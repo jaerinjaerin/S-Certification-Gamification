@@ -5,10 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
   output   = env("PRISMA_CLIENT_OUTPUT")
-  // output ="./client"
 }
 
 datasource db {
@@ -17,27 +16,27 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
- 
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   userId       String
@@ -49,7 +48,7 @@ model Session {
 
   @@map("sessions")
 }
- 
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -61,31 +60,34 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  emailId       String?
-  profileId     String?   @unique
-  profile       UserProfile?
-  authType      AuthType?
+  emailId   String?
+  profileId String?      @unique
+  profile   UserProfile?
+  authType  AuthType?
+
+  userQuizHistory     UserQuizHistory[]
+  userQuestionAttempt UserQuestionAttempt[]
 
   @@map("users")
 }
 
 model UserProfile {
-  id        String    @id @default(cuid())
-  name      String?
-  image     String?
-  userId    String?   @unique
-  user      User?     @relation(fields: [userId], references: [id])
+  id     String  @id @default(cuid())
+  name   String?
+  image  String?
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id])
 
   @@map("user_profiles")
 }
 
 model UserEmail {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id     String  @id @default(cuid())
+  email  String  @unique
   // user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
+  userId String?
 }
- 
+
 model VerificationRequest {
   id         String   @id @default(cuid())
   identifier String
@@ -101,7 +103,7 @@ model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
@@ -109,4 +111,119 @@ model VerificationToken {
 enum AuthType {
   SUMTOTAL
   GUEST
+}
+
+model UserQuizHistory {
+  id          String   @id @default(uuid())
+  userId      String
+  // quizSetId   String
+  campaignId String
+  metadataId String
+  completed   Boolean // 퀴즈 세트를 완료했는지 여부
+  stage       Int // 유저가 마지막으로 도달한 스테이지
+  progress    Int // 퀴즈 세트 내 진행도 (%)
+  createdAt   DateTime @default(now()) // 히스토리 생성 시간
+  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
+
+  user    User?    @relation(fields: [userId], references: [id])
+  // quizSet QuizSet? @relation(fields: [quizSetId], references: [id])
+
+  @@unique([userId, campaignId, metadataId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
+}
+
+model QuizCampaign {
+  id          String   @id @default(uuid())
+  title       String
+  releaseDate DateTime
+  createdAt   DateTime @default(now()) // 레코드 생성 시간 자동 설정
+  updatedAt   DateTime @updatedAt // 레코드 수정 시 자동 업데이트
+
+  // metadatas QuizMetadata[]
+  quizSets QuizSet[]
+}
+
+model QuizSet {
+  id               String   @id @default(uuid())
+  title            String
+  timeLimitSeconds Int
+  lives            Int
+  stage            Int
+  nextStage        Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  campaignId      String
+  campaign        QuizCampaign @relation(fields: [campaignId], references: [id])
+
+  metadataId      String         
+  metadata        QuizMetadata   @relation(fields: [metadataId], references: [id])
+  questions       QuizQuestion[]
+
+  // userQuizHistory     UserQuizHistory[]
+  userQuestionAttempts UserQuestionAttempt[]
+}
+
+model QuizMetadata {
+  id            String   @id @default(uuid())
+  serviceEntity String?
+  country       String
+  language      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // campaignId    String
+  // campaign      QuizCampaign @relation(fields: [campaignId], references: [id])
+
+  quizSets QuizSet[]
+}
+
+model QuizQuestion {
+  id              String   @id @default(uuid())
+  questionText    String
+  correctOptionId String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  quizSetId String
+  quizSet   QuizSet      @relation(fields: [quizSetId], references: [id])
+  options   QuizOption[]
+
+  userQuestionAttempts UserQuestionAttempt[]
+}
+
+model QuizOption {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questionId String?
+  question   QuizQuestion? @relation(fields: [questionId], references: [id])
+}
+
+model UserQuestionAttempt {
+  id                 String   @id @default(uuid())
+  userId             String // 유저 ID
+  quizSetId          String // 퀴즈 세트 ID
+  stage              Int // 스테이지 번호
+  questionId         String // 문제 ID
+  isCorrect          Boolean // 정답 여부
+  selectedOptionId   String // 유저가 선택한 옵션의 ID
+  selectedOptionText String // 유저가 선택한 옵션의 텍스트
+  attemptTime        DateTime @default(now()) // 시도 시간
+  timeTaken          Int // 문제 풀이에 소요된 시간 (초 단위)
+
+  // QuizMetadata 정보
+  serviceEntity       String // 지법인 정보 (metadata에서 가져옴)
+  country             String // 국가 정보 (metadata에서 가져옴)
+  language            String // 언어 정보 (metadata에서 가져옴)
+  campaignId          String? // 캠페인 ID (optional)
+  campaignTitle       String? // 캠페인 타이틀
+  campaignReleaseDate DateTime? // 캠페인 출시 날짜
+
+  user     User          @relation(fields: [userId], references: [id])
+  quizSet  QuizSet?      @relation(fields: [quizSetId], references: [id])
+  question QuizQuestion? @relation(fields: [questionId], references: [id])
+
+  @@index([userId, quizSetId, stage, questionId]) // 효율적인 조회를 위한 인덱스
 }
