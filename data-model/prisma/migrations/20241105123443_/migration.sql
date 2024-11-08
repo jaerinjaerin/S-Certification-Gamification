@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "profileId" DROP NOT NULL,
+ALTER COLUMN "authType" DROP NOT NULL;
