@@ -1,6 +1,7 @@
 import { prisma } from '@/prisma-client';
 import type { Adapter } from '@auth/core/adapters';
 import { PrismaAdapter } from '@auth/prisma-adapter';
+import { AuthType } from '@prisma/client';
 import NextAuth, { DefaultSession } from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
 import GoogleProvier from 'next-auth/providers/google';
@@ -24,8 +25,11 @@ declare module 'next-auth' {
     user: {
       /** The user's id. */
       id: string;
-      isGranted?: Boolean;
-      loginName?: string;
+      providerUserId: string;
+      providerPersonId: string;
+      authType: AuthType;
+      // isGranted?: Boolean;
+      // loginName?: string;
     } & DefaultSession['user'];
   }
 }
@@ -58,6 +62,15 @@ export const {
         });
       }
     },
+    async linkAccount({ user, profile }) {
+      console.log('next-auth linkAccount', user, profile);
+      // if (!user.image && profile.image) {
+      //   await prisma.user.update({
+      //     where: { id: user.id },
+      //     data: { image: profile.image },
+      //   });
+      // }
+    },
   },
   providers: [
     // SumTotalProvider({
@@ -73,27 +86,39 @@ export const {
         url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
         params: {
           scope: 'allapis',
+          prompt: 'select_account',
         },
       },
       token: 'https://samsung.sumtotal.host/apisecurity/connect/token',
       userinfo: 'https://samsung.sumtotal.host/apis/api/v2/advanced/users',
-      clientId: process.env.AUTH_SUMTOTAL_ID,
-      clientSecret: process.env.AUTH_SUMTOTAL_SECRET,
+      clientId: process.env.SUMTOTAL_CLIENT_ID,
+      clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: (profile: SumtotalProfile) => {
         console.log('profile:', profile);
         return {
           id: profile.userId,
-          name: profile.fullName,
+          name: profile.fullName ?? profile.userLogin.username ?? null,
           email: profile.businessAddress.email1 ?? null,
           image: profile.imagePath ?? null,
+          authType: AuthType.SUMTOTAL,
+          providerUserId: profile.userId,
+          providerPersonId: profile.personId,
         };
       },
+      // account: () {
+
+      // }
       // callbackUrl: process.env.AUTH_SUMTOTAL_CALLBACK,
       // options,
     },
     GoogleProvier({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      // authorization: {
+      //   params: {
+      //     prompt: 'select_account',
+      //   },
+      // },
     }),
     EmailProvider({
       server: {
@@ -162,22 +187,49 @@ export const {
         // const granted = await grant(user.id);
         // token.isGranted = granted;
       }
-      //
-      if (pf) {
-        const profile: SumtotalProfile | any = { ...pf };
-        token.loginName = profile.userLogin.username;
+
+      if (account) {
+        token.access_token = account.access_token;
+        token.expires_at = account.expires_at;
+
+        const found_account = await prisma.account.findFirst({
+          where: { providerAccountId: account.providerAccountId as string },
+        });
+
+        if (found_account) {
+          await prisma.account.update({
+            where: {
+              id: found_account.id,
+            },
+            data: {
+              access_token: account.access_token,
+              expires_at: account.expires_at, // 새로운 만료 시간
+            },
+          });
+        }
       }
       //
+      // if (pf) {
+      //   const profile: SumtotalProfile | any = { ...pf };
+      //   token.loginName = profile.userLogin.username;
+      // }
+
+      // if (account?.access_token) {
+      //   token.access_token = account.access_token;
+      // }
       return token;
     },
     session: async ({ session, token }) => {
       console.log('next-auth session', session, token);
-      if (session?.user && token) {
-        token.id && (session.user.id = String(token.id));
-        token.loginName && (session.user.loginName = String(token.loginName));
-        token.isGranted != null &&
-          (session.user.isGranted = Boolean(token.isGranted));
+      if (session?.user && token.sub) {
+        session.user.id = token.sub;
       }
+      // if (session?.user && token) {
+      //   token.id && (session.user.id = String(token.id));
+      //   token.loginName && (session.user.loginName = String(token.loginName));
+      //   token.isGranted != null &&
+      //     (session.user.isGranted = Boolean(token.isGranted));
+      // }
       //
       return session;
     },

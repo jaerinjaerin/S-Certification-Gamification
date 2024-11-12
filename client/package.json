@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3100",
+    "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start -p 3100",
+    "start": "next start -p 3000",
     "lint": "next lint",
     "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
     "prisma:migrate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma migrate dev --schema=../data-model/prisma/schema.prisma",

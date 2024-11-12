@@ -14,13 +14,13 @@ export async function middleware(request: NextRequest) {
   // const { pathname } = request.nextUrl;
 
   // // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
-  // if (!token && pathname !== '/login' && pathname !== '/verify-request') {
+  // if (!session && pathname !== '/login' && pathname !== '/verify-request') {
   //   return NextResponse.redirect(new URL('/login', request.url));
   // }
 
   // // 로그인된 사용자가 /login 페이지에 접근하려는 경우
   // if (
-  //   token &&
+  //   session &&
   //   (pathname === '/login' ||
   //     pathname === '/verify-request' ||
   //     pathname === '/')
@@ -32,5 +32,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/login', '/home', '/verify-request'], // 미들웨어를 적용할 경로를 지정
+  matcher: ['/', '/login', '/home', '/verify-request', '/test'], // 미들웨어를 적용할 경로를 지정
 };
