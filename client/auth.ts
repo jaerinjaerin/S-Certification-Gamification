@@ -3,22 +3,8 @@ import type { Adapter } from '@auth/core/adapters';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { AuthType } from '@prisma/client';
 import NextAuth, { DefaultSession } from 'next-auth';
-import EmailProvider from 'next-auth/providers/email';
 import GoogleProvier from 'next-auth/providers/google';
-import { createTransport } from 'nodemailer';
 import { SumtotalProfile } from './app/lib/auth/sumtotal';
-import {
-  magicLinkEmailHtml,
-  magicLinkEmailText,
-} from './app/templete/emails/verification-template';
-
-// const transporter = nodemailer.createTransport({
-//   service: process.env.EMAIL_SERVER,
-//   auth: {
-//     user: process.env.EMAIL_SERVER_USER,
-//     pass: process.env.EMAIL_SERVER_PASSWORD,
-//   },
-// });
 
 declare module 'next-auth' {
   interface Session {
@@ -85,7 +71,7 @@ export const {
       authorization: {
         url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
         params: {
-          scope: 'allapis',
+          scope: 'allapis offline_access',
           prompt: 'select_account',
         },
       },
@@ -95,6 +81,7 @@ export const {
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: (profile: SumtotalProfile) => {
         console.log('profile:', profile);
+        // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
         return {
           id: profile.userId,
           name: profile.fullName ?? profile.userLogin.username ?? null,
@@ -119,55 +106,6 @@ export const {
       //     prompt: 'select_account',
       //   },
       // },
-    }),
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT as unknown as number,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
-      async sendVerificationRequest({
-        identifier: email,
-        url,
-        provider: { server, from },
-        theme,
-      }) {
-        console.log('sendVerificationRequest', email, url, server, from, theme);
-        // const { identifier, url, provider, theme } = params;
-        const { host } = new URL(url);
-        // NOTE: You are not required to use `nodemailer`, use whatever you want.
-        const transport = createTransport(server);
-        const result = await transport.sendMail({
-          to: email,
-          from: process.env.EMAIL_FROM,
-          subject: `Sign in to ${host}`,
-          text: magicLinkEmailText({ url, host }),
-          html: magicLinkEmailHtml({ url, host, theme }),
-        });
-        const failed = result.rejected.concat(result.pending).filter(Boolean);
-        if (failed.length) {
-          throw new Error(`Email(s) (${failed.join(', ')}) could not be sent`);
-        }
-      },
-      normalizeIdentifier(identifier: string): string {
-        // Get the first two elements only,
-        // separated by `@` from user input.
-        let [local, domain] = identifier.toLowerCase().trim().split('@');
-        // The part before "@" can contain a ","
-        // but we remove it on the domain part
-        domain = domain.split(',')[0];
-        return `${local}@${domain}`;
-
-        // You can also throw an error, which will redirect the user
-        // to the error page with error=EmailSignin in the URL
-        // if (identifier.split("@").length > 2) {
-        //   throw new Error("Only one email allowed")
-        // }
-      },
     }),
   ],
   secret: process.env.AUTH_SECRET,
@@ -203,6 +141,7 @@ export const {
             },
             data: {
               access_token: account.access_token,
+              refresh_token: account.refresh_token,
               expires_at: account.expires_at, // 새로운 만료 시간
             },
           });

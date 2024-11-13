@@ -8,6 +8,7 @@ export default function TestPage() {
   const [selectedActivity, setSelectedActivity] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const { data: session } = useSession();
   const [resultUser, setResultUser] = useState<any | null>(null);
   const [resultActivity, setResultActivity] = useState<any | null>(null);
@@ -44,6 +45,31 @@ export default function TestPage() {
 
       console.log('data', data);
       fetchUserPrimaryOrganization(foundPrimaryOrganization);
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshToken = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/sumtotal/auth/refresh_token', {
+        method: 'GET',
+        cache: 'no-store',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch user profile');
+      }
+
+      const data = await response.json();
+      console.log('data', data);
+      setMessage('토큰 갱신 완료');
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred');
     } finally {
@@ -199,6 +225,11 @@ export default function TestPage() {
           <p>{resultUser}</p>
         </div>
       )}
+      <br />
+      <button onClick={refreshToken} disabled={loading}>
+        {loading ? 'Loading...' : '토큰 갱신'}
+      </button>
+      {message && <p style={{ color: 'blue' }}>Message: {message}</p>}
       <br />
       <button onClick={fetchActivities} disabled={loading}>
         {loading ? 'Loading...' : 'Activity 목록 조회'}
