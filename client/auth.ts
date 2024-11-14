@@ -1,22 +1,22 @@
-import { prisma } from '@/prisma-client';
-import type { Adapter } from '@auth/core/adapters';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { AuthType } from '@prisma/client';
-import NextAuth, { DefaultSession } from 'next-auth';
-import GoogleProvier from 'next-auth/providers/google';
-import { SumtotalProfile } from './app/lib/auth/sumtotal';
+import { prisma } from '@/prisma-client'
+import type { Adapter } from '@auth/core/adapters'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { AuthType } from '@prisma/client'
+import NextAuth, { DefaultSession } from 'next-auth'
+import GoogleProvier from 'next-auth/providers/google'
+import { SumtotalProfile } from './app/lib/auth/sumtotal'
 
 declare module 'next-auth' {
   interface Session {
     user: {
       /** The user's id. */
-      id: string;
-      providerUserId: string;
-      providerPersonId: string;
-      authType: AuthType;
+      id: string
+      providerUserId: string
+      providerPersonId: string
+      authType: AuthType
       // isGranted?: Boolean;
       // loginName?: string;
-    } & DefaultSession['user'];
+    } & DefaultSession['user']
   }
 }
 
@@ -26,44 +26,7 @@ export const {
   auth,
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
-  events: {
-    createUser: async (message) => {
-      console.log('next-auth createUser', message);
-      const { user } = message;
-
-      if (user.email != null) {
-        const userEmail = await prisma.userEmail.create({
-          data: {
-            email: user.email,
-            userId: user.id,
-          },
-        });
-
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            email: null,
-            emailId: userEmail.id,
-          },
-        });
-      }
-    },
-    async linkAccount({ user, profile }) {
-      console.log('next-auth linkAccount', user, profile);
-      // if (!user.image && profile.image) {
-      //   await prisma.user.update({
-      //     where: { id: user.id },
-      //     data: { image: profile.image },
-      //   });
-      // }
-    },
-  },
   providers: [
-    // SumTotalProvider({
-    //   clientId: process.env.AUTH_SUMTOTAL_ID!,
-    //   clientSecret: process.env.AUTH_SUMTOTAL_SECRET!,
-    //   callbackUrl: process.env.AUTH_SUMTOTAL_CALLBACK,
-    // }),
     {
       id: 'sumtotal',
       name: 'SumTotal',
@@ -80,7 +43,7 @@ export const {
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: (profile: SumtotalProfile) => {
-        console.log('profile:', profile);
+        console.log('profile:', profile)
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
         return {
           id: profile.userId,
@@ -90,22 +53,12 @@ export const {
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
-        };
+        }
       },
-      // account: () {
-
-      // }
-      // callbackUrl: process.env.AUTH_SUMTOTAL_CALLBACK,
-      // options,
     },
     GoogleProvier({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      // authorization: {
-      //   params: {
-      //     prompt: 'select_account',
-      //   },
-      // },
     }),
   ],
   secret: process.env.AUTH_SECRET,
@@ -113,12 +66,44 @@ export const {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, //30일
   },
+  events: {
+    createUser: async (message) => {
+      console.log('next-auth createUser', message)
+      const { user } = message
+
+      if (user.email != null) {
+        const userEmail = await prisma.userEmail.create({
+          data: {
+            email: user.email,
+            userId: user.id,
+          },
+        })
+
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            email: null,
+            emailId: userEmail.id,
+          },
+        })
+      }
+    },
+    async linkAccount({ user, profile }) {
+      console.log('next-auth linkAccount', user, profile)
+      // if (!user.image && profile.image) {
+      //   await prisma.user.update({
+      //     where: { id: user.id },
+      //     data: { image: profile.image },
+      //   });
+      // }
+    },
+  },
   callbacks: {
     jwt: async ({ token, profile: pf, user, account }) => {
       //
-      console.log('next-auth jwt', token, pf, user, account);
+      // console.log('next-auth jwt', token, pf, user, account)
       if (user) {
-        token.id = user.id;
+        token.id = user.id
         // token.image = user.image;
         // token.isGranted = false;
         // //
@@ -127,12 +112,12 @@ export const {
       }
 
       if (account) {
-        token.access_token = account.access_token;
-        token.expires_at = account.expires_at;
+        token.access_token = account.access_token
+        token.expires_at = account.expires_at
 
         const found_account = await prisma.account.findFirst({
           where: { providerAccountId: account.providerAccountId as string },
-        });
+        })
 
         if (found_account) {
           await prisma.account.update({
@@ -144,7 +129,7 @@ export const {
               refresh_token: account.refresh_token,
               expires_at: account.expires_at, // 새로운 만료 시간
             },
-          });
+          })
         }
       }
       //
@@ -156,12 +141,12 @@ export const {
       // if (account?.access_token) {
       //   token.access_token = account.access_token;
       // }
-      return token;
+      return token
     },
     session: async ({ session, token }) => {
-      console.log('next-auth session', session, token);
+      // console.log('next-auth session', session, token)
       if (session?.user && token.sub) {
-        session.user.id = token.sub;
+        session.user.id = token.sub
       }
       // if (session?.user && token) {
       //   token.id && (session.user.id = String(token.id));
@@ -170,67 +155,18 @@ export const {
       //     (session.user.isGranted = Boolean(token.isGranted));
       // }
       //
-      return session;
+      return session
     },
     authorized: ({ auth }) => {
-      console.log('next-auth authorized', auth);
-      return !!auth?.user; // this ensures there is a logged in user for -every- request
+      // console.log('next-auth authorized', auth)
+      return !!auth?.user // this ensures there is a logged in user for -every- request
     },
   },
-  // callbacks: {
-  // async session({ session, token, user }) {
-  //   // 사용자 정보나 토큰 데이터를 세션에 추가
-  //   // session.user.id = user?.id || token.sub;
-  //   // session.user.role = user?.role || 'user';
-  //   // if (session?.user?.profileId == null) {
-  //   // if (user?.profileId == null) {
-  //   // }
-  //   console.log('next-auth session', session, token, user);
-  //   if (session?.user) {
-  //     session.user.id = token.sub;
-  //   }
-  //   return session;
-  // },
-  // async jwt({ token, user, account, profile, isNewUser }) {
-  //   // console.log("next-auth jwt", token, user, account, profile, isNewUser);
-  //   return token;
-  // },
-  // jwt: async ({ token, profile: pf, user, account }) => {
-  //   //
-  //   // if (user) {
-  //   //   token.id = user.id;
-  //   //   token.image = user.image;
-  //   //   token.isGranted = false;
-  //   //   //
-  //   //   // const granted = await grant(user.id);
-  //   //   // token.isGranted = granted;
-  //   // }
-  //   // //
-  //   // if (pf) {
-  //   //   const profile: SumtotalProfile | any = { ...pf };
-  //   //   token.loginName = profile.userLogin.username;
-  //   // }
-  //   //
-  //   return token;
-  // },
-  // session: async ({ session, token }) => {
-  //   if (session?.user && token) {
-  //     token.id && (session.user.id = String(token.id));
-  //     token.loginName && (session.user.loginName = String(token.loginName));
-  //     token.isGranted != null &&
-  //       (session.user.isGranted = Boolean(token.isGranted));
-  //   }
-  //   //
-  //   return session;
-  // },
-  // authorized: ({ auth }) => {
-  //   return !!auth?.user; // this ensures there is a logged in user for -every- request
-  // },
-  // },
   pages: {
     signIn: '/login',
-    signOut: '/login',
+    // signOut: '/login',
+    // newUser
     error: '/error',
     verifyRequest: '/verify-request',
   },
-});
+})

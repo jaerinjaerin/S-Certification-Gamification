@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import useGetItem from '@/app/hooks/useGetItem';
-import { useQuiz } from '@/providers/quiz_provider';
-import { QuizSet, UserQuizHistory } from '@prisma/client';
-import { useSession } from 'next-auth/react';
+import useGetItem from "@/app/hooks/useGetItem";
+import { QuizSet, UserQuizHistory } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 type QuizData = {
   userQuizHistory: UserQuizHistory;
@@ -11,7 +10,7 @@ type QuizData = {
 };
 
 export default function QuizPage() {
-  const { quizCampaign, quizMetadata } = useQuiz();
+  // const { quizCampaign, quizMetadata } = useQuiz();
   const { data: session } = useSession();
 
   const userId = session?.user?.id;
@@ -20,8 +19,8 @@ export default function QuizPage() {
   //   return <p>Not authenticated</p>;
   // }
 
-  const testCampaignId = 'c8197cf4-3d49-4c48-a294-d47716708382';
-  const testMetadataId = '90e9d95e-2ee0-4f28-9060-8e7d053b97f3';
+  const testCampaignId = "c8197cf4-3d49-4c48-a294-d47716708382";
+  const testMetadataId = "90e9d95e-2ee0-4f28-9060-8e7d053b97f3";
 
   const {
     isLoading,
