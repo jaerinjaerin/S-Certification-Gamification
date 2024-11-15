@@ -89,18 +89,30 @@ async function main() {
   // Add CountryActivity entries
   const activityId = "test_activity_id";
   for (const country of countries) {
-    const countryActivityId = uuid.v4();
-    await prisma.countryActivity.create({
+    await prisma.campaignActivity.create({
       data: {
-        id: countryActivityId,
+        id: uuid.v4(),
         campaignId: campaignId,
         activityId: activityId,
         countryId: country.id,
         countryCode: country.code,
+        jobId: userJobs[0].id,
+        jobName: userJobs[0].name,
+      },
+    });
+    await prisma.campaignActivity.create({
+      data: {
+        id: uuid.v4(),
+        campaignId: campaignId,
+        activityId: activityId,
+        countryId: country.id,
+        countryCode: country.code,
+        jobId: userJobs[1].id,
+        jobName: userJobs[1].name,
       },
     });
     console.log(
-      `Created CountryActivity for Country: ${country.name}, Activity ID: ${activityId}`
+      `Created CampaignActivity for Country: ${country.name}, Activity ID: ${activityId}`
     );
     break; // 하나의 activityId는 하나의 countryId만 매칭되므로, 한 번만 실행
   }
@@ -108,46 +120,46 @@ async function main() {
   console.log("Seeding completed!");
 
   // Create a quiz set
-  const quizSetId = uuid.v4();
-  const quizSet = await prisma.quizSet.create({
-    data: {
-      id: quizSetId,
-      name: "General Knowledge Quiz",
-      description: "A quiz set to test general knowledge.",
-      campaignId: campaign.id,
-    },
-  });
+  // const quizSetId = uuid.v4();
+  // const quizSet = await prisma.quizSet.create({
+  //   data: {
+  //     id: quizSetId,
+  //     name: "General Knowledge Quiz",
+  //     description: "A quiz set to test general knowledge.",
+  //     campaignId: campaign.id,
+  //   },
+  // });
 
-  console.log(`Created Quiz Set: ${quizSet.name}`);
+  // console.log(`Created Quiz Set: ${quizSet.name}`);
 
-  // Create translations for the quiz set
-  const quizSetTranslations = [
-    { languageCode: "en", text: "General Knowledge Quiz" },
-    { languageCode: "ko", text: "일반 상식 퀴즈" },
-    { languageCode: "ja", text: "一般知識クイズ" },
-  ];
+  // // Create translations for the quiz set
+  // const quizSetTranslations = [
+  //   { languageCode: "en", text: "General Knowledge Quiz" },
+  //   { languageCode: "ko", text: "일반 상식 퀴즈" },
+  //   { languageCode: "ja", text: "一般知識クイズ" },
+  // ];
 
-  for (const translation of quizSetTranslations) {
-    await prisma.quizSetTranslation.create({
-      data: {
-        id: uuid.v4(),
-        languageCode: translation.languageCode,
-        text: translation.text,
-        quizSetId: quizSet.id,
-      },
-    });
-  }
+  // for (const translation of quizSetTranslations) {
+  //   await prisma.quizSetTranslation.create({
+  //     data: {
+  //       id: uuid.v4(),
+  //       languageCode: translation.languageCode,
+  //       text: translation.text,
+  //       quizSetId: quizSet.id,
+  //     },
+  //   });
+  // }
 
   // Create 5 stages
   const stages = [];
   for (let i = 1; i <= 5; i++) {
-    const stageId = uuid.v4();
-    const stage = await prisma.stage.create({
+    const quizStageId = uuid.v4();
+    const stage = await prisma.quizStage.create({
       data: {
-        id: stageId,
+        id: quizStageId,
         name: `Stage ${i}`,
         order: i,
-        quizSetId: quizSet.id,
+        campaignId: campaign.id,
       },
     });
     stages.push(stage);
@@ -165,7 +177,7 @@ async function main() {
           text: `Question ${i} in ${stage.name}`,
           lifeCount: 3,
           expiresIn: 60, // Expires in 60 seconds
-          stageId: stage.id,
+          quizStageId: stage.id,
         },
       });
       console.log(`Created Question: ${question.text}`);
@@ -183,7 +195,7 @@ async function main() {
             id: uuid.v4(),
             languageCode: translation.language,
             text: translation.text,
-            questionId: question.id,
+            questionId: questionId,
           },
         });
       }
@@ -197,7 +209,7 @@ async function main() {
             id: optionId,
             text: `Option ${j} for Question ${i}`,
             order: j,
-            questionId: question.id,
+            questionId: questionId,
           },
         });
         console.log(`Created Option: ${option.text} (Correct: ${isCorrect})`);
@@ -224,21 +236,21 @@ async function main() {
       // Assign the question to random countries and user jobs
       for (const country of countries) {
         for (const userJob of userJobs) {
-          if (Math.random() > 0.5) {
-            await prisma.countryUserJobQuestion.create({
-              data: {
-                id: uuid.v4(),
-                countryId: country.id,
-                userJobId: userJob.id,
-                userJobName: userJob.name,
-                questionId: question.id,
-                isEnabled: true,
-              },
-            });
-            console.log(
-              `Assigned Question ${question.text} to Country ${country.name}, User Job ${userJob.name}`
-            );
-          }
+          const isEnabled = Math.random() > 0.5;
+          await prisma.questionUsage.create({
+            data: {
+              id: uuid.v4(),
+              countryId: country.id,
+              userJobId: userJob.id,
+              userJobName: userJob.name,
+              questionId: question.id,
+              isEnabled: isEnabled,
+            },
+          });
+
+          console.log(
+            `Assigned Question ${question.text} to Country ${country.name}, User Job ${userJob.name}`
+          );
         }
       }
     }
