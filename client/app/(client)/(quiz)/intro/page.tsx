@@ -1,31 +1,31 @@
 "use client";
 
+import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItem from "@/app/hooks/useGetItem";
 import {
   Campaign,
-  CampaignActivity,
-  Country,
-  CountryLanguage,
-  UserCampaignActivityLog,
+  CampaignDomain,
+  UserCampaignDomainLog,
 } from "@prisma/client";
+import { Domain } from "domain";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type CountryEx = Country & {
-  languages: CountryLanguage[];
-};
+// type CountryEx = Country & {
+//   languages: CountryLanguage[];
+// };
 
-type CampaignActivityEx = CampaignActivity & {
+type CampaignDomainEx = CampaignDomain & {
   campaign: Campaign;
-  country: CountryEx;
+  domain: Domain;
 };
 
 export default function QuizIntro() {
   const searchParams = useSearchParams();
 
   const activityId = searchParams.get("activityId");
-  // const userJob = searchParams.get("job");
+  const jobName = searchParams.get("jobName");
 
   // const {
   //   campaign,
@@ -42,18 +42,35 @@ export default function QuizIntro() {
 
   // console.log("useQuiz", campaign, country, languages, selectedLanguage);
 
-  const { isLoading, error, item } = useGetItem<UserCampaignActivityLog>(
-    `/api/activity/${activityId}/user/${session?.user.id}/history`
+  const {
+    isLoading,
+    error,
+    item: history,
+  } = useGetItem<UserCampaignDomainLog>(
+    `/api/activity/${activityId}/user/${session?.user.id}/history?job_name=${jobName}`
   );
 
+  const {
+    isLoading: isCreating,
+    error: createError,
+    item: createdHistory,
+    createItem,
+  } = useCreateItem<UserCampaignDomainLog>();
+
   const [userQuizHistory, setUserQuizHistory] =
-    useState<UserCampaignActivityLog | null>(null);
+    useState<UserCampaignDomainLog | null>(null);
 
   useEffect(() => {
-    if (item) {
-      setUserQuizHistory(item);
+    if (createdHistory) {
+      setUserQuizHistory(createdHistory);
     }
-  }, [item]);
+  }, [createdHistory]);
+
+  console.log("userQuizHistory", isLoading, error, history);
+
+  const fetchLanguages = () => {
+    //
+  };
 
   // const handleSelect = (countryLanguage: CountryLanguage) => {
   //   setSelectedLanguage(countryLanguage);
@@ -98,26 +115,17 @@ export default function QuizIntro() {
   //   }
   // };
   const createUserQuizHistory = async () => {
-    try {
-      const response = await fetch(
-        `/api/activity/${activityId}/user/${session?.user.id}/history`,
-        {
-          method: "POST",
-          cache: "no-store",
-          body: JSON.stringify({
-            languageCode: "ja",
-          }),
-        }
-      );
+    createItem({
+      url: `/api/activity/${activityId}/user/${session?.user.id}/history`,
+      body: { jobName: jobName },
+    });
+  };
 
-      const data = await response.json();
-      if (data) {
-        // setUserQuizHistory(item);
-      }
-      console.log("fetchData data", data);
-    } catch (error) {
-      console.error("fetchData error", error);
-    }
+  const routeQuizMap = () => {
+    const currentUrl = new URL(window.location.href);
+    const queryString = currentUrl.search; // 현재 URL의 query string 추출
+    const targetUrl = `/map${queryString}`; // /quiz 뒤에 query string 추가
+    window.location.href = targetUrl;
   };
 
   if (isLoading) {
@@ -142,6 +150,9 @@ export default function QuizIntro() {
         disabled={userQuizHistory !== null}
       >
         Create User Quiz History
+      </button>
+      <button onClick={routeQuizMap} disabled={userQuizHistory == null}>
+        Go Quiz Map
       </button>
       {error && <div>{error.message}</div>}
     </div>
