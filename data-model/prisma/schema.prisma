@@ -15,6 +15,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./erd.svg"
+}
+
 model Account {
   id                String   @id @default(cuid())
   userId            String   @map("user_id")
@@ -67,9 +72,16 @@ model User {
 
   providerUserId        String?
   providerPersonId      Int?
+  // jobName             String?
+  jobId             String?
+  job               Job? @relation(fields: [jobId], references: [id])
+  domainId              Int?
 
-  userQuizHistory     UserQuizHistory[]
-  userQuestionAttempt UserQuestionAttempt[]
+  // userQuizLogs     UserQuizLog[]
+  userCampaignDomainLogs UserCampaignDomainLog[]
+  // userQuizStageLogs     UserQuizStageLog[]
+  // userQuizSetLogs     UserQuizSetLog[]
+  // userQuestionAttempt UserQuestionAttempt[]
 
   @@map("users")
 }
@@ -116,117 +128,206 @@ enum AuthType {
   GUEST
 }
 
-model UserQuizHistory {
+
+model Language {
+  id         String   @id @default(uuid())
+  code       String   @unique // Language code (e.g., en, fr, es)
+  name       String   // Language name
+
+  campaignDomainQuizSets CampaignDomainQuizSet[]
+  questions Question[]
+  questionOption QuestionOption[]
+}
+
+// model Countr
+model Campaign {
+  id          String   @id @default(uuid())
+  name        String      // Name of the campaign
+  description String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  startedAt   DateTime
+  endedAt     DateTime
+
+  createrId   String
+  updaterId   String?
+
+  campaignDomainQuizSets  CampaignDomainQuizSet[]
+}
+
+model Domain {
+  id         Int   @id
+  name       String?
+  code       String   @unique // Domain name
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  campaignDomainQuizSets  CampaignDomainQuizSet[]
+}
+
+// 어떤 job이 사용할 수 있는가, guest 도 사용할 수 있는가, 어떤 언어를 사용하는가
+// job 여러 개 선택 가능
+// 언어 여러 개 선택 가능
+model CampaignDomainQuizSet {
+  id         String   @id @default(uuid())
+  campaignId String      // Foreign key to Campaign
+  domainId   Int      // Foreign key to Domain
+  jobId             String
+  languageId        String
+  // questionIds       String
+  quizStages     QuizStage[]
+
+  activityId String?
+
+  createrId   String
+  updaterId   String?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  campaign   Campaign    @relation(fields: [campaignId], references: [id])
+  domain     Domain      @relation(fields: [domainId], references: [id])
+  language     Language      @relation(fields: [languageId], references: [id])
+
+  userCampaignDomainLogs UserCampaignDomainLog[]
+}
+
+model QuizStage {
+  id         String   @id @default(uuid())
+  name       String     // Name of the stage
+  order      Int        // Order of the stage within the quiz set
+  // questions  Question[] // Associated questions
+  questionIds       String
+  lifeCount   Int         // Number of lives for the question
+  // quizSetId  String        // Foreign key to QuizSet
+  // quizSet    QuizSet    @relation(fields: [quizSetId], references: [id])
+  campaignDomainQuizSetId  String        // Foreign key to QuizSet
+  campaignDomainQuizSet    CampaignDomainQuizSet @relation(fields: [campaignDomainQuizSetId], references: [id])
+  // campaign    Campaign    @relation(fields: [campaignId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  userQuizStageLogs UserQuizStageLog[]
+}
+
+
+model Question {
+  id          String   @id @default(uuid())
+  text        String      // Text of the question in default language
+  
+  timeLimitSeconds   Int         // Expiration time for the question in seconds
+  options     QuestionOption[] // Associated options
+  // quizStageId     String?         // Foreign key to Stage
+  order       Int
+  // quizStage       QuizStage       @relation(fields: [quizStageId], references: [id])
+  
+  languageId  String      // Foreign key to Language
+  parentId    String?     // Foreign key to Question
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  language    Language    @relation(fields: [languageId], references: [id])
+  userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
+}
+
+model QuestionOption {
+  id          String   @id @default(uuid())
+  text        String              // Text of the option
+  order       Int                 // Order of the option within the question
+  // translations QuestionOptionTranslation[]
+  questionId  String                 // Foreign key to Question
+  question    Question            @relation(fields: [questionId], references: [id])
+  languageId   String
+  language    Language            @relation(fields: [languageId], references: [id])
+  isCorrect   Boolean             // Whether the option is correct
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Job {
+  id         String   @id @default(uuid())
+  name       String   // Name of the user group (e.g., A, B)
+  description String? // Optional description
+  // countryJobQuestionsUeage QuestionUsage[] // Associated CountryGroup entries
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  users User[]
+  
+}
+
+model UserCampaignDomainLog {
   id          String   @id @default(uuid())
   userId      String
   // quizSetId   String
   campaignId String
-  metadataId String
+  // activityId String
+  // metadataId String
   completed   Boolean // 퀴즈 세트를 완료했는지 여부
-  stage       Int // 유저가 마지막으로 도달한 스테이지
-  progress    Int // 퀴즈 세트 내 진행도 (%)
+  lastCompletedStage    Int?
+  timeSpent    Int?      // Time spent on this activity (in seconds)
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
   user    User?    @relation(fields: [userId], references: [id])
+  jobId       String?
+
+
+  campaignDomainQuizSetId String
+  campaignDomainQuizSet    CampaignDomainQuizSet  @relation(fields: [campaignDomainQuizSetId], references: [id])
+  // campaignActivityId String
+  // campaignActivity  CampaignActivity  @relation(fields: [campaignActivityId], references: [id])
   // quizSet QuizSet? @relation(fields: [quizSetId], references: [id])
 
-  @@unique([userId, campaignId, metadataId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
+  // countryCode String
+
+  domainId Int
+  activityId String?
+  // languageCode String?
+  languageId String?
+
+  @@unique([userId, campaignId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
 }
 
-model QuizCampaign {
-  id          String   @id @default(uuid())
-  title       String
-  releaseDate DateTime
-  createdAt   DateTime @default(now()) // 레코드 생성 시간 자동 설정
-  updatedAt   DateTime @updatedAt // 레코드 수정 시 자동 업데이트
+model UserQuizStageLog {
+  id           String   @id @default(uuid())
+  userId       String      // Foreign key to User
+  // user         User     @relation(fields: [userId], references: [id])
+  quizStageId      String      // Foreign key to Stage
+  quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
+  isCompleted  Boolean  // Whether the stage was completed
+  timeSpent    Int      // Time spent on this stage (in seconds)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  // metadatas QuizMetadata[]
-  quizSets QuizSet[]
+  // countryCode String
+  campaignDomainId String
+  countryId String
+  // languageCode String
+  // activityId  String
+  // campaignActivityId  String
 }
 
-model QuizSet {
-  id               String   @id @default(uuid())
-  title            String
-  timeLimitSeconds Int
-  lives            Int
-  stage            Int
-  nextStage        Int?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+model UserQuizQuestionLog {
+  id           String   @id @default(uuid())
+  userId       String      // Foreign key to User
+  // user         User     @relation(fields: [userId], references: [id])
+  questionId   String      // Foreign key to Question
+  question     Question @relation(fields: [questionId], references: [id])
+  isCorrect    Boolean  // Whether the user answered the question correctly
+  timeSpent    Int      // Time spent on this question (in seconds)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  campaignId      String
-  campaign        QuizCampaign @relation(fields: [campaignId], references: [id])
-
-  metadataId      String         
-  metadata        QuizMetadata   @relation(fields: [metadataId], references: [id])
-  questions       QuizQuestion[]
-
-  // userQuizHistory     UserQuizHistory[]
-  userQuestionAttempts UserQuestionAttempt[]
-}
-
-model QuizMetadata {
-  id            String   @id @default(uuid())
-  serviceEntity String?
-  country       String
-  language      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  // campaignId    String
-  // campaign      QuizCampaign @relation(fields: [campaignId], references: [id])
-
-  quizSets QuizSet[]
-}
-
-model QuizQuestion {
-  id              String   @id @default(uuid())
-  questionText    String
-  correctOptionId String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  quizSetId String
-  quizSet   QuizSet      @relation(fields: [quizSetId], references: [id])
-  options   QuizOption[]
-
-  userQuestionAttempts UserQuestionAttempt[]
-}
-
-model QuizOption {
-  id        String   @id @default(uuid())
-  text      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  questionId String?
-  question   QuizQuestion? @relation(fields: [questionId], references: [id])
-}
-
-model UserQuestionAttempt {
-  id                 String   @id @default(uuid())
-  userId             String // 유저 ID
-  quizSetId          String // 퀴즈 세트 ID
-  stage              Int // 스테이지 번호
-  questionId         String // 문제 ID
-  isCorrect          Boolean // 정답 여부
-  selectedOptionId   String // 유저가 선택한 옵션의 ID
-  selectedOptionText String // 유저가 선택한 옵션의 텍스트
-  attemptTime        DateTime @default(now()) // 시도 시간
-  timeTaken          Int // 문제 풀이에 소요된 시간 (초 단위)
-
-  // QuizMetadata 정보
-  serviceEntity       String // 지법인 정보 (metadata에서 가져옴)
-  country             String // 국가 정보 (metadata에서 가져옴)
-  language            String // 언어 정보 (metadata에서 가져옴)
-  campaignId          String? // 캠페인 ID (optional)
-  campaignTitle       String? // 캠페인 타이틀
-  campaignReleaseDate DateTime? // 캠페인 출시 날짜
-
-  user     User          @relation(fields: [userId], references: [id])
-  quizSet  QuizSet?      @relation(fields: [quizSetId], references: [id])
-  question QuizQuestion? @relation(fields: [questionId], references: [id])
-
-  @@index([userId, quizSetId, stage, questionId]) // 효율적인 조회를 위한 인덱스
+  campaignDomainId String
+  // countryCode String
+  countryId String
+  // languageCode String
+  languageId String?
+  // activityId  String
+  // campaignActivityId  String
 }

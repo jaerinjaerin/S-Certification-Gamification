@@ -4,7 +4,8 @@ import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItem from "@/app/hooks/useGetItem";
 import {
   Campaign,
-  CampaignDomain,
+  CampaignDomainQuizSet,
+  Language,
   UserCampaignDomainLog,
 } from "@prisma/client";
 import { Domain } from "domain";
@@ -16,16 +17,25 @@ import { useEffect, useState } from "react";
 //   languages: CountryLanguage[];
 // };
 
-type CampaignDomainEx = CampaignDomain & {
+type CampaignDomainQuizSetEx = CampaignDomainQuizSet & {
   campaign: Campaign;
   domain: Domain;
+  language: Language;
 };
+
+// type UserCampaignDomainLogEx = UserCampaignDomainLog & {
+//   // campaignDomainQuizSet: CampaignDomainQuizSetEx;
+// };
 
 export default function QuizIntro() {
   const searchParams = useSearchParams();
 
   const activityId = searchParams.get("activityId");
-  const jobName = searchParams.get("jobName");
+  const jobName = searchParams.get("job");
+
+  if (!activityId) {
+    return <div>Activity ID is required</div>;
+  }
 
   // const {
   //   campaign,
@@ -47,7 +57,7 @@ export default function QuizIntro() {
     error,
     item: history,
   } = useGetItem<UserCampaignDomainLog>(
-    `/api/activity/${activityId}/user/${session?.user.id}/history?job_name=${jobName}`
+    `/api/user/${session?.user.id}/activity/${activityId}/logs?job=${jobName}`
   );
 
   const {
@@ -65,6 +75,12 @@ export default function QuizIntro() {
       setUserQuizHistory(createdHistory);
     }
   }, [createdHistory]);
+
+  useEffect(() => {
+    if (history) {
+      setUserQuizHistory(history);
+    }
+  }, [history]);
 
   console.log("userQuizHistory", isLoading, error, history);
 
@@ -116,15 +132,15 @@ export default function QuizIntro() {
   // };
   const createUserQuizHistory = async () => {
     createItem({
-      url: `/api/activity/${activityId}/user/${session?.user.id}/history`,
-      body: { jobName: jobName },
+      url: `/api/user/${session?.user.id}/activity/${activityId}/logs`,
+      body: { job: jobName },
     });
   };
 
   const routeQuizMap = () => {
-    const currentUrl = new URL(window.location.href);
-    const queryString = currentUrl.search; // 현재 URL의 query string 추출
-    const targetUrl = `/map${queryString}`; // /quiz 뒤에 query string 추가
+    // const currentUrl = new URL(window.location.href);
+    // const queryString = currentUrl.search; // 현재 URL의 query string 추출
+    const targetUrl = `/map?quizset_id=${userQuizHistory?.campaignDomainQuizSetId}`; // /quiz 뒤에 query string 추가
     window.location.href = targetUrl;
   };
 
@@ -134,7 +150,7 @@ export default function QuizIntro() {
 
   return (
     <div>
-      <h1>Intro</h1>
+      <h1>Intro (Sumtotal)</h1>
       {userQuizHistory && (
         <>
           <p>{userQuizHistory?.lastCompletedStage}</p>

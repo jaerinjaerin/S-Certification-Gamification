@@ -1,0 +1,835 @@
+[
+    {
+        "text": "What is the key improvements of Fold6? (select two)",
+        "product": "Fold6",
+        "category": "Key Improvements",
+        "feature": NaN,
+        "domain": "japan",
+        "domainCode": "NAT_2392",
+        "order": 1.0,
+        "languageCode": "ja",
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "you can boost your productivity with large screen optimization in Notes",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Regarding Note Assist, which of the following is NOT true?",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Note Assist",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 2.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "You can record meeting minutes and transcribe directly in Notes App",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Regarding the entry point of Sketch to Image (AI Drawing), which of the following is NOT true?",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Sketch to Image",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 3.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "From texts or images selected through Smart Select",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the name of the feature that lets Fold6 users generate sentences/paragraphs with a brief input?",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Chat Assist - Composer",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 4.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Writing Assist",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "With Sketch to Image (AI Drawing), users can turn their simple sketch to a AI-generated artwork only with S Pen",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Sketch to Image",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 5.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "True",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Starting Fold6Flip6, users will be able to communicate conveniently in multiple languages using Live Translate through various 3rd party apps (VoIP)",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Live Translate",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 6.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "True",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Regarding the portability of Fold6, which of the following is NOT true?",
+        "product": "Fold6",
+        "category": "Design",
+        "feature": "Portabiltiy",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 7.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "The length of the coverscreen has been reduced",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Regarding Interpreter, what is the key improvements of Fold6 compared with Fold5? (select two)",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Interpreter",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 8.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Users can translate conversations & convert to text or read aloud",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the key improvements of Circle to Search compared to Fold5? (select two)",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Circle to Search",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 9.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "You can search anything on screen, even the texts",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Pick the best that describes Fold6's Demo Flow (Create Excitement)",
+        "product": "Fold6",
+        "category": "Training Strategy",
+        "feature": "Demo Flow",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 10.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "① Note Assist\n② Photo Assist\n③ Chat Assist",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What Case should be highlighted to customers the most to Fold6 Customers? (Hero Case)",
+        "product": "Fold6",
+        "category": "APS",
+        "feature": "APS",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 11.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Clear Case, to emphasize premium design of Fold6",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "From Fold6Flip6, users can create slow-mo clips through long-pressing the video and even can share it to friends by simply clicking the button",
+        "product": "Fold6",
+        "category": "Galaxy AI",
+        "feature": "Photo Assist",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 12.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "True",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Regarding the premium design of Fold6, which of the following is NOT true?",
+        "product": "Fold6",
+        "category": "Design",
+        "feature": "Premium Design",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 13.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "there are 5 color options including 2 online exclusive colors",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT true about emphasizing the daily benefits of Galaxy AI connectivity?",
+        "product": "Fold6",
+        "category": "Training Strategy",
+        "feature": "Cross-sell",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 14.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "[X2 & Buds3 Pro]\nshows you a comparison & progress based on your past running activity",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What factor(s) of Fold6 can maximize user's gaming experience?",
+        "product": "Fold6",
+        "category": "Fundamentals",
+        "feature": "Gaming",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 15.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "The latest chipset, Snapdragon 8 Gen3 for Galaxy",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Vision booster recognizes various lighting conditions and sets the brightness in to ____ different levels",
+        "product": "Fold6",
+        "category": "Fundamentals",
+        "feature": "Viewing",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 16.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": 3,
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Although Fold6 has become slimmer and lighter, the durability is tougher than ever",
+        "product": "Fold6",
+        "category": "Fundamentals",
+        "feature": "Durability",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 17.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "True",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "To bring customers closer to purchasing, mention _______ & _______ (select two)",
+        "product": "Fold6",
+        "category": "Training Strategy",
+        "feature": "Review & Award",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 18.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "positive customer review",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT true about Flip6' color including samsung.com exclusive? ",
+        "product": "Flip6",
+        "category": "Design",
+        "feature": "CMF",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 19.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Blue",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the battery size of Flip6?",
+        "product": "Flip6",
+        "category": "Performance",
+        "feature": "Battery",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 20.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "3,000 mAh",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT true about Flip6's durability features?",
+        "product": "Flip6",
+        "category": "Performance",
+        "feature": "Durability",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 21.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "IP68",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT available at Flex Window? ",
+        "product": "Flip6",
+        "category": "Performance",
+        "feature": "Flex Window",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 22.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Live Translation",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT true about Flip6's camera specification?",
+        "product": "Flip6",
+        "category": "Camera",
+        "feature": "Spec",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 23.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "12 MP Ultra Wide",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "With ________ feature, user can create image in various styles, such as Comic, 3D cartoon, Watercolor, and Sketch",
+        "product": "Flip6",
+        "category": "Camera",
+        "feature": "Camera SW",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 24.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Portrait Studio",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following are new features of Flip6's photo assist? ",
+        "product": "Flip6",
+        "category": "Camera",
+        "feature": "Overall",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 25.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Live Effect",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "The available zoom range of Auto zoom is from 0.6X to ________.",
+        "product": "Flip6",
+        "category": "Camera",
+        "feature": "Flexcam",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 26.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "1.5X",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT available style at Portrait Studio?",
+        "product": "Flip6",
+        "category": "AI ",
+        "feature": "Portrait Studio",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 27.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Comic",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the name of feature that can give 3d photography effect?",
+        "product": "Flip6",
+        "category": "AI ",
+        "feature": "Live Effect ",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 28.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Live Effect",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT true about Flip6's new interpreter features? ",
+        "product": "Flip6",
+        "category": "AI",
+        "feature": "Interpreter",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 29.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Dual screen mode",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the peak brightness of Flip6's main display? ",
+        "product": "Flip6",
+        "category": "Display",
+        "feature": "Brightness",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 30.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "2,000 nits",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the memory specification of Flip6?",
+        "product": "Flip6",
+        "category": "Performance",
+        "feature": "Memory",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 31.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "8 GB LPDDR5",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "When customers have concern of theft, loss or durability, ________ can be good option to suggest in addition to sales.",
+        "product": "Flip6",
+        "category": "Others",
+        "feature": "SC+",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 32.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Installment without interest",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "When PDF overlay translation, can it be saved in translated state?",
+        "product": "Flip6",
+        "category": "AI ",
+        "feature": "Translation",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 33.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Yes",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following formats are available at composer feature at Chat assist?",
+        "product": "Flip6",
+        "category": "AI ",
+        "feature": "Composer",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 34.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Standard",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Is LED Effect Card also available to Flip5?",
+        "product": "Flip6",
+        "category": "Acc",
+        "feature": "LED Effect Card",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 35.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Yes",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Is DeX compatible to Flip6?",
+        "product": "Flip6",
+        "category": "Fundamental",
+        "feature": "Dex",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 36.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Yes",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "When Flip6 sales, what benefits can be recommendable to customers?",
+        "product": "Flip6",
+        "category": "Others",
+        "feature": "Soft Skills",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 37.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Trade  In",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the main advantage of Trade-in? (select two)",
+        "product": "All",
+        "category": "Training Strategy",
+        "feature": "Trade in",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 38.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Consumers can get a monthly financing plan",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What are the key benefits that Samsung Care+ provides to customers? (select two)",
+        "product": "All",
+        "category": "Samsung Care+",
+        "feature": NaN,
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 39.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "With Samsung Care+, customers can get storage upgrade for their devices",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is a key feature of New Watch that should be highlighted as the connected experience when providing lifestyle use case demo? (select all correct answers)",
+        "product": "X2 / W7",
+        "category": "Customer Engagement",
+        "feature": "Connected Exp.",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 40.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Crystal Clear Sound",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is NOT a Key CXP of New Watch? (select one)",
+        "product": "X2 / W7",
+        "category": "Customer Engagement",
+        "feature": "Key CXPs",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 41.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Next-level Essential\n(performance)",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Select a feature related to Health/Sleep in New Watch (select all correct answers)",
+        "product": "X2 / W7",
+        "category": "Customer Engagement",
+        "feature": "Key CXPs",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 42.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Energy Score",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is a key feature of Buds3 Pro and Buds3 that should be highlighted as the connected experience when providing lifestyle use case demo?",
+        "product": "Buds3 Pro / Buds3",
+        "category": "Customer Engagement",
+        "feature": "Connected Exp.",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 43.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Intuitive UI/UX",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is a key feature that should be highlighted when introducing Buds3 Pro and Buds3 to customers who are new to earbuds (1st buyer)?",
+        "product": "Buds3 Pro / Buds3",
+        "category": "Customer Engagement",
+        "feature": "Key CXPs",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 44.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Crystal Clear Sound",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Select the most suitable feature of Buds3 that can be utilized in a meeting with a foreigner who speaks other language.",
+        "product": "Buds3 Pro / Buds3",
+        "category": "Customer Engagement",
+        "feature": "Connected Exp.",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 45.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Interpreter",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+        "product": "Ring",
+        "category": "Customer Engagement",
+        "feature": "Pitchline",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 46.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Energy Score",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is Key CXP of Galaxy Ring?",
+        "product": "Ring",
+        "category": "Overall CXP",
+        "feature": "Key CXPs",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 47.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Personalized Coaching",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "What is the most appropriate answer to the following blank?\nIf the Ring is not available at your store, tell customers how to ________. ",
+        "product": "Ring",
+        "category": "Customer Engagement",
+        "feature": "Assurance",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 48.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Purchase it online",
+                "isCorrect": true
+            }
+        ]
+    },
+    {
+        "text": "Which of the following is a proper way to remove the Ring when a customer asks, \"If the Ring gets stuck on my finger, what should I do?\"",
+        "product": "Ring",
+        "category": "Customer Engagement",
+        "feature": "FAQ",
+        "domain": NaN,
+        "domainCode": NaN,
+        "order": 49.0,
+        "languageCode": NaN,
+        "timeLimitSeconds": NaN,
+        "options": [
+            {
+                "optionText": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+                "isCorrect": true
+            }
+        ]
+    }
+]

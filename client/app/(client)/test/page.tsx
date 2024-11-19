@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { signOut, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
 
 export default function TestPage() {
   const [activities, setActivities] = useState<any[]>([]);
+  const [domains, setDomains] = useState<any[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,20 +19,20 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/sumtotal/user/profile', {
-        method: 'GET',
-        cache: 'no-store',
+      const response = await fetch("/api/sumtotal/user/profile", {
+        method: "GET",
+        cache: "no-store",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch user profile');
+        throw new Error(errorData.message || "Failed to fetch user profile");
       }
 
       const data = await response.json();
 
       if (data.organizations.length === 0) {
-        setResultUser('Organizations 정보가 없습니다.');
+        setResultUser("Organizations 정보가 없습니다.");
         return;
       }
 
@@ -39,14 +40,14 @@ export default function TestPage() {
         (org: any) => org.isPrimary
       );
       if (!foundPrimaryOrganization) {
-        setResultUser('Primary Organization 정보가 없습니다.');
+        setResultUser("Primary Organization 정보가 없습니다.");
         return;
       }
 
-      console.log('data', data);
+      console.log("data", data);
       fetchUserPrimaryOrganization(foundPrimaryOrganization);
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -57,21 +58,21 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/sumtotal/auth/refresh_token', {
-        method: 'GET',
-        cache: 'no-store',
+      const response = await fetch("/api/sumtotal/auth/refresh_token", {
+        method: "GET",
+        cache: "no-store",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch user profile');
+        throw new Error(errorData.message || "Failed to fetch user profile");
       }
 
       const data = await response.json();
-      console.log('data', data);
-      setMessage('토큰 갱신 완료');
+      console.log("data", data);
+      setMessage("토큰 갱신 완료");
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -85,35 +86,35 @@ export default function TestPage() {
       const response = await fetch(
         `/api/sumtotal/user/org?id=${organizationrg.id}`,
         {
-          method: 'GET',
-          cache: 'no-store',
+          method: "GET",
+          cache: "no-store",
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.message || 'Failed to fetch user organization'
+          errorData.message || "Failed to fetch user organization"
         );
       }
 
       const data = await response.json();
 
       if (data.data?.length === 0) {
-        setResultUser('Organization 정보가 없습니다.');
+        setResultUser("Organization 정보가 없습니다.");
         return;
       }
 
-      console.log('data', data);
+      console.log("data", data);
 
       const text9 = data.data[0]?.optionalInfo.text9;
-      if (text9 === '4' || text9 === '5' || text9 === '6') {
-        setResultUser('Job: FF');
+      if (text9 === "4" || text9 === "5" || text9 === "6") {
+        setResultUser("Job: FF");
       } else {
-        setResultUser('Job: FSM/Other');
+        setResultUser("Job: FSM/Other");
       }
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -125,19 +126,42 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/sumtotal/activity', {
-        cache: 'no-store',
+      const response = await fetch("/api/sumtotal/activity", {
+        cache: "no-store",
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch activities');
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
-      console.log('fetchActivities data', data);
+      console.log("fetchActivities data", data);
       setActivities(data.data); // Extract and store activities array
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+  // API 호출 함수
+  const fetchDomains = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/sumtotal/domains", {
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch domains");
+      }
+
+      const data = await response.json();
+      console.log("fetchDomains data", data);
+      setDomains(data.data); // Extract and store activities array
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -152,9 +176,9 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/sumtotal/activity/register', {
-        method: 'PUT',
-        cache: 'no-store',
+      const response = await fetch("/api/sumtotal/activity/register", {
+        method: "PUT",
+        cache: "no-store",
         body: JSON.stringify({
           activityId: selectedActivity.activityId,
         }),
@@ -162,14 +186,14 @@ export default function TestPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch activities');
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
-      console.log('data', data);
+      console.log("data", data);
       // setActivities(JSON.stringify(data, null, 2)); // 응답 데이터를 JSON 포맷으로 텍스트 필드에 표시
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -180,9 +204,9 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/sumtotal/activity/end', {
-        method: 'POST',
-        cache: 'no-store',
+      const response = await fetch("/api/sumtotal/activity/end", {
+        method: "POST",
+        cache: "no-store",
         body: JSON.stringify({
           activityId: selectedActivity.activityId,
         }),
@@ -190,18 +214,18 @@ export default function TestPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch activities');
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
-      console.log('data', data);
-      if (data.status === 'attended') {
-        setResultActivity('Activity의 메달을 획득하였습니다.');
+      console.log("data", data);
+      if (data.status === "attended") {
+        setResultActivity("Activity의 메달을 획득하였습니다.");
       }
       // setActivities(JSON.stringify(data, null, 2)); // 응답 데이터를 JSON 포맷으로 텍스트 필드에 표시
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
-      setResultActivity(err.message || 'An unexpected error occurred');
+      setError(err.message || "An unexpected error occurred");
+      setResultActivity(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -218,43 +242,47 @@ export default function TestPage() {
         </li>
       </ul>
       <button onClick={fetchUserProfile} disabled={loading}>
-        {loading ? 'Loading...' : '유저 Job 정보 조회'}
+        {loading ? "Loading..." : "유저 Job 정보 조회"}
       </button>
       {resultUser && (
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: "1rem" }}>
           <p>{resultUser}</p>
         </div>
       )}
       <br />
       <button onClick={refreshToken} disabled={loading}>
-        {loading ? 'Loading...' : '토큰 갱신'}
+        {loading ? "Loading..." : "토큰 갱신"}
       </button>
-      {message && <p style={{ color: 'blue' }}>Message: {message}</p>}
+      {message && <p style={{ color: "blue" }}>Message: {message}</p>}
       <br />
       <button onClick={fetchActivities} disabled={loading}>
-        {loading ? 'Loading...' : 'Activity 목록 조회'}
+        {loading ? "Loading..." : "Activity 목록 조회"}
+      </button>
+      <br />
+      <button onClick={fetchDomains} disabled={loading}>
+        {loading ? "Loading..." : "Domain 목록 조회"}
       </button>
 
       {activities.length > 0 && (
         <ul
           style={{
-            maxHeight: '500px',
-            overflowY: 'auto',
-            padding: '0',
-            marginTop: '1rem',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
+            maxHeight: "500px",
+            overflowY: "auto",
+            padding: "0",
+            marginTop: "1rem",
+            border: "1px solid #ddd",
+            borderRadius: "4px",
           }}
         >
           {activities.map((activity) => (
             <li
               key={activity.activityId}
-              style={{ padding: '10px', borderBottom: '1px solid #ddd' }}
+              style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
             >
               <span>{activity.activityName}</span>
               <button
                 onClick={() => handleActivitySelect(activity)}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: "10px" }}
               >
                 Select
               </button>
@@ -264,7 +292,7 @@ export default function TestPage() {
       )}
 
       {selectedActivity && (
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: "1rem" }}>
           <h2>선택된 Activity</h2>
           <p>
             <strong>Name:</strong> {selectedActivity.activityName}
@@ -278,24 +306,52 @@ export default function TestPage() {
         </div>
       )}
 
-      {selectedActivity && selectedActivity.assignmentStatus !== 'Attended' && (
+      {selectedActivity && selectedActivity.assignmentStatus !== "Attended" && (
         <>
           <button onClick={postActivitieRegister} disabled={loading}>
-            {loading ? 'Loading...' : 'Activity 등록'}
+            {loading ? "Loading..." : "Activity 등록"}
           </button>
           <button onClick={postActivitieEnd} disabled={loading}>
-            {loading ? 'Loading...' : 'Activity 종료'}
+            {loading ? "Loading..." : "Activity 종료"}
           </button>
         </>
       )}
 
       {resultActivity && (
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: "1rem" }}>
           <h2>결과</h2>
           <p>{resultActivity}</p>
         </div>
       )}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+
+      {domains.length > 0 && (
+        <ul
+          style={{
+            maxHeight: "500px",
+            overflowY: "auto",
+            padding: "0",
+            marginTop: "1rem",
+            border: "1px solid #ddd",
+            borderRadius: "4px",
+          }}
+        >
+          {domains.map((domain) => (
+            <li
+              key={domain.domainId}
+              style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
+            >
+              <p>{domain.domainName}</p>
+              <p>{domain.domainCode}</p>
+              <p>{domain.parentDomainName}</p>
+              <p>{domain.parentDomainId}</p>
+              <p>{domain.isParentDomain}</p>
+              <p>{domain.domainHierarchy}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
     </div>
   );
 }

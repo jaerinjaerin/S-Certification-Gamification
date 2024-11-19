@@ -4,226 +4,160 @@ const uuid = require("uuid");
 const prisma = new PrismaClient();
 
 async function main() {
-  // Languages
-  const languageRecords = await prisma.language.createMany({
+  // Create Languages
+  const languages = await prisma.language.createMany({
     data: [
-      { code: "ko", name: "Korean" },
       { code: "en", name: "English" },
+      { code: "ko", name: "Korean" },
       { code: "ja", name: "Japanese" },
     ],
   });
 
-  const languages = await prisma.language.findMany();
-  const enLanguage = languages.find((lang: any) => lang.code === "en");
-  const koLanguage = languages.find((lang: any) => lang.code === "ko");
-  const jaLanguage = languages.find((lang: any) => lang.code === "ja");
+  const languageRecords = await prisma.language.findMany();
+  const enLanguage = languageRecords.find((lang: any) => lang.code === "en");
+  const koLanguage = languageRecords.find((lang: any) => lang.code === "ko");
+  const jaLanguage = languageRecords.find((lang: any) => lang.code === "ja");
 
-  // Domains
-  const domains = await prisma.domain.createMany({
+  // Create Domains
+  await prisma.domain.createMany({
     data: [
-      { id: 29, name: "Korea", code: "ko" },
-      { id: 30, name: "English", code: "en" },
-      { id: 31, name: "Japan", code: "ja" },
+      { id: 1, name: "Global", code: "global" },
+      { id: 2, name: "Korea", code: "ko" },
+      { id: 3, name: "Japan", code: "ja" },
     ],
   });
 
-  // Campaign
+  const domains = await prisma.domain.findMany();
+
+  // Create Campaign
   const campaign = await prisma.campaign.create({
     data: {
       name: "Global Campaign",
-      description: "A multilingual campaign",
+      description: "A campaign spanning multiple languages",
       startedAt: new Date(),
       endedAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-      createrId: "test_admin_id",
+      createrId: "admin",
     },
   });
 
-  // Campaign Domains
-  // const campaignDomains = await prisma.campaignDomain.createMany({
-  //   data: [
-  //     {
-  //       campaignId: campaign.id,
-  //       domainId: (await prisma.domain.findFirst({ where: { code: "ko" } }))!
-  //         .id,
-  //       activityId: "test_activity_id",
-  //       languageIds: JSON.stringify([enLanguage.id, koLanguage.id].join(",")),
-  //     },
-  //     {
-  //       campaignId: campaign.id,
-  //       domainId: (await prisma.domain.findFirst({ where: { code: "en" } }))!
-  //         .id,
-  //       activityId: "test_activity_id",
-  //       languageIds: JSON.stringify([enLanguage.id].join(",")),
-  //     },
-  //     {
-  //       campaignId: campaign.id,
-  //       domainId: (await prisma.domain.findFirst({ where: { code: "ja" } }))!
-  //         .id,
-  //       activityId: "test_activity_id",
-  //       languageIds: JSON.stringify([enLanguage.id, jaLanguage.id].join(",")),
-  //     },
-  //   ],
-  // });
-
-  // User Jobs
-  const jobs = await prisma.job.createMany({
+  // Create Jobs
+  await prisma.job.createMany({
     data: [
-      { name: "ff", description: "User job FF" },
-      { name: "others", description: "Other user jobs" },
+      { id: "ff", name: "Full-time", description: "Full-time Job" },
+      { id: "pt", name: "Part-time", description: "Part-time Job" },
     ],
   });
 
-  // Stages with Questions and Options
-  const allQuestions = [];
-  const allKoQuestions: any[] = [];
-  const allJaQuestions: any[] = [];
+  const jobs = await prisma.job.findMany();
 
-  for (let stageOrder = 1; stageOrder <= 5; stageOrder++) {
-    const stage = await prisma.quizStage.create({
+  // Create Questions and Options in English
+  const allQuestions = [];
+  const allKoQuestions: any = [];
+  const allJaQuestions: any = [];
+
+  for (let i = 1; i <= 10; i++) {
+    const question = await prisma.question.create({
       data: {
-        name: `Stage ${stageOrder}`,
-        order: stageOrder,
-        lifeCount: Math.floor(Math.random() * 3) + 4,
-        campaignId: campaign.id,
+        text: `What is ${i}?`,
+        timeLimitSeconds: 30,
+        languageId: enLanguage.id,
+        order: i,
       },
     });
 
-    for (let qIndex = 0; qIndex < stage.lifeCount; qIndex++) {
-      const question = await prisma.question.create({
+    allQuestions.push(question.id);
+
+    for (let j = 1; j <= 4; j++) {
+      await prisma.questionOption.create({
         data: {
-          text: `Question ${qIndex + 1} for Stage ${stageOrder}`,
-          timeLimitSeconds: Math.floor(Math.random() * 60) + 30,
-          quizStageId: stage.id,
-          languageId: (await prisma.language.findFirst({
-            where: { code: "en" },
-          }))!.id,
+          text: `Option ${j} for Question ${i}`,
+          order: j,
+          questionId: question.id,
+          isCorrect: j === 1,
+          languageId: enLanguage.id,
+        },
+      });
+    }
+
+    // Translations for Korean and Japanese
+    const translations = [
+      { code: "ko", lang: koLanguage, list: allKoQuestions },
+      { code: "ja", lang: jaLanguage, list: allJaQuestions },
+    ];
+
+    for (const { lang, list } of translations) {
+      const translatedQuestion = await prisma.question.create({
+        data: {
+          text: `Translated What is ${i} in ${lang.name}`,
+          timeLimitSeconds: 30,
+          languageId: lang.id,
+          parentId: question.id,
+          order: i,
         },
       });
 
-      allQuestions.push(question.id);
+      list.push(translatedQuestion.id);
 
-      for (let optionIndex = 0; optionIndex < 4; optionIndex++) {
+      const options = await prisma.questionOption.findMany({
+        where: { questionId: question.id },
+      });
+
+      for (const option of options) {
         await prisma.questionOption.create({
           data: {
-            text: `Option ${optionIndex + 1} for Question ${qIndex + 1}`,
-            order: optionIndex + 1,
-            questionId: question.id,
-            isCorrect: optionIndex === 0, // First option is correct
-            languageId: (await prisma.language.findFirst({
-              where: { code: "en" },
-            }))!.id,
+            text: `Translated ${option.text} in ${lang.name}`,
+            order: option.order,
+            questionId: translatedQuestion.id,
+            isCorrect: option.isCorrect,
+            languageId: lang.id,
           },
         });
       }
-
-      // Translations for Questions and Options
-      const translations = ["ko", "ja"].map(async (code) => {
-        const language = await prisma.language.findFirst({ where: { code } });
-        if (!language) return;
-
-        const translatedQuestion = await prisma.question.create({
-          data: {
-            text: `Translated ${question.text} in ${language.name}`,
-            timeLimitSeconds: question.timeLimitSeconds,
-            quizStageId: stage.id,
-            languageId: language.id,
-            parentId: question.id,
-          },
-        });
-
-        if (code === "ko") {
-          allKoQuestions.push(translatedQuestion.id);
-        } else if (code === "ja") {
-          allJaQuestions.push(translatedQuestion.id);
-        }
-
-        const options = await prisma.questionOption.findMany({
-          where: { questionId: question.id },
-        });
-        options.forEach(async (option: any) => {
-          await prisma.questionOption.create({
-            data: {
-              text: `Translated ${option.text} in ${language.name}`,
-              order: option.order,
-              questionId: translatedQuestion.id,
-              isCorrect: option.isCorrect,
-              languageId: language.id,
-            },
-          });
-        });
-      });
-
-      await Promise.all(translations);
     }
   }
 
-  // CampaignDomainQuizSet
-  const selectedQuestionIds = (questions: any, fraction: any) => {
-    const count = Math.floor(questions.length * fraction);
-    return questions.sort(() => 0.5 - Math.random()).slice(0, count);
-  };
+  // Create CampaignDomainQuizSet and QuizStages
+  for (const domain of domains) {
+    const lang =
+      domain.code === "ko"
+        ? koLanguage
+        : domain.code === "ja"
+        ? jaLanguage
+        : enLanguage;
+    const questions =
+      domain.code === "ko"
+        ? allKoQuestions
+        : domain.code === "ja"
+        ? allJaQuestions
+        : allQuestions;
 
-  const campaignDomainQuizSets = await prisma.campaignDomainQuizSet.createMany({
-    data: [
-      {
+    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
+      data: {
         campaignId: campaign.id,
-        domainId: (await prisma.domain.findFirst({ where: { code: "ko" } }))!
-          .id,
-        // campaignDomainId: (await prisma.campaignDomain.findFirst({
-        //   where: {
-        //     domainId: (await prisma.domain.findFirst({
-        //       where: { code: "ko" },
-        //     }))!.id,
-        //   },
-        // }))!.id,
-        jobId: (await prisma.job.findFirst({ where: { name: "ff" } }))!.id,
-        languageId: (await prisma.language.findFirst({
-          where: { code: "ko" },
-        }))!.id,
-        questionIds: JSON.stringify(selectedQuestionIds(allKoQuestions, 0.75)),
-        createrId: "test_admin_id",
-        activityId: "test_activity_id",
+        domainId: domain.id,
+        jobId: jobs[0].id, // Assigning the first job for simplicity
+        languageId: lang.id,
+        activityId: `activity_test_id`,
+        createrId: "admin",
       },
-      {
-        campaignId: campaign.id,
-        domainId: (await prisma.domain.findFirst({ where: { code: "en" } }))!
-          .id,
-        // campaignDomainId: (await prisma.campaignDomain.findFirst({
-        //   where: {
-        //     domainId: (await prisma.domain.findFirst({
-        //       where: { code: "en" },
-        //     }))!.id,
-        //   },
-        // }))!.id,
-        jobId: (await prisma.job.findFirst({ where: { name: "others" } }))!.id,
-        languageId: (await prisma.language.findFirst({
-          where: { code: "en" },
-        }))!.id,
-        questionIds: JSON.stringify(selectedQuestionIds(allQuestions, 0.75)),
-        createrId: "test_admin_id",
-        activityId: "test_activity_id",
-      },
-      {
-        campaignId: campaign.id,
-        domainId: (await prisma.domain.findFirst({ where: { code: "ja" } }))!
-          .id,
-        // campaignDomainId: (await prisma.campaignDomain.findFirst({
-        //   where: {
-        //     domainId: (await prisma.domain.findFirst({
-        //       where: { code: "ja" },
-        //     }))!.id,
-        //   },
-        // }))!.id,
-        jobId: (await prisma.job.findFirst({ where: { name: "others" } }))!.id,
-        languageId: (await prisma.language.findFirst({
-          where: { code: "ja" },
-        }))!.id,
-        questionIds: JSON.stringify(selectedQuestionIds(allJaQuestions, 0.75)),
-        createrId: "test_admin_id",
-        activityId: "test_activity_id",
-      },
-    ],
-  });
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      const stageQuestionIds = questions
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      await prisma.quizStage.create({
+        data: {
+          name: `Stage ${i} for ${domain.name}`,
+          order: i,
+          questionIds: JSON.stringify(stageQuestionIds),
+          lifeCount: stageQuestionIds.length,
+          campaignDomainQuizSetId: campaignDomainQuizSet.id,
+        },
+      });
+    }
+  }
 
   console.log("Seeding completed!");
 }
