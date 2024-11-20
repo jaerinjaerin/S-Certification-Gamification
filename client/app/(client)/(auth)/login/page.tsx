@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalStorage } from "@/providers/local_storage_provider";
+// import { useLocalStorage } from "@/providers/local_storage_provider";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -15,15 +15,15 @@ export default function Login() {
   const activityId = searchParams.get("activityId");
   const userJob = searchParams.get("job");
 
-  const { setActivityId, setUserJob } = useLocalStorage();
+  // const { setActivityId, setUserJob } = useLocalStorage();
 
-  if (activityId) {
-    setActivityId(activityId);
-  }
+  // if (activityId) {
+  //   setActivityId(activityId);
+  // }
 
-  if (userJob) {
-    setUserJob(userJob);
-  }
+  // if (userJob) {
+  //   setUserJob(userJob);
+  // }
 
   console.log("status", status);
 

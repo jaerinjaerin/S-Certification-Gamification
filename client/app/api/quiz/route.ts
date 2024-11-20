@@ -28,7 +28,12 @@ export async function GET(request: Request, context: any) {
       );
     }
 
-    return NextResponse.json({ item: countryActivity }, { status: 200 });
+    const response = NextResponse.json(
+      { item: countryActivity },
+      { status: 200 }
+    );
+    response.headers.set("Cache-Control", "public, max-age=3600");
+    return response;
   } catch (error) {
     console.error("Error fetching activities:", error);
     return NextResponse.json(

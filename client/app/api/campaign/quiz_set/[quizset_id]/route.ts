@@ -1,17 +1,34 @@
+import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   params: {
-    quiz_set_id: string;
+    quizset_id: string;
   };
 };
 
 export async function GET(request: NextRequest, props: Props) {
   try {
-    const quizsetId = props.params.quiz_set_id;
+    const quizsetId = props.params.quizset_id;
+    const session = await auth();
+    console.log("quizsetId", quizsetId);
 
-    const result = await prisma.campaignDomainQuizSet.findUnique({
+    if (!quizsetId) {
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "Bad request",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Invalid quiz set ID",
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const result = await prisma.campaignDomainQuizSet.findFirst({
       where: {
         id: quizsetId, // ID of the CampaignDomainQuizSet
       },
@@ -46,25 +63,27 @@ export async function GET(request: NextRequest, props: Props) {
     );
 
     // Return the combined result
-    return NextResponse.json(
-      {
-        item: {
-          ...result,
-          quizStages: stagesWithQuestions, // Replace quizStages with enriched data
-        },
-      },
-      { status: 200 }
-    );
-
     // return NextResponse.json(
     //   {
     //     item: {
     //       ...result,
-    //       questions: questionsWithOptions,
+    //       quizStages: stagesWithQuestions,
     //     },
     //   },
     //   { status: 200 }
     // );
+
+    const response = NextResponse.json(
+      {
+        item: {
+          ...result,
+          quizStages: stagesWithQuestions,
+        },
+      },
+      { status: 200 }
+    );
+    response.headers.set("Cache-Control", "public, max-age=3600");
+    return response;
   } catch (error) {
     console.error("Error fetching activity data:", error);
 

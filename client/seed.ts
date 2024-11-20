@@ -4,6 +4,9 @@ const uuid = require("uuid");
 const prisma = new PrismaClient();
 
 async function main() {
+  const mainActivityId = "test_main_activity_id";
+  const optionalActivityId = "test_optional_activity_id";
+
   // Create Languages
   const languages = await prisma.language.createMany({
     data: [
@@ -43,8 +46,8 @@ async function main() {
   // Create Jobs
   await prisma.job.createMany({
     data: [
-      { id: "ff", name: "Full-time", description: "Full-time Job" },
-      { id: "pt", name: "Part-time", description: "Part-time Job" },
+      { id: "ff", name: "ff", description: "FF Job" },
+      { id: "fsm", name: "fsm", description: "FSM Job" },
     ],
   });
 
@@ -117,6 +120,7 @@ async function main() {
   }
 
   // Create CampaignDomainQuizSet and QuizStages
+  // for ff user
   for (const domain of domains) {
     const lang =
       domain.code === "ko"
@@ -137,7 +141,139 @@ async function main() {
         domainId: domain.id,
         jobId: jobs[0].id, // Assigning the first job for simplicity
         languageId: lang.id,
-        activityId: `activity_test_id`,
+        lastBadgeActivityId: mainActivityId,
+        createrId: "admin",
+      },
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      const stageQuestionIds = questions
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      await prisma.quizStage.create({
+        data: {
+          name: `Stage ${i} for ${domain.name}`,
+          order: i,
+          questionIds: JSON.stringify(stageQuestionIds),
+          lifeCount: stageQuestionIds.length,
+          campaignDomainQuizSetId: campaignDomainQuizSet.id,
+        },
+      });
+    }
+  }
+
+  // for fsm user
+  for (const domain of domains) {
+    const lang =
+      domain.code === "ko"
+        ? koLanguage
+        : domain.code === "ja"
+        ? jaLanguage
+        : enLanguage;
+    const questions =
+      domain.code === "ko"
+        ? allKoQuestions
+        : domain.code === "ja"
+        ? allJaQuestions
+        : allQuestions;
+
+    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
+      data: {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        jobId: jobs[1].id, // Assigning the first job for simplicity
+        languageId: lang.id,
+        firstBadgeStage: 3,
+        firstBadgeActivityId: optionalActivityId,
+        lastBadgeActivityId: mainActivityId,
+        createrId: "admin",
+      },
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      const stageQuestionIds = questions
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      await prisma.quizStage.create({
+        data: {
+          name: `Stage ${i} for ${domain.name}`,
+          order: i,
+          questionIds: JSON.stringify(stageQuestionIds),
+          lifeCount: stageQuestionIds.length,
+          campaignDomainQuizSetId: campaignDomainQuizSet.id,
+        },
+      });
+    }
+  }
+
+  // for ff guest
+  for (const domain of domains) {
+    const lang =
+      domain.code === "ko"
+        ? koLanguage
+        : domain.code === "ja"
+        ? jaLanguage
+        : enLanguage;
+    const questions =
+      domain.code === "ko"
+        ? allKoQuestions
+        : domain.code === "ja"
+        ? allJaQuestions
+        : allQuestions;
+
+    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
+      data: {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        jobId: jobs[0].id, // Assigning the first job for simplicity
+        languageId: lang.id,
+        lastBadgeActivityId: mainActivityId,
+        createrId: "admin",
+      },
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      const stageQuestionIds = questions
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      await prisma.quizStage.create({
+        data: {
+          name: `Stage ${i} for ${domain.name}`,
+          order: i,
+          questionIds: JSON.stringify(stageQuestionIds),
+          lifeCount: stageQuestionIds.length,
+          campaignDomainQuizSetId: campaignDomainQuizSet.id,
+        },
+      });
+    }
+  }
+
+  // for fcm guest
+  for (const domain of domains) {
+    const lang =
+      domain.code === "ko"
+        ? koLanguage
+        : domain.code === "ja"
+        ? jaLanguage
+        : enLanguage;
+    const questions =
+      domain.code === "ko"
+        ? allKoQuestions
+        : domain.code === "ja"
+        ? allJaQuestions
+        : allQuestions;
+
+    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
+      data: {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        languageId: lang.id,
+        firstBadgeStage: 3,
+        firstBadgeActivityId: optionalActivityId,
+        lastBadgeActivityId: mainActivityId,
         createrId: "admin",
       },
     });
