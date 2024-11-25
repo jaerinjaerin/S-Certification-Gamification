@@ -21,6 +21,28 @@ export default function QuizIntro() {
     window.location.href = targetUrl;
   };
 
+  const testSendEmail = async () => {
+    const response = await fetch("/api/auth/send-verify-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        toAddress: "bluedevstorm@gmail.com",
+        subject: "Test Email",
+        htmlBody: "<h1>Hello</h1><p>This is a test email.</p>",
+        textBody: "Hello\nThis is a test email.",
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Email sent successfully:", data.messageId);
+    } else {
+      console.error("Error sending email:", data.error);
+    }
+  };
+
   return (
     <div>
       <h1>Intro (Sumtotal)</h1>
@@ -30,6 +52,9 @@ export default function QuizIntro() {
       <p>다음 Stage: {(quizHistory?.lastCompletedStage ?? 0) + 1}</p>
       <button onClick={routeQuizMap} disabled={loading}>
         Go Quiz Map
+      </button>
+      <button onClick={testSendEmail} disabled={loading}>
+        Send Test Mail
       </button>
     </div>
   );

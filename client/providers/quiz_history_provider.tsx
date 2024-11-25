@@ -42,7 +42,7 @@ export const QuizHistoryProvider = ({
     try {
       // setLoading(true);
       const response = await fetch(
-        `/api/user/${session?.user.id}/quizset/${quizsetId}`,
+        `/api/users/${session?.user.id}/quizset/${quizsetId}`,
         {
           method: "POST",
           headers: {
@@ -71,7 +71,7 @@ export const QuizHistoryProvider = ({
     try {
       // setLoading(true);
       const response = await fetch(
-        `/api/user/${session?.user.id}/quiz_set/${quizsetId}`,
+        `/api/users/${session?.user.id}/quiz_set/${quizsetId}`,
         {
           cache: "no-cache",
         }

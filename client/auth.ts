@@ -3,8 +3,10 @@ import type { Adapter } from "@auth/core/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthType } from "@prisma/client";
 import NextAuth, { DefaultSession } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvier from "next-auth/providers/google";
 import { SumtotalProfile } from "./app/lib/auth/sumtotal";
+const uuid = require("uuid");
 
 declare module "next-auth" {
   interface Session {
@@ -14,13 +16,10 @@ declare module "next-auth" {
       providerUserId: string;
       providerPersonId: string;
       authType: AuthType;
-      // isGranted?: Boolean;
-      // loginName?: string;
     } & DefaultSession["user"];
   }
 }
 
-// export const authOptions: NextAuthOptions =
 export const {
   handlers: { GET, POST },
   auth,
@@ -59,6 +58,78 @@ export const {
         };
       },
     },
+    CredentialsProvider({
+      id: "credentials",
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        code: { label: "Verification Code", type: "text" },
+      },
+      async authorize(credentials) {
+        const { email, code } = credentials;
+        console.log("Email + Code", email, code);
+
+        // 이메일과 인증 코드 확인
+        const tokenRecord = await prisma.verifyToken.findFirst({
+          where: { email: email as string },
+        });
+
+        console.log("tokenRecord", tokenRecord);
+
+        if (!tokenRecord) {
+          throw new Error("Invalid email or code");
+        }
+
+        // 만료 시간 확인
+        if (new Date() > tokenRecord.expiresAt) {
+          await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
+          throw new Error("Code expired");
+        }
+
+        // 인증 코드 확인
+        if (tokenRecord.token !== code) {
+          throw new Error("Invalid email or code");
+        }
+
+        let user = await prisma.user.findUnique({
+          where: { email: email as string },
+        });
+
+        console.log("tokenRecord user", user);
+        // 사용자 계정이 없으면 생성
+        if (!user) {
+          const userId = uuid.v4();
+
+          const userEmail = await prisma.userEmail.create({
+            data: {
+              email: email as string,
+              userId: userId,
+            },
+          });
+
+          user = await prisma.user.create({
+            data: {
+              id: userId,
+              name: "Guest User",
+              emailId: userEmail.id,
+              authType: AuthType.GUEST,
+            },
+          });
+        }
+
+        // 인증 코드 삭제
+        await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
+
+        // 선택 사항
+        await prisma.verifyToken.deleteMany({
+          where: {
+            expiresAt: { lt: new Date() }, // 현재 시간보다 이전
+          },
+        });
+
+        return user;
+      },
+    }),
     GoogleProvier({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -93,30 +164,15 @@ export const {
     },
     async linkAccount({ user, profile }) {
       console.log("next-auth linkAccount", user, profile);
-      // if (!user.image && profile.image) {
-      //   await prisma.user.update({
-      //     where: { id: user.id },
-      //     data: { image: profile.image },
-      //   });
-      // }
     },
   },
   callbacks: {
     jwt: async ({ token, profile: pf, user, account }) => {
-      //
-      // console.log('next-auth jwt', token, pf, user, account)
-      if (user) {
-        token.id = user.id;
-        // token.image = user.image;
-        // token.isGranted = false;
-        // //
-        // const granted = await grant(user.id);
-        // token.isGranted = granted;
-      }
-
+      console.log("auth callbacks jwt", token, pf, user, account);
       if (account) {
-        token.access_token = account.access_token;
-        token.expires_at = account.expires_at;
+        // token.access_token = account.access_token;
+        // token.expires_at = account.expires_at;
+        token.accountType = account.type;
 
         const found_account = await prisma.account.findFirst({
           where: { providerAccountId: account.providerAccountId as string },
@@ -135,29 +191,12 @@ export const {
           });
         }
       }
-      //
-      // if (pf) {
-      //   const profile: SumtotalProfile | any = { ...pf };
-      //   token.loginName = profile.userLogin.username;
-      // }
-
-      // if (account?.access_token) {
-      //   token.access_token = account.access_token;
-      // }
       return token;
     },
     session: async ({ session, token }) => {
-      // console.log('next-auth session', session, token)
       if (session?.user && token.sub) {
         session.user.id = token.sub;
       }
-      // if (session?.user && token) {
-      //   token.id && (session.user.id = String(token.id));
-      //   token.loginName && (session.user.loginName = String(token.loginName));
-      //   token.isGranted != null &&
-      //     (session.user.isGranted = Boolean(token.isGranted));
-      // }
-      //
       return session;
     },
     authorized: ({ auth }) => {
