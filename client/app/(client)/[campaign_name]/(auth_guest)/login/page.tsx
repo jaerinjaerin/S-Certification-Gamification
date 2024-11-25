@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathNavigator } from "@/app/hooks/usePathNavigator";
+import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";

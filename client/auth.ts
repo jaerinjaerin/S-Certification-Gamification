@@ -52,9 +52,9 @@ export const {
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
-          domainId:
-            profile.personDomain?.find((domain) => domain.isPrimary)
-              ?.domainId || null,
+          sumtotalDomainId:
+            profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
+            null,
         };
       },
     },

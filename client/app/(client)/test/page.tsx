@@ -12,7 +12,10 @@ export default function TestPage() {
   const [message, setMessage] = useState<string | null>(null);
   const { data: session } = useSession();
   const [resultUser, setResultUser] = useState<any | null>(null);
+  const [resultDomain, setResultDomain] = useState<any | null>(null);
   const [resultActivity, setResultActivity] = useState<any | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState<number | "">("");
 
   const fetchUserProfile = async () => {
     setLoading(true);
@@ -113,6 +116,10 @@ export default function TestPage() {
       } else {
         setResultUser("Job: FSM/Other");
       }
+
+      if (data.data[0]?.code != null) {
+        setResultDomain(`DomainCode: ${data.data[0].code}`);
+      }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
     } finally {
@@ -143,6 +150,69 @@ export default function TestPage() {
       setLoading(false);
     }
   };
+
+  const fetchAllActivities = async () => {
+    setLoading(true);
+    setError(null);
+    setActivities([]); // Clear any existing activities
+
+    try {
+      let allActivities: any[] = []; // To accumulate all activity data
+      let offset = 0; // Start from page 0
+      const limit = 100; // Number of items per page
+
+      while (true) {
+        const response = await fetch(
+          `/api/sumtotal/activity?limit=${limit}&offset=${offset}`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch activities");
+        }
+
+        const data = await response.json();
+        console.log(`Fetched activities: page=${offset}`, data);
+
+        // Combine fetched activities with accumulated activities
+        allActivities = [...allActivities, ...data.data];
+
+        // Remove duplicates by activityId
+        const activityMap = new Map();
+        allActivities.forEach((activity) => {
+          activityMap.set(activity.activityId, activity);
+        });
+        allActivities = Array.from(activityMap.values());
+
+        console.log("allActivities", allActivities.length);
+
+        // Check if we've fetched all pages
+        if (allActivities.length >= data.pagination.total) {
+          break;
+        }
+
+        // Increment the page number for the next request
+        offset = allActivities.length;
+      }
+
+      setActivities(allActivities); // Store all activities
+
+      if (allActivities != null && selectedActivity != null) {
+        const foundActivity = allActivities.find(
+          (activity) => activity.activityId === selectedActivity.activityId
+        );
+        setSelectedActivity(foundActivity);
+      }
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // API 호출 함수
   const fetchDomains = async () => {
     setLoading(true);
@@ -191,11 +261,13 @@ export default function TestPage() {
 
       const data = await response.json();
       console.log("data", data);
+      setLoading(false);
+
+      fetchAllActivities();
       // setActivities(JSON.stringify(data, null, 2)); // 응답 데이터를 JSON 포맷으로 텍스트 필드에 표시
     } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
       setLoading(false);
+      setError(err.message || "An unexpected error occurred");
     }
   };
 
@@ -209,6 +281,8 @@ export default function TestPage() {
         cache: "no-store",
         body: JSON.stringify({
           activityId: selectedActivity.activityId,
+          status,
+          elapsedSeconds: parseInt(elapsedSeconds as string, 10),
         }),
       });
 
@@ -222,12 +296,14 @@ export default function TestPage() {
       if (data.status === "attended") {
         setResultActivity("Activity의 메달을 획득하였습니다.");
       }
+      setLoading(false);
+
+      fetchAllActivities();
       // setActivities(JSON.stringify(data, null, 2)); // 응답 데이터를 JSON 포맷으로 텍스트 필드에 표시
     } catch (err: any) {
+      setLoading(false);
       setError(err.message || "An unexpected error occurred");
       setResultActivity(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -249,13 +325,18 @@ export default function TestPage() {
           <p>{resultUser}</p>
         </div>
       )}
+      {resultDomain && (
+        <div style={{ marginTop: "1rem" }}>
+          <p>{resultDomain}</p>
+        </div>
+      )}
       <br />
       <button onClick={refreshToken} disabled={loading}>
         {loading ? "Loading..." : "토큰 갱신"}
       </button>
       {message && <p style={{ color: "blue" }}>Message: {message}</p>}
       <br />
-      <button onClick={fetchActivities} disabled={loading}>
+      <button onClick={fetchAllActivities} disabled={loading}>
         {loading ? "Loading..." : "Activity 목록 조회"}
       </button>
       <br />
@@ -306,13 +387,54 @@ export default function TestPage() {
         </div>
       )}
 
-      {selectedActivity && selectedActivity.assignmentStatus !== "Attended" && (
+      {/* {selectedActivity && selectedActivity.assignmentStatus !== "Attended" && (
         <>
           <button onClick={postActivitieRegister} disabled={loading}>
             {loading ? "Loading..." : "Activity 등록"}
           </button>
           <button onClick={postActivitieEnd} disabled={loading}>
             {loading ? "Loading..." : "Activity 종료"}
+          </button>
+        </>
+      )} */}
+
+      {(selectedActivity?.assignmentStatus === "Registered" ||
+        selectedActivity?.assignmentStatus === "In progress - Registered") && (
+        <>
+          <div style={{ marginTop: "1rem" }}>
+            <label htmlFor="statusSelect">
+              <strong>Status:</strong>
+            </label>
+            <select
+              id="statusSelect"
+              value={status ?? ""}
+              onChange={(e) => setStatus(e.target.value)}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="Inprogress">In Progress</option>
+              <option value="Attended">Attended</option>
+              <option value="Cancelled">Cancel</option>
+            </select>
+          </div>
+
+          <div style={{ marginTop: "1rem" }}>
+            <label htmlFor="elapsedSeconds">
+              <strong>Elapsed Seconds:</strong>
+            </label>
+            <input
+              id="elapsedSeconds"
+              type="number"
+              value={elapsedSeconds}
+              onChange={(e) =>
+                setElapsedSeconds(
+                  e.target.value === "" ? "" : parseInt(e.target.value, 10)
+                )
+              }
+              style={{ marginLeft: "10px" }}
+            />
+          </div>
+          <button onClick={postActivitieEnd} disabled={loading}>
+            {loading ? "Loading..." : "Activity 이벤트 보내기"}
           </button>
         </>
       )}

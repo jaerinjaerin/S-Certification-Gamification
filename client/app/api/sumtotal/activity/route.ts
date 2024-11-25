@@ -10,8 +10,9 @@ const CLIENT_SECRET = process.env.SUMTOTAL_CLIENT_SECRET;
 const CALLBACK_URL = process.env.SUMTOTAL_CALLBACK_URL; // Redirect URI
 
 export async function GET(request: Request, context: any) {
-  // const { searchParams } = new URL(request.url);
-  // const code = searchParams.get('code'); // 인증 코드 추출
+  const { searchParams } = new URL(request.url);
+  const offset = searchParams.get("offset"); // 인증 코드 추출
+  const limit = searchParams.get("limit"); // 인증 코드 추출
 
   // 1. 인증 코드가 없는 경우 SumTotal 로그인 페이지로 리디렉션하여 인증 코드 요청
   // if (!code) {
@@ -94,7 +95,7 @@ export async function GET(request: Request, context: any) {
 
     // try {
     const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/v1/users/${account.providerAccountId}/activities?limit=300`,
+      `https://samsung.sumtotal.host/apis/api/v2/users/${account.providerAccountId}/activities?limit=${limit}&offset=${offset}`,
       // 'https://samsung.sumtotal.host/apis/api/v1/users/2135156/activities',
       {
         // method: 'GET',
@@ -109,7 +110,7 @@ export async function GET(request: Request, context: any) {
       }
     );
 
-    console.log("response", response);
+    // console.log("response", response);
 
     if (!response.ok) {
       // const errorData = await response.json();
