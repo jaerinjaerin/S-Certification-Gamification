@@ -77,6 +77,11 @@ model User {
   job               Job? @relation(fields: [jobId], references: [id])
   domainId              String?
   languageId              String?
+
+
+  sumtotalDomainId              String?
+  sumtotalJobCode              String?
+  sumtotalLanguageId              String?
   
   channelSegmentId            String?
   salesFormatId  String?
