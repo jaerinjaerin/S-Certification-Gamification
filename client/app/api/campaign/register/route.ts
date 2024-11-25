@@ -1,13 +1,15 @@
+import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
   try {
+    const session = await auth();
     const body = await request.json();
 
     const user = await prisma.user.update({
       where: {
-        id: body.userId,
+        id: session?.user.id,
       },
       data: body,
       include: {

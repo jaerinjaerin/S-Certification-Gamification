@@ -4,17 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   params: {
-    quizset_id: string;
+    quizset_path: string;
   };
 };
 
 export async function GET(request: NextRequest, props: Props) {
   try {
-    const quizsetId = props.params.quizset_id;
+    const quizsetPath = props.params.quizset_path;
     const session = await auth();
-    console.log("quizsetId", quizsetId);
+    console.log("quizsetPath", quizsetPath);
 
-    if (!quizsetId) {
+    if (!quizsetPath) {
       return NextResponse.json(
         {
           status: 400,
@@ -30,7 +30,10 @@ export async function GET(request: NextRequest, props: Props) {
 
     const result = await prisma.campaignDomainQuizSet.findFirst({
       where: {
-        id: quizsetId, // ID of the CampaignDomainQuizSet
+        path: {
+          equals: quizsetPath,
+          mode: "insensitive", // 대소문자 구분 없이 검색
+        },
       },
       include: {
         language: true,
@@ -39,6 +42,8 @@ export async function GET(request: NextRequest, props: Props) {
         quizStages: true, // Include the stages associated with the quiz set
       },
     });
+
+    console.log("result:", result);
 
     // Fetch questions for each quizStage
     const stagesWithQuestions = await Promise.all(

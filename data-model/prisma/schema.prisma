@@ -200,6 +200,7 @@ model Domain {
 model CampaignDomainQuizSet {
   id         String   @id @default(uuid())
 
+  path       String
   campaignId String      // Foreign key to Campaign
   domainId   String      // Foreign key to Domain
   jobId             String?

@@ -4,6 +4,7 @@ import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItemList from "@/app/hooks/useGetItemList";
 import useUpdateItem from "@/app/hooks/useUpdateItem";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
+import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language, SalesFormat, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ import { useEffect, useState } from "react";
 export default function GuestRegisterPage() {
   const { data: session } = useSession();
 
+  const { routeToPage } = usePathNavigator();
   // Selection States
   const [selectedDomain, setSelectedDomain] = useState<DomainEx | null>(null);
   const [selectedChannel, setSelectedChannel] =
@@ -67,6 +69,12 @@ export default function GuestRegisterPage() {
     item: campaignPath,
     createItem,
   } = useCreateItem<string>();
+
+  useEffect(() => {
+    if (campaignPath) {
+      routeToPage(`${campaignPath}/map`);
+    }
+  }, [campaignPath]);
 
   console.info("GuestRegisterPage session", session);
 
@@ -134,7 +142,6 @@ export default function GuestRegisterPage() {
       // url: `/api/users/${session?.user?.id}`,
       url: `/api/campaign/register`,
       body: {
-        userId: session?.user?.id,
         domainId: selectedDomain?.id,
         jobId: selectedSalesFormat?.jobId,
         languageId: selectedLanguage?.id,

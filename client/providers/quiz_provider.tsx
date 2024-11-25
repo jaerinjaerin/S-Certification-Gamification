@@ -1,117 +1,99 @@
 "use client";
 
 import { CampaignDomainQuizSetEx } from "@/app/types/type";
-import { Campaign, Language, UserCampaignDomainLog } from "@prisma/client";
-import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { Language } from "@prisma/client";
+import { createContext, useContext } from "react";
 
 interface QuizContextType {
   quizSet: CampaignDomainQuizSetEx | null;
-  campaign: Campaign | null;
   language: Language | null;
-  quizHistory: UserCampaignDomainLog | null;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
-export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
-  const [quizSet, setQuizSet] = useState<CampaignDomainQuizSetEx | null>(null);
-  const [campaign, setCampaign] = useState<Campaign | null>(null);
-  const [language, setLanguage] = useState<Language | null>(null);
-  const [quizHistory, setQuizHistory] = useState<UserCampaignDomainLog | null>(
-    null
-  );
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-  const quizsetId = searchParams.get("quizset_id");
-  const { data: session } = useSession();
+export const QuizProvider = ({
+  children,
+  quizSet,
+  language,
+}: {
+  children: React.ReactNode;
+  quizSet: CampaignDomainQuizSetEx;
+  language: Language;
+}) => {
+  // const _quizSet = quizSet;
+  // const _language = language;
+  // const [quizSet, setQuizSet] = useState<CampaignDomainQuizSetEx>(_quizSet);
+  // const [language, setLanguage] = useState<Language>(_language);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+  // const searchParams = useSearchParams();
+  // const { data: session } = useSession();
+  // const pathname = usePathname(); // App Router에서 경로 가져오기
+  // const paths = pathname.split("/").filter(Boolean);
 
-  useEffect(() => {
-    fetchDatas();
-  }, []);
+  // const campaignName = paths[0];
+  // const quizPath = paths[1];
+  // console.log("QuizProvider pathname", pathname);
 
-  const fetchDatas = async () => {
-    await fetchQuizData();
-    // if (session) {
-    //   await fetchHistoryData();
-    // }
-  };
+  // useEffect(() => {
+  //   // fetchDatas();
+  // }, []);
 
-  const fetchQuizData = async () => {
-    console.log("QuizProvider fetchData", quizsetId);
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/campaign/quiz_set/${quizsetId}`, {
-        cache: "force-cache",
-        // cache: "no-cache",
-      });
-      if (!response.ok) {
-        routeCommonError(response.status);
-        return;
-      }
-      const data = await response.json();
+  // const fetchDatas = async () => {
+  //   await fetchQuizData();
+  //   // if (session) {
+  //   //   await fetchHistoryData();
+  //   // }
+  // };
 
-      console.log("QuizProvider fetchData data", data);
-      setQuizSet(data.item);
-      setCampaign(data.item.campaign);
-      setLanguage(data.item.language);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchQuizData = async () => {
+  //   console.log("QuizProvider fetchData", quizPath);
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch(`/api/campaign/quiz_set/${quizPath}`, {
+  //       method: "GET",
+  //       headers: { "Content-Type": "application/json" },
+  //       cache: "force-cache",
+  //       // cache: "no-cache",
+  //     });
+  //     if (!response.ok) {
+  //       routeCommonError(response.status);
+  //       return;
+  //     }
+  //     const data = await response.json();
 
-  const fetchHistoryData = async () => {
-    console.log("QuizProvider fetchData", quizsetId);
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `/api/users/${session?.user.id}/quiz_set/${quizsetId}`,
-        {
-          // cache: "force-cache",
-          cache: "no-cache",
-        }
-      );
-      if (!response.ok) {
-        routeCommonError(response.status);
-        return;
-      }
-      const data = await response.json();
+  //     console.log("QuizProvider fetchData data", data);
+  //     setQuizSet(data.item);
+  //     setLanguage(data.item.language);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-      console.log("QuizProvider fetchData data", data);
-      setQuizHistory(data.item);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const routeCommonError = (status: number) => {
+  //   const currentUrl = new URL(window.location.href);
+  //   const queryString = currentUrl.search; // 현재 URL의 query string 추출
+  //   const targetUrl = `/error${queryString}`; // /quiz 뒤에 query string 추가
+  //   window.location.href = targetUrl;
+  // };
 
-  const routeCommonError = (status: number) => {
-    const currentUrl = new URL(window.location.href);
-    const queryString = currentUrl.search; // 현재 URL의 query string 추출
-    const targetUrl = `/error${queryString}`; // /quiz 뒤에 query string 추가
-    window.location.href = targetUrl;
-  };
+  // const routeNotFound = () => {
+  //   // window.location.href = "/map";
+  //   const currentUrl = new URL(window.location.href);
+  //   const queryString = currentUrl.search; // 현재 URL의 query string 추출
+  //   const targetUrl = `/error/not-found${queryString}`; // /quiz 뒤에 query string 추가
+  //   window.location.href = targetUrl;
+  // };
 
-  const routeNotFound = () => {
-    // window.location.href = "/map";
-    const currentUrl = new URL(window.location.href);
-    const queryString = currentUrl.search; // 현재 URL의 query string 추출
-    const targetUrl = `/error/not-found${queryString}`; // /quiz 뒤에 query string 추가
-    window.location.href = targetUrl;
-  };
+  // if (loading) {
+  //   return <div>Loading...</div>; // 로딩 화면
+  // }
 
-  if (loading) {
-    return <div>Loading...</div>; // 로딩 화면
-  }
-
-  if (error) {
-    return <div>{error}</div>; // 에러 메시지
-  }
+  // if (error) {
+  //   return <div>{error}</div>; // 에러 메시지
+  // }
 
   // if (!quizSet || !campaign || !language) {
   //   routeNotFound();
@@ -122,9 +104,9 @@ export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
     <QuizContext.Provider
       value={{
         quizSet,
-        campaign,
+        // campaign,
         language,
-        quizHistory,
+        // quizHistory,
         // loading,
       }}
     >
@@ -140,17 +122,3 @@ export const useQuiz = () => {
   }
   return context;
 };
-
-// export function QuizProviderWrapper({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   const { loading } = useQuiz();
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return <>{children}</>;
-// }

@@ -168,7 +168,7 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile: pf, user, account }) => {
-      console.log("auth callbacks jwt", token, pf, user, account);
+      // console.log("auth callbacks jwt", token, pf, user, account);
       if (account) {
         // token.access_token = account.access_token;
         // token.expires_at = account.expires_at;
