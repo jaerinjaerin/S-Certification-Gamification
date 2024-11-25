@@ -47,3 +47,20 @@ $ npm run prisma:seed
 activity test id: 'test_activity_id'
 localhost 접속 시, 아래처럼 접속
 http://localhost:3000/?activityId=test_activity_id&job=ff
+
+### QuizSet 정보에 대한 redirect 처리
+
+- Middleware:
+
+* URL에서 quiz_id를 확인.
+* 필요한 경우 API를 호출해 만료 상태를 확인.
+  만료된 경우 /error/expired로 리다이렉트.
+
+- QuizLoader:
+
+* API를 통해 퀴즈 데이터를 로드.
+* 만료된 경우 redirect('/error/expired') 호출.
+
+- ExpiredPage:
+
+* 만료된 퀴즈 요청을 처리하여 사용자에게 알림.

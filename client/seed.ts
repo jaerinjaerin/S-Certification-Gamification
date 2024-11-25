@@ -3,6 +3,10 @@ const uuid = require("uuid");
 
 const prisma = new PrismaClient();
 
+// 실제 url: https://quiz.samsungplus.net/s24/{domainCode}_{job}_{languageCode}
+// test url: http://localhost:3000/s24/{domain_code}/{job_name}/{lagnuage_code}
+// test url: http://localhost:3000/s24/ORG_502_ff_ko
+
 async function main() {
   const mainActivityId = "test_main_activity_id";
   const optionalActivityId = "test_optional_activity_id";
@@ -16,6 +20,186 @@ async function main() {
     ],
   });
 
+  // Create Jobs
+  await prisma.job.createMany({
+    data: [
+      { code: "ff", name: "ff", description: "FF Job" },
+      { code: "fsm", name: "fsm", description: "FSM Job" },
+      {
+        code: "fsm",
+        name: "FSM(C&R)",
+        description: "FSM(C&R)",
+      },
+      { code: "fsm", name: "SES", description: "ses" },
+    ],
+  });
+
+  const jobs = await prisma.job.findMany();
+
+  const channelSegments = await prisma.channelSegment.createMany({
+    data: [
+      { name: "Carrier" },
+      { name: "Retailer (MM/IT/Traditional etc)" },
+      { name: "Retailer (Pure player)" },
+      { name: "samsung.com" },
+      { name: "others" },
+    ],
+  });
+
+  const channelSegmentRecords = await prisma.channelSegment.findMany();
+
+  const carrier = channelSegmentRecords.find((c: any) => c.name === "Carrier");
+  const retailerMM = channelSegmentRecords.find(
+    (c: any) => c.name === "Retailer (MM/IT/Traditional etc)"
+  );
+  const retailerPure = channelSegmentRecords.find(
+    (c: any) => c.name === "Retailer (Pure player)"
+  );
+  const samsungCom = channelSegmentRecords.find(
+    (c: any) => c.name === "samsung.com"
+  );
+  const others = channelSegmentRecords.find((c: any) => c.name === "others");
+
+  await prisma.salesFormat.createMany({
+    data: [
+      // Carrier
+      {
+        storeType: "Off line Store",
+        // jobCode: "FSM(C&R)",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: carrier.id,
+      },
+      {
+        storeType: "On line Store",
+        // jobCode: "FSM(C&R)",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: carrier.id,
+      },
+      {
+        storeType: "contact(Call center)",
+        // jobCode: "FSM(C&R)",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: carrier.id,
+      },
+      {
+        storeType: "SES",
+        // jobCode: "SES",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: carrier.id,
+      },
+      {
+        storeType: "others",
+        // jobCode: "FSM(C&R)",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: carrier.id,
+      },
+
+      // Retailer (MM/IT/Traditional etc)
+      {
+        storeType: "Off line Store",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerMM.id,
+      },
+      {
+        storeType: "On line Store",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerMM.id,
+      },
+      {
+        storeType: "contact(Call center)",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerMM.id,
+      },
+      {
+        storeType: "SES",
+        // jobCode: "SES",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerMM.id,
+      },
+      {
+        storeType: "others",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerMM.id,
+      },
+
+      // Retailer (Pure player)
+      {
+        storeType: "Off line Store",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerPure.id,
+      },
+      {
+        storeType: "On line Store",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerPure.id,
+      },
+      {
+        storeType: "contact(Call center)",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerPure.id,
+      },
+      {
+        storeType: "SES",
+        // jobCode: "SES",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerPure.id,
+      },
+      {
+        storeType: "others",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: retailerPure.id,
+      },
+
+      // samsung.com
+      {
+        storeType: "Off line Store",
+        // jobCode: "FF",
+        jobId: jobs.find((j: any) => j.code === "ff").id,
+        channelSegmentId: samsungCom.id,
+      },
+      {
+        storeType: "On line Store",
+        // jobCode: "FF",
+        jobId: jobs.find((j: any) => j.code === "ff").id,
+        channelSegmentId: samsungCom.id,
+      },
+      {
+        storeType: "contact(Call center)",
+        // jobCode: "FF",
+        jobId: jobs.find((j: any) => j.code === "ff").id,
+        channelSegmentId: samsungCom.id,
+      },
+      {
+        storeType: "SES",
+        // jobCode: "SES",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: samsungCom.id,
+      },
+      {
+        storeType: "others",
+        // jobCode: "FF",
+        jobId: jobs.find((j: any) => j.code === "ff").id,
+        channelSegmentId: samsungCom.id,
+      },
+
+      // others
+      {
+        storeType: "others",
+        // jobCode: "FSM",
+        jobId: jobs.find((j: any) => j.code === "fsm").id,
+        channelSegmentId: others.id,
+      },
+    ],
+  });
+
   const languageRecords = await prisma.language.findMany();
   const enLanguage = languageRecords.find((lang: any) => lang.code === "en");
   const koLanguage = languageRecords.find((lang: any) => lang.code === "ko");
@@ -24,9 +208,21 @@ async function main() {
   // Create Domains
   await prisma.domain.createMany({
     data: [
-      { id: 1, name: "Global", code: "global" },
-      { id: 2, name: "Korea", code: "ko" },
-      { id: 3, name: "Japan", code: "ja" },
+      {
+        name: "US",
+        code: "us",
+        channelSegmentIds: `${carrier.id},${samsungCom.id},${retailerPure.id}`,
+      },
+      {
+        name: "Korea",
+        code: "ORG_502",
+        channelSegmentIds: `${carrier.id},${samsungCom.id},${retailerPure.id}`,
+      },
+      {
+        name: "Japan",
+        code: "NAT_2392",
+        channelSegmentIds: `${carrier.id},${retailerPure.id}`,
+      },
     ],
   });
 
@@ -35,23 +231,13 @@ async function main() {
   // Create Campaign
   const campaign = await prisma.campaign.create({
     data: {
-      name: "Global Campaign",
+      name: "S24",
       description: "A campaign spanning multiple languages",
       startedAt: new Date(),
       endedAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
       createrId: "admin",
     },
   });
-
-  // Create Jobs
-  await prisma.job.createMany({
-    data: [
-      { id: "ff", name: "ff", description: "FF Job" },
-      { id: "fsm", name: "fsm", description: "FSM Job" },
-    ],
-  });
-
-  const jobs = await prisma.job.findMany();
 
   // Create Questions and Options in English
   const allQuestions = [];
@@ -123,13 +309,13 @@ async function main() {
   // for ff user
   for (const domain of domains) {
     const lang =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? koLanguage
         : domain.code === "ja"
         ? jaLanguage
         : enLanguage;
     const questions =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? allKoQuestions
         : domain.code === "ja"
         ? allJaQuestions
@@ -166,15 +352,15 @@ async function main() {
   // for fsm user
   for (const domain of domains) {
     const lang =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? koLanguage
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? jaLanguage
         : enLanguage;
     const questions =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? allKoQuestions
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? allJaQuestions
         : allQuestions;
 
@@ -211,15 +397,15 @@ async function main() {
   // for ff guest
   for (const domain of domains) {
     const lang =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? koLanguage
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? jaLanguage
         : enLanguage;
     const questions =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? allKoQuestions
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? allJaQuestions
         : allQuestions;
 
@@ -254,15 +440,15 @@ async function main() {
   // for fcm guest
   for (const domain of domains) {
     const lang =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? koLanguage
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? jaLanguage
         : enLanguage;
     const questions =
-      domain.code === "ko"
+      domain.code === "ORG_502"
         ? allKoQuestions
-        : domain.code === "ja"
+        : domain.code === "NAT_2392"
         ? allJaQuestions
         : allQuestions;
 
@@ -275,6 +461,7 @@ async function main() {
         firstBadgeActivityId: optionalActivityId,
         lastBadgeActivityId: mainActivityId,
         createrId: "admin",
+        jobId: jobs[1].id,
       },
     });
 

@@ -75,7 +75,15 @@ model User {
   // jobName             String?
   jobId             String?
   job               Job? @relation(fields: [jobId], references: [id])
-  domainId              Int?
+  domainId              String?
+  languageId              String?
+  
+  channelSegmentId            String?
+  salesFormatId  String?
+
+  domain      Domain? @relation(fields: [domainId], references: [id])
+  language    Language? @relation(fields: [languageId], references: [id])
+
 
   // userQuizLogs     UserQuizLog[]
   userCampaignDomainLogs UserCampaignDomainLog[]
@@ -118,9 +126,23 @@ model VerificationToken {
   identifier String
   token      String
   expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model VerifyToken {
+  id          String   @id @default(cuid()) // 고유 식별자
+  email       String   // 인증할 이메일
+  token       String   // 인증 토큰 (랜덤 문자열)
+  expiresAt   DateTime // 토큰 만료 시간
+  createdAt   DateTime @default(now()) // 생성 시간
+  updatedAt   DateTime @updatedAt // 마지막 갱신 시간
+
+  @@index([email]) // 이메일 검색을 빠르게 하기 위한 인덱스
+  @@index([token]) // 토큰 검색을 빠르게 하기 위한 인덱스
 }
 
 enum AuthType {
@@ -137,6 +159,7 @@ model Language {
   campaignDomainQuizSets CampaignDomainQuizSet[]
   questions Question[]
   questionOption QuestionOption[]
+  users User[]
 }
 
 // model Countr
@@ -157,7 +180,7 @@ model Campaign {
 }
 
 model Domain {
-  id         Int   @id
+  id         String   @id @default(uuid())
   name       String?
   code       String   @unique // Domain name
 
@@ -165,21 +188,23 @@ model Domain {
   updatedAt   DateTime    @updatedAt
 
   campaignDomainQuizSets  CampaignDomainQuizSet[]
+  channelSegmentIds String
+  users User[]
 }
 
-// 어떤 job이 사용할 수 있는가, guest 도 사용할 수 있는가, 어떤 언어를 사용하는가
-// job 여러 개 선택 가능
-// 언어 여러 개 선택 가능
 model CampaignDomainQuizSet {
   id         String   @id @default(uuid())
+
   campaignId String      // Foreign key to Campaign
-  domainId   Int      // Foreign key to Domain
-  jobId             String
+  domainId   String      // Foreign key to Domain
+  jobId             String?
   languageId        String
   // questionIds       String
   quizStages     QuizStage[]
 
-  activityId String?
+  firstBadgeStage    Int?
+  firstBadgeActivityId String?
+  lastBadgeActivityId String?
 
   createrId   String
   updaterId   String?
@@ -250,6 +275,7 @@ model QuestionOption {
 
 model Job {
   id         String   @id @default(uuid())
+  code        String
   name       String   // Name of the user group (e.g., A, B)
   description String? // Optional description
   // countryJobQuestionsUeage QuestionUsage[] // Associated CountryGroup entries
@@ -257,7 +283,22 @@ model Job {
   updatedAt   DateTime    @updatedAt
 
   users User[]
-  
+  salesFormats SalesFormat[]
+}
+
+model ChannelSegment {
+  id            String                @id @default(uuid())
+  name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
+  salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
+}
+
+model SalesFormat {
+  id                String                @id @default(uuid())
+  channelSegmentId  String             // Foreign key to ChannelSegment
+  channelSegment    ChannelSegment  @relation(fields: [channelSegmentId], references: [id])
+  storeType         String          // e.g., "Off line Store", "On line Store"
+  jobId             String          // Replaced 'format' with 'jobCode' (e.g., "FSM(C&R)", "FF", "SES")
+  job               Job             @relation(fields: [jobId], references: [id])
 }
 
 model UserCampaignDomainLog {
@@ -267,13 +308,17 @@ model UserCampaignDomainLog {
   campaignId String
   // activityId String
   // metadataId String
-  completed   Boolean // 퀴즈 세트를 완료했는지 여부
+  firstBadgeStage   Int?
+  isFirstBadgeStageCompleted    Boolean?
+  isCompleted    Boolean?
+  badgeAcquisitionDate DateTime?
+  isBadgeAcquired Boolean?
   lastCompletedStage    Int?
   timeSpent    Int?      // Time spent on this activity (in seconds)
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
-  user    User?    @relation(fields: [userId], references: [id])
+  user        User    @relation(fields: [userId], references: [id])
   jobId       String?
 
 
@@ -285,12 +330,13 @@ model UserCampaignDomainLog {
 
   // countryCode String
 
-  domainId Int
-  activityId String?
+  domainId String
+  firstBadgeActivityId String?
+  lastBadgeActivityId String?
   // languageCode String?
   languageId String?
 
-  @@unique([userId, campaignId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
+  // @@unique([userId, campaignId, domainId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
 }
 
 model UserQuizStageLog {
@@ -303,10 +349,12 @@ model UserQuizStageLog {
   timeSpent    Int      // Time spent on this stage (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  isFirstBadgeStage Boolean?
 
   // countryCode String
-  campaignDomainId String
+  // campaignDomainId String
   countryId String
+  campaignDomainQuizSetId String
   // languageCode String
   // activityId  String
   // campaignActivityId  String
@@ -323,7 +371,7 @@ model UserQuizQuestionLog {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  campaignDomainId String
+  // campaignDomainId String
   // countryCode String
   countryId String
   // languageCode String

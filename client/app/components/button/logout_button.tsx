@@ -1,11 +1,22 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function LogoutButton() {
-  const currentUrl = new URL(window.location.href);
-  const queryString = currentUrl.search;
-  const callbackUrl = `/login${queryString}`;
+  const [callbackUrl, setCallbackUrl] = useState("/login");
+
+  useEffect(() => {
+    const currentUrl = new URL(window.location.href);
+    const pathname = currentUrl.pathname;
+    const eventName = pathname.split("/")[1];
+
+    if (eventName) {
+      setCallbackUrl(`/${eventName}/login`);
+    } else {
+      setCallbackUrl("/login");
+    }
+  }, []);
 
   return (
     <div>

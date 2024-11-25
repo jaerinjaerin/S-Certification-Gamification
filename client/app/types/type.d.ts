@@ -22,3 +22,15 @@ type QuizStageEx = QuizStage & {
 type QuestionEx = QuestionEx & {
   options: QuestionOption[];
 };
+
+type DomainEx = Domain & {
+  channelSegments: ChannelSegmentEx[];
+};
+
+type ChannelSegmentEx = ChannelSegment & {
+  salesFormats: SalesFormatEx[];
+};
+
+type SalesFormatEx = SalesFormat & {
+  job: Job;
+};

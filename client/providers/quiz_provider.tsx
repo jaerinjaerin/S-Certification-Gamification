@@ -69,7 +69,7 @@ export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `/api/user/${session?.user.id}/quiz_set/${quizsetId}`,
+        `/api/users/${session?.user.id}/quiz_set/${quizsetId}`,
         {
           // cache: "force-cache",
           cache: "no-cache",
@@ -113,10 +113,10 @@ export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
     return <div>{error}</div>; // 에러 메시지
   }
 
-  if (!quizSet || !campaign || !language) {
-    routeNotFound();
-    return;
-  }
+  // if (!quizSet || !campaign || !language) {
+  //   routeNotFound();
+  //   return;
+  // }
 
   return (
     <QuizContext.Provider

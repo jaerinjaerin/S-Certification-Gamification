@@ -1,34 +1,35 @@
+import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 export async function GET(request: Request, context: any) {
   const { searchParams } = new URL(request.url);
-  const activityId = searchParams.get("activity_id");
+  const campaignName = searchParams.get("campaign_name");
+
+  if (!campaignName) {
+    return NextResponse.json(
+      { message: "Missing required parameter: campaign_name" },
+      { status: 400 }
+    );
+  }
 
   try {
-    const countryActivity = await prisma.countryActivity.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
-        activityId: activityId,
-      },
-      include: {
-        country: {
-          include: {
-            languages: true,
-          },
+        name: {
+          equals: campaignName,
+          mode: "insensitive", // 대소문자 구분 없이 검색
         },
-        campaign: true,
       },
     });
 
-    console.log("countryActivity", countryActivity);
-
-    if (!countryActivity) {
+    if (campaign == null) {
       return NextResponse.json(
-        { message: "CountryActivity not found" },
+        { message: "Campaign not found" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ item: countryActivity }, { status: 200 });
+    return NextResponse.json({ item: campaign }, { status: 200 });
   } catch (error) {
     console.error("Error fetching activities:", error);
     return NextResponse.json(

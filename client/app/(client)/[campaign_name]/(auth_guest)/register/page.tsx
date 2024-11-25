@@ -1,0 +1,245 @@
+"use client";
+
+import useCreateItem from "@/app/hooks/useCreateItem";
+import useGetItemList from "@/app/hooks/useGetItemList";
+import useUpdateItem from "@/app/hooks/useUpdateItem";
+import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
+import { Language, SalesFormat, User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+
+export default function GuestRegisterPage() {
+  const { data: session } = useSession();
+
+  // Selection States
+  const [selectedDomain, setSelectedDomain] = useState<DomainEx | null>(null);
+  const [selectedChannel, setSelectedChannel] =
+    useState<ChannelSegmentEx | null>(null);
+  const [selectedSalesFormat, setSelectedSalesFormat] =
+    useState<SalesFormat | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    null
+  );
+
+  const [channels, setChannels] = useState<ChannelSegmentEx[]>([]);
+  const [salesFormats, setSalesFormats] = useState<SalesFormatEx[]>([]);
+  const [languages, setLanguages] = useState<Language[]>([]);
+  const {
+    isLoading,
+    error,
+    items: domains,
+  } = useGetItemList<DomainEx>({ url: "/api/domains" });
+
+  const fetchLanguages = async (domainId: string, jobId: string) => {
+    const response = await fetch(
+      `/api/campaign/domains/${domainId}/jobs/${jobId}/languages`,
+      {
+        method: "GET",
+        cache: "force-cache",
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch domains");
+    }
+
+    const data = await response.json();
+    setLanguages(data.items);
+  };
+
+  useEffect(() => {
+    if (selectedSalesFormat) {
+      fetchLanguages(selectedDomain?.id!, selectedSalesFormat?.jobId!);
+    }
+  }, [selectedSalesFormat]);
+
+  const {
+    isLoading: loadingUpdate,
+    error: errorUpdate,
+    item: updatedUser,
+    updateItem,
+  } = useUpdateItem<User>();
+
+  const {
+    isLoading: loadingCreate,
+    error: errorCreate,
+    item: campaignPath,
+    createItem,
+  } = useCreateItem<string>();
+
+  console.info("GuestRegisterPage session", session);
+
+  useEffect(() => {
+    if (updatedUser) {
+      if (updatedUser !== null) {
+        console.info("Updated User", updatedUser);
+      }
+    }
+  }, [updatedUser]);
+
+  const selectDomain = (domainId: string) => {
+    const domain = domains.find((d) => d.id === domainId);
+    setSelectedDomain(domain);
+
+    const channels = domain?.channelSegments;
+    setChannels(channels);
+    setSalesFormats([]);
+    setLanguages([]);
+
+    setSelectedChannel(null);
+    setSelectedSalesFormat(null);
+    setSelectedLanguage(null);
+  };
+
+  const selectChannel = (channelId: string) => {
+    const channel = channels?.find((c: ChannelSegmentEx) => c.id === channelId);
+    if (!channel) {
+      alert("Channel not found. Please select a valid channel.");
+      return;
+    }
+    setSelectedChannel(channel);
+    const salesFormats = channel.salesFormats;
+    setSalesFormats(salesFormats);
+    setLanguages([]);
+
+    setSelectedSalesFormat(null);
+    setSelectedLanguage(null);
+  };
+
+  const selectSalesFormat = (salesFormatId: string) => {
+    const salesFormat = salesFormats!.find(
+      (c: SalesFormat) => c.id === salesFormatId
+    );
+    if (!salesFormat) {
+      alert("Sales Format not found. Please select a valid sales format.");
+      return;
+    }
+    setSelectedSalesFormat(salesFormat);
+
+    setSelectedLanguage(null);
+  };
+
+  const selectLanguage = (languageId: string) => {
+    const language = languages.find((l) => l.id === languageId);
+    if (!language) {
+      alert("Language not found. Please select a valid language.");
+      return;
+    }
+    setSelectedLanguage(language);
+  };
+
+  const routeQuizPage = () => {
+    createItem({
+      // url: `/api/users/${session?.user?.id}`,
+      url: `/api/campaign/register`,
+      body: {
+        userId: session?.user?.id,
+        domainId: selectedDomain?.id,
+        jobId: selectedSalesFormat?.jobId,
+        languageId: selectedLanguage?.id,
+        channelSegmentId: selectedChannel?.id,
+        salesFormatId: selectedSalesFormat?.id,
+      },
+    });
+  };
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error.toString()}</div>;
+  // }
+
+  return (
+    <div className="container">
+      <div>
+        <h2>Domain Selection</h2>
+        <select
+          onChange={(e) => {
+            const domainId = e.target.value;
+            selectDomain(domainId);
+          }}
+          disabled={loadingUpdate || domains == null}
+        >
+          <option value="">Select a Domain</option>
+          {domains?.map((domain) => (
+            <option key={domain.id} value={domain.id}>
+              {domain.name}
+            </option>
+          ))}
+        </select>
+
+        <h2>Channel Selection</h2>
+        <select
+          onChange={(e) => {
+            const channelId = e.target.value;
+            selectChannel(channelId);
+          }}
+          disabled={loadingUpdate || channels == null}
+        >
+          <option value="">Select a Channel</option>
+          {channels.map((channel) => (
+            <option key={channel.id} value={channel.id}>
+              {channel.name}
+            </option>
+          ))}
+        </select>
+
+        <h2>Sales Format Selection</h2>
+        <select
+          onChange={(e) => {
+            const id = e.target.value;
+            selectSalesFormat(id);
+          }}
+          disabled={loadingUpdate || channels == null || salesFormats == null}
+        >
+          <option value="">Select a Sales Format</option>
+          {salesFormats.map((format) => (
+            <option key={format.id} value={format.id}>
+              {format.storeType} ({format.job.code})
+            </option>
+          ))}
+        </select>
+
+        <h2>Language Selection</h2>
+        <select
+          onChange={(e) => {
+            const id = e.target.value;
+            selectLanguage(id);
+          }}
+          disabled={
+            loadingUpdate ||
+            channels == null ||
+            salesFormats == null ||
+            languages == null
+          }
+        >
+          <option value="">Select a Language</option>
+          {languages.map((format) => (
+            <option key={format.id} value={format.id}>
+              {format.name} ({format.id})
+            </option>
+          ))}
+        </select>
+
+        <br />
+        <button
+          onClick={() => {
+            routeQuizPage();
+          }}
+          disabled={
+            loadingUpdate ||
+            !selectedDomain ||
+            !selectedChannel ||
+            !selectedSalesFormat ||
+            !selectedLanguage
+          }
+        >
+          Start Quiz
+        </button>
+      </div>
+    </div>
+  );
+}
