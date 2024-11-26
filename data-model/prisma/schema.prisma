@@ -262,6 +262,19 @@ model Question {
   
   language    Language    @relation(fields: [languageId], references: [id])
   userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
+
+
+  category    String
+  specificFeature   String
+  enabled     Boolean
+  product    String
+  questionType    QuestionType
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  SINGLE_CHOICE
+  TRUE_FALSE
 }
 
 model QuestionOption {
@@ -349,18 +362,24 @@ model UserQuizStageLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
   // user         User     @relation(fields: [userId], references: [id])
+
   quizStageId      String      // Foreign key to Stage
   quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
   isCompleted  Boolean  // Whether the stage was completed
-  timeSpent    Int      // Time spent on this stage (in seconds)
+  // timeSpent    Int      // Time spent on this stage (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isFirstBadgeStage Boolean?
 
   // countryCode String
   // campaignDomainId String
-  countryId String
+  domainId String
   campaignDomainQuizSetId String
+
+  elapsedSeconds Int
+
+  startedAt DateTime
+  endedAt DateTime?
   // languageCode String
   // activityId  String
   // campaignActivityId  String
@@ -373,15 +392,26 @@ model UserQuizQuestionLog {
   questionId   String      // Foreign key to Question
   question     Question @relation(fields: [questionId], references: [id])
   isCorrect    Boolean  // Whether the user answered the question correctly
-  timeSpent    Int      // Time spent on this question (in seconds)
+  // timeSpent    Int      // Time spent on this question (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   // campaignDomainId String
   // countryCode String
-  countryId String
+  domainId String
   // languageCode String
   languageId String?
+
+  stageIndex  Int
+
+
+  elapsedSeconds Int
+  category    String
+  specificFeature   String
+  enabled     Boolean
+  product    String
+  questionType    QuestionType
+  score       Int
   // activityId  String
   // campaignActivityId  String
 }

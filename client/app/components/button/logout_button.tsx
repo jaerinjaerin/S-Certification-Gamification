@@ -7,15 +7,7 @@ export default function LogoutButton() {
   const [callbackUrl, setCallbackUrl] = useState("/login");
 
   useEffect(() => {
-    const currentUrl = new URL(window.location.href);
-    const pathname = currentUrl.pathname;
-    const eventName = pathname.split("/")[1];
-
-    if (eventName) {
-      setCallbackUrl(`/${eventName}/login`);
-    } else {
-      setCallbackUrl("/login");
-    }
+    setCallbackUrl("logout");
   }, []);
 
   return (

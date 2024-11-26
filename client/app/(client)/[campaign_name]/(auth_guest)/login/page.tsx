@@ -78,7 +78,7 @@ export default function GuestLogin() {
     <div className="container">
       {step === "email" && (
         <div>
-          <h2>Email Verification</h2>
+          <h2>이메일로 로그인</h2>
           <p>Enter your email to receive a verification code.</p>
           <input
             type="email"

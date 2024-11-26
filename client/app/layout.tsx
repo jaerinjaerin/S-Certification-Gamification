@@ -1,4 +1,3 @@
-import AuthProvider from "@/providers/auth_provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -24,7 +23,7 @@ async function fetchData(quizSetId: string | null) {
 
   try {
     const response = await fetch(
-      `${process.env.API_URL}/api/campaign/quiz_set/${quizSetId}`,
+      `${process.env.API_URL}/api/campaigns/quizset_path/${quizSetId}`,
       {
         cache: "force-cache",
       }
@@ -42,55 +41,15 @@ async function fetchData(quizSetId: string | null) {
 
 export default async function RootLayout({
   children,
-}: // params,
-{
+}: {
   children: React.ReactNode;
-  // searchParams?: { [key: string]: string | string[] | undefined };
-  // params: Promise<{ quizsetId: string }>;
 }) {
-  // const { quizsetId } = await params;
-
-  // const queryParam = searchParams.param || null; // 쿼리스트링에서 'param' 값 가져오기
-  // const data = await fetchData(queryParam);
-
-  // const queryParam = searchParams?.param || null; // 'param' 값 가져오기
-
-  // console.log("RootLayout", params, quizsetId);
-
-  // const data = await fetchData("2319515d-17f4-4817-ad08-d9d61a0cbc71");
-  // console.log("data", data);
-
-  // if (!data) {
-  //   window.location.href = "/error/invalid-access";
-  // }
-
-  // if (!data.item.campaign) {
-  //   window.location.href = "/error/invalid-access";
-  // }
-
-  // if (data.item.campaign.startedAt < new Date()) {
-  //   window.location.href = "/error/invalid-access";
-  // }
-
-  // if (data.item.campaign.endedAt > new Date()) {
-  //   window.location.href = "/error/campaign-closed";
-  // }
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* {children} */}
-        {/* <LocalStorageProvider> */}
-        <AuthProvider>
-          {/* <QuizProvider ></QuizProvider> */}
-          {children}
-          {/* <QuizProvider>
-            <QuizProviderWrapper></QuizProviderWrapper>
-          </QuizProvider> */}
-        </AuthProvider>
-        {/* </LocalStorageProvider> */}
+        {children}
       </body>
     </html>
   );

@@ -1,12 +1,58 @@
 "use client";
 
-import { CampaignDomainQuizSetEx } from "@/app/types/type";
-import { Language } from "@prisma/client";
-import { createContext, useContext } from "react";
+import {
+  CampaignDomainQuizSetEx,
+  QuestionEx,
+  QuizStageEx,
+} from "@/app/types/type";
+import { areArraysEqualUnordered } from "@/utils/validationUtils";
+import {
+  Campaign,
+  Domain,
+  Language,
+  Question,
+  QuestionOption,
+  QuestionType,
+  UserCampaignDomainLog,
+} from "@prisma/client";
+import { createContext, useContext, useState } from "react";
 
 interface QuizContextType {
   quizSet: CampaignDomainQuizSetEx | null;
   language: Language | null;
+  // domain: Domain | null;
+  // campaign: Campaign | null;
+  quizHistory: UserCampaignDomainLog | null;
+  currentQuizStageIndex: number;
+  currentQuestionIndex: number;
+  // currentQuestionOptionIndex: number;
+  currentQuizStage: QuizStageEx | null;
+  currentStageQuizzes: QuestionEx[] | null;
+  isFirstBadgeStage(): boolean;
+  isLastBadgeStage(): boolean;
+  processFirstBadgeAcquisition(): void;
+  processLastBadgeAcquisition(): void;
+  isComplete(): boolean;
+  isLastQuestionOnState(): boolean;
+  isLastStage(): boolean;
+  startStage(): void;
+  endStage(): Promise<void>;
+  nextQuestion(): boolean;
+  nextStage(): boolean;
+  canNextQuestion(): boolean;
+  confirmAnswer(
+    quizStageId: string,
+    questionId: string,
+    selectedOptionIds: string[]
+  ): Promise<confirmAnswerResponse>;
+  // setCurrentQuestionOptionIds: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface confirmAnswerResponse {
+  isCorrect: boolean;
+  questionType: QuestionType;
+  correctOptions: number[];
+  message: string;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -15,99 +61,215 @@ export const QuizProvider = ({
   children,
   quizSet,
   language,
+  quizHistory,
 }: {
   children: React.ReactNode;
   quizSet: CampaignDomainQuizSetEx;
   language: Language;
+  quizHistory: UserCampaignDomainLog;
+  domain: Domain;
+  campaign: Campaign;
 }) => {
-  // const _quizSet = quizSet;
-  // const _language = language;
-  // const [quizSet, setQuizSet] = useState<CampaignDomainQuizSetEx>(_quizSet);
-  // const [language, setLanguage] = useState<Language>(_language);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
-  // const searchParams = useSearchParams();
-  // const { data: session } = useSession();
-  // const pathname = usePathname(); // App Router에서 경로 가져오기
-  // const paths = pathname.split("/").filter(Boolean);
+  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
+    quizHistory?.lastCompletedStage ?? 0
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  // const [currentQuestionOptionIndex, setCurrentQuestionOptionIndex] =
+  //   useState(0);
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
+    quizSet.quizStages[currentQuizStageIndex]
+  );
+  const [currentStageQuizzes, setCurrentStageQuizzes] = useState<
+    QuestionEx[] | null
+  >(quizSet.quizStages[currentQuizStageIndex].questions);
+  let stageStartedAt = null;
 
-  // const campaignName = paths[0];
-  // const quizPath = paths[1];
-  // console.log("QuizProvider pathname", pathname);
+  const startStage = (): void => {
+    stageStartedAt = new Date();
+  };
 
-  // useEffect(() => {
-  //   // fetchDatas();
-  // }, []);
+  const endStage = async (): Promise<void> => {
+    const elapsedSeconds = Math.floor(
+      // 소수점 버림
+      (new Date().getTime() - stageStartedAt!.getTime()) / 1000
+    );
 
-  // const fetchDatas = async () => {
-  //   await fetchQuizData();
-  //   // if (session) {
-  //   //   await fetchHistoryData();
-  //   // }
-  // };
+    /**
+     * send log
+     */
 
-  // const fetchQuizData = async () => {
-  //   console.log("QuizProvider fetchData", quizPath);
-  //   try {
-  //     setLoading(true);
-  //     const response = await fetch(`/api/campaign/quiz_set/${quizPath}`, {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/json" },
-  //       cache: "force-cache",
-  //       // cache: "no-cache",
-  //     });
-  //     if (!response.ok) {
-  //       routeCommonError(response.status);
-  //       return;
-  //     }
-  //     const data = await response.json();
+    if (!isLastStage()) {
+      const nextQuizStageIndex = currentQuizStageIndex + 1;
+      setCurrentQuizStageIndex(nextQuizStageIndex);
+      setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
+      setCurrentStageQuizzes(quizSet.quizStages[nextQuizStageIndex].questions);
+      setCurrentQuestionIndex(0);
+    }
 
-  //     console.log("QuizProvider fetchData data", data);
-  //     setQuizSet(data.item);
-  //     setLanguage(data.item.language);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
+    stageStartedAt = null;
+  };
+
+  const isLastQuestionOnState = (): boolean => {
+    return currentQuizStage?.questions.length - 1 === currentQuestionIndex;
+  };
+
+  const canNextQuestion = (): boolean => {
+    if (isLastQuestionOnState()) {
+      return false;
+    }
+    return true;
+  };
+
+  const nextQuestion = (): boolean => {
+    console.log("nextQuestion", currentQuestionIndex);
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    return true;
+  };
+
+  const nextStage = (): boolean => {
+    if (isLastStage()) {
+      return false;
+    }
+    const nextQuizStageIndex = currentQuizStageIndex + 1;
+    setCurrentQuizStageIndex(nextQuizStageIndex);
+    setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
+    setCurrentStageQuizzes(quizSet.quizStages[nextQuizStageIndex].questions);
+    setCurrentQuestionIndex(0);
+    return true;
+  };
+
+  // const getCurrentStageQuizzes = (): QuizQuestion[] => {
+  //   if (quizSet.quizStages.length <= currentQuizStageIndex) {
+  //     return [];
   //   }
+  //   return quizSet.quizStages[currentQuizStageIndex].questions;
   // };
 
-  // const routeCommonError = (status: number) => {
-  //   const currentUrl = new URL(window.location.href);
-  //   const queryString = currentUrl.search; // 현재 URL의 query string 추출
-  //   const targetUrl = `/error${queryString}`; // /quiz 뒤에 query string 추가
-  //   window.location.href = targetUrl;
-  // };
+  const isFirstBadgeStage = (): boolean => {
+    if (
+      quizSet.isFirstBadgeStage == null ||
+      quizSet.firstBadgeActivityId == null
+    ) {
+      return false;
+    }
+    return quizSet.isFirstBadgeStage === currentQuizStageIndex;
+  };
 
-  // const routeNotFound = () => {
-  //   // window.location.href = "/map";
-  //   const currentUrl = new URL(window.location.href);
-  //   const queryString = currentUrl.search; // 현재 URL의 query string 추출
-  //   const targetUrl = `/error/not-found${queryString}`; // /quiz 뒤에 query string 추가
-  //   window.location.href = targetUrl;
-  // };
+  const isLastBadgeStage = (): boolean => {
+    if (quizSet.lastBadgeActivityId == null) {
+      return false;
+    }
+    return quizSet.quizStages.length - 1 === currentQuizStageIndex;
+  };
 
-  // if (loading) {
-  //   return <div>Loading...</div>; // 로딩 화면
-  // }
+  const processFirstBadgeAcquisition = () => {
+    // fsm 처리 로직
+  };
 
-  // if (error) {
-  //   return <div>{error}</div>; // 에러 메시지
-  // }
+  const processLastBadgeAcquisition = () => {
+    // ff 처리 로직
+    // fsm 처리 로직
+  };
 
-  // if (!quizSet || !campaign || !language) {
-  //   routeNotFound();
-  //   return;
-  // }
+  const isComplete = (): boolean => {
+    return quizHistory.isCompleted ?? false;
+  };
+
+  const isLastStage = (): boolean => {
+    return quizSet.quizStages.length - 1 === currentQuizStageIndex;
+  };
+
+  const confirmAnswer = async (
+    quizStageId: string,
+    questionId: string,
+    selectedOptionIds: string[]
+  ): Promise<confirmAnswerResponse> => {
+    const question = currentQuizStage?.questions.find(
+      (q: Question) => q.id === questionId
+    );
+
+    if (!question) {
+      return {
+        isCorrect: false,
+        questionType: QuestionType.SINGLE_CHOICE,
+        correctOptions: [],
+        message: "Question not found",
+      };
+    }
+
+    const correctOptionIds = question.options
+      .filter((option: QuestionOption) => option.isCorrect)
+      .map((option: QuestionOption) => option.id);
+
+    console.log("correctOptions", correctOptionIds, selectedOptionIds);
+    if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
+      return {
+        isCorrect: true,
+        questionType: question.type,
+        correctOptions: correctOptionIds,
+        message: "정답입니다!",
+      };
+    }
+
+    return {
+      isCorrect: false,
+      questionType: question.type,
+      correctOptions: correctOptionIds,
+      message: "틀렸습니다!",
+    };
+  };
+
+  const sendQuestionLog = async (
+    questionId: string,
+    selectedOptionId: string,
+    isCorrect: boolean,
+    elapsedSeconds: number
+  ) => {
+    // 맞췄는지 틀렸는지
+  };
+
+  const sendQuizStageLog = async (
+    stageIncex: number,
+    elapsedSeconds: number
+  ) => {
+    //
+  };
+
+  const sendQuizStageCompleteLog = async (
+    stageIncex: number,
+    elapsedSeconds: number
+  ) => {
+    //
+  };
+  const sendQuizCompleteLog = async () => {
+    //
+  };
 
   return (
     <QuizContext.Provider
       value={{
         quizSet,
-        // campaign,
         language,
-        // quizHistory,
-        // loading,
+        quizHistory,
+        currentQuizStageIndex,
+        currentQuestionIndex,
+        currentQuizStage,
+        currentStageQuizzes,
+        isFirstBadgeStage,
+        isLastBadgeStage,
+        processFirstBadgeAcquisition,
+        processLastBadgeAcquisition,
+        isComplete,
+        isLastStage,
+        startStage,
+        endStage,
+        nextStage,
+        confirmAnswer,
+        isLastQuestionOnState,
+        nextQuestion,
+        canNextQuestion,
+        // currentQuestionOptionIndex,
+        // setCurrentQuestionOptionIndex,
       }}
     >
       {children}

@@ -2,18 +2,15 @@
 
 import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItemList from "@/app/hooks/useGetItemList";
-import useUpdateItem from "@/app/hooks/useUpdateItem";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { Language, SalesFormat, User } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { Language, SalesFormat } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function GuestRegisterPage() {
-  const { data: session } = useSession();
-
   const { routeToPage } = usePathNavigator();
-  // Selection States
+
+  // state
   const [selectedDomain, setSelectedDomain] = useState<DomainEx | null>(null);
   const [selectedChannel, setSelectedChannel] =
     useState<ChannelSegmentEx | null>(null);
@@ -23,18 +20,27 @@ export default function GuestRegisterPage() {
     null
   );
 
+  // select box options
   const [channels, setChannels] = useState<ChannelSegmentEx[]>([]);
   const [salesFormats, setSalesFormats] = useState<SalesFormatEx[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
+
   const {
     isLoading,
     error,
     items: domains,
   } = useGetItemList<DomainEx>({ url: "/api/domains" });
 
+  const {
+    isLoading: loadingCreate,
+    error: errorCreate,
+    item: campaignPath,
+    createItem,
+  } = useCreateItem<string>();
+
   const fetchLanguages = async (domainId: string, jobId: string) => {
     const response = await fetch(
-      `/api/campaign/domains/${domainId}/jobs/${jobId}/languages`,
+      `/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`,
       {
         method: "GET",
         cache: "force-cache",
@@ -56,42 +62,18 @@ export default function GuestRegisterPage() {
     }
   }, [selectedSalesFormat]);
 
-  const {
-    isLoading: loadingUpdate,
-    error: errorUpdate,
-    item: updatedUser,
-    updateItem,
-  } = useUpdateItem<User>();
-
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
-
   useEffect(() => {
     if (campaignPath) {
       routeToPage(`${campaignPath}/map`);
     }
   }, [campaignPath]);
 
-  console.info("GuestRegisterPage session", session);
-
-  useEffect(() => {
-    if (updatedUser) {
-      if (updatedUser !== null) {
-        console.info("Updated User", updatedUser);
-      }
-    }
-  }, [updatedUser]);
-
   const selectDomain = (domainId: string) => {
     const domain = domains.find((d) => d.id === domainId);
     setSelectedDomain(domain);
 
     const channels = domain?.channelSegments;
-    setChannels(channels);
+    setChannels(channels ?? []);
     setSalesFormats([]);
     setLanguages([]);
 
@@ -108,7 +90,7 @@ export default function GuestRegisterPage() {
     }
     setSelectedChannel(channel);
     const salesFormats = channel.salesFormats;
-    setSalesFormats(salesFormats);
+    setSalesFormats(salesFormats ?? []);
     setLanguages([]);
 
     setSelectedSalesFormat(null);
@@ -139,8 +121,7 @@ export default function GuestRegisterPage() {
 
   const routeQuizPage = () => {
     createItem({
-      // url: `/api/users/${session?.user?.id}`,
-      url: `/api/campaign/register`,
+      url: `/api/campaigns/register`,
       body: {
         domainId: selectedDomain?.id,
         jobId: selectedSalesFormat?.jobId,
@@ -151,24 +132,20 @@ export default function GuestRegisterPage() {
     });
   };
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  const errorMessage = error || errorCreate;
 
-  // if (error) {
-  //   return <div>Error: {error.toString()}</div>;
-  // }
-
+  console.info("GuestRegisterPage render", isLoading, error, domains);
   return (
     <div className="container">
       <div>
         <h2>Domain Selection</h2>
         <select
+          value={selectedDomain?.id}
           onChange={(e) => {
             const domainId = e.target.value;
             selectDomain(domainId);
           }}
-          disabled={loadingUpdate || domains == null}
+          disabled={isLoading || loadingCreate || domains == null}
         >
           <option value="">Select a Domain</option>
           {domains?.map((domain) => (
@@ -180,11 +157,12 @@ export default function GuestRegisterPage() {
 
         <h2>Channel Selection</h2>
         <select
+          value={selectedChannel?.id}
           onChange={(e) => {
             const channelId = e.target.value;
             selectChannel(channelId);
           }}
-          disabled={loadingUpdate || channels == null}
+          disabled={isLoading || loadingCreate || channels == null}
         >
           <option value="">Select a Channel</option>
           {channels.map((channel) => (
@@ -196,11 +174,17 @@ export default function GuestRegisterPage() {
 
         <h2>Sales Format Selection</h2>
         <select
+          value={selectedSalesFormat?.id}
           onChange={(e) => {
             const id = e.target.value;
             selectSalesFormat(id);
           }}
-          disabled={loadingUpdate || channels == null || salesFormats == null}
+          disabled={
+            isLoading ||
+            loadingCreate ||
+            channels == null ||
+            salesFormats == null
+          }
         >
           <option value="">Select a Sales Format</option>
           {salesFormats.map((format) => (
@@ -212,12 +196,13 @@ export default function GuestRegisterPage() {
 
         <h2>Language Selection</h2>
         <select
+          value={selectedLanguage?.id}
           onChange={(e) => {
             const id = e.target.value;
             selectLanguage(id);
           }}
           disabled={
-            loadingUpdate ||
+            loadingCreate ||
             channels == null ||
             salesFormats == null ||
             languages == null
@@ -237,7 +222,8 @@ export default function GuestRegisterPage() {
             routeQuizPage();
           }}
           disabled={
-            loadingUpdate ||
+            isLoading ||
+            loadingCreate ||
             !selectedDomain ||
             !selectedChannel ||
             !selectedSalesFormat ||
@@ -247,6 +233,7 @@ export default function GuestRegisterPage() {
           Start Quiz
         </button>
       </div>
+      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
     </div>
   );
 }

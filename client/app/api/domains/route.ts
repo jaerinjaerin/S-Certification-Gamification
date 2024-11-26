@@ -1,3 +1,4 @@
+import { prisma } from "@/prisma-client";
 import { Domain } from "@prisma/client";
 import { NextResponse } from "next/server";
 

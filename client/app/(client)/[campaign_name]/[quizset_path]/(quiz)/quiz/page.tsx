@@ -1,0 +1,224 @@
+"use client";
+
+import { useQuiz } from "@/providers/quiz_provider";
+import { QuestionOption } from "@prisma/client";
+import { useEffect, useState } from "react";
+
+export default function QuizPage() {
+  const {
+    quizSet,
+    quizHistory,
+    currentQuizStageIndex,
+    currentQuestionIndex,
+    currentQuizStage,
+    // currentQuestionOptionIndex,
+    currentStageQuizzes,
+    isFirstBadgeStage,
+    isLastBadgeStage,
+    processFirstBadgeAcquisition,
+    processLastBadgeAcquisition,
+    isComplete,
+    isLastStage,
+    startStage,
+    endStage,
+    isLastQuestionOnState,
+    confirmAnswer,
+    nextStage,
+    nextQuestion,
+    canNextQuestion,
+    // setCurrentQuestionOptionIndex,
+  } = useQuiz();
+  // const [currentStage, setCurrentStage] = useState(
+  //   quizHistory?.lastCompletedStage ?? 0
+  // );
+  // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  // const { routeToPage } = usePathNavigator();
+
+  // // 선택된 옵션 상태
+  const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (quizSet) {
+      startStage();
+    }
+  }, []);
+
+  // const routeNextQuizComplete = () => {
+  //   routeToPage("complete");
+  // };
+
+  // const confirmAnswer = (
+  //   quizStageId: string,
+  //   questionId: string,
+  //   optionId: string
+  // ) => {
+  //   console.log("Selected Option:", optionId); // 선택된 옵션 확인
+
+  //   const isCorrect =
+  //     quizSet.quizStages
+  //       .find((stage: QuizStageEx) => stage.id === quizStageId)
+  //       ?.questions.find((question: QuestionEx) => question.id === questionId)
+  //       ?.options?.find((option: QuestionOption) => option.id === optionId)
+  //       ?.isCorrect ?? false;
+
+  //   if (isCorrect) {
+  //     alert("정답입니다!");
+  //     // send qeustion log to server
+  //     if (
+  //       currentQuestionIndex ===
+  //       quizSet.quizStages[currentStage].questions.length - 1
+  //     ) {
+  //       if (currentStage === quizSet.quizStages.length - 1) {
+  //         // send stage log to server
+  //         // update user quiz history
+  //         alert("퀴즈를 모두 완료했습니다!");
+  //         routeNextQuizComplete();
+  //         return;
+  //       }
+
+  //       alert("다음 스테이지로 이동합니다!");
+  //       // send stage log to server
+  //       // update user quiz history
+
+  //       setCurrentStage(currentStage + 1);
+  //       setSelectedOptionId(null);
+  //       setCurrentQuestionIndex(0);
+  //       return;
+  //     }
+
+  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
+  //     setSelectedOptionId(null);
+  //   } else {
+  //     alert("틀렸습니다!");
+  //     // send qeustion log to server
+  //   }
+  // };
+
+  const handleConfirmAnswer = async (questionId: string) => {
+    if (selectedOptionIds.length === 0) {
+      alert("선택된 옵션이 없습니다.");
+      return;
+    }
+
+    const result = await confirmAnswer(
+      currentQuizStage?.id,
+      questionId,
+      selectedOptionIds
+    );
+
+    if (result.isCorrect) {
+      alert("정답입니다!");
+      next();
+    } else {
+      alert("틀렸습니다!");
+    }
+  };
+
+  const next = async () => {
+    setSelectedOptionIds([]);
+
+    if (canNextQuestion()) {
+      nextQuestion();
+      return;
+    }
+
+    if (isFirstBadgeStage()) {
+      await processFirstBadgeAcquisition();
+      alert("첫 번째 배지 획득!");
+      // 배지 획득 화면 처리 로직
+      endStage();
+    } else if (isLastBadgeStage()) {
+      await processLastBadgeAcquisition();
+      alert("배지 획득!");
+      // 배지 획득 화면 처리 로직
+      endStage();
+      return;
+    }
+
+    // if (isLastStage()) {
+    //   // 퀴즈 완료 화면 처리 로직
+    //   return;
+    // }
+
+    alert(
+      `${
+        currentQuizStageIndex + 1
+      } 번째 스테이지 완료. 다음 스테이지로 이동합니다.`
+    );
+
+    nextStage();
+  };
+
+  const handleOptionChange = (optionId: string) => {
+    const newSelectedOptionIds = selectedOptionIds;
+    setSelectedOptionIds((prevSelected) => {
+      if (prevSelected.includes(optionId)) {
+        // 이미 선택된 옵션이면 제거
+        console.log(`Option ${optionId} 해지됨`);
+
+        const result = prevSelected.filter((id) => id !== optionId);
+        console.log("result", result);
+        return result;
+      } else {
+        // 선택된 옵션 추가
+        console.log(`Option ${optionId} 선택됨`);
+
+        return [...prevSelected, optionId];
+      }
+    });
+  };
+
+  console.log("currentQuestionIndex", currentQuestionIndex);
+
+  const renderQuizPage = () => {
+    if (!currentQuizStage || !currentStageQuizzes) {
+      return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
+    }
+
+    // const quizStage: QuizStageEx = quizSet.quizStages[currentStage];
+    const question = currentStageQuizzes[currentQuestionIndex];
+    const totalQuestions = currentStageQuizzes?.length;
+    const totalStages = quizSet.quizStages.length;
+
+    return (
+      <>
+        <p>
+          stage: {currentQuizStageIndex + 1}/{totalStages}
+        </p>
+        <p>stage에 주어진 하트 수: {currentQuizStage.lifeCount}</p>
+        <p>
+          question: {currentQuestionIndex + 1}/{totalQuestions}
+        </p>
+        <h3>{currentQuizStage?.name}</h3>
+        <p>시간제한: {question.timeLimitSeconds}</p>
+        <p>{question.text}</p>
+        {question.options &&
+          question.options.map((option: QuestionOption, index: number) => (
+            <div key={option.id}>
+              <input
+                type="checkbox"
+                name="option"
+                value={option.id}
+                checked={selectedOptionIds.includes(option.id)}
+                onChange={() => handleOptionChange(option.id)} // 옵션 선택/해제 처리
+              />
+              <label>
+                {option.text}({option.isCorrect ? "o" : "x"})
+              </label>
+            </div>
+          ))}
+        <button
+          onClick={() => {
+            handleConfirmAnswer(question.id);
+            // confirmAnswer(currentQuizStage.id, question.id, selectedOptionIds);
+          }}
+          disabled={selectedOptionIds.length === 0} // 선택된 옵션이 없으면 버튼 비활성화
+        >
+          확인
+        </button>
+      </>
+    );
+  };
+
+  return <div>{renderQuizPage()}</div>;
+}
