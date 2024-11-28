@@ -141,7 +141,7 @@ model VerificationToken {
 model VerifyToken {
   id          String   @id @default(cuid()) // 고유 식별자
   email       String   // 인증할 이메일
-  token       String   // 인증 토큰 (랜덤 문자열)
+  token       String   // 인증 토큰 (6개의 숫자 문자열)
   expiresAt   DateTime // 토큰 만료 시간
   createdAt   DateTime @default(now()) // 생성 시간
   updatedAt   DateTime @updatedAt // 마지막 갱신 시간
@@ -203,7 +203,7 @@ model CampaignDomainQuizSet {
   path       String
   campaignId String      // Foreign key to Campaign
   domainId   String      // Foreign key to Domain
-  jobId             String?
+  jobId             String
   languageId        String
   // questionIds       String
   quizStages     QuizStage[]

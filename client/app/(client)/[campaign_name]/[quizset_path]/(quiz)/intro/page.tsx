@@ -40,7 +40,9 @@ export default function QuizIntro() {
       {quizSet && <p>퀴즈 스테이지 개수: {quizSet.quizStages.length}</p>}
       <p>다음 Stage: {(quizHistory?.lastCompletedStage ?? 0) + 1}</p>
       <button onClick={routeQuizMap}>Go Quiz Map</button>
-      <button onClick={testSendEmail}>Send Test Mail</button>
+      <button disabled onClick={testSendEmail}>
+        Send Test Mail
+      </button>
     </div>
   );
 }

@@ -28,6 +28,8 @@ export default function QuizPage() {
     canNextQuestion,
     // setCurrentQuestionOptionIndex,
   } = useQuiz();
+
+  console.log("quizSet", quizSet);
   // const [currentStage, setCurrentStage] = useState(
   //   quizHistory?.lastCompletedStage ?? 0
   // );
