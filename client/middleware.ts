@@ -16,7 +16,11 @@ export async function middleware(request: NextRequest) {
 
   // console.log("pathname:", pathname, pathname.includes("/error"));
 
-  if (pathname.includes("/error") || pathname.includes("/logout")) {
+  if (
+    pathname.includes("/error") ||
+    pathname.includes("/logout") ||
+    pathname.includes("/home")
+  ) {
     return NextResponse.next();
   }
 

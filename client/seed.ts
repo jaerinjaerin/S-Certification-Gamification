@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, QuestionType } = require("@prisma/client");
 const uuid = require("uuid");
 
 const prisma = new PrismaClient();
@@ -251,6 +251,11 @@ async function main() {
         timeLimitSeconds: 30,
         languageId: enLanguage.id,
         order: i,
+        category: "test_category",
+        specificFeature: "test_specificFeature",
+        enabled: true,
+        product: "test_product",
+        questionType: QuestionType.SINGLE_CHOICE,
       },
     });
 
@@ -282,6 +287,11 @@ async function main() {
           languageId: lang.id,
           parentId: question.id,
           order: i,
+          category: "test_category",
+          specificFeature: "test_specificFeature",
+          enabled: true,
+          product: "test_product",
+          questionType: QuestionType.SINGLE_CHOICE,
         },
       });
 

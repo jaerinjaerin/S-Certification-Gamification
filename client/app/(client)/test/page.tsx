@@ -16,6 +16,8 @@ export default function TestPage() {
   const [resultActivity, setResultActivity] = useState<any | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState<number | "">("");
+  const [apiPath, setApiPath] = useState("");
+  const [apiResult, setApiResult] = useState(null);
 
   const fetchUserProfile = async () => {
     setLoading(true);
@@ -237,6 +239,29 @@ export default function TestPage() {
     }
   };
 
+  const fetchJobs = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/sumtotal/jobs", {
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch domains");
+      }
+
+      const data = await response.json();
+      console.log("fetchJobs data", data);
+      setDomains(data.data); // Extract and store activities array
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleActivitySelect = (activity: any) => {
     setSelectedActivity(activity);
   };
@@ -307,6 +332,39 @@ export default function TestPage() {
     }
   };
 
+  const fetchApi = async () => {
+    if (!apiPath) {
+      setError("Please provide an API path");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setApiResult(null);
+
+    try {
+      const response = await fetch(
+        `/api/sumtotal/custom?api_path=${encodeURIComponent(apiPath)}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log("data", result);
+      setApiResult(result);
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <button onClick={() => signOut()}>Sign out</button>
@@ -342,6 +400,23 @@ export default function TestPage() {
       <br />
       <button onClick={fetchDomains} disabled={loading}>
         {loading ? "Loading..." : "Domain 목록 조회"}
+      </button>
+      <br />
+      <button onClick={fetchJobs} disabled={loading}>
+        {loading ? "Loading..." : "Job 목록 조회"}
+      </button>
+      <br />
+      <br />
+      <input
+        type="text"
+        placeholder="Enter API path"
+        value={apiPath}
+        onChange={(e) => setApiPath(e.target.value)}
+        style={{ marginBottom: "10px", padding: "5px", width: "300px" }}
+      />
+      <br />
+      <button onClick={fetchApi} disabled={loading || apiPath == null}>
+        {loading ? "Loading..." : "Call Api"}
       </button>
 
       {activities.length > 0 && (
@@ -471,6 +546,13 @@ export default function TestPage() {
             </li>
           ))}
         </ul>
+      )}
+
+      {apiResult && (
+        <div>
+          <h2>Api Result:</h2>
+          <pre>{JSON.stringify(apiResult, null, 2)}</pre>
+        </div>
       )}
 
       {error && <p style={{ color: "red" }}>Error: {error}</p>}

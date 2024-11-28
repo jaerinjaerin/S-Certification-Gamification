@@ -88,7 +88,7 @@ export async function GET(request: NextRequest, props: Props) {
     response.headers.set("Cache-Control", "public, max-age=3600");
     return response;
   } catch (error) {
-    console.error("Error fetching activity data:", error);
+    console.error("Error fetching question data:", error);
 
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";

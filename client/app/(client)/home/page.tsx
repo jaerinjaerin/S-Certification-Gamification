@@ -1,21 +1,60 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+// import { useLocalStorage } from "@/providers/local_storage_provider";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
+  const { status, data: session } = useSession();
+
+  const [error, setError] = useState<string | null>(null);
+
+  const searchParams = useSearchParams();
+
+  const activityId = searchParams.get("activityId");
+  const userJob = searchParams.get("job");
+
+  // const { setActivityId, setUserJob } = useLocalStorage();
+
+  // if (activityId) {
+  //   setActivityId(activityId);
+  // }
+
+  // if (userJob) {
+  //   setUserJob(userJob);
+  // }
+
+  console.log("status", status);
+
+  if (session) {
+    return (
+      <>
+        :) Signed in as {session.user?.email}
+        <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+
+  const processSignIn = async () => {
+    const result = await signIn("sumtotal");
+    console.log("result", result);
+  };
+
   return (
     <div>
-      <h1>Home</h1>
-      <p>인증제 퀴즈 설명</p>
+      <h1>Sumtotal Test Login</h1>
       <button
         onClick={() => {
-          // (window.location.href = '/map')
+          processSignIn();
         }}
+        disabled={status === "loading"}
       >
-        퀴즈 풀기
+        Sign in with Sumtotal
       </button>
-      <br />
-      <button onClick={() => signOut()}>Sign out</button>
+      {status === "loading" && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
