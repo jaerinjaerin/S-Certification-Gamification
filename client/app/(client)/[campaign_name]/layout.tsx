@@ -1,23 +1,14 @@
 import { CampaignProvider } from "@/providers/campaignProvider";
 import { redirect } from "next/navigation";
 
-export default async function CampaignLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: any;
-}) {
+export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: any }) {
   console.log("CampaignLayout", params);
 
-  const response = await fetch(
-    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
-    {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    cache: "force-cache",
+  });
 
   const routeCommonError = () => {
     redirect("/error");

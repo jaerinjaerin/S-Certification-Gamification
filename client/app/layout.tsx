@@ -22,12 +22,9 @@ async function fetchData(quizSetId: string | null) {
   if (!quizSetId) return null;
 
   try {
-    const response = await fetch(
-      `${process.env.API_URL}/api/campaigns/quizset_path/${quizSetId}`,
-      {
-        cache: "force-cache",
-      }
-    );
+    const response = await fetch(`${process.env.API_URL}/api/campaigns/quizset_path/${quizSetId}`, {
+      cache: "force-cache",
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -39,18 +36,10 @@ async function fetchData(quizSetId: string | null) {
   }
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex justify-center`}>{children}</body>
     </html>
   );
 }
