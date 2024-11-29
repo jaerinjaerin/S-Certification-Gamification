@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CustomError } from "../types/type";
 
 type useGetItemListProps = {
   url: string;
@@ -9,10 +10,6 @@ function useGetItemList<T>(props: useGetItemListProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<T[]>([]);
   const [error, setError] = useState<string>();
-
-  useEffect(() => {
-    fetchData();
-  }, [props.url]);
 
   const fetchData = async () => {
     try {
@@ -28,17 +25,27 @@ function useGetItemList<T>(props: useGetItemListProps) {
       console.info("useGetItemList call", props.url, response);
 
       const data = await response.json();
-      const { items, count } = data;
+      const { items /* count */ } = data as {
+        items: T[];
+        // count: number;
+      };
 
       setItems(items as T[]);
-    } catch (error: any) {
-      const errorMessage = error.error.name;
-      console.error("Error:", error, errorMessage);
-      setError(errorMessage ?? "Something went wrong");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const customError = error as CustomError;
+        setError(customError?.error?.name ?? customError.message);
+      } else {
+        setError("Something went wrong");
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [props.url, fetchData]);
 
   const refetch = () => {
     fetchData();

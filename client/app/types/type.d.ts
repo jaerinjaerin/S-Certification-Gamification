@@ -34,3 +34,10 @@ type ChannelSegmentEx = ChannelSegment & {
 type SalesFormatEx = SalesFormat & {
   job: Job;
 };
+
+interface CustomError extends Error {
+  error?: {
+    name?: string;
+    code?: string;
+  };
+}

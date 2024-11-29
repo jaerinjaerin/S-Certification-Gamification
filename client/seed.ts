@@ -240,9 +240,9 @@ async function main() {
   });
 
   // Create Questions and Options in English
-  const allQuestions = [];
-  const allKoQuestions: any = [];
-  const allJaQuestions: any = [];
+  const allQuestions: string[] = [];
+  const allKoQuestions: string[] = [];
+  const allJaQuestions: string[] = [];
 
   for (let i = 1; i <= 10; i++) {
     const question = await prisma.question.create({

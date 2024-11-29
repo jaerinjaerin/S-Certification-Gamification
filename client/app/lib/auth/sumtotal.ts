@@ -1,6 +1,4 @@
-//@ts-nocheck
-
-import { OAuthConfig, OAuthUserConfig } from '@auth/core/providers';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
 interface Address {
@@ -240,24 +238,24 @@ export interface SumtotalProfile extends Record<string, any> {
 //     options,
 //   };
 // }
-
+/*
 export default function SumTotalProvider<SumtotalProfile>(
   options: OAuthUserConfig<SumtotalProfile>
 ): OAuthConfig<SumtotalProfile> {
   return {
-    id: 'sumtotal',
-    name: 'SumTotal',
-    type: 'oauth',
+    id: "sumtotal",
+    name: "SumTotal",
+    type: "oauth",
     authorization: {
-      url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
+      url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
       params: {
-        scope: 'allapis',
+        scope: "allapis",
       },
     },
-    token: 'https://samsung.sumtotal.host/apisecurity/connect/token',
-    userinfo: 'https://samsung.sumtotal.host/apis/api/v2/advanced/users',
+    token: "https://samsung.sumtotal.host/apisecurity/connect/token",
+    userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
     profile: (profile: SumtotalProfile) => {
-      console.log('profile:', profile);
+      console.log("profile:", profile);
       return {
         id: profile.userId,
         name: profile.fullName,
@@ -268,3 +266,4 @@ export default function SumTotalProvider<SumtotalProfile>(
     options,
   };
 }
+*/

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 // app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
@@ -29,7 +30,11 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { activityId, status, elapsedSeconds } = body;
+    const { activityId, status, elapsedSeconds } = body as {
+      activityId: string;
+      status: string;
+      elapsedSeconds: number;
+    };
 
     // try {
     const response = await fetch(
@@ -66,7 +71,7 @@ export async function POST(request: Request) {
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error fetching activitie:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

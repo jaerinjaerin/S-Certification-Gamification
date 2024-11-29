@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic";
 // app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, context: any) {
+export async function GET() {
   try {
     const session = await auth();
 
@@ -52,8 +53,8 @@ export async function GET(request: Request, context: any) {
     const data = await response.json();
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching activities:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching jobs:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

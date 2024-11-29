@@ -2,7 +2,7 @@
 
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function GuestLogin() {
@@ -12,7 +12,7 @@ export default function GuestLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
-  const { data: session } = useSession();
+  const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
 
   const sendEmail = async () => {
@@ -22,7 +22,7 @@ export default function GuestLogin() {
     try {
       const response = await fetch("/api/auth/send-verify-email", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ toAddress: email }),
       });
 
@@ -32,11 +32,12 @@ export default function GuestLogin() {
         setVerifyToken(verifyToken);
         setStep("code");
       } else {
-        const { error, code, retryAfter, verifyToken } = await response.json();
+        const { error, code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
           alert("Verification email already sent");
           setVerifyToken(verifyToken);
           setStep("code");
+          setExpiresAt(new Date(expiresAt));
           return;
         }
         setError(error || "Failed to send email. Please try again.");
@@ -113,6 +114,7 @@ export default function GuestLogin() {
           <button onClick={verifyCode} disabled={loading || !code}>
             {loading ? "Verifying..." : "Verify Code"}
           </button>
+          {expiresAt && <p>{expiresAt.toString()}</p>}
           {error && <p className="error">{error}</p>}
         </div>
       )}

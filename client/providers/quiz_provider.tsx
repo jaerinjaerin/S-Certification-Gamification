@@ -82,7 +82,7 @@ export const QuizProvider = ({
   const [currentStageQuizzes, setCurrentStageQuizzes] = useState<
     QuestionEx[] | null
   >(quizSet.quizStages[currentQuizStageIndex].questions);
-  let stageStartedAt = null;
+  let stageStartedAt: Date | null = null;
 
   const startStage = (): void => {
     stageStartedAt = new Date();

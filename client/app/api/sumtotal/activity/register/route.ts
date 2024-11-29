@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 // app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
@@ -28,7 +29,7 @@ export async function PUT(request: Request) {
     }
 
     const body = await request.json();
-    const { activityId } = body;
+    const { activityId } = body as { activityId: string };
 
     // try {
     const response = await fetch(
@@ -60,7 +61,7 @@ export async function PUT(request: Request) {
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error register activity:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

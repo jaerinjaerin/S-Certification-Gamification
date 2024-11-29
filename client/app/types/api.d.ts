@@ -1,3 +1,4 @@
+/*
 // 퀴즈 버전 또는 에디션 (전체 업데이트 개념)
 export interface QuizCampaign {
   id: string;
@@ -64,3 +65,4 @@ export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 // 퀴즈 세트 API 응답 타입
 export interface QuizSetApiResponse extends ApiResponse<QuizSet> {}
+*/

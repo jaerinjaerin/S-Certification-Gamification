@@ -18,27 +18,6 @@ export const metadata: Metadata = {
   description: "Samsung+ Certification Gamification",
 };
 
-async function fetchData(quizSetId: string | null) {
-  if (!quizSetId) return null;
-
-  try {
-    const response = await fetch(
-      `${process.env.API_URL}/api/campaigns/quizset_path/${quizSetId}`,
-      {
-        cache: "force-cache",
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
 export default async function RootLayout({
   children,
 }: {

@@ -17,7 +17,7 @@ export const usePathNavigator = () => {
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
     const campaignName = segments[0];
     // const campaignQuizSetId = segments.length > 1 ? segments[1] : null;
-    let campaignQuizSetId = null;
+    let campaignQuizSetId: string | null = null;
     if (segments.length > 1 && isValidCampaignQuizSetId(segments[1])) {
       campaignQuizSetId = segments[1];
     }

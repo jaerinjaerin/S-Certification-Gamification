@@ -21,7 +21,7 @@ export async function PUT(request: Request, props: Props) {
 
     return NextResponse.json({ item: user }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error fetching users:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

@@ -57,16 +57,20 @@ export default function GuestRegisterPage() {
   };
 
   useEffect(() => {
-    if (selectedSalesFormat) {
-      fetchLanguages(selectedDomain?.id!, selectedSalesFormat?.jobId!);
+    if (
+      selectedSalesFormat &&
+      selectedDomain?.id &&
+      selectedSalesFormat?.jobId
+    ) {
+      fetchLanguages(selectedDomain?.id, selectedSalesFormat?.jobId);
     }
-  }, [selectedSalesFormat]);
+  }, [selectedSalesFormat, selectedDomain]);
 
   useEffect(() => {
     if (campaignPath) {
       routeToPage(`${campaignPath}/map`);
     }
-  }, [campaignPath]);
+  }, [campaignPath, routeToPage]);
 
   const selectDomain = (domainId: string) => {
     const domain = domains.find((d) => d.id === domainId);

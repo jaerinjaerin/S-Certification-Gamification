@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic";
 // app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, context: any) {
+export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const apiPath = searchParams.get("api_path");
@@ -56,7 +57,7 @@ export async function GET(request: Request, context: any) {
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error call api:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

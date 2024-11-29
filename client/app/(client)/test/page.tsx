@@ -130,28 +130,28 @@ export default function TestPage() {
   };
 
   // API 호출 함수
-  const fetchActivities = async () => {
-    setLoading(true);
-    setError(null);
+  // const fetchActivities = async () => {
+  //   setLoading(true);
+  //   setError(null);
 
-    try {
-      const response = await fetch("/api/sumtotal/activity", {
-        cache: "no-store",
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch activities");
-      }
+  //   try {
+  //     const response = await fetch("/api/sumtotal/activity", {
+  //       cache: "no-store",
+  //     });
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Failed to fetch activities");
+  //     }
 
-      const data = await response.json();
-      console.log("fetchActivities data", data);
-      setActivities(data.data); // Extract and store activities array
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("fetchActivities data", data);
+  //     setActivities(data.data); // Extract and store activities array
+  //   } catch (err: any) {
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchAllActivities = async () => {
     setLoading(true);

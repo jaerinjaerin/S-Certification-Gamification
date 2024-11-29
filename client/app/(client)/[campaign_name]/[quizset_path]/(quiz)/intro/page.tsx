@@ -14,9 +14,9 @@ export default function QuizIntro() {
   const testSendEmail = async () => {
     const response = await fetch("/api/auth/send-verify-email", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
       body: JSON.stringify({
         toAddress: "bluedevstorm@gmail.com",
         subject: "Test Email",

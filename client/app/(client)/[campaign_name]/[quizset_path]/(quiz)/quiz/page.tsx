@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function QuizPage() {
   const {
     quizSet,
-    quizHistory,
+    // quizHistory,
     currentQuizStageIndex,
     currentQuestionIndex,
     currentQuizStage,
@@ -17,11 +17,11 @@ export default function QuizPage() {
     isLastBadgeStage,
     processFirstBadgeAcquisition,
     processLastBadgeAcquisition,
-    isComplete,
-    isLastStage,
+    // isComplete,
+    // isLastStage,
     startStage,
     endStage,
-    isLastQuestionOnState,
+    // isLastQuestionOnState,
     confirmAnswer,
     nextStage,
     nextQuestion,
@@ -30,11 +30,6 @@ export default function QuizPage() {
   } = useQuiz();
 
   console.log("quizSet", quizSet);
-  // const [currentStage, setCurrentStage] = useState(
-  //   quizHistory?.lastCompletedStage ?? 0
-  // );
-  // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  // const { routeToPage } = usePathNavigator();
 
   // // 선택된 옵션 상태
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
@@ -43,7 +38,7 @@ export default function QuizPage() {
     if (quizSet) {
       startStage();
     }
-  }, []);
+  }, [quizSet, startStage]);
 
   // const routeNextQuizComplete = () => {
   //   routeToPage("complete");
@@ -152,7 +147,6 @@ export default function QuizPage() {
   };
 
   const handleOptionChange = (optionId: string) => {
-    const newSelectedOptionIds = selectedOptionIds;
     setSelectedOptionIds((prevSelected) => {
       if (prevSelected.includes(optionId)) {
         // 이미 선택된 옵션이면 제거
@@ -195,7 +189,7 @@ export default function QuizPage() {
         <p>시간제한: {question.timeLimitSeconds}</p>
         <p>{question.text}</p>
         {question.options &&
-          question.options.map((option: QuestionOption, index: number) => (
+          question.options.map((option: QuestionOption) => (
             <div key={option.id}>
               <input
                 type="checkbox"

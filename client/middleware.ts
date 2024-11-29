@@ -30,9 +30,9 @@ export async function middleware(request: NextRequest) {
   }
   const campaignName = segments[0];
   // const campaignQuizSetId = segments.length > 1 ? segments[1] : null;
-  let campaignQuizSetId = null;
+  let campaignQuizSetId: string | null = null;
   if (segments.length > 1 && isValidCampaignQuizSetId(segments[1])) {
-    campaignQuizSetId = segments[1];
+    campaignQuizSetId = segments[1] as string;
   }
 
   // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
