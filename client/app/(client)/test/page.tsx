@@ -409,14 +409,14 @@ export default function TestPage() {
       <br />
       <input
         type="text"
-        placeholder="Enter API path"
+        placeholder="/api/v2/advanced/userprofile"
         value={apiPath}
         onChange={(e) => setApiPath(e.target.value)}
         style={{ marginBottom: "10px", padding: "5px", width: "300px" }}
       />
       <br />
       <button onClick={fetchApi} disabled={loading || apiPath == null}>
-        {loading ? "Loading..." : "Call Api"}
+        {loading ? "Loading..." : "Call Api (API 직접 입력)"}
       </button>
 
       {activities.length > 0 && (
@@ -462,16 +462,16 @@ export default function TestPage() {
         </div>
       )}
 
-      {/* {selectedActivity && selectedActivity.assignmentStatus !== "Attended" && (
+      {selectedActivity && selectedActivity.assignmentStatus === "Assigned" && (
         <>
           <button onClick={postActivitieRegister} disabled={loading}>
             {loading ? "Loading..." : "Activity 등록"}
           </button>
-          <button onClick={postActivitieEnd} disabled={loading}>
+          {/* <button onClick={postActivitieEnd} disabled={loading}>
             {loading ? "Loading..." : "Activity 종료"}
-          </button>
+          </button> */}
         </>
-      )} */}
+      )}
 
       {(selectedActivity?.assignmentStatus === "Registered" ||
         selectedActivity?.assignmentStatus === "In progress - Registered") && (

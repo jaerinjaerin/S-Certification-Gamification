@@ -32,7 +32,7 @@ export async function GET(request: Request, context: any) {
 
     // try {
     const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/${apiPath}?limit=100`,
+      `https://samsung.sumtotal.host/apis/${apiPath}?limit=100`,
       {
         cache: "no-store",
         headers: {
