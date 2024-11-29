@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-// app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";

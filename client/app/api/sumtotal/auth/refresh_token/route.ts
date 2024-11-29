@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
-// app/api/users/[userId]/activities/route.ts
 import { auth } from "@/auth";
+import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
 const TOKEN_URL = "https://samsung.sumtotal.host/apisecurity/connect/token";
@@ -50,7 +50,7 @@ export async function GET() {
       },
       body: new URLSearchParams({
         grant_type: "refresh_token",
-        refresh_token: account.refresh_token,
+        refresh_token: account.refresh_token || "",
         client_id: CLIENT_ID!, // 환경 변수에 저장된 Client ID
         client_secret: CLIENT_SECRET!, // 환경 변수에 저장된 Client Secret
       }),
