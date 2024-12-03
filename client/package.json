@@ -21,6 +21,8 @@
     "@prisma/client": "^5.22.0",
     "@react-email/components": "^0.0.27",
     "aws-sdk": "^2.1692.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cuid": "^3.0.0",
     "date-fns": "^4.1.0",
     "js-cookie": "^3.0.5",
@@ -30,6 +32,7 @@
     "react-dom": "18",
     "react-email": "^3.0.2",
     "resend": "^4.0.1-alpha.0",
+    "tailwind-merge": "^2.5.5",
     "ts-node": "^10.9.2",
     "uuid": "^11.0.3"
   },
