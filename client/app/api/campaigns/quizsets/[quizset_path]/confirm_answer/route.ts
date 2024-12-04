@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import { NextResponse } from "next/server";
@@ -11,7 +10,7 @@ type Props = {
 
 export async function POST(request: Request, props: Props) {
   try {
-    const session = await auth();
+    // const session = await auth();
     const body = await request.json();
 
     const { quizset_path } = props.params;
