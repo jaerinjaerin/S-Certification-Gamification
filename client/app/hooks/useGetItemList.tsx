@@ -45,7 +45,7 @@ function useGetItemList<T>(props: useGetItemListProps) {
 
   useEffect(() => {
     fetchData();
-  }, [props.url, fetchData]);
+  }, [props.url]);
 
   const refetch = () => {
     fetchData();
