@@ -15,19 +15,20 @@ export const usePathNavigator = () => {
   ): string => {
     const pathname = window.location.pathname;
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
-    const campaignName = segments[0];
+    const firstPath = segments[0];
+    const campaignName = segments[1];
     // const campaignQuizSetId = segments.length > 1 ? segments[1] : null;
     let campaignQuizSetId: string | null = null;
-    if (segments.length > 1 && isValidCampaignQuizSetId(segments[1])) {
-      campaignQuizSetId = segments[1];
+    if (segments.length > 2 && isValidCampaignQuizSetId(segments[2])) {
+      campaignQuizSetId = segments[2];
     }
 
     console.log("segments:", segments);
     console.log("campaignQuizSetId:", campaignQuizSetId);
 
     return campaignQuizSetId
-      ? `/${campaignName}/${campaignQuizSetId}/${page}${search}`
-      : `/${campaignName}/${page}${search}`;
+      ? `/${firstPath}/${campaignName}/${campaignQuizSetId}/${page}${search}`
+      : `/${firstPath}/${campaignName}/${page}${search}`;
   };
 
   /**

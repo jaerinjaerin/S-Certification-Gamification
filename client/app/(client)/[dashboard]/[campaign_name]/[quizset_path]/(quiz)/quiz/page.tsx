@@ -103,7 +103,12 @@ export default function QuizPage() {
       selectedOptionIds
     );
 
-    if (result.isCorrect) {
+    if (!result.success) {
+      alert(result.error);
+      return;
+    }
+
+    if (result.data.isCorrect) {
       alert("정답입니다!");
       next();
     } else {

@@ -80,11 +80,15 @@ model User {
 
 
   sumtotalDomainId              String?
-  sumtotalJobCode              String?
+  sumtotalJob              String?
   sumtotalLanguageId              String?
+  // sumtotalOrganizationIds String?
+  
+  sumtotalStore            String?
   
   channelSegmentId            String?
   salesFormatId  String?
+  
 
   domain      Domain? @relation(fields: [domainId], references: [id])
   language    Language? @relation(fields: [languageId], references: [id])
@@ -395,6 +399,7 @@ model UserQuizQuestionLog {
   // timeSpent    Int      // Time spent on this question (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  selectedOptionIds String
 
   // campaignDomainId String
   // countryCode String
@@ -403,7 +408,6 @@ model UserQuizQuestionLog {
   languageId String?
 
   stageIndex  Int
-
 
   elapsedSeconds Int
   category    String
