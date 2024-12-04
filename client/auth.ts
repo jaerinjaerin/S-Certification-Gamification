@@ -16,6 +16,7 @@ declare module "next-auth" {
       providerUserId: string;
       providerPersonId: string;
       authType: AuthType;
+      // sumtotalOrganizationIds: string | null;
     } & DefaultSession["user"];
   }
 }
@@ -41,7 +42,7 @@ export const {
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      profile: (profile: SumtotalProfile) => {
+      profile: async (profile: SumtotalProfile) => {
         console.log("profile:", profile);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
         return {
@@ -144,7 +145,6 @@ export const {
     createUser: async (message) => {
       console.log("next-auth createUser", message);
       const { user } = message;
-
       if (user.email != null) {
         const userEmail = await prisma.userEmail.create({
           data: {
@@ -162,31 +162,58 @@ export const {
         });
       }
     },
-    async linkAccount({ user, profile }) {
+    linkAccount: ({ user, profile }) => {
       console.log("next-auth linkAccount", user, profile);
     },
   },
   callbacks: {
-    jwt: async ({ token, profile: pf, user, account }) => {
-      // console.log("auth callbacks jwt", token, pf, user, account);
+    jwt: async ({ token, profile, user, account }) => {
+      console.log("auth callbacks jwt", token, profile, user, account);
       if (account) {
         token.accountType = account.type;
+      }
+      if (profile) {
+        const sumtotalProfile = profile as SumtotalProfile;
 
-        const found_account = await prisma.account.findFirst({
-          where: { providerAccountId: account.providerAccountId as string },
-        });
+        try {
+          let job = null;
+          let store = null;
 
-        if (found_account) {
-          await prisma.account.update({
+          // Sumtotal에서 job, store 정보 가져와 저장히기
+          const orgIds = sumtotalProfile.personOrganization
+            .map((org) => org.organizationId)
+            .join(",");
+          const response = await fetch(
+            `${process.env.API_URL}/api/users/job?user_id=${user.id}&org_ids=${orgIds}`,
+            {
+              method: "GET",
+              cache: "no-store",
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || "Failed to fetch user job and channel"
+            );
+          }
+
+          const data = await response.json();
+          console.log("data", data);
+          job = data.job;
+          store = data.store;
+
+          await prisma.user.update({
             where: {
-              id: found_account.id,
+              id: user.id,
             },
             data: {
-              access_token: account.access_token,
-              refresh_token: account.refresh_token,
-              expires_at: account.expires_at, // 새로운 만료 시간
+              sumtotalJob: job,
+              sumtotalStore: store,
             },
           });
+        } catch (error) {
+          console.error("Error fetching user job and channel:", error);
         }
       }
       return token;

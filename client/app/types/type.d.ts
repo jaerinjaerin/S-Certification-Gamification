@@ -40,3 +40,10 @@ type IconProps = {
   color?: string;
   accent?: boolean;
 } & React.SVGAttributes<SVGElement>;
+
+interface CustomError extends Error {
+  error?: {
+    name?: string;
+    code?: string;
+  };
+}

@@ -1,8 +1,9 @@
-// app/api/users/[userId]/activities/route.ts
+export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
+import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, context: any) {
+export async function GET() {
   try {
     const session = await auth();
 
@@ -53,7 +54,7 @@ export async function GET(request: Request, context: any) {
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error fetching domains:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

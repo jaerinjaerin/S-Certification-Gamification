@@ -6,11 +6,7 @@ export default function useGetItem<T>(
 ) {
   const [isLoading, setIsLoading] = useState(true);
   const [item, setItem] = useState<T>();
-  const [error, setError] = useState<any>();
-
-  useEffect(() => {
-    fetchData();
-  }, [url, cachePolicy]);
+  const [error, setError] = useState<unknown>();
 
   const fetchData = async () => {
     try {
@@ -25,12 +21,16 @@ export default function useGetItem<T>(
       }
 
       setItem(data.item);
-    } catch (error) {
+    } catch (error: unknown) {
       setError(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [url, cachePolicy, fetchData]);
 
   const refetch = () => {
     fetchData();

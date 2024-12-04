@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CustomError } from "../types/type";
 
 export default function useCreateItem<T>() {
   const [item, setItem] = useState<T>();
@@ -11,7 +12,7 @@ export default function useCreateItem<T>() {
     body,
   }: {
     url: string;
-    body: any;
+    body: object;
   }): Promise<void> => {
     setIsLoading(true);
     try {
@@ -33,8 +34,13 @@ export default function useCreateItem<T>() {
       setItem(item);
       setSuccess(true);
       setIsLoading(false);
-    } catch (error: any) {
-      setError(error?.error?.name ?? "Something went wrong");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const customError = error as CustomError;
+        setError(customError?.error?.name ?? customError.message);
+      } else {
+        setError("Something went wrong");
+      }
       setIsLoading(false);
       setSuccess(false);
     }

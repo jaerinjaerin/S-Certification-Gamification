@@ -59,7 +59,7 @@ export async function GET(request: NextRequest, props: Props) {
     });
 
     return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching activity data:", error);
 
     const errorMessage =
@@ -126,9 +126,9 @@ export async function POST(request: NextRequest, props: Props) {
     });
 
     return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("Error creating user campaign domain log:", e);
-    return NextResponse.json({ error: e.error }, { status: 500 });
+    return NextResponse.json({ error: e }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

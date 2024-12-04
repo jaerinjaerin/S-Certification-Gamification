@@ -48,3 +48,8 @@ app /
 ├── map / # 퀴즈 맵 정보. 현재 유저의 퀴즈 스테이지 정보 노출
 ├── quiz / # 퀴즈를 진행하는 페이지 (스테이지도 포함)
 ├── complete / # 퀴즈 완료 페이지
+
+## Route를 처리하는 곳
+
+- middleware.ts
+- route/usePathNavigator.ts

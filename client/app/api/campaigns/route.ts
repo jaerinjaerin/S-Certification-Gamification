@@ -1,7 +1,7 @@
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
-export async function GET(request: Request, context: any) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const campaignName = searchParams.get("campaign_name");
 
@@ -31,7 +31,7 @@ export async function GET(request: Request, context: any) {
 
     return NextResponse.json({ item: campaign }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activities:", error);
+    console.error("Error fetching campaigns:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

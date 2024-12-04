@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import useTimer from "@/app/hooks/useTimer";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function GuestLogin() {
@@ -14,7 +14,7 @@ export default function GuestLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
-  const { data: session } = useSession();
+  const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const { time, reset, resetAndStart } = useTimer(60);
 
@@ -36,7 +36,7 @@ export default function GuestLogin() {
     try {
       const response = await fetch("/api/auth/send-verify-email", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ toAddress: email }),
       });
 
@@ -47,13 +47,13 @@ export default function GuestLogin() {
         setStep("code");
         resetAndStart();
       } else {
-        const { error, code, retryAfter, verifyToken } = await response.json();
-        console.log(verifyToken);
+        const { error, code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
           alert("Verification email already sent");
           setVerifyToken(verifyToken);
           setStep("code");
           resetAndStart();
+          setExpiresAt(new Date(expiresAt));
           return;
         }
         setError(error || "Failed to send email. Please try again.");
@@ -201,3 +201,25 @@ export default function GuestLogin() {
     </div>
   );
 }
+
+// {step === "code" && (
+//   <div>
+//     <h2>Enter Verification Code</h2>
+//     <p>We have sent a verification code to your email.</p>
+//     <input
+//       type="text"
+//       placeholder="Enter the code"
+//       value={code}
+//       onChange={(e) => setCode(e.target.value)}
+//       disabled={loading}
+//     />
+//     {verifyToken?.expiresAt && (
+//       <p>
+//         Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
+//       </p>
+//     )}
+//     <button onClick={verifyCode} disabled={loading || !code}>
+//       {loading ? "Verifying..." : "Verify Code"}
+//     </button>
+//     {expiresAt && <p>{expiresAt.toString()}</p>}
+//     {error && <p className="error">{error}</p>}

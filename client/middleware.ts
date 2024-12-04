@@ -25,14 +25,16 @@ export async function middleware(request: NextRequest) {
   }
 
   const segments = pathname.split("/").filter(Boolean); // 빈 문자열 제거
-  if (segments.length === 0) {
+  if (segments.length < 1) {
     return NextResponse.redirect(new URL("/error/not-found", request.url));
   }
-  const campaignName = segments[0];
+
+  const dashboardPath = segments[0];
+  const campaignName = segments[1];
   // const campaignQuizSetId = segments.length > 1 ? segments[1] : null;
-  let campaignQuizSetId = null;
-  if (segments.length > 1 && isValidCampaignQuizSetId(segments[1])) {
-    campaignQuizSetId = segments[1];
+  let campaignQuizSetId: string | null = null;
+  if (isValidCampaignQuizSetId(segments[2])) {
+    campaignQuizSetId = segments[2] as string;
   }
 
   // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
@@ -44,24 +46,24 @@ export async function middleware(request: NextRequest) {
     // pathname !== "/verify-request"
   ) {
     const url = campaignQuizSetId
-      ? `/${campaignName}/${campaignQuizSetId}/login${search}`
-      : `/${campaignName}/login${search}`;
+      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/login${search}`
+      : `/${dashboardPath}/${campaignName}/login${search}`;
 
     return NextResponse.redirect(new URL(url, request.url));
   }
 
   if (session && pathname.includes("/login")) {
     const url = campaignQuizSetId
-      ? `/${campaignName}/${campaignQuizSetId}/intro${search}`
-      : `/${campaignName}${search}`;
+      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`
+      : `/${dashboardPath}/${campaignName}${search}`;
 
     console.log("url:", url);
 
     return NextResponse.redirect(new URL(url, request.url));
   }
 
-  if (session && campaignQuizSetId && segments.length === 2) {
-    const url = `/${campaignName}/${campaignQuizSetId}/intro${search}`;
+  if (session && campaignQuizSetId && segments.length === 3) {
+    const url = `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`;
 
     console.log("url:", url);
 

@@ -1,12 +1,13 @@
 import { CampaignProvider } from "@/providers/campaignProvider";
+import { Campaign } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: any }) {
+export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: { campaign_name: string } }) {
   console.log("CampaignLayout", params);
 
   const response = await fetch(`${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`, {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    // headers: { "Content-Type": "application/json" },
     cache: "force-cache",
   });
 
@@ -18,7 +19,7 @@ export default async function CampaignLayout({ children, params }: { children: R
     routeCommonError();
     return;
   }
-  const data = await response.json();
+  const data = (await response.json()) as { item: Campaign };
 
   console.log("QuizProvider fetchData data", data);
 

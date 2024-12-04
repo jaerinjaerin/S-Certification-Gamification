@@ -37,7 +37,7 @@ export default async function QuizLayout({
     `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
     {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
       cache: "force-cache",
     }
   );
@@ -59,9 +59,9 @@ export default async function QuizLayout({
       `${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
         body: JSON.stringify({ userId: session?.user.id }),
       }
     );

@@ -2,11 +2,9 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function CampaignPage({
-  children,
   params,
 }: {
-  children: React.ReactNode;
-  params: any;
+  params: { campaign_name: string };
 }) {
   // export default async function CampaignPage() {
   // 유저가 삼플 유저인지. 삼플 미사용 유저인지 확인
@@ -34,7 +32,7 @@ export default async function CampaignPage({
     `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
     {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
       cache: "force-cache",
     }
   );
@@ -46,7 +44,7 @@ export default async function CampaignPage({
     `${process.env.API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
     {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
       cache: "force-cache",
     }
   );
@@ -70,4 +68,6 @@ export default async function CampaignPage({
   }
 
   redirect(`${params.campaign_name}/register`);
+
+  return <div>Loading...</div>;
 }

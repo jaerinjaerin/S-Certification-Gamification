@@ -1,6 +1,5 @@
 import { prisma } from "@/prisma-client";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
 const sesClient = new SESClient({
@@ -12,56 +11,56 @@ const sesClient = new SESClient({
   },
 });
 
-export async function createVerifyToken(email: string) {
-  const token = crypto.randomBytes(32).toString("hex"); // 랜덤 토큰 생성
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
+// export async function createVerifyToken(email: string) {
+//   const token = crypto.randomBytes(32).toString("hex"); // 랜덤 토큰 생성
+//   const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
 
-  const verifyToken = await prisma.verifyToken.create({
-    data: {
-      email,
-      token,
-      expiresAt,
-    },
-  });
+//   const verifyToken = await prisma.verifyToken.create({
+//     data: {
+//       email,
+//       token,
+//       expiresAt,
+//     },
+//   });
 
-  return verifyToken;
-}
+//   return verifyToken;
+// }
 
-export async function verifyToken(email: string, token: string) {
-  const verifyToken = await prisma.verifyToken.findFirst({
-    where: { token },
-  });
+// export async function verifyToken(email: string, token: string) {
+//   const verifyToken = await prisma.verifyToken.findFirst({
+//     where: { token },
+//   });
 
-  if (!verifyToken) {
-    throw new Error("Invalid or expired token");
-  }
+//   if (!verifyToken) {
+//     throw new Error("Invalid or expired token");
+//   }
 
-  if (verifyToken.email !== email) {
-    throw new Error("Token does not match the email");
-  }
+//   if (verifyToken.email !== email) {
+//     throw new Error("Token does not match the email");
+//   }
 
-  if (new Date() > verifyToken.expiresAt) {
-    throw new Error("Token has expired");
-  }
+//   if (new Date() > verifyToken.expiresAt) {
+//     throw new Error("Token has expired");
+//   }
 
-  // 유효한 경우 토큰 삭제 (선택 사항)
-  await prisma.verifyToken.delete({ where: { id: verifyToken.id } });
+//   // 유효한 경우 토큰 삭제 (선택 사항)
+//   await prisma.verifyToken.delete({ where: { id: verifyToken.id } });
 
-  return true;
-}
+//   return true;
+// }
 
-export async function cleanExpiredTokens() {
-  await prisma.verifyToken.deleteMany({
-    where: {
-      expiresAt: { lt: new Date() }, // 현재 시간보다 이전
-    },
-  });
-}
+// export async function cleanExpiredTokens() {
+//   await prisma.verifyToken.deleteMany({
+//     where: {
+//       expiresAt: { lt: new Date() }, // 현재 시간보다 이전
+//     },
+//   });
+// }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { toAddress, subject, htmlBody, textBody } = body;
+    const { toAddress } = body as { toAddress: string };
 
     const verifyToken = await prisma.verifyToken.findFirst({
       where: { email: toAddress },
@@ -81,13 +80,18 @@ export async function POST(request: NextRequest) {
             error: "Verification email already sent",
             verifyToken: verifyToken,
             code: "EMAIL_ALREADY_SENT",
-            retryAfter: verifyToken.expiresAt,
+            expiresAt: verifyToken.expiresAt,
           },
           { status: 409 }
         );
       }
 
-      await cleanExpiredTokens();
+      // 만료된 토큰 삭제
+      await prisma.verifyToken.deleteMany({
+        where: {
+          expiresAt: { lt: new Date() }, // 현재 시간보다 이전
+        },
+      });
     }
 
     // const token = crypto.randomBytes(32).toString("hex");
@@ -128,7 +132,7 @@ export async function POST(request: NextRequest) {
     if (data?.$metadata?.httpStatusCode == 200) {
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
 
-      const verifyToken = await prisma.verifyToken.create({
+      await prisma.verifyToken.create({
         data: {
           email: toAddress,
           token: randomCode,
@@ -138,13 +142,13 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { item: data },
+      { item: { success: true } },
       { status: data?.$metadata?.httpStatusCode }
     );
     // return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
-  } catch (e: any) {
-    console.error("Error send email verify error: ", e);
-    return NextResponse.json({ error: e.error }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Error send email verify error: ", error);
+    return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

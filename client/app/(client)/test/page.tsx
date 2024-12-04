@@ -58,6 +58,32 @@ export default function TestPage() {
     }
   };
 
+  const getUserJobAndChannel = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/users/job?org_ids=488883,751755", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Failed to fetch user job and channel"
+        );
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const refreshToken = async () => {
     setLoading(true);
     setError(null);
@@ -130,28 +156,28 @@ export default function TestPage() {
   };
 
   // API 호출 함수
-  const fetchActivities = async () => {
-    setLoading(true);
-    setError(null);
+  // const fetchActivities = async () => {
+  //   setLoading(true);
+  //   setError(null);
 
-    try {
-      const response = await fetch("/api/sumtotal/activity", {
-        cache: "no-store",
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch activities");
-      }
+  //   try {
+  //     const response = await fetch("/api/sumtotal/activity", {
+  //       cache: "no-store",
+  //     });
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Failed to fetch activities");
+  //     }
 
-      const data = await response.json();
-      console.log("fetchActivities data", data);
-      setActivities(data.data); // Extract and store activities array
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("fetchActivities data", data);
+  //     setActivities(data.data); // Extract and store activities array
+  //   } catch (err: any) {
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchAllActivities = async () => {
     setLoading(true);
@@ -409,14 +435,14 @@ export default function TestPage() {
       <br />
       <input
         type="text"
-        placeholder="Enter API path"
+        placeholder="/api/v2/advanced/userprofile"
         value={apiPath}
         onChange={(e) => setApiPath(e.target.value)}
         style={{ marginBottom: "10px", padding: "5px", width: "300px" }}
       />
       <br />
       <button onClick={fetchApi} disabled={loading || apiPath == null}>
-        {loading ? "Loading..." : "Call Api"}
+        {loading ? "Loading..." : "Call Api (API 직접 입력)"}
       </button>
 
       {activities.length > 0 && (
@@ -462,16 +488,16 @@ export default function TestPage() {
         </div>
       )}
 
-      {/* {selectedActivity && selectedActivity.assignmentStatus !== "Attended" && (
+      {selectedActivity && selectedActivity.assignmentStatus === "Assigned" && (
         <>
           <button onClick={postActivitieRegister} disabled={loading}>
             {loading ? "Loading..." : "Activity 등록"}
           </button>
-          <button onClick={postActivitieEnd} disabled={loading}>
+          {/* <button onClick={postActivitieEnd} disabled={loading}>
             {loading ? "Loading..." : "Activity 종료"}
-          </button>
+          </button> */}
         </>
-      )} */}
+      )}
 
       {(selectedActivity?.assignmentStatus === "Registered" ||
         selectedActivity?.assignmentStatus === "In progress - Registered") && (
@@ -556,6 +582,10 @@ export default function TestPage() {
       )}
 
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      <button onClick={getUserJobAndChannel} disabled={loading}>
+        {loading ? "Loading..." : "유저 Job 와 Channel 정보 조회"}
+      </button>
     </div>
   );
 }
