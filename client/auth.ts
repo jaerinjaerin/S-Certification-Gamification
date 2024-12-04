@@ -13,9 +13,9 @@ declare module "next-auth" {
     user: {
       /** The user's id. */
       id: string;
-      providerUserId: string;
-      providerPersonId: string;
-      authType: AuthType;
+      // providerUserId: string;
+      // providerPersonId: string;
+      provider: string;
       // sumtotalOrganizationIds: string | null;
     } & DefaultSession["user"];
   }
@@ -170,7 +170,7 @@ export const {
     jwt: async ({ token, profile, user, account }) => {
       console.log("auth callbacks jwt", token, profile, user, account);
       if (account) {
-        token.accountType = account.type;
+        token.provider = account.provider;
       }
       if (profile) {
         const sumtotalProfile = profile as SumtotalProfile;
@@ -221,6 +221,7 @@ export const {
     session: async ({ session, token }) => {
       if (session?.user && token.sub) {
         session.user.id = token.sub;
+        session.user.provider = token.provider as string;
       }
       return session;
     },
