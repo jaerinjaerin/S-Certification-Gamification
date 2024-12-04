@@ -5,13 +5,10 @@ import {
   QuestionEx,
   QuizStageEx,
 } from "@/app/types/type";
-import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
   Campaign,
   Domain,
   Language,
-  Question,
-  QuestionOption,
   QuestionType,
   UserCampaignDomainLog,
 } from "@prisma/client";
@@ -44,11 +41,15 @@ interface QuizContextType {
     quizStageId: string,
     questionId: string,
     selectedOptionIds: string[]
-  ): Promise<confirmAnswerResponse>;
+  ): Promise<ConfirmAnswerResult>;
   // setCurrentQuestionOptionIds: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface confirmAnswerResponse {
+type ConfirmAnswerResult =
+  | { success: true; data: ConfirmAnswerResponse }
+  | { success: false; error: string; statusCode?: number };
+
+interface ConfirmAnswerResponse {
   isCorrect: boolean;
   questionType: QuestionType;
   correctOptions: number[];
@@ -183,40 +184,73 @@ export const QuizProvider = ({
     quizStageId: string,
     questionId: string,
     selectedOptionIds: string[]
-  ): Promise<confirmAnswerResponse> => {
-    const question = currentQuizStage?.questions.find(
-      (q: Question) => q.id === questionId
-    );
+  ): Promise<ConfirmAnswerResult> => {
+    try {
+      const response = await fetch(
+        `/api/campaigns/quizsets/${quizSet.path}/confirm_answer`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quizStageId,
+            questionId,
+            selectedOptionIds,
+          }),
+        }
+      );
 
-    if (!question) {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch domains");
+      }
+
+      const data = await response.json();
+      console.log("response", data);
       return {
-        isCorrect: false,
-        questionType: QuestionType.SINGLE_CHOICE,
-        correctOptions: [],
-        message: "Question not found",
+        success: true,
+        data: data.result as ConfirmAnswerResponse,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: (error as Error).message || "An unexpected error occurred",
       };
     }
+    // const question = currentQuizStage?.questions.find(
+    //   (q: Question) => q.id === questionId
+    // );
 
-    const correctOptionIds = question.options
-      .filter((option: QuestionOption) => option.isCorrect)
-      .map((option: QuestionOption) => option.id);
+    // if (!question) {
+    //   return {
+    //     isCorrect: false,
+    //     questionType: QuestionType.SINGLE_CHOICE,
+    //     correctOptions: [],
+    //     message: "Question not found",
+    //   };
+    // }
 
-    console.log("correctOptions", correctOptionIds, selectedOptionIds);
-    if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
-      return {
-        isCorrect: true,
-        questionType: question.type,
-        correctOptions: correctOptionIds,
-        message: "정답입니다!",
-      };
-    }
+    // const correctOptionIds = question.options
+    //   .filter((option: QuestionOption) => option.isCorrect)
+    //   .map((option: QuestionOption) => option.id);
 
-    return {
-      isCorrect: false,
-      questionType: question.type,
-      correctOptions: correctOptionIds,
-      message: "틀렸습니다!",
-    };
+    // console.log("correctOptions", correctOptionIds, selectedOptionIds);
+    // if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
+    //   return {
+    //     isCorrect: true,
+    //     questionType: question.questionType,
+    //     correctOptions: correctOptionIds,
+    //     message: "정답입니다!",
+    //   };
+    // }
+
+    // return {
+    //   isCorrect: false,
+    //   questionType: question.questionType,
+    //   correctOptions: correctOptionIds,
+    //   message: "틀렸습니다!",
+    // };
   };
 
   const sendQuestionLog = async (
