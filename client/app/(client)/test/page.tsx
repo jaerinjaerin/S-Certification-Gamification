@@ -58,6 +58,32 @@ export default function TestPage() {
     }
   };
 
+  const getUserJobAndChannel = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/users/job?org_ids=488883,751755", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Failed to fetch user job and channel"
+        );
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const refreshToken = async () => {
     setLoading(true);
     setError(null);
@@ -556,6 +582,10 @@ export default function TestPage() {
       )}
 
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      <button onClick={getUserJobAndChannel} disabled={loading}>
+        {loading ? "Loading..." : "유저 Job 와 Channel 정보 조회"}
+      </button>
     </div>
   );
 }

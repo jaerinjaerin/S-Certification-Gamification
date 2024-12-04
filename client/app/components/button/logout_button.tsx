@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function LogoutButton() {
-  const [callbackUrl, setCallbackUrl] = useState("/login");
+  const [callbackUrl, setCallbackUrl] = useState("/logout");
 
   useEffect(() => {
     setCallbackUrl("logout");
