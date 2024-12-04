@@ -5,12 +5,12 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        sm: "340px",
-        // => @media (min-width: 340px) { ... }
+        sm: "340px", // => @media (min-width: 340px) { ... }
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        disabled: "var(--disabled)",
       },
     },
   },

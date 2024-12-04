@@ -29,7 +29,7 @@ export default async function CampaignLayout({ children, params }: { children: R
 
   console.info("Render CampaignLayout");
   return (
-    <div>
+    <div className="h-full">
       <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
     </div>
   );

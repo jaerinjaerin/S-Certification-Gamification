@@ -34,3 +34,9 @@ type ChannelSegmentEx = ChannelSegment & {
 type SalesFormatEx = SalesFormat & {
   job: Job;
 };
+
+type IconProps = {
+  children?: never;
+  color?: string;
+  accent?: boolean;
+} & React.SVGAttributes<SVGElement>;
