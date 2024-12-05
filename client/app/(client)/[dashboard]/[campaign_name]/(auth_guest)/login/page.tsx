@@ -1,7 +1,9 @@
 "use client";
+
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import useTimer from "@/app/hooks/useTimer";
+
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { signIn } from "next-auth/react";
@@ -10,12 +12,15 @@ import { useState } from "react";
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
+
   const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
+
   const { time, reset, resetAndStart } = useTimer(60);
 
   // const [resendTimer, setResendTimer] = useState(60);
@@ -45,6 +50,7 @@ export default function GuestLogin() {
         const { verifyToken } = await response.json();
         setVerifyToken(verifyToken);
         setStep("code");
+
         resetAndStart();
       } else {
         const { error, code, expiresAt, verifyToken } = await response.json();
@@ -204,22 +210,24 @@ export default function GuestLogin() {
 
 // {step === "code" && (
 //   <div>
-//     <h2>Enter Verification Code</h2>
-//     <p>We have sent a verification code to your email.</p>
-//     <input
-//       type="text"
-//       placeholder="Enter the code"
-//       value={code}
-//       onChange={(e) => setCode(e.target.value)}
-//       disabled={loading}
-//     />
-//     {verifyToken?.expiresAt && (
-//       <p>
-//         Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
-//       </p>
-//     )}
-//     <button onClick={verifyCode} disabled={loading || !code}>
-//       {loading ? "Verifying..." : "Verify Code"}
-//     </button>
-//     {expiresAt && <p>{expiresAt.toString()}</p>}
-//     {error && <p className="error">{error}</p>}
+//  <h2>Enter Verification Code</h2>
+// <p>We have sent a verification code to your email.</p>
+// <input
+//   type="text"
+//   placeholder="Enter the code"
+//   value={code}
+//   onChange={(e) => setCode(e.target.value)}
+//   disabled={loading}
+// />
+// {verifyToken?.expiresAt && (
+//   <p>
+//     Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
+//   </p>
+// )}
+// <button onClick={verifyCode} disabled={loading || !code}>
+//   {loading ? "Verifying..." : "Verify Code"}
+// </button>
+// {expiresAt && <p>{expiresAt.toString()}</p>}
+// {error && <p className="error">{error}</p>}
+// </div>
+// )}

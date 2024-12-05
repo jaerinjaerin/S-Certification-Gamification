@@ -4,13 +4,7 @@ import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
 import { redirect } from "next/navigation";
 
-export default async function QuizLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { quizset_path: string };
-}) {
+export default async function QuizLayout({ children, params }: { children: React.ReactNode; params: { quizset_path: string } }) {
   const session = await auth();
   console.log("QuizLayout session", session);
 
@@ -33,14 +27,12 @@ export default async function QuizLayout({
   };
 
   // Fetch quiz data
-  const quizData = await fetchData(
-    `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
-    {
-      method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
-    }
-  );
+  const quizData = await fetchData(`${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`, {
+    method: "GET",
+    // headers: { "Content-Type": "application/json" },
+    // cache: "force-cache",
+    cache: "no-cache",
+  });
 
   if (!quizData) {
     redirectToErrorPage();
@@ -48,23 +40,19 @@ export default async function QuizLayout({
   }
 
   // Fetch quiz history
-  let quizHistory = await fetchData(
-    `${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}?userId=${session?.user.id}`,
-    { cache: "no-cache" }
-  );
+  let quizHistory = await fetchData(`${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}?userId=${session?.user.id}`, {
+    cache: "no-cache",
+  });
 
   if (!quizHistory?.item) {
     // Initialize quiz history if not found
-    const initHistoryResponse = await fetch(
-      `${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}`,
-      {
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        body: JSON.stringify({ userId: session?.user.id }),
-      }
-    );
+    const initHistoryResponse = await fetch(`${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}`, {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      body: JSON.stringify({ userId: session?.user.id }),
+    });
 
     if (!initHistoryResponse.ok) {
       console.error("Failed to initialize quiz history:", initHistoryResponse);

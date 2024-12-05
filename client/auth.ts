@@ -13,9 +13,9 @@ declare module "next-auth" {
     user: {
       /** The user's id. */
       id: string;
-      providerUserId: string;
-      providerPersonId: string;
-      authType: AuthType;
+      // providerUserId: string;
+      // providerPersonId: string;
+      provider: string;
       // sumtotalOrganizationIds: string | null;
     } & DefaultSession["user"];
   }
@@ -42,9 +42,60 @@ export const {
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      profile: async (profile: SumtotalProfile) => {
+      profile: async (profile: SumtotalProfile, tokens) => {
         console.log("profile:", profile);
+        console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
+
+        const accessToken = tokens.access_token;
+        // job 및 store 추출
+        let job: string | null = null;
+        let store: string | null = null;
+
+        if (accessToken) {
+          const orgIds: string[] = profile.personOrganization.map((org) => org.organizationId.toString());
+
+          const fetchOrganizationData = async (orgId: string, accessToken: string) => {
+            try {
+              const response = await fetch(`https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`, {
+                cache: "no-store",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              });
+
+              if (!response.ok) {
+                throw new Error(`Failed to fetch data: ${response.statusText}`);
+              }
+
+              return await response.json(); // 요청 성공 시 데이터 반환
+            } catch (error) {
+              console.error(`Error fetching data for orgId ${orgId}:`, error);
+              return null; // 실패한 요청은 null 반환
+            }
+          };
+
+          const results = await Promise.all(orgIds.map((orgId) => fetchOrganizationData(orgId, accessToken)));
+
+          results.forEach((result: any) => {
+            if (!result) return; // null인 경우 건너뜀
+
+            const text9 = result.data[0]?.optionalInfo.text9;
+            const integer1 = result.data[0]?.optionalInfo.integer1;
+
+            if (!text9 || !integer1) return;
+
+            if (integer1 === 7) {
+              job = text9;
+            }
+
+            if (integer1 === 5) {
+              store = text9;
+            }
+          });
+        }
+
         return {
           id: profile.userId,
           name: profile.fullName ?? profile.userLogin.username ?? null,
@@ -53,9 +104,9 @@ export const {
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
-          sumtotalDomainId:
-            profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
-            null,
+          sumtotalDomainId: profile.personDomain?.find((domain) => domain.isPrimary)?.code || null,
+          sumtotalJob: job,
+          sumtotalStore: store,
         };
       },
     },
@@ -168,59 +219,16 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      console.log("auth callbacks jwt", token, profile, user, account);
+      // console.log("auth callbacks jwt", token, profile, user, account);
       if (account) {
-        token.accountType = account.type;
-      }
-      if (profile) {
-        const sumtotalProfile = profile as SumtotalProfile;
-
-        try {
-          let job = null;
-          let store = null;
-
-          // Sumtotal에서 job, store 정보 가져와 저장히기
-          const orgIds = sumtotalProfile.personOrganization
-            .map((org) => org.organizationId)
-            .join(",");
-          const response = await fetch(
-            `${process.env.API_URL}/api/users/job?user_id=${user.id}&org_ids=${orgIds}`,
-            {
-              method: "GET",
-              cache: "no-store",
-            }
-          );
-
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(
-              errorData.message || "Failed to fetch user job and channel"
-            );
-          }
-
-          const data = await response.json();
-          console.log("data", data);
-          job = data.job;
-          store = data.store;
-
-          await prisma.user.update({
-            where: {
-              id: user.id,
-            },
-            data: {
-              sumtotalJob: job,
-              sumtotalStore: store,
-            },
-          });
-        } catch (error) {
-          console.error("Error fetching user job and channel:", error);
-        }
+        token.provider = account.provider;
       }
       return token;
     },
     session: async ({ session, token }) => {
       if (session?.user && token.sub) {
         session.user.id = token.sub;
+        session.user.provider = token.provider as string;
       }
       return session;
     },
