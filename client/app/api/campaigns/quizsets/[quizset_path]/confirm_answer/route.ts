@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import { NextResponse } from "next/server";
@@ -11,17 +10,13 @@ type Props = {
 
 export async function POST(request: Request, props: Props) {
   try {
-    const session = await auth();
+    // const session = await auth();
     const body = await request.json();
 
     const { quizset_path } = props.params;
     const { quizStageId, questionId, selectedOptionIds } = body;
 
-    // const quizset = await prisma.campaignDomainQuizSet.findFirst({
-    //   where: {
-    //     path: quizset_path
-    //   },
-    // });
+    console.log("body:", quizStageId, questionId, selectedOptionIds);
 
     const quizset = await prisma.campaignDomainQuizSet.findFirst({
       where: {
@@ -38,11 +33,13 @@ export async function POST(request: Request, props: Props) {
       },
     });
 
+    console.log("quizset:", quizset);
+
     if (!quizset) {
       return NextResponse.json(
         {
           status: 404,
-          message: "Not found",
+          message: "Quiz set not found",
           error: {
             code: "NOT_FOUND",
             details: "Quiz set not found",
@@ -59,7 +56,7 @@ export async function POST(request: Request, props: Props) {
       return NextResponse.json(
         {
           status: 404,
-          message: "Not found",
+          message: "Quiz stage not found",
           error: {
             code: "NOT_FOUND",
             details: "Quiz stage not found",
@@ -86,7 +83,7 @@ export async function POST(request: Request, props: Props) {
       return NextResponse.json(
         {
           status: 404,
-          message: "Not found",
+          message: "Question not found",
           error: {
             code: "NOT_FOUND",
             details: "Question not found",
