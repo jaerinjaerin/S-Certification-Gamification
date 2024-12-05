@@ -8,6 +8,7 @@ import useGetItemList from "@/app/hooks/useGetItemList";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language, SalesFormat } from "@prisma/client";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export default function GuestRegisterPage() {
@@ -119,21 +120,23 @@ export default function GuestRegisterPage() {
   };
 
   const errorMessage = error || errorCreate;
+  const t = useTranslations("register");
 
   console.info("GuestRegisterPage render", isLoading, error, domains);
+
   return (
     <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
       <Dialog defaultOpen>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Enter Details</DialogTitle>
-            <DialogDescription>Please select the information below.</DialogDescription>
+            <DialogTitle>{t("enter details")}</DialogTitle>
+            <DialogDescription>{t("select information")}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* domains */}
             <Select>
               <SelectTrigger disabled={isLoading || loadingCreate || domains == null} value={selectedDomain}>
-                <SelectValue placeholder="Country" />
+                <SelectValue placeholder={t("country")} />
               </SelectTrigger>
               <SelectContent>
                 {domains.map((domain) => (
@@ -155,7 +158,7 @@ export default function GuestRegisterPage() {
             {/* channel */}
             <Select>
               <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0} value={selectedChannel}>
-                <SelectValue placeholder="Channel" />
+                <SelectValue placeholder={t("channel")} />
               </SelectTrigger>
               <SelectContent>
                 {channels.map((channel) => (
@@ -178,7 +181,7 @@ export default function GuestRegisterPage() {
             {/* job group */}
             <Select>
               <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}>
-                <SelectValue placeholder="Job Group" />
+                <SelectValue placeholder={t("job group")} />
               </SelectTrigger>
               <SelectContent>
                 {salesFormats.map((format) => (
@@ -203,7 +206,7 @@ export default function GuestRegisterPage() {
                 disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0 || languages.length === 0}
                 value={selectedLanguage}
               >
-                <SelectValue placeholder="Language" />
+                <SelectValue placeholder={t("language")} />
               </SelectTrigger>
               <SelectContent>
                 {languages.map((lang) => (
@@ -229,7 +232,7 @@ export default function GuestRegisterPage() {
               disabled={isLoading || loadingCreate || !selectedDomain || !selectedChannel || !selectedSalesFormat || !selectedLanguage}
               onClick={routeQuizPage}
             >
-              {loadingCreate ? "Saving..." : "Save"}
+              {loadingCreate ? `${t("saving")}` : `${t("save")}`}
             </Button>
             {errorMessage && <p className="errorMessage">{errorMessage}</p>}
           </DialogFooter>

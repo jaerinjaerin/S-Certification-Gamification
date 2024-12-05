@@ -123,7 +123,7 @@ export const DialogTitle = ({ children, className }: { children: React.ReactNode
 
 // DialogDescription 컴포넌트
 export const DialogDescription = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <p className={cn("text-base text-[#4F4F4F] mb-5", className)}>{children}</p>
+  <div className={cn("text-base text-[#4F4F4F] mb-5", className)}>{children}</div>
 );
 
 // DialogFooter 컴포넌트

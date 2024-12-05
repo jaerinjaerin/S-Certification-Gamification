@@ -7,6 +7,7 @@ import useTimer from "@/app/hooks/useTimer";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function GuestLogin() {
@@ -20,6 +21,7 @@ export default function GuestLogin() {
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
+  const t = useTranslations("login");
 
   const { time, reset, resetAndStart } = useTimer(60);
 
@@ -104,19 +106,19 @@ export default function GuestLogin() {
 
         <div className="flex flex-col items-center">
           <div className="mb-[70px]">
-            <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">Be a Galaxy AI (S24*) Expert!</span>
-            <span className="block text-[30px] font-light text-center ">Certification</span>
+            <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">{t("be a galaxy ai expert")}</span>
+            <span className="block text-[30px] font-light text-center ">{t("certification")}</span>
           </div>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant={"primary"} onClick={() => setStep("email")}>
-                Login
+                {t("login")}
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Login</DialogTitle>
-                <DialogDescription>Log in by Send code your email.</DialogDescription>
+                <DialogTitle>{t("login")}</DialogTitle>
+                <DialogDescription>{t("send code your email")}</DialogDescription>
               </DialogHeader>
               <div>
                 <form
@@ -127,7 +129,7 @@ export default function GuestLogin() {
                   }}
                 >
                   <input
-                    placeholder="email"
+                    placeholder={t("email")}
                     className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -140,15 +142,24 @@ export default function GuestLogin() {
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant={"primary"} className="text-[18px] disabled:bg-disabled" type="submit" form="verify-email" disabled={!email}>
-                      Send Code
+                      {t("send code")}
                     </Button>
                   </DialogTrigger>
                   {step === "code" && (
                     <DialogContent>
                       <DialogHeader>
-                        <DialogTitle>Confirm Your Email</DialogTitle>
+                        <DialogTitle>{t("confirm your email")}</DialogTitle>
                         <DialogDescription>
-                          An email with a magic link has been sent to email@example.com Click on the link to automatically log in.
+                          {t.rich("magic link sent", {
+                            address: (children) => (
+                              <address className="inline-block">
+                                <a href={`mailto:${email}`} className="text-blue-500 not-italic ">
+                                  {children}
+                                </a>
+                              </address>
+                            ),
+                            email,
+                          })}
                         </DialogDescription>
                         <div>
                           <form
@@ -173,6 +184,7 @@ export default function GuestLogin() {
                               <div className="absolute right-[10px] top-1/2 -translate-y-1/2">00:{String(time).padStart(2, "0")}</div>
                             )}
                           </form>
+                          {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
                         </div>
                       </DialogHeader>
                       <DialogFooter
@@ -183,7 +195,7 @@ export default function GuestLogin() {
                         }}
                       >
                         <Button className="text-[18px]" variant={"primary"} type="submit" form="verify-code" disabled={!code}>
-                          Submit
+                          {t("submit")}
                         </Button>
                         <div className="mx-auto">
                           <button
@@ -191,7 +203,7 @@ export default function GuestLogin() {
                             disabled={time > 0}
                             onClick={sendEmail}
                           >
-                            Resend Code
+                            {t("resend code")}
                           </button>
                         </div>
                       </DialogFooter>
@@ -207,27 +219,3 @@ export default function GuestLogin() {
     </div>
   );
 }
-
-// {step === "code" && (
-//   <div>
-//  <h2>Enter Verification Code</h2>
-// <p>We have sent a verification code to your email.</p>
-// <input
-//   type="text"
-//   placeholder="Enter the code"
-//   value={code}
-//   onChange={(e) => setCode(e.target.value)}
-//   disabled={loading}
-// />
-// {verifyToken?.expiresAt && (
-//   <p>
-//     Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
-//   </p>
-// )}
-// <button onClick={verifyCode} disabled={loading || !code}>
-//   {loading ? "Verifying..." : "Verify Code"}
-// </button>
-// {expiresAt && <p>{expiresAt.toString()}</p>}
-// {error && <p className="error">{error}</p>}
-// </div>
-// )}

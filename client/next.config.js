@@ -4,7 +4,10 @@
 //   productionBrowserSourceMaps: true,
 // };
 
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-module.exports = withBundleAnalyzer({});
+// module.exports = withBundleAnalyzer({});
+module.exports = withBundleAnalyzer(withNextIntl({}));

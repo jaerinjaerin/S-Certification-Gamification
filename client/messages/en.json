@@ -1,0 +1,25 @@
+{
+  "login": {
+    "be a galaxy ai expert": "Be a Galaxy AI (S24*) Expert!",
+    "certification": "Certification",
+    "login": "Login",
+    "send code your email": "Log in by Send code your email.",
+    "email": "email",
+    "send code": "Send Code",
+    "confirm your email": "Confirm Your Email",
+    "magic link sent": "An email with a magic link has been sent to <address>{email}</address>. Click on the link to automatically log in.",
+    "submit": "Submit",
+    "resend code": "Resend Code"
+  },
+  "register": {
+    "enter details": "Enter Details",
+    "select information": "Please select the information below.",
+    "country": "Country",
+    "channel": "Channel",
+    "job group": "Job Group",
+    "language": "Language",
+    "saving": "Saving...",
+    "save": "Save"
+  },
+  "map": {}
+}
