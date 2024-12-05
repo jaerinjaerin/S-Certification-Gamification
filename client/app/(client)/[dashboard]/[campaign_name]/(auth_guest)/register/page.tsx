@@ -43,7 +43,8 @@ export default function GuestRegisterPage() {
       `/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`,
       {
         method: "GET",
-        cache: "force-cache",
+        // cache: "force-cache",
+        cache: "no-cache",
       }
     );
 

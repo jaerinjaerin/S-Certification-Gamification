@@ -34,7 +34,8 @@ export default async function CampaignPage({
     {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
+      // cache: "force-cache",
+      cache: "no-cache",
     }
   );
 
@@ -50,7 +51,8 @@ export default async function CampaignPage({
     {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
+      // cache: "force-cache",
+      cache: "no-cache",
     }
   );
 
