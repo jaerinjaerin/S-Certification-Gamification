@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/app/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItemList from "@/app/hooks/useGetItemList";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
@@ -12,41 +15,25 @@ export default function GuestRegisterPage() {
 
   // state
   const [selectedDomain, setSelectedDomain] = useState<DomainEx | null>(null);
-  const [selectedChannel, setSelectedChannel] =
-    useState<ChannelSegmentEx | null>(null);
-  const [selectedSalesFormat, setSelectedSalesFormat] =
-    useState<SalesFormat | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
-    null
-  );
+  const [selectedChannel, setSelectedChannel] = useState<ChannelSegmentEx | null>(null);
+  const [selectedSalesFormat, setSelectedSalesFormat] = useState<SalesFormat | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
 
   // select box options
   const [channels, setChannels] = useState<ChannelSegmentEx[]>([]);
   const [salesFormats, setSalesFormats] = useState<SalesFormatEx[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
 
-  const {
-    isLoading,
-    error,
-    items: domains,
-  } = useGetItemList<DomainEx>({ url: "/api/domains" });
+  const { isLoading, error, items: domains } = useGetItemList<DomainEx>({ url: "/api/domains" });
 
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
+  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
   const fetchLanguages = async (domainId: string, jobId: string) => {
-    const response = await fetch(
-      `/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`,
-      {
-        method: "GET",
-        // cache: "force-cache",
-        cache: "no-cache",
-      }
-    );
+    const response = await fetch(`/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`, {
+      method: "GET",
+      // cache: "force-cache",
+      cache: "no-cache",
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -58,11 +45,7 @@ export default function GuestRegisterPage() {
   };
 
   useEffect(() => {
-    if (
-      selectedSalesFormat &&
-      selectedDomain?.id &&
-      selectedSalesFormat?.jobId
-    ) {
+    if (selectedSalesFormat && selectedDomain?.id && selectedSalesFormat?.jobId) {
       fetchLanguages(selectedDomain?.id, selectedSalesFormat?.jobId);
     }
   }, [selectedSalesFormat, selectedDomain]);
@@ -103,9 +86,7 @@ export default function GuestRegisterPage() {
   };
 
   const selectSalesFormat = (salesFormatId: string) => {
-    const salesFormat = salesFormats!.find(
-      (c: SalesFormat) => c.id === salesFormatId
-    );
+    const salesFormat = salesFormats!.find((c: SalesFormat) => c.id === salesFormatId);
     if (!salesFormat) {
       alert("Sales Format not found. Please select a valid sales format.");
       return;
@@ -141,104 +122,119 @@ export default function GuestRegisterPage() {
 
   console.info("GuestRegisterPage render", isLoading, error, domains);
   return (
-    <div className="container">
-      <div>
-        <h2>Domain Selection</h2>
-        <select
-          value={selectedDomain?.id}
-          onChange={(e) => {
-            const domainId = e.target.value;
-            selectDomain(domainId);
-          }}
-          disabled={isLoading || loadingCreate || domains == null}
-        >
-          <option value="">Select a Domain</option>
-          {domains?.map((domain) => (
-            <option key={domain.id} value={domain.id}>
-              {domain.name}
-            </option>
-          ))}
-        </select>
-
-        <h2>Channel Selection</h2>
-        <select
-          value={selectedChannel?.id}
-          onChange={(e) => {
-            const channelId = e.target.value;
-            selectChannel(channelId);
-          }}
-          disabled={isLoading || loadingCreate || channels == null}
-        >
-          <option value="">Select a Channel</option>
-          {channels.map((channel) => (
-            <option key={channel.id} value={channel.id}>
-              {channel.name}
-            </option>
-          ))}
-        </select>
-
-        <h2>Sales Format Selection</h2>
-        <select
-          value={selectedSalesFormat?.id}
-          onChange={(e) => {
-            const id = e.target.value;
-            selectSalesFormat(id);
-          }}
-          disabled={
-            isLoading ||
-            loadingCreate ||
-            channels == null ||
-            salesFormats == null
-          }
-        >
-          <option value="">Select a Sales Format</option>
-          {salesFormats.map((format) => (
-            <option key={format.id} value={format.id}>
-              {format.storeType} ({format.job.code})
-            </option>
-          ))}
-        </select>
-
-        <h2>Language Selection</h2>
-        <select
-          value={selectedLanguage?.id}
-          onChange={(e) => {
-            const id = e.target.value;
-            selectLanguage(id);
-          }}
-          disabled={
-            loadingCreate ||
-            channels == null ||
-            salesFormats == null ||
-            languages == null
-          }
-        >
-          <option value="">Select a Language</option>
-          {languages.map((format) => (
-            <option key={format.id} value={format.id}>
-              {format.name} ({format.id})
-            </option>
-          ))}
-        </select>
-
-        <br />
-        <button
-          onClick={() => {
-            routeQuizPage();
-          }}
-          disabled={
-            isLoading ||
-            loadingCreate ||
-            !selectedDomain ||
-            !selectedChannel ||
-            !selectedSalesFormat ||
-            !selectedLanguage
-          }
-        >
-          Start Quiz
-        </button>
-      </div>
-      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
+      <Dialog defaultOpen>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter Details</DialogTitle>
+            <DialogDescription>Please select the information below.</DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-[14px]">
+            {/* domains */}
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || domains == null} value={selectedDomain}>
+                <SelectValue placeholder="Country" />
+              </SelectTrigger>
+              <SelectContent>
+                {domains.map((domain) => (
+                  <SelectItem
+                    key={domain.id}
+                    value={domain.name}
+                    dataValue={domain.id}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement; // DOM 노드로 캐스팅
+                      const domainId = target.dataset.value; // data-value 값 가져오기
+                      selectDomain(domainId!);
+                    }}
+                  >
+                    {domain.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {/* channel */}
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0} value={selectedChannel}>
+                <SelectValue placeholder="Channel" />
+              </SelectTrigger>
+              <SelectContent>
+                {channels.map((channel) => (
+                  <SelectItem
+                    key={channel.id}
+                    dataValue={channel.id}
+                    value={channel.name}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const channelId = target.dataset.value;
+                      console.log(channelId);
+                      selectChannel(channelId!);
+                    }}
+                  >
+                    {channel.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {/* job group */}
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}>
+                <SelectValue placeholder="Job Group" />
+              </SelectTrigger>
+              <SelectContent>
+                {salesFormats.map((format) => (
+                  <SelectItem
+                    key={format.id}
+                    dataValue={format.id}
+                    value={`${format.storeType} (${format.job.code})`}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const id = target.dataset.value;
+                      selectSalesFormat(id!);
+                    }}
+                  >
+                    {format.storeType} ({format.job.code})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {/* language */}
+            <Select>
+              <SelectTrigger
+                disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0 || languages.length === 0}
+                value={selectedLanguage}
+              >
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {languages.map((lang) => (
+                  <SelectItem
+                    key={lang.id}
+                    dataValue={lang.id}
+                    value={`${lang.name} (${lang.id})`}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const id = target.dataset.value;
+                      selectLanguage(id!);
+                    }}
+                  >
+                    {lang.name} ({lang.id})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter close={false}>
+            <Button
+              variant={"primary"}
+              disabled={isLoading || loadingCreate || !selectedDomain || !selectedChannel || !selectedSalesFormat || !selectedLanguage}
+              onClick={routeQuizPage}
+            >
+              {loadingCreate ? "Saving..." : "Save"}
+            </Button>
+            {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

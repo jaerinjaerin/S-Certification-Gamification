@@ -102,10 +102,7 @@ export const DialogContent = ({
     <div role="dialog" aria-modal="true" className="relative">
       <DialogOverlay dismissOnOverlayClick={dismissOnOverlayClick} />
       <div
-        className={cn(
-          "bg-white p-5 min-w-[250px] sm:max-w-[340px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px]",
-          className
-        )}
+        className={cn("bg-white p-5 min-w-[250px] sm:w-[340px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px]", className)}
       >
         {children}
       </div>
