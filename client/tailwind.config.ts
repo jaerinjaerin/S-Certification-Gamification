@@ -12,6 +12,10 @@ const config: Config = {
         foreground: "var(--foreground)",
         disabled: "var(--disabled)",
       },
+      fontFamily: {
+        samsungSans: ["var(--font-samsungSans)"],
+        one: ["var(--font-one)"],
+      },
     },
   },
   plugins: [],
