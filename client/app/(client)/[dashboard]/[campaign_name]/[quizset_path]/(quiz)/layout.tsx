@@ -68,7 +68,7 @@ export default async function QuizLayout({ children, params }: { children: React
 
   console.info("Render QuizLayout");
   return (
-    <div>
+    <div className="h-full">
       <LogoutButton />
       <QuizProvider
         quizSet={quizData.item as CampaignDomainQuizSetEx}

@@ -14,6 +14,7 @@ import { createPortal } from "react-dom";
 import { cn } from "@/app/lib/utils";
 import { Button } from "./button";
 import { CloseIcon } from "../icons/icons";
+import { useBodyScrollLock } from "@/app/hooks/useBodyScrollLock";
 
 interface DialogContextType {
   open: boolean;
@@ -46,11 +47,30 @@ export const Dialog = ({ children, defaultOpen = false }: { children: React.Reac
 // Dialog Overlay Component
 // dismissOnOverlayClick: overlayout 영역을 클릭했을 때 모달 open, close 여부
 const DialogOverlay = ({ dismissOnOverlayClick = false }: { dismissOnOverlayClick?: boolean }) => {
-  const { setOpen } = useDialogContext();
+  const { open, setOpen } = useDialogContext();
+
+  useBodyScrollLock();
+
+  useEffect(() => {
+    // body 자식 요소에 aria-hidden 설정
+    const bodyChildren = Array.from(document.body.children);
+
+    const dialogElements = Array.from(document.querySelectorAll('[role="dialog"]'));
+
+    bodyChildren.forEach((child) => {
+      if (!dialogElements.some((dialog) => dialog.contains(child))) {
+        child.setAttribute("inert", open ? "true" : "false");
+      }
+    });
+
+    return () => {
+      bodyChildren.forEach((child) => child.removeAttribute("inert"));
+    };
+  }, [open]);
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex justify-center items-center"
+      className="fixed z-[900] inset-0 flex items-center justify-center bg-black/50"
       onClick={() => (dismissOnOverlayClick ? setOpen(false) : setOpen(true))}
     />
   );
@@ -59,7 +79,7 @@ const DialogOverlay = ({ dismissOnOverlayClick = false }: { dismissOnOverlayClic
 // Dialog Trigger Component
 export const DialogTrigger = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button"> & { asChild?: boolean }>(
   ({ children, asChild = false, ...props }, ref) => {
-    const { setOpen } = useDialogContext();
+    const { setOpen, open } = useDialogContext();
 
     if (asChild && isValidElement(children)) {
       return cloneElement(children as ReactElement, {
@@ -102,7 +122,10 @@ export const DialogContent = ({
     <div role="dialog" aria-modal="true" className="relative">
       <DialogOverlay dismissOnOverlayClick={dismissOnOverlayClick} />
       <div
-        className={cn("bg-white p-5 min-w-[250px] sm:w-[340px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px]", className)}
+        className={cn(
+          "bg-white p-5 min-w-[250px] sm:w-[340px] fixed z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px]",
+          className
+        )}
       >
         {children}
       </div>
@@ -118,13 +141,27 @@ export const DialogHeader = ({ children }: { children: React.ReactNode }) => {
 
 // DialogTitle 컴포넌트
 export const DialogTitle = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <h2 className={cn("font-bold text-center text-[26px] mt-[32px] mb-[26px]", className)}>{children}</h2>
+  <h2 className={cn("font-bold text-center text-[26px] mt-[32px] mb-[26px] font-one", className)}>{children}</h2>
 );
 
 // DialogDescription 컴포넌트
 export const DialogDescription = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <div className={cn("text-base text-[#4F4F4F] mb-5", className)}>{children}</div>
 );
+
+export const DialogClose = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button"> & { asChild?: boolean }>(
+  ({ children, asChild = false, ...props }, ref) => {
+    const { setOpen } = useDialogContext();
+
+    // 기본 버튼 렌더링
+    return (
+      <button {...props} ref={ref} onClick={() => setOpen(false)}>
+        {children}
+      </button>
+    );
+  }
+);
+DialogClose.displayName = "DialogClose";
 
 // DialogFooter 컴포넌트
 export const DialogFooter = ({
