@@ -245,8 +245,11 @@ async function main() {
   const allJaQuestions: string[] = [];
 
   for (let i = 1; i <= 10; i++) {
+    const questionId = uuid.v4();
     const question = await prisma.question.create({
       data: {
+        id: questionId,
+        originalQuestionId: questionId,
         text: `What is ${i}?`,
         timeLimitSeconds: 30,
         languageId: enLanguage.id,
@@ -285,7 +288,7 @@ async function main() {
           text: `Translated What is ${i} in ${lang.name}`,
           timeLimitSeconds: 30,
           languageId: lang.id,
-          parentId: question.id,
+          originalQuestionId: question.id,
           order: i,
           category: "test_category",
           specificFeature: "test_specificFeature",
@@ -318,33 +321,39 @@ async function main() {
   // Create CampaignDomainQuizSet and QuizStages
   // for ff user
   for (const domain of domains) {
-    const lang =
-      domain.code === "ORG_502"
-        ? koLanguage
-        : domain.code === "ja"
-        ? jaLanguage
-        : enLanguage;
-    const questions =
-      domain.code === "ORG_502"
-        ? allKoQuestions
-        : domain.code === "ja"
-        ? allJaQuestions
-        : allQuestions;
+    // const lang = koLanguage;
+    // domain.code === "ORG_502"
+    //   ? koLanguage
+    //   : domain.code === "NAT_2392"
+    //   ? jaLanguage
+    //   : enLanguage;
+    // const questions =
+    //   domain.code === "ORG_502"
+    //     ? allKoQuestions
+    //     : domain.code === "ja"
+    //     ? allJaQuestions
+    //     : allQuestions;
 
-    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
+    const quizSet = await prisma.quizSet.create({
       data: {
-        path: `${domain.code}_${jobs[0].code}_${lang.code}`,
+        // path: `${domain.code}_${jobs[0].code}_${lang.code}`,
+        // paths: [
+        //   `${domain.code}_${jobs[0].code}`,
+        //   `${domain.code}_${jobs[1].code}`,
+        // ],
         campaignId: campaign.id,
         domainId: domain.id,
-        jobId: jobs[0].id, // Assigning the first job for simplicity
-        languageId: lang.id,
-        lastBadgeActivityId: mainActivityId,
+        jobIds: [jobs[0].id, jobs[1].id],
+        // languageId: lang.id,
+        // lastBadgeActivityId: mainActivityId,
+        badgeStages: [4],
+        badgeActivityIds: [mainActivityId],
         createrId: "admin",
       },
     });
 
     for (let i = 1; i <= 4; i++) {
-      const stageQuestionIds = questions
+      const stageQuestionIds = allQuestions
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
@@ -352,103 +361,115 @@ async function main() {
         data: {
           name: `Stage ${i} for ${domain.name}`,
           order: i,
-          questionIds: JSON.stringify(stageQuestionIds),
+          questionIds: stageQuestionIds,
           lifeCount: stageQuestionIds.length,
-          campaignDomainQuizSetId: campaignDomainQuizSet.id,
+          quizSetId: quizSet.id,
         },
       });
     }
   }
 
-  // for fsm user
-  for (const domain of domains) {
-    const lang =
-      domain.code === "ORG_502"
-        ? koLanguage
-        : domain.code === "NAT_2392"
-        ? jaLanguage
-        : enLanguage;
-    const questions =
-      domain.code === "ORG_502"
-        ? allKoQuestions
-        : domain.code === "NAT_2392"
-        ? allJaQuestions
-        : allQuestions;
+  // // for fsm user
+  // for (const domain of domains) {
+  //   const lang = jaLanguage;
+  //   // domain.code === "ORG_502"
+  //   //   ? koLanguage
+  //   //   : domain.code === "NAT_2392"
+  //   //   ? jaLanguage
+  //   //   : enLanguage;
+  //   // const questions =
+  //   //   domain.code === "ORG_502"
+  //   //     ? allKoQuestions
+  //   //     : domain.code === "NAT_2392"
+  //   //     ? allJaQuestions
+  //   //     : allQuestions;
 
-    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
-      data: {
-        path: `${domain.code}_${jobs[1].code}_${lang.code}`,
-        campaignId: campaign.id,
-        domainId: domain.id,
-        jobId: jobs[1].id, // Assigning the first job for simplicity
-        languageId: lang.id,
-        firstBadgeStage: 3,
-        firstBadgeActivityId: optionalActivityId,
-        lastBadgeActivityId: mainActivityId,
-        createrId: "admin",
-      },
-    });
+  //   const quizSet = await prisma.quizSet.create({
+  //     data: {
+  //       // path: `${domain.code}_${jobs[1].code}_${lang.code}`,
+  //       paths: [
+  //         `${domain.code}_${jobs[0].code}`,
+  //         `${domain.code}_${jobs[1].code}`,
+  //       ],
+  //       campaignId: campaign.id,
+  //       domainId: domain.id,
+  //       jobIds: [jobs[0].id, jobs[1].id], // Assigning the first job for simplicity
+  //       // languageIds: [lang.id],
+  //       // firstBadgeStage: 3,
+  //       badgeStages: [4],
+  //       badgeActivityIds: [mainActivityId],
+  //       // firstBadgeActivityId: optionalActivityId,
+  //       // lastBadgeActivityId: mainActivityId,
+  //       createrId: "admin",
+  //     },
+  //   });
 
-    for (let i = 1; i <= 4; i++) {
-      const stageQuestionIds = questions
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3);
+  //   for (let i = 1; i <= 4; i++) {
+  //     const stageQuestionIds = allQuestions
+  //       .sort(() => 0.5 - Math.random())
+  //       .slice(0, 3);
 
-      await prisma.quizStage.create({
-        data: {
-          name: `Stage ${i} for ${domain.name}`,
-          order: i,
-          questionIds: JSON.stringify(stageQuestionIds),
-          lifeCount: stageQuestionIds.length,
-          campaignDomainQuizSetId: campaignDomainQuizSet.id,
-        },
-      });
-    }
-  }
+  //     await prisma.quizStage.create({
+  //       data: {
+  //         name: `Stage ${i} for ${domain.name}`,
+  //         order: i,
+  //         questionIds: stageQuestionIds,
+  //         lifeCount: stageQuestionIds.length,
+  //         quizSetId: quizSet.id,
+  //       },
+  //     });
+  //   }
+  // }
 
-  // for ff guest
-  for (const domain of domains) {
-    const lang =
-      domain.code === "ORG_502"
-        ? koLanguage
-        : domain.code === "NAT_2392"
-        ? jaLanguage
-        : enLanguage;
-    const questions =
-      domain.code === "ORG_502"
-        ? allKoQuestions
-        : domain.code === "NAT_2392"
-        ? allJaQuestions
-        : allQuestions;
+  // // for ff guest
+  // for (const domain of domains) {
+  //   const lang = enLanguage;
+  //   // domain.code === "ORG_502"
+  //   //   ? koLanguage
+  //   //   : domain.code === "NAT_2392"
+  //   //   ? jaLanguage
+  //   //   : enLanguage;
+  //   // const questions =
+  //   //   domain.code === "ORG_502"
+  //   //     ? allKoQuestions
+  //   //     : domain.code === "NAT_2392"
+  //   //     ? allJaQuestions
+  //   //     : allQuestions;
 
-    const campaignDomainQuizSet = await prisma.campaignDomainQuizSet.create({
-      data: {
-        path: `${domain.code}_${jobs[0].code}_${lang.code}`,
-        campaignId: campaign.id,
-        domainId: domain.id,
-        jobId: jobs[0].id, // Assigning the first job for simplicity
-        languageId: lang.id,
-        lastBadgeActivityId: mainActivityId,
-        createrId: "admin",
-      },
-    });
+  //   const quizSet = await prisma.quizSet.create({
+  //     data: {
+  //       // path: `${domain.code}_${jobs[0].code}_${lang.code}`,
+  //       paths: [
+  //         `${domain.code}_${jobs[0].code}`,
+  //         `${domain.code}_${jobs[1].code}`,
+  //       ],
+  //       campaignId: campaign.id,
+  //       domainId: domain.id,
+  //       jobIds: [jobs[0].id, jobs[1].id],
+  //       badgeStages: [4],
+  //       badgeActivityIds: [mainActivityId],
+  //       // languageId: lang.id,
+  //       // lastBadgeActivityId: mainActivityId,
+  //       createrId: "admin",
+  //     },
+  //   });
 
-    for (let i = 1; i <= 4; i++) {
-      const stageQuestionIds = questions
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3);
+  //   for (let i = 1; i <= 4; i++) {
+  //     const stageQuestionIds = allQuestions
+  //       .sort(() => 0.5 - Math.random())
+  //       .slice(0, 3);
 
-      await prisma.quizStage.create({
-        data: {
-          name: `Stage ${i} for ${domain.name}`,
-          order: i,
-          questionIds: JSON.stringify(stageQuestionIds),
-          lifeCount: stageQuestionIds.length,
-          campaignDomainQuizSetId: campaignDomainQuizSet.id,
-        },
-      });
-    }
-  }
+  //     await prisma.quizStage.create({
+  //       data: {
+  //         name: `Stage ${i} for ${domain.name}`,
+  //         order: i,
+  //         questionIds: stageQuestionIds,
+  //         lifeCount: stageQuestionIds.length,
+  //         quizSetId: quizSet.id,
+  //       },
+  //     });
+  //   }
+  // }
 
   // for fcm guest
   // for (const domain of domains) {

@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import { extractCodesFromPath } from "@/utils/pathUtils";
 import { NextRequest, NextResponse } from "next/server";
 type Props = {
   params: {
@@ -29,9 +30,12 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
-    const quizSet = await prisma.campaignDomainQuizSet.findFirst({
+    const quizSet = await prisma.quizSet.findFirst({
       where: {
-        path: quizsetPath,
+        // path: quizsetPath,
+        paths: {
+          has: quizsetPath, // Ensure jobId exists in the jobIds array
+        },
       },
     });
 
@@ -53,7 +57,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: {
         userId: userId,
         campaignId: quizSet.campaignId,
-        jobId: quizSet.jobId,
+        // jobId: quizSet.jobId,
         domainId: quizSet.domainId,
       },
     });
@@ -82,13 +86,16 @@ export async function GET(request: NextRequest, props: Props) {
 export async function POST(request: NextRequest, props: Props) {
   try {
     const body = await request.json();
-    const userId = body.userId;
+    const { userId } = body;
 
     const quizsetPath = props.params.quizset_path;
     console.log("quizSet post", quizsetPath);
-    const quizSet = await prisma.campaignDomainQuizSet.findFirst({
+    const quizSet = await prisma.quizSet.findFirst({
       where: {
-        path: quizsetPath,
+        // path: quizsetPath,
+        paths: {
+          has: quizsetPath, // Ensure jobId exists in the jobIds array
+        },
       },
     });
 
@@ -108,20 +115,37 @@ export async function POST(request: NextRequest, props: Props) {
       );
     }
 
+    const { domainCode, jobCode, languageCode } =
+      extractCodesFromPath(quizsetPath);
+    const language = await prisma.language.findFirst({
+      where: {
+        code: languageCode,
+      },
+    });
+
+    const job = await prisma.job.findFirst({
+      where: {
+        code: jobCode,
+      },
+    });
+
+    console.log("language:", language);
+    console.log("job:", job);
+
     const userCampaignDomainLog = await prisma.userCampaignDomainLog.create({
       data: {
         userId: userId,
         campaignId: quizSet.campaignId,
-        firstBadgeStage: quizSet.firstBadgeStage,
+        // firstBadgeStage: quizSet.badgeStages,
         isFirstBadgeStageCompleted: false,
         isCompleted: false,
         isBadgeAcquired: false,
-        jobId: quizSet.jobId,
-        campaignDomainQuizSetId: quizSet.id,
+        jobId: job?.id,
+        quizSetId: quizSet.id,
         domainId: quizSet.domainId,
-        firstBadgeActivityId: quizSet.firstBadgeActivityId,
-        lastBadgeActivityId: quizSet.lastBadgeActivityId,
-        languageId: quizSet.languageId,
+        // firstBadgeActivityId: quizSet.firstBadgeActivityId,
+        // lastBadgeActivityId: quizSet.lastBadgeActivityId,
+        languageId: language?.id,
       },
     });
 

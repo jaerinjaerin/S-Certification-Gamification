@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import { extractCodesFromPath } from "@/utils/pathUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
@@ -26,61 +27,119 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
-    const result = await prisma.campaignDomainQuizSet.findFirst({
+    const { domainCode, jobCode, languageCode } =
+      extractCodesFromPath(quizsetPath);
+
+    const domain = await prisma.domain.findFirst({
       where: {
-        path: {
-          equals: quizsetPath,
-          mode: "insensitive", // 대소문자 구분 없이 검색
-        },
-      },
-      include: {
-        language: true,
-        campaign: true,
-        domain: true,
-        quizStages: true, // Include the stages associated with the quiz set
+        code: domainCode,
       },
     });
 
-    console.log("result:", result);
+    const job = await prisma.job.findFirst({
+      where: {
+        code: jobCode,
+      },
+    });
 
-    // Fetch questions for each quizStage
-    const stagesWithQuestions = await Promise.all(
-      result?.quizStages.map(async (stage) => {
-        const questionIds = JSON.parse(stage.questionIds || "[]");
+    const quizSet = await prisma.quizSet.findFirst({
+      where: {
+        domainId: domain?.id,
+        jobIds: {
+          has: job?.id,
+        },
+        // paths: {
+        //   has: quizsetPath, // Ensure jobId exists in the jobIds array
+        // },
+      },
+      include: {
+        quizStages: true, // Include quizStages
+      },
+    });
+
+    if (!quizSet) {
+      return null;
+    }
+
+    const language = await prisma.language.findFirst({
+      where: {
+        code: languageCode,
+      },
+    });
+
+    const languageId = language?.id || "en";
+
+    // 각 quizStage의 questionIds를 기반으로 Question 데이터를 가져오기
+    const quizStagesWithQuestions = await Promise.all(
+      quizSet.quizStages.map(async (quizStage) => {
         const questions = await prisma.question.findMany({
           where: {
-            id: {
-              in: questionIds,
+            originalQuestionId: {
+              in: quizStage.questionIds, // Match question IDs from quizStage
             },
+            languageId, // Filter by languageId
           },
           include: {
-            options: true, // Include all related options for each question
+            options: true, // Include options if needed
           },
         });
 
         return {
-          ...stage,
-          questions, // Add questions with options to the stage
+          ...quizStage,
+          questions, // Attach filtered questions
         };
-      }) || []
+      })
     );
 
-    // Return the combined result
-    // return NextResponse.json(
-    //   {
-    //     item: {
-    //       ...result,
-    //       quizStages: stagesWithQuestions,
+    // return {
+    //   ...quizSet,
+    //   quizStages: quizStagesWithQuestions,
+    // };
+
+    // const result = await prisma.campaignDomainQuizSet.findFirst({
+    //   where: {
+    //     path: {
+    //       equals: quizsetPath,
+    //       mode: "insensitive", // 대소문자 구분 없이 검색
     //     },
     //   },
-    //   { status: 200 }
+    //   include: {
+    //     language: true,
+    //     campaign: true,
+    //     domain: true,
+    //     quizStages: true, // Include the stages associated with the quiz set
+    //   },
+    // });
+
+    // console.log("result:", result);
+
+    // // Fetch questions for each quizStage
+    // const stagesWithQuestions = await Promise.all(
+    //   result?.quizStages.map(async (stage) => {
+    //     const questionIds = JSON.parse(stage.questionIds || "[]");
+    //     const questions = await prisma.question.findMany({
+    //       where: {
+    //         id: {
+    //           in: questionIds,
+    //         },
+    //       },
+    //       include: {
+    //         options: true, // Include all related options for each question
+    //       },
+    //     });
+
+    //     return {
+    //       ...stage,
+    //       questions, // Add questions with options to the stage
+    //     };
+    //   }) || []
     // );
 
     const response = NextResponse.json(
       {
         item: {
-          ...result,
-          quizStages: stagesWithQuestions,
+          ...quizSet,
+          quizStages: quizStagesWithQuestions,
         },
       },
       { status: 200 }
