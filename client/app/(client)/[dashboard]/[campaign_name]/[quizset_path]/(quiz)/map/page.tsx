@@ -8,7 +8,9 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { Carousel, CarouselItem, CarouselContent, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 
 const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
@@ -48,11 +50,13 @@ export default function QuizMap() {
             <DialogHeader>
               <DialogTitle>How to play Be a Galaxy AI Expert! (Paradigm)</DialogTitle>
             </DialogHeader>
-            <div className="bg-[#EDEDED]">11</div>
+            {/* Carousel Area */}
+            <TutorialCarousel />
             <DialogFooter>
-              <Button variant={"primary"} onClick={() => console.log("TODO: 캐러샐이 넘어가야함. 끝났을땐 Dialog창 닫아야 함")}>
+              {/* <Button variant={"primary"} onClick={() => console.log("TODO: 캐러샐이 넘어가야함. 끝났을땐 Dialog창 닫아야 함")}>
                 OK
-              </Button>
+              </Button> */}
+              <DialogClose>OK</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -64,7 +68,7 @@ export default function QuizMap() {
 
       {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
-        {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
+        {quizSet.quizStages.map((stage: QuizStageEx) => {
           const nextStage = (quizHistory?.lastCompletedStage ?? 0) + 1;
           const firstBadgeStage = quizHistory?.firstBadgeStage;
 
@@ -81,7 +85,8 @@ export default function QuizMap() {
           );
         })}
       </div>
-      <div className="fixed z-30 bottom-7">Privacy | Term</div>
+
+      <PrivacyAndTerm />
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
     </div>
@@ -141,6 +146,31 @@ const Gradient = ({ type }: { type: GradientType }) => {
         type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
       )}
     />
+  );
+};
+
+const TutorialCarousel = () => {
+  return (
+    <Carousel className="w-full">
+      <CarouselContent>
+        {Array.from({ length: 3 }).map((_, index) => {
+          return (
+            <CarouselItem key={index}>
+              <div className="p-1">
+                <ul className="bg-[#EDEDED] min-h-[340px]">
+                  <li>
+                    If you answer correctly on the first attempt, answer consecutively correctly, or complete the stage, you will earn points based on
+                    the remaining attempts, and the points will be awarded differently
+                  </li>
+                </ul>
+              </div>
+            </CarouselItem>
+          );
+        })}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
 };
 
