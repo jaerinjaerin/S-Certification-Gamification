@@ -79,7 +79,7 @@ const DialogOverlay = ({ dismissOnOverlayClick = false }: { dismissOnOverlayClic
 // Dialog Trigger Component
 export const DialogTrigger = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button"> & { asChild?: boolean }>(
   ({ children, asChild = false, ...props }, ref) => {
-    const { setOpen, open } = useDialogContext();
+    const { setOpen } = useDialogContext();
 
     if (asChild && isValidElement(children)) {
       return cloneElement(children as ReactElement, {
@@ -149,18 +149,15 @@ export const DialogDescription = ({ children, className }: { children: React.Rea
   <div className={cn("text-base text-[#4F4F4F] mb-5", className)}>{children}</div>
 );
 
-export const DialogClose = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button"> & { asChild?: boolean }>(
-  ({ children, asChild = false, ...props }, ref) => {
-    const { setOpen } = useDialogContext();
+export const DialogClose = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button">>(({ children, ...props }, ref) => {
+  const { setOpen } = useDialogContext();
 
-    // 기본 버튼 렌더링
-    return (
-      <button {...props} ref={ref} onClick={() => setOpen(false)}>
-        {children}
-      </button>
-    );
-  }
-);
+  return (
+    <Button variant={"primary"} {...props} ref={ref} onClick={() => setOpen(false)}>
+      {children}
+    </Button>
+  );
+});
 DialogClose.displayName = "DialogClose";
 
 // DialogFooter 컴포넌트
