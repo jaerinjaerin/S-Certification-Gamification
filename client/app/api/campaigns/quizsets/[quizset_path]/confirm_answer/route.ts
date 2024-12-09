@@ -49,7 +49,9 @@ export async function POST(request: Request, props: Props) {
       );
     }
 
-    const quizStage = quizset.quizStages.find((stage) => stage.id === quizStageId);
+    const quizStage = quizset.quizStages.find(
+      (stage) => stage.id === quizStageId
+    );
     if (!quizStage) {
       return NextResponse.json(
         {
@@ -91,7 +93,9 @@ export async function POST(request: Request, props: Props) {
       );
     }
 
-    const correctOptionIds = question.options.filter((option) => option.isCorrect).map((option) => option.id);
+    const correctOptionIds = question.options
+      .filter((option) => option.isCorrect)
+      .map((option) => option.id);
 
     if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
       // await prisma.userQuizQuestionLog.create({
@@ -137,6 +141,9 @@ export async function POST(request: Request, props: Props) {
     }
   } catch (error) {
     console.error("Error register user quiz log:", error);
-    return NextResponse.json({ message: "An unexpected error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }

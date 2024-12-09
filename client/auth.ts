@@ -53,17 +53,25 @@ export const {
         let store: string | null = null;
 
         if (accessToken) {
-          const orgIds: string[] = profile.personOrganization.map((org) => org.organizationId.toString());
+          const orgIds: string[] = profile.personOrganization.map((org) =>
+            org.organizationId.toString()
+          );
 
-          const fetchOrganizationData = async (orgId: string, accessToken: string) => {
+          const fetchOrganizationData = async (
+            orgId: string,
+            accessToken: string
+          ) => {
             try {
-              const response = await fetch(`https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`, {
-                cache: "no-store",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
-                },
-              });
+              const response = await fetch(
+                `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
+                {
+                  cache: "no-store",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
 
               if (!response.ok) {
                 throw new Error(`Failed to fetch data: ${response.statusText}`);
@@ -76,7 +84,9 @@ export const {
             }
           };
 
-          const results = await Promise.all(orgIds.map((orgId) => fetchOrganizationData(orgId, accessToken)));
+          const results = await Promise.all(
+            orgIds.map((orgId) => fetchOrganizationData(orgId, accessToken))
+          );
 
           results.forEach((result: any) => {
             if (!result) return; // null인 경우 건너뜀
@@ -104,7 +114,9 @@ export const {
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
-          sumtotalDomainId: profile.personDomain?.find((domain) => domain.isPrimary)?.code || null,
+          sumtotalDomainId:
+            profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
+            null,
           sumtotalJob: job,
           sumtotalStore: store,
         };
@@ -143,7 +155,7 @@ export const {
           throw new Error("Invalid email or code");
         }
 
-        let user = await prisma.user.findUnique({
+        let user = await prisma.user.findFirst({
           where: { email: email as string },
         });
 
@@ -213,6 +225,7 @@ export const {
         });
       }
     },
+    // getUserByEmail: (email) => prisma.user.findFirst({ where: { email } }),
     linkAccount: ({ user, profile }) => {
       console.log("next-auth linkAccount", user, profile);
     },
