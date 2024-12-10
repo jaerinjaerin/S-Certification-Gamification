@@ -21,18 +21,42 @@ async function main() {
   });
 
   // Create Jobs
+  /*
+    1: FSM(FSC) Store Sales
+    2: FSM(FSC) e-promoter
+    3: FSM(FSC) Contact-Center agent (Call Center Agent)
+    4: FF MX promoter
+    5: FF MX merchandiser
+    6: FF MX trainer
+    7: others (Not obligate to learn like a Management)
+  */
   await prisma.job.createMany({
     data: [
-      { code: "ff", name: "ff", description: "FF Job" },
-      { code: "fsm", name: "fsm", description: "FSM Job" },
+      { id: "1", code: "fsm", name: "FSM(FSC) Store Sales" },
+      { id: "2", code: "fsm", name: "FSM(FSC) e-promoter" },
       {
+        id: "3",
         code: "fsm",
-        name: "FSM(C&R)",
-        description: "FSM(C&R)",
+        name: "FSM(FSC) Contact-Center agent",
       },
-      { code: "fsm", name: "SES", description: "ses" },
+      { id: "4", code: "ff", name: "FF MX promoter" },
+      { id: "5", code: "ff", name: "FF MX merchandiser" },
+      { id: "6", code: "ff", name: "FF MX trainer" },
+      { id: "7", code: "fsm", name: "others" },
     ],
   });
+  // await prisma.job.createMany({
+  //   data: [
+  //     { code: "ff", name: "ff", description: "FF Job" },
+  //     { code: "fsm", name: "fsm", description: "FSM Job" },
+  //     {
+  //       code: "fsm",
+  //       name: "FSM(C&R)",
+  //       description: "FSM(C&R)",
+  //     },
+  //     { code: "fsm", name: "SES", description: "ses" },
+  //   ],
+  // });
 
   const jobs = await prisma.job.findMany();
 
@@ -343,11 +367,12 @@ async function main() {
         // ],
         campaignId: campaign.id,
         domainId: domain.id,
-        jobIds: [jobs[0].id, jobs[1].id],
+        // jobIds: [jobs[0].id, jobs[1].id],
+        jobCodes: ["ff", "fsm"],
         // languageId: lang.id,
         // lastBadgeActivityId: mainActivityId,
-        badgeStages: [4],
-        badgeActivityIds: [mainActivityId],
+        // badgeStages: [4],
+        // badgeActivityIds: [mainActivityId],
         createrId: "admin",
       },
     });
@@ -364,6 +389,8 @@ async function main() {
           questionIds: stageQuestionIds,
           lifeCount: stageQuestionIds.length,
           quizSetId: quizSet.id,
+          isBadgeStage: i === 4,
+          badgeActivityId: i === 4 ? mainActivityId : null,
         },
       });
     }
@@ -396,8 +423,8 @@ async function main() {
   //       jobIds: [jobs[0].id, jobs[1].id], // Assigning the first job for simplicity
   //       // languageIds: [lang.id],
   //       // firstBadgeStage: 3,
-  //       badgeStages: [4],
-  //       badgeActivityIds: [mainActivityId],
+  // badgeStages: [4],
+  // badgeActivityIds: [mainActivityId],
   //       // firstBadgeActivityId: optionalActivityId,
   //       // lastBadgeActivityId: mainActivityId,
   //       createrId: "admin",
@@ -446,8 +473,8 @@ async function main() {
   //       campaignId: campaign.id,
   //       domainId: domain.id,
   //       jobIds: [jobs[0].id, jobs[1].id],
-  //       badgeStages: [4],
-  //       badgeActivityIds: [mainActivityId],
+  // badgeStages: [4],
+  // badgeActivityIds: [mainActivityId],
   //       // languageId: lang.id,
   //       // lastBadgeActivityId: mainActivityId,
   //       createrId: "admin",

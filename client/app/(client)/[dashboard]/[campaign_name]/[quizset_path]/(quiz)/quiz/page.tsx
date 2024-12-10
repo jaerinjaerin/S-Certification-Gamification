@@ -1,8 +1,8 @@
 "use client";
 
-import { useQuiz } from "@/providers/quiz_provider";
+import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
 import { QuestionOption } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function QuizPage() {
   const {
@@ -12,14 +12,17 @@ export default function QuizPage() {
     currentQuestionIndex,
     currentQuizStage,
     // currentQuestionOptionIndex,
-    currentStageQuizzes,
-    isFirstBadgeStage,
-    isLastBadgeStage,
-    processFirstBadgeAcquisition,
-    processLastBadgeAcquisition,
+    // currentStageQuizzes,
+    // isFirstBadgeStage,
+    // isLastBadgeStage,
+    // processFirstBadgeAcquisition,
+    // processLastBadgeAcquisition,
     // isComplete,
     // isLastStage,
-    startStage,
+    currentStageQuestions,
+    isBadgeStage,
+    processBadgeAcquisition,
+    // startStage,
     endStage,
     // isLastQuestionOnState,
     confirmAnswer,
@@ -29,16 +32,16 @@ export default function QuizPage() {
     // setCurrentQuestionOptionIndex,
   } = useQuiz();
 
-  console.log("quizSet", quizSet);
+  // console.log("quizSet", quizSet);
 
   // // 선택된 옵션 상태
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (quizSet) {
-      startStage();
-    }
-  }, [quizSet, startStage]);
+  // useEffect(() => {
+  //   if (quizSet) {
+  //     startStage();
+  //   }
+  // }, [quizSet]);
 
   // const routeNextQuizComplete = () => {
   //   routeToPage("complete");
@@ -98,17 +101,13 @@ export default function QuizPage() {
     }
 
     const result = await confirmAnswer(
-      currentQuizStage?.id,
+      // currentQuizStage?.id,
       questionId,
-      selectedOptionIds
+      selectedOptionIds,
+      30
     );
 
-    if (!result.success) {
-      alert(result.error);
-      return;
-    }
-
-    if (result.data.isCorrect) {
+    if (result.isCorrect) {
       alert("정답입니다!");
       next();
     } else {
@@ -124,29 +123,25 @@ export default function QuizPage() {
       return;
     }
 
-    if (isFirstBadgeStage()) {
-      await processFirstBadgeAcquisition();
-      alert("첫 번째 배지 획득!");
-      // 배지 획득 화면 처리 로직
-      endStage();
-    } else if (isLastBadgeStage()) {
-      await processLastBadgeAcquisition();
-      alert("배지 획득!");
-      // 배지 획득 화면 처리 로직
-      endStage();
-      return;
-    }
+    // if (isBadgeStage()) {
+    //   await processBadgeAcquisition();
+    //   alert("배지 획득!");
+    //   // 배지 획득 화면 처리 로직
+    // }
+
+    const result: EndStageResult = await endStage(3);
+    alert(`스테이지 완료! 점수: ${result.score}`);
 
     // if (isLastStage()) {
     //   // 퀴즈 완료 화면 처리 로직
     //   return;
     // }
 
-    alert(
-      `${
-        currentQuizStageIndex + 1
-      } 번째 스테이지 완료. 다음 스테이지로 이동합니다.`
-    );
+    // alert(
+    //   `${
+    //     currentQuizStageIndex + 1
+    //   } 번째 스테이지 완료. 다음 스테이지로 이동합니다.`
+    // );
 
     nextStage();
   };
@@ -169,16 +164,14 @@ export default function QuizPage() {
     });
   };
 
-  console.log("currentQuestionIndex", currentQuestionIndex);
-
   const renderQuizPage = () => {
-    if (!currentQuizStage || !currentStageQuizzes) {
+    if (!currentQuizStage || !currentStageQuestions) {
       return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
     }
 
     // const quizStage: QuizStageEx = quizSet.quizStages[currentStage];
-    const question = currentStageQuizzes[currentQuestionIndex];
-    const totalQuestions = currentStageQuizzes?.length;
+    const question = currentStageQuestions[currentQuestionIndex];
+    const totalQuestions = currentStageQuestions?.length;
     const totalStages = quizSet.quizStages.length;
 
     return (

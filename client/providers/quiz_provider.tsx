@@ -1,59 +1,67 @@
 "use client";
 
+import { QuestionEx, QuizSetEx, QuizStageEx } from "@/app/types/type";
+import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
-  CampaignDomainQuizSetEx,
-  QuestionEx,
-  QuizStageEx,
-} from "@/app/types/type";
-import {
-  Campaign,
   Domain,
   Language,
+  Question,
+  QuestionOption,
   QuestionType,
-  UserCampaignDomainLog,
+  UserQuizLog,
+  UserQuizStageLog,
 } from "@prisma/client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
+import { useCampaign } from "./campaignProvider";
+import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
+import QuizScoreManager from "./managers/quizScoreManager";
 
 interface QuizContextType {
-  quizSet: CampaignDomainQuizSetEx | null;
+  quizSet: QuizSetEx | null;
   language: Language | null;
-  // domain: Domain | null;
-  // campaign: Campaign | null;
-  quizHistory: UserCampaignDomainLog | null;
+  quizHistory: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
-  // currentQuestionOptionIndex: number;
   currentQuizStage: QuizStageEx | null;
-  currentStageQuizzes: QuestionEx[] | null;
-  isFirstBadgeStage(): boolean;
-  isLastBadgeStage(): boolean;
-  processFirstBadgeAcquisition(): void;
-  processLastBadgeAcquisition(): void;
+  currentStageQuestions: QuestionEx[] | null;
+  isBadgeStage(): boolean;
+  processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
   isComplete(): boolean;
   isLastQuestionOnState(): boolean;
   isLastStage(): boolean;
-  startStage(): void;
-  endStage(): Promise<void>;
+  // startStage(): void;
+  endStage(remainingHearts: number): Promise<EndStageResult>;
+  // completeQuiz(): void;
   nextQuestion(): boolean;
   nextStage(): boolean;
   canNextQuestion(): boolean;
   confirmAnswer(
-    quizStageId: string,
+    // quizStageId: string,
     questionId: string,
-    selectedOptionIds: string[]
-  ): Promise<ConfirmAnswerResult>;
-  // setCurrentQuestionOptionIds: React.Dispatch<React.SetStateAction<string>>;
+    selectedOptionIds: string[],
+    elapsedSeconds: number
+  ): ConfirmAnswerResponse;
+  getCorrectOptionIds(questionId: string): string[];
+  // isCheckingAnswer: boolean;
+  isLoading: boolean;
 }
 
-type ConfirmAnswerResult =
-  | { success: true; data: ConfirmAnswerResponse }
-  | { success: false; error: string; statusCode?: number };
+// type ConfirmAnswerResult =
+//   | { success: true; data: ConfirmAnswerResponse }
+//   | { success: false; error: string; statusCode?: number };
 
 interface ConfirmAnswerResponse {
   isCorrect: boolean;
   questionType: QuestionType;
-  correctOptions: number[];
+  correctOptionIds: string[];
   message: string;
+}
+
+export interface EndStageResult {
+  score: number;
+  isBadgeAcquired: boolean;
+  badgeStage: boolean;
+  badgeImageURL: string;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -63,51 +71,101 @@ export const QuizProvider = ({
   quizSet,
   language,
   quizHistory,
+  domain,
 }: {
   children: React.ReactNode;
-  quizSet: CampaignDomainQuizSetEx;
+  quizSet: QuizSetEx;
   language: Language;
-  quizHistory: UserCampaignDomainLog;
+  quizHistory: UserQuizLog;
   domain: Domain;
-  campaign: Campaign;
 }) => {
+  const { campaign } = useCampaign();
+  const _domain: Domain = domain;
+  let _quizHistory: UserQuizLog = quizHistory;
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
     quizHistory?.lastCompletedStage ?? 0
   );
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  // const [currentQuestionOptionIndex, setCurrentQuestionOptionIndex] =
-  //   useState(0);
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
     quizSet.quizStages[currentQuizStageIndex]
   );
-  const [currentStageQuizzes, setCurrentStageQuizzes] = useState<
+  const [currentStageQuestions, setCurrentStageQuestions] = useState<
     QuestionEx[] | null
   >(quizSet.quizStages[currentQuizStageIndex].questions);
-  let stageStartedAt: Date | null = null;
 
-  const startStage = (): void => {
-    stageStartedAt = new Date();
-  };
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const endStage = async (): Promise<void> => {
-    const elapsedSeconds = Math.floor(
-      // 소수점 버림
-      (new Date().getTime() - stageStartedAt!.getTime()) / 1000
-    );
+  const quizScoreManagerRef = useRef(new QuizScoreManager()); // 유지되는 인스턴스
+  const quizScoreManager = quizScoreManagerRef.current;
+
+  const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
+  const quizLogManager = quizLogManagerRef.current;
+
+  // const startStage = (stageIndex: number): void => {
+  //   quizLogManager.startStage(stageIndex);
+  // };
+
+  const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
+    // const elapsedSeconds = Math.floor(
+    //   // 소수점 버림
+    //   (new Date().getTime() - stageStartedAt!.getTime()) / 1000
+    // );
 
     /**
      * send log
      */
 
-    if (!isLastStage()) {
-      const nextQuizStageIndex = currentQuizStageIndex + 1;
-      setCurrentQuizStageIndex(nextQuizStageIndex);
-      setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
-      setCurrentStageQuizzes(quizSet.quizStages[nextQuizStageIndex].questions);
-      setCurrentQuestionIndex(0);
+    // if (!isLastStage()) {
+    //   const nextQuizStageIndex = currentQuizStageIndex + 1;
+    //   setCurrentQuizStageIndex(nextQuizStageIndex);
+    //   setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
+    //   setCurrentStageQuestions(
+    //     quizSet.quizStages[nextQuizStageIndex].questions
+    //   );
+    //   setCurrentQuestionIndex(0);
+    // }
+
+    // stageStartedAt = null;
+
+    const score = quizScoreManager.calculateStageScore({
+      quizLogs: quizLogManager.getLogs(),
+      remainingHearts: remainingHearts,
+    });
+
+    console.info("score", score);
+
+    const totalElapsedSeconds = quizLogManager.getTotalElapsedSeconds();
+    setIsLoading(true);
+
+    let isBadgeAcquired = false;
+    let badgeStage = isBadgeStage();
+    if (badgeStage) {
+      isBadgeAcquired = await processBadgeAcquisition(totalElapsedSeconds);
     }
 
-    stageStartedAt = null;
+    await createQuizQuestionLogs(quizLogManager.getLogs());
+    const stageLog: UserQuizStageLog = await createQuizStageLog(
+      remainingHearts,
+      badgeStage,
+      isBadgeAcquired
+    );
+
+    const quizLog: UserQuizLog = await updateQuizStageCompleteLog(
+      currentQuizStageIndex,
+      badgeStage
+    );
+    _quizHistory = quizLog;
+
+    quizLogManager.endStage();
+
+    setIsLoading(false);
+
+    return {
+      score: stageLog.score ?? 0,
+      isBadgeAcquired: isBadgeAcquired,
+      badgeStage: badgeStage,
+      badgeImageURL: currentQuizStage?.badgeImageURL ?? "",
+    };
   };
 
   const isLastQuestionOnState = (): boolean => {
@@ -134,147 +192,266 @@ export const QuizProvider = ({
     const nextQuizStageIndex = currentQuizStageIndex + 1;
     setCurrentQuizStageIndex(nextQuizStageIndex);
     setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
-    setCurrentStageQuizzes(quizSet.quizStages[nextQuizStageIndex].questions);
+    setCurrentStageQuestions(quizSet.quizStages[nextQuizStageIndex].questions);
     setCurrentQuestionIndex(0);
+
+    quizLogManager.startStage(nextQuizStageIndex);
     return true;
   };
 
-  // const getCurrentStageQuizzes = (): QuizQuestion[] => {
-  //   if (quizSet.quizStages.length <= currentQuizStageIndex) {
-  //     return [];
-  //   }
-  //   return quizSet.quizStages[currentQuizStageIndex].questions;
-  // };
+  const isBadgeStage = (): boolean => {
+    return currentQuizStage.isBadgeStage;
+  };
 
-  const isFirstBadgeStage = (): boolean => {
-    if (
-      quizSet.isFirstBadgeStage == null ||
-      quizSet.firstBadgeActivityId == null
-    ) {
+  const getCurrentStageBadgeActivityId = (): string | null => {
+    return currentQuizStage.badgeActivityId;
+  };
+
+  const processBadgeAcquisition = async (
+    elapsedSeconds: number
+  ): Promise<boolean> => {
+    // call sumtotal badge api
+    const activityId = getCurrentStageBadgeActivityId();
+    if (!activityId) {
       return false;
     }
-    return quizSet.isFirstBadgeStage === currentQuizStageIndex;
-  };
 
-  const isLastBadgeStage = (): boolean => {
-    if (quizSet.lastBadgeActivityId == null) {
+    try {
+      await postActivitieRegister(activityId);
+      await postActivitieEnd(activityId, elapsedSeconds);
+      return true;
+    } catch (error) {
       return false;
     }
-    return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const processFirstBadgeAcquisition = () => {
-    // fsm 처리 로직
+  const postActivitieRegister = async (activityId: string) => {
+    try {
+      const response = await fetch("/api/sumtotal/activity/register", {
+        method: "PUT",
+        cache: "no-store",
+        body: JSON.stringify({
+          activityId: activityId,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch activities");
+      }
+
+      const data = await response.json();
+    } catch (err: any) {
+      console.error(err.message || "An unexpected error occurred");
+      throw new Error(err.message || "An unexpected error occurred");
+    }
   };
 
-  const processLastBadgeAcquisition = () => {
-    // ff 처리 로직
-    // fsm 처리 로직
+  const postActivitieEnd = async (
+    activityId: string,
+    elapsedSeconds: number
+  ) => {
+    try {
+      const response = await fetch("/api/sumtotal/activity/end", {
+        method: "POST",
+        cache: "no-store",
+        body: JSON.stringify({
+          activityId: activityId,
+          status: "Attended",
+          elapsedSeconds: elapsedSeconds,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch activities");
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+    } catch (err: any) {
+      console.error(err.message || "An unexpected error occurred");
+      throw new Error(err.message || "An unexpected error occurred");
+    }
   };
 
   const isComplete = (): boolean => {
-    return quizHistory.isCompleted ?? false;
+    return _quizHistory.isCompleted ?? false;
   };
 
   const isLastStage = (): boolean => {
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const confirmAnswer = async (
-    quizStageId: string,
+  const confirmAnswer = (
     questionId: string,
-    selectedOptionIds: string[]
-  ): Promise<ConfirmAnswerResult> => {
+    selectedOptionIds: string[],
+    elapsedSeconds: number
+  ): ConfirmAnswerResponse => {
+    try {
+      const question = currentQuizStage?.questions.find(
+        (q: Question) => q.id === questionId
+      );
+
+      if (!question) {
+        throw new Error("Question not found");
+      }
+
+      const correctOptionIds = question.options
+        .filter((option: QuestionOption) => option.isCorrect)
+        .map((option: QuestionOption) => option.id);
+
+      const isCorrect = areArraysEqualUnordered(
+        correctOptionIds,
+        selectedOptionIds
+      );
+      const result = {
+        isCorrect: isCorrect,
+        questionType: question.questionType,
+        correctOptionIds: correctOptionIds,
+        message: isCorrect ? "정답입니다!" : "틀렸습니다!",
+      };
+
+      quizLogManager.addLog({
+        isCorrect: result.isCorrect,
+        campaignId: campaign.id,
+        userId: _quizHistory.userId,
+        jobId: _quizHistory.jobId || "",
+        quizSetId: quizSet.id,
+        questionId: questionId,
+        languageId: language.id,
+        selectedOptionIds: selectedOptionIds,
+        correctOptionIds: result.correctOptionIds,
+        domainId: _domain.id,
+        stageIndex: currentQuizStageIndex,
+        category: question.category,
+        specificFeature: question.specificFeature,
+        product: question.product,
+        questionType: question.questionType,
+        elapsedSeconds: elapsedSeconds,
+        quizStageId: currentQuizStage.id,
+        createdAt: new Date().toISOString(),
+      });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCorrectOptionIds = (questionId: string): string[] => {
+    const question = currentQuizStage?.questions.find(
+      (q: Question) => q.id === questionId
+    );
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    return question.options
+      .filter((option: QuestionOption) => option.isCorrect)
+      .map((option: QuestionOption) => option.id);
+  };
+
+  const createQuizQuestionLogs = async (quizLogs: QuizLog[]): Promise<void> => {
+    try {
+      const result = Promise.all(
+        quizLogs.map(async (quizLog) => {
+          await fetch("/api/logs/quizzes/questions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(quizLog),
+          });
+        })
+      );
+    } catch (error) {
+      console.error("Error createQuizQuestionLogs:", error);
+      throw new Error(
+        "An unexpected error occurred while registering quiz log"
+      );
+    }
+  };
+
+  const createQuizStageLog = async (
+    remainingHearts: number,
+    isBadgeStage: boolean,
+    isBadgeAcquired: boolean,
+    badgeActivityId: string | null = null
+  ): Promise<UserQuizStageLog> => {
+    try {
+      const response = await fetch("/api/logs/quizzes/stages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaignId: campaign.id,
+          userId: _quizHistory.userId,
+          jobId: _quizHistory.jobId || "",
+          domainId: domain.id,
+          quizSetId: quizSet.id,
+          stageIndex: currentQuizStageIndex,
+          quizStageId: currentQuizStage.id,
+          isCompleted: true,
+          isBadgeStage,
+          isBadgeAcquired,
+          badgeActivityId,
+          remainingHearts,
+          // score: score,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch user profile");
+      }
+
+      const data = await response.json();
+      return data.item as UserQuizStageLog;
+    } catch (error) {
+      console.error("Error createQuizStageLog:", error);
+      throw new Error(
+        "An unexpected error occurred while registering quiz log"
+      );
+    }
+  };
+
+  const updateQuizStageCompleteLog = async (
+    stageIndex: number,
+    isBadgeAcquired: boolean
+  ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
-        `/api/campaigns/quizsets/${quizSet.path}/confirm_answer`,
+        `/api/logs/quizzes/sets/${_quizHistory.id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            quizStageId,
-            questionId,
-            selectedOptionIds,
+            lastCompletedStage: stageIndex + 1,
+            isBadgeAcquired,
           }),
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch domains");
+        throw new Error(errorData.message || "Failed to fetch user profile");
       }
 
       const data = await response.json();
-      console.log("response", data);
-      return {
-        success: true,
-        data: data.result as ConfirmAnswerResponse,
-      };
+      return data.item as UserQuizLog;
     } catch (error) {
-      return {
-        success: false,
-        error: (error as Error).message || "An unexpected error occurred",
-      };
+      console.error("Error updateQuizStageCompleteLog:", error);
+      throw new Error(
+        "An unexpected error occurred while registering quiz log"
+      );
     }
-    // const question = currentQuizStage?.questions.find(
-    //   (q: Question) => q.id === questionId
-    // );
-
-    // if (!question) {
-    //   return {
-    //     isCorrect: false,
-    //     questionType: QuestionType.SINGLE_CHOICE,
-    //     correctOptions: [],
-    //     message: "Question not found",
-    //   };
-    // }
-
-    // const correctOptionIds = question.options
-    //   .filter((option: QuestionOption) => option.isCorrect)
-    //   .map((option: QuestionOption) => option.id);
-
-    // console.log("correctOptions", correctOptionIds, selectedOptionIds);
-    // if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
-    //   return {
-    //     isCorrect: true,
-    //     questionType: question.questionType,
-    //     correctOptions: correctOptionIds,
-    //     message: "정답입니다!",
-    //   };
-    // }
-
-    // return {
-    //   isCorrect: false,
-    //   questionType: question.questionType,
-    //   correctOptions: correctOptionIds,
-    //   message: "틀렸습니다!",
-    // };
   };
 
-  const sendQuestionLog = async (
-    questionId: string,
-    selectedOptionId: string,
-    isCorrect: boolean,
-    elapsedSeconds: number
-  ) => {
-    // 맞췄는지 틀렸는지
-  };
-
-  const sendQuizStageLog = async (
-    stageIncex: number,
-    elapsedSeconds: number
-  ) => {
-    //
-  };
-
-  const sendQuizStageCompleteLog = async (
-    stageIncex: number,
-    elapsedSeconds: number
-  ) => {
-    //
-  };
   const sendQuizCompleteLog = async () => {
     //
   };
@@ -284,26 +461,24 @@ export const QuizProvider = ({
       value={{
         quizSet,
         language,
-        quizHistory,
+        quizHistory: _quizHistory,
         currentQuizStageIndex,
         currentQuestionIndex,
         currentQuizStage,
-        currentStageQuizzes,
-        isFirstBadgeStage,
-        isLastBadgeStage,
-        processFirstBadgeAcquisition,
-        processLastBadgeAcquisition,
+        currentStageQuestions,
         isComplete,
         isLastStage,
-        startStage,
+        // startStage,
         endStage,
         nextStage,
         confirmAnswer,
         isLastQuestionOnState,
         nextQuestion,
         canNextQuestion,
-        // currentQuestionOptionIndex,
-        // setCurrentQuestionOptionIndex,
+        isBadgeStage,
+        processBadgeAcquisition,
+        getCorrectOptionIds,
+        isLoading,
       }}
     >
       {children}

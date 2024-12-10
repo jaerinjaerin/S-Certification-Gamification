@@ -1,15 +1,31 @@
-import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+type Props = {
+  params: {
+    user_id: string;
+  };
+};
+
+export async function POST(request: Request, props: Props) {
   try {
-    const session = await auth();
+    const userId = props.params.user_id;
+    // const session = await auth();
     const body = await request.json();
+
+    /*
+    body: {
+      domainId: selectedDomain?.id,
+      jobId: selectedSalesFormat?.jobId,
+      languageId: selectedLanguage?.id,
+      channelSegmentId: selectedChannel?.id,
+      salesFormatId: selectedSalesFormat?.id,
+    }
+    */
 
     const user = await prisma.user.update({
       where: {
-        id: session?.user.id,
+        id: userId,
       },
       data: body,
       include: {

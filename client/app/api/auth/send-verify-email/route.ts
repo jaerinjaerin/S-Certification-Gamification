@@ -145,7 +145,6 @@ export async function POST(request: NextRequest) {
       { item: { success: true } },
       { status: data?.$metadata?.httpStatusCode }
     );
-    // return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
   } catch (error: unknown) {
     console.error("Error send email verify error: ", error);
     return NextResponse.json({ error: error }, { status: 500 });

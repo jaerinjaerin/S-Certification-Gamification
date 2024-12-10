@@ -73,30 +73,42 @@ model User {
 
   providerUserId        String?
   providerPersonId      Int?
-  // jobName             String?
+  // // jobName             String?
   jobId             String?
   job               Job? @relation(fields: [jobId], references: [id])
-  domainId              String?
-  languageId              String?
+  
 
 
   sumtotalDomainId              String?
-  sumtotalJob              String?
+  sumtotalJobId              String?
   sumtotalLanguageId              String?
   // sumtotalOrganizationIds String?
   
-  sumtotalStore            String?
+  sumtotalChannelSegmentId           String?
+  sumtotalStoreId           String?
   
-  channelSegmentId            String?
-  salesFormatId  String?
+  // channelSegmentId            String?
+  // salesFormatId  String?
+  // channel  String?
   
 
   domain      Domain? @relation(fields: [domainId], references: [id])
   language    Language? @relation(fields: [languageId], references: [id])
 
 
+
+
+  domainId              String?
+  languageId              String?
+
+  regionId String?
+  subsidaryId String?
+  channelSegmentId String?
+  storeId String?
+  channelId String?
+
   // userQuizLogs     UserQuizLog[]
-  userCampaignDomainLogs UserCampaignDomainLog[]
+  userQuizLogs UserQuizLog[]
   // userQuizStageLogs     UserQuizStageLog[]
   // userQuizSetLogs     UserQuizSetLog[]
   // userQuestionAttempt UserQuestionAttempt[]
@@ -204,34 +216,6 @@ model Domain {
   users User[]
 }
 
-// model CampaignDomainQuizSet {
-//   id         String   @id @default(uuid())
-
-//   path       String
-//   campaignId String      // Foreign key to Campaign
-//   domainId   String      // Foreign key to Domain
-//   jobId             String
-//   languageId        String
-//   // questionIds       String
-//   quizStages     QuizStage[]
-
-//   firstBadgeStage    Int?
-//   firstBadgeActivityId String?
-//   lastBadgeActivityId String?
-
-//   createrId   String
-//   updaterId   String?
-
-//   createdAt   DateTime    @default(now())
-//   updatedAt   DateTime    @updatedAt
-
-//   campaign   Campaign    @relation(fields: [campaignId], references: [id])
-//   domain     Domain      @relation(fields: [domainId], references: [id])
-//   language     Language      @relation(fields: [languageId], references: [id])
-
-//   userCampaignDomainLogs UserCampaignDomainLog[]
-// }
-
 model QuizSet {
   id         String   @id @default(uuid())
 
@@ -240,14 +224,15 @@ model QuizSet {
   campaignId String      // Foreign key to Campaign
   domainId   String      // Foreign key to Domain
   // jobId             String
-  jobIds             String[]
+  // jobIds             String[]
+  jobCodes             String[]
   // languageIds        String[]
   // languageIds        String
   // questionIds       String
   quizStages     QuizStage[]
 
-  badgeStages    Int[]
-  badgeActivityIds String[]
+  // badgeStages    Int[]
+  // badgeActivityIds String[]
   // firstBadgeStage    Int?
   // firstBadgeActivityId String?
   // lastBadgeActivityId String?
@@ -262,7 +247,7 @@ model QuizSet {
   domain     Domain      @relation(fields: [domainId], references: [id])
   // language     Language      @relation(fields: [languageId], references: [id])
 
-  userCampaignDomainLogs UserCampaignDomainLog[]
+  userQuizLogs UserQuizLog[]
 }
 
 model QuizStage {
@@ -285,6 +270,12 @@ model QuizStage {
   updatedAt  DateTime   @updatedAt
 
   userQuizStageLogs UserQuizStageLog[]
+  // userQuizQuestionLogs UserQuizQuestionLog[]
+
+
+  isBadgeStage Boolean?
+  badgeActivityId String?
+  badgeImageUrl String?
 }
 
 model Question {
@@ -304,7 +295,7 @@ model Question {
   updatedAt   DateTime    @updatedAt
   
   language    Language    @relation(fields: [languageId], references: [id])
-  userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
+  // userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
 
 
   category    String
@@ -336,7 +327,8 @@ model QuestionOption {
 }
 
 model Job {
-  id         String   @id @default(uuid())
+  id         String   @id
+  // groupCode  String
   code        String
   name       String   // Name of the user group (e.g., A, B)
   description String? // Optional description
@@ -346,6 +338,14 @@ model Job {
 
   users User[]
   salesFormats SalesFormat[]
+}
+
+model Store {
+  id         String   @id
+  name       String
+  code       String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model ChannelSegment {
@@ -363,17 +363,19 @@ model SalesFormat {
   job               Job             @relation(fields: [jobId], references: [id])
 }
 
-model UserCampaignDomainLog {
+model UserQuizLog {
   id          String   @id @default(uuid())
   userId      String
   // quizSetId   String
-  campaignId String
+  
   // activityId String
   // metadataId String
-  firstBadgeStage   Int?
-  isFirstBadgeStageCompleted    Boolean?
+  // firstBadgeStage   Int?
+  // isFirstBadgeStageCompleted    Boolean?
+  // badgeStages    Int[]
+  // badgeActivityIds String[]
   isCompleted    Boolean?
-  badgeAcquisitionDate DateTime?
+  // badgeAcquisitionDates DateTime[]
   isBadgeAcquired Boolean?
   lastCompletedStage    Int?
   timeSpent    Int?      // Time spent on this activity (in seconds)
@@ -381,7 +383,7 @@ model UserCampaignDomainLog {
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
   user        User    @relation(fields: [userId], references: [id])
-  jobId       String?
+  
 
 
   // campaignDomainQuizSetId String
@@ -394,21 +396,40 @@ model UserCampaignDomainLog {
 
   // countryCode String
 
-  domainId String
-  firstBadgeActivityId String?
-  lastBadgeActivityId String?
+  
+  // firstBadgeActivityId String?
+  // lastBadgeActivityId String?
   // languageCode String?
-  languageId String?
+  
   score       Int?
 
+  quizsetPath String?
+
+
+  campaignId String
+  domainId String
+  languageId String?
+
+  jobId       String?
+
   // @@unique([userId, campaignId, domainId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
+
+
+
+  regionId String?
+  subsidaryId String?
+  channelSegmentId String?
+  storeId String?
+  channelId String?
 }
 
 model UserQuizStageLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
+  jobId String
   // user         User     @relation(fields: [userId], references: [id])
 
+  campaignId  String
   quizStageId      String      // Foreign key to Stage
   quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
   isCompleted  Boolean  // Whether the stage was completed
@@ -416,53 +437,73 @@ model UserQuizStageLog {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isBadgeStage Boolean?
+  isBadgeAcquired   Boolean?
+  badgeActivityId String?
+
+  remainingHearts Int
 
   // countryCode String
   // campaignDomainId String
-  domainId String
+  // domainId String
   // campaignDomainQuizSetId String
   quizSetId String
+  stageIndex Int
 
   elapsedSeconds Int
 
-  startedAt DateTime
-  endedAt DateTime?
+  // startedAt DateTime?
+  // endedAt DateTime?
   score       Int?
   // languageCode String
   // activityId  String
   // campaignActivityId  String
+
+  domainId String
+  
+  regionId String?
+  subsidaryId String?
+  channelSegmentId String?
+  storeId String?
+  channelId String?
 }
 
 model UserQuizQuestionLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
   quizSetId   String      // Foreign key to QuizSet
-  jobId String
-  // user         User     @relation(fields: [userId], references: [id])
-  campaignId  String
+  
+  // user result
   questionId   String      // Foreign key to Question
-  question     Question @relation(fields: [questionId], references: [id])
+  // question     Question @relation(fields: [questionId], references: [id])
   isCorrect    Boolean  // Whether the user answered the question correctly
-  // timeSpent    Int      // Time spent on this question (in seconds)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  selectedOptionIds String
-
-  // campaignDomainId String
-  // countryCode String
-  domainId String
-  // languageCode String
-  languageId String?
+  selectedOptionIds String[]
+  correctOptionIds String[]
+  quizStageId String
+  // quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
 
   stageIndex  Int
-
   elapsedSeconds Int
+
+  // question
   category    String
   specificFeature   String
-  enabled     Boolean
   product    String
   questionType    QuestionType
-  score       Int?
-  // activityId  String
-  // campaignActivityId  String
+
+  // country
+  campaignId  String
+  jobId String
+  languageId String?
+
+  domainId String
+
+  regionId String?
+  subsidaryId String?
+  channelSegmentId String?
+  storeId String?
+  channelId String?
+  
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

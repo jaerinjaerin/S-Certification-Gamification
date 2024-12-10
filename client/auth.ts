@@ -49,8 +49,9 @@ export const {
 
         const accessToken = tokens.access_token;
         // job 및 store 추출
-        let job: string | null = null;
-        let store: string | null = null;
+        let jobId: string | null = null;
+        let storeId: string | null = null;
+        let channelSegmentId: string | null = null;
 
         if (accessToken) {
           const orgIds: string[] = profile.personOrganization.map((org) =>
@@ -91,20 +92,43 @@ export const {
           results.forEach((result: any) => {
             if (!result) return; // null인 경우 건너뜀
 
+            // const text9 = result.data[0]?.optionalInfo.text9;
+            // const text8 = result.data[0]?.optionalInfo.text8;
+            // const integer1 = result.data[0]?.optionalInfo.integer1;
+
+            // if (integer1 === 7 && !text9) {
+            //   jobId = text9;
+            // }
+
+            // if (integer1 === 5 && !text9) {
+            //   storeId = text9;
+            // }
+
+            // if (integer1 === 4 && !text8) {
+            //   channelSegmentId = text8;
+            // }
+
             const text9 = result.data[0]?.optionalInfo.text9;
+            const text8 = result.data[0]?.optionalInfo.text8;
             const integer1 = result.data[0]?.optionalInfo.integer1;
 
             if (!text9 || !integer1) return;
 
-            if (integer1 === 7) {
-              job = text9;
+            if (integer1 === "7" || integer1 === 7) {
+              jobId = text9;
             }
 
-            if (integer1 === 5) {
-              store = text9;
+            if (integer1 === "5" || integer1 === 5) {
+              storeId = text9;
+            }
+
+            if (integer1 === "4" || integer1 === 4) {
+              channelSegmentId = text8;
             }
           });
         }
+
+        // TODO: regionId, subsidaryId, channelId 정보를 추가로 넣어야 함.
 
         return {
           id: profile.userId,
@@ -117,8 +141,9 @@ export const {
           sumtotalDomainId:
             profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
             null,
-          sumtotalJob: job,
-          sumtotalStore: store,
+          sumtotalJobId: jobId,
+          sumtotalStoreId: storeId,
+          sumtotalChannelSegmentId: channelSegmentId,
         };
       },
     },

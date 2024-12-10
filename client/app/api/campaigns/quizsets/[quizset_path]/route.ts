@@ -36,17 +36,19 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
-    const job = await prisma.job.findFirst({
-      where: {
-        code: jobCode,
-      },
-    });
+    console.log("domain:", domain);
+
+    // const job = await prisma.job.findFirst({
+    //   where: {
+    //     code: jobCode,
+    //   },
+    // });
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: domain?.id,
-        jobIds: {
-          has: job?.id,
+        jobCodes: {
+          has: jobCode,
         },
         // paths: {
         //   has: quizsetPath, // Ensure jobId exists in the jobIds array
@@ -54,8 +56,13 @@ export async function GET(request: NextRequest, props: Props) {
       },
       include: {
         quizStages: true, // Include quizStages
+        // language: true,
+        // campaign: true,
+        // domain: true,
       },
     });
+
+    console.log("quizSet:", quizSet);
 
     if (!quizSet) {
       return null;
@@ -66,6 +73,8 @@ export async function GET(request: NextRequest, props: Props) {
         code: languageCode,
       },
     });
+
+    console.log("language:", language);
 
     const languageId = language?.id || "en";
 
@@ -90,6 +99,8 @@ export async function GET(request: NextRequest, props: Props) {
         };
       })
     );
+
+    console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
     // return {
     //   ...quizSet,
@@ -140,6 +151,8 @@ export async function GET(request: NextRequest, props: Props) {
         item: {
           ...quizSet,
           quizStages: quizStagesWithQuestions,
+          language: language,
+          domain: domain,
         },
       },
       { status: 200 }

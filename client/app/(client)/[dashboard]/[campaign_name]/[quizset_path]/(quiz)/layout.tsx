@@ -1,7 +1,8 @@
 import LogoutButton from "@/app/components/button/logout_button";
-import { CampaignDomainQuizSetEx } from "@/app/types/type";
+import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
+import { Domain } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -50,16 +51,37 @@ export default async function QuizLayout({
 
   // Fetch quiz history
   let quizHistory = await fetchData(
-    `${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}?userId=${session?.user.id}`,
+    `${process.env.API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
       cache: "no-cache",
     }
   );
 
+  // if (!quizHistory?.item) {
+  //   const initHistoryResponse = await fetch(
+  //     `${process.env.API_URL}/api/users/${session?.user.id}/register`,
+  //     {
+  //       method: "PUT",
+  //       body: JSON.stringify({ quizset_path: params.quizset_path }),
+  //     }
+  //   );
+
+  //   if (!initHistoryResponse.ok) {
+  //     console.error("Failed to initialize quiz history:", initHistoryResponse);
+  //     redirectToErrorPage();
+  //     return null;
+  //   }
+
+  //   const initHistoryData = await initHistoryResponse.json();
+  //   quizHistory = initHistoryData.item.userQuizLog;
+  // } else {
+  //   quizHistory = quizHistory.item;
+  // }
+
   if (!quizHistory?.item) {
     // Initialize quiz history if not found
     const initHistoryResponse = await fetch(
-      `${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}`,
+      `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
       {
         method: "POST",
         // headers: {
@@ -86,20 +108,13 @@ export default async function QuizLayout({
     <div>
       <LogoutButton />
       <QuizProvider
-        quizSet={quizData.item as CampaignDomainQuizSetEx}
+        quizSet={quizData.item as QuizSetEx}
         language={quizData.item.language}
-        domain={quizData.item.domain}
         quizHistory={quizHistory}
-        campaign={quizData.item.campaign}
+        domain={quizData.item.domain as Domain}
+        // campaign={quizData.item.campaign as Campaign}
       >
-        {/* <QuizHistoryProvider
-          quizHistory={quizHistory}
-          domain={quizData.item.domain}
-          campaign={quizData.item.campaign}
-          language={quizData.item.language}
-        > */}
         {children}
-        {/* </QuizHistoryProvider> */}
       </QuizProvider>
     </div>
   );

@@ -1,20 +1,21 @@
 export const dynamic = "force-dynamic";
 import { refreshToken } from "@/app/lib/api/refresh_token";
+import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    // const session = await auth();
+    const session = await auth();
 
     // if (!session) {
     //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     // }
     const searchParams = new URL(request.url).searchParams;
     const orgIdsStr = searchParams.get("org_ids");
-    const userId = searchParams.get("user_id");
+    // const userId = searchParams.get("user_id");
 
-    if (!userId || !orgIdsStr) {
+    if (!orgIdsStr) {
       return NextResponse.json(
         { message: "userId or orgIds not found" },
         { status: 404 }
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
     }
 
     const account = await prisma.account.findFirst({
-      where: { userId: userId },
+      where: { userId: session?.user.id },
     });
 
     if (!account) {
@@ -82,9 +83,11 @@ export async function GET(request: Request) {
 
     let job: string | null = null;
     let store: string | null = null;
+    let channelSegmentId: string | null = null;
 
     results.forEach((result: any) => {
       const text9 = result.data[0]?.optionalInfo.text9;
+      const text8 = result.data[0]?.optionalInfo.text8;
       const integer1 = result.data[0]?.optionalInfo.integer1;
 
       if (!text9 || !integer1) return;
@@ -96,9 +99,13 @@ export async function GET(request: Request) {
       if (integer1 === "5" || integer1 === 5) {
         store = text9;
       }
+
+      if (integer1 === "4" || integer1 === 4) {
+        channelSegmentId = text8;
+      }
     });
 
-    return NextResponse.json({ job, store }, { status: 200 });
+    return NextResponse.json({ job, store, channelSegmentId }, { status: 200 });
   } catch (error) {
     console.error("Error in GET handler:", error);
     return NextResponse.json(

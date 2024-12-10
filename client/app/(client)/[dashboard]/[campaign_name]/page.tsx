@@ -1,7 +1,13 @@
+import LogoutButton from "@/app/components/button/logout_button";
 import { auth } from "@/auth";
+import { UserQuizLog } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export default async function CampaignPage({ params }: { params: { dashboard: string; campaign_name: string } }) {
+export default async function CampaignPage({
+  params,
+}: {
+  params: { dashboard: string; campaign_name: string };
+}) {
   console.info("CampaignPage page", params);
   // export default async function CampaignPage() {
   // 유저가 삼플 유저인지. 삼플 미사용 유저인지 확인
@@ -25,12 +31,14 @@ export default async function CampaignPage({ params }: { params: { dashboard: st
   // const { data: session } = useSession();
   const session = await auth();
 
-  const response = await fetch(`${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`, {
-    method: "GET",
-    // headers: { "Content-Type": "application/json" },
-    // cache: "force-cache",
-    cache: "no-cache",
-  });
+  const response = await fetch(
+    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    {
+      method: "GET",
+      // cache: "force-cache",
+      cache: "no-cache",
+    }
+  );
 
   const data = await response.json();
   console.info("CampaignPage data", data, session?.user);
@@ -39,12 +47,14 @@ export default async function CampaignPage({ params }: { params: { dashboard: st
     redirect("error-notfound");
   }
 
-  const historyResponse = await fetch(`${process.env.API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`, {
-    method: "GET",
-    // headers: { "Content-Type": "application/json" },
-    // cache: "force-cache",
-    cache: "no-cache",
-  });
+  const historyResponse = await fetch(
+    `${process.env.API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
+    {
+      method: "GET",
+      // cache: "force-cache",
+      cache: "no-cache",
+    }
+  );
 
   if (!historyResponse.ok) {
     console.error("CampaignPage quizHistory error", historyResponse);
@@ -53,16 +63,11 @@ export default async function CampaignPage({ params }: { params: { dashboard: st
   }
 
   const historyData = await historyResponse.json();
+  const userQuizLog: UserQuizLog = historyData.item;
 
-  console.info(
-    "CampaignPage quizHistory",
-    historyData
-    // historyData.item.campaignDomainQuizSet
-  );
+  console.info("CampaignPage quizHistory", historyData, session?.user);
 
-  if (!historyData.item) {
-    // redirect(`${params.dashboard}/${params.campaign_name}/register`);
-    // redirect("error-notfound");
+  if (!userQuizLog) {
     console.log("gogo register");
     if (session?.user.provider !== "sumtotal") {
       redirect(`${params.campaign_name}/register`);
@@ -70,18 +75,16 @@ export default async function CampaignPage({ params }: { params: { dashboard: st
 
     return (
       <div>
+        <LogoutButton />
         <p>Sumtotal로 로그인했지만 잘못된 경로로 들어온 경우입니다.</p>
-        <button>
-          <a href={`${params.campaign_name}/ORG_502_ff_ko`}>이동</a>
-        </button>
       </div>
     );
   }
 
-  const campaignDomainQuizSet = historyData.item.campaignDomainQuizSet;
-
-  if (campaignDomainQuizSet?.path) {
-    redirect(`${params.dashboard}/${params.campaign_name}/${campaignDomainQuizSet.path}`);
+  if (userQuizLog.quizsetPath) {
+    redirect(
+      `${params.dashboard}/${params.campaign_name}/${userQuizLog.quizsetPath}`
+    );
   }
 
   redirect(`${params.dashboard}/${params.campaign_name}/register`);

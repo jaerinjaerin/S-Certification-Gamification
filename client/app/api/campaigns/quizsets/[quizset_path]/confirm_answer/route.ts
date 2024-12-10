@@ -18,67 +18,15 @@ export async function POST(request: Request, props: Props) {
 
     console.log("body:", quizStageId, questionId, selectedOptionIds);
 
-    const quizset = await prisma.campaignDomainQuizSet.findFirst({
+    const question = await prisma.question.findFirst({
       where: {
-        path: {
-          equals: quizset_path,
-          mode: "insensitive", // 대소문자 구분 없이 검색
-        },
-      },
-      include: {
-        language: true,
-        campaign: true,
-        domain: true,
-        quizStages: true, // Include the stages associated with the quiz set
-      },
-    });
-
-    console.log("quizset:", quizset);
-
-    if (!quizset) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "Quiz set not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Quiz set not found",
-          },
-        },
-        { status: 404 }
-      );
-    }
-
-    const quizStage = quizset.quizStages.find(
-      (stage) => stage.id === quizStageId
-    );
-    if (!quizStage) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "Quiz stage not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Quiz stage not found",
-          },
-        },
-        { status: 404 }
-      );
-    }
-
-    const questionIds = JSON.parse(quizStage.questionIds || "[]");
-    const questions = await prisma.question.findMany({
-      where: {
-        id: {
-          in: questionIds,
-        },
+        id: questionId,
       },
       include: {
         options: true, // Include all related options for each question
       },
     });
 
-    const question = questions.find((q) => q.id === questionId);
     if (!question) {
       return NextResponse.json(
         {
@@ -120,7 +68,7 @@ export async function POST(request: Request, props: Props) {
           result: {
             isCorrect: true,
             questionType: question.questionType,
-            correctOptions: correctOptionIds,
+            correctOptionIds: correctOptionIds,
             message: "The answer is correct!",
           },
         },
@@ -132,7 +80,7 @@ export async function POST(request: Request, props: Props) {
           result: {
             isCorrect: false,
             questionType: question.questionType,
-            correctOptions: correctOptionIds,
+            correctOptionIds: correctOptionIds,
             message: "The answer is incorrect!",
           },
         },

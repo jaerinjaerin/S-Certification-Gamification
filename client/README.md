@@ -53,3 +53,12 @@ app /
 
 - middleware.ts
 - route/usePathNavigator.ts
+
+## User 데이타가 생성되는 곳
+
+- Sumtotal 인증 유저
+  - 유저 생성: auth.ts에서 adapter로 인해 자동 생성.
+  - 유저 추가 정보 저장: auth.ts profile 함수에서 accessToken을 이용하여 sumtotal api호출하여 channelSegmentId, storeId, jobId를 얻어 저장함. 이 때, regionId, subsidaryId 정보도 같이 넣어줌
+- Sumtotal 미사용 유저
+  - 유저 생성: auth.ts CredentialsProvider에서 인증 성공 시, user 가 없는 경우, 생성해줌.
+  - 유저 추가 정보 저장: register page에서 유저에게 입력받은 정보를 기반으로, regionId, subsidaryId, channelSegmentId, storeId, channelId를 넣어줌

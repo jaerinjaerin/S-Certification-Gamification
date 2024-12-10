@@ -1,55 +1,84 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/app/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
 import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItemList from "@/app/hooks/useGetItemList";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language, SalesFormat } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export default function GuestRegisterPage() {
   const { routeToPage } = usePathNavigator();
 
+  const { data: session } = useSession();
+
   // state
   const [selectedDomain, setSelectedDomain] = useState<DomainEx | null>(null);
-  const [selectedChannel, setSelectedChannel] = useState<ChannelSegmentEx | null>(null);
-  const [selectedSalesFormat, setSelectedSalesFormat] = useState<SalesFormat | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedChannel, setSelectedChannel] =
+    useState<ChannelSegmentEx | null>(null);
+  const [selectedSalesFormat, setSelectedSalesFormat] =
+    useState<SalesFormat | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    null
+  );
 
   // select box options
   const [channels, setChannels] = useState<ChannelSegmentEx[]>([]);
   const [salesFormats, setSalesFormats] = useState<SalesFormatEx[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
 
-  const { isLoading, error, items: domains } = useGetItemList<DomainEx>({ url: "/api/domains" });
+  const {
+    isLoading,
+    error,
+    items: domains,
+  } = useGetItemList<DomainEx>({ url: "/api/domains" });
 
-  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
+  const {
+    isLoading: loadingCreate,
+    error: errorCreate,
+    item: campaignPath,
+    createItem,
+  } = useCreateItem<string>();
 
-  const fetchLanguages = async (domainId: string, jobId: string) => {
-    const response = await fetch(`/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`, {
-      method: "GET",
-      // cache: "force-cache",
-      cache: "no-cache",
-    });
+  // const fetchLanguages = async (domainId: string, jobId: string) => {
+  //   const response = await fetch(`/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`, {
+  //     method: "GET",
+  //     // cache: "force-cache",
+  //     cache: "no-cache",
+  //   });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to fetch domains");
-    }
+  //   if (!response.ok) {
+  //     const errorData = await response.json();
+  //     throw new Error(errorData.message || "Failed to fetch domains");
+  //   }
 
-    const data = await response.json();
-    setLanguages(data.items);
-  };
+  //   const data = await response.json();
+  //   setLanguages(data.items);
+  // };
 
-  useEffect(() => {
-    if (selectedSalesFormat && selectedDomain?.id && selectedSalesFormat?.jobId) {
-      fetchLanguages(selectedDomain?.id, selectedSalesFormat?.jobId);
-    }
-  }, [selectedSalesFormat, selectedDomain]);
+  // useEffect(() => {
+  //   if (selectedSalesFormat && selectedDomain?.id && selectedSalesFormat?.jobId) {
+  //     fetchLanguages(selectedDomain?.id, selectedSalesFormat?.jobId);
+  //   }
+  // }, [selectedSalesFormat, selectedDomain]);
 
   useEffect(() => {
     if (campaignPath) {
@@ -87,7 +116,9 @@ export default function GuestRegisterPage() {
   };
 
   const selectSalesFormat = (salesFormatId: string) => {
-    const salesFormat = salesFormats!.find((c: SalesFormat) => c.id === salesFormatId);
+    const salesFormat = salesFormats!.find(
+      (c: SalesFormat) => c.id === salesFormatId
+    );
     if (!salesFormat) {
       alert("Sales Format not found. Please select a valid sales format.");
       return;
@@ -107,8 +138,18 @@ export default function GuestRegisterPage() {
   };
 
   const routeQuizPage = () => {
+    // createItem({
+    //   url: `/api/campaigns/register`,
+    //   body: {
+    //     domainId: selectedDomain?.id,
+    //     jobId: selectedSalesFormat?.jobId,
+    //     languageId: selectedLanguage?.id,
+    //     channelSegmentId: selectedChannel?.id,
+    //     salesFormatId: selectedSalesFormat?.id,
+    //   },
+    // });
     createItem({
-      url: `/api/campaigns/register`,
+      url: `/api/users/${session?.user.id}/register`,
       body: {
         domainId: selectedDomain?.id,
         jobId: selectedSalesFormat?.jobId,
@@ -125,7 +166,10 @@ export default function GuestRegisterPage() {
   console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
+    <div
+      className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
+      style={{ backgroundImage: `url('/assets/bg_main1.png')` }}
+    >
       <Dialog defaultOpen>
         <DialogContent>
           <DialogHeader>
@@ -135,7 +179,10 @@ export default function GuestRegisterPage() {
           <div className="flex flex-col gap-[14px]">
             {/* domains */}
             <Select>
-              <SelectTrigger disabled={isLoading || loadingCreate || domains == null} value={selectedDomain}>
+              <SelectTrigger
+                disabled={isLoading || loadingCreate || domains == null}
+                value={selectedDomain}
+              >
                 <SelectValue placeholder={t("country")} />
               </SelectTrigger>
               <SelectContent>
@@ -157,7 +204,10 @@ export default function GuestRegisterPage() {
             </Select>
             {/* channel */}
             <Select>
-              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0} value={selectedChannel}>
+              <SelectTrigger
+                disabled={isLoading || loadingCreate || channels.length === 0}
+                value={selectedChannel}
+              >
                 <SelectValue placeholder={t("channel")} />
               </SelectTrigger>
               <SelectContent>
@@ -180,7 +230,15 @@ export default function GuestRegisterPage() {
             </Select>
             {/* job group */}
             <Select>
-              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}>
+              <SelectTrigger
+                disabled={
+                  isLoading ||
+                  loadingCreate ||
+                  channels.length === 0 ||
+                  salesFormats.length === 0
+                }
+                value={selectedSalesFormat}
+              >
                 <SelectValue placeholder={t("job group")} />
               </SelectTrigger>
               <SelectContent>
@@ -203,7 +261,13 @@ export default function GuestRegisterPage() {
             {/* language */}
             <Select>
               <SelectTrigger
-                disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0 || languages.length === 0}
+                disabled={
+                  isLoading ||
+                  loadingCreate ||
+                  channels.length === 0 ||
+                  salesFormats.length === 0 ||
+                  languages.length === 0
+                }
                 value={selectedLanguage}
               >
                 <SelectValue placeholder={t("language")} />
@@ -229,7 +293,14 @@ export default function GuestRegisterPage() {
           <DialogFooter close={false}>
             <Button
               variant={"primary"}
-              disabled={isLoading || loadingCreate || !selectedDomain || !selectedChannel || !selectedSalesFormat || !selectedLanguage}
+              disabled={
+                isLoading ||
+                loadingCreate ||
+                !selectedDomain ||
+                !selectedChannel ||
+                !selectedSalesFormat ||
+                !selectedLanguage
+              }
               onClick={routeQuizPage}
             >
               {loadingCreate ? `${t("saving")}` : `${t("save")}`}
