@@ -1,17 +1,7 @@
 "use client";
 
-import {
-  CampaignDomainQuizSetEx,
-  QuestionEx,
-  QuizStageEx,
-} from "@/app/types/type";
-import {
-  Campaign,
-  Domain,
-  Language,
-  QuestionType,
-  UserCampaignDomainLog,
-} from "@prisma/client";
+import { CampaignDomainQuizSetEx, QuestionEx, QuizStageEx } from "@/app/types/type";
+import { Campaign, Domain, Language, QuestionType, UserCampaignDomainLog } from "@prisma/client";
 import { createContext, useContext, useState } from "react";
 
 interface QuizContextType {
@@ -37,17 +27,11 @@ interface QuizContextType {
   nextQuestion(): boolean;
   nextStage(): boolean;
   canNextQuestion(): boolean;
-  confirmAnswer(
-    quizStageId: string,
-    questionId: string,
-    selectedOptionIds: string[]
-  ): Promise<ConfirmAnswerResult>;
+  confirmAnswer(quizStageId: string, questionId: string, selectedOptionIds: string[]): Promise<ConfirmAnswerResult>;
   // setCurrentQuestionOptionIds: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type ConfirmAnswerResult =
-  | { success: true; data: ConfirmAnswerResponse }
-  | { success: false; error: string; statusCode?: number };
+type ConfirmAnswerResult = { success: true; data: ConfirmAnswerResponse } | { success: false; error: string; statusCode?: number };
 
 interface ConfirmAnswerResponse {
   isCorrect: boolean;
@@ -71,18 +55,12 @@ export const QuizProvider = ({
   domain: Domain;
   campaign: Campaign;
 }) => {
-  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
-    quizHistory?.lastCompletedStage ?? 0
-  );
+  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizHistory?.lastCompletedStage ?? 0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   // const [currentQuestionOptionIndex, setCurrentQuestionOptionIndex] =
   //   useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
-    quizSet.quizStages[currentQuizStageIndex]
-  );
-  const [currentStageQuizzes, setCurrentStageQuizzes] = useState<
-    QuestionEx[] | null
-  >(quizSet.quizStages[currentQuizStageIndex].questions);
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(quizSet.quizStages[currentQuizStageIndex]);
+  const [currentStageQuizzes, setCurrentStageQuizzes] = useState<QuestionEx[] | null>(quizSet.quizStages[currentQuizStageIndex].questions);
   let stageStartedAt: Date | null = null;
 
   const startStage = (): void => {
@@ -147,10 +125,7 @@ export const QuizProvider = ({
   // };
 
   const isFirstBadgeStage = (): boolean => {
-    if (
-      quizSet.isFirstBadgeStage == null ||
-      quizSet.firstBadgeActivityId == null
-    ) {
+    if (quizSet.isFirstBadgeStage == null || quizSet.firstBadgeActivityId == null) {
       return false;
     }
     return quizSet.isFirstBadgeStage === currentQuizStageIndex;
@@ -180,26 +155,19 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const confirmAnswer = async (
-    quizStageId: string,
-    questionId: string,
-    selectedOptionIds: string[]
-  ): Promise<ConfirmAnswerResult> => {
+  const confirmAnswer = async (quizStageId: string, questionId: string, selectedOptionIds: string[]): Promise<ConfirmAnswerResult> => {
     try {
-      const response = await fetch(
-        `/api/campaigns/quizsets/${quizSet.path}/confirm_answer`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            quizStageId,
-            questionId,
-            selectedOptionIds,
-          }),
-        }
-      );
+      const response = await fetch(`/api/campaigns/quizsets/${quizSet.path}/confirm_answer`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quizStageId,
+          questionId,
+          selectedOptionIds,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -253,26 +221,15 @@ export const QuizProvider = ({
     // };
   };
 
-  const sendQuestionLog = async (
-    questionId: string,
-    selectedOptionId: string,
-    isCorrect: boolean,
-    elapsedSeconds: number
-  ) => {
+  const sendQuestionLog = async (questionId: string, selectedOptionId: string, isCorrect: boolean, elapsedSeconds: number) => {
     // 맞췄는지 틀렸는지
   };
 
-  const sendQuizStageLog = async (
-    stageIncex: number,
-    elapsedSeconds: number
-  ) => {
+  const sendQuizStageLog = async (stageIncex: number, elapsedSeconds: number) => {
     //
   };
 
-  const sendQuizStageCompleteLog = async (
-    stageIncex: number,
-    elapsedSeconds: number
-  ) => {
+  const sendQuizStageCompleteLog = async (stageIncex: number, elapsedSeconds: number) => {
     //
   };
   const sendQuizCompleteLog = async () => {
