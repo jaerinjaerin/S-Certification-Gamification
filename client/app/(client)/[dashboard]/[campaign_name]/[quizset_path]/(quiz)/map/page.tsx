@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
 import { useQuiz } from "@/providers/quiz_provider";
@@ -6,17 +7,20 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import InactiveBadge from "@/public/assets/badge_inactive.png";
 import Image from "next/image";
 import { Fragment } from "react";
-import { QuestionMark } from "@/app/components/icons/icons";
+import { LockIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
-import { Carousel, CarouselItem, CarouselContent, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import { type CarouselApi } from "@/components/ui/carousel";
+import { useTranslations } from "next-intl";
 
 const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizMap() {
   const { quizSet, language, quizHistory } = useQuiz();
   const { routeToPage } = usePathNavigator();
+  const t = useTranslations("Map_guide");
 
   const routeNextQuizStage = async () => {
     routeToPage("quiz");
@@ -48,7 +52,7 @@ export default function QuizMap() {
           </DialogTrigger>
           <DialogContent dismissOnOverlayClick>
             <DialogHeader>
-              <DialogTitle>How to play Be a Galaxy AI Expert! (Paradigm)</DialogTitle>
+              <DialogTitle>{t("how_to_play")}</DialogTitle>
             </DialogHeader>
             {/* Carousel Area */}
             <TutorialCarousel />
@@ -56,7 +60,7 @@ export default function QuizMap() {
               {/* <Button variant={"primary"} onClick={() => console.log("TODO: 캐러샐이 넘어가야함. 끝났을땐 Dialog창 닫아야 함")}>
                 OK
               </Button> */}
-              <DialogClose>OK</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">OK</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -109,15 +113,25 @@ const Stage = ({
   return (
     <div className="relative">
       <div className={cn("relative z-10")}>
+        {!nextStage && (
+          <div className="absolute right-[3px] -top-[14px] bg-white size-10 rounded-full flex justify-center items-center">
+            <LockIcon />
+          </div>
+        )}
+
         <button
           onClick={routeNextQuizStage}
           disabled={!nextStage}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
-            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]"
+            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
           )}
         >
-          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
+          {firstBadgeStage === order ? (
+            <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" />
+          ) : (
+            `stage ${order}`
+          )}
         </button>
 
         {nextStage && (
@@ -143,34 +157,92 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
       )}
     />
   );
 };
 
 const TutorialCarousel = () => {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  const t = useTranslations("Map_guide");
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const handleMoveIndex = () => {};
+
   return (
-    <Carousel className="w-full">
+    <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>
-        {Array.from({ length: 3 }).map((_, index) => {
+        {Array.from({ length: count }).map((_, index) => {
           return (
-            <CarouselItem key={index}>
+            <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
               <div className="p-1">
-                <ul className="bg-[#EDEDED] min-h-[340px]">
-                  <li>
-                    If you answer correctly on the first attempt, answer consecutively correctly, or complete the stage, you will earn points based on
-                    the remaining attempts, and the points will be awarded differently
-                  </li>
-                </ul>
+                {index === 0 && (
+                  <div className="bg-[#EDEDED] min-h-[340px] relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
+                    <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
+                      {t("attempts_deduction")}
+                    </p>
+                    <div className="flex justify-center pt-[10px]">
+                      <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
+                    </div>
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
+                      {t("time_limit_per_quiz")}
+                    </p>
+                  </div>
+                )}
+                {index === 1 && (
+                  <Ol>
+                    <li>{t("you_have_5_attemps")}</li>
+                    <li>{t("giveup_or_interrupt_quiz")}</li>
+                  </Ol>
+                )}
+                {index === 2 && (
+                  <Ol>
+                    <li>{t("answer_first_attempt")}</li>
+                  </Ol>
+                )}
               </div>
             </CarouselItem>
           );
         })}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <div className="flex justify-center gap-2 mt-[10px]">
+        {Array.from({ length: count }).map((_, index) => {
+          return (
+            <button
+              onClick={handleMoveIndex}
+              key={index}
+              className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")}
+            />
+          );
+        })}
+      </div>
+      {/* <CarouselPrevious />
+      <CarouselNext /> */}
     </Carousel>
+  );
+};
+
+const Ol = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ol className="bg-[#EDEDED] min-h-[340px] rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
+      {children}
+    </ol>
   );
 };
 
