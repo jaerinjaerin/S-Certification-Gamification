@@ -1,9 +1,8 @@
 "use client";
-
+import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import useTimer from "@/app/hooks/useTimer";
-
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { signIn } from "next-auth/react";
@@ -100,14 +99,14 @@ export default function GuestLogin() {
   };
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
+    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
       <div className="flex flex-col items-center">
-        <span className="block ">Galaxy AI Expert</span>
+        <span className="block font-extrabold">Galaxy AI Expert</span>
 
         <div className="flex flex-col items-center">
           <div className="mb-[70px]">
             <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">{t("be a galaxy ai expert")}</span>
-            <span className="block text-[30px] font-light text-center ">{t("certification")}</span>
+            <span className="block text-[30px] font-medium text-center">{t("certification")}</span>
           </div>
           <Dialog>
             <DialogTrigger asChild>
@@ -153,7 +152,7 @@ export default function GuestLogin() {
                           {t.rich("magic link sent", {
                             address: (children) => (
                               <address className="inline-block">
-                                <a href={`mailto:${email}`} className="text-blue-500 not-italic ">
+                                <a href={`mailto:${email}`} className="not-italic text-blue-500 ">
                                   {children}
                                 </a>
                               </address>
@@ -214,7 +213,7 @@ export default function GuestLogin() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="fixed bottom-7">Privacy | Term</div>
+        <PrivacyAndTerm />
       </div>
     </div>
   );

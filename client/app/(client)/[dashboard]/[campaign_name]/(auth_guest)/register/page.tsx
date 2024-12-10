@@ -125,7 +125,7 @@ export default function GuestRegisterPage() {
   console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
+    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
       <Dialog defaultOpen>
         <DialogContent>
           <DialogHeader>
