@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import React from "react";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
 import { useQuiz } from "@/providers/quiz_provider";
@@ -7,7 +7,7 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import InactiveBadge from "@/public/assets/badge_inactive.png";
 import Image from "next/image";
 import { Fragment } from "react";
-import { QuestionMark } from "@/app/components/icons/icons";
+import { LockIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
@@ -113,6 +113,12 @@ const Stage = ({
   return (
     <div className="relative">
       <div className={cn("relative z-10")}>
+        {!nextStage && (
+          <div className="absolute right-[3px] -top-[14px] bg-white size-10 rounded-full flex justify-center items-center">
+            <LockIcon />
+          </div>
+        )}
+
         <button
           onClick={routeNextQuizStage}
           disabled={!nextStage}
@@ -182,32 +188,38 @@ const TutorialCarousel = () => {
   return (
     <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>
-        <CarouselItem>
-          <div className="p-1">
-            <div className="bg-[#EDEDED] min-h-[340px] relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
-              <p className="text-right absolute right-[84px] top-[21px] text-[14px]">{t("attempts_deduction")}</p>
-              <div className="flex justify-center pt-[10px]">
-                <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
+        {Array.from({ length: count }).map((_, index) => {
+          return (
+            <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
+              <div className="p-1">
+                {index === 0 && (
+                  <div className="bg-[#EDEDED] min-h-[340px] relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
+                    <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
+                      {t("attempts_deduction")}
+                    </p>
+                    <div className="flex justify-center pt-[10px]">
+                      <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
+                    </div>
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
+                      {t("time_limit_per_quiz")}
+                    </p>
+                  </div>
+                )}
+                {index === 1 && (
+                  <Ol>
+                    <li>{t("you_have_5_attemps")}</li>
+                    <li>{t("giveup_or_interrupt_quiz")}</li>
+                  </Ol>
+                )}
+                {index === 2 && (
+                  <Ol>
+                    <li>{t("answer_first_attempt")}</li>
+                  </Ol>
+                )}
               </div>
-              <p className="ml-[62px] -mt-[10px] text-[14px] text-pretty">{t("time_limit_per_quiz")}</p>
-            </div>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div className="p-1">
-            <Ol>
-              <li className="">{t("you_have_5_attemps")}</li>
-              <li>{t("giveup_or_interrupt_quiz")}</li>
-            </Ol>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div className="p-1">
-            <Ol>
-              <li className="">{t("answer_first_attempt")}</li>
-            </Ol>
-          </div>
-        </CarouselItem>
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
       <div className="flex justify-center gap-2 mt-[10px]">
         {Array.from({ length: count }).map((_, index) => {
@@ -228,7 +240,7 @@ const TutorialCarousel = () => {
 
 const Ol = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ol className="bg-[#EDEDED] min-h-[340px] rounded-[20px] pl-8 pr-4 py-5 list-disc text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
+    <ol className="bg-[#EDEDED] min-h-[340px] rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
       {children}
     </ol>
   );
