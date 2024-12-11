@@ -1,4 +1,3 @@
-import LogoutButton from "@/app/components/button/logout_button";
 import { CampaignDomainQuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
@@ -69,7 +68,7 @@ export default async function QuizLayout({ children, params }: { children: React
   console.info("Render QuizLayout");
   return (
     <div className="h-full">
-      <LogoutButton />
+      {/* <LogoutButton /> */}
       <QuizProvider
         quizSet={quizData.item as CampaignDomainQuizSetEx}
         language={quizData.item.language}

@@ -2,7 +2,7 @@
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
-import useTimer from "@/app/hooks/useTimer";
+import useTimer from "@/app/hooks/useTimers";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { signIn } from "next-auth/react";

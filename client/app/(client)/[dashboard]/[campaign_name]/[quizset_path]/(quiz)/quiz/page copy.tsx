@@ -3,7 +3,7 @@ import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
 import { type QuestionOption, QuestionType } from "@prisma/client";
 import React, { Fragment, useEffect, useState } from "react";
 import { Button } from "@/app/components/ui/button";
-import useTimer from "@/app/hooks/useTimer";
+import useTimer from "@/app/hooks/useTimers";
 import { useQuiz } from "@/providers/quiz_provider";
 import { cn, sleep } from "@/app/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
