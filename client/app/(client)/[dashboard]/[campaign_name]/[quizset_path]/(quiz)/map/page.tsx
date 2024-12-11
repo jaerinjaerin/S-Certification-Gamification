@@ -1,5 +1,5 @@
 "use client";
-import React, { forwardRef, LegacyRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
 import { useQuiz } from "@/providers/quiz_provider";
@@ -18,8 +18,8 @@ import { useTranslations } from "next-intl";
 const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizMap() {
-  const [nextStage, setNextStage] = useState(0);
   const { quizSet, language, quizHistory } = useQuiz();
+  const [nextStage, setNextStage] = useState<number>((quizHistory?.lastCompletedStage ?? 0) + 1);
   const { routeToPage } = usePathNavigator();
   const t = useTranslations("Map_guide");
 
@@ -28,17 +28,13 @@ export default function QuizMap() {
 
   useEffect(() => {
     setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
+    const targetStage = itemsRef.current[nextStage - 1];
+    // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
 
-    const activeStage =
-      quizSet.quizStages.findIndex((stage) => {
-        // console.log("stage.order", stage.order); // order가 1부터 시작
-        return stage.order === nextStage;
-      }) + 1; // 해당하는 인덱스값을 반환하기 때문에 +1을 하여 현재 스테이지 값과 동일하도록 함
-
-    // console.log(itemsRef.current[activeStage]);
-    if (activeStage !== -1 && itemsRef.current[activeStage]) {
-      itemsRef.current[activeStage].scrollIntoView({
+    if (targetStage) {
+      targetStage.scrollIntoView({
         behavior: "smooth",
+        block: "center",
       });
     }
   }, [quizHistory?.lastCompletedStage, nextStage, quizSet.quizStages]);
@@ -145,10 +141,14 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
           disabled={!nextStage}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
-            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]"
+            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
           )}
         >
-          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
+          {firstBadgeStage === order ? (
+            <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" />
+          ) : (
+            `stage ${order}`
+          )}
         </button>
 
         {nextStage && (
@@ -176,7 +176,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
       )}
     />
   );
