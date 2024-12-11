@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
 import { useQuiz } from "@/providers/quiz_provider";
@@ -19,8 +19,25 @@ const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizMap() {
   const { quizSet, language, quizHistory } = useQuiz();
+  const [nextStage, setNextStage] = useState<number>((quizHistory?.lastCompletedStage ?? 0) + 1);
   const { routeToPage } = usePathNavigator();
   const t = useTranslations("Map_guide");
+
+  // 아이템을 참조할 배열
+  const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
+    const targetStage = itemsRef.current[nextStage - 1];
+    // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
+
+    if (targetStage) {
+      targetStage.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [quizHistory?.lastCompletedStage, nextStage, quizSet.quizStages]);
 
   const routeNextQuizStage = async () => {
     routeToPage("quiz");
@@ -72,13 +89,15 @@ export default function QuizMap() {
 
       {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
-        {quizSet.quizStages.map((stage: QuizStageEx) => {
-          const nextStage = (quizHistory?.lastCompletedStage ?? 0) + 1;
+        {quizSet.quizStages.map((stage: QuizStageEx, index) => {
           const firstBadgeStage = quizHistory?.firstBadgeStage;
 
           return (
             <Fragment key={stage.id}>
               <Stage
+                ref={(item) => {
+                  itemsRef.current[index] = item;
+                }}
                 nextStage={stage.order === nextStage}
                 order={stage.order}
                 firstBadgeStage={firstBadgeStage}
@@ -97,21 +116,19 @@ export default function QuizMap() {
   );
 }
 
-const Stage = ({
-  nextStage,
-  order,
-  firstBadgeStage,
-  routeNextQuizStage,
-}: {
+interface StageProps {
   nextStage: boolean;
   order: number;
   firstBadgeStage: number | null | undefined;
   routeNextQuizStage: () => Promise<void>;
-}) => {
+}
+
+const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
+  const { nextStage, order, firstBadgeStage, routeNextQuizStage } = props;
   // 완료하지 못한 stage에 자물쇠 아이콘
   // 완료한 stage는 색상 변경
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <div className={cn("relative z-10")}>
         {!nextStage && (
           <div className="absolute right-[3px] -top-[14px] bg-white size-10 rounded-full flex justify-center items-center">
@@ -124,10 +141,14 @@ const Stage = ({
           disabled={!nextStage}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
-            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]"
+            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
           )}
         >
-          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
+          {firstBadgeStage === order ? (
+            <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" />
+          ) : (
+            `stage ${order}`
+          )}
         </button>
 
         {nextStage && (
@@ -138,7 +159,9 @@ const Stage = ({
       {nextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
     </div>
   );
-};
+});
+
+Stage.displayName = "Stage";
 
 const Connection = () => {
   return <div className="w-[31px] h-[140px] bg-[#A6CFFF] scale-[1.1]" />;
@@ -153,7 +176,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
       )}
     />
   );
@@ -162,8 +185,6 @@ const Gradient = ({ type }: { type: GradientType }) => {
 const TutorialCarousel = () => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
-
   const t = useTranslations("Map_guide");
 
   React.useEffect(() => {
@@ -171,7 +192,6 @@ const TutorialCarousel = () => {
       return;
     }
 
-    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap());
 
     api.on("select", () => {
@@ -184,7 +204,7 @@ const TutorialCarousel = () => {
   return (
     <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>
-        {Array.from({ length: count }).map((_, index) => {
+        {Array.from({ length: 3 }).map((_, index) => {
           return (
             <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
               <div className="p-1">
@@ -218,7 +238,7 @@ const TutorialCarousel = () => {
         })}
       </CarouselContent>
       <div className="flex justify-center gap-2 mt-[10px]">
-        {Array.from({ length: count }).map((_, index) => {
+        {Array.from({ length: 3 }).map((_, index) => {
           return (
             <button
               onClick={handleMoveIndex}
