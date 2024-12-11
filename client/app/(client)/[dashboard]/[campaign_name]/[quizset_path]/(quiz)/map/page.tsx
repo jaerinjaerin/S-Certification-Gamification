@@ -124,14 +124,10 @@ const Stage = ({
           disabled={!nextStage}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
-            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
+            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]"
           )}
         >
-          {firstBadgeStage === order ? (
-            <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" />
-          ) : (
-            `stage ${order}`
-          )}
+          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
         </button>
 
         {nextStage && (
@@ -157,7 +153,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
       )}
     />
   );

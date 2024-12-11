@@ -12,7 +12,7 @@ export default async function ClientLayout({ children }: { children: React.React
 
   console.log(locale, getMessages);
   return (
-    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh border-x-4 border-slate-900" lang={locale}>
+    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
       <NextIntlClientProvider messages={messages}>
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
