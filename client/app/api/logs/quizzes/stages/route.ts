@@ -41,21 +41,21 @@ export async function POST(request: Request) {
     //   body.remainingHearts
     // );
 
-    const {
-      campaignId,
-      userId,
-      jobId,
-      domainId,
-      quizSetId,
-      quizStageId,
-      isCompleted,
-      isBadgeStage,
-      remainingHearts,
-      isBadgeAcquired,
-      badgeActivityId,
-      elapsedSeconds,
-      score,
-    } = body;
+    // const {
+    //   campaignId,
+    //   userId,
+    //   jobId,
+    //   domainId,
+    //   quizSetId,
+    //   quizStageId,
+    //   isCompleted,
+    //   isBadgeStage,
+    //   remainingHearts,
+    //   isBadgeAcquired,
+    //   badgeActivityId,
+    //   elapsedSeconds,
+    //   score,
+    // } = body;
 
     const log = await await prisma.userQuizStageLog.create({
       data: body,

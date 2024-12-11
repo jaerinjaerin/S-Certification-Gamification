@@ -1,13 +1,8 @@
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { NextRequest, NextResponse } from "next/server";
-type Props = {
-  params: {
-    // quizset_path: string;
-  };
-};
 
-export async function GET(request: NextRequest, props: Props) {
+export async function GET(request: NextRequest) {
   try {
     const url = request.url;
 
@@ -31,7 +26,7 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
-    const { domainCode, jobCode, languageCode } =
+    const { domainCode, jobCode /* languageCode */ } =
       extractCodesFromPath(quizsetPath);
 
     const domain = await prisma.domain.findFirst({
@@ -102,7 +97,7 @@ export async function GET(request: NextRequest, props: Props) {
   }
 }
 
-export async function POST(request: NextRequest, props: Props) {
+export async function POST(request: NextRequest) {
   try {
     const url = request.url;
     const { searchParams } = new URL(url);

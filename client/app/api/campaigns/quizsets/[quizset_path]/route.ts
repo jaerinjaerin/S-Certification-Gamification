@@ -65,7 +65,17 @@ export async function GET(request: NextRequest, props: Props) {
     console.log("quizSet:", quizSet);
 
     if (!quizSet) {
-      return null;
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Quiz set not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Quiz set not found",
+          },
+        },
+        { status: 404 }
+      );
     }
 
     let language = await prisma.language.findFirst({

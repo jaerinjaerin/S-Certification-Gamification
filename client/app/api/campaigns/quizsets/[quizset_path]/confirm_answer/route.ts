@@ -16,7 +16,13 @@ export async function POST(request: Request, props: Props) {
     const { quizset_path } = props.params;
     const { quizStageId, questionId, selectedOptionIds } = body;
 
-    console.log("body:", quizStageId, questionId, selectedOptionIds);
+    console.log(
+      "body:",
+      quizStageId,
+      questionId,
+      selectedOptionIds,
+      quizset_path
+    );
 
     const question = await prisma.question.findFirst({
       where: {

@@ -1,7 +1,15 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 import useTimer from "@/app/hooks/useTimer";
 
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -14,7 +22,9 @@ export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
 
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
+    "init"
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,6 +34,8 @@ export default function GuestLogin() {
   const t = useTranslations("login");
 
   const { time, reset, resetAndStart } = useTimer(60);
+
+  console.log("loading", loading, error, expiresAt);
 
   // const [resendTimer, setResendTimer] = useState(60);
 
@@ -100,14 +112,21 @@ export default function GuestLogin() {
   };
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main1.png')` }}>
+    <div
+      className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
+      style={{ backgroundImage: `url('/assets/bg_main1.png')` }}
+    >
       <div className="flex flex-col items-center">
         <span className="block ">Galaxy AI Expert</span>
 
         <div className="flex flex-col items-center">
           <div className="mb-[70px]">
-            <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">{t("be a galaxy ai expert")}</span>
-            <span className="block text-[30px] font-light text-center ">{t("certification")}</span>
+            <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">
+              {t("be a galaxy ai expert")}
+            </span>
+            <span className="block text-[30px] font-light text-center ">
+              {t("certification")}
+            </span>
           </div>
           <Dialog>
             <DialogTrigger asChild>
@@ -118,7 +137,9 @@ export default function GuestLogin() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>{t("login")}</DialogTitle>
-                <DialogDescription>{t("send code your email")}</DialogDescription>
+                <DialogDescription>
+                  {t("send code your email")}
+                </DialogDescription>
               </DialogHeader>
               <div>
                 <form
@@ -141,7 +162,13 @@ export default function GuestLogin() {
               <DialogFooter>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant={"primary"} className="text-[18px] disabled:bg-disabled" type="submit" form="verify-email" disabled={!email}>
+                    <Button
+                      variant={"primary"}
+                      className="text-[18px] disabled:bg-disabled"
+                      type="submit"
+                      form="verify-email"
+                      disabled={!email}
+                    >
                       {t("send code")}
                     </Button>
                   </DialogTrigger>
@@ -153,7 +180,10 @@ export default function GuestLogin() {
                           {t.rich("magic link sent", {
                             address: (children) => (
                               <address className="inline-block">
-                                <a href={`mailto:${email}`} className="text-blue-500 not-italic ">
+                                <a
+                                  href={`mailto:${email}`}
+                                  className="text-blue-500 not-italic "
+                                >
                                   {children}
                                 </a>
                               </address>
@@ -179,12 +209,21 @@ export default function GuestLogin() {
                               required
                             />
                             {time < 0 ? (
-                              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">00:00</div>
+                              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
+                                00:00
+                              </div>
                             ) : (
-                              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">00:{String(time).padStart(2, "0")}</div>
+                              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
+                                00:{String(time).padStart(2, "0")}
+                              </div>
                             )}
                           </form>
-                          {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
+                          {verifyToken?.expiresAt && (
+                            <p>
+                              Expires At:{" "}
+                              {new Date(verifyToken.expiresAt).toLocaleString()}
+                            </p>
+                          )}
                         </div>
                       </DialogHeader>
                       <DialogFooter
@@ -194,7 +233,13 @@ export default function GuestLogin() {
                           reset();
                         }}
                       >
-                        <Button className="text-[18px]" variant={"primary"} type="submit" form="verify-code" disabled={!code}>
+                        <Button
+                          className="text-[18px]"
+                          variant={"primary"}
+                          type="submit"
+                          form="verify-code"
+                          disabled={!code}
+                        >
                           {t("submit")}
                         </Button>
                         <div className="mx-auto">
