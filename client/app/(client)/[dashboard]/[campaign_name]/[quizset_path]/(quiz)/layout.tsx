@@ -44,6 +44,8 @@ export default async function QuizLayout({
     }
   );
 
+  console.log("QuizLayout quizData", quizData);
+
   if (!quizData) {
     redirectToErrorPage();
     return null;

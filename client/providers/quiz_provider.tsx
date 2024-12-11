@@ -46,10 +46,6 @@ interface QuizContextType {
   isLoading: boolean;
 }
 
-// type ConfirmAnswerResult =
-//   | { success: true; data: ConfirmAnswerResponse }
-//   | { success: false; error: string; statusCode?: number };
-
 interface ConfirmAnswerResponse {
   isCorrect: boolean;
   questionType: QuestionType;
@@ -145,9 +141,12 @@ export const QuizProvider = ({
 
     await createQuizQuestionLogs(quizLogManager.getLogs());
     const stageLog: UserQuizStageLog = await createQuizStageLog(
+      score,
+      totalElapsedSeconds,
       remainingHearts,
       badgeStage,
-      isBadgeAcquired
+      isBadgeAcquired,
+      getCurrentStageBadgeActivityId()
     );
 
     const quizLog: UserQuizLog = await updateQuizStageCompleteLog(
@@ -375,6 +374,8 @@ export const QuizProvider = ({
   };
 
   const createQuizStageLog = async (
+    score,
+    elapsedSeconds,
     remainingHearts: number,
     isBadgeStage: boolean,
     isBadgeAcquired: boolean,
@@ -399,7 +400,8 @@ export const QuizProvider = ({
           isBadgeAcquired,
           badgeActivityId,
           remainingHearts,
-          // score: score,
+          score,
+          elapsedSeconds,
         }),
       });
 

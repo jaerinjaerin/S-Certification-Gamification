@@ -384,7 +384,7 @@ async function main() {
 
       await prisma.quizStage.create({
         data: {
-          name: `Stage ${i} for ${domain.name}`,
+          name: `Stage ${i}`,
           order: i,
           questionIds: stageQuestionIds,
           lifeCount: stageQuestionIds.length,

@@ -68,15 +68,24 @@ export async function GET(request: NextRequest, props: Props) {
       return null;
     }
 
-    const language = await prisma.language.findFirst({
+    let language = await prisma.language.findFirst({
       where: {
         code: languageCode,
       },
     });
 
+    // TODO: 지원 언어가 없을 경우 기본 언어로 설정
+    if (!language) {
+      language = await prisma.language.findFirst({
+        where: {
+          code: "en",
+        },
+      });
+    }
+
     console.log("language:", language);
 
-    const languageId = language?.id || "en";
+    const languageId = language?.id;
 
     // 각 quizStage의 questionIds를 기반으로 Question 데이터를 가져오기
     const quizStagesWithQuestions = await Promise.all(

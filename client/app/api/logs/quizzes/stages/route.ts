@@ -1,47 +1,45 @@
-import QuizScoreCalculator from "@/app/lib/score/quizScoreCalculator";
-import { UserQuizQuestionLog } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const questionsLogs: UserQuizQuestionLog[] =
-      await prisma.userQuizQuestionLog.findMany({
-        where: {
-          campaignId: body.campaignId,
-          userId: body.userId,
-          quizSetId: body.quizSetId,
-          stageIndex: body.stageIndex,
-        },
-      });
+    // const questionsLogs: UserQuizQuestionLog[] =
+    //   await prisma.userQuizQuestionLog.findMany({
+    //     where: {
+    //       campaignId: body.campaignId,
+    //       userId: body.userId,
+    //       quizSetId: body.quizSetId,
+    //       stageIndex: body.stageIndex,
+    //     },
+    //   });
 
-    console.log("questionsLogs", questionsLogs);
+    // console.log("questionsLogs", questionsLogs);
 
-    const totalElapsedSeconds = questionsLogs.reduce(
-      (total, log) => total + log.elapsedSeconds,
-      0
-    );
+    // const totalElapsedSeconds = questionsLogs.reduce(
+    //   (total, log) => total + log.elapsedSeconds,
+    //   0
+    // );
 
-    if (questionsLogs.length === 0) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "questionsLogs Not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Fail create quiz stage log",
-          },
-        },
-        { status: 404 }
-      );
-    }
+    // if (questionsLogs.length === 0) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 404,
+    //       message: "questionsLogs Not found",
+    //       error: {
+    //         code: "NOT_FOUND",
+    //         details: "Fail create quiz stage log",
+    //       },
+    //     },
+    //     { status: 404 }
+    //   );
+    // }
 
-    const quizScoreCalculator = new QuizScoreCalculator();
-    const score = quizScoreCalculator.calculateStageScore(
-      questionsLogs,
-      body.remainingHearts
-    );
+    // const quizScoreCalculator = new QuizScoreCalculator();
+    // const score = quizScoreCalculator.calculateStageScore(
+    //   questionsLogs,
+    //   body.remainingHearts
+    // );
 
     const {
       campaignId,
@@ -55,25 +53,12 @@ export async function POST(request: Request) {
       remainingHearts,
       isBadgeAcquired,
       badgeActivityId,
-      // elapsedSeconds,
+      elapsedSeconds,
+      score,
     } = body;
 
     const log = await await prisma.userQuizStageLog.create({
-      data: {
-        campaignId,
-        userId,
-        jobId,
-        domainId,
-        quizSetId,
-        quizStageId,
-        isCompleted,
-        isBadgeStage,
-        elapsedSeconds: totalElapsedSeconds,
-        score,
-        remainingHearts,
-        isBadgeAcquired,
-        badgeActivityId,
-      },
+      data: body,
     });
 
     return NextResponse.json({ item: log }, { status: 200 });
