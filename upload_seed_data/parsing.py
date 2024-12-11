@@ -1,44 +1,85 @@
+import os
+from openpyxl import load_workbook
 import pandas as pd
 import json
 
-# 엑셀 파일 경로 설정
-file_path = 'data.xlsx'
+# 입력 및 출력 디렉토리 설정
+input_dir = "origins"
+output_dir = "jsons"
 
-# 엑셀 파일 읽기
-df = pd.read_excel(file_path, sheet_name='Sheet1')
+# 출력 디렉토리가 없으면 생성
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
-# 열 이름의 앞뒤 공백 제거
-df.columns = df.columns.str.strip()
+# 파일 처리 함수 정의
+def process_excel(file_path, output_path):
+    workbook = load_workbook(file_path)
+    sheet = workbook.active
 
-# 필요한 열 선택 및 결측값 제거
-columns = ['No','Question', 'Product', 'Category', 'SpecificFeature', 'Domain', 'DomainCode', 'Lang', 'Answer', 'TimeLimitSeconds']
-df = df[columns].dropna(subset=['Question', 'Answer'])
+    # 병합된 셀 정보 가져오기
+    merged_cells = sheet.merged_cells.ranges
+    merged_data = {}
+    for merge_range in merged_cells:
+        top_left_cell = merge_range.start_cell
+        value = sheet[top_left_cell.coordinate].value
+        for row in sheet.iter_rows(min_row=merge_range.min_row, max_row=merge_range.max_row,
+                                   min_col=merge_range.min_col, max_col=merge_range.max_col):
+            for cell in row:
+                merged_data[cell.coordinate] = value
 
-# 인덱스 재설정
-df = df.reset_index(drop=True)
+    # 데이터프레임으로 변환
+    data = []
+    for row in sheet.iter_rows():  # values_only=True 제거
+        row_data = []
+        for cell in row:
+            cell_value = merged_data.get(cell.coordinate, cell.value)  # 병합된 값 적용
+            row_data.append(cell_value)
+        data.append(row_data)
 
-# JSON 데이터 생성
-questions = []
-for index, row in df.iterrows():
-    question = {
-        "text": row['Question'],
-        "product": row['Product'],
-        "category": row['Category'],
-        "feature": row['SpecificFeature'],
-        "domain": row['Domain'],
-        "domainCode": row['DomainCode'],
-        "order": row['No'],
-        "languageCode": row['Lang'],
-        "timeLimitSeconds": row['TimeLimitSeconds'],
+    df = pd.DataFrame(data)
+
+    # 첫 번째 행을 헤더로 설정
+    df.columns = df.iloc[0]
+    df = df[1:].reset_index(drop=True)
+
+    # "No" 열이 숫자인지 확인 및 변환
+    df["No"] = pd.to_numeric(df["No"], errors="coerce")
+
+    # "No" 열 기준으로 그룹화 및 JSON 변환
+    grouped_data = df.groupby("No").apply(lambda group: {
+        "stage": group["Stage"].iloc[0] if "Stage" in group else None,
+        "product": group["Product"].iloc[0] if "Product" in group else None,
+        "category": group["Category"].iloc[0] if "Category" in group else None,
+        "specific_feature": group["SpecificFeature"].iloc[0] if "SpecificFeature" in group else None,
+        "importance": group["Importance"].iloc[0] if "Importance" in group else None,
+        "timeLimitSeconds": group["TimeLimitSeconds"].iloc[0] if "TimeLimitSeconds" in group else None,
+        "question": group["Question"].iloc[0] if "Question" in group else None,
+        "question_type": group["QuestionType"].iloc[0] if "QuestionType" in group else None,
         "options": [
-            {"optionText": row['Answer'], "isCorrect": True}
-            # 추가 옵션이 있다면 여기에 추가
+            {
+                "options": row["Answer"] if "Answer" in row else None,
+                "answer_status": row["AnswerStatus"] if "AnswerStatus" in row else None,
+            }
+            for _, row in group.iterrows()
         ]
-    }
-    questions.append(question)
+    }).tolist()
 
-# JSON 파일로 저장
-with open('questions.json', 'w', encoding='utf-8') as json_file:
-    json.dump(questions, json_file, ensure_ascii=False, indent=4)
+    # JSON 파일로 저장
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(grouped_data, f, ensure_ascii=False, indent=2)
 
-print("JSON 파일이 성공적으로 생성되었습니다.")
+# origins 디렉토리의 모든 엑셀 파일 처리
+for file_name in os.listdir(input_dir):
+    if file_name.endswith(".xlsx"):
+        # 파일명 처리: "sample|NAT_021502|fi.xlsx" -> "NAT_021502|fi.json"
+        parts = file_name.split("|")
+        if len(parts) > 1:
+            output_file_name = "|".join(parts[1:]).replace(".xlsx", ".json")
+            input_path = os.path.join(input_dir, file_name)
+            output_path = os.path.join(output_dir, output_file_name)
+
+            # 엑셀 파일 처리
+            process_excel(input_path, output_path)
+            print(f"Processed: {file_name} -> {output_file_name}")
+
+print("모든 파일이 변환되었습니다.")

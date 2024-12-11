@@ -44,5 +44,27 @@ export const usePathNavigator = () => {
     window.location.href = targetUrl;
   };
 
-  return { generateTargetUrl, routeToPage };
+  /**
+   * Redirects to the error/not-found page based on the current path.
+   * @param search - The query string (optional). Defaults to the current URL's query string.
+   */
+  const routeToError = (
+    additionalPath = "",
+    search = window.location.search
+  ) => {
+    const pathname = window.location.pathname;
+    const segments = pathname.split("/").filter(Boolean); // Remove empty segments
+    const firstPath = segments[0];
+
+    // Construct the new URL by appending the additional path
+    const newPath = `/${firstPath}/${additionalPath}`;
+
+    // Construct the final error URL
+    const errorUrl = `${newPath}${search}`;
+
+    // Use window.location to navigate
+    window.location.href = errorUrl;
+  };
+
+  return { generateTargetUrl, routeToPage, routeToError };
 };

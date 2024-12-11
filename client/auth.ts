@@ -6,6 +6,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvier from "next-auth/providers/google";
 import { SumtotalProfile } from "./app/lib/auth/sumtotal";
+import { encryptEmail } from "./utils/encrypt";
 const uuid = require("uuid");
 
 declare module "next-auth" {
@@ -92,22 +93,6 @@ export const {
           results.forEach((result: any) => {
             if (!result) return; // null인 경우 건너뜀
 
-            // const text9 = result.data[0]?.optionalInfo.text9;
-            // const text8 = result.data[0]?.optionalInfo.text8;
-            // const integer1 = result.data[0]?.optionalInfo.integer1;
-
-            // if (integer1 === 7 && !text9) {
-            //   jobId = text9;
-            // }
-
-            // if (integer1 === 5 && !text9) {
-            //   storeId = text9;
-            // }
-
-            // if (integer1 === 4 && !text8) {
-            //   channelSegmentId = text8;
-            // }
-
             const text9 = result.data[0]?.optionalInfo.text9;
             const text8 = result.data[0]?.optionalInfo.text8;
             const integer1 = result.data[0]?.optionalInfo.integer1;
@@ -132,8 +117,11 @@ export const {
 
         return {
           id: profile.userId,
-          name: profile.fullName ?? profile.userLogin.username ?? null,
-          email: profile.businessAddress.email1 ?? null,
+          // name: profile.fullName ?? profile.userLogin.username ?? null,
+          email:
+            profile.businessAddress.email1 != null
+              ? encryptEmail(profile.businessAddress.email1)
+              : null,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
@@ -180,27 +168,29 @@ export const {
           throw new Error("Invalid email or code");
         }
 
+        const encryptedEmail = encryptEmail(email as string);
+
         let user = await prisma.user.findFirst({
-          where: { email: email as string },
+          where: { email: encryptedEmail },
         });
 
         console.log("tokenRecord user", user);
         // 사용자 계정이 없으면 생성
         if (!user) {
-          const userId = uuid.v4();
+          // const userId = uuid.v4();
 
-          const userEmail = await prisma.userEmail.create({
-            data: {
-              email: email as string,
-              userId: userId,
-            },
-          });
+          // const userEmail = await prisma.userEmail.create({
+          //   data: {
+          //     email: encryptedEmail,
+          //     userId: userId,
+          //   },
+          // });
 
           user = await prisma.user.create({
             data: {
-              id: userId,
+              // id: userId,
               name: "Guest User",
-              emailId: userEmail.id,
+              emailId: encryptedEmail,
               authType: AuthType.GUEST,
             },
           });
@@ -232,23 +222,23 @@ export const {
   events: {
     createUser: async (message) => {
       console.log("next-auth createUser", message);
-      const { user } = message;
-      if (user.email != null) {
-        const userEmail = await prisma.userEmail.create({
-          data: {
-            email: user.email,
-            userId: user.id,
-          },
-        });
+      // const { user } = message;
+      // if (user.email != null) {
+      //   const userEmail = await prisma.userEmail.create({
+      //     data: {
+      //       email: user.email,
+      //       userId: user.id,
+      //     },
+      //   });
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            email: null,
-            emailId: userEmail.id,
-          },
-        });
-      }
+      //   await prisma.user.update({
+      //     where: { id: user.id },
+      //     data: {
+      //       email: null,
+      //       emailId: userEmail.id,
+      //     },
+      //   });
+      // }
     },
     // getUserByEmail: (email) => prisma.user.findFirst({ where: { email } }),
     linkAccount: ({ user, profile }) => {

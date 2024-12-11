@@ -204,15 +204,17 @@ model Campaign {
 
 model Domain {
   id         String   @id @default(uuid())
-  name       String?
+  name       String
   code       String   @unique // Domain name
+  region   String
+  subsidary  String
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
   // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
-  channelSegmentIds String
+  // channelSegmentIds String
   users User[]
 }
 
@@ -330,6 +332,7 @@ model Job {
   id         String   @id
   // groupCode  String
   code        String
+  group        String
   name       String   // Name of the user group (e.g., A, B)
   description String? // Optional description
   // countryJobQuestionsUeage QuestionUsage[] // Associated CountryGroup entries
@@ -337,13 +340,13 @@ model Job {
   updatedAt   DateTime    @updatedAt
 
   users User[]
-  salesFormats SalesFormat[]
+  // salesFormats SalesFormat[]
 }
 
 model Store {
   id         String   @id
   name       String
-  code       String
+  // code       String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -351,17 +354,17 @@ model Store {
 model ChannelSegment {
   id            String                @id @default(uuid())
   name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
-  salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
+  // salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
 }
 
-model SalesFormat {
-  id                String                @id @default(uuid())
-  channelSegmentId  String             // Foreign key to ChannelSegment
-  channelSegment    ChannelSegment  @relation(fields: [channelSegmentId], references: [id])
-  storeType         String          // e.g., "Off line Store", "On line Store"
-  jobId             String          // Replaced 'format' with 'jobCode' (e.g., "FSM(C&R)", "FF", "SES")
-  job               Job             @relation(fields: [jobId], references: [id])
-}
+// model SalesFormat {
+//   id                String                @id @default(uuid())
+//   // channelSegmentId  String             // Foreign key to ChannelSegment
+//   // channelSegment    ChannelSegment  @relation(fields: [channelSegmentId], references: [id])
+//   storeType         String          // e.g., "Off line Store", "On line Store"
+//   // jobId             String          // Replaced 'format' with 'jobCode' (e.g., "FSM(C&R)", "FF", "SES")
+//   // job               Job             @relation(fields: [jobId], references: [id])
+// }
 
 model UserQuizLog {
   id          String   @id @default(uuid())

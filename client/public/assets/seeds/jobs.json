@@ -1,0 +1,54 @@
+[
+  {
+    "id": "1",
+    "code": "fsm",
+    "group": "fsm",
+    "name": "FSM(FSC) Store Sales",
+    "description": "FSM(FSC)"
+  },
+  {
+    "id": "2",
+    "code": "fsm",
+    "group": "fsm",
+    "name": "FSM(FSC) e-promoter",
+    "description": "FSM(FSC)"
+  },
+  {
+    "id": "3",
+    "code": "fsm",
+    "group": "fsm",
+    "name": "FSM(FSC) Contact-Center agent",
+    "description": "FSM(FSC)"
+  },
+  {
+    "id": "4",
+    "code": "ff",
+    "group": "ff",
+    "name": "FF MX promoter",
+    "description": "FF"
+  },
+  {
+    "id": "5",
+    "code": "ff",
+    "group": "ff",
+    "name": "FF MX merchandiser",
+    "description": "FF"
+  },
+  {
+    "id": "6",
+    "code": "ff",
+    "group": "ff",
+    "name": "FF MX trainer",
+    "description": "FF"
+  },
+  {
+    "id": "7",
+    "code": "fsm",
+    "group": "fsm",
+    "name": "others",
+    "description": "FSM(FSC)"
+  },
+  { "id": "8", "code": "fsm", "group": "fsm", "name": "FSM (others)" },
+  { "id": "9", "code": "ff", "group": "ff", "name": "FF (others)" },
+  { "id": "10", "code": "fsm", "group": "fsm", "name": "Customer Services" }
+]
