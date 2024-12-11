@@ -1,38 +1,40 @@
 "use client";
-
+import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
+import { Fragment, useEffect, useState } from "react";
 import { useQuiz } from "@/providers/quiz_provider";
+import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { sleep } from "@/app/lib/utils";
+import { motion } from "motion/react";
+import GameOverAlertDialog from "@/app/components/quiz/game-over-alert";
+import Qusetion from "@/app/components/quiz/question-area";
 
 export default function QuizPage() {
   const {
     quizSet,
-    // quizHistory,
     currentQuizStageIndex,
     currentQuestionIndex,
     currentQuizStage,
-    // currentQuestionOptionIndex,
     currentStageQuizzes,
     isFirstBadgeStage,
     isLastBadgeStage,
     processFirstBadgeAcquisition,
     processLastBadgeAcquisition,
-    // isComplete,
-    // isLastStage,
     startStage,
     endStage,
-    // isLastQuestionOnState,
-    confirmAnswer,
     nextStage,
     nextQuestion,
     canNextQuestion,
-    // setCurrentQuestionOptionIndex,
   } = useQuiz();
+  const { routeToPage } = usePathNavigator();
+  // console.log("quizSet", quizSet);
+  const question = currentStageQuizzes && currentStageQuizzes[currentQuestionIndex];
 
-  console.log("quizSet", quizSet);
-
-  // // 선택된 옵션 상태
+  // 선택된 옵션 상태
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  const [lifeCount, setLifeCount] = useState<number>(currentQuizStage.lifeCount);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     if (quizSet) {
@@ -40,79 +42,52 @@ export default function QuizPage() {
     }
   }, [quizSet, startStage]);
 
-  // const routeNextQuizComplete = () => {
-  //   routeToPage("complete");
-  // };
+  useEffect(() => {
+    if (lifeCount > 0) return;
 
-  // const confirmAnswer = (
-  //   quizStageId: string,
-  //   questionId: string,
-  //   optionId: string
-  // ) => {
-  //   console.log("Selected Option:", optionId); // 선택된 옵션 확인
+    setGameOver(true);
+  }, [lifeCount]);
 
-  //   const isCorrect =
-  //     quizSet.quizStages
-  //       .find((stage: QuizStageEx) => stage.id === quizStageId)
-  //       ?.questions.find((question: QuestionEx) => question.id === questionId)
-  //       ?.options?.find((option: QuestionOption) => option.id === optionId)
-  //       ?.isCorrect ?? false;
+  /**
+   * 선택한 optionId를 모두 저장
+   */
+  const handleOptionSave = (optionId: string) => {
+    setSelectedOptionIds((prevSelected) => {
+      // 이미 선택된 옵션이면 그대로 유지
+      if (prevSelected.includes(optionId)) {
+        return [...prevSelected];
+      }
+      // 선택된 옵션 추가
+      else {
+        return [...prevSelected, optionId];
+      }
+    });
+  };
 
-  //   if (isCorrect) {
-  //     alert("정답입니다!");
-  //     // send qeustion log to server
-  //     if (
-  //       currentQuestionIndex ===
-  //       quizSet.quizStages[currentStage].questions.length - 1
-  //     ) {
-  //       if (currentStage === quizSet.quizStages.length - 1) {
-  //         // send stage log to server
-  //         // update user quiz history
-  //         alert("퀴즈를 모두 완료했습니다!");
-  //         routeNextQuizComplete();
-  //         return;
-  //       }
+  /**
+   * 선택한 optionId가 정답인지 오답인지 체크
+   * 모두 맞췄을 경우 - 다음 문제로 이동
+   * 틀렸을 경우 - 기회 차감
+   */
+  const handleConfirmAnswer = async (question: any, optionId: string) => {
+    const result = question.options.find((option) => option.id === optionId);
 
-  //       alert("다음 스테이지로 이동합니다!");
-  //       // send stage log to server
-  //       // update user quiz history
+    // 맞았으면
+    if (result.isCorrect) {
+      // 모두 맞았으면
+      // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
+      const correctCount = question.options.map((option) => option.isCorrect).filter((answer) => answer === true).length;
+      const selectedIds = question.options.filter((option) => [...new Set([...selectedOptionIds, optionId])].includes(option.id));
+      const selectedCorrectCount = selectedIds.filter((id) => id.isCorrect === true).length;
 
-  //       setCurrentStage(currentStage + 1);
-  //       setSelectedOptionId(null);
-  //       setCurrentQuestionIndex(0);
-  //       return;
-  //     }
-
-  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
-  //     setSelectedOptionId(null);
-  //   } else {
-  //     alert("틀렸습니다!");
-  //     // send qeustion log to server
-  //   }
-  // };
-
-  const handleConfirmAnswer = async (questionId: string) => {
-    if (selectedOptionIds.length === 0) {
-      alert("선택된 옵션이 없습니다.");
-      return;
+      if (correctCount === selectedCorrectCount) {
+        await sleep(1000);
+        await next();
+      }
     }
-
-    const result = await confirmAnswer(
-      currentQuizStage?.id,
-      questionId,
-      selectedOptionIds
-    );
-
-    if (!result.success) {
-      alert(result.error);
-      return;
-    }
-
-    if (result.data.isCorrect) {
-      alert("정답입니다!");
-      next();
-    } else {
-      alert("틀렸습니다!");
+    // 틀렸으면 도전 횟수 차감
+    else {
+      setLifeCount((lifeCount) => lifeCount - 1);
     }
   };
 
@@ -142,84 +117,88 @@ export default function QuizPage() {
     //   return;
     // }
 
-    alert(
-      `${
-        currentQuizStageIndex + 1
-      } 번째 스테이지 완료. 다음 스테이지로 이동합니다.`
-    );
+    alert(`${currentQuizStageIndex + 1} 번째 스테이지 완료. 다음 스테이지로 이동합니다.`);
 
     nextStage();
   };
 
-  const handleOptionChange = (optionId: string) => {
-    setSelectedOptionIds((prevSelected) => {
-      if (prevSelected.includes(optionId)) {
-        // 이미 선택된 옵션이면 제거
-        console.log(`Option ${optionId} 해지됨`);
+  // const progress = Math.floor((time / question.timeLimitSeconds) * 100); // 진행 상태 (%)
 
-        const result = prevSelected.filter((id) => id !== optionId);
-        console.log("result", result);
-        return result;
-      } else {
-        // 선택된 옵션 추가
-        console.log(`Option ${optionId} 선택됨`);
+  if (!currentQuizStage || !currentStageQuizzes) {
+    return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
+  }
 
-        return [...prevSelected, optionId];
-      }
-    });
-  };
-
-  console.log("currentQuestionIndex", currentQuestionIndex);
-
-  const renderQuizPage = () => {
-    if (!currentQuizStage || !currentStageQuizzes) {
-      return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
-    }
-
-    // const quizStage: QuizStageEx = quizSet.quizStages[currentStage];
-    const question = currentStageQuizzes[currentQuestionIndex];
-    const totalQuestions = currentStageQuizzes?.length;
-    const totalStages = quizSet.quizStages.length;
-
-    return (
-      <>
-        <p>
-          stage: {currentQuizStageIndex + 1}/{totalStages}
-        </p>
-        <p>stage에 주어진 하트 수: {currentQuizStage.lifeCount}</p>
-        <p>
-          question: {currentQuestionIndex + 1}/{totalQuestions}
-        </p>
-        <h3>{currentQuizStage?.name}</h3>
-        <p>시간제한: {question.timeLimitSeconds}</p>
-        <p>{question.text}</p>
-        {question.options &&
-          question.options.map((option: QuestionOption) => (
-            <div key={option.id}>
-              <input
-                type="checkbox"
-                name="option"
-                value={option.id}
-                checked={selectedOptionIds.includes(option.id)}
-                onChange={() => handleOptionChange(option.id)} // 옵션 선택/해제 처리
-              />
-              <label>
-                {option.text}({option.isCorrect ? "o" : "x"})
-              </label>
-            </div>
+  return (
+    <div
+      className="h-full bg-[#F7F7F7]"
+      style={{
+        backgroundImage: `url('/assets/bg_main2.png')`,
+      }}
+    >
+      {/* QuizHeader */}
+      <div className="bg-background p-5 grid grid-cols-12 gap-[2px]">
+        <div className="col-span-4 content-center text-[14px]" onClick={() => routeToPage("map")}>
+          Galaxy AI Expert
+        </div>
+        <div className="col-span-4 justify-items-center content-center">
+          <div className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px]">
+            <span>{currentQuestionIndex + 1}</span>
+            <span>/</span>
+            <span>{currentStageQuizzes && currentStageQuizzes.length}</span>
+          </div>
+        </div>
+        <div className="col-span-4 flex self-center gap-1 justify-end">
+          {Array.from({ length: currentQuizStage.lifeCount }).map((_, index) => (
+            <Fragment key={index}>{index < lifeCount ? <HeartFilledIcon /> : <HeartIcon />}</Fragment>
           ))}
-        <button
-          onClick={() => {
-            handleConfirmAnswer(question.id);
-            // confirmAnswer(currentQuizStage.id, question.id, selectedOptionIds);
-          }}
-          disabled={selectedOptionIds.length === 0} // 선택된 옵션이 없으면 버튼 비활성화
-        >
-          확인
-        </button>
-      </>
-    );
-  };
+        </div>
+      </div>
 
-  return <div>{renderQuizPage()}</div>;
+      {/* TimeBar */}
+      <div className="bg-white relative h-[6px]"></div>
+      {/* Question Area*/}
+      <Qusetion questionText={question.text} />
+      {/* answer Area*/}
+      <div className="pt-[30px] px-5 flex flex-col gap-4">
+        {question.options &&
+          question.options.map((option: QuestionOption) => {
+            return (
+              <motion.label
+                key={option.id}
+                onClick={() => {
+                  handleOptionSave(option.id);
+                  handleConfirmAnswer(question, option.id);
+                }}
+                className={cn(
+                  "rounded-[20px] py-4 px-6 bg-white",
+                  selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white",
+                  selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white"
+                )}
+                animate={
+                  selectedOptionIds.includes(option.id) && !option.isCorrect
+                    ? { x: [0, -5, 5, -5, 5, 0] }
+                    : selectedOptionIds.includes(option.id) && option.isCorrect
+                    ? { scale: [1, 1.1, 1] }
+                    : { x: 0, scale: 1 }
+                }
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {option.text}({option.isCorrect ? "o" : "x"})
+                <input
+                  type="checkbox"
+                  checked={selectedOptionIds.includes(option.id)}
+                  readOnly
+                  className="hidden"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                />
+              </motion.label>
+            );
+          })}
+      </div>
+
+      <GameOverAlertDialog gameOver={gameOver} />
+    </div>
+  );
 }

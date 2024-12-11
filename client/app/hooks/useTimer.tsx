@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from "react";
 
 export default function useTimer(initialTime: number = 60) {
   const [time, setTime] = useState(initialTime); // 진행 중인 시간
@@ -7,10 +7,19 @@ export default function useTimer(initialTime: number = 60) {
 
   // 타이머 시작
   const start = useCallback(() => {
-    if (!isRunning) {
+    if (!isRunning && time > 0) {
       setIsRunning(true);
     }
-  }, [isRunning]);
+  }, [isRunning, time]);
+
+  // 타이머 멈춤 (정지)
+  const stop = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsRunning(false);
+  }, []);
 
   // 타이머 리셋 함수(타이머 중지)
   const reset = useCallback(() => {
@@ -29,7 +38,7 @@ export default function useTimer(initialTime: number = 60) {
   }, [reset, start]);
 
   useEffect(() => {
-    if (isRunning) {
+    if (isRunning && time > 0) {
       timerRef.current = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime <= 1) {
@@ -47,11 +56,14 @@ export default function useTimer(initialTime: number = 60) {
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning]);
+  }, [isRunning, time]);
 
   return {
     time, // 진행 중인 시간
+    start, // 타이머 시작
+    stop, // 타이머 멈춤
     reset, // 타이머 리셋 함수
     resetAndStart, // 리셋 후 다시 진행 함수
+    isRunning,
   };
 }
