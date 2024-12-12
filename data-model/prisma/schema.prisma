@@ -179,8 +179,8 @@ model Language {
   name       String   // Language name
 
   // campaignDomainQuizSets CampaignDomainQuizSet[]
-  questions Question[]
-  questionOption QuestionOption[]
+  // questions Question[]
+  // questionOption QuestionOption[]
   users User[]
 }
 
@@ -292,11 +292,12 @@ model Question {
   
   languageId  String      // Foreign key to Language
   originalQuestionId    String     // Foreign key to Question
+  originalIndex    Int     // Foreign key to Question
   
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   
-  language    Language    @relation(fields: [languageId], references: [id])
+  // language    Language    @relation(fields: [languageId], references: [id])
   // userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
 
 
@@ -321,7 +322,7 @@ model QuestionOption {
   questionId  String                 // Foreign key to Question
   question    Question            @relation(fields: [questionId], references: [id])
   languageId   String
-  language    Language            @relation(fields: [languageId], references: [id])
+  // language    Language            @relation(fields: [languageId], references: [id])
   isCorrect   Boolean             // Whether the option is correct
 
   createdAt   DateTime    @default(now())

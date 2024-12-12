@@ -4,8 +4,8 @@ import pandas as pd
 import json
 
 # 입력 및 출력 디렉토리 설정
-input_dir = "origins"
-output_dir = "jsons"
+input_dir = "data/origins"
+output_dir = "data/questions"
 
 # 출력 디렉토리가 없으면 생성
 if not os.path.exists(output_dir):
@@ -47,18 +47,21 @@ def process_excel(file_path, output_path):
 
     # "No" 열 기준으로 그룹화 및 JSON 변환
     grouped_data = df.groupby("No").apply(lambda group: {
+        "originQuestionIndex": group.name,  # 그룹화 기준 키 값을 사용
+        "orderInStage": group["New No."].iloc[0] if "New No." in group else None,
+        "enabled": group["Enabled"].iloc[0] if "Enabled" in group else None,
         "stage": group["Stage"].iloc[0] if "Stage" in group else None,
         "product": group["Product"].iloc[0] if "Product" in group else None,
         "category": group["Category"].iloc[0] if "Category" in group else None,
-        "specific_feature": group["SpecificFeature"].iloc[0] if "SpecificFeature" in group else None,
+        "specificFeature": group["SpecificFeature"].iloc[0] if "SpecificFeature" in group else None,
         "importance": group["Importance"].iloc[0] if "Importance" in group else None,
         "timeLimitSeconds": group["TimeLimitSeconds"].iloc[0] if "TimeLimitSeconds" in group else None,
-        "question": group["Question"].iloc[0] if "Question" in group else None,
-        "question_type": group["QuestionType"].iloc[0] if "QuestionType" in group else None,
+        "text": group["Question"].iloc[0] if "Question" in group else None,
+        "questionType": group["QuestionType"].iloc[0] if "QuestionType" in group else None,
         "options": [
             {
-                "options": row["Answer"] if "Answer" in row else None,
-                "answer_status": row["AnswerStatus"] if "AnswerStatus" in row else None,
+                "text": row["Answer"] if "Answer" in row else None,
+                "answerStatus": row["AnswerStatus"] if "AnswerStatus" in row else None,
             }
             for _, row in group.iterrows()
         ]

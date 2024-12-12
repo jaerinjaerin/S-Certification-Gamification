@@ -45,7 +45,15 @@ async function main() {
   //   }))
   //   .filter((row) => row.question);
 
-  // return;
+  let jsonFilePath = path.join(
+    process.cwd(),
+    "public",
+    "assets",
+    "seeds",
+    "domains.json"
+  );
+
+  return;
 
   const mainActivityId = "test_main_activity_id";
   const optionalActivityId = "test_optional_activity_id";
