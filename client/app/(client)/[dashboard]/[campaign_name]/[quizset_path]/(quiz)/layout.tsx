@@ -2,7 +2,6 @@ import LogoutButton from "@/app/components/button/logout_button";
 import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
-import { Domain } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -34,7 +33,7 @@ export default async function QuizLayout({
   };
 
   // Fetch quiz data
-  const quizData = await fetchData(
+  const quizSetReponse = await fetchData(
     `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
     {
       method: "GET",
@@ -44,15 +43,15 @@ export default async function QuizLayout({
     }
   );
 
-  console.log("QuizLayout quizData", quizData);
+  console.log("QuizLayout quizData", quizSetReponse);
 
-  if (!quizData) {
+  if (!quizSetReponse?.item) {
     redirectToErrorPage();
     return null;
   }
 
   // Fetch quiz history
-  let quizHistory = await fetchData(
+  let quizLogResponse = await fetchData(
     `${process.env.API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
       cache: "no-cache",
@@ -80,7 +79,10 @@ export default async function QuizLayout({
   //   quizHistory = quizHistory.item;
   // }
 
-  if (!quizHistory?.item) {
+  let quizLog;
+  let quizStageLogs;
+
+  if (!quizLogResponse?.item) {
     // Initialize quiz history if not found
     const initHistoryResponse = await fetch(
       `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
@@ -100,20 +102,23 @@ export default async function QuizLayout({
     }
 
     const initHistoryData = await initHistoryResponse.json();
-    quizHistory = initHistoryData.item;
+    quizLog = initHistoryData.item.quizLog;
+    quizStageLogs = initHistoryData.item.quizStageLogs;
   } else {
-    quizHistory = quizHistory.item;
+    quizLog = quizLogResponse.item.quizLog;
+    quizStageLogs = quizLogResponse.item.quizStageLogs;
   }
 
-  console.info("Render QuizLayout");
+  console.info("Render QuizLayout", quizLog);
   return (
     <div>
       <LogoutButton />
       <QuizProvider
-        quizSet={quizData.item as QuizSetEx}
-        language={quizData.item.language}
-        quizHistory={quizHistory}
-        domain={quizData.item.domain as Domain}
+        quizSet={quizSetReponse.item as QuizSetEx}
+        language={quizSetReponse.item.language}
+        quizLog={quizLog}
+        quizStageLogs={quizStageLogs}
+        // domain={quizLog.domain as Domain}
         // campaign={quizData.item.campaign as Campaign}
       >
         {children}

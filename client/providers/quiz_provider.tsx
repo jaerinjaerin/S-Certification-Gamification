@@ -3,7 +3,6 @@
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/app/types/type";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
-  Domain,
   Language,
   Question,
   QuestionOption,
@@ -19,7 +18,7 @@ import QuizScoreManager from "./managers/quizScoreManager";
 interface QuizContextType {
   quizSet: QuizSetEx | null;
   language: Language | null;
-  quizHistory: UserQuizLog | null;
+  quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
   currentQuizStage: QuizStageEx | null;
@@ -44,6 +43,7 @@ interface QuizContextType {
   getCorrectOptionIds(questionId: string): string[];
   // isCheckingAnswer: boolean;
   isLoading: boolean;
+  quizStagesTotalScore: number;
 }
 
 interface ConfirmAnswerResponse {
@@ -66,20 +66,31 @@ export const QuizProvider = ({
   children,
   quizSet,
   language,
-  quizHistory,
-  domain,
-}: {
+  quizLog,
+  quizStageLogs,
+}: // domain,
+{
   children: React.ReactNode;
   quizSet: QuizSetEx;
   language: Language;
-  quizHistory: UserQuizLog;
-  domain: Domain;
+  quizLog: UserQuizLog;
+  quizStageLogs: UserQuizStageLog[];
+  // domain: Domain;
 }) => {
   const { campaign } = useCampaign();
-  const _domain: Domain = domain;
-  let _quizHistory: UserQuizLog = quizHistory;
+  // const [_domain] = useState<Domain>(domain);
+  const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
+  const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
+    quizStageLogs ?? []
+  );
+  const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
+    quizStageLogs.reduce(
+      (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
+      0
+    )
+  );
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
-    quizHistory?.lastCompletedStage ?? 0
+    quizLog?.lastCompletedStage ?? 0
   );
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
@@ -140,7 +151,7 @@ export const QuizProvider = ({
     }
 
     await createQuizQuestionLogs(quizLogManager.getLogs());
-    const stageLog: UserQuizStageLog = await createQuizStageLog(
+    const quizStageLog: UserQuizStageLog = await createQuizStageLog(
       score,
       totalElapsedSeconds,
       remainingHearts,
@@ -149,18 +160,21 @@ export const QuizProvider = ({
       getCurrentStageBadgeActivityId()
     );
 
+    setQuizStagesTotalScore(quizStagesTotalScore + score);
+    setQuizStageLogs([..._quizStageLogs, quizStageLog]);
+
     const quizLog: UserQuizLog = await updateQuizStageCompleteLog(
       currentQuizStageIndex,
       badgeStage
     );
-    _quizHistory = quizLog;
+    setQuizLog(quizLog);
 
     quizLogManager.endStage();
 
     setIsLoading(false);
 
     return {
-      score: stageLog.score ?? 0,
+      score: quizStageLog.score ?? 0,
       isBadgeAcquired: isBadgeAcquired,
       badgeStage: badgeStage,
       badgeImageURL: currentQuizStage?.badgeImageURL ?? "",
@@ -275,7 +289,7 @@ export const QuizProvider = ({
   };
 
   const isComplete = (): boolean => {
-    return _quizHistory.isCompleted ?? false;
+    return _quizLog.isCompleted ?? false;
   };
 
   const isLastStage = (): boolean => {
@@ -314,14 +328,14 @@ export const QuizProvider = ({
       quizLogManager.addLog({
         isCorrect: result.isCorrect,
         campaignId: campaign.id,
-        userId: _quizHistory.userId,
-        jobId: _quizHistory.jobId || "",
+        userId: _quizLog.userId,
+        jobId: _quizLog.jobId || "",
         quizSetId: quizSet.id,
         questionId: questionId,
         languageId: language.id,
         selectedOptionIds: selectedOptionIds,
         correctOptionIds: result.correctOptionIds,
-        domainId: _domain.id,
+        domainId: quizLog.domainId,
         stageIndex: currentQuizStageIndex,
         category: question.category,
         specificFeature: question.specificFeature,
@@ -389,9 +403,9 @@ export const QuizProvider = ({
         },
         body: JSON.stringify({
           campaignId: campaign.id,
-          userId: _quizHistory.userId,
-          jobId: _quizHistory.jobId || "",
-          domainId: domain.id,
+          userId: _quizLog.userId,
+          jobId: _quizLog.jobId || "",
+          domainId: quizLog.domainId,
           quizSetId: quizSet.id,
           stageIndex: currentQuizStageIndex,
           quizStageId: currentQuizStage.id,
@@ -425,19 +439,16 @@ export const QuizProvider = ({
     isBadgeAcquired: boolean
   ): Promise<UserQuizLog> => {
     try {
-      const response = await fetch(
-        `/api/logs/quizzes/sets/${_quizHistory.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            lastCompletedStage: stageIndex + 1,
-            isBadgeAcquired,
-          }),
-        }
-      );
+      const response = await fetch(`/api/logs/quizzes/sets/${_quizLog.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lastCompletedStage: stageIndex + 1,
+          isBadgeAcquired,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -463,7 +474,7 @@ export const QuizProvider = ({
       value={{
         quizSet,
         language,
-        quizHistory: _quizHistory,
+        quizLog: _quizLog,
         currentQuizStageIndex,
         currentQuestionIndex,
         currentQuizStage,
@@ -481,6 +492,7 @@ export const QuizProvider = ({
         processBadgeAcquisition,
         getCorrectOptionIds,
         isLoading,
+        quizStagesTotalScore,
       }}
     >
       {children}

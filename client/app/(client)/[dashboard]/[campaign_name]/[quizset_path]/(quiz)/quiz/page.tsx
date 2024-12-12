@@ -29,6 +29,7 @@ export default function QuizPage() {
     nextStage,
     nextQuestion,
     canNextQuestion,
+    quizStagesTotalScore,
     // setCurrentQuestionOptionIndex,
   } = useQuiz();
 
@@ -176,6 +177,7 @@ export default function QuizPage() {
 
     return (
       <>
+        <p>현재까지 스코어: {quizStagesTotalScore}</p>
         <p>
           stage: {currentQuizStageIndex + 1}/{totalStages}
         </p>

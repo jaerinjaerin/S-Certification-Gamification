@@ -76,7 +76,21 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ item: userQuizLog }, { status: 200 });
+    const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
+      where: {
+        quizSetId: userQuizLog?.quizSetId,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        item: {
+          quizLog: userQuizLog,
+          quizStageLogs: userQuizStageLogs,
+        },
+      },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     console.error("Error fetching activity data:", error);
 
