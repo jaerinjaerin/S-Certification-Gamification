@@ -1,5 +1,7 @@
 "use client";
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import { Button } from "@/app/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import {
   AlertDialogFooter,
   AlertDialogHeader,
@@ -9,41 +11,29 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
-import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
-import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { useCountdown } from "usehooks-ts";
 
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
+  console.log(step);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // const [error, setError] = useState<string | Record<string, any> | null>(null); // 에러가 객체로 들어올 수도 있는데?
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
-  const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
-  console.log(error);
 
   const t = useTranslations("login");
+
+  console.log("LOADING:", loading, "ERROR:", error);
 
   const sendEmail = async () => {
     setLoading(true);
@@ -57,16 +47,18 @@ export default function GuestLogin() {
       });
 
       if (response.ok) {
-        setSuccessSendEmail("Email sent successfully!");
+        // alert("Email sent successfully!");
+        setError("Email sent successfully!");
         const { verifyToken } = await response.json();
-        console.log("처음 코드 받았을때 verifyToken", verifyToken);
         setVerifyToken(verifyToken);
+        setStep("code");
       } else {
         const { error, code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
-          setSuccessSendEmail("Verification email already sent");
+          // alert("Verification email already sent");
+          setError("Verification email already sent");
           setVerifyToken(verifyToken);
-
+          setStep("code");
           setExpiresAt(new Date(expiresAt));
           return;
         }
@@ -93,6 +85,7 @@ export default function GuestLogin() {
         code,
         // callbackUrl: "/intro",
       });
+      console.log("result✅", result);
 
       if (result?.error) {
         alert("Invalid email or code");
@@ -149,19 +142,88 @@ export default function GuestLogin() {
                   </form>
                 </div>
                 <DialogFooter>
-                  <Button
-                    variant={"primary"}
-                    className="text-[18px] disabled:bg-disabled"
-                    type="submit"
-                    form="verify-email"
-                    disabled={!email || loading}
-                  >
-                    {t("send code")}
-                  </Button>
-                  <DialogClose className="absolute top-5 right-5">
-                    <X className="h-4 w-4" />
-                    <span className="sr-only">Close</span>
-                  </DialogClose>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant={"primary"}
+                        className="text-[18px] disabled:bg-disabled"
+                        type="submit"
+                        form="verify-email"
+                        disabled={!email || loading}
+                      >
+                        {t("send code")}
+                      </Button>
+                    </DialogTrigger>
+                    {step === "code" && (
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>{t("confirm your email")}</DialogTitle>
+                          <DialogDescription>
+                            {t.rich("magic link sent", {
+                              address: (children) => (
+                                <address className="inline-block">
+                                  <a href={`mailto:${email}`} className="not-italic text-blue-500 ">
+                                    {children}
+                                  </a>
+                                </address>
+                              ),
+                              email,
+                            })}
+                          </DialogDescription>
+                          <div>
+                            <form
+                              id="verify-code"
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                verifyCode();
+                              }}
+                              className="relative"
+                            >
+                              <input
+                                placeholder="code"
+                                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                                autoFocus
+                                required
+                              />
+                              {/* {time < 0 ? (
+                                <div className="absolute right-[10px] top-1/2 -translate-y-1/2">00:00</div>
+                              ) : (
+                                <div className="absolute right-[10px] top-1/2 -translate-y-1/2">00:{String(time).padStart(2, "0")}</div>
+                              )} */}
+                            </form>
+                            {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
+                          </div>
+                        </DialogHeader>
+                        <DialogFooter
+                          className="flex-col gap-5"
+                          cancelAction={() => {
+                            setCode("");
+                          }}
+                        >
+                          <Button
+                            className="text-[18px] disabled:bg-disabled"
+                            variant={"primary"}
+                            type="submit"
+                            form="verify-code"
+                            disabled={!code || loading}
+                          >
+                            {t("submit")}
+                          </Button>
+                          <div className="mx-auto">
+                            <button
+                              className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
+                              // disabled={time > 0}
+                              onClick={sendEmail}
+                            >
+                              {t("resend code")}
+                            </button>
+                          </div>
+                        </DialogFooter>
+                      </DialogContent>
+                    )}
+                  </Dialog>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -170,7 +232,7 @@ export default function GuestLogin() {
         </div>
       </div>
 
-      {/* error alert dialog */}
+      {/* dialog */}
       <AlertDialog open={!!error}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
@@ -180,6 +242,7 @@ export default function GuestLogin() {
           <AlertDialogFooter>
             <AlertDialogCancel
               onClick={() => {
+                console.log("팝업 종료");
                 setError(null);
               }}
             >
@@ -188,105 +251,6 @@ export default function GuestLogin() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {/* success */}
-      <AlertDialog open={!!successSendEmail}>
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Success</AlertDialogTitle>
-            <AlertDialogDescription>{successSendEmail}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Button
-                variant={"primary"}
-                onClick={() => {
-                  setSuccessSendEmail(null);
-                  setStep("code");
-                  resetCountdown();
-                  startCountdown();
-                }}
-              >
-                OK
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      <Dialog open={step === "code"}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("confirm your email")}</DialogTitle>
-            <DialogDescription>
-              {t.rich("magic link sent", {
-                address: (children) => <span className="text-blue-500">{children}</span>,
-                email,
-              })}
-            </DialogDescription>
-          </DialogHeader>
-          <div>
-            <form
-              id="verify-code"
-              onSubmit={(e) => {
-                console.log("verify code");
-                e.preventDefault();
-              }}
-              className="relative"
-            >
-              <input
-                placeholder="code"
-                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                autoFocus
-                required
-              />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div>
-            </form>
-            {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
-          </div>
-          <DialogFooter
-            className="flex-col items-center gap-5"
-            onClick={() => {
-              setCode("");
-            }}
-          >
-            <Button
-              className="text-[18px] disabled:bg-disabled"
-              variant={"primary"}
-              type="submit"
-              form="verify-code"
-              disabled={!code || loading}
-              onClick={verifyCode}
-            >
-              {t("submit")}
-            </Button>
-            <div className="mx-auto">
-              <button
-                className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
-                disabled={count > 0}
-                onClick={sendEmail}
-              >
-                {t("resend code")}
-              </button>
-            </div>
-            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </>
   );
-}
-
-function formatToMMSS(value: number) {
-  const minutes = Math.floor(value / 60);
-  const seconds = value % 60;
-
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-  const formattedSeconds = seconds.toString().padStart(2, "0");
-  return `${formattedMinutes}:${formattedSeconds}`;
 }

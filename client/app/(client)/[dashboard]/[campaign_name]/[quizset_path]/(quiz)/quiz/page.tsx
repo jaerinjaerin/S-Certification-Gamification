@@ -39,7 +39,6 @@ export default function QuizPage() {
   const [gameOver, setGameOver] = useState(false);
 
   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: question.timeLimitSeconds });
-  console.log(count);
 
   useEffect(() => {
     if (quizSet) {
@@ -189,6 +188,7 @@ export default function QuizPage() {
                   onClick={() => {
                     handleOptionSave(option.id);
                     handleConfirmAnswer(question, option.id);
+                    console.log("click");
                   }}
                   className={cn(
                     "rounded-[20px] py-4 px-6 bg-white",

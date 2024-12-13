@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import useCreateItem from "@/app/hooks/useCreateItem";
 import useGetItemList from "@/app/hooks/useGetItemList";
 import { ChannelSegmentEx, DomainEx, SalesFormatEx } from "@/app/types/type";
@@ -9,16 +9,6 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language, SalesFormat } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 
 export default function GuestRegisterPage() {
   const { routeToPage } = usePathNavigator();
@@ -37,12 +27,6 @@ export default function GuestRegisterPage() {
   const { isLoading, error, items: domains } = useGetItemList<DomainEx>({ url: "/api/domains" });
 
   const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  useEffect(() => {
-    if (error || errorCreate) {
-      setErrorMessage(error || errorCreate);
-    }
-  }, [error, errorCreate]);
 
   const fetchLanguages = async (domainId: string, jobId: string) => {
     const response = await fetch(`/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`, {
@@ -89,8 +73,7 @@ export default function GuestRegisterPage() {
   const selectChannel = (channelId: string) => {
     const channel = channels?.find((c: ChannelSegmentEx) => c.id === channelId);
     if (!channel) {
-      // alert("Channel not found. Please select a valid channel.");
-      setErrorMessage("Channel not found. Please select a valid channel.");
+      alert("Channel not found. Please select a valid channel.");
       return;
     }
     setSelectedChannel(channel);
@@ -105,7 +88,7 @@ export default function GuestRegisterPage() {
   const selectSalesFormat = (salesFormatId: string) => {
     const salesFormat = salesFormats!.find((c: SalesFormat) => c.id === salesFormatId);
     if (!salesFormat) {
-      setErrorMessage("Sales Format not found. Please select a valid sales format.");
+      alert("Sales Format not found. Please select a valid sales format.");
       return;
     }
     setSelectedSalesFormat(salesFormat);
@@ -116,7 +99,7 @@ export default function GuestRegisterPage() {
   const selectLanguage = (languageId: string) => {
     const language = languages.find((l) => l.id === languageId);
     if (!language) {
-      setErrorMessage("Language not found. Please select a valid language.");
+      alert("Language not found. Please select a valid language.");
       return;
     }
     setSelectedLanguage(language);
@@ -135,95 +118,114 @@ export default function GuestRegisterPage() {
     });
   };
 
+  const errorMessage = error || errorCreate;
   const t = useTranslations("register");
 
   console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
     <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
-      <Dialog open>
+      <Dialog defaultOpen>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("enter details")}</DialogTitle>
-            <DialogDescription className="text-left">
-              {t("select information")}
-              <span className="block text-[#0037FF]">*Mandatory fields</span>
-            </DialogDescription>
+            <DialogDescription>{t("select information")}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* domains */}
-            <Select
-              onValueChange={(value) => selectDomain(value)}
-              value={`${t.rich("language", {
-                address: (children) => <span className="text-blue-500">{children}</span>,
-              })}`}
-            >
-              <SelectTrigger
-                disabled={isLoading || loadingCreate || domains == null}
-                className={cn(selectedDomain !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
-              >
-                <SelectValue>{selectedDomain === null ? t("country") : selectedDomain.name}</SelectValue>
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || domains == null} value={selectedDomain}>
+                <SelectValue placeholder={t("country")} />
               </SelectTrigger>
               <SelectContent>
                 {domains.map((domain) => (
-                  <SelectItem key={domain.id} value={domain.id}>
+                  <SelectItem
+                    key={domain.id}
+                    value={domain.name}
+                    dataValue={domain.id}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement; // DOM 노드로 캐스팅
+                      const domainId = target.dataset.value; // data-value 값 가져오기
+                      selectDomain(domainId!);
+                    }}
+                  >
                     {domain.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select onValueChange={(value) => selectChannel(value)} value={t("channel")}>
-              <SelectTrigger
-                disabled={isLoading || loadingCreate || channels.length === 0}
-                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
-              >
-                <SelectValue>{selectedChannel === null ? t("channel") : selectedChannel.name}</SelectValue>
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0} value={selectedChannel}>
+                <SelectValue placeholder={t("channel")} />
               </SelectTrigger>
               <SelectContent>
                 {channels.map((channel) => (
-                  <SelectItem key={channel.id} value={channel.id}>
+                  <SelectItem
+                    key={channel.id}
+                    dataValue={channel.id}
+                    value={channel.name}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const channelId = target.dataset.value;
+                      console.log(channelId);
+                      selectChannel(channelId!);
+                    }}
+                  >
                     {channel.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* job group */}
-            <Select onValueChange={(value) => selectSalesFormat(value)} value={t("job group")}>
-              <SelectTrigger
-                disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0}
-                className={cn(selectedSalesFormat !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
-              >
-                <SelectValue>
-                  {selectedSalesFormat === null ? t("job group") : `${selectedSalesFormat.storeType} (${selectedSalesFormat.job.code})`}
-                </SelectValue>
+            <Select>
+              <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}>
+                <SelectValue placeholder={t("job group")} />
               </SelectTrigger>
               <SelectContent>
                 {salesFormats.map((format) => (
-                  <SelectItem key={format.id} value={format.id}>
+                  <SelectItem
+                    key={format.id}
+                    dataValue={format.id}
+                    value={`${format.storeType} (${format.job.code})`}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const id = target.dataset.value;
+                      selectSalesFormat(id!);
+                    }}
+                  >
                     {format.storeType} ({format.job.code})
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* language */}
-            <Select onValueChange={(value) => selectLanguage(value)} value={t("language")}>
+            <Select>
               <SelectTrigger
                 disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0 || languages.length === 0}
-                className={cn(selectedLanguage !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
+                value={selectedLanguage}
               >
-                <SelectValue>{selectedLanguage === null ? t("language") : selectedLanguage.name}</SelectValue>
+                <SelectValue placeholder={t("language")} />
               </SelectTrigger>
               <SelectContent>
                 {languages.map((lang) => (
-                  <SelectItem key={lang.id} value={lang.id}>
+                  <SelectItem
+                    key={lang.id}
+                    dataValue={lang.id}
+                    value={`${lang.name} (${lang.id})`}
+                    onChange={(e) => {
+                      const target = e.target as HTMLElement;
+                      const id = target.dataset.value;
+                      selectLanguage(id!);
+                    }}
+                  >
                     {lang.name} ({lang.id})
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-          <DialogFooter>
+          <DialogFooter close={false}>
             <Button
               variant={"primary"}
               disabled={isLoading || loadingCreate || !selectedDomain || !selectedChannel || !selectedSalesFormat || !selectedLanguage}
@@ -232,26 +234,10 @@ export default function GuestRegisterPage() {
             >
               {loadingCreate ? `${t("saving")}` : `${t("save")}`}
             </Button>
+            {errorMessage && <p className="errorMessage">{errorMessage}</p>}
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* error alert */}
-      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Alert</AlertDialogTitle>
-            <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Button variant={"primary"} onClick={() => {}}>
-                OK
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }

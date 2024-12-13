@@ -24,6 +24,8 @@
     "@aws-sdk/client-ses": "^3.696.0",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-alert-dialog": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@react-email/components": "^0.0.27",
     "aws-sdk": "^2.1692.0",
