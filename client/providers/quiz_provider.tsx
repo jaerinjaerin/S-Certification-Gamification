@@ -10,6 +10,7 @@ import {
   UserQuizLog,
   UserQuizStageLog,
 } from "@prisma/client";
+import assert from "assert";
 import { createContext, useContext, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
@@ -17,6 +18,7 @@ import QuizScoreManager from "./managers/quizScoreManager";
 
 interface QuizContextType {
   quizSet: QuizSetEx | null;
+  quizStageLogs: UserQuizStageLog[];
   language: Language | null;
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
@@ -37,6 +39,12 @@ interface QuizContextType {
     selectedOptionIds: string[],
     elapsedSeconds: number
   ): ConfirmAnswerResponse;
+  logUserAnswer(
+    questionId: string,
+    selectedOptionIds: string[],
+    elapsedSeconds: number,
+    isCorrect: boolean
+  ): void;
   getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
   quizStagesTotalScore: number;
@@ -320,6 +328,46 @@ export const QuizProvider = ({
     }
   };
 
+  const logUserAnswer = (
+    questionId: string,
+    selectedOptionIds: string[],
+    elapsedSeconds: number,
+    isCorrect: boolean
+  ): void => {
+    const question = currentQuizStage?.questions.find(
+      (q: Question) => q.id === questionId
+    );
+
+    if (!question) {
+      assert(false, "Question not found");
+    }
+
+    const correctOptionIds = question.options
+      .filter((option: QuestionOption) => option.isCorrect)
+      .map((option: QuestionOption) => option.id);
+
+    quizLogManager.addLog({
+      isCorrect,
+      campaignId: campaign.id,
+      userId: _quizLog.userId,
+      jobId: _quizLog.jobId || "",
+      quizSetId: quizSet.id,
+      questionId: questionId,
+      languageId: language.id,
+      selectedOptionIds: selectedOptionIds,
+      correctOptionIds: correctOptionIds,
+      domainId: quizLog.domainId,
+      stageIndex: currentQuizStageIndex,
+      category: question.category,
+      specificFeature: question.specificFeature,
+      product: question.product,
+      questionType: question.questionType,
+      elapsedSeconds: elapsedSeconds,
+      quizStageId: currentQuizStage.id,
+      createdAt: new Date().toISOString(),
+    });
+  };
+
   const getCorrectOptionIds = (questionId: string): string[] => {
     const question = currentQuizStage?.questions.find(
       (q: Question) => q.id === questionId
@@ -441,6 +489,7 @@ export const QuizProvider = ({
     <QuizContext.Provider
       value={{
         quizSet,
+        quizStageLogs: _quizStageLogs,
         language,
         quizLog: _quizLog,
         currentQuizStageIndex,
@@ -452,6 +501,7 @@ export const QuizProvider = ({
         endStage,
         nextStage,
         confirmAnswer,
+        logUserAnswer,
         isLastQuestionOnState,
         nextQuestion,
         canNextQuestion,

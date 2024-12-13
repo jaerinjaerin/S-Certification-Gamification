@@ -81,7 +81,9 @@ export default async function QuizLayout({
   let quizLog;
   let quizStageLogs;
 
-  if (!quizLogResponse?.item) {
+  console.log("QuizLayout quizLogResponse", quizLogResponse);
+
+  if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
     const initHistoryResponse = await fetch(
       `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
@@ -101,6 +103,7 @@ export default async function QuizLayout({
     }
 
     const initHistoryData = await initHistoryResponse.json();
+
     quizLog = initHistoryData.item.quizLog;
     quizStageLogs = initHistoryData.item.quizStageLogs;
   } else {
