@@ -192,7 +192,7 @@ export default function QuizPage() {
                     console.log("click");
                   }}
                   className={cn(
-                    "rounded-[20px] py-4 px-6 bg-white",
+                    "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
                     selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white",
                     selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white",
                     isSelectedCorrectCount && "pointer-events-none"
