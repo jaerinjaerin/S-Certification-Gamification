@@ -25,7 +25,7 @@ export default function QuizPage() {
   const [gameOver, setGameOver] = useState(false);
   const [isSelectedCorrectCount, setIsSelectedCorrectCount] = useState(0);
 
-  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: question.timeLimitSeconds });
+  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: currentQuizStage.timeLimitSeconds });
 
   const handleConfirmAnswer = async (questionId: string) => {
     if (selectedOptionIds.length === 0) {

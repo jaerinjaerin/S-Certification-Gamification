@@ -9,7 +9,6 @@ import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { cn } from "@/lib/utils";
 
 interface ChannelSegment {
   name: string;
@@ -67,7 +67,8 @@ export default function GuestRegisterPage() {
   const [languages, setLanguages] = useState<Language[]>([]);
   // const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  console.log(selectedCountry);
+  console.log(countries);
   // const {
   //   isLoading,
   //   error,
@@ -217,6 +218,8 @@ export default function GuestRegisterPage() {
     // });
   };
 
+  console.log(selectedCountry);
+
   // const errorMessage = error || errorCreate;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -241,17 +244,12 @@ export default function GuestRegisterPage() {
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
-            <Select
-              onValueChange={(value) => selectCountry(value)}
-              value={`${t.rich("country", {
-                address: (children) => <span className="text-blue-500">{children}</span>,
-              })}`}
-            >
+            <Select defaultValue={t("country")} onValueChange={(value) => selectCountry(value)} value={t("country")}>
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
                 className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>{selectedCountry === null ? t("country") : selectedCountry?.name}</SelectValue>
+                <SelectValue>{selectedCountry === null ? t("country") : selectedCountry.name}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {countries.map((country) => (

@@ -702,7 +702,7 @@
       }
     ],
     "name": "COLOMBIA",
-    "code": "",
+    "code": "NAT_2702",
     "region": "LATAM",
     "subsidary": "SAMCOL"
   },
@@ -794,7 +794,7 @@
       }
     ],
     "name": "ARGENTINA",
-    "code": "",
+    "code": "NAT_2702",
     "region": "LATAM",
     "subsidary": "SEASA"
   },
