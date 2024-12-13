@@ -1,25 +1,23 @@
 "use client";
-import React, { forwardRef, useEffect, useState } from "react";
-import { cn } from "@/app/lib/utils";
-import { QuizStageEx } from "@/app/types/type";
-import { useQuiz } from "@/providers/quiz_provider";
-import { usePathNavigator } from "@/route/usePathNavigator";
-import InactiveBadge from "@/public/assets/badge_inactive.png";
-import Image from "next/image";
-import { Fragment } from "react";
+import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { LockIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
-import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
-import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
-import { type CarouselApi } from "@/components/ui/carousel";
+import { cn } from "@/app/lib/utils";
+import { QuizStageEx } from "@/app/types/type";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import { useQuiz } from "@/providers/quiz_provider";
+import InactiveBadge from "@/public/assets/badge_inactive.png";
+import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import React, { forwardRef, Fragment, useEffect, useState } from "react";
 
 const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizMap() {
-  const { quizSet, language, quizHistory } = useQuiz();
-  const [nextStage, setNextStage] = useState<number>((quizHistory?.lastCompletedStage ?? 0) + 1);
+  const { quizSet, language, quizLog } = useQuiz();
+  const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
   const { routeToPage } = usePathNavigator();
   const t = useTranslations("Map_guide");
 
@@ -27,8 +25,7 @@ export default function QuizMap() {
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
-    setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
+    setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
     const targetStage = itemsRef.current[nextStage - 1];
     // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
 
@@ -38,7 +35,7 @@ export default function QuizMap() {
         block: "center",
       });
     }
-  }, [quizHistory?.lastCompletedStage, nextStage, quizSet.quizStages]);
+  }, [quizLog?.lastCompletedStage, nextStage, quizSet.quizStages]);
 
   const routeNextQuizStage = async () => {
     routeToPage("quiz");
@@ -91,7 +88,8 @@ export default function QuizMap() {
       {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
         {quizSet.quizStages.map((stage: QuizStageEx, index) => {
-          const firstBadgeStage = quizHistory?.firstBadgeStage;
+          const stageIndices = quizSet.quizStages.filter((stage) => stage.isBadgeStage).map((stage) => stage.order - 1); // order가 1부터 시작하기 때문에 -1을 해줌
+
           return (
             <Fragment key={stage.id}>
               <Stage
@@ -101,7 +99,7 @@ export default function QuizMap() {
                 nextStage={nextStage}
                 isNextStage={stage.order === nextStage}
                 order={stage.order}
-                firstBadgeStage={firstBadgeStage}
+                firstBadgeStage={stageIndices[0]}
                 routeNextQuizStage={routeNextQuizStage}
               />
               {stage.order !== quizSet.quizStages.length && <Connection />}
@@ -144,22 +142,18 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
             isNextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
-            isStageCompleted && "bg-[#001276]",
+            isStageCompleted && "bg-[#001276]"
           )}
         >
-          {firstBadgeStage === order ? (
-            <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" />
-          ) : (
-            `stage ${order}`
-          )}
+          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
         </button>
 
-        {isNextStage && (
+        {nextStage && (
           <span className="absolute bottom-[-30px] right-[-28px] size-[85px] " style={{ backgroundImage: `url('/assets/pointer.svg')` }} />
         )}
       </div>
-      {isNextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
-      {isNextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
+      {nextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
+      {nextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
     </div>
   );
 });
@@ -179,7 +173,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
       )}
     />
   );
@@ -264,107 +258,3 @@ const Ol = ({ children }: { children: React.ReactNode }) => {
     </ol>
   );
 };
-
-// TODO: QuizHistory
-// badgeAcquisitionDate: null;
-// campaignDomainQuizSetId: "df4d9601-463e-4d66-b429-7d4af00d23f9";
-// campaignId: "7f434785-82e2-4309-b263-f2531c414951";
-// createdAt: "2024-12-05T07:33:26.478Z";
-// domainId: "8f7d1646-7742-462c-b7e1-a413cfe5a828";
-// firstBadgeActivityId: "test_optional_activity_id";
-// firstBadgeStage: 3;
-// id: "fa319477-624b-4616-9b9b-454e0f7c4b07";
-// isBadgeAcquired: false;
-// isCompleted: false;
-// isFirstBadgeStageCompleted: false;
-// jobId: "cfee5fb9-5183-482c-9185-0f00e1e3d2b8";
-// languageId: "e92508c5-4621-4ffe-b5cf-98b4e9c9c5d3";
-// lastBadgeActivityId: "test_main_activity_id";
-// lastCompletedStage: null; //🔥 내가 완료한 스테이지 단계
-// timeSpent: null;
-// updatedAt: "2024-12-05T07:33:26.478Z";
-// userId: "f2629b21-559d-444f-8e50-4ef6d8131ca2";
-
-// ========================================================================
-// quizsetPath us_fsm_en
-// result: {
-//   id: 'df4d9601-463e-4d66-b429-7d4af00d23f9',
-//   path: 'us_fsm_en',
-//   campaignId: '7f434785-82e2-4309-b263-f2531c414951',
-//   domainId: '8f7d1646-7742-462c-b7e1-a413cfe5a828',
-//   jobId: 'cfee5fb9-5183-482c-9185-0f00e1e3d2b8',
-//   languageId: 'e92508c5-4621-4ffe-b5cf-98b4e9c9c5d3',
-//   firstBadgeStage: 3,
-//   firstBadgeActivityId: 'test_optional_activity_id',
-//   lastBadgeActivityId: 'test_main_activity_id',
-//   createrId: 'admin',
-//   updaterId: null,
-//   createdAt: 2024-12-05T00:23:43.089Z,
-//   updatedAt: 2024-12-05T00:23:43.089Z,
-//   language: {
-//     id: 'e92508c5-4621-4ffe-b5cf-98b4e9c9c5d3',
-//     code: 'en',
-//     name: 'English'
-//   },
-//   campaign: {
-//     id: '7f434785-82e2-4309-b263-f2531c414951',
-//     name: 'S24',
-//     description: 'A campaign spanning multiple languages',
-//     createdAt: 2024-12-05T00:23:41.521Z,
-//     updatedAt: 2024-12-05T00:23:41.521Z,
-//     startedAt: 2024-12-05T00:23:41.514Z,
-//     endedAt: 2025-01-05T00:23:41.514Z,
-//     createrId: 'admin',
-//     updaterId: null
-//   },
-//   domain: {
-//     id: '8f7d1646-7742-462c-b7e1-a413cfe5a828',
-//     name: 'US',
-//     code: 'us',
-//     createdAt: 2024-12-05T00:23:41.465Z,
-//     updatedAt: 2024-12-05T00:23:41.465Z,
-//     channelSegmentIds: 'b6426fb4-357b-4872-9ec0-d0ed371952d5,e625aa0c-a763-42b0-a0dc-abf5f021236e,344fabd2-9f64-4416-85d3-e2452b8c5535'
-//   },
-//   quizStages: [
-//     {
-//       id: 'de320be3-b79d-48db-b97c-2bc4ff1ab224',
-//       name: 'Stage 1 for US',
-//       order: 1,
-//       questionIds: '["a9e8ea5c-dbd9-43e3-ac6a-702928f827d9","af101e2d-3df6-4404-99e1-c2f54d872da6","95f37a1a-bcea-482f-9315-fca2abaf1566"]',
-//       lifeCount: 3,
-//       campaignDomainQuizSetId: 'df4d9601-463e-4d66-b429-7d4af00d23f9',
-//       createdAt: 2024-12-05T00:23:43.105Z,
-//       updatedAt: 2024-12-05T00:23:43.105Z
-//     },
-//     {
-//       id: 'a44693ff-09da-4199-870a-ecf941d89e26',
-//       name: 'Stage 2 for US',
-//       order: 2,
-//       questionIds: '["32d81fb8-c500-4ac1-954b-682252788111","4353d465-8d4b-40e6-bed3-7a4ec6d9819f","a9e8ea5c-dbd9-43e3-ac6a-702928f827d9"]',
-//       lifeCount: 3,
-//       campaignDomainQuizSetId: 'df4d9601-463e-4d66-b429-7d4af00d23f9',
-//       createdAt: 2024-12-05T00:23:43.112Z,
-//       updatedAt: 2024-12-05T00:23:43.112Z
-//     },
-//     {
-//       id: 'bc2397cc-509b-4d45-acfa-6d4f4388fddc',
-//       name: 'Stage 3 for US',
-//       order: 3,
-//       questionIds: '["a9e8ea5c-dbd9-43e3-ac6a-702928f827d9","4353d465-8d4b-40e6-bed3-7a4ec6d9819f","af101e2d-3df6-4404-99e1-c2f54d872da6"]',
-//       lifeCount: 3,
-//       campaignDomainQuizSetId: 'df4d9601-463e-4d66-b429-7d4af00d23f9',
-//       createdAt: 2024-12-05T00:23:43.120Z,
-//       updatedAt: 2024-12-05T00:23:43.120Z
-//     },
-//     {
-//       id: '34848ad5-0e62-45a2-8f20-feca6552a69c',
-//       name: 'Stage 4 for US',
-//       order: 4,
-//       questionIds: '["fdc74105-b247-4fe0-a821-aef9a2442e42","95f37a1a-bcea-482f-9315-fca2abaf1566","32d81fb8-c500-4ac1-954b-682252788111"]',
-//       lifeCount: 3,
-//       campaignDomainQuizSetId: 'df4d9601-463e-4d66-b429-7d4af00d23f9',
-//       createdAt: 2024-12-05T00:23:43.127Z,
-//       updatedAt: 2024-12-05T00:23:43.127Z
-//     }
-//   ]
-// }

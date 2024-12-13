@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
@@ -42,6 +43,8 @@ export default function GuestLogin() {
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
   const t = useTranslations("login");
+
+  console.log("loading", loading, error, expiresAt);
 
   const sendEmail = async () => {
     setLoading(true);

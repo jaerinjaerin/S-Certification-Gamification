@@ -47,8 +47,9 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
-    "usehooks-ts": "^3.1.0",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "xlsx": "^0.18.5",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.0.3",

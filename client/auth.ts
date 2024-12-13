@@ -6,6 +6,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvier from "next-auth/providers/google";
 import { SumtotalProfile } from "./app/lib/auth/sumtotal";
+import { encryptEmail } from "./utils/encrypt";
 const uuid = require("uuid");
 
 declare module "next-auth" {
@@ -49,8 +50,9 @@ export const {
 
         const accessToken = tokens.access_token;
         // job 및 store 추출
-        let job: string | null = null;
-        let store: string | null = null;
+        let jobId: string | null = null;
+        let storeId: string | null = null;
+        let channelSegmentId: string | null = null;
 
         if (accessToken) {
           const orgIds: string[] = profile.personOrganization.map((org) =>
@@ -92,24 +94,34 @@ export const {
             if (!result) return; // null인 경우 건너뜀
 
             const text9 = result.data[0]?.optionalInfo.text9;
+            const text8 = result.data[0]?.optionalInfo.text8;
             const integer1 = result.data[0]?.optionalInfo.integer1;
 
             if (!text9 || !integer1) return;
 
-            if (integer1 === 7) {
-              job = text9;
+            if (integer1 === "7" || integer1 === 7) {
+              jobId = text9;
             }
 
-            if (integer1 === 5) {
-              store = text9;
+            if (integer1 === "5" || integer1 === 5) {
+              storeId = text9;
+            }
+
+            if (integer1 === "4" || integer1 === 4) {
+              channelSegmentId = text8;
             }
           });
         }
 
+        // TODO: regionId, subsidaryId, channelId 정보를 추가로 넣어야 함.
+
         return {
           id: profile.userId,
-          name: profile.fullName ?? profile.userLogin.username ?? null,
-          email: profile.businessAddress.email1 ?? null,
+          // name: profile.fullName ?? profile.userLogin.username ?? null,
+          email:
+            profile.businessAddress.email1 != null
+              ? encryptEmail(profile.businessAddress.email1)
+              : null,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
@@ -117,8 +129,9 @@ export const {
           sumtotalDomainId:
             profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
             null,
-          sumtotalJob: job,
-          sumtotalStore: store,
+          sumtotalJobId: jobId,
+          sumtotalStoreId: storeId,
+          sumtotalChannelSegmentId: channelSegmentId,
         };
       },
     },
@@ -155,27 +168,29 @@ export const {
           throw new Error("Invalid email or code");
         }
 
+        const encryptedEmail = encryptEmail(email as string);
+
         let user = await prisma.user.findFirst({
-          where: { email: email as string },
+          where: { email: encryptedEmail },
         });
 
         console.log("tokenRecord user", user);
         // 사용자 계정이 없으면 생성
         if (!user) {
-          const userId = uuid.v4();
+          // const userId = uuid.v4();
 
-          const userEmail = await prisma.userEmail.create({
-            data: {
-              email: email as string,
-              userId: userId,
-            },
-          });
+          // const userEmail = await prisma.userEmail.create({
+          //   data: {
+          //     email: encryptedEmail,
+          //     userId: userId,
+          //   },
+          // });
 
           user = await prisma.user.create({
             data: {
-              id: userId,
+              // id: userId,
               name: "Guest User",
-              emailId: userEmail.id,
+              emailId: encryptedEmail,
               authType: AuthType.GUEST,
             },
           });
@@ -207,23 +222,23 @@ export const {
   events: {
     createUser: async (message) => {
       console.log("next-auth createUser", message);
-      const { user } = message;
-      if (user.email != null) {
-        const userEmail = await prisma.userEmail.create({
-          data: {
-            email: user.email,
-            userId: user.id,
-          },
-        });
+      // const { user } = message;
+      // if (user.email != null) {
+      //   const userEmail = await prisma.userEmail.create({
+      //     data: {
+      //       email: user.email,
+      //       userId: user.id,
+      //     },
+      //   });
 
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            email: null,
-            emailId: userEmail.id,
-          },
-        });
-      }
+      //   await prisma.user.update({
+      //     where: { id: user.id },
+      //     data: {
+      //       email: null,
+      //       emailId: userEmail.id,
+      //     },
+      //   });
+      // }
     },
     // getUserByEmail: (email) => prisma.user.findFirst({ where: { email } }),
     linkAccount: ({ user, profile }) => {
