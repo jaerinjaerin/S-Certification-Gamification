@@ -237,6 +237,23 @@ async function main() {
           }
         });
 
+        const charImages = [
+          "/certification/s24/character_m_01.png",
+          "/certification/s24/character_m_02.png",
+          "/certification/s24/character_m_03.png",
+          "/certification/s24/character_w_01.png",
+          "/certification/s24/character_w_02.png",
+        ];
+
+        const bgImages = [
+          "/certification/s24/bg_01.png",
+          "/certification/s24/bg_02.png",
+          "/certification/s24/bg_03png",
+          "/certification/s24/bg_04.png",
+          "/certification/s24/bg_05.png",
+        ];
+
+        const isLastStage = i === stages.length - 1;
         await prisma.quizStage.create({
           data: {
             name: stage.toString(),
@@ -244,6 +261,13 @@ async function main() {
             questionIds,
             lifeCount: stageQuestions.length,
             quizSetId: quizSet.id,
+            isBadgeStage: isLastStage,
+            badgeActivityId: isLastStage ? "249587" : null, // 250659, 250642, 250639, 250641
+            badgeImageUrl: isLastStage
+              ? "/certification/s24/badgeFF.png"
+              : null,
+            backgroundImageUrl: bgImages[i],
+            characterImageUrl: charImages[i],
           },
         });
       }

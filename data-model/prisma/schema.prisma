@@ -278,6 +278,9 @@ model QuizStage {
   isBadgeStage Boolean?
   badgeActivityId String?
   badgeImageUrl String?
+
+  backgroundImageUrl String?
+  characterImageUrl String?
 }
 
 model Question {

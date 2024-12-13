@@ -175,6 +175,11 @@ export default function QuizPage() {
     const totalQuestions = currentStageQuestions?.length;
     const totalStages = quizSet.quizStages.length;
 
+    const bgImageUrl = `${process.env.ASSETS_DOMAIN}${currentQuizStage.backgroundImageUrl}`;
+    const charImageUrl = `${process.env.ASSETS_DOMAIN}${currentQuizStage.characterImageUrl}`;
+
+    console.log("bgImageUrl", bgImageUrl);
+
     return (
       <>
         <p>현재까지 스코어: {quizStagesTotalScore}</p>
@@ -212,6 +217,8 @@ export default function QuizPage() {
         >
           확인
         </button>
+        <img src={bgImageUrl} alt="quiz background" />
+        <img src={charImageUrl} alt="quiz character" />
       </>
     );
   };
