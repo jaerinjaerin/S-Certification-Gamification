@@ -28,20 +28,16 @@ interface QuizContextType {
   isComplete(): boolean;
   isLastQuestionOnState(): boolean;
   isLastStage(): boolean;
-  // startStage(): void;
   endStage(remainingHearts: number): Promise<EndStageResult>;
-  // completeQuiz(): void;
   nextQuestion(): boolean;
   nextStage(): boolean;
   canNextQuestion(): boolean;
   confirmAnswer(
-    // quizStageId: string,
     questionId: string,
     selectedOptionIds: string[],
     elapsedSeconds: number
   ): ConfirmAnswerResponse;
   getCorrectOptionIds(questionId: string): string[];
-  // isCheckingAnswer: boolean;
   isLoading: boolean;
   quizStagesTotalScore: number;
 }
@@ -68,17 +64,14 @@ export const QuizProvider = ({
   language,
   quizLog,
   quizStageLogs,
-}: // domain,
-{
+}: {
   children: React.ReactNode;
   quizSet: QuizSetEx;
   language: Language;
   quizLog: UserQuizLog;
   quizStageLogs: UserQuizStageLog[];
-  // domain: Domain;
 }) => {
   const { campaign } = useCampaign();
-  // const [_domain] = useState<Domain>(domain);
   const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
     quizStageLogs ?? []
@@ -108,32 +101,7 @@ export const QuizProvider = ({
   const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
   const quizLogManager = quizLogManagerRef.current;
 
-  // const startStage = (stageIndex: number): void => {
-  //   quizLogManager.startStage(stageIndex);
-  // };
-
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
-    // const elapsedSeconds = Math.floor(
-    //   // 소수점 버림
-    //   (new Date().getTime() - stageStartedAt!.getTime()) / 1000
-    // );
-
-    /**
-     * send log
-     */
-
-    // if (!isLastStage()) {
-    //   const nextQuizStageIndex = currentQuizStageIndex + 1;
-    //   setCurrentQuizStageIndex(nextQuizStageIndex);
-    //   setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
-    //   setCurrentStageQuestions(
-    //     quizSet.quizStages[nextQuizStageIndex].questions
-    //   );
-    //   setCurrentQuestionIndex(0);
-    // }
-
-    // stageStartedAt = null;
-
     const score = quizScoreManager.calculateStageScore({
       quizLogs: quizLogManager.getLogs(),
       remainingHearts: remainingHearts,
@@ -481,7 +449,6 @@ export const QuizProvider = ({
         currentStageQuestions,
         isComplete,
         isLastStage,
-        // startStage,
         endStage,
         nextStage,
         confirmAnswer,

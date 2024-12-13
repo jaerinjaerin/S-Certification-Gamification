@@ -7,93 +7,20 @@ import { useState } from "react";
 export default function QuizPage() {
   const {
     quizSet,
-    // quizHistory,
     currentQuizStageIndex,
     currentQuestionIndex,
     currentQuizStage,
-    // currentQuestionOptionIndex,
-    // currentStageQuizzes,
-    // isFirstBadgeStage,
-    // isLastBadgeStage,
-    // processFirstBadgeAcquisition,
-    // processLastBadgeAcquisition,
-    // isComplete,
-    // isLastStage,
     currentStageQuestions,
-    // isBadgeStage,
-    // processBadgeAcquisition,
-    // startStage,
     endStage,
-    // isLastQuestionOnState,
     confirmAnswer,
     nextStage,
     nextQuestion,
     canNextQuestion,
     quizStagesTotalScore,
-    // setCurrentQuestionOptionIndex,
   } = useQuiz();
-
-  // console.log("quizSet", quizSet);
 
   // // 선택된 옵션 상태
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-
-  // useEffect(() => {
-  //   if (quizSet) {
-  //     startStage();
-  //   }
-  // }, [quizSet]);
-
-  // const routeNextQuizComplete = () => {
-  //   routeToPage("complete");
-  // };
-
-  // const confirmAnswer = (
-  //   quizStageId: string,
-  //   questionId: string,
-  //   optionId: string
-  // ) => {
-  //   console.log("Selected Option:", optionId); // 선택된 옵션 확인
-
-  //   const isCorrect =
-  //     quizSet.quizStages
-  //       .find((stage: QuizStageEx) => stage.id === quizStageId)
-  //       ?.questions.find((question: QuestionEx) => question.id === questionId)
-  //       ?.options?.find((option: QuestionOption) => option.id === optionId)
-  //       ?.isCorrect ?? false;
-
-  //   if (isCorrect) {
-  //     alert("정답입니다!");
-  //     // send qeustion log to server
-  //     if (
-  //       currentQuestionIndex ===
-  //       quizSet.quizStages[currentStage].questions.length - 1
-  //     ) {
-  //       if (currentStage === quizSet.quizStages.length - 1) {
-  //         // send stage log to server
-  //         // update user quiz history
-  //         alert("퀴즈를 모두 완료했습니다!");
-  //         routeNextQuizComplete();
-  //         return;
-  //       }
-
-  //       alert("다음 스테이지로 이동합니다!");
-  //       // send stage log to server
-  //       // update user quiz history
-
-  //       setCurrentStage(currentStage + 1);
-  //       setSelectedOptionId(null);
-  //       setCurrentQuestionIndex(0);
-  //       return;
-  //     }
-
-  //     setCurrentQuestionIndex(currentQuestionIndex + 1);
-  //     setSelectedOptionId(null);
-  //   } else {
-  //     alert("틀렸습니다!");
-  //     // send qeustion log to server
-  //   }
-  // };
 
   const handleConfirmAnswer = async (questionId: string) => {
     if (selectedOptionIds.length === 0) {
@@ -124,25 +51,8 @@ export default function QuizPage() {
       return;
     }
 
-    // if (isBadgeStage()) {
-    //   await processBadgeAcquisition();
-    //   alert("배지 획득!");
-    //   // 배지 획득 화면 처리 로직
-    // }
-
     const result: EndStageResult = await endStage(3);
     alert(`스테이지 완료! 점수: ${result.score}`);
-
-    // if (isLastStage()) {
-    //   // 퀴즈 완료 화면 처리 로직
-    //   return;
-    // }
-
-    // alert(
-    //   `${
-    //     currentQuizStageIndex + 1
-    //   } 번째 스테이지 완료. 다음 스테이지로 이동합니다.`
-    // );
 
     nextStage();
   };
@@ -170,15 +80,12 @@ export default function QuizPage() {
       return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
     }
 
-    // const quizStage: QuizStageEx = quizSet.quizStages[currentStage];
     const question = currentStageQuestions[currentQuestionIndex];
     const totalQuestions = currentStageQuestions?.length;
     const totalStages = quizSet.quizStages.length;
 
     const bgImageUrl = `${process.env.ASSETS_DOMAIN}${currentQuizStage.backgroundImageUrl}`;
     const charImageUrl = `${process.env.ASSETS_DOMAIN}${currentQuizStage.characterImageUrl}`;
-
-    console.log("bgImageUrl", bgImageUrl);
 
     return (
       <>
@@ -211,7 +118,6 @@ export default function QuizPage() {
         <button
           onClick={() => {
             handleConfirmAnswer(question.id);
-            // confirmAnswer(currentQuizStage.id, question.id, selectedOptionIds);
           }}
           disabled={selectedOptionIds.length === 0} // 선택된 옵션이 없으면 버튼 비활성화
         >
