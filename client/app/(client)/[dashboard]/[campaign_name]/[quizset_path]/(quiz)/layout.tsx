@@ -1,4 +1,3 @@
-import LogoutButton from "@/app/components/button/logout_button";
 import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
@@ -111,8 +110,8 @@ export default async function QuizLayout({
 
   console.info("Render QuizLayout", quizLog);
   return (
-    <div>
-      <LogoutButton />
+    <div className="h-full">
+      {/* <LogoutButton /> */}
       <QuizProvider
         quizSet={quizSetReponse.item as QuizSetEx}
         language={quizSetReponse.item.language}

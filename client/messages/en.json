@@ -21,5 +21,13 @@
     "saving": "Saving...",
     "save": "Save"
   },
-  "map": {}
+  "map": {},
+  "Map_guide": {
+    "how_to_play": "How to play “Be a Galaxy AI Expert! (Paradigm)” Certification",
+    "attempts_deduction": "1 heart deducted for each incorrect answer.",
+    "time_limit_per_quiz": "Each quiz has a 30 sec time limit. Each stage has a limit of 5 incorrect quiz attempts.",
+    "you_have_5_attemps": "If you reach the 5 incorrect quiz limit, you must restart at the first question of that stage.",
+    "giveup_or_interrupt_quiz": "If you quit a stage or it is interrupted, you must restart at the first question of that stage.",
+    "answer_first_attempt": "Total points awarded will vary based on: answering correctly on the first attempt; giving consecutive correct answers; stage completion; number of remaining attempts."
+  }
 }
