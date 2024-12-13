@@ -29,5 +29,28 @@
     "you_have_5_attemps": "If you reach the 5 incorrect quiz limit, you must restart at the first question of that stage.",
     "giveup_or_interrupt_quiz": "If you quit a stage or it is interrupted, you must restart at the first question of that stage.",
     "answer_first_attempt": "Total points awarded will vary based on: answering correctly on the first attempt; giving consecutive correct answers; stage completion; number of remaining attempts."
+  },
+  "Quiz": {
+    "galaxy_ai_expert": "Galaxy AI Expert"
+  },
+  "Completed": {
+    "stage": "Stage",
+    "completed": "Complet!",
+    "score": "Score",
+    "congratulation": "Congratulations! You have earned the Galaxy AI Expert Badge",
+    "done": "Done",
+    "rank_notification": "You are ranked in the top XX %",
+    "badge_deliver": "Your badge is being issued. Please allow up to 5 minutes for it to appear.",
+    "reture_map": "Return map"
+  },
+  "Score_guide": {
+    "score": "Score",
+    "base_score": "Base score",
+    "base_score_discription": "Each correct answer is worth 20 points",
+    "combo_score": "Combo score",
+    "combo_score_description": "Each consecutive correct answer earns you an additional 2 points",
+    "remaining_attempts": "Remaining attempts",
+    "remaiing_attempts_description": "Upon completion of the stage, you will receive 10 points for each remaining attempt.",
+    "ok": "OK"
   }
 }

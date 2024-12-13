@@ -37,6 +37,7 @@ export default function QuizPage() {
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [lifeCount, setLifeCount] = useState<number>(currentQuizStage.lifeCount);
   const [gameOver, setGameOver] = useState(false);
+  const [isSelectedCorrectCount, setIsSelectedCorrectCount] = useState(0);
 
   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: question.timeLimitSeconds });
 
@@ -93,6 +94,7 @@ export default function QuizPage() {
       const correctCount = question.options.map((option) => option.isCorrect).filter((answer) => answer === true).length;
       const selectedIds = question.options.filter((option) => [...new Set([...selectedOptionIds, optionId])].includes(option.id));
       const selectedCorrectCount = selectedIds.filter((id) => id.isCorrect === true).length;
+      setIsSelectedCorrectCount(selectedCorrectCount);
 
       if (correctCount === selectedCorrectCount) {
         await sleep(1000);
@@ -109,6 +111,7 @@ export default function QuizPage() {
 
   const next = async () => {
     setSelectedOptionIds([]);
+    setIsSelectedCorrectCount(0);
 
     if (canNextQuestion()) {
       console.log("canNextQuestion");
@@ -139,8 +142,6 @@ export default function QuizPage() {
 
     // nextStage();
   };
-
-  // const progress = Math.floor((time / question.timeLimitSeconds) * 100); // 진행 상태 (%)
 
   if (!currentQuizStage || !currentStageQuizzes) {
     return <p>퀴즈 스테이지를 찾을 수 없습니다.</p>;
@@ -193,7 +194,8 @@ export default function QuizPage() {
                   className={cn(
                     "rounded-[20px] py-4 px-6 bg-white",
                     selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white",
-                    selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white"
+                    selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white",
+                    isSelectedCorrectCount && "pointer-events-none"
                   )}
                   animate={
                     selectedOptionIds.includes(option.id) && !option.isCorrect

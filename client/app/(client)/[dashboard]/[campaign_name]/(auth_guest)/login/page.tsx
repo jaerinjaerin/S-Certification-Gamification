@@ -41,8 +41,6 @@ export default function GuestLogin() {
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
-  console.log(error);
-
   const t = useTranslations("login");
 
   const sendEmail = async () => {

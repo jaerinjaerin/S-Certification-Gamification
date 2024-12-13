@@ -27,6 +27,7 @@ export default function QuizMap() {
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    // setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
     setNextStage((quizHistory?.lastCompletedStage ?? 0) + 1);
     const targetStage = itemsRef.current[nextStage - 1];
     // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
@@ -91,14 +92,14 @@ export default function QuizMap() {
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
         {quizSet.quizStages.map((stage: QuizStageEx, index) => {
           const firstBadgeStage = quizHistory?.firstBadgeStage;
-
           return (
             <Fragment key={stage.id}>
               <Stage
                 ref={(item) => {
                   itemsRef.current[index] = item;
                 }}
-                nextStage={stage.order === nextStage}
+                nextStage={nextStage}
+                isNextStage={stage.order === nextStage}
                 order={stage.order}
                 firstBadgeStage={firstBadgeStage}
                 routeNextQuizStage={routeNextQuizStage}
@@ -117,31 +118,33 @@ export default function QuizMap() {
 }
 
 interface StageProps {
-  nextStage: boolean;
+  nextStage: number;
+  isNextStage: boolean;
   order: number;
   firstBadgeStage: number | null | undefined;
   routeNextQuizStage: () => Promise<void>;
 }
 
 const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
-  const { nextStage, order, firstBadgeStage, routeNextQuizStage } = props;
-  // 완료하지 못한 stage에 자물쇠 아이콘
-  // 완료한 stage는 색상 변경
+  const { nextStage, isNextStage, order, firstBadgeStage, routeNextQuizStage } = props;
+  const isStageCompleted = nextStage > order;
+
   return (
     <div className="relative" ref={ref}>
       <div className={cn("relative z-10")}>
-        {!nextStage && (
-          <div className="absolute right-[3px] -top-[14px] bg-white size-10 rounded-full flex justify-center items-center">
+        {!isNextStage && !isStageCompleted && (
+          <div className="absolute right-[3px] -top-[14px] z-40 bg-white size-10 rounded-full flex justify-center items-center">
             <LockIcon />
           </div>
         )}
 
         <button
           onClick={routeNextQuizStage}
-          disabled={!nextStage}
+          disabled={!isNextStage && isStageCompleted}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
-            nextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
+            isNextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
+            isStageCompleted && "bg-[#001276]",
           )}
         >
           {firstBadgeStage === order ? (
@@ -151,12 +154,12 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
           )}
         </button>
 
-        {nextStage && (
+        {isNextStage && (
           <span className="absolute bottom-[-30px] right-[-28px] size-[85px] " style={{ backgroundImage: `url('/assets/pointer.svg')` }} />
         )}
       </div>
-      {nextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
-      {nextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
+      {isNextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
+      {isNextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
     </div>
   );
 });
