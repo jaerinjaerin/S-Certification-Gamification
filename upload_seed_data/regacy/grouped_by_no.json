@@ -1,0 +1,1114 @@
+[
+  {
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specific_feature": "Memory",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten RAM-muistin määrä?",
+        "options": "S24: 6 Gt, S24+: 8 Gt, S24 Ultra: 10 Gt",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten RAM-muistin määrä?",
+        "options": "S24: 8 Gt, S24+: 8 Gt, S24 Ultra: 8 Gt",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten RAM-muistin määrä?",
+        "options": "S24: 8 Gt, S24+: 10 Gt, S24 Ultra: 12 Gt",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten RAM-muistin määrä?",
+        "options": "S24: 8 Gt, S24+: 12 Gt, S24 Ultra: 12 Gt",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specific_feature": "Screen",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
+        "options": "1 600 nitiä",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
+        "options": "2 100 nitiä",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
+        "options": "2 600 nitiä",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
+        "options": "3 100 nitiä",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 3,
+    "product": "S24",
+    "category": "Fundamental",
+    "specific_feature": "Durability",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Kaikissa S24-puhelinmalleissa on titaanirunko, joka on Galaxy-puhelinten tähän asti kestävintä metallia",
+        "options": "OIKEIN",
+        "answer_status": 0
+      },
+      {
+        "question_type": "OX",
+        "question": "Kaikissa S24-puhelinmalleissa on titaanirunko, joka on Galaxy-puhelinten tähän asti kestävintä metallia",
+        "options": "VÄÄRIN",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 2,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specific_feature": "Browsing Assist",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Galaxy AI:n avulla voit luoda ytimekkäät yhteenvedot verkkosivustoista vain Samsung Internet -selaimessa",
+        "options": "OIKEIN",
+        "answer_status": 1
+      },
+      {
+        "question_type": "OX",
+        "question": "Galaxy AI:n avulla voit luoda ytimekkäät yhteenvedot verkkosivustoista vain Samsung Internet -selaimessa",
+        "options": "VÄÄRIN",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 4,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specific_feature": "Samsung Account",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Kaikkien Galaxy AI -toimintojen käyttäminen edellyttää kirjautumista Google -tiliin.",
+        "options": "OIKEIN",
+        "answer_status": 0
+      },
+      {
+        "question_type": "OX",
+        "question": "Kaikkien Galaxy AI -toimintojen käyttäminen edellyttää kirjautumista Google -tiliin.",
+        "options": "VÄÄRIN",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specific_feature": "Circle to Search",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Z Fold6- / Z Flip6-käyttäjät voivat käyttää QR-koodin linkkiä piirtämällä sen ympärille ympyrän, kun Circle to Search on aktivoitu.",
+        "options": "OIKEIN",
+        "answer_status": 1
+      },
+      {
+        "question_type": "OX",
+        "question": "Z Fold6- / Z Flip6-käyttäjät voivat käyttää QR-koodin linkkiä piirtämällä sen ympärille ympyrän, kun Circle to Search on aktivoitu.",
+        "options": "VÄÄRIN",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specific_feature": "Drawing Assist",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
+        "options": "S Pen -kynän ilmakomento",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
+        "options": "Reunapaneeli - Älykäs valinta",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
+        "options": "Valokuvien muokkaaminen",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 3,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specific_feature": "Interpreter",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
+        "options": "Tulkki - Kaksoisnäyttönäkymä",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
+        "options": "Tulkki - Kuuntelutilassa.",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
+        "options": "Reaaliaikainen käännös - Äänipuhelu viestisovelluksissa",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
+        "options": "Keskusteluavustaja - Tekstikeskustelun käännös",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 2,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specific_feature": "Live Translate",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Reaaliaikainen käännös on käytettävissä KAIKKIEN viestisovellusten äänipuheluissa (Z Fold6 / Z Flip6)",
+        "options": "OIKEIN",
+        "answer_status": 0
+      },
+      {
+        "question_type": "OX",
+        "question": "Reaaliaikainen käännös on käytettävissä KAIKKIEN viestisovellusten äänipuheluissa (Z Fold6 / Z Flip6)",
+        "options": "VÄÄRIN",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 4,
+    "product": "Fold6",
+    "category": "Portability",
+    "specific_feature": "Weight",
+    "options": [
+      {
+        "question_type": "OX",
+        "question": "Z Fold6 on ohuempi ja kevyempi kuin edellinen malli (Z Fold5)",
+        "options": "OIKEIN",
+        "answer_status": 1
+      },
+      {
+        "question_type": "OX",
+        "question": "Z Fold6 on ohuempi ja kevyempi kuin edellinen malli (Z Fold5)",
+        "options": "VÄÄRIN",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specific_feature": "AI",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
+        "options": "Muotokuvastudio",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
+        "options": "Luonnos kuvaan",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
+        "options": "Reaaliaikainen tehoste",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specific_feature": "Suggested replies",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
+        "options": 3,
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
+        "options": 5,
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
+        "options": 7,
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
+        "options": 10,
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specific_feature": "FlexWindow",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
+        "options": "Ehdotetut vastaukset",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
+        "options": "Tulkki kaksoisnäytössä",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
+        "options": "Valokuvan tunnelma -taustakuvaa",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
+        "options": "Reaaliaikainen käännös",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 1,
+    "product": "Flip6",
+    "category": "Display",
+    "specific_feature": "Durability",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
+        "options": "Kaksikiskoinen saranarakenne",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
+        "options": "Gorilla® Glass Victus® 2 (edessä ja takana)",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
+        "options": "Parannettu panssarialumiinirunko",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 4,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specific_feature": "Key CXPs",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä tekijä vaikuttaa energiapisteisiin?",
+        "options": "Viimeisin uni",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä tekijä vaikuttaa energiapisteisiin?",
+        "options": "Päivittäinen aktiivisuus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä tekijä vaikuttaa energiapisteisiin?",
+        "options": "Unenaikainen syke",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä tekijä vaikuttaa energiapisteisiin?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 4,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specific_feature": "Key CXPs",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
+        "options": "Energiapisteet",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
+        "options": "Henkilökohtainen valmennus liikunnassa",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
+        "options": "Itsensä motivointi ja kehittäminen liikunnassa",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": 4,
+    "product": "Watch Ultra & Watch7",
+    "category": "Health",
+    "specific_feature": "Sleep Coaching",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
+        "options": "Uniapnea",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
+        "options": "Energiapisteet",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
+        "options": "Unitasapaino",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
+        "options": "Aktiivisuusaika",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Design",
+    "specific_feature": "Durability",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
+        "options": "IP46",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
+        "options": "IP57",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
+        "options": "IPX7",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
+        "options": "IP68",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specific_feature": "Sound Optimization",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
+        "options": "Mukautuva melunsäätö",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
+        "options": "Aktiivinen melunvaimennus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
+        "options": "Mukautuva taajuuskorjain / mukautuva melunvaimennus",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
+        "options": "Automaattinen melunsäätö",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specific_feature": "Hi-Fi Sound",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
+        "options": "16 bittiä / 48 kHz",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
+        "options": "24 bittiä / 48 kHz",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
+        "options": "32 bittiä / 96 kHz",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
+        "options": "24 bittiä / 96 kHz",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specific_feature": "Crystal Clear Sound",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
+        "options": "Koulutustietokanta",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
+        "options": "Mukautettu äänenvahvistus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
+        "options": "Parannettu kaksitiekaiutin",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
+        "options": "Automaattinen keskeytys ja jatkaminen",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specific_feature": "Key CXPs",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
+        "options": "Elämää helpottava AI",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
+        "options": "Parannettu luovuus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
+        "options": "Tehokas suorituskyky",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specific_feature": "Demo Points",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
+        "options": "Circle to Search",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
+        "options": "Reaaliaikainen käännös",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
+        "options": "Litterointiavustaja",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
+        "options": "Valokuva-avustaja",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specific_feature": "Demo Points",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
+        "options": "Circle to Search",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
+        "options": "Reaaliaikainen käännös",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
+        "options": "Litterointiavustaja",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
+        "options": "Valokuva-avustaja",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specific_feature": "Key Improvements",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Täydet Galaxy AI -toiminnot",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Lippulaivatasoinen kamera",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Tehokkaampi suorituskyky",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specific_feature": "Tailored Sales Talk",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
+        "options": "Erinomainen kamera ja Valokuva-avustaja",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
+        "options": "Lippulaivatasoinen suorituskyky",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
+        "options": "Galaxy AI",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
+        "options": "Erinomainen kestävyys",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specific_feature": "Galaxy Comparison",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Täydet Galaxy AI -toiminnot",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Suurempi näyttö",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Suorittimen ja akun parannukset",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specific_feature": "Life-Boosting AI",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
+        "options": "Circle to Search",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
+        "options": "Reaaliaikainen käännös",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
+        "options": "Keskusteluavustaja",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
+        "options": "Selausavustaja",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specific_feature": "Epic Camera with Photo Assist",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
+        "options": "Valokuva-avustaja (Muotokuvastudio)",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
+        "options": "IP68",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
+        "options": "Pikahidastus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
+        "options": "Akun parannus",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Tab S10 series",
+    "category": "Features",
+    "specific_feature": "Galaxy AI ",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mitä ominaisuuksia Samsung Notes EI tue?",
+        "options": "PDF-päällekkäiskäännös",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä ominaisuuksia Samsung Notes EI tue?",
+        "options": "Litterointi ja käännös",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä ominaisuuksia Samsung Notes EI tue?",
+        "options": "Reaaliaikainen käännös puhemuistion tallennuksen aikana",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä ominaisuuksia Samsung Notes EI tue?",
+        "options": "Yhteenveto ja automaattinen muotoilu",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Tab S10 series",
+    "category": "Feature",
+    "specific_feature": "Display",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+        "options": "Dynamic AMOLED 2X",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+        "options": "Heijastusta estävä näyttö",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+        "options": "HDR 10+",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+        "options": "Suuri näyttö",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Tab S10 series",
+    "category": "Customer Engagement",
+    "specific_feature": "Features",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
+        "options": "Galaxy AI - S Pen -kynä - Ääni",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
+        "options": "Näyttö - Suorituskyky - Ääni",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
+        "options": "Galaxy AI - S Pen -kynä - Samsung Notes",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
+        "options": "Näyttö - Kamera - S Pen -kynä",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Tab S10 series",
+    "category": "Eco",
+    "specific_feature": "Features",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+        "options": "Taustavalo ",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+        "options": "Erillinen AI-näppäin",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+        "options": "Samsung Notesin käynnistys",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+        "options": "Google Assistant",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Tab S10 series",
+    "category": "Performance",
+    "specific_feature": "Memory",
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
+        "options": "512 Gt",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
+        "options": "1 Gt",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
+        "options": "1,5 Tt",
+        "answer_status": null
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
+        "options": "2 Tt",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specific_feature": null,
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
+        "options": "Yökuvaus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
+        "options": "Suuri tarkkuus",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
+        "options": "Eri vaihtoehdot käyttäjän mieltymysten mukaan (selfien värisävy, kamera-avustaja)",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
+        "options": "500x-zoomaus",
+        "answer_status": 1
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specific_feature": null,
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
+        "options": "Reaaliaikainen käännös",
+        "answer_status": 1
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
+        "options": "Circle to Search",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
+        "options": "Tulkki",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
+        "options": "AI-pyyhekumi",
+        "answer_status": 0
+      }
+    ]
+  },
+  {
+    "stage": null,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specific_feature": null,
+    "options": [
+      {
+        "question_type": "Single select type",
+        "question": "Mitä hyötyä Galaxy AI:stä on?",
+        "options": "Se on jo saatavilla",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä hyötyä Galaxy AI:stä on?",
+        "options": "16 kielen tuki (23 maata/aluetta)",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä hyötyä Galaxy AI:stä on?",
+        "options": "Henkilökohtaisten tietojen suojaus laitteen sisäisen tekoälyn avulla",
+        "answer_status": 0
+      },
+      {
+        "question_type": "Single select type",
+        "question": "Mitä hyötyä Galaxy AI:stä on?",
+        "options": "Kaikki edellä mainitut",
+        "answer_status": 1
+      }
+    ]
+  }
+]

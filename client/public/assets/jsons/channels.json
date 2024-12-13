@@ -1,0 +1,845 @@
+[
+  {
+    "channels": [
+      {
+        "name": "Telekom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Yettel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Media Markt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Euronics",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      }
+    ],
+    "name": "Hungary",
+    "code": "NAT_2348",
+    "region": "Europe",
+    "subsidary": "SEH"
+  },
+  {
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "FNAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "WORTEN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "RADIO POPULAR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "ECI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "AUCHAN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "MEO",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "NOS",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "VODAFONE",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "BPI (Bank)",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "others",
+          "id": "5"
+        }
+      }
+    ],
+    "name": "Portugal",
+    "code": "NAT_2620",
+    "region": "Europe",
+    "subsidary": "SEIB-P"
+  },
+  {
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "ECI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "FNAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "CARREFOUR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "WORTEN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "MOVISTAR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "ORANGE",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      }
+    ],
+    "name": "Spain",
+    "code": "NAT_2724",
+    "region": "Europe",
+    "subsidary": "SEIB-S"
+  },
+  {
+    "channels": [
+      {
+        "name": "APSARA MOBILE PHONE CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (Pure plyer)",
+          "id": "3"
+        }
+      },
+      {
+        "name": "SMART AXIATA CO.,LTD",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "KEON LEADER CO.,LTD",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (Pure plyer)",
+          "id": "3"
+        }
+      },
+      {
+        "name": "RSNK ELECTRONIC CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (Pure plyer)",
+          "id": "3"
+        }
+      },
+      {
+        "name": "UNIQUE IMPORT EXPORT CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (Pure plyer)",
+          "id": "3"
+        }
+      }
+    ],
+    "name": "Cambodia",
+    "code": "NAT_2116",
+    "region": "SEAO",
+    "subsidary": "TSE-KH"
+  },
+  {
+    "channels": [
+      {
+        "name": "RtvEuroAgd",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "X-kom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Media Markt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Media Expert",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Komputronik",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Orange",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Play",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Plus",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "T-Mobile",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "AGD Galicja",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Auchan",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "NeoNet",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Tele Magic",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      }
+    ],
+    "name": "Poland",
+    "code": "NAT_2616",
+    "region": "Europe",
+    "subsidary": "SEPOL"
+  },
+  {
+    "channels": [
+      {
+        "name": "Tele2",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "LMT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      }
+    ],
+    "name": "Latvia",
+    "code": "NAT_2428",
+    "region": "Europe",
+    "subsidary": "SEB"
+  },
+  {
+    "channels": [
+      {
+        "name": "Telia",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      }
+    ],
+    "name": "Lithuania",
+    "code": "NAT_2440",
+    "region": "Europe",
+    "subsidary": "SEB"
+  },
+  {
+    "channels": [
+      {
+        "name": "Singtel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "M1",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Starhub",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Best Denki",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Courts",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Challenger",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Harvey Norman",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Gain City",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "e-Promoter",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "FF"
+        },
+        "channelSegment": {
+          "name": "samsung.com",
+          "id": "4"
+        }
+      },
+      {
+        "name": "Customer Service",
+        "job": {
+          "id": "10",
+          "name": "Customer Services"
+        },
+        "channelSegment": {
+          "name": "others",
+          "id": "5"
+        }
+      }
+    ],
+    "name": "Singapore",
+    "code": "NAT_2702",
+    "region": "SEAO",
+    "subsidary": "SESP"
+  },
+  {
+    "channels": [
+      {
+        "name": "CLARO",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      }
+    ],
+    "name": "COLOMBIA",
+    "code": "",
+    "region": "LATAM",
+    "subsidary": "SAMCOL"
+  },
+  {
+    "channels": [
+      {
+        "name": "Claro CAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Diggit",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Fravega",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Movistar Agentes",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Personal OC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Musimundo",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      },
+      {
+        "name": "Claro Agentes",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Retailer (MM/IT/Traditaionl etc)",
+          "id": "2"
+        }
+      }
+    ],
+    "name": "ARGENTINA",
+    "code": "",
+    "region": "LATAM",
+    "subsidary": "SEASA"
+  },
+  {
+    "channels": [
+      {
+        "name": "Docomo",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "KDDI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      },
+      {
+        "name": "Softbank",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelSegment": {
+          "name": "Carrier(Operator)",
+          "id": "1"
+        }
+      }
+    ],
+    "name": "Japan",
+    "code": "NAT_2392",
+    "region": "JAPAN",
+    "subsidary": "SEJ"
+  }
+]

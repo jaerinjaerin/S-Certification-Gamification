@@ -1,0 +1,1101 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specificFeature": "Memory",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "S24 電話機の RAM の量はどれくらいですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S24: 6 GB、S24+: 8 GB、S24 ウルトラ: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8GB、S24+: 8GB、S24 ウルトラ: 8GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8GB、S24+: 10GB、S24 ウルトラ: 12GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8GB、S24+: 12GB、S24 ウルトラ: 12GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": null,
+    "enabled": "X",
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specificFeature": "Screen",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "S24 携帯電話の画面のピーク輝度値はどれくらいですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1,600ニット",
+        "answerStatus": 0
+      },
+      {
+        "text": "2,100ニット",
+        "answerStatus": 0
+      },
+      {
+        "text": "2,600ニット",
+        "answerStatus": 1
+      },
+      {
+        "text": "3,100ニット",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Fundamental",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "すべての S24 携帯電話モデルは、これまでの Galaxy 携帯電話の中で最も耐久性のある金属であるチタンボディを特徴としています。",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 0
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specificFeature": "Browsing Assist",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Galaxy AI を使用すると、Samsung インターネット ブラウザ上でのみ Web サイトの簡潔な概要を作成できます",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 1
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specificFeature": "Samsung Account",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Galaxy AI のすべての機能を使用するには、Google アカウントにサインインする必要があります。",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 0
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Circle to Search",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Fold6 / Z Flip6 ユーザーは、Circle to Search が有効になっているときに QR コードの周囲に円を描くことで、QR コードのリンクを使用できます。",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 1
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Drawing Assist",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Fold6 でドラフトから画像への機能を有効にするにはどうすればよいですか? (出発点)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sペンエアーコマンド",
+        "answerStatus": 0
+      },
+      {
+        "text": "エッジパネル - 賢い選択",
+        "answerStatus": 0
+      },
+      {
+        "text": "写真の編集",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Interpreter",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "標準的なスマートフォンと比較して、折りたたみ式携帯電話のどのような機能により、外国語でのコミュニケーションが容易になりますか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "通訳 - デュアルスクリーンビュー",
+        "answerStatus": 1
+      },
+      {
+        "text": "通訳 - リスニングモード。",
+        "answerStatus": 0
+      },
+      {
+        "text": "リアルタイム翻訳 - メッセージング アプリでの音声通話",
+        "answerStatus": 0
+      },
+      {
+        "text": "会話アシスタント - テキスト会話翻訳",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Live Translate",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "リアルタイム翻訳は、すべてのメッセージング アプリ (Z Fold6 / Z Flip6) の音声通話で利用できます。",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 0
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Portability",
+    "specificFeature": "Weight",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Fold6は前モデル（Z Fold5）よりも薄く、軽くなりました。",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "きちんと",
+        "answerStatus": 1
+      },
+      {
+        "text": "間違っている",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "AI",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Flip6 の写真用の新しい AI 機能とは何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ポートレートスタジオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "写真用のスケッチ",
+        "answerStatus": 0
+      },
+      {
+        "text": "リアルタイムエフェクト",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "Suggested replies",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "空白を埋めるのに最適な答えは何ですか?返信候補は、過去の最大 ___ メッセージを分析し、それに応じて推奨返信を生成します。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": 3,
+        "answerStatus": 0
+      },
+      {
+        "text": 5,
+        "answerStatus": 0
+      },
+      {
+        "text": 7,
+        "answerStatus": 1
+      },
+      {
+        "text": 10,
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "FlexWindow",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Flip6 の Flex ウィンドウに表示できない AI 機能は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "推奨される回答",
+        "answerStatus": 0
+      },
+      {
+        "text": "デュアルスクリーンの通訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "写真の雰囲気の壁紙",
+        "answerStatus": 0
+      },
+      {
+        "text": "リアルタイム翻訳",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Display",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Flip6 の耐久性に関係する機能は次のうちどれですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "2レールヒンジ設計",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gorilla® Glass Victus® 2 (前面および背面)",
+        "answerStatus": 0
+      },
+      {
+        "text": "改良された装甲アルミニウムフレーム",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specificFeature": "Key CXPs",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "エネルギーポイントに影響を与える要因は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "最後の夢",
+        "answerStatus": 0
+      },
+      {
+        "text": "日々の活動",
+        "answerStatus": 0
+      },
+      {
+        "text": "睡眠中の心拍数",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specificFeature": "Key CXPs",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "何健康/睡眠関連機能Watch Ultra / Watch7 で見つかりました",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "エネルギーポイント",
+        "answerStatus": 0
+      },
+      {
+        "text": "運動のパーソナルコーチング",
+        "answerStatus": 0
+      },
+      {
+        "text": "自発性の向上と運動能力の向上",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Health",
+    "specificFeature": "Sleep Coaching",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "とは何ですか最も適切な答え次の空白スペースへ？ ________はユーザーの状態を評価し、毎日の活動レベルを決定するのに役立ちます",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "睡眠時無呼吸症候群",
+        "answerStatus": 0
+      },
+      {
+        "text": "エネルギーポイント",
+        "answerStatus": 1
+      },
+      {
+        "text": "睡眠バランス",
+        "answerStatus": 0
+      },
+      {
+        "text": "活動時間",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Design",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Buds3 イヤホンの防水性と防塵性の新しい保護レベルは何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "IP46",
+        "answerStatus": 0
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 1
+      },
+      {
+        "text": "IPX7",
+        "answerStatus": 0
+      },
+      {
+        "text": "IP68",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Sound Optimization",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ユーザーの使用状況に応じて最適なサウンドを提供するBuds3イヤホンの特徴は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "適応型ノイズ制御",
+        "answerStatus": 0
+      },
+      {
+        "text": "アクティブノイズリダクション",
+        "answerStatus": 0
+      },
+      {
+        "text": "アダプティブEQ / アダプティブノイズリダクション",
+        "answerStatus": 1
+      },
+      {
+        "text": "自動騒音制御",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 10,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Hi-Fi Sound",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "最新の Galaxy スマートフォンが Buds3 イヤホンにオーディオを送信できる最大オーディオ サンプル レートはどれくらいですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "16ビット/48kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "24ビット/48kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "32ビット/96kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "24ビット/96kHz",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 3,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Crystal Clear Sound",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Buds3 Pro イヤホンが最大 40 kHz の周波数範囲でクリアなサウンドを生成できるハードウェア テクノロジーは何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "教育データベース",
+        "answerStatus": 0
+      },
+      {
+        "text": "カスタム音声増幅",
+        "answerStatus": 0
+      },
+      {
+        "text": "改良された双方向スピーカー",
+        "answerStatus": 1
+      },
+      {
+        "text": "自動一時停止と再開",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Key CXPs",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": " S24 FEとは何ですか重要な顧客体験?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "生活を楽にするAI",
+        "answerStatus": 0
+      },
+      {
+        "text": "創造性の向上",
+        "answerStatus": 0
+      },
+      {
+        "text": "パワフルなパフォーマンス",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Demo Points",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "次の空欄に対する最も適切な答えは何ですかショーケースとしてのS24 FE ? ________ は、あらゆるアプリケーションで簡単かつ高速な検索を提供します",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "丸で検索",
+        "answerStatus": 1
+      },
+      {
+        "text": "リアルタイム翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "転写アシスタント",
+        "answerStatus": 0
+      },
+      {
+        "text": "撮影アシスタント",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Demo Points",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "次の空欄に対する最も適切な答えは何ですかショーケースとしてのS24 FE ? ________ はあなたのコミュニケーションをリアルタイムで翻訳します。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "丸で検索",
+        "answerStatus": 0
+      },
+      {
+        "text": "リアルタイム翻訳",
+        "answerStatus": 1
+      },
+      {
+        "text": "転写アシスタント",
+        "answerStatus": 0
+      },
+      {
+        "text": "撮影アシスタント",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Key Improvements",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": " S24 FEとは何ですか重要な改善点S23はFEと比べて？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy AI の完全な機能",
+        "answerStatus": 0
+      },
+      {
+        "text": "フラッグシップカメラ",
+        "answerStatus": 0
+      },
+      {
+        "text": "より効率的なパフォーマンス",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specificFeature": "Tailored Sales Talk",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "要求の高いモバイル ゲームをプレイしたい A シリーズ ユーザーに S24 FE へのアップグレードを勧める場合、最初にどの点を勧めるべきですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "優れたカメラとフォトアシスタント",
+        "answerStatus": 0
+      },
+      {
+        "text": "フラッグシップパフォーマンス",
+        "answerStatus": 1
+      },
+      {
+        "text": "ギャラクシーAI",
+        "answerStatus": 0
+      },
+      {
+        "text": "優れた耐久性",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specificFeature": "Galaxy Comparison",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": " S24 FEとは何ですか重要な改善点S23はFEと比べて？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy AI の完全な機能",
+        "answerStatus": 0
+      },
+      {
+        "text": "より大きな画面",
+        "answerStatus": 0
+      },
+      {
+        "text": "プロセッサーとバッテリーの改良",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specificFeature": "Life-Boosting AI",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "なんて特徴があるんだろうS24 FE の実際の使用例として以下に説明しますか?「YouTubeを見ていて気になる自転車を見つけましたか？」まさにそのモデルを簡単に見つけることができます。」",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "丸で検索",
+        "answerStatus": 1
+      },
+      {
+        "text": "リアルタイム翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "チャットアシスタント",
+        "answerStatus": 0
+      },
+      {
+        "text": "閲覧アシスタント",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 4,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specificFeature": "Epic Camera with Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "なんて特徴があるんだろうS24 FE の実際の使用例として以下に説明しますか?「何か特別なものを Instagram にアップロードしたいですか?創造的な方法でポートレートをスタイリングしてください。」",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "撮影アシスタント（ポートレートスタジオ）",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP68",
+        "answerStatus": 0
+      },
+      {
+        "text": "急減速",
+        "answerStatus": 0
+      },
+      {
+        "text": "バッテリーの改善",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Features",
+    "specificFeature": "Galaxy AI ",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Samsung Notes がサポートしていない機能は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDFオーバーレイ翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "音訳と翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "ボイスメモ録音中のリアルタイム翻訳",
+        "answerStatus": 1
+      },
+      {
+        "text": "概要と自動フォーマット",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 3,
+    "enabled": "0",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Feature",
+    "specificFeature": "Display",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "明るい照明下でのデバイスの表示をサポートする Tab S10 の新機能は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ダイナミックAMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "アンチグレアスクリーン",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "大画面",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Customer Engagement",
+    "specificFeature": "Features",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "生産性を求めるお客様のために、Tab S10 の機能の適切な組み合わせを選択してください。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy AI - Sペン - サウンド",
+        "answerStatus": 0
+      },
+      {
+        "text": "ディスプレイ - パフォーマンス - サウンド",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI - S ペン - Samsung Note",
+        "answerStatus": 1
+      },
+      {
+        "text": "画面 - カメラ - Sペン",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Eco",
+    "specificFeature": "Features",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "新しい Tab S10 ブックカバー キーボードの新機能は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "バックライト",
+        "answerStatus": 0
+      },
+      {
+        "text": "個別の AI キー",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note の起動",
+        "answerStatus": 0
+      },
+      {
+        "text": "Googleアシスタント",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Performance",
+    "specificFeature": "Memory",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Galaxy Tab S10がサポートするSDカードの最大容量はどれくらいですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "512GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "1GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "1.5TB",
+        "answerStatus": null
+      },
+      {
+        "text": "2TB",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "主力の Galaxy スマートフォンのカメラ機能ではないものはどれですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "夜間撮影",
+        "answerStatus": 0
+      },
+      {
+        "text": "高精度",
+        "answerStatus": 0
+      },
+      {
+        "text": "ユーザーの好みに応じたさまざまなオプション（セルフィーの色調、カメラアシスタント）",
+        "answerStatus": 0
+      },
+      {
+        "text": "500倍ズーム",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "他のスマートフォンブランドと比べて、Galaxy AIのユニークな機能は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "リアルタイム翻訳",
+        "answerStatus": 1
+      },
+      {
+        "text": "丸で検索",
+        "answerStatus": 0
+      },
+      {
+        "text": "通訳者",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI消しゴム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Galaxy AI の利点は何ですか?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "すでに利用可能です",
+        "answerStatus": 0
+      },
+      {
+        "text": "16言語対応（23か国・地域）",
+        "answerStatus": 0
+      },
+      {
+        "text": "デバイスに内蔵された人工知能を使用した個人データの保護",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記のすべて",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

@@ -8,7 +8,7 @@ declare module "next-auth" {
   }
 }
 
-type CampaignDomainQuizSetEx = CampaignDomainQuizSet & {
+type QuizSetEx = QuizSet & {
   language: Language;
   campaign: Campaign;
   domain: Domain;

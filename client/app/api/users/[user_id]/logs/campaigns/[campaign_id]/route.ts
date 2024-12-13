@@ -12,13 +12,13 @@ export async function GET(request: Request, props: Props) {
   try {
     const userId = props.params.user_id;
     const campaignId = props.params.campaign_id;
-    const log = await prisma.userCampaignDomainLog.findFirst({
+    const log = await prisma.userQuizLog.findFirst({
       where: {
         userId: userId,
         campaignId: campaignId,
       },
       include: {
-        campaignDomainQuizSet: true,
+        quizSet: true,
       },
     });
 

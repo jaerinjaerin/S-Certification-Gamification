@@ -39,7 +39,8 @@
     "resend": "^4.0.1-alpha.0",
     "tailwind-merge": "^2.5.5",
     "ts-node": "^10.9.2",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.0.3",

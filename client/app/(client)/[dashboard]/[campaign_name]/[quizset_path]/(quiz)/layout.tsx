@@ -1,10 +1,16 @@
 import LogoutButton from "@/app/components/button/logout_button";
-import { CampaignDomainQuizSetEx } from "@/app/types/type";
+import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
 import { redirect } from "next/navigation";
 
-export default async function QuizLayout({ children, params }: { children: React.ReactNode; params: { quizset_path: string } }) {
+export default async function QuizLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { quizset_path: string };
+}) {
   const session = await auth();
   console.log("QuizLayout session", session);
 
@@ -27,32 +33,67 @@ export default async function QuizLayout({ children, params }: { children: React
   };
 
   // Fetch quiz data
-  const quizData = await fetchData(`${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`, {
-    method: "GET",
-    // headers: { "Content-Type": "application/json" },
-    // cache: "force-cache",
-    cache: "no-cache",
-  });
+  const quizSetReponse = await fetchData(
+    `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
+    {
+      method: "GET",
+      // headers: { "Content-Type": "application/json" },
+      // cache: "force-cache",
+      cache: "no-cache",
+    }
+  );
 
-  if (!quizData) {
+  console.log("QuizLayout quizData", quizSetReponse);
+
+  if (!quizSetReponse?.item) {
     redirectToErrorPage();
     return null;
   }
 
   // Fetch quiz history
-  let quizHistory = await fetchData(`${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}?userId=${session?.user.id}`, {
-    cache: "no-cache",
-  });
+  let quizLogResponse = await fetchData(
+    `${process.env.API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
+    {
+      cache: "no-cache",
+    }
+  );
 
-  if (!quizHistory?.item) {
+  // if (!quizHistory?.item) {
+  //   const initHistoryResponse = await fetch(
+  //     `${process.env.API_URL}/api/users/${session?.user.id}/register`,
+  //     {
+  //       method: "PUT",
+  //       body: JSON.stringify({ quizset_path: params.quizset_path }),
+  //     }
+  //   );
+
+  //   if (!initHistoryResponse.ok) {
+  //     console.error("Failed to initialize quiz history:", initHistoryResponse);
+  //     redirectToErrorPage();
+  //     return null;
+  //   }
+
+  //   const initHistoryData = await initHistoryResponse.json();
+  //   quizHistory = initHistoryData.item.userQuizLog;
+  // } else {
+  //   quizHistory = quizHistory.item;
+  // }
+
+  let quizLog;
+  let quizStageLogs;
+
+  if (!quizLogResponse?.item) {
     // Initialize quiz history if not found
-    const initHistoryResponse = await fetch(`${process.env.API_URL}/api/logs/quizzes/sets/${params.quizset_path}`, {
-      method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-      body: JSON.stringify({ userId: session?.user.id }),
-    });
+    const initHistoryResponse = await fetch(
+      `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+      {
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: JSON.stringify({ userId: session?.user.id }),
+      }
+    );
 
     if (!initHistoryResponse.ok) {
       console.error("Failed to initialize quiz history:", initHistoryResponse);
@@ -61,30 +102,26 @@ export default async function QuizLayout({ children, params }: { children: React
     }
 
     const initHistoryData = await initHistoryResponse.json();
-    quizHistory = initHistoryData.item;
+    quizLog = initHistoryData.item.quizLog;
+    quizStageLogs = initHistoryData.item.quizStageLogs;
   } else {
-    quizHistory = quizHistory.item;
+    quizLog = quizLogResponse.item.quizLog;
+    quizStageLogs = quizLogResponse.item.quizStageLogs;
   }
 
-  console.info("Render QuizLayout");
+  console.info("Render QuizLayout", quizLog);
   return (
     <div>
       <LogoutButton />
       <QuizProvider
-        quizSet={quizData.item as CampaignDomainQuizSetEx}
-        language={quizData.item.language}
-        domain={quizData.item.domain}
-        quizHistory={quizHistory}
-        campaign={quizData.item.campaign}
+        quizSet={quizSetReponse.item as QuizSetEx}
+        language={quizSetReponse.item.language}
+        quizLog={quizLog}
+        quizStageLogs={quizStageLogs}
+        // domain={quizLog.domain as Domain}
+        // campaign={quizData.item.campaign as Campaign}
       >
-        {/* <QuizHistoryProvider
-          quizHistory={quizHistory}
-          domain={quizData.item.domain}
-          campaign={quizData.item.campaign}
-          language={quizData.item.language}
-        > */}
         {children}
-        {/* </QuizHistoryProvider> */}
       </QuizProvider>
     </div>
   );

@@ -1,9 +1,7 @@
-import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
     const body = await request.json();
 
     const {
@@ -11,9 +9,11 @@ export async function POST(request: Request) {
       campaignId,
       userId,
       quizSetId,
+      quizStageId,
       questionId,
       languageId,
       selectedOptionIds,
+      correctOptionIds,
       jobId,
       domainId,
       stageIndex,
@@ -22,31 +22,39 @@ export async function POST(request: Request) {
       product,
       questionType,
       elapsedSeconds,
-      score,
+      createdAt,
+      // score,
     } = body;
 
-    // await prisma.userQuizQuestionLog.create({
-    //   data: {
-    //     isCorrect,
-    //     campaignId,
-    //     userId,
-    //     quizSetId,
-    //     questionId,
-    //     languageId,
-    //     selectedOptionIds,
-    //     jobId,
-    //     domainId,
-    //     stageIndex,
-    //     category,
-    //     specificFeature,
-    //     product,
-    //     questionType,
-    //     elapsedSeconds,
-    //     score,
-    //   },
-    // });
+    console.log("body", body);
+
+    const questionLog = await prisma.userQuizQuestionLog.create({
+      data: {
+        isCorrect,
+        campaignId,
+        userId,
+        quizSetId,
+        questionId,
+        quizStageId,
+        languageId,
+        selectedOptionIds,
+        correctOptionIds,
+        jobId,
+        domainId,
+        stageIndex,
+        category,
+        specificFeature,
+        product,
+        questionType,
+        elapsedSeconds,
+        createdAt,
+        // score,
+      },
+    });
+
+    return NextResponse.json({ item: questionLog }, { status: 200 });
   } catch (error) {
-    console.error("Error register user quiz log:", error);
+    console.error("Error create quiz question log :", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

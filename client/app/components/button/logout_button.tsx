@@ -11,6 +11,8 @@ export default function LogoutButton() {
     const pathname = window.location.pathname; // 현재 경로 가져오기
     const firstPath = pathname.split("/")[1]; // 첫 번째 경로 값 추출
 
+    console.log("pathname:", pathname);
+
     if (firstPath) {
       setCallbackUrl(`/${firstPath}/logout`);
     } else {

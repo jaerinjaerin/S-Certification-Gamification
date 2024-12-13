@@ -63,7 +63,7 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/users/job?org_ids=488883,751755", {
+      const response = await fetch("/api/users/job?org_ids=506631,751755", {
         method: "GET",
         cache: "no-store",
       });
@@ -275,7 +275,7 @@ export default function TestPage() {
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch domains");
+        throw new Error(errorData.message || "Failed to fetch jobs");
       }
 
       const data = await response.json();

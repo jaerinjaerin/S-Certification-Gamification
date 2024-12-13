@@ -1,0 +1,1101 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specificFeature": "Memory",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on S24-puhelinten RAM-muistin määrä?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S24: 6 Gt, S24+: 8 Gt, S24 Ultra: 10 Gt",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8 Gt, S24+: 8 Gt, S24 Ultra: 8 Gt",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8 Gt, S24+: 10 Gt, S24 Ultra: 12 Gt",
+        "answerStatus": 0
+      },
+      {
+        "text": "S24: 8 Gt, S24+: 12 Gt, S24 Ultra: 12 Gt",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": null,
+    "enabled": "X",
+    "stage": 1,
+    "product": "S24",
+    "category": "Performance",
+    "specificFeature": "Screen",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1 600 nitiä",
+        "answerStatus": 0
+      },
+      {
+        "text": "2 100 nitiä",
+        "answerStatus": 0
+      },
+      {
+        "text": "2 600 nitiä",
+        "answerStatus": 1
+      },
+      {
+        "text": "3 100 nitiä",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Fundamental",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Kaikissa S24-puhelinmalleissa on titaanirunko, joka on Galaxy-puhelinten tähän asti kestävintä metallia",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 0
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specificFeature": "Browsing Assist",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Galaxy AI:n avulla voit luoda ytimekkäät yhteenvedot verkkosivustoista vain Samsung Internet -selaimessa",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 1
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 1,
+    "product": "S24",
+    "category": "Galaxy AI",
+    "specificFeature": "Samsung Account",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Kaikkien Galaxy AI -toimintojen käyttäminen edellyttää kirjautumista Google -tiliin.",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 0
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Circle to Search",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Fold6- / Z Flip6-käyttäjät voivat käyttää QR-koodin linkkiä piirtämällä sen ympärille ympyrän, kun Circle to Search on aktivoitu.",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 1
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Drawing Assist",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S Pen -kynän ilmakomento",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reunapaneeli - Älykäs valinta",
+        "answerStatus": 0
+      },
+      {
+        "text": "Valokuvien muokkaaminen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Interpreter",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tulkki - Kaksoisnäyttönäkymä",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tulkki - Kuuntelutilassa.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös - Äänipuhelu viestisovelluksissa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Keskusteluavustaja - Tekstikeskustelun käännös",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Galaxy AI",
+    "specificFeature": "Live Translate",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Reaaliaikainen käännös on käytettävissä KAIKKIEN viestisovellusten äänipuheluissa (Z Fold6 / Z Flip6)",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 0
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 1,
+    "product": "Fold6",
+    "category": "Portability",
+    "specificFeature": "Weight",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Z Fold6 on ohuempi ja kevyempi kuin edellinen malli (Z Fold5)",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "OIKEIN",
+        "answerStatus": 1
+      },
+      {
+        "text": "VÄÄRIN",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "AI",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muotokuvastudio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Luonnos kuvaan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen tehoste",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "Suggested replies",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": 3,
+        "answerStatus": 0
+      },
+      {
+        "text": 5,
+        "answerStatus": 0
+      },
+      {
+        "text": 7,
+        "answerStatus": 1
+      },
+      {
+        "text": 10,
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Galaxy AI",
+    "specificFeature": "FlexWindow",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ehdotetut vastaukset",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tulkki kaksoisnäytössä",
+        "answerStatus": 0
+      },
+      {
+        "text": "Valokuvan tunnelma -taustakuvaa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Flip6",
+    "category": "Display",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kaksikiskoinen saranarakenne",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gorilla® Glass Victus® 2 (edessä ja takana)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Parannettu panssarialumiinirunko",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specificFeature": "Key CXPs",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä tekijä vaikuttaa energiapisteisiin?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Viimeisin uni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Päivittäinen aktiivisuus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Unenaikainen syke",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Customer Engagement",
+    "specificFeature": "Key CXPs",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Henkilökohtainen valmennus liikunnassa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Itsensä motivointi ja kehittäminen liikunnassa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Watch Ultra & Watch7",
+    "category": "Health",
+    "specificFeature": "Sleep Coaching",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Uniapnea",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 1
+      },
+      {
+        "text": "Unitasapaino",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktiivisuusaika",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Design",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "IP46",
+        "answerStatus": 0
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 1
+      },
+      {
+        "text": "IPX7",
+        "answerStatus": 0
+      },
+      {
+        "text": "IP68",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Sound Optimization",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mukautuva melunsäätö",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktiivinen melunvaimennus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mukautuva taajuuskorjain / mukautuva melunvaimennus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automaattinen melunsäätö",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 10,
+    "enabled": "1",
+    "stage": 2,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Hi-Fi Sound",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "16 bittiä / 48 kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "24 bittiä / 48 kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "32 bittiä / 96 kHz",
+        "answerStatus": 0
+      },
+      {
+        "text": "24 bittiä / 96 kHz",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 3,
+    "product": "Buds3 Pro & Buds3",
+    "category": "Ultimate Listening",
+    "specificFeature": "Crystal Clear Sound",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Koulutustietokanta",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mukautettu äänenvahvistus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Parannettu kaksitiekaiutin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automaattinen keskeytys ja jatkaminen",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Key CXPs",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Elämää helpottava AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Parannettu luovuus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tehokas suorituskyky",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 3,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Demo Points",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to Search",
+        "answerStatus": 1
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Litterointiavustaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Valokuva-avustaja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Demo Points",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 1
+      },
+      {
+        "text": "Litterointiavustaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Valokuva-avustaja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "One Pager",
+    "specificFeature": "Key Improvements",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Täydet Galaxy AI -toiminnot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Lippulaivatasoinen kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tehokkaampi suorituskyky",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specificFeature": "Tailored Sales Talk",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Erinomainen kamera ja Valokuva-avustaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Lippulaivatasoinen suorituskyky",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Erinomainen kestävyys",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Customer Engagement",
+    "specificFeature": "Galaxy Comparison",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Täydet Galaxy AI -toiminnot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suurempi näyttö",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suorittimen ja akun parannukset",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 3,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specificFeature": "Life-Boosting AI",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to Search",
+        "answerStatus": 1
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Keskusteluavustaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Selausavustaja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 1,
+    "enabled": "1",
+    "stage": 4,
+    "product": "S24 FE",
+    "category": "Use cases",
+    "specificFeature": "Epic Camera with Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Valokuva-avustaja (Muotokuvastudio)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP68",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pikahidastus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Akun parannus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 2,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Features",
+    "specificFeature": "Galaxy AI ",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mitä ominaisuuksia Samsung Notes EI tue?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF-päällekkäiskäännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Litterointi ja käännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös puhemuistion tallennuksen aikana",
+        "answerStatus": 1
+      },
+      {
+        "text": "Yhteenveto ja automaattinen muotoilu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 3,
+    "enabled": "0",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Feature",
+    "specificFeature": "Display",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Heijastusta estävä näyttö",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suuri näyttö",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 4,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Customer Engagement",
+    "specificFeature": "Features",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy AI - S Pen -kynä - Ääni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Näyttö - Suorituskyky - Ääni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI - S Pen -kynä - Samsung Notes",
+        "answerStatus": 1
+      },
+      {
+        "text": "Näyttö - Kamera - S Pen -kynä",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 5,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Eco",
+    "specificFeature": "Features",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Taustavalo ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Erillinen AI-näppäin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Notesin käynnistys",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assistant",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 6,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Tab S10 series",
+    "category": "Performance",
+    "specificFeature": "Memory",
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "512 Gt",
+        "answerStatus": 0
+      },
+      {
+        "text": "1 Gt",
+        "answerStatus": 0
+      },
+      {
+        "text": "1,5 Tt",
+        "answerStatus": null
+      },
+      {
+        "text": "2 Tt",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 7,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yökuvaus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suuri tarkkuus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Eri vaihtoehdot käyttäjän mieltymysten mukaan (selfien värisävy, kamera-avustaja)",
+        "answerStatus": 0
+      },
+      {
+        "text": "500x-zoomaus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 8,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tulkki",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-pyyhekumi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 9,
+    "enabled": "1",
+    "stage": 4,
+    "product": "Sell-out platform",
+    "category": "Why galaxy",
+    "specificFeature": null,
+    "importance": "C",
+    "timeLimitSeconds": "30",
+    "text": "Mitä hyötyä Galaxy AI:stä on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Se on jo saatavilla",
+        "answerStatus": 0
+      },
+      {
+        "text": "16 kielen tuki (23 maata/aluetta)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Henkilökohtaisten tietojen suojaus laitteen sisäisen tekoälyn avulla",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  }
+]
