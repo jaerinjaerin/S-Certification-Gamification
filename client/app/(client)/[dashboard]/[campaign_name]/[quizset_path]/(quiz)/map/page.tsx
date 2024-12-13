@@ -113,7 +113,9 @@ export default function QuizMap() {
       {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
         {quizSet.quizStages.map((stage: QuizStageEx, index) => {
-          const firstBadgeStage = quizLog?.firstBadgeStage;
+          const stageIndices = quizSet.quizStages
+            .filter((stage) => stage.isBadgeStage)
+            .map((stage) => stage.order - 1); // order가 1부터 시작하기 때문에 -1을 해줌
 
           return (
             <Fragment key={stage.id}>
@@ -123,7 +125,7 @@ export default function QuizMap() {
                 }}
                 nextStage={stage.order === nextStage}
                 order={stage.order}
-                firstBadgeStage={firstBadgeStage}
+                firstBadgeStage={stageIndices[0]}
                 routeNextQuizStage={routeNextQuizStage}
               />
               {stage.order !== quizSet.quizStages.length && <Connection />}
