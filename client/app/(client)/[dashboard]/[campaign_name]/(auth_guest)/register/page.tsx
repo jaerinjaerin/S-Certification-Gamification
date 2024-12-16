@@ -1,21 +1,7 @@
 "use client";
-
 import { Button } from "@/app/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/app/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useCreateItem from "@/app/hooks/useCreateItem";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language } from "@prisma/client";
@@ -23,6 +9,16 @@ import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { cn } from "@/lib/utils";
 
 interface ChannelSegment {
   name: string;
@@ -56,8 +52,7 @@ export default function GuestRegisterPage() {
   // state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegment, setSelectedChannelSegment] =
-    useState<ChannelSegment | null>(null);
+  const [selectedChannelSegment, setSelectedChannelSegment] = useState<ChannelSegment | null>(null);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   // const [selectedSalesFormat, setSelectedSalesFormat] =
   //   useState<SalesFormat | null>(null);
@@ -72,7 +67,8 @@ export default function GuestRegisterPage() {
   const [languages, setLanguages] = useState<Language[]>([]);
   // const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  console.log(selectedCountry);
+  console.log(countries);
   // const {
   //   isLoading,
   //   error,
@@ -113,12 +109,7 @@ export default function GuestRegisterPage() {
     // fetchLanguage();
   }, []);
 
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
+  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
   // console.log("user", session?.user);
 
@@ -227,69 +218,58 @@ export default function GuestRegisterPage() {
     // });
   };
 
+  console.log(selectedCountry);
+
   // const errorMessage = error || errorCreate;
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (errorCreate) {
+      setErrorMessage(errorCreate);
+    }
+  }, [errorCreate]);
   const t = useTranslations("register");
 
   // console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
-    <div
-      className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: `url('/assets/bg_main1.png')` }}
-    >
-      <Dialog defaultOpen>
+    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
+      <Dialog open>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("enter details")}</DialogTitle>
-            <DialogDescription>{t("select information")}</DialogDescription>
+            <DialogDescription className="text-left">
+              {t("select information")}
+              <span className="block text-[#0037FF]">*Mandatory fields</span>
+            </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
-            {/* domains */}
-            <Select>
+            {/* countries */}
+            <Select defaultValue={t("country")} onValueChange={(value) => selectCountry(value)} value={t("country")}>
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
-                value={selectedCountry}
+                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue placeholder={t("country")} />
+                <SelectValue>{selectedCountry === null ? t("country") : selectedCountry.name}</SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {countries.map((domain) => (
-                  <SelectItem
-                    key={domain.code}
-                    value={domain.name}
-                    dataValue={domain.code}
-                    onChange={(e) => {
-                      const target = e.target as HTMLElement; // DOM 노드로 캐스팅
-                      const countryCode = target.dataset.value; // data-value 값 가져오기
-                      selectCountry(countryCode!);
-                    }}
-                  >
-                    {domain.name}
+                {countries.map((country) => (
+                  <SelectItem key={country.code} value={country.code}>
+                    {country.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select>
+            <Select onValueChange={(value) => selectChannel(value)} value={t("channel")}>
               <SelectTrigger
                 disabled={loading || loadingCreate || channels.length === 0}
-                value={selectedChannel}
+                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue placeholder={t("channel")} />
+                <SelectValue>{selectedChannel === null ? t("channel") : selectChannel.name}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {channels.map((channel) => (
-                  <SelectItem
-                    key={channel.name}
-                    dataValue={channel.name}
-                    value={channel.name}
-                    onChange={(e) => {
-                      const target = e.target as HTMLElement;
-                      const channelId = target.dataset.value;
-                      console.log(channelId);
-                      selectChannel(channelId!);
-                    }}
-                  >
+                  <SelectItem key={channel.name} value={channel.name}>
                     {channel.name}
                   </SelectItem>
                 ))}
@@ -310,16 +290,7 @@ export default function GuestRegisterPage() {
               </SelectTrigger>
               <SelectContent>
                 {salesFormats.map((format) => (
-                  <SelectItem
-                    key={format.id}
-                    dataValue={format.id}
-                    value={`${format.storeType} (${format.job.code})`}
-                    onChange={(e) => {
-                      const target = e.target as HTMLElement;
-                      const id = target.dataset.value;
-                      selectSalesFormat(id!);
-                    }}
-                  >
+                  <SelectItem key={format.id} value={format.id}>
                     {format.storeType} ({format.job.code})
                   </SelectItem>
                 ))}
@@ -337,38 +308,26 @@ export default function GuestRegisterPage() {
                 }
                 value={selectedLanguage}
               >
-                <SelectValue placeholder={t("language")} />
+                <SelectValue>{selectedLanguage === null ? t("language") : selectedLanguage.name}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {languages.map((lang) => (
-                  <SelectItem
-                    key={lang.id}
-                    dataValue={lang.id}
-                    value={`${lang.name} (${lang.id})`}
-                    onChange={(e) => {
-                      const target = e.target as HTMLElement;
-                      const id = target.dataset.value;
-                      selectLanguage(id!);
-                    }}
-                  >
+                  <SelectItem key={lang.id} value={lang.id}>
                     {lang.name} ({lang.id})
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select> */}
           </div>
-          <DialogFooter close={false}>
+          <DialogFooter>
             <Button
               variant={"primary"}
               disabled={
                 // isLoading ||
-                loadingCreate ||
-                !selectedCountry ||
-                !selectedChannel ||
-                !setSelectedChannelSegment ||
-                !selectedJob
+                loadingCreate || !selectedCountry || !selectedChannel || !selectedChannelSegment || !selectedJob
               }
               onClick={routeQuizPage}
+              className="disabled:bg-disabled"
             >
               {loadingCreate ? `${t("saving")}` : `${t("save")}`}
             </Button>
@@ -376,6 +335,23 @@ export default function GuestRegisterPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* error alert */}
+      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
+        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Alert</AlertDialogTitle>
+            <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction asChild>
+              <Button variant={"primary"} onClick={() => {}}>
+                OK
+              </Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
