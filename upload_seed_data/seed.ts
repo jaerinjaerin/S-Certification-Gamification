@@ -133,8 +133,12 @@ async function main() {
       a.includes("HQ_NAT_0001") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
-      const domainCode = fileName.split("|")[0];
-      const languageCode = fileName.split("|")[1].split(".")[0];
+      // const domainCode = fileName.split("|")[0];
+      // const languageCode = fileName.split("|")[1].split(".")[0];
+      // 확장자 제거
+      const baseFileName = path.basename(fileName, path.extname(fileName));
+      // 파일명 구조 파싱
+      const [domainCode, languageCode] = baseFileName.split(".");
 
       const domain = await prisma.domain.findFirst({
         where: { code: domainCode },

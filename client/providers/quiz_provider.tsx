@@ -85,7 +85,7 @@ export const QuizProvider = ({
     quizStageLogs ?? []
   );
   const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
-    quizStageLogs.reduce(
+    (quizStageLogs ?? []).reduce(
       (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
       0
     )
