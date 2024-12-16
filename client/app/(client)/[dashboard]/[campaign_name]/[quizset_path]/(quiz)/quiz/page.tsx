@@ -1,5 +1,5 @@
 "use client";
-
+import { useCountdown } from "@/app/hooks/useCountdown";
 import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
 import { QuestionOption } from "@prisma/client";
 import { useState } from "react";
@@ -21,6 +21,11 @@ export default function QuizPage() {
 
   // // 선택된 옵션 상태
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  const [lifeCount, setLifeCount] = useState<number>(currentQuizStage.lifeCount);
+  const [gameOver, setGameOver] = useState(false);
+  const [isSelectedCorrectCount, setIsSelectedCorrectCount] = useState(0);
+
+  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: currentQuizStage.timeLimitSeconds });
 
   const handleConfirmAnswer = async (questionId: string) => {
     if (selectedOptionIds.length === 0) {
@@ -45,6 +50,7 @@ export default function QuizPage() {
 
   const next = async () => {
     setSelectedOptionIds([]);
+    setIsSelectedCorrectCount(0);
 
     if (canNextQuestion()) {
       nextQuestion();
@@ -130,4 +136,74 @@ export default function QuizPage() {
   };
 
   return <div>{renderQuizPage()}</div>;
+}
+
+{
+  /* Question Area*/
+}
+//   <div className="pt-[70px]">
+//   <Qusetion questionText={question.text} />
+//   <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4">
+//     {question.options &&
+//       question.options.map((option: QuestionOption) => {
+//         return (
+//           <motion.label
+//             key={option.id}
+//             onClick={() => {
+//               handleOptionSave(option.id);
+//               handleConfirmAnswer(question, option.id);
+//               console.log("click");
+//             }}
+//             className={cn(
+//               "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
+//               selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white",
+//               selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white",
+//               isSelectedCorrectCount && "pointer-events-none"
+//             )}
+//             animate={
+//               selectedOptionIds.includes(option.id) && !option.isCorrect
+//                 ? { x: [0, -5, 5, -5, 5, 0] }
+//                 : selectedOptionIds.includes(option.id) && option.isCorrect
+//                 ? { scale: [1, 1.1, 1] }
+//                 : { x: 0, scale: 1 }
+//             }
+//             transition={{ duration: 0.5, ease: "easeInOut" }}
+//           >
+//             {option.text}({option.isCorrect ? "o" : "x"})
+//             <input
+//               type="checkbox"
+//               checked={selectedOptionIds.includes(option.id)}
+//               readOnly
+//               className="hidden"
+//               onClick={(e) => {
+//                 e.stopPropagation();
+//               }}
+//             />
+//           </motion.label>
+//         );
+//       })}
+//   </div>
+// </div>
+
+// 모두 맞았으면
+// 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
+//   const correctCount = question.options.map((option) => option.isCorrect).filter((answer) => answer === true).length;
+//   const selectedIds = question.options.filter((option) => [...new Set([...selectedOptionIds, optionId])].includes(option.id));
+//   const selectedCorrectCount = selectedIds.filter((id) => id.isCorrect === true).length;
+//   setIsSelectedCorrectCount(selectedCorrectCount);
+
+//   if (correctCount === selectedCorrectCount) {
+//     await sleep(1000);
+//     await next();
+//   }
+
+//   resetCountdown();
+// }
+// // 틀렸으면 도전 횟수 차감 & 시간 다시 시작
+// else {
+//   setLifeCount((lifeCount) => lifeCount - 1);
+
+{
+  /* <GameOverAlertDialog gameOver={gameOver} />
+</div> */
 }
