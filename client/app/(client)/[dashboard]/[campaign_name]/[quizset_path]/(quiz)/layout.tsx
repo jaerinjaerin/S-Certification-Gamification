@@ -113,7 +113,10 @@ export default async function QuizLayout({
 
   console.info("Render QuizLayout", quizLog);
   return (
-    <div className="h-full">
+    <div
+      className="h-full bg-[#F0F0F0]"
+      style={{ backgroundImage: `url('/assets/bg_main2.png')` }}
+    >
       {/* <LogoutButton /> */}
       <QuizProvider
         quizSet={quizSetReponse.item as QuizSetEx}

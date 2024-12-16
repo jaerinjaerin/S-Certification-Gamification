@@ -1,16 +1,26 @@
 "use client";
 
-import { BluePaperAirplaneIcon, QuestionMark, SPlusIcon } from "@/app/components/icons/icons";
+import {
+  BluePaperAirplaneIcon,
+  QuestionMark,
+  SPlusIcon,
+} from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, fixedClass } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 
 export default function QuizComplete() {
-  const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
-
   return (
     <div
       className="flex flex-col items-center h-full "
@@ -40,7 +50,13 @@ const ScoreAnimation = () => {
       <div>
         <h1 className="mt-[26px] mb-[66px] text-[38px]">{t("completed")}</h1>
         <div className="relative">
-          <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="200"
+            height="200"
+            viewBox="0 0 200 200"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -69,7 +85,12 @@ const GetBadge = () => {
       </div>
       <div className="flex flex-col items-center gap-10">
         <h3 className="text-[22px] text-pretty">{t("congratulation")}</h3>
-        <Image src={"/assets/badge_all_models.png"} alt="green badge with all models" width={200} height={200} />
+        <Image
+          src={"/assets/badge_all_models.png"}
+          alt="green badge with all models"
+          width={200}
+          height={200}
+        />
         <Button className="text-[18px] mt-[26px]" variant={"primary"}>
           {t("done")}
         </Button>
@@ -90,7 +111,10 @@ const ScoreRanked = () => {
       <div className="absolute top-[21px] right-[21px]">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
+            <Button
+              className={cn("ml-auto border rounded-full border-black/50")}
+              size={"icon_md"}
+            >
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -121,7 +145,9 @@ const ScoreRanked = () => {
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">{t("ok")}</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+                {t("ok")}
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -134,8 +160,15 @@ const ScoreRanked = () => {
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
-          <Image src={"/assets/rank_graph.png"} alt="rank graph" width={320} height={179} />
-          <p className="text-[22px] text-balance px-5">{t("rank_notification")}</p>
+          <Image
+            src={"/assets/rank_graph.png"}
+            alt="rank graph"
+            width={320}
+            height={179}
+          />
+          <p className="text-[22px] text-balance px-5">
+            {t("rank_notification")}
+          </p>
         </div>
         {isCardOpen ? (
           <>
@@ -164,7 +197,9 @@ const SendEmailCard = () => {
     <div className="pt-[10px]">
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
         <BluePaperAirplaneIcon className="shrink-0" />
-        <p className="text-[#1429A0] text-[12px] sm:text-[14px] font-normal text-left max-w-[230px]">{t("badge_deliver")}</p>
+        <p className="text-[#1429A0] text-[12px] sm:text-[14px] font-normal text-left max-w-[230px]">
+          {t("badge_deliver")}
+        </p>
       </div>
     </div>
   );
