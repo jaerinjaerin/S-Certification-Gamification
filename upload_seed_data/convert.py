@@ -74,10 +74,10 @@ def process_excel(file_path, output_path):
 # origins 디렉토리의 모든 엑셀 파일 처리
 for file_name in os.listdir(input_dir):
     if file_name.endswith(".xlsx"):
-        # 파일명 처리: "sample|NAT_021502|fi.xlsx" -> "NAT_021502|fi.json"
-        parts = file_name.split("|")
-        if len(parts) > 1:
-            output_file_name = "|".join(parts[1:]).replace(".xlsx", ".json")
+        # 파일명 처리: "sample.NAT_021502.fi.xlsx" -> "NAT_021502.fi.json"
+        parts = file_name.split(".")
+        if len(parts) > 2:  # 파일명이 "sample.NAT_021502.fi.xlsx" 구조라고 가정
+            output_file_name = ".".join(parts[1:]).replace(".xlsx", ".json")  # 첫 부분 제외
             input_path = os.path.join(input_dir, file_name)
             output_path = os.path.join(output_dir, output_file_name)
 

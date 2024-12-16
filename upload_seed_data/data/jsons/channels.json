@@ -325,7 +325,7 @@
   },
   {
     "name": "COLOMBIA",
-    "code": "",
+    "code": "NAT_2702",
     "regionId": "8",
     "subsidaryId": "31",
     "channels": [
@@ -338,7 +338,7 @@
   },
   {
     "name": "ARGENTINA",
-    "code": "",
+    "code": "NAT_2702",
     "regionId": "8",
     "subsidaryId": "33",
     "channels": [
@@ -382,7 +382,7 @@
   {
     "name": "Japan",
     "code": "NAT_2392",
-    "regionId": null,
+    "regionId": "11",
     "subsidaryId": "44",
     "channels": [
       {

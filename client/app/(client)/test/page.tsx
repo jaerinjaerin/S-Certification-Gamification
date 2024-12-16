@@ -245,24 +245,85 @@ export default function TestPage() {
   const fetchDomains = async () => {
     setLoading(true);
     setError(null);
+    setDomains([]); // Clear any existing domains
 
     try {
-      const response = await fetch("/api/sumtotal/domains", {
-        cache: "no-store",
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch domains");
+      let allDomains: any[] = []; // To accumulate all domain data
+      let offset = 1; // Start from page 0
+      const limit = 100; // Number of items per page
+
+      while (true) {
+        const response = await fetch(
+          `/api/sumtotal/domains?limit=${limit}&offset=${offset}`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch domains");
+        }
+
+        const data = await response.json();
+
+        // Combine fetched domains with accumulated domains
+        allDomains = [...allDomains, ...data.data];
+
+        // Remove duplicates by domainId (or a unique identifier)
+        const domainMap = new Map();
+        allDomains.forEach((domain) => {
+          domainMap.set(domain.domainId, domain); // Replace `domainId` with the actual unique key for domains
+        });
+        allDomains = Array.from(domainMap.values());
+
+        console.log("allDomains", allDomains.length);
+
+        // Check if we've fetched all pages
+        if (allDomains.length >= data.pagination.total) {
+          break;
+        }
+
+        // Increment the page number for the next request
+        offset += 1;
       }
 
-      const data = await response.json();
-      console.log("fetchDomains data", data);
-      setDomains(data.data); // Extract and store activities array
+      console.log(`Fetched allDomains`, allDomains);
+      saveAsJson(allDomains, "allDomains.json");
+
+      setDomains(allDomains); // Store all domains
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
+  };
+
+  const saveAsJson = (data, fileName = "data.json") => {
+    // Convert the data to a JSON string
+    const jsonString = JSON.stringify(data, null, 2); // `null, 2` for pretty printing
+
+    // Create a Blob object
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+
+    // Set the download URL and file name
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+
+    // Append the anchor to the body (required for Firefox)
+    document.body.appendChild(link);
+
+    // Programmatically click the anchor to trigger the download
+    link.click();
+
+    // Remove the anchor from the document
+    document.body.removeChild(link);
+
+    // Revoke the Blob URL
+    URL.revokeObjectURL(link.href);
   };
 
   const fetchJobs = async () => {

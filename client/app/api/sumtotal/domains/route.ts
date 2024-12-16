@@ -3,7 +3,11 @@ import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const offset = searchParams.get("offset"); // 인증 코드 추출
+  const limit = searchParams.get("limit"); // 인증 코드 추출
+
   try {
     const session = await auth();
 
@@ -28,9 +32,9 @@ export async function GET() {
       );
     }
 
-    // try {
     const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/v1/domains?limit=300`,
+      // `https://samsung.sumtotal.host/apis/api/v1/domains?limit=300`,
+      `https://samsung.sumtotal.host/apis/api/v1/domains?limit=${limit}&offset=${offset}`,
       {
         cache: "no-store",
         headers: {

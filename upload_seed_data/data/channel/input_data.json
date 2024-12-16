@@ -181,7 +181,7 @@
     "name": "Portugal",
     "code": "NAT_2620",
     "region": "Europe",
-    "subsidary": "SEIB-P"
+    "subsidary": "SEIB"
   },
   {
     "channels": [
@@ -273,7 +273,7 @@
     "name": "Spain",
     "code": "NAT_2724",
     "region": "Europe",
-    "subsidary": "SEIB-S"
+    "subsidary": "SEIB"
   },
   {
     "channels": [
@@ -341,7 +341,7 @@
     "name": "Cambodia",
     "code": "NAT_2116",
     "region": "SEAO",
-    "subsidary": "TSE-KH"
+    "subsidary": "TSE"
   },
   {
     "channels": [

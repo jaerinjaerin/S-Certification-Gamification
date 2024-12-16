@@ -113,11 +113,27 @@ export const {
           });
         }
 
-        // TODO: regionId, subsidaryId, channelId 정보를 추가로 넣어야 함.
+        // 확인 regionId, subsidaryId
+        let regionId: string | null = null;
+        let subsidaryId: string | null = null;
+        const domainCode = profile.personDomain?.find(
+          (domain) => domain.isPrimary
+        )?.code;
+        if (!domainCode) {
+          const domain = await prisma.domain.findFirst({
+            where: {
+              code: domainCode,
+            },
+          });
+
+          if (!domain) {
+            regionId = domain!.regionId;
+            subsidaryId = domain!.subsidaryId;
+          }
+        }
 
         return {
           id: profile.userId,
-          // name: profile.fullName ?? profile.userLogin.username ?? null,
           email:
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
@@ -127,11 +143,17 @@ export const {
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
           sumtotalDomainId:
+            profile.personDomain
+              ?.find((domain) => domain.isPrimary)
+              ?.domainId?.toString() || null,
+          sumtotalDomainCode:
             profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
             null,
           sumtotalJobId: jobId,
-          sumtotalStoreId: storeId,
-          sumtotalChannelSegmentId: channelSegmentId,
+          storeId: storeId,
+          channelSegmentId: channelSegmentId,
+          regionId: regionId,
+          subsidaryId: subsidaryId,
         };
       },
     },
