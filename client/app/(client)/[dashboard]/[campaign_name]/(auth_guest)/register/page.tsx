@@ -1,7 +1,20 @@
 "use client";
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import useCreateItem from "@/app/hooks/useCreateItem";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { Language } from "@prisma/client";
@@ -19,6 +32,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
+import { getUserLocale } from "@/app/services/locale";
 
 interface ChannelSegment {
   name: string;
@@ -52,13 +66,16 @@ export default function GuestRegisterPage() {
   // state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegment, setSelectedChannelSegment] = useState<ChannelSegment | null>(null);
+  const [selectedChannelSegment, setSelectedChannelSegment] =
+    useState<ChannelSegment | null>(null);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   // const [selectedSalesFormat, setSelectedSalesFormat] =
   //   useState<SalesFormat | null>(null);
   // const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
   //   null
   // );
+
+  const [language, setLanguage] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<Country[]>([]);
@@ -67,8 +84,7 @@ export default function GuestRegisterPage() {
   const [languages, setLanguages] = useState<Language[]>([]);
   // const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(selectedCountry);
-  console.log(countries);
+
   // const {
   //   isLoading,
   //   error,
@@ -92,24 +108,22 @@ export default function GuestRegisterPage() {
     }
   };
 
-  // const fetchLanguage = async () => {
-  //   const headersList = await headers();
-  //   const acceptLanguage = headersList.get("accept-language");
-  //   const acceptLanguageArray = acceptLanguage?.split(",");
-
-  //   acceptLanguageArray?.map((language) => {
-  //     const [langCode, weight] = language?.split(";");
-  //   });
-
-  //   console.log("acceptLanguage", acceptLanguage);
-  // };
+  const fetchLanguage = async () => {
+    const locale = await getUserLocale();
+    setLanguage(locale);
+  };
 
   useEffect(() => {
     fetchConutries();
-    // fetchLanguage();
+    fetchLanguage();
   }, []);
 
-  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
+  const {
+    isLoading: loadingCreate,
+    error: errorCreate,
+    item: campaignPath,
+    createItem,
+  } = useCreateItem<string>();
 
   // console.log("user", session?.user);
 
@@ -154,9 +168,9 @@ export default function GuestRegisterPage() {
     setSelectedCountry(country!);
     const channels = country!.channels;
     setChannels(channels ?? []);
-    // setSalesFormats([]);
     setLanguages([]);
     setSelectedChannel(null);
+    // setSalesFormats([]);
     // setSelectedSalesFormat(null);
     // setSelectedLanguage(null);
   };
@@ -218,10 +232,10 @@ export default function GuestRegisterPage() {
     // });
   };
 
-  console.log(selectedCountry);
-
   // const errorMessage = error || errorCreate;
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   useEffect(() => {
     if (errorCreate) {
       setErrorMessage(errorCreate);
@@ -232,7 +246,10 @@ export default function GuestRegisterPage() {
   // console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
+    <div
+      className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
+      style={{ backgroundImage: `url('/assets/bg_main.png')` }}
+    >
       <Dialog open>
         <DialogContent>
           <DialogHeader>
@@ -244,35 +261,59 @@ export default function GuestRegisterPage() {
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
-            <Select defaultValue={t("country")} onValueChange={(value) => selectCountry(value)} value={t("country")}>
+            <Select
+              defaultValue={t("country")}
+              onValueChange={(value) => selectCountry(value)}
+              value={t("country")}
+            >
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
-                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
+                className={cn(
+                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
+                )}
               >
-                <SelectValue>{selectedCountry === null ? t("country") : selectedCountry.name}</SelectValue>
+                <SelectValue>
+                  {selectedCountry === null
+                    ? t("country")
+                    : selectedCountry.name}
+                </SelectValue>
               </SelectTrigger>
-              <SelectContent>
-                {countries.map((country) => (
-                  <SelectItem key={country.code} value={country.code}>
+              <SelectContent className="max-h-[220px]">
+                {countries.map((country, idx) => (
+                  <SelectItem key={idx} value={country.code}>
                     {country.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select onValueChange={(value) => selectChannel(value)} value={t("channel")}>
+            <Select
+              onValueChange={(value) => selectChannel(value)}
+              value={t("channel")}
+            >
               <SelectTrigger
                 disabled={loading || loadingCreate || channels.length === 0}
-                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
+                className={cn(
+                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
+                )}
               >
-                <SelectValue>{selectedChannel === null ? t("channel") : selectChannel.name}</SelectValue>
+                <SelectValue>
+                  {selectedChannel === null
+                    ? t("channel")
+                    : selectedChannel.name}
+                </SelectValue>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[220px]">
                 {channels.map((channel) => (
                   <SelectItem key={channel.name} value={channel.name}>
                     {channel.name}
                   </SelectItem>
                 ))}
+                {/* TODO: 
+                 1. 직접입력 클릭 시  input 컴포넌트 생성
+                 2. input의 입력된 값을 channel로 전달
+                */}
+                {/* <SelectItem value={"직접입력할거에요"}>직접입력</SelectItem> */}
               </SelectContent>
             </Select>
             {/* job group */}
@@ -324,7 +365,11 @@ export default function GuestRegisterPage() {
               variant={"primary"}
               disabled={
                 // isLoading ||
-                loadingCreate || !selectedCountry || !selectedChannel || !selectedChannelSegment || !selectedJob
+                loadingCreate ||
+                !selectedCountry ||
+                !selectedChannel ||
+                !selectedChannelSegment ||
+                !selectedJob
               }
               onClick={routeQuizPage}
               className="disabled:bg-disabled"
@@ -337,7 +382,10 @@ export default function GuestRegisterPage() {
       </Dialog>
 
       {/* error alert */}
-      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
+      <AlertDialog
+        open={!!errorMessage}
+        onOpenChange={() => setErrorMessage(undefined)}
+      >
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Alert</AlertDialogTitle>

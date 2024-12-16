@@ -2,10 +2,23 @@
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { LockIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { useQuiz } from "@/providers/quiz_provider";
 import InactiveBadge from "@/public/assets/badge_inactive.png";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -16,8 +29,12 @@ import React, { forwardRef, Fragment, useEffect, useState } from "react";
 const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizMap() {
-  const { quizSet, language, quizLog } = useQuiz();
-  const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
+  const { quizSet, quizLog, quizStageLogs, quizStagesTotalScore } = useQuiz();
+
+  const [nextStage, setNextStage] = useState<number>(
+    (quizLog?.lastCompletedStage ?? 0) + 1
+  );
+
   const { routeToPage } = usePathNavigator();
   const t = useTranslations("Map_guide");
 
@@ -58,10 +75,18 @@ export default function QuizMap() {
         backgroundImage: `url('/assets/bg_main2.png')`,
       }}
     >
-      <div className={cn(fixedClass, "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col")}>
+      <div
+        className={cn(
+          fixedClass,
+          "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col"
+        )}
+      >
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
+            <Button
+              className={cn("ml-auto border rounded-full border-black/50")}
+              size={"icon_md"}
+            >
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -72,24 +97,21 @@ export default function QuizMap() {
             {/* Carousel Area */}
             <TutorialCarousel />
             <DialogFooter>
-              {/* <Button variant={"primary"} onClick={() => console.log("TODO: 캐러샐이 넘어가야함. 끝났을땐 Dialog창 닫아야 함")}>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">
                 OK
-              </Button> */}
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">OK</DialogClose>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="flex flex-col font-extrabold">
           <span className="text-[24px]">Total Score</span>
-          <span className="text-[48px]">470</span>
+          <span className="text-[48px]">{quizStagesTotalScore}</span>
         </div>
       </div>
 
       {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
         {quizSet.quizStages.map((stage: QuizStageEx, index) => {
-          const stageIndices = quizSet.quizStages.filter((stage) => stage.isBadgeStage).map((stage) => stage.order - 1); // order가 1부터 시작하기 때문에 -1을 해줌
-
           return (
             <Fragment key={stage.id}>
               <Stage
@@ -99,7 +121,6 @@ export default function QuizMap() {
                 nextStage={nextStage}
                 isNextStage={stage.order === nextStage}
                 order={stage.order}
-                firstBadgeStage={stageIndices[0]}
                 routeNextQuizStage={routeNextQuizStage}
               />
               {stage.order !== quizSet.quizStages.length && <Connection />}
@@ -119,13 +140,16 @@ interface StageProps {
   nextStage: number;
   isNextStage: boolean;
   order: number;
-  firstBadgeStage: number | null | undefined;
   routeNextQuizStage: () => Promise<void>;
 }
 
 const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
-  const { nextStage, isNextStage, order, firstBadgeStage, routeNextQuizStage } = props;
+  const { nextStage, isNextStage, order, routeNextQuizStage } = props;
   const isStageCompleted = nextStage > order;
+
+  const {
+    quizStageLogs: { isBadgeStage, isCompleted, isBadgeAcquired },
+  } = useQuiz();
 
   return (
     <div className="relative" ref={ref}>
@@ -138,22 +162,37 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
 
         <button
           onClick={routeNextQuizStage}
-          disabled={!isNextStage && isStageCompleted}
+          disabled={!isNextStage || isCompleted}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
             isNextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
-            isStageCompleted && "bg-[#001276]"
+            isCompleted && "bg-[#001276]"
           )}
         >
-          {firstBadgeStage === order ? <Image src={InactiveBadge} alt="inactive-badge" className="object-cover w-full h-full" /> : `stage ${order}`}
+          {isBadgeStage ? (
+            <Image
+              src={InactiveBadge} // TODO: isBadgeStage? ActiveBadge: InactiveBadge
+              alt="inactive-badge"
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            `stage ${order}`
+          )}
         </button>
 
-        {nextStage && (
-          <span className="absolute bottom-[-30px] right-[-28px] size-[85px] " style={{ backgroundImage: `url('/assets/pointer.svg')` }} />
+        {isNextStage && (
+          <span
+            className="absolute bottom-[-30px] right-[-28px] size-[85px] "
+            style={{ backgroundImage: `url('/assets/pointer.svg')` }}
+          />
         )}
       </div>
-      {nextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
-      {nextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
+      {isNextStage && (
+        <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />
+      )}
+      {isNextStage && (
+        <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />
+      )}
     </div>
   );
 });
@@ -173,7 +212,9 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0"
+        type === "color-to-transparent"
+          ? "bg-gradient-to-t top-0 "
+          : "bg-gradient-to-b bottom-0"
       )}
     />
   );
@@ -203,7 +244,10 @@ const TutorialCarousel = () => {
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => {
           return (
-            <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
+            <CarouselItem
+              key={index}
+              className={cn(current === index ? "w-full" : "w-0")}
+            >
               <div className="p-1">
                 {index === 0 && (
                   <div className="bg-[#EDEDED] min-h-[340px] relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
@@ -211,7 +255,12 @@ const TutorialCarousel = () => {
                       {t("attempts_deduction")}
                     </p>
                     <div className="flex justify-center pt-[10px]">
-                      <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
+                      <Image
+                        src={"/assets/map_guide1.png"}
+                        alt="map_guide1_image"
+                        width={270}
+                        height={160}
+                      />
                     </div>
                     <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
                       {t("time_limit_per_quiz")}
@@ -240,13 +289,14 @@ const TutorialCarousel = () => {
             <button
               onClick={handleMoveIndex}
               key={index}
-              className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")}
+              className={cn(
+                "bg-black/30 size-2 text-white rounded-full",
+                current === index && "bg-black/100"
+              )}
             />
           );
         })}
       </div>
-      {/* <CarouselPrevious />
-      <CarouselNext /> */}
     </Carousel>
   );
 };
