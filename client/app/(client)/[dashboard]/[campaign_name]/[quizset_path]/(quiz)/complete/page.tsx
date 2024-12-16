@@ -7,9 +7,15 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { useQuiz } from "@/providers/quiz_provider";
+
+const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 
 export default function QuizComplete() {
-  const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
+  const { quizLog } = useQuiz();
+
+  // 완료한 스테이지 체크하는 변수
+  const completedStage = quizLog?.lastCompletedStage ?? 0;
 
   return (
     <div
@@ -20,8 +26,8 @@ export default function QuizComplete() {
     >
       <div className={cn(fixedClass, "z-20 p-[21px] flex flex-col relative")}>
         <div className="flex flex-col w-full items-center text-center gap-[66px] mx-auto pt-[60px] px-[9px] font-extrabold">
-          <ScoreAnimation />
-          {/* <GetBadge /> */}
+          <ScoreAnimation completedStage={completedStage} score={quizLog?.score} />
+          {/* <GetBadge completedStage={completedStage} /> */}
           {/* <ScoreRanked /> */}
         </div>
       </div>
@@ -29,13 +35,13 @@ export default function QuizComplete() {
   );
 }
 
-const ScoreAnimation = () => {
+const ScoreAnimation = ({ completedStage, score }: { completedStage: number; score: number | null | undefined }) => {
   const t = useTranslations("Completed");
   return (
     <>
       <div>
         <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
-        <h1 className="text-[50px]">3</h1>
+        <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div>
         <h1 className="mt-[26px] mb-[66px] text-[38px]">{t("completed")}</h1>
@@ -51,7 +57,7 @@ const ScoreAnimation = () => {
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{t("score")}</p>
-            <h1 className="text-[50px] leading-normal">840</h1>
+            <h1 className="text-[50px] leading-normal">{score ?? 0}</h1>
           </div>
         </div>
       </div>
@@ -59,13 +65,13 @@ const ScoreAnimation = () => {
   );
 };
 
-const GetBadge = () => {
+const GetBadge = ({ completedStage }: { completedStage: number }) => {
   const t = useTranslations("Completed");
   return (
     <>
       <div>
         <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
-        <h1 className="text-[50px]">3</h1>
+        <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div className="flex flex-col items-center gap-10">
         <h3 className="text-[22px] text-pretty">{t("congratulation")}</h3>
@@ -160,6 +166,8 @@ const ScoreRanked = () => {
 };
 
 const SendEmailCard = () => {
+  const t = useTranslations("Score_guide");
+
   return (
     <div className="pt-[10px]">
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">

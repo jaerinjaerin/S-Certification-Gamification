@@ -1,24 +1,12 @@
 "use client";
+
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { LockIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import { cn } from "@/app/lib/utils";
 import { QuizStageEx } from "@/app/types/type";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useQuiz } from "@/providers/quiz_provider";
 import InactiveBadge from "@/public/assets/badge_inactive.png";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -31,9 +19,7 @@ const fixedClass = `fixed w-full max-w-[412px] left-1/2 -translate-x-1/2`;
 export default function QuizMap() {
   const { quizSet, quizLog, quizStageLogs, quizStagesTotalScore } = useQuiz();
 
-  const [nextStage, setNextStage] = useState<number>(
-    (quizLog?.lastCompletedStage ?? 0) + 1
-  );
+  const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
 
   const { routeToPage } = usePathNavigator();
   const t = useTranslations("Map_guide");
@@ -75,18 +61,10 @@ export default function QuizMap() {
         backgroundImage: `url('/assets/bg_main2.png')`,
       }}
     >
-      <div
-        className={cn(
-          fixedClass,
-          "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col"
-        )}
-      >
+      <div className={cn(fixedClass, "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col")}>
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              className={cn("ml-auto border rounded-full border-black/50")}
-              size={"icon_md"}
-            >
+            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -97,9 +75,7 @@ export default function QuizMap() {
             {/* Carousel Area */}
             <TutorialCarousel />
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">
-                OK
-              </DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">OK</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -166,7 +142,7 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
             isNextStage && "size-[100px] bg-[#001276] border-[#0027EB]",
-            isCompleted && "bg-[#001276]"
+            isCompleted && "bg-[#001276]",
           )}
         >
           {isBadgeStage ? (
@@ -181,18 +157,11 @@ const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
         </button>
 
         {isNextStage && (
-          <span
-            className="absolute bottom-[-30px] right-[-28px] size-[85px] "
-            style={{ backgroundImage: `url('/assets/pointer.svg')` }}
-          />
+          <span className="absolute bottom-[-30px] right-[-28px] size-[85px] " style={{ backgroundImage: `url('/assets/pointer.svg')` }} />
         )}
       </div>
-      {isNextStage && (
-        <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />
-      )}
-      {isNextStage && (
-        <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />
-      )}
+      {isNextStage && <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />}
+      {isNextStage && <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />}
     </div>
   );
 });
@@ -212,9 +181,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
       className={cn(
         "h-[220px] z-10 from-white/0 to-white",
         fixedClass,
-        type === "color-to-transparent"
-          ? "bg-gradient-to-t top-0 "
-          : "bg-gradient-to-b bottom-0"
+        type === "color-to-transparent" ? "bg-gradient-to-t top-0 " : "bg-gradient-to-b bottom-0",
       )}
     />
   );
@@ -244,38 +211,31 @@ const TutorialCarousel = () => {
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => {
           return (
-            <CarouselItem
-              key={index}
-              className={cn(current === index ? "w-full" : "w-0")}
-            >
-              <div className="p-1">
+            <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
+              <div className="p-1 h-full">
                 {index === 0 && (
-                  <div className="bg-[#EDEDED] min-h-[340px] relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
+                  <div className="bg-[#EDEDED] max-h-[320px] h-full relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
                     <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
                       {t("attempts_deduction")}
                     </p>
                     <div className="flex justify-center pt-[10px]">
-                      <Image
-                        src={"/assets/map_guide1.png"}
-                        alt="map_guide1_image"
-                        width={270}
-                        height={160}
-                      />
+                      <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
                     </div>
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
-                      {t("time_limit_per_quiz")}
-                    </p>
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">{t("")}</p>
                   </div>
                 )}
                 {index === 1 && (
                   <Ol>
-                    <li>{t("you_have_5_attemps")}</li>
-                    <li>{t("giveup_or_interrupt_quiz")}</li>
+                    <li>If you reach the 5 incorrect quiz limit, you must restart at the first question of that stage.</li>
+                    <li>If you quit a stage or it is interrupted, you must restart at the first question of that stage.</li>
                   </Ol>
                 )}
                 {index === 2 && (
                   <Ol>
-                    <li>{t("answer_first_attempt")}</li>
+                    <li>
+                      Total points awarded will vary based on: answering correctly on the first attempt; giving consecutive correct answers;
+                      stage completion; number of remaining attempts.
+                    </li>
                   </Ol>
                 )}
               </div>
@@ -289,10 +249,7 @@ const TutorialCarousel = () => {
             <button
               onClick={handleMoveIndex}
               key={index}
-              className={cn(
-                "bg-black/30 size-2 text-white rounded-full",
-                current === index && "bg-black/100"
-              )}
+              className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")}
             />
           );
         })}
@@ -303,7 +260,7 @@ const TutorialCarousel = () => {
 
 const Ol = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ol className="bg-[#EDEDED] min-h-[340px] rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
+    <ol className="bg-[#EDEDED] max-h-[320px] h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
       {children}
     </ol>
   );
