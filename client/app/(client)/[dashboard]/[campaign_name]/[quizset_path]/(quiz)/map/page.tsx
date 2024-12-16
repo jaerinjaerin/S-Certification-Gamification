@@ -221,21 +221,20 @@ const TutorialCarousel = () => {
                     <div className="flex justify-center pt-[10px]">
                       <Image src={"/assets/map_guide1.png"} alt="map_guide1_image" width={270} height={160} />
                     </div>
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">{t("")}</p>
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
+                      {t("time_limit_per_quiz")}
+                    </p>
                   </div>
                 )}
                 {index === 1 && (
                   <Ol>
-                    <li>If you reach the 5 incorrect quiz limit, you must restart at the first question of that stage.</li>
-                    <li>If you quit a stage or it is interrupted, you must restart at the first question of that stage.</li>
+                    <li>{t("you_have_5_attemps")}</li>
+                    <li>{t("giveup_or_interrupt_quiz")}</li>
                   </Ol>
                 )}
                 {index === 2 && (
                   <Ol>
-                    <li>
-                      Total points awarded will vary based on: answering correctly on the first attempt; giving consecutive correct answers;
-                      stage completion; number of remaining attempts.
-                    </li>
+                    <li>{t("answer_first_attempt")}</li>
                   </Ol>
                 )}
               </div>
