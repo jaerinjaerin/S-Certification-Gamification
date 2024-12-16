@@ -1,0 +1,405 @@
+[
+  {
+    "name": "Hungary",
+    "code": "NAT_2348",
+    "regionId": "3",
+    "subsidaryId": "11",
+    "channels": [
+      {
+        "name": "Telekom",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Yettel",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Media Markt",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Euronics",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "name": "Portugal",
+    "code": "NAT_2620",
+    "regionId": "3",
+    "subsidaryId": "45",
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "FNAC",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "WORTEN",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "RADIO POPULAR",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "ECI",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "AUCHAN",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "MEO",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "NOS",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "VODAFONE",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "BPI (Bank)",
+        "jobId": "8",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "name": "Spain",
+    "code": "NAT_2724",
+    "regionId": "3",
+    "subsidaryId": "46",
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "ECI",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "FNAC",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "CARREFOUR",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "WORTEN",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "MOVISTAR",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "ORANGE",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "name": "Cambodia",
+    "code": "NAT_2116",
+    "regionId": "6",
+    "subsidaryId": "47",
+    "channels": [
+      {
+        "name": "APSARA MOBILE PHONE CO.,LTD.",
+        "jobId": "8",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "SMART AXIATA CO.,LTD",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "KEON LEADER CO.,LTD",
+        "jobId": "8",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "RSNK ELECTRONIC CO.,LTD.",
+        "jobId": "8",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "UNIQUE IMPORT EXPORT CO.,LTD.",
+        "jobId": "8",
+        "channelSegmentId": "3"
+      }
+    ]
+  },
+  {
+    "name": "Poland",
+    "code": "NAT_2616",
+    "regionId": "3",
+    "subsidaryId": "6",
+    "channels": [
+      {
+        "name": "RtvEuroAgd",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "X-kom",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Media Markt",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Media Expert",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Komputronik",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Orange",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Play",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Plus",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "T-Mobile",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "AGD Galicja",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Auchan",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "NeoNet",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Tele Magic",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "name": "Latvia",
+    "code": "NAT_2428",
+    "regionId": "3",
+    "subsidaryId": "12",
+    "channels": [
+      {
+        "name": "Tele2",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "LMT",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "name": "Lithuania",
+    "code": "NAT_2440",
+    "regionId": "3",
+    "subsidaryId": "12",
+    "channels": [
+      {
+        "name": "Telia",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "name": "Singapore",
+    "code": "NAT_2702",
+    "regionId": "6",
+    "subsidaryId": "26",
+    "channels": [
+      {
+        "name": "Singtel",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "M1",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Starhub",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Best Denki",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Courts",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Challenger",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Harvey Norman",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Gain City",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "e-Promoter",
+        "jobId": "9",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Customer Service",
+        "jobId": "10",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "name": "COLOMBIA",
+    "code": "",
+    "regionId": "8",
+    "subsidaryId": "31",
+    "channels": [
+      {
+        "name": "CLARO",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "name": "ARGENTINA",
+    "code": "",
+    "regionId": "8",
+    "subsidaryId": "33",
+    "channels": [
+      {
+        "name": "Claro CAC",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Diggit",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Fravega",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Movistar Agentes",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Personal OC",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Musimundo",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Claro Agentes",
+        "jobId": "8",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "name": "Japan",
+    "code": "NAT_2392",
+    "regionId": null,
+    "subsidaryId": "44",
+    "channels": [
+      {
+        "name": "Docomo",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "KDDI",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Softbank",
+        "jobId": "8",
+        "channelSegmentId": "1"
+      }
+    ]
+  }
+]

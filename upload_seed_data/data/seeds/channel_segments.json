@@ -1,7 +1,22 @@
 [
-  { "id": "1", "name": "Carrier(Operator)" },
-  { "id": "2", "name": "Retailer (MM/IT/Traditaionl etc)" },
-  { "id": "3", "name": "Retailer (Pure plyer)" },
-  { "id": "4", "name": "samsung.com" },
-  { "id": "5", "name": "others" }
+  {
+    "id": "1",
+    "name": "Carrier(Operator)"
+  },
+  {
+    "id": "2",
+    "name": "Retailer (MM/IT/Traditaionl etc)"
+  },
+  {
+    "id": "3",
+    "name": "Retailer (Pure plyer)"
+  },
+  {
+    "id": "4",
+    "name": "samsung.com"
+  },
+  {
+    "id": "5",
+    "name": "others"
+  }
 ]

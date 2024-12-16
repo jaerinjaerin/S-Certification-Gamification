@@ -1,3 +1,16 @@
+# Domain, Regeion, Subsidary 데이타 만들기
+
+1. domain/input_data.json을 수기로 마련 (certificaiton_acitivity code.xlsx 파일 참조)
+2. 아래의 명령어를 터미널에서 실행
+
+```
+$ python create.py
+```
+
+3. seeds 폴더 안에 생성된 domains.json, regions.json subsidaries.json 확인
+
+# Channels 데이타 만들기 (유저 )
+
 # 번역본 엑셀 파일을 Json 형태로 변환하기
 
 1. 번역본 파일을 data/origins에 위치

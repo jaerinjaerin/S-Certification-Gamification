@@ -1,3 +1,4 @@
+import { prisma } from "@/prisma-client";
 import { signIn } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 
