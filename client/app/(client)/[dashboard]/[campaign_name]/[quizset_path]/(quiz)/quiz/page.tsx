@@ -1,20 +1,20 @@
 "use client";
 
+import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
 import {
   ErrorAlertDialog,
   GameOverAlertDialog,
 } from "@/app/components/quiz/alert-dialog";
+import CountDownBar from "@/app/components/quiz/countdown-bar";
 import Qusetion from "@/app/components/quiz/question-area";
 import { useCountdown } from "@/app/hooks/useCountdown";
-import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
-import { QuestionOption } from "@prisma/client";
-import { Fragment, useEffect, useState } from "react";
-import { motion } from "motion/react";
-import CountDownBar from "@/app/components/quiz/countdown-bar";
-import { cn, fixedClass } from "@/lib/utils";
-import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
 import { sleep } from "@/app/lib/utils";
+import { cn, fixedClass } from "@/lib/utils";
+import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { QuestionOption } from "@prisma/client";
+import { motion } from "motion/react";
+import { Fragment, useEffect, useState } from "react";
 
 export default function QuizPage() {
   const {

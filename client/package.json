@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "cp -f .env.dev .env && next dev -p 3000",
+    "local": "cp -f .env.local .env && next dev -p 3000",
+    "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": "next build",
     "build:analyze": "npm run build && source-map-explorer .next/static/**/*.js",
     "analyze": "ANALYZE=true next build",
@@ -12,12 +14,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:migrate:dev": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma migrate dev --schema=../data-model/prisma/schema.prisma",
-    "prisma:migrate:deploy": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma migrate deploy --schema=../data-model/prisma/schema.prisma",
-    "prisma:db:push": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma db push --schema=../data-model/prisma/schema.prisma",
-    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma",
-    "prisma:seed": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client ts-node ./seed.ts --schema=../data-model/prisma/schema.prisma",
-    "prisma:dbreset": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma db push --force-reset --schema=../data-model/prisma/schema.prisma"
+    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",

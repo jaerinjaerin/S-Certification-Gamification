@@ -20,57 +20,7 @@ async function main() {
     // Create Regions
     let filePath;
     let fileContent;
-    /*
-    let filePath = path.join(process.cwd(), "data", "seeds", "regions.json");
 
-    // JSON 파일 읽기
-    let fileContent = fs.readFileSync(filePath, "utf-8");
-    const regions = JSON.parse(fileContent);
-
-    // 데이터 삽입
-    await prisma.region.createMany({
-      data: regions.map((language: any) => ({
-        id: language.id,
-        name: language.name,
-      })),
-      skipDuplicates: true, // 중복된 데이터를 무시
-    });
-
-    // Create Regions
-    filePath = path.join(process.cwd(), "data", "seeds", "subsidaries.json");
-
-    // JSON 파일 읽기
-    fileContent = fs.readFileSync(filePath, "utf-8");
-    const subsidaries = JSON.parse(fileContent);
-
-    // 데이터 삽입
-    await prisma.subsidary.createMany({
-      data: subsidaries.map((language: any) => ({
-        id: language.id,
-        name: language.name,
-      })),
-      skipDuplicates: true, // 중복된 데이터를 무시
-    });
-
-    // Create Domains
-    filePath = path.join(process.cwd(), "data", "seeds", "domains.json");
-
-    // JSON 파일 읽기
-    fileContent = fs.readFileSync(filePath, "utf-8");
-    const domains = JSON.parse(fileContent);
-
-    // 데이터 삽입
-    await prisma.domain.createMany({
-      data: domains.map((domain: any) => ({
-        id: domain.id,
-        name: domain.name,
-        code: domain.code,
-        regionId: domain.regionId,
-        subsidaryId: domain.subsidaryId,
-      })),
-      skipDuplicates: true, // 중복된 데이터를 무시
-    });
-    */
     filePath = path.join(
       process.cwd(),
       "data",

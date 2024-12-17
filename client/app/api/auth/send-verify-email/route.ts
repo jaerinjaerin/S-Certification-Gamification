@@ -60,11 +60,11 @@ export async function POST(request: NextRequest) {
         Body: {
           Html: {
             Charset: "UTF-8",
-            Data: `<h1>Hello</h1><p>This is a test email.</p>. code: ${randomCode}`,
+            Data: `<h1>Hello</h1><p>Please enter the verification code.</p>. Code: ${randomCode}`,
           },
           Text: {
             Charset: "UTF-8",
-            Data: `Hello\nThis is a test email. code: ${randomCode}`,
+            Data: `Hello\nPlease enter the verification code.\nCode: ${randomCode}`,
           },
         },
         Subject: {
