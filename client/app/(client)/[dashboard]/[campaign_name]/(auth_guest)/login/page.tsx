@@ -33,9 +33,7 @@ import { useCountdown } from "usehooks-ts";
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
-    "init"
-  );
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,9 +41,8 @@ export default function GuestLogin() {
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({ countStart: 60 });
-  const t = useTranslations("login");
+  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
+  const translation = useTranslations("login");
 
   console.log("loading", loading, error, expiresAt);
 
@@ -114,34 +111,25 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{ backgroundImage: `url('/assets/bg_main.png')` }}
-      >
+      <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
         <div className="flex flex-col items-center">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center">
             <div className="mb-[70px]">
-              <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">
-                {t("be a galaxy ai expert")}
-              </span>
-              <span className="block text-[30px] font-medium text-center">
-                {t("certification")}
-              </span>
+              <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">{translation("be a galaxy ai expert")}</span>
+              <span className="block text-[30px] font-medium text-center">{translation("certification")}</span>
             </div>
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant={"primary"} onClick={() => setStep("email")}>
-                  {t("login")}
+                  {translation("login")}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>{t("login")}</DialogTitle>
-                  <DialogDescription>
-                    {t("send code your email")}
-                  </DialogDescription>
+                  <DialogTitle>{translation("login")}</DialogTitle>
+                  <DialogDescription>{translation("send code your email")}</DialogDescription>
                 </DialogHeader>
                 <div>
                   <form
@@ -152,7 +140,7 @@ export default function GuestLogin() {
                     }}
                   >
                     <input
-                      placeholder={t("email")}
+                      placeholder={translation("email")}
                       className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -169,7 +157,7 @@ export default function GuestLogin() {
                     form="verify-email"
                     disabled={!email || loading}
                   >
-                    {t("send code")}
+                    {translation("send code")}
                   </Button>
                   <DialogClose className="absolute top-5 right-5">
                     <X className="h-4 w-4" />
@@ -230,12 +218,10 @@ export default function GuestLogin() {
       <Dialog open={step === "code"}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("confirm your email")}</DialogTitle>
+            <DialogTitle>{translation("confirm your email")}</DialogTitle>
             <DialogDescription>
-              {t.rich("magic link sent", {
-                address: (children) => (
-                  <span className="text-blue-500">{children}</span>
-                ),
+              {translation.rich("magic link sent", {
+                address: (children) => <span className="text-blue-500">{children}</span>,
                 email,
               })}
             </DialogDescription>
@@ -257,15 +243,9 @@ export default function GuestLogin() {
                 autoFocus
                 required
               />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
-                {formatToMMSS(count)}
-              </div>
+              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div>
             </form>
-            {verifyToken?.expiresAt && (
-              <p>
-                Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
-              </p>
-            )}
+            {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
           </div>
           <DialogFooter
             className="flex-col items-center gap-5"
@@ -281,7 +261,7 @@ export default function GuestLogin() {
               disabled={!code || loading}
               onClick={verifyCode}
             >
-              {t("submit")}
+              {translation("submit")}
             </Button>
             <div className="mx-auto">
               <button
@@ -289,13 +269,10 @@ export default function GuestLogin() {
                 disabled={count > 0}
                 onClick={sendEmail}
               >
-                {t("resend code")}
+                {translation("resend code")}
               </button>
             </div>
-            <DialogClose
-              className="absolute top-5 right-5"
-              onClick={() => setStep("email")}
-            >
+            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </DialogClose>
