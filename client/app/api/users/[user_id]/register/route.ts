@@ -9,19 +9,41 @@ export async function POST(request: Request) {
 
     /*
     body: {
-      domainId: selectedDomain?.id,
-      jobId: selectedSalesFormat?.jobId,
-      languageId: selectedLanguage?.id,
-      channelSegmentId: selectedChannel?.id,
-      salesFormatId: selectedSalesFormat?.id,
+      domainCode: selectedCountry.code,
+      subsidaryId: selectedCountry.subsidaryId,
+      regionId: selectedCountry.regionId,
+      jobId: selectedJobId,
+      languageCode: languageCode,
+      channelSegmentId: selectedChannelSegmentId,
     }
     */
+
+    const domain = await prisma.domain.findFirst({
+      where: {
+        code: body.domainCode,
+      },
+    });
+
+    const language = await prisma.language.findFirst({
+      where: {
+        code: body.languageCode,
+      },
+    });
 
     const user = await prisma.user.update({
       where: {
         id: session?.user.id,
       },
-      data: body,
+      data: {
+        domainId: domain?.id,
+        languageId: language?.id ?? "en-US",
+        jobId: body.jobId,
+        regionId: body.regionId,
+        subsidaryId: body.subsidaryId,
+        channelSegmentId: body.channelSegmentId,
+        storeId: body.storeId,
+        channelId: body.channelId,
+      },
       include: {
         domain: true,
         language: true,

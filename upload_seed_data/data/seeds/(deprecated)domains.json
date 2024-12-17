@@ -1,0 +1,660 @@
+[
+  {
+    "id": "1",
+    "regionId": "1",
+    "subsidaryId": "1",
+    "name": "HQ Retail Team",
+    "code": "HQ_NAT_0001"
+  },
+  {
+    "id": "2",
+    "regionId": "2",
+    "subsidaryId": "2",
+    "name": "Canada",
+    "code": "NAT_7000"
+  },
+  {
+    "id": "3",
+    "regionId": "3",
+    "subsidaryId": "3",
+    "name": "France",
+    "code": "NAT_2250"
+  },
+  {
+    "id": "4",
+    "regionId": "3",
+    "subsidaryId": "4",
+    "name": "Italy",
+    "code": "NAT_2380"
+  },
+  {
+    "id": "5",
+    "regionId": "3",
+    "subsidaryId": "5",
+    "name": "Spain",
+    "code": "NAT_2724"
+  },
+  {
+    "id": "6",
+    "regionId": "3",
+    "subsidaryId": "5",
+    "name": "Portugal",
+    "code": "NAT_2620"
+  },
+  {
+    "id": "7",
+    "regionId": "3",
+    "subsidaryId": "6",
+    "name": "Poland",
+    "code": "NAT_2616"
+  },
+  {
+    "id": "8",
+    "regionId": "3",
+    "subsidaryId": "7",
+    "name": "Switzerland",
+    "code": "NAT_2756"
+  },
+  {
+    "id": "9",
+    "regionId": "3",
+    "subsidaryId": "7",
+    "name": "Austria",
+    "code": "NAT_2040"
+  },
+  {
+    "id": "10",
+    "regionId": "3",
+    "subsidaryId": "8",
+    "name": "Bulgaria",
+    "code": "NAT_2100"
+  },
+  {
+    "id": "11",
+    "regionId": "3",
+    "subsidaryId": "8",
+    "name": "Romania",
+    "code": "NAT_2642"
+  },
+  {
+    "id": "12",
+    "regionId": "3",
+    "subsidaryId": "9",
+    "name": "Czech Republic",
+    "code": "NAT_2203"
+  },
+  {
+    "id": "13",
+    "regionId": "3",
+    "subsidaryId": "9",
+    "name": "Slovakia",
+    "code": "NAT_2703"
+  },
+  {
+    "id": "14",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Albania",
+    "code": "NAT_2008"
+  },
+  {
+    "id": "15",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Bosnia and Herzegovina",
+    "code": "NAT_2070"
+  },
+  {
+    "id": "16",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Croatia",
+    "code": "NAT_2191"
+  },
+  {
+    "id": "17",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Macedonia (FYROM)",
+    "code": "NAT_2807"
+  },
+  {
+    "id": "18",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Serbia",
+    "code": "NAT_2688"
+  },
+  {
+    "id": "19",
+    "regionId": "3",
+    "subsidaryId": "10",
+    "name": "Slovenia",
+    "code": "NAT_2705"
+  },
+  {
+    "id": "20",
+    "regionId": "3",
+    "subsidaryId": "11",
+    "name": "Hungary",
+    "code": "NAT_2348"
+  },
+  {
+    "id": "21",
+    "regionId": "3",
+    "subsidaryId": "12",
+    "name": "Estonia",
+    "code": "NAT_2233"
+  },
+  {
+    "id": "22",
+    "regionId": "3",
+    "subsidaryId": "12",
+    "name": "Latvia",
+    "code": "NAT_2428"
+  },
+  {
+    "id": "23",
+    "regionId": "3",
+    "subsidaryId": "12",
+    "name": "Lithuania",
+    "code": "NAT_2440"
+  },
+  {
+    "id": "24",
+    "regionId": "3",
+    "subsidaryId": "13",
+    "name": "Greece",
+    "code": "NAT_2300"
+  },
+  {
+    "id": "25",
+    "regionId": "3",
+    "subsidaryId": "13",
+    "name": "Cyprus",
+    "code": "NAT_19602"
+  },
+  {
+    "id": "26",
+    "regionId": "3",
+    "subsidaryId": "14",
+    "name": "Sweden",
+    "code": "NAT_021501"
+  },
+  {
+    "id": "27",
+    "regionId": "3",
+    "subsidaryId": "14",
+    "name": "Finland",
+    "code": "NAT_021502"
+  },
+  {
+    "id": "28",
+    "regionId": "3",
+    "subsidaryId": "14",
+    "name": "Norway",
+    "code": "NAT_021503"
+  },
+  {
+    "id": "29",
+    "regionId": "3",
+    "subsidaryId": "14",
+    "name": "Denmark",
+    "code": "NAT_021504"
+  },
+  {
+    "id": "30",
+    "regionId": "3",
+    "subsidaryId": "15",
+    "name": "Germany",
+    "code": "NAT_2276"
+  },
+  {
+    "id": "31",
+    "regionId": "3",
+    "subsidaryId": "16",
+    "name": "United Kingdom",
+    "code": "NAT_021505"
+  },
+  {
+    "id": "32",
+    "regionId": "4",
+    "subsidaryId": "17",
+    "name": "Russia",
+    "code": "NAT_2643"
+  },
+  {
+    "id": "33",
+    "regionId": "4",
+    "subsidaryId": "17",
+    "name": "Azerbaijan",
+    "code": "NAT_2645"
+  },
+  {
+    "id": "34",
+    "regionId": "4",
+    "subsidaryId": "17",
+    "name": "Georgia",
+    "code": "NAT_2644"
+  },
+  {
+    "id": "35",
+    "regionId": "4",
+    "subsidaryId": "18",
+    "name": "Kazakhstan",
+    "code": "NAT_2398"
+  },
+  {
+    "id": "36",
+    "regionId": "4",
+    "subsidaryId": "18",
+    "name": "Kyrgyzstan",
+    "code": "NAT_41702"
+  },
+  {
+    "id": "37",
+    "regionId": "4",
+    "subsidaryId": "18",
+    "name": "Tajikistan",
+    "code": "NAT_76202"
+  },
+  {
+    "id": "38",
+    "regionId": "4",
+    "subsidaryId": "19",
+    "name": "Uzbekistan",
+    "code": "NAT_2860"
+  },
+  {
+    "id": "39",
+    "regionId": "5",
+    "subsidaryId": "20",
+    "name": "China",
+    "code": "NAT_2156"
+  },
+  {
+    "id": "40",
+    "regionId": "5",
+    "subsidaryId": "21",
+    "name": "Hongkong",
+    "code": "NAT_2344"
+  },
+  {
+    "id": "41",
+    "regionId": "5",
+    "subsidaryId": "22",
+    "name": "Taiwan",
+    "code": "NAT_2158"
+  },
+  {
+    "id": "42",
+    "regionId": "6",
+    "subsidaryId": "23",
+    "name": "Indonesia",
+    "code": "NAT_2360"
+  },
+  {
+    "id": "43",
+    "regionId": "6",
+    "subsidaryId": "24",
+    "name": "Thailand",
+    "code": "NAT_2764"
+  },
+  {
+    "id": "44",
+    "regionId": "6",
+    "subsidaryId": "24",
+    "name": "Cambodia",
+    "code": "NAT_2116"
+  },
+  {
+    "id": "45",
+    "regionId": "6",
+    "subsidaryId": "24",
+    "name": "Laos",
+    "code": "NAT_2418"
+  },
+  {
+    "id": "46",
+    "regionId": "6",
+    "subsidaryId": "25",
+    "name": "Malaysia",
+    "code": "NAT_2458"
+  },
+  {
+    "id": "47",
+    "regionId": "6",
+    "subsidaryId": "26",
+    "name": "Singapore",
+    "code": "NAT_2702"
+  },
+  {
+    "id": "48",
+    "regionId": "7",
+    "subsidaryId": "27",
+    "name": "India",
+    "code": "NAT_2356"
+  },
+  {
+    "id": "49",
+    "regionId": "7",
+    "subsidaryId": "28",
+    "name": "Sri Lanka",
+    "code": "NAT_2144"
+  },
+  {
+    "id": "50",
+    "regionId": "7",
+    "subsidaryId": "29",
+    "name": "Nepal",
+    "code": "NAT_060401"
+  },
+  {
+    "id": "51",
+    "regionId": "7",
+    "subsidaryId": "27",
+    "name": "Bangladesh",
+    "code": "NAT_2050"
+  },
+  {
+    "id": "52",
+    "regionId": "8",
+    "subsidaryId": "30",
+    "name": "Mexico",
+    "code": "NAT_2484"
+  },
+  {
+    "id": "53",
+    "regionId": "8",
+    "subsidaryId": "31",
+    "name": "Colombia",
+    "code": "NAT_2170"
+  },
+  {
+    "id": "54",
+    "regionId": "8",
+    "subsidaryId": "32",
+    "name": "Brazil",
+    "code": "NAT_2076"
+  },
+  {
+    "id": "55",
+    "regionId": "8",
+    "subsidaryId": "33",
+    "name": "Argentina",
+    "code": "NAT_2707"
+  },
+  {
+    "id": "56",
+    "regionId": "8",
+    "subsidaryId": "33",
+    "name": "Paraguay",
+    "code": "NAT_2600"
+  },
+  {
+    "id": "57",
+    "regionId": "8",
+    "subsidaryId": "33",
+    "name": "Uruguay",
+    "code": "NAT_2858"
+  },
+  {
+    "id": "58",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Trinidad and tobago",
+    "code": "NAT_2780"
+  },
+  {
+    "id": "59",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Puerto Rico",
+    "code": "NAT_2630"
+  },
+  {
+    "id": "60",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Panama",
+    "code": "ORG_500"
+  },
+  {
+    "id": "61",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Ecuador",
+    "code": "NAT_2218"
+  },
+  {
+    "id": "62",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Costa Rica",
+    "code": "NAT_2188"
+  },
+  {
+    "id": "63",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Dominican Republic",
+    "code": "NAT_2212"
+  },
+  {
+    "id": "64",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Jamaica",
+    "code": "NAT_2388"
+  },
+  {
+    "id": "65",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Guatemala",
+    "code": "NAT_2631"
+  },
+  {
+    "id": "66",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Honduras",
+    "code": "NAT_2633"
+  },
+  {
+    "id": "67",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "Nicaragua",
+    "code": "NAT_2635"
+  },
+  {
+    "id": "68",
+    "regionId": "8",
+    "subsidaryId": "34",
+    "name": "El Salvador",
+    "code": "NAT_2632"
+  },
+  {
+    "id": "69",
+    "regionId": "8",
+    "subsidaryId": "35",
+    "name": "Chile",
+    "code": "NAT_2152"
+  },
+  {
+    "id": "70",
+    "regionId": "8",
+    "subsidaryId": "35",
+    "name": "Bolivia",
+    "code": "NAT_2068"
+  },
+  {
+    "id": "71",
+    "regionId": "9",
+    "subsidaryId": "36",
+    "name": "United Arab Emirates",
+    "code": "NAT_2784"
+  },
+  {
+    "id": "72",
+    "regionId": "9",
+    "subsidaryId": "36",
+    "name": "Bahrain",
+    "code": "NAT_2048"
+  },
+  {
+    "id": "73",
+    "regionId": "9",
+    "subsidaryId": "36",
+    "name": "Kuwait",
+    "code": "NAT_2414"
+  },
+  {
+    "id": "74",
+    "regionId": "9",
+    "subsidaryId": "36",
+    "name": "Oman",
+    "code": "NAT_2512"
+  },
+  {
+    "id": "75",
+    "regionId": "9",
+    "subsidaryId": "36",
+    "name": "Qatar",
+    "code": "NAT_2634"
+  },
+  {
+    "id": "76",
+    "regionId": "9",
+    "subsidaryId": "37",
+    "name": "Israel",
+    "code": "NAT_37602"
+  },
+  {
+    "id": "77",
+    "regionId": "9",
+    "subsidaryId": "37",
+    "name": "Palestine",
+    "code": "NAT_2275"
+  },
+  {
+    "id": "78",
+    "regionId": "9",
+    "subsidaryId": "38",
+    "name": "Pakistan",
+    "code": "NAT_2586"
+  },
+  {
+    "id": "79",
+    "regionId": "9",
+    "subsidaryId": "39",
+    "name": "Jordan",
+    "code": "NAT_2400"
+  },
+  {
+    "id": "80",
+    "regionId": "9",
+    "subsidaryId": "39",
+    "name": "Iraq",
+    "code": "NAT_2368"
+  },
+  {
+    "id": "81",
+    "regionId": "9",
+    "subsidaryId": "39",
+    "name": "Lebanon",
+    "code": "NAT_2422"
+  },
+  {
+    "id": "82",
+    "regionId": "9",
+    "subsidaryId": "40",
+    "name": "Egypt",
+    "code": "NAT_2818"
+  },
+  {
+    "id": "83",
+    "regionId": "9",
+    "subsidaryId": "41",
+    "name": "Morocco",
+    "code": "NAT_2504"
+  },
+  {
+    "id": "84",
+    "regionId": "9",
+    "subsidaryId": "41",
+    "name": "Tunisia",
+    "code": "NAT_2788"
+  },
+  {
+    "id": "85",
+    "regionId": "9",
+    "subsidaryId": "41",
+    "name": "Algeria",
+    "code": "NAT_2012"
+  },
+  {
+    "id": "86",
+    "regionId": "10",
+    "subsidaryId": "42",
+    "name": "South Africa",
+    "code": "NAT_2710"
+  },
+  {
+    "id": "87",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Kenya (SEEA)",
+    "code": "NAT_2404"
+  },
+  {
+    "id": "88",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Nigeria",
+    "code": "NAT_2566"
+  },
+  {
+    "id": "89",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Senegal",
+    "code": "NAT_2686"
+  },
+  {
+    "id": "90",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Cameroon",
+    "code": "NAT_120"
+  },
+  {
+    "id": "91",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Ghana",
+    "code": "NAT_2288"
+  },
+  {
+    "id": "92",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Mauritius",
+    "code": "NAT_3701"
+  },
+  {
+    "id": "93",
+    "regionId": "10",
+    "subsidaryId": "43",
+    "name": "Ivory Coast",
+    "code": "NAT_384"
+  },
+  {
+    "id": "94",
+    "regionId": "11",
+    "subsidaryId": "44",
+    "name": "Japan_Galaxy Harajuku",
+    "code": "NAT_23961"
+  }
+]

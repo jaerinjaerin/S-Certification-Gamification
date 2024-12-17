@@ -80,12 +80,13 @@ model User {
 
 
   sumtotalDomainId              String?
+  sumtotalDomainCode              String?
   sumtotalJobId              String?
   sumtotalLanguageId              String?
   // sumtotalOrganizationIds String?
   
-  sumtotalChannelSegmentId           String?
-  sumtotalStoreId           String?
+  // sumtotalChannelSegmentId           String?
+  // sumtotalStoreId           String?
   
   // channelSegmentId            String?
   // salesFormatId  String?
@@ -199,15 +200,51 @@ model Campaign {
   updaterId   String?
 
   // campaignDomainQuizSets  CampaignDomainQuizSet[]
-  quizSet  QuizSet[]
+  quizSets  QuizSet[]
+}
+
+model Hq {
+  id         String   @id 
+  name       String
+  code       String   @unique // Domain name
+
+  regions Region[] 
+}
+
+model Region {
+  id         String   @id 
+  name String
+  code       String   @unique // Domain name
+
+  hqId String?
+  hq Hq? @relation(fields: [hqId], references: [id])
+
+  subsidaries Subsidary[]
+
+  // domain Domain[]
+}
+
+model Subsidary {
+  id         String   @id 
+  name String
+  code       String   @unique // Domain name
+
+  regionId String?
+  region Region? @relation(fields: [regionId], references: [id])
+
+  domains Domain[]
+  quizSets  QuizSet[]
 }
 
 model Domain {
-  id         String   @id @default(uuid())
+  id         String   @id 
   name       String
   code       String   @unique // Domain name
-  region   String
-  subsidary  String
+  // regionId   String
+  subsidaryId  String?
+
+  // region   Region @relation(fields: [regionId], references: [id])
+  subsidary   Subsidary? @relation(fields: [subsidaryId], references: [id])
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -224,7 +261,8 @@ model QuizSet {
   // path       String
   // paths       String[]
   campaignId String      // Foreign key to Campaign
-  domainId   String      // Foreign key to Domain
+  domainId   String?      // Foreign key to Domain
+  subsidaryId   String?      // Foreign key to Subsidary
   // jobId             String
   // jobIds             String[]
   jobCodes             String[]
@@ -246,7 +284,8 @@ model QuizSet {
   updatedAt   DateTime    @updatedAt
 
   campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  domain     Domain      @relation(fields: [domainId], references: [id])
+  domain     Domain?      @relation(fields: [domainId], references: [id])
+  subsidary   Subsidary?      @relation(fields: [subsidaryId], references: [id])
   // language     Language      @relation(fields: [languageId], references: [id])
 
   userQuizLogs UserQuizLog[]
@@ -414,7 +453,7 @@ model UserQuizLog {
 
 
   campaignId String
-  domainId String
+  domainId String?
   languageId String?
 
   jobId       String?
@@ -502,7 +541,7 @@ model UserQuizQuestionLog {
   jobId String
   languageId String?
 
-  domainId String
+  domainId String?
 
   regionId String?
   subsidaryId String?

@@ -1,5 +1,16 @@
 "use client";
 import { Button } from "@/app/components/ui/button";
+import useCreateItem from "@/app/hooks/useCreateItem";
+import { getUserLocale } from "@/app/services/locale";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   Dialog,
   DialogContent,
@@ -15,29 +26,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useCreateItem from "@/app/hooks/useCreateItem";
+import { cn } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { Language } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
-import { getUserLocale } from "@/app/services/locale";
 
-interface ChannelSegment {
-  name: string;
-  id: string;
-}
+// interface ChannelSegment {
+//   name: string;
+//   id: string;
+// }
 
 interface Job {
   name: string;
@@ -47,15 +46,15 @@ interface Job {
 interface Channel {
   name: string;
   job: Job;
-  channelSegment: ChannelSegment;
+  channelSegmentId: string;
 }
 
 interface Country {
   channels: Channel[];
   name: string;
   code: string;
-  region: string;
-  subsidary: string;
+  regionId: string;
+  subsidaryId: string;
 }
 
 export default function GuestRegisterPage() {
@@ -66,41 +65,46 @@ export default function GuestRegisterPage() {
   // state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegment, setSelectedChannelSegment] =
-    useState<ChannelSegment | null>(null);
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-  // const [selectedSalesFormat, setSelectedSalesFormat] =
-  //   useState<SalesFormat | null>(null);
-  // const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
-  //   null
-  // );
+  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
+    string | null
+  >(null);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [language, setLanguage] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
+  const [languageCode, setLanguageCode] = useState<string | undefined>(
+    undefined
+  ); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<Country[]>([]);
   const [channels, setChannels] = useState<Channel[]>([]);
-  // const [salesFormats, setSalesFormats] = useState<SalesFormatEx[]>([]);
-  const [languages, setLanguages] = useState<Language[]>([]);
-  // const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   // const {
-  //   isLoading,
-  //   error,
-  //   items: domains,
-  // } = useGetItemList<DomainEx>({ url: "/api/domains" });
-
   const fetchConutries = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        // `${process.env.API_URL}/assets/jsons/channels.json`
-        `http://localhost:3000/assets/jsons/channels.json`
-      ); // 개발 중에는 localhost, 배포 시에는 배포 URL
-      const data = await res.json();
-      console.log("data", data);
-      setCountries(data as Country[]);
+      const response = await fetch(`/api/channels`, {
+        method: "GET",
+        // cache: "force-cache",
+        cache: "no-cache",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch domains");
+      }
+
+      const data = await response.json();
+
+      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels.json`;
+      // console.log("jsonUrl", jsonUrl);
+      // const res = await fetch(
+      //   jsonUrl
+      //   // `http://localhost:3000/assets/jsons/channels.json`
+      // ); // 개발 중에는 localhost, 배포 시에는 배포 URL
+      // const data = await res.json();
+      // console.log("data", data);
+      setCountries(data.items as Country[]);
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
@@ -110,7 +114,8 @@ export default function GuestRegisterPage() {
 
   const fetchLanguage = async () => {
     const locale = await getUserLocale();
-    setLanguage(locale);
+    console.log("locale", locale);
+    setLanguageCode(locale);
   };
 
   useEffect(() => {
@@ -124,35 +129,6 @@ export default function GuestRegisterPage() {
     item: campaignPath,
     createItem,
   } = useCreateItem<string>();
-
-  // console.log("user", session?.user);
-
-  // if (session?.user.provider !== AuthType.GUEST) {
-  //   console.log("redirect to dashboard");
-  //   // routeToError("/error/not-found");
-  // }
-
-  // const fetchLanguages = async (domainId: string, jobId: string) => {
-  //   const response = await fetch(`/api/campaigns/domains/${domainId}/jobs/${jobId}/languages`, {
-  //     method: "GET",
-  //     // cache: "force-cache",
-  //     cache: "no-cache",
-  //   });
-
-  //   if (!response.ok) {
-  //     const errorData = await response.json();
-  //     throw new Error(errorData.message || "Failed to fetch domains");
-  //   }
-
-  //   const data = await response.json();
-  //   setLanguages(data.items);
-  // };
-
-  // useEffect(() => {
-  //   if (selectedSalesFormat && selectedDomain?.id && selectedSalesFormat?.jobId) {
-  //     fetchLanguages(selectedDomain?.id, selectedSalesFormat?.jobId);
-  //   }
-  // }, [selectedSalesFormat, selectedDomain]);
 
   useEffect(() => {
     if (campaignPath) {
@@ -168,11 +144,7 @@ export default function GuestRegisterPage() {
     setSelectedCountry(country!);
     const channels = country!.channels;
     setChannels(channels ?? []);
-    setLanguages([]);
     setSelectedChannel(null);
-    // setSalesFormats([]);
-    // setSelectedSalesFormat(null);
-    // setSelectedLanguage(null);
   };
 
   const selectChannel = (channelName: string) => {
@@ -182,54 +154,30 @@ export default function GuestRegisterPage() {
       return;
     }
     setSelectedChannel(channel);
-    setSelectedChannelSegment(channel.channelSegment);
-    setSelectedJob(channel.job);
+    setSelectedChannelSegmentId(channel.channelSegmentId);
+    setSelectedJobId(channel.job.id);
 
     console.log("selectedChannel", channel);
-    console.log("selectedChannelSegment", channel.channelSegment);
-    console.log("selectedJob", channel.job);
-
-    // const salesFormats = channel.salesFormats;
-    // setSalesFormats(salesFormats ?? []);
-    // setLanguages([]);
-
-    // setSelectedSalesFormat(null);
-    // setSelectedLanguage(null);
+    console.log("selectedChannelSegment", channel.channelSegmentId);
+    console.log("selectedJob", channel.job.id);
   };
 
-  // const selectSalesFormat = (salesFormatId: string) => {
-  //   const salesFormat = salesFormats!.find(
-  //     (c: SalesFormat) => c.id === salesFormatId
-  //   );
-  //   if (!salesFormat) {
-  //     alert("Sales Format not found. Please select a valid sales format.");
-  //     return;
-  //   }
-  //   // setSelectedSalesFormat(salesFormat);
-
-  //   // setSelectedLanguage(null);
-  // };
-
-  // const selectLanguage = (languageId: string) => {
-  //   const language = languages.find((l) => l.id === languageId);
-  //   if (!language) {
-  //     alert("Language not found. Please select a valid language.");
-  //     return;
-  //   }
-  //   setSelectedLanguage(language);
-  // };
-
   const routeQuizPage = () => {
+    if (!selectedCountry) {
+      assert(false, "Please select a country.");
+    }
     // TODO: 코드 수정 필요
-    // createItem({
-    //   url: `/api/users/${session?.user.id}/register`,
-    //   body: {
-    //     domainCode: selectedCountry?.code,
-    //     jobId: selectedJob?.id,
-    //     // languageId: selectedLanguage?.id,
-    //     channelSegmentId: selectedChannelSegment?.id,
-    //   },
-    // });
+    createItem({
+      url: `/api/users/${session?.user.id}/register`,
+      body: {
+        domainCode: selectedCountry.code,
+        subsidaryId: selectedCountry.subsidaryId,
+        regionId: selectedCountry.regionId,
+        jobId: selectedJobId,
+        languageCode: languageCode,
+        channelSegmentId: selectedChannelSegmentId,
+      },
+    });
   };
 
   // const errorMessage = error || errorCreate;
@@ -298,9 +246,7 @@ export default function GuestRegisterPage() {
                 )}
               >
                 <SelectValue>
-                  {selectedChannel === null
-                    ? t("channel")
-                    : selectedChannel.name}
+                  {selectedChannel === null ? t("channel") : selectChannel.name}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
@@ -368,8 +314,9 @@ export default function GuestRegisterPage() {
                 loadingCreate ||
                 !selectedCountry ||
                 !selectedChannel ||
-                !selectedChannelSegment ||
-                !selectedJob
+                !selectedChannelSegmentId ||
+                !selectedJobId ||
+                !languageCode
               }
               onClick={routeQuizPage}
               className="disabled:bg-disabled"

@@ -5,14 +5,23 @@ import { getMessages } from "next-intl/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: { campaign_name: string } }) {
+export default async function CampaignLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { campaign_name: string };
+}) {
   console.log("CampaignLayout", params);
 
-  const response = await fetch(`${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`, {
-    method: "GET",
-    // headers: { "Content-Type": "application/json" },
-    cache: "force-cache",
-  });
+  const response = await fetch(
+    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    {
+      method: "GET",
+      // headers: { "Content-Type": "application/json" },
+      cache: "force-cache",
+    }
+  );
 
   const routeCommonError = () => {
     redirect("/error");
@@ -24,7 +33,7 @@ export default async function CampaignLayout({ children, params }: { children: R
   }
   const data = (await response.json()) as { item: Campaign };
 
-  console.log("QuizProvider fetchData data", data);
+  // console.log("QuizProvider fetchData data", data);
 
   if (data.item == null) {
     routeCommonError();

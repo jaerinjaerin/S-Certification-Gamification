@@ -17,23 +17,129 @@ async function main() {
 
   // Create Campaign
   const createSeeds = async () => {
-    // Create Domains
-    let filePath = path.join(process.cwd(), "data", "seeds", "domains.json");
+    // Create Regions
+    let filePath;
+    let fileContent;
+    /*
+    let filePath = path.join(process.cwd(), "data", "seeds", "regions.json");
 
     // JSON 파일 읽기
     let fileContent = fs.readFileSync(filePath, "utf-8");
+    const regions = JSON.parse(fileContent);
+
+    // 데이터 삽입
+    await prisma.region.createMany({
+      data: regions.map((language: any) => ({
+        id: language.id,
+        name: language.name,
+      })),
+      skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    // Create Regions
+    filePath = path.join(process.cwd(), "data", "seeds", "subsidaries.json");
+
+    // JSON 파일 읽기
+    fileContent = fs.readFileSync(filePath, "utf-8");
+    const subsidaries = JSON.parse(fileContent);
+
+    // 데이터 삽입
+    await prisma.subsidary.createMany({
+      data: subsidaries.map((language: any) => ({
+        id: language.id,
+        name: language.name,
+      })),
+      skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    // Create Domains
+    filePath = path.join(process.cwd(), "data", "seeds", "domains.json");
+
+    // JSON 파일 읽기
+    fileContent = fs.readFileSync(filePath, "utf-8");
     const domains = JSON.parse(fileContent);
 
     // 데이터 삽입
     await prisma.domain.createMany({
       data: domains.map((domain: any) => ({
+        id: domain.id,
         name: domain.name,
         code: domain.code,
-        region: domain.region,
-        subsidary: domain.subsidary,
+        regionId: domain.regionId,
+        subsidaryId: domain.subsidaryId,
       })),
       skipDuplicates: true, // 중복된 데이터를 무시
     });
+    */
+    filePath = path.join(
+      process.cwd(),
+      "data",
+      "seeds",
+      "grouped_domains.json"
+    );
+
+    fileContent = fs.readFileSync(filePath, "utf-8");
+    const allDomains = JSON.parse(fileContent);
+
+    const hqs = allDomains.hq;
+    const regions = allDomains.regions;
+    const subsidaries = allDomains.subsidaries;
+    const domains = allDomains.domains;
+
+    console.log("domains", domains);
+
+    // 데이터 삽입
+    await prisma.hq.createMany({
+      data: hqs.map((region: any) => ({
+        id: region.domainId.toString(),
+        code: region.domainCode.toString(),
+        name: region.domainName,
+      })),
+      // skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    await prisma.region.createMany({
+      data: regions.map((region: any) => ({
+        id: region.domainId.toString(),
+        code: region.domainCode.toString(),
+        name: region.domainName,
+        hqId:
+          hqs
+            .find((hq) => hq.domainId === region.parentDomainId)
+            ?.domainId?.toString() ?? null,
+      })),
+      // skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    await prisma.subsidary.createMany({
+      data: subsidaries.map((subsidiary: any) => ({
+        id: subsidiary.domainId.toString(),
+        code: subsidiary.domainCode.toString(),
+        name: subsidiary.domainName,
+        regionId:
+          regions
+            .find((region) => region.domainId === subsidiary.parentDomainId)
+            ?.domainId?.toString() ?? null,
+      })),
+      // skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    const resultDomains = await prisma.domain.createMany({
+      data: domains.map((country: any) => ({
+        id: country.domainId.toString(),
+        code: country.domainCode.toString(),
+        name: country.domainName,
+        subsidaryId:
+          subsidaries
+            .find(
+              (subsidiary) => subsidiary.domainId === country.parentDomainId
+            )
+            ?.domainId?.toString() ?? null,
+      })),
+      // skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    console.log("resultDomains", resultDomains);
 
     // Create Jobs
     filePath = path.join(process.cwd(), "data", "seeds", "jobs.json");
@@ -51,7 +157,7 @@ async function main() {
         name: job.name,
         description: job.description,
       })),
-      skipDuplicates: true, // 중복된 데이터를 무시
+      // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     // Create Channel Segments
@@ -72,7 +178,7 @@ async function main() {
         id: channel.id,
         name: channel.name,
       })),
-      skipDuplicates: true, // 중복된 데이터를 무시
+      // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     // Create Stores
@@ -88,7 +194,7 @@ async function main() {
         id: store.id,
         name: store.name,
       })),
-      skipDuplicates: true, // 중복된 데이터를 무시
+      // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     // Create Languages
@@ -104,7 +210,7 @@ async function main() {
         code: language.code,
         name: language.name,
       })),
-      skipDuplicates: true, // 중복된 데이터를 무시
+      // skipDuplicates: true, // 중복된 데이터를 무시
     });
   };
 
@@ -140,15 +246,32 @@ async function main() {
       // 파일명 구조 파싱
       const [domainCode, languageCode] = baseFileName.split(".");
 
-      const domain = await prisma.domain.findFirst({
-        where: { code: domainCode },
-      });
-      const language = await prisma.language.findFirst({
+      const domainOrSubsidary =
+        domainCode === "HQ_NAT_0001"
+          ? await prisma.subsidary.findFirst({
+              where: { code: domainCode },
+            })
+          : await prisma.domain.findFirst({
+              where: { code: domainCode },
+            });
+
+      let language = await prisma.language.findFirst({
         where: { code: languageCode },
       });
 
-      if (!domain || !language) {
-        console.warn(`Domain or Language not found for file: ${fileName}`);
+      // if (!language)  {
+      //   language = await prisma.language.findFirst({
+      //     where: { code: "en-US" },
+      //   });
+      // }
+
+      if (!domainOrSubsidary) {
+        console.warn(`Domain not found for file: ${fileName}`);
+        continue;
+      }
+
+      if (!language) {
+        console.warn(`Language not found for file: ${fileName}`);
         continue;
       }
 
@@ -207,11 +330,15 @@ async function main() {
       const quizSet = await prisma.quizSet.create({
         data: {
           campaignId: campaign.id,
-          domainId: domain.id,
+          domainId: domainCode === "HQ_NAT_0001" ? null : domainOrSubsidary.id,
+          subsidaryId:
+            domainCode === "HQ_NAT_0001" ? domainOrSubsidary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
       });
+
+      console.log("quizSet", quizSet);
 
       const stages = [
         ...new Set(questions.map((question) => question.stage)),

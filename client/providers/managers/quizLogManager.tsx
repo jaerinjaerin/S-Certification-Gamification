@@ -14,7 +14,8 @@ export type QuizLog = {
   selectedOptionIds: string[];
   correctOptionIds: string[];
   jobId: string;
-  domainId: string;
+  domainId: string | null;
+  subsidaryId: string | null;
   stageIndex: number;
   category: string;
   specificFeature: string;

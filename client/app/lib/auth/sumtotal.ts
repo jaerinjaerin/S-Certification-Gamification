@@ -33,6 +33,7 @@ interface PersonDomain {
   isPrimary: boolean;
   deleted: number;
   code: string;
+  id: string;
 }
 
 interface PersonOrganization {

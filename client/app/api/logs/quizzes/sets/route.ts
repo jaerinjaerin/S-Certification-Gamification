@@ -223,9 +223,8 @@ export async function POST(request: NextRequest) {
 
         regionId: user?.regionId,
         subsidaryId: user?.subsidaryId,
-        channelSegmentId:
-          user?.sumtotalChannelSegmentId ?? user?.channelSegmentId,
-        storeId: user?.sumtotalStoreId ?? user?.storeId,
+        channelSegmentId: user?.channelSegmentId,
+        storeId: user?.storeId,
         channelId: user?.channelId,
 
         // regionId String?
