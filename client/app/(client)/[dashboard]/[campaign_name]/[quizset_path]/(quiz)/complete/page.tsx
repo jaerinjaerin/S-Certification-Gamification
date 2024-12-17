@@ -6,10 +6,10 @@ import {
   SPlusIcon,
 } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { cn, fixedClass } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -20,12 +20,35 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useQuiz } from "@/providers/quiz_provider";
+import { usePathNavigator } from "@/route/usePathNavigator";
+import { sleep } from "@/app/lib/utils";
 
 export default function QuizComplete() {
-  const { quizLog } = useQuiz();
+  const { isBadgeStage, quizStageLogs, quizLog } = useQuiz();
 
-  // 완료한 스테이지 체크하는 변수
   const completedStage = quizLog?.lastCompletedStage ?? 0;
+
+  const { routeToPage } = usePathNavigator();
+
+  useEffect(() => {
+    const routeToMapPage = async () => {
+      await sleep(3000);
+      routeToPage("map");
+    };
+
+    if (!quizStageLogs.at(-1)) {
+      return;
+    }
+
+    routeToMapPage();
+  }, [quizStageLogs]);
+
+  // 1. badgeStage인 경우 -> Badge component
+  // 2. badgeStage가 아닌 경우 -> Score component
+
+  if (isBadgeStage()) {
+    return <GetBadgeAnnouncment completedStage={completedStage} />;
+  }
 
   return (
     <div
@@ -34,12 +57,13 @@ export default function QuizComplete() {
         backgroundImage: `url('/assets/bg_main2.png')`,
       }}
     >
-      <div className={cn(fixedClass, "z-20 p-[21px] flex flex-col relative")}>
+      <div>
         <div className="flex flex-col w-full items-center text-center gap-[66px] mx-auto pt-[60px] px-[9px] font-extrabold">
-          <ScoreAnimation
+          <ScoreAnnouncement completedStage={completedStage} />
+          {/* <ScoreAnimation
             completedStage={completedStage}
             score={quizLog?.score}
-          />
+          /> */}
           {/* <GetBadge completedStage={completedStage} /> */}
           {/* <ScoreRanked /> */}
         </div>
@@ -48,14 +72,13 @@ export default function QuizComplete() {
   );
 }
 
-const ScoreAnimation = ({
-  completedStage,
-  score,
-}: {
-  completedStage: number;
-  score: number | null | undefined;
-}) => {
+// TODO: 점수, 그래프 애니메이션 효과 추가
+const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const t = useTranslations("Completed");
+  const { quizStageLogs, quizLog, getAllStageMaxScore } = useQuiz();
+
+  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+
   return (
     <>
       <div>
@@ -82,7 +105,7 @@ const ScoreAnimation = ({
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{t("score")}</p>
-            <h1 className="text-[50px] leading-normal">{score ?? 0}</h1>
+            <h1 className="text-[50px] leading-normal">{stageScore}</h1>
           </div>
         </div>
       </div>
@@ -90,8 +113,67 @@ const ScoreAnimation = ({
   );
 };
 
-const GetBadge = ({ completedStage }: { completedStage: number }) => {
+// const ScoreAnimation = ({
+//   completedStage,
+//   score,
+// }: {
+//   completedStage: number;
+//   score: number | null | undefined;
+// }) => {
+//   const t = useTranslations("Completed");
+
+//   return (
+//     <>
+//       <div>
+//         <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
+//         <h1 className="text-[50px]">{completedStage}</h1>
+//       </div>
+//       <div>
+//         <h1 className="mt-[26px] mb-[66px] text-[38px]">{t("completed")}</h1>
+//         <div className="relative">
+//           <svg
+//             width="200"
+//             height="200"
+//             viewBox="0 0 200 200"
+//             fill="none"
+//             xmlns="http://www.w3.org/2000/svg"
+//           >
+//             <path
+//               fillRule="evenodd"
+//               clipRule="evenodd"
+//               d="M100 188C148.601 188 188 148.601 188 100C188 51.3989 148.601 12 100 12C51.3989 12 12 51.3989 12 100C12 148.601 51.3989 188 100 188ZM100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200Z"
+//               fill="black"
+//             />
+//           </svg>
+
+//           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+//             <p className="text-xl">{t("score")}</p>
+//             <h1 className="text-[50px] leading-normal">{score ?? 0}</h1>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+const GetBadgeAnnouncment = ({
+  completedStage,
+}: {
+  completedStage: number;
+}) => {
   const t = useTranslations("Completed");
+  const { quizSet, currentQuizStageIndex } = useQuiz();
+  const [done, setDone] = useState(false);
+
+  const badgeStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+
+  console.log(badgeStage);
+  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${badgeStage.badgeImageUrl}`;
+
+  // quizSet에서 quizStageLogs.at(-1) 값의 id로
+
   return (
     <>
       <div>
@@ -100,16 +182,16 @@ const GetBadge = ({ completedStage }: { completedStage: number }) => {
       </div>
       <div className="flex flex-col items-center gap-10">
         <h3 className="text-[22px] text-pretty">{t("congratulation")}</h3>
-        <Image
-          src={"/assets/badge_all_models.png"}
-          alt="green badge with all models"
-          width={200}
-          height={200}
-        />
-        <Button className="text-[18px] mt-[26px]" variant={"primary"}>
+        <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
+        <Button
+          className="text-[18px] mt-[26px]"
+          variant={"primary"}
+          onClick={() => setDone(true)}
+        >
           {t("done")}
         </Button>
       </div>
+      {done && <ScoreRanked />}
     </>
   );
 };
@@ -118,8 +200,6 @@ const ScoreRanked = () => {
   // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
   const [isCardOpen, setIsCardOpen] = useState(true);
   const t = useTranslations("Score_guide");
-
-  const contentData = ["base_score", "combo_score", "remaining_attempts"];
 
   return (
     <>

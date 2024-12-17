@@ -127,6 +127,7 @@ export default function QuizPage() {
     }
 
     const result: EndStageResult = await endStage(lifeCount); // 남은 하트수
+    console.log("👉🏻", result);
     alert(`스테이지 완료! 점수: ${result.score} 남은 하트 수: ${lifeCount}`);
 
     // nextStage();
