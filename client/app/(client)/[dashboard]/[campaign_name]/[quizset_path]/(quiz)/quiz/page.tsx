@@ -36,8 +36,8 @@ export default function QuizPage() {
   const question =
     currentStageQuestions && currentStageQuestions[currentQuestionIndex];
 
-  const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]); // 선택한 option의 id 값을 담은 배열
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false); // 정답인 경우 오답 클릭 방지를 위한 boolean
+  const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState(false);
 
   const [lifeCount, setLifeCount] = useState<number>(
@@ -49,20 +49,15 @@ export default function QuizPage() {
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({ countStart: question.timeLimitSeconds });
 
-  const progress = (count / question.timeLimitSeconds) * 100; // question.timeLimitSeconds
+  const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const totalQuestions = currentStageQuestions?.length; // stage 당 문제 개수
-  // const totalStages = quizSet.quizStages.length; //전체 stage 개수
 
   const handleOptionSave = (optionId: string) => {
     setSelectedOptionIds((prevSelected) => {
-      // 이미 선택된 옵션이면 그대로 유지
       if (prevSelected.includes(optionId)) {
         return [...prevSelected];
       }
-      // 선택된 옵션 추가
-      else {
-        return [...prevSelected, optionId];
-      }
+      return [...prevSelected, optionId];
     });
   };
 
@@ -70,11 +65,9 @@ export default function QuizPage() {
     const result = question.options.find((option) => option.id === optionId);
     const selectedOptIds = [...new Set([...selectedOptionIds, optionId])];
     const elapsedSeconds = question.timeLimitSeconds - count;
-    // console.log(question.id, selectedOptIds, elapsedSeconds, true);
 
     // 맞았으면
     if (result.isCorrect) {
-      // 모두 맞았으면
       // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
       const isAllCorrectSelected = question.options.every((option) =>
         option.isCorrect ? selectedOptIds.includes(option.id) : true
@@ -96,27 +89,6 @@ export default function QuizPage() {
     }
   };
 
-  // const handleConfirmAnswer = async (questionId: string) => {
-  //   if (selectedOptionIds.length === 0) {
-  //     alert("선택된 옵션이 없습니다.");
-  //     return;
-  //   }
-
-  //   const result = await confirmAnswer(
-  //     // currentQuizStage?.id,
-  //     questionId,
-  //     selectedOptionIds,
-  //     30
-  //   );
-
-  //   if (result.isCorrect) {
-  //     alert("정답입니다!");
-  //     next();
-  //   } else {
-  //     alert("틀렸습니다!");
-  //   }
-  // };
-
   const next = async () => {
     setSelectedOptionIds([]);
     setIsCorrectAnswer(false);
@@ -127,6 +99,7 @@ export default function QuizPage() {
     }
 
     const result: EndStageResult = await endStage(lifeCount); // 남은 하트수
+    console.log("👉🏻", result);
     alert(`스테이지 완료! 점수: ${result.score} 남은 하트 수: ${lifeCount}`);
 
     // nextStage();
@@ -155,8 +128,6 @@ export default function QuizPage() {
     }
   }, [lifeCount]);
 
-  // return <div>{renderQuizPage()}</div>;
-
   return (
     <div className="pt-[70px]">
       <div className={cn(fixedClass, "top-0 z-10")}>
@@ -181,7 +152,7 @@ export default function QuizPage() {
             )}
           </div>
         </div>
-        <CountDownBar progress={progress} />
+        <CountDownBar progress={TIME_PROGRESS} />
       </div>
 
       <Qusetion currentQuizStage={currentQuizStage} question={question} />

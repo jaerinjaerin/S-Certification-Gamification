@@ -48,6 +48,7 @@ interface QuizContextType {
   getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
   quizStagesTotalScore: number;
+  getAllStageMaxScore(): number;
 }
 
 interface ConfirmAnswerResponse {
@@ -485,6 +486,11 @@ export const QuizProvider = ({
     //
   };
 
+  // TODO: 실제 계산로직으로 변경해야함.
+  const getAllStageMaxScore = () => {
+    return 2000;
+  };
+
   return (
     <QuizContext.Provider
       value={{
@@ -510,6 +516,7 @@ export const QuizProvider = ({
         getCorrectOptionIds,
         isLoading,
         quizStagesTotalScore,
+        getAllStageMaxScore,
       }}
     >
       {children}

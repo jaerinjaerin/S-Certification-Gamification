@@ -1,18 +1,24 @@
 import { CampaignProvider } from "@/providers/campaignProvider";
 import { Campaign } from "@prisma/client";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: { campaign_name: string } }) {
+export default async function CampaignLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { campaign_name: string };
+}) {
   console.log("CampaignLayout", params);
 
-  const response = await fetch(`${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`, {
-    method: "GET",
-    // headers: { "Content-Type": "application/json" },
-    cache: "force-cache",
-  });
+  const response = await fetch(
+    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    {
+      method: "GET",
+      // headers: { "Content-Type": "application/json" },
+      cache: "force-cache",
+    }
+  );
 
   const routeCommonError = () => {
     redirect("/error");
@@ -30,18 +36,6 @@ export default async function CampaignLayout({ children, params }: { children: R
     routeCommonError();
     return;
   }
-
-  const messages = await getMessages();
-
-  const headersList = await headers();
-  const acceptLanguage = headersList.get("accept-language");
-  const acceptLanguageArray = acceptLanguage?.split(",");
-
-  acceptLanguageArray?.map((language) => {
-    const [langCode, weight] = language?.split(";");
-  });
-
-  console.log("acceptLanguage", acceptLanguage);
 
   console.info("Render CampaignLayout");
   return (

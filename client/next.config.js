@@ -10,4 +10,15 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 // module.exports = withBundleAnalyzer({});
-module.exports = withBundleAnalyzer(withNextIntl({}));
+module.exports = withBundleAnalyzer(
+  withNextIntl({
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "assets-stage.samsungplus.net",
+        },
+      ],
+    },
+  })
+);
