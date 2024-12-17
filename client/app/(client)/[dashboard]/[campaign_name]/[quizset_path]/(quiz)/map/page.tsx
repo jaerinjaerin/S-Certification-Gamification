@@ -37,7 +37,7 @@ export default function QuizMap() {
   );
 
   const { routeToPage } = usePathNavigator();
-  const t = useTranslations("Map_guide");
+  const translation = useTranslations("Map_guide");
 
   // 아이템을 참조할 배열
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -93,7 +93,7 @@ export default function QuizMap() {
           </DialogTrigger>
           <DialogContent dismissOnOverlayClick>
             <DialogHeader>
-              <DialogTitle>{t("how_to_play")}</DialogTitle>
+              <DialogTitle>{translation("how_to_play")}</DialogTitle>
             </DialogHeader>
             {/* Carousel Area */}
             <TutorialCarousel />
@@ -224,7 +224,7 @@ const Gradient = ({ type }: { type: GradientType }) => {
 const TutorialCarousel = () => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-  const t = useTranslations("Map_guide");
+  const translation = useTranslations("Map_guide");
 
   React.useEffect(() => {
     if (!api) {
@@ -253,7 +253,7 @@ const TutorialCarousel = () => {
                 {index === 0 && (
                   <div className="bg-[#EDEDED] max-h-[320px] h-full relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
                     <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
-                      {t("attempts_deduction")}
+                      {translation("attempts_deduction")}
                     </p>
                     <div className="flex justify-center pt-[10px]">
                       <Image
@@ -264,19 +264,19 @@ const TutorialCarousel = () => {
                       />
                     </div>
                     <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
-                      {t("time_limit_per_quiz")}
+                      {translation("time_limit_per_quiz")}
                     </p>
                   </div>
                 )}
                 {index === 1 && (
                   <Ol>
-                    <li>{t("you_have_5_attemps")}</li>
-                    <li>{t("giveup_or_interrupt_quiz")}</li>
+                    <li>{translation("you_have_5_attemps")}</li>
+                    <li>{translation("giveup_or_interrupt_quiz")}</li>
                   </Ol>
                 )}
                 {index === 2 && (
                   <Ol>
-                    <li>{t("answer_first_attempt")}</li>
+                    <li>{translation("answer_first_attempt")}</li>
                   </Ol>
                 )}
               </div>
