@@ -46,9 +46,7 @@ export default async function CampaignLayout({ children, params }: { children: R
   console.info("Render CampaignLayout");
   return (
     <div className="h-full">
-      <NextIntlClientProvider messages={messages}>
-        <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
-      </NextIntlClientProvider>
+      <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
     </div>
   );
 }
