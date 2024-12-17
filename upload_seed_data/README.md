@@ -12,6 +12,7 @@ $ python create.py
 # Channels 데이타 만들기 (삼플 미사용 유저의 Channel 선택 시 사용하는 데이타)
 
 1. channel/input_data를 수기로 마련
+2. seeds/grouped_domains.json 을 기반으로 input_data를 id 기빈으로 transformed_data.json의 형태로 변환
 
 # 번역본 엑셀 파일을 Json 형태로 변환하기
 
