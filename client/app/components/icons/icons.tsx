@@ -111,3 +111,18 @@ export const SPlusIcon = React.forwardRef<SVGSVGElement, IconProps>(({ ...props 
 });
 
 SPlusIcon.displayName = "SPlusIcon";
+
+export const SpinnerIcon = React.forwardRef<SVGSVGElement, IconProps>(({ ...props }, forwardRef) => {
+  return (
+    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" {...props} ref={forwardRef}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M100 0C44.7715 0 0 44.7715 0 100C0 155.229 44.7715 200 100 200C155.229 200 200 155.229 200 100H180C180 144.183 144.183 180 100 180C55.8174 180 20 144.183 20 100C20 55.8171 55.8174 20 100 20V0Z"
+        fill="black"
+      />
+    </svg>
+  );
+});
+
+SpinnerIcon.displayName = "SpinnerIcon";
