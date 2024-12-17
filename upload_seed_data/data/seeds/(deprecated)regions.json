@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "name": "HQ"
+  },
+  {
+    "id": "2",
+    "name": "North America"
+  },
+  {
+    "id": "3",
+    "name": "Europe"
+  },
+  {
+    "id": "4",
+    "name": "CIS"
+  },
+  {
+    "id": "5",
+    "name": "China"
+  },
+  {
+    "id": "6",
+    "name": "SEAO"
+  },
+  {
+    "id": "7",
+    "name": "SWA"
+  },
+  {
+    "id": "8",
+    "name": "LATAM"
+  },
+  {
+    "id": "9",
+    "name": "MENA"
+  },
+  {
+    "id": "10",
+    "name": "Africa"
+  },
+  {
+    "id": "11",
+    "name": "Japan"
+  }
+]

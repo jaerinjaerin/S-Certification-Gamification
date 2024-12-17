@@ -58,7 +58,7 @@ export default function QuizMap() {
   }, [quizLog?.lastCompletedStage, nextStage, quizSet.quizStages]);
 
   const routeNextQuizStage = async () => {
-    routeToPage("quiz");
+    routeToPage("/quiz");
   };
 
   return (

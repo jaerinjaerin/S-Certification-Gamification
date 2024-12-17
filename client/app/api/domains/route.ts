@@ -12,29 +12,29 @@ export async function GET() {
     const enrichedDomains = await Promise.all(
       domains.map(async (domain: Domain) => {
         // Parse channelSegmentIds (assuming it's stored as a JSON string)
-        const channelSegmentIds = domain.channelSegmentIds
-          ? domain.channelSegmentIds.split(",")
-          : [];
+        // const channelSegmentIds = domain.channelSegmentIds
+        //   ? domain.channelSegmentIds.split(",")
+        //   : [];
 
         // Fetch ChannelSegment and SalesFormat for each channelSegmentId
-        const channelSegments = await prisma.channelSegment.findMany({
-          where: {
-            id: {
-              in: channelSegmentIds,
-            },
-          },
-          include: {
-            salesFormats: {
-              include: {
-                job: true, // `job` 관계를 포함
-              },
-            },
-          },
-        });
+        // const channelSegments = await prisma.channelSegment.findMany({
+        //   where: {
+        //     id: {
+        //       in: channelSegmentIds,
+        //     },
+        //   },
+        //   include: {
+        //     salesFormats: {
+        //       include: {
+        //         job: true, // `job` 관계를 포함
+        //       },
+        //     },
+        //   },
+        // });
 
         return {
           ...domain,
-          channelSegments, // Attach the fetched channelSegments
+          // channelSegments, // Attach the fetched channelSegments
         };
       })
     );

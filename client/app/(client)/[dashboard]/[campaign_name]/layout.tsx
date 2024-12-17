@@ -30,7 +30,7 @@ export default async function CampaignLayout({
   }
   const data = (await response.json()) as { item: Campaign };
 
-  console.log("QuizProvider fetchData data", data);
+  // console.log("QuizProvider fetchData data", data);
 
   if (data.item == null) {
     routeCommonError();

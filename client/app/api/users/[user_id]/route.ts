@@ -1,3 +1,4 @@
+import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { NextResponse } from "next/server";
 
@@ -38,9 +39,9 @@ export async function PUT(request: Request, props: Props) {
         id: userId,
       },
       data: {
-        jobId: job.id,
-        domainId: domain.id,
-        languageId: language.id,
+        jobId: job?.id,
+        domainId: domain?.id,
+        languageId: language?.id,
       },
     });
 
