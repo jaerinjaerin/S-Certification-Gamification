@@ -246,7 +246,9 @@ export default function GuestRegisterPage() {
                 )}
               >
                 <SelectValue>
-                  {selectedChannel === null ? t("channel") : selectChannel.name}
+                  {selectedChannel === null
+                    ? t("channel")
+                    : selectedChannel.name}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
