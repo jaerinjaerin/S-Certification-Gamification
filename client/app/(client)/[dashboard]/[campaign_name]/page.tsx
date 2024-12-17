@@ -81,9 +81,9 @@ export default async function CampaignPage({
     );
   }
 
-  if (userQuizLog.quizsetPath) {
+  if (userQuizLog.quizSetPath) {
     redirect(
-      `${params.dashboard}/${params.campaign_name}/${userQuizLog.quizsetPath}`
+      `${params.dashboard}/${params.campaign_name}/${userQuizLog.quizSetPath}`
     );
   }
 

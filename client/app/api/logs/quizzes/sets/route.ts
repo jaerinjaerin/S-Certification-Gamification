@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
         // firstBadgeActivityId: quizSet.firstBadgeActivityId,
         // lastBadgeActivityId: quizSet.lastBadgeActivityId,
         languageId: language?.id,
-        quizsetPath: quizsetPath,
+        quizSetPath: quizsetPath,
 
         regionId: user?.regionId,
         subsidaryId: user?.subsidaryId,
