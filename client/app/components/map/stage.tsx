@@ -1,28 +1,20 @@
 import { cn } from "@/lib/utils";
-import { useQuiz } from "@/providers/quiz_provider";
 import { forwardRef } from "react";
 import { LockIcon } from "../icons/icons";
 import Image from "next/image";
-import InactiveBadge from "@/public/assets/badge_inactive.png";
 
 interface StageProps {
   currentQuizStageIndex: number; // 풀어야 할 stage
-  stageOrder: number;
-  isBadgeStage: boolean;
   routeNextQuizStage: () => Promise<void>;
+  stage: any;
 }
 
 export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
-  const {
-    stageOrder,
-    routeNextQuizStage,
-    currentQuizStageIndex,
-    isBadgeStage,
-  } = props;
-  const isStageCompleted = currentQuizStageIndex > stageOrder; // TODO: ActiveStage와 order 비교
-  const isActiveStage = currentQuizStageIndex === stageOrder;
-  console.log(isActiveStage, "🏃🏻‍♀️");
-  const { isCompleted } = useQuiz();
+  const { routeNextQuizStage, currentQuizStageIndex, stage } = props;
+  const stageOrder = stage.order;
+  const isStageCompleted = currentQuizStageIndex >= stageOrder;
+  const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
+  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
 
   return (
     <div className="relative" ref={ref}>
@@ -35,18 +27,23 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
 
         <button
           onClick={routeNextQuizStage}
-          disabled={!isActiveStage || isCompleted}
+          disabled={!isActiveStage || isStageCompleted}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
             isActiveStage && "size-[100px] bg-[#001276] border-[#0027EB]",
-            isCompleted && "bg-[#001276]"
+            isStageCompleted && "bg-[#001276]"
           )}
         >
-          {isBadgeStage ? (
+          {stage.isBadgeStage ? (
             <Image
-              src={InactiveBadge} // TODO: isBadgeStage? ActiveBadge: InactiveBadge
-              alt="inactive-badge"
-              className="object-cover w-full h-full"
+              alt="badge image"
+              src={badgeImageUrl}
+              width={200}
+              height={200}
+              className={cn(
+                "object-cover w-full h-full ",
+                !isActiveStage && !isStageCompleted && "grayscale"
+              )}
             />
           ) : (
             `stage ${stageOrder}`

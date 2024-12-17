@@ -9,7 +9,7 @@ import { Button } from "@/app/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -22,13 +22,16 @@ import {
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { sleep } from "@/app/lib/utils";
+import { animate, motion, useInView } from "motion/react";
 
 export default function QuizComplete() {
-  const { isBadgeStage, quizStageLogs, quizLog } = useQuiz();
-
-  const completedStage = quizLog?.lastCompletedStage ?? 0;
+  const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+  const isBadgeStage = currentStage.isBadgeStage;
 
   useEffect(() => {
     const routeToMapPage = async () => {
@@ -43,13 +46,6 @@ export default function QuizComplete() {
     routeToMapPage();
   }, [quizStageLogs]);
 
-  // 1. badgeStage인 경우 -> Badge component
-  // 2. badgeStage가 아닌 경우 -> Score component
-
-  if (isBadgeStage()) {
-    return <GetBadgeAnnouncment completedStage={completedStage} />;
-  }
-
   return (
     <div
       className="flex flex-col items-center h-full "
@@ -58,54 +54,89 @@ export default function QuizComplete() {
       }}
     >
       <div>
-        <div className="flex flex-col w-full items-center text-center gap-[66px] mx-auto pt-[60px] px-[9px] font-extrabold">
-          <ScoreAnnouncement completedStage={completedStage} />
-          {/* <ScoreAnimation
-            completedStage={completedStage}
-            score={quizLog?.score}
-          /> */}
-          {/* <GetBadge completedStage={completedStage} /> */}
-          {/* <ScoreRanked /> */}
+        <div className="flex flex-col w-full items-center text-center gap-[46px] mx-auto pt-[60px] px-[9px] font-extrabold">
+          {isBadgeStage ? (
+            <GetBadgeAnnouncment
+              completedStage={currentQuizStageIndex}
+              badgeStage={currentStage}
+            />
+          ) : (
+            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-// TODO: 점수, 그래프 애니메이션 효과 추가
 const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const t = useTranslations("Completed");
-  const { quizStageLogs, quizLog, getAllStageMaxScore } = useQuiz();
+  const { quizStageLogs, getAllStageMaxScore, quizStagesTotalScore } =
+    useQuiz();
 
   const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+  const CIRCLE_PERCENTAGE = Math.floor(
+    (quizStagesTotalScore / getAllStageMaxScore()) * 100
+  );
+  const ANIMATION_DURATION = 1;
+  const targetDasharray = `${CIRCLE_PERCENTAGE} ${100 - CIRCLE_PERCENTAGE}`;
+
+  console.log(
+    "quizStagesTotalScore: ",
+    quizStagesTotalScore,
+    "getAllStageMaxScore: ",
+    getAllStageMaxScore(),
+    "percentage: ",
+    CIRCLE_PERCENTAGE
+  );
 
   return (
     <>
       <div>
-        <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
+        <h2 className="text-2xl">{t("stage")}</h2>
         <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div>
         <h1 className="mt-[26px] mb-[66px] text-[38px]">{t("completed")}</h1>
         <div className="relative">
           <svg
-            width="200"
-            height="200"
-            viewBox="0 0 200 200"
+            width="100%"
+            height="100%"
+            viewBox="0 0 400 400"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M100 188C148.601 188 188 148.601 188 100C188 51.3989 148.601 12 100 12C51.3989 12 12 51.3989 12 100C12 148.601 51.3989 188 100 188ZM100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200Z"
-              fill="black"
+            <circle
+              cx="200"
+              cy="200"
+              r={150}
+              stroke="lightgray"
+              strokeWidth="20"
+              fill="none"
+            />
+            <motion.circle
+              cx="0"
+              cy="200"
+              r={150}
+              stroke="black"
+              strokeWidth="20"
+              fill="none"
+              pathLength="100"
+              strokeDasharray="0 100"
+              animate={{
+                strokeDasharray: targetDasharray,
+              }}
+              transform="rotate(-90 100 100)"
+              transition={{
+                duration: `${ANIMATION_DURATION}`,
+                ease: "easeInOut",
+              }}
             />
           </svg>
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{t("score")}</p>
-            <h1 className="text-[50px] leading-normal">{stageScore}</h1>
+            <Stat stageScore={stageScore} />
           </div>
         </div>
       </div>
@@ -113,71 +144,22 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   );
 };
 
-// const ScoreAnimation = ({
-//   completedStage,
-//   score,
-// }: {
-//   completedStage: number;
-//   score: number | null | undefined;
-// }) => {
-//   const t = useTranslations("Completed");
-
-//   return (
-//     <>
-//       <div>
-//         <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
-//         <h1 className="text-[50px]">{completedStage}</h1>
-//       </div>
-//       <div>
-//         <h1 className="mt-[26px] mb-[66px] text-[38px]">{t("completed")}</h1>
-//         <div className="relative">
-//           <svg
-//             width="200"
-//             height="200"
-//             viewBox="0 0 200 200"
-//             fill="none"
-//             xmlns="http://www.w3.org/2000/svg"
-//           >
-//             <path
-//               fillRule="evenodd"
-//               clipRule="evenodd"
-//               d="M100 188C148.601 188 188 148.601 188 100C188 51.3989 148.601 12 100 12C51.3989 12 12 51.3989 12 100C12 148.601 51.3989 188 100 188ZM100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200Z"
-//               fill="black"
-//             />
-//           </svg>
-
-//           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-//             <p className="text-xl">{t("score")}</p>
-//             <h1 className="text-[50px] leading-normal">{score ?? 0}</h1>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
 const GetBadgeAnnouncment = ({
   completedStage,
+  badgeStage,
 }: {
   completedStage: number;
+  badgeStage: any;
 }) => {
   const t = useTranslations("Completed");
-  const { quizSet, currentQuizStageIndex } = useQuiz();
   const [done, setDone] = useState(false);
 
-  const badgeStage = quizSet.quizStages.find(
-    (stage) => stage.order === currentQuizStageIndex
-  );
-
-  console.log(badgeStage);
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${badgeStage.badgeImageUrl}`;
-
-  // quizSet에서 quizStageLogs.at(-1) 값의 id로
 
   return (
     <>
       <div>
-        <h2 className="text-2xl mb-[26px]">{t("stage")}</h2>
+        <h2 className="text-2xl">{t("stage")}</h2>
         <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div className="flex flex-col items-center gap-10">
@@ -200,6 +182,10 @@ const ScoreRanked = () => {
   // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
   const [isCardOpen, setIsCardOpen] = useState(true);
   const t = useTranslations("Score_guide");
+  const { quizStageLogs } = useQuiz();
+  const { routeToPage } = usePathNavigator();
+
+  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
 
   return (
     <>
@@ -218,14 +204,6 @@ const ScoreRanked = () => {
               <DialogTitle>{t("score")}</DialogTitle>
             </DialogHeader>
             <div className="flex flex-col gap-4 text-[14px] text-[#4E4E4E]">
-              {/* {contentData.map((item, index) => {
-              return (
-                <div key={index}>
-                  <p className="font-extrabold">{t(item)}</p>
-                  {t(`${item}_description`)}
-                </div>
-              );
-            })} */}
               <div>
                 <p className="font-extrabold">{t("base_score")}</p>
                 {t("base_score_discription")}
@@ -251,7 +229,7 @@ const ScoreRanked = () => {
       {/* content */}
       <div>
         <h2 className="text-[32px]">Your Score</h2>
-        <h1 className="text-[60px]">840</h1>
+        <h1 className="text-[60px]">{stageScore}</h1>
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
@@ -268,7 +246,11 @@ const ScoreRanked = () => {
         {isCardOpen ? (
           <>
             <SendEmailCard />
-            <Button className="text-[18px] mt-7" variant={"primary"}>
+            <Button
+              className="text-[18px] mt-7"
+              variant={"primary"}
+              onClick={() => routeToPage("map")}
+            >
               {t("reture_map")}
             </Button>
           </>
@@ -277,7 +259,11 @@ const ScoreRanked = () => {
             <Button className="text-[18px] mt-7" variant={"primary"}>
               <SPlusIcon />
             </Button>
-            <Button className="text-[18px] mt-7" variant={"primary"}>
+            <Button
+              className="text-[18px] mt-7"
+              variant={"primary"}
+              onClick={() => routeToPage("map")}
+            >
               {t("reture_map")}
             </Button>
           </div>
@@ -299,5 +285,28 @@ const SendEmailCard = () => {
         </p>
       </div>
     </div>
+  );
+};
+
+const Stat = ({ stageScore }: { stageScore: number }) => {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const isInView = useInView(ref);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    animate(0, stageScore, {
+      duration: 1,
+      onUpdate(value) {
+        if (!ref.current) return;
+        ref.current.textContent = value.toFixed(0);
+      },
+    });
+  }, [stageScore, isInView]);
+
+  return (
+    <h1 className="text-[50px] leading-normal" ref={ref}>
+      {stageScore}
+    </h1>
   );
 };

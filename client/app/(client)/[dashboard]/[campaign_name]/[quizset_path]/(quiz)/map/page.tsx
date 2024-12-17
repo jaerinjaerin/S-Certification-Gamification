@@ -33,8 +33,6 @@ import Connection from "@/app/components/map/connection";
 export default function QuizMap() {
   const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex } =
     useQuiz();
-  // console.log("✅quizSet", quizSet);
-  console.log(currentQuizStageIndex);
 
   const [nextStage, setNextStage] = useState<number>(
     (quizLog?.lastCompletedStage ?? 0) + 1
@@ -63,19 +61,9 @@ export default function QuizMap() {
     routeToPage("quiz");
   };
 
-  {
-    /* <div className="w-full bg-red-200">
-        <h1>Quiz Map</h1>
-        {language && <p>언어: {language.name}</p>}
-        {quizSet && <p>퀴즈 스테이지 개수: {quizSet.quizStages.length}</p>}
-        <p>다음 Stage: {(quizHistory?.lastCompletedStage ?? 0) + 1}</p>
-        <button onClick={routeNextQuizStage}>Go Quiz</button>
-      </div> */
-  }
-
   return (
     <div
-      className="flex flex-col items-center h-full "
+      className="flex flex-col items-center h-full"
       style={{
         backgroundImage: `url('/assets/bg_main2.png')`,
       }}
@@ -99,7 +87,7 @@ export default function QuizMap() {
             <DialogHeader>
               <DialogTitle>{t("how_to_play")}</DialogTitle>
             </DialogHeader>
-            {/* Carousel Area */}
+
             <TutorialCarousel />
             <DialogFooter>
               <DialogClose className="text-[18px] py-[22px] px-[34px]">
@@ -114,10 +102,8 @@ export default function QuizMap() {
         </div>
       </div>
 
-      {/* map compnent */}
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
         {quizSet.quizStages.map((stage: QuizStageEx, index) => {
-          console.log("🚀", stage);
           return (
             <Fragment key={stage.id}>
               <Stage
@@ -125,9 +111,8 @@ export default function QuizMap() {
                   itemsRef.current[index] = item;
                 }}
                 currentQuizStageIndex={currentQuizStageIndex}
-                stageOrder={stage.order}
                 routeNextQuizStage={routeNextQuizStage}
-                isBadgeStage={stage.isBadgeStage}
+                stage={stage}
               />
               {stage.order !== quizSet.quizStages.length && <Connection />}
             </Fragment>
