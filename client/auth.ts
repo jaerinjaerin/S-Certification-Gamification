@@ -124,10 +124,17 @@ export const {
             where: {
               code: domainCode,
             },
+            include: {
+              subsidary: {
+                include: {
+                  region: true,
+                },
+              },
+            },
           });
 
           if (!domain) {
-            regionId = domain!.regionId;
+            regionId = domain!.subsidary?.regionId || null;
             subsidaryId = domain!.subsidaryId;
           }
         }
@@ -138,6 +145,7 @@ export const {
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
               : null,
+          name: profile.name,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
