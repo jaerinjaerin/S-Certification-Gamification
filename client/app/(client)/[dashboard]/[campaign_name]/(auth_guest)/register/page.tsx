@@ -58,7 +58,7 @@ interface Country {
 }
 
 export default function GuestRegisterPage() {
-  const { routeToPage, routeToError } = usePathNavigator();
+  const { routeToPage } = usePathNavigator();
 
   const { data: session } = useSession();
 

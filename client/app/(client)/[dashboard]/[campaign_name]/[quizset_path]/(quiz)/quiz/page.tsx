@@ -18,17 +18,12 @@ import { Fragment, useEffect, useState } from "react";
 
 export default function QuizPage() {
   const {
-    quizSet,
-    currentQuizStageIndex,
     currentQuestionIndex,
     currentQuizStage,
     currentStageQuestions,
     endStage,
-    confirmAnswer,
-    nextStage,
     nextQuestion,
     canNextQuestion,
-    quizStagesTotalScore,
     logUserAnswer,
   } = useQuiz();
 

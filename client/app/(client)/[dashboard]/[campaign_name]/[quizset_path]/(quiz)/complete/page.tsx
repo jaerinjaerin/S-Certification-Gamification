@@ -6,10 +6,6 @@ import {
   SPlusIcon,
 } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -19,10 +15,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import { sleep } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { sleep } from "@/app/lib/utils";
 import { animate, motion, useInView } from "motion/react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export default function QuizComplete() {
   const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
@@ -184,7 +184,7 @@ const GetBadgeAnnouncment = ({
 
 const ScoreRanked = () => {
   // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
-  const [isCardOpen, setIsCardOpen] = useState(true);
+  const [isCardOpen] = useState(true);
 
   const translation = useTranslations("Score_guide");
   const { quizStageLogs } = useQuiz();
