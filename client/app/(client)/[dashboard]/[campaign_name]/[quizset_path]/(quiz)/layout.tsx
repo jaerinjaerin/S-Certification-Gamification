@@ -111,6 +111,17 @@ export default async function QuizLayout({
     quizStageLogs = quizLogResponse.item.quizStageLogs;
   }
 
+  // 다른 퀴즈페이지로 이동했는지 확인
+  console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
+  if (quizLog.quizSetPath !== params.quizset_path) {
+    return (
+      <div>
+        <h1>퀴즈 페이지 이동</h1>
+        <p>다른 퀴즈 페이지로 이동하셨습니다.</p>
+      </div>
+    );
+  }
+
   console.info("Render QuizLayout", quizLog);
   return (
     <div

@@ -100,7 +100,7 @@ export const QuizProvider = ({
   );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
     QuestionEx[] | null
-  >(quizSet.quizStages[currentQuizStageIndex].questions);
+  >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

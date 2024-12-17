@@ -449,7 +449,7 @@ model UserQuizLog {
   
   score       Int?
 
-  quizsetPath String?
+  quizSetPath String?
 
 
   campaignId String
