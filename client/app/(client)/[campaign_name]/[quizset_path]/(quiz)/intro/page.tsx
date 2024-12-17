@@ -12,7 +12,7 @@ export default function QuizIntro() {
   };
 
   const testSendEmail = async () => {
-    const response = await fetch("/api/auth/send-verify-email", {
+    const response = await fetch("/certification/api/auth/send-verify-email", {
       method: "POST",
       // headers: {
       //   "Content-Type": "application/json",

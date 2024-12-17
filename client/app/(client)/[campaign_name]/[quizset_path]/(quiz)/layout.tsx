@@ -126,7 +126,7 @@ export default async function QuizLayout({
   return (
     <div
       className="h-full bg-[#F0F0F0]"
-      style={{ backgroundImage: `url('/assets/bg_main2.png')` }}
+      style={{ backgroundImage: `url('/certification/assets/bg_main2.png')` }}
     >
       {/* <LogoutButton /> */}
       <QuizProvider

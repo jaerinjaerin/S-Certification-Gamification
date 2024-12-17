@@ -1,8 +1,6 @@
-import AuthProvider from "@/providers/authProvider";
 import { CampaignProvider } from "@/providers/campaignProvider";
 import { Campaign } from "@prisma/client";
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export default async function CampaignLayout({
@@ -14,21 +12,27 @@ export default async function CampaignLayout({
 }) {
   console.log("CampaignLayout", params);
 
-  const response = await fetch(
-    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
-    {
-      method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
-    }
-  );
+  const url = `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
+  console.log("url", url);
+  const response = await fetch(url, {
+    method: "GET",
+    // headers: { "Content-Type": "application/json" },
+    cache: "force-cache",
+  });
+
+  console.log("CampaignLayout response", response);
 
   const routeCommonError = () => {
     redirect("/error");
   };
 
   if (!response.ok) {
-    routeCommonError();
+    // routeCommonError();
+    return (
+      <div>
+        <h1>404 Not Found</h1>
+      </div>
+    );
     return;
   }
   const data = (await response.json()) as { item: Campaign };
@@ -44,16 +48,16 @@ export default async function CampaignLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  const messages = await getMessages();
+  // const messages = await getMessages();
 
   console.info("Render CampaignLayout");
   return (
     <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
-      <NextIntlClientProvider messages={messages}>
-        <AuthProvider>
-          <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
-        </AuthProvider>
-      </NextIntlClientProvider>
+      {/* <NextIntlClientProvider messages={messages}> */}
+      {/* <AuthProvider> */}
+      <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
+      {/* </AuthProvider> */}
+      {/* </NextIntlClientProvider> */}
     </div>
     // <div className="h-full">
     //   <CampaignProvider campaign={data.item}>{children}</CampaignProvider>

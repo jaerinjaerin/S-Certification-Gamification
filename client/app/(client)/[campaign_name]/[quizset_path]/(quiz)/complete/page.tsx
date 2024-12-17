@@ -50,7 +50,7 @@ export default function QuizComplete() {
     <div
       className="flex flex-col items-center h-full "
       style={{
-        backgroundImage: `url('/assets/bg_main2.png')`,
+        backgroundImage: `url('/certification/assets/bg_main2.png')`,
       }}
     >
       <div>

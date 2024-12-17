@@ -2,7 +2,6 @@
 
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { QuestionMark } from "@/app/components/icons/icons";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -13,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { QuizStageEx } from "@/app/types/type";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -21,14 +21,14 @@ import {
 } from "@/components/ui/carousel";
 import { useQuiz } from "@/providers/quiz_provider";
 
+import Connection from "@/app/components/map/connection";
+import Gradient from "@/app/components/map/gradient";
+import { Stage } from "@/app/components/map/stage";
+import { cn, fixedClass } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
-import { fixedClass, cn } from "@/lib/utils";
-import { Stage } from "@/app/components/map/stage";
-import Gradient from "@/app/components/map/gradient";
-import Connection from "@/app/components/map/connection";
 
 export default function QuizMap() {
   const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex } =
@@ -65,7 +65,7 @@ export default function QuizMap() {
     <div
       className="flex flex-col items-center h-full"
       style={{
-        backgroundImage: `url('/assets/bg_main2.png')`,
+        backgroundImage: `url('/certification/assets/bg_main2.png')`,
       }}
     >
       <div

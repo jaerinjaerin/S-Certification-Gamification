@@ -24,7 +24,7 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sumtotal/user/profile", {
+      const response = await fetch("/certification/api/sumtotal/user/profile", {
         method: "GET",
         cache: "no-store",
       });
@@ -63,10 +63,13 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/users/job?org_ids=506631,751755", {
-        method: "GET",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        "/certification/api/users/job?org_ids=506631,751755",
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -89,10 +92,13 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sumtotal/auth/refresh_token", {
-        method: "GET",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        "/certification/api/sumtotal/auth/refresh_token",
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -161,7 +167,7 @@ export default function TestPage() {
   //   setError(null);
 
   //   try {
-  //     const response = await fetch("/api/sumtotal/activity", {
+  //     const response = await fetch("/certification/api/sumtotal/activity", {
   //       cache: "no-store",
   //     });
   //     if (!response.ok) {
@@ -331,7 +337,7 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sumtotal/jobs", {
+      const response = await fetch("/certification/api/sumtotal/jobs", {
         cache: "no-store",
       });
       if (!response.ok) {
@@ -358,13 +364,16 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sumtotal/activity/register", {
-        method: "PUT",
-        cache: "no-store",
-        body: JSON.stringify({
-          activityId: selectedActivity.activityId,
-        }),
-      });
+      const response = await fetch(
+        "/certification/api/sumtotal/activity/register",
+        {
+          method: "PUT",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: selectedActivity.activityId,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -388,7 +397,7 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sumtotal/activity/end", {
+      const response = await fetch("/certification/api/sumtotal/activity/end", {
         method: "POST",
         cache: "no-store",
         body: JSON.stringify({
@@ -496,7 +505,7 @@ export default function TestPage() {
       <br />
       <input
         type="text"
-        placeholder="/api/v2/advanced/userprofile"
+        placeholder="/certification/api/v2/advanced/userprofile"
         value={apiPath}
         onChange={(e) => setApiPath(e.target.value)}
         style={{ marginBottom: "10px", padding: "5px", width: "300px" }}

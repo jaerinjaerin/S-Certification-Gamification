@@ -55,11 +55,14 @@ export default function GuestLogin() {
     setError(null);
 
     try {
-      const response = await fetch("/api/auth/send-verify-email", {
-        method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ toAddress: email }),
-      });
+      const response = await fetch(
+        "/certification/api/auth/send-verify-email",
+        {
+          method: "POST",
+          // headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ toAddress: email }),
+        }
+      );
 
       if (response.ok) {
         setSuccessSendEmail("Email sent successfully!");
@@ -117,7 +120,7 @@ export default function GuestLogin() {
     <>
       <div
         className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{ backgroundImage: `url('/assets/bg_main.png')` }}
+        style={{ backgroundImage: `url('/certification/assets/bg_main.png')` }}
       >
         <div className="flex flex-col items-center">
           <span className="block font-extrabold">Galaxy AI Expert</span>
