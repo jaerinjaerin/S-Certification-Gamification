@@ -23,8 +23,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/error/not-found", request.url));
   }
 
-  const dashboardPath = segments[0];
-  const campaignName = segments[1];
+  // const dashboardPath = segments[0];
+  const campaignName = segments[0];
 
   let campaignQuizSetId: string | null = null;
   if (isValidCampaignQuizSetId(segments[2])) {
@@ -40,16 +40,16 @@ export async function middleware(request: NextRequest) {
     // pathname !== "/verify-request"
   ) {
     const url = campaignQuizSetId
-      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/login${search}`
-      : `/${dashboardPath}/${campaignName}/login${search}`;
+      ? `/${campaignName}/${campaignQuizSetId}/login${search}`
+      : `/${campaignName}/login${search}`;
 
     return NextResponse.redirect(new URL(url, request.url));
   }
 
   if (session && pathname.includes("/login")) {
     const url = campaignQuizSetId
-      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`
-      : `/${dashboardPath}/${campaignName}${search}`;
+      ? `/${campaignName}/${campaignQuizSetId}/intro${search}`
+      : `/${campaignName}${search}`;
 
     console.log("url:", url);
 
@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (session && campaignQuizSetId && segments.length === 3) {
-    const url = `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`;
+    const url = `/${campaignName}/${campaignQuizSetId}/intro${search}`;
 
     console.log("url:", url);
 

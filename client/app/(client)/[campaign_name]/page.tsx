@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export default async function CampaignPage({
   params,
 }: {
-  params: { dashboard: string; campaign_name: string };
+  params: { campaign_name: string };
 }) {
   console.info("CampaignPage page", params);
   // export default async function CampaignPage() {
@@ -82,10 +82,8 @@ export default async function CampaignPage({
   }
 
   if (userQuizLog.quizSetPath) {
-    redirect(
-      `${params.dashboard}/${params.campaign_name}/${userQuizLog.quizSetPath}`
-    );
+    redirect(`${params.campaign_name}/${userQuizLog.quizSetPath}`);
   }
 
-  redirect(`${params.dashboard}/${params.campaign_name}/register`);
+  redirect(`${params.campaign_name}/register`);
 }

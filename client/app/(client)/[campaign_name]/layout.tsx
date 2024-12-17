@@ -1,5 +1,8 @@
+import AuthProvider from "@/providers/authProvider";
 import { CampaignProvider } from "@/providers/campaignProvider";
 import { Campaign } from "@prisma/client";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export default async function CampaignLayout({
@@ -37,10 +40,23 @@ export default async function CampaignLayout({
     return;
   }
 
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   console.info("Render CampaignLayout");
   return (
-    <div className="h-full">
-      <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
+    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
+      <NextIntlClientProvider messages={messages}>
+        <AuthProvider>
+          <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
+        </AuthProvider>
+      </NextIntlClientProvider>
     </div>
+    // <div className="h-full">
+    //   <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
+    // </div>
   );
 }
