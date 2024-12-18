@@ -37,6 +37,7 @@ export const {
         params: {
           scope: "allapis offline_access",
           prompt: "select_account",
+          redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
         },
       },
       token: "https://samsung.sumtotal.host/apisecurity/connect/token",
