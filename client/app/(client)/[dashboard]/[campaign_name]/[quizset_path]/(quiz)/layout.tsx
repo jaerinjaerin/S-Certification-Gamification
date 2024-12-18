@@ -81,7 +81,7 @@ export default async function QuizLayout({
   let quizLog;
   let quizStageLogs;
 
-  console.log("QuizLayout quizLogResponse", quizLogResponse);
+  console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
@@ -89,9 +89,9 @@ export default async function QuizLayout({
       `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
       {
         method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ userId: session?.user.id }),
       }
     );
