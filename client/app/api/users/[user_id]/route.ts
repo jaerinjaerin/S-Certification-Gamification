@@ -8,7 +8,7 @@ type Props = {
   };
 };
 
-export async function GET(props: Props) {
+export async function GET(request: Request, props: Props) {
   try {
     const userId = props.params.user_id;
 

@@ -1,22 +1,36 @@
 "use client";
 
-import { BluePaperAirplaneIcon, QuestionMark, SPlusIcon } from "@/app/components/icons/icons";
+import {
+  BluePaperAirplaneIcon,
+  QuestionMark,
+  SPlusIcon,
+} from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
+import { sleep } from "@/app/lib/utils";
 import { cn } from "@/lib/utils";
+import { useQuiz } from "@/providers/quiz_provider";
+import { usePathNavigator } from "@/route/usePathNavigator";
+import { animate, AnimatePresence, motion, useInView } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
-import { useQuiz } from "@/providers/quiz_provider";
-import { usePathNavigator } from "@/route/usePathNavigator";
-import { sleep } from "@/app/lib/utils";
-import { animate, AnimatePresence, motion, useInView } from "motion/react";
 
 export default function QuizComplete() {
   const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
-  const currentStage = quizSet.quizStages.find((stage) => stage.order === currentQuizStageIndex);
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
   const isBadgeStage = currentStage.isBadgeStage;
 
   useEffect(() => {
@@ -40,7 +54,10 @@ export default function QuizComplete() {
     >
       <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
         {isBadgeStage ? (
-          <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
+          <GetBadgeAnnouncment
+            completedStage={currentQuizStageIndex}
+            badgeStage={currentStage}
+          />
         ) : (
           <ScoreAnnouncement completedStage={currentQuizStageIndex} />
         )}
@@ -51,10 +68,13 @@ export default function QuizComplete() {
 
 const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const translation = useTranslations("Completed");
-  const { quizStageLogs, getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
+  const { quizStageLogs, getAllStageMaxScore, quizStagesTotalScore } =
+    useQuiz();
 
   const stageScore = quizStageLogs.at(-1)?.score ?? 0;
-  const CIRCLE_PERCENTAGE = Math.floor((quizStagesTotalScore / getAllStageMaxScore()) * 100);
+  const CIRCLE_PERCENTAGE = Math.floor(
+    (quizStagesTotalScore / getAllStageMaxScore()) * 100
+  );
   const ANIMATION_DURATION = 1;
   const targetDasharray = `${CIRCLE_PERCENTAGE} ${100 - CIRCLE_PERCENTAGE}`;
 
@@ -74,10 +94,25 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
         <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div>
-        <h1 className="mt-[26px] mb-[66px] text-[38px]">{translation("completed")}</h1>
+        <h1 className="mt-[26px] mb-[66px] text-[38px]">
+          {translation("completed")}
+        </h1>
         <div className="relative">
-          <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="200" cy="200" r={150} stroke="lightgray" strokeWidth="20" fill="none" />
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 400 400"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="200"
+              cy="200"
+              r={150}
+              stroke="lightgray"
+              strokeWidth="20"
+              fill="none"
+            />
             <motion.circle
               cx="0"
               cy="200"
@@ -108,7 +143,13 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   );
 };
 
-const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: number; badgeStage: any }) => {
+const GetBadgeAnnouncment = ({
+  completedStage,
+  badgeStage,
+}: {
+  completedStage: number;
+  badgeStage: any;
+}) => {
   const translation = useTranslations("Completed");
   const [done, setDone] = useState(false);
 
@@ -131,11 +172,22 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
               <h1 className="text-[50px]">{completedStage}</h1>
             </div>
             <div className="flex flex-col items-center gap-10">
-              <h3 className="text-[22px] text-pretty">{translation("congratulation")}</h3>
-              <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
+              <h3 className="text-[22px] text-pretty">
+                {translation("congratulation")}
+              </h3>
+              <Image
+                src={badgeImageUrl}
+                alt="badge image"
+                width={200}
+                height={200}
+              />
             </div>
             <div className="mt-[20px]">
-              <Button className="text-[18px]" variant={"primary"} onClick={() => setDone(true)}>
+              <Button
+                className="text-[18px]"
+                variant={"primary"}
+                onClick={() => setDone(true)}
+              >
                 {translation("done")}
               </Button>
             </div>
@@ -160,7 +212,7 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
 
 const ScoreRanked = () => {
   // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
-  const [isCardOpen, setIsCardOpen] = useState(true);
+  const [isCardOpen] = useState(true);
 
   const translation = useTranslations("Score_guide");
   const { quizStageLogs } = useQuiz();
@@ -173,7 +225,10 @@ const ScoreRanked = () => {
       <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
+            <Button
+              className={cn("ml-auto border rounded-full border-black/50")}
+              size={"icon_md"}
+            >
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -191,12 +246,16 @@ const ScoreRanked = () => {
                 {translation("combo_score_description")}
               </div>
               <div>
-                <p className="font-extrabold">{translation("remaining_attempts")}</p>
+                <p className="font-extrabold">
+                  {translation("remaining_attempts")}
+                </p>
                 {translation("remaiing_attempts_description")}
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">{translation("ok")}</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+                {translation("ok")}
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -209,7 +268,12 @@ const ScoreRanked = () => {
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
-          <Image src={"/assets/rank_graph.png"} alt="rank graph" width={320} height={179} />
+          <Image
+            src={"/assets/rank_graph.png"}
+            alt="rank graph"
+            width={320}
+            height={179}
+          />
           <p className="text-[22px] text-balance px-5">
             {/* {translation("rank_notification")} */}
             You are ranked in the top 20%
@@ -218,7 +282,11 @@ const ScoreRanked = () => {
         {isCardOpen ? (
           <>
             <SendEmailCard />
-            <Button className="text-[18px] mt-7" variant={"primary"} onClick={() => routeToPage("map")}>
+            <Button
+              className="text-[18px] mt-7"
+              variant={"primary"}
+              onClick={() => routeToPage("map")}
+            >
               {/* {translation("reture_map")} */}
               Return map
             </Button>
@@ -228,7 +296,11 @@ const ScoreRanked = () => {
             <Button className="text-[18px] mt-7" variant={"primary"}>
               <SPlusIcon />
             </Button>
-            <Button className="text-[18px] mt-7" variant={"primary"} onClick={() => routeToPage("map")}>
+            <Button
+              className="text-[18px] mt-7"
+              variant={"primary"}
+              onClick={() => routeToPage("map")}
+            >
               {translation("reture_map")}
             </Button>
           </div>
@@ -239,7 +311,7 @@ const ScoreRanked = () => {
 };
 
 const SendEmailCard = () => {
-  const translation = useTranslations("Score_guide");
+  // const translation = useTranslations("Score_guide");
 
   return (
     <div className="pt-[10px]">

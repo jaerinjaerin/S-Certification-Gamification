@@ -60,7 +60,7 @@ interface Country {
 }
 
 export default function GuestRegisterPage() {
-  const { routeToPage, routeToError } = usePathNavigator();
+  const { routeToPage } = usePathNavigator();
 
   const { data: session } = useSession();
 
@@ -81,6 +81,8 @@ export default function GuestRegisterPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
+
+  console.log("checkingRegisterd", checkingRegisterd);
 
   const { campaign } = useCampaign();
 

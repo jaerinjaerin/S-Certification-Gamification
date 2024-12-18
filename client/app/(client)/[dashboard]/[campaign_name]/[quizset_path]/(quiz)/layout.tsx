@@ -50,7 +50,7 @@ export default async function QuizLayout({
   }
 
   // Fetch quiz history
-  let quizLogResponse = await fetchData(
+  const quizLogResponse = await fetchData(
     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
       cache: "no-cache",
