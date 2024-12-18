@@ -3,17 +3,18 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { NextRequest, NextResponse } from "next/server";
 
 const sesClient =
-  process.env.NODE_ENV !== "production"
-    ? new SESClient({
-        region: process.env.AWS_SES_REGION,
-        credentials: {
-          accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
-          secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
-        },
-      })
-    : new SESClient({
-        region: process.env.AWS_SES_REGION,
-      });
+  // process.env.NODE_ENV !== "production"
+  //   ? new SESClient({
+  //       region: process.env.AWS_SES_REGION,
+  //       credentials: {
+  //         accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
+  //         secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
+  //       },
+  //     })
+  //   :
+  new SESClient({
+    region: process.env.AWS_SES_REGION,
+  });
 
 export async function POST(request: NextRequest) {
   try {
