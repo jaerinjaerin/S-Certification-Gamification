@@ -133,16 +133,23 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    console.log("body", body);
     const { userId } = body;
 
     const { domainCode, jobCode, languageCode } =
       extractCodesFromPath(quizsetPath);
+
+    console.log("domainCode", domainCode);
+    console.log("jobCode", jobCode);
+    console.log("languageCode", languageCode);
 
     const domain = await prisma.domain.findFirst({
       where: {
         code: domainCode,
       },
     });
+
+    console.log("domain:", domain);
 
     // const job = await prisma.job.findFirst({
     //   where: {
@@ -156,11 +163,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log("job:", job);
+
     const language = await prisma.job.findFirst({
       where: {
         code: languageCode,
       },
     });
+
+    console.log("language:", language);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -173,14 +184,6 @@ export async function POST(request: NextRequest) {
         quizStages: true, // Include quizStages
       },
     });
-    // const quizSet = await prisma.quizSet.findFirst({
-    //   where: {
-    //     // path: quizsetPath,
-    //     paths: {
-    //       has: quizsetPath, // Ensure jobId exists in the jobIds array
-    //     },
-    //   },
-    // });
 
     console.log("quizSet:", quizsetPath, quizSet);
 
@@ -205,8 +208,6 @@ export async function POST(request: NextRequest) {
     });
 
     console.log("user:", user);
-    console.log("language:", language);
-    console.log("job:", job);
 
     const userQuizLog = await prisma.userQuizLog.create({
       data: {
@@ -239,11 +240,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log("userQuizLog:", userQuizLog);
+
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
         quizSetId: userQuizLog?.quizSetId,
       },
     });
+
+    console.log("userQuizStageLogs:", userQuizStageLogs);
 
     return NextResponse.json(
       {
