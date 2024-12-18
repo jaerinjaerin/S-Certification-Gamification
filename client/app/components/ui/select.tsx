@@ -1,6 +1,6 @@
 import { Children, cloneElement, createContext, forwardRef, useContext, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "../icons/icons";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface SelectContextType {
   isOpen: boolean;
