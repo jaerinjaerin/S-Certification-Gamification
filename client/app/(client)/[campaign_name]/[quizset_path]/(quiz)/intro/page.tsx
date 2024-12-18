@@ -12,18 +12,21 @@ export default function QuizIntro() {
   };
 
   const testSendEmail = async () => {
-    const response = await fetch("/certification/api/auth/send-verify-email", {
-      method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-      body: JSON.stringify({
-        toAddress: "bluedevstorm@gmail.com",
-        subject: "Test Email",
-        htmlBody: "<h1>Hello</h1><p>This is a test email.</p>",
-        textBody: "Hello\nThis is a test email.",
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
+      {
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: JSON.stringify({
+          toAddress: "bluedevstorm@gmail.com",
+          subject: "Test Email",
+          htmlBody: "<h1>Hello</h1><p>This is a test email.</p>",
+          textBody: "Hello\nThis is a test email.",
+        }),
+      }
+    );
 
     const data = await response.json();
     if (response.ok) {

@@ -11,7 +11,7 @@ type Props = {
 export async function GET(request: NextRequest, props: Props) {
   try {
     const quizsetPath = props.params.quizset_path;
-    console.log("quizsetPath", quizsetPath);
+    console.log("API: quizsetPath", quizsetPath);
 
     if (!quizsetPath) {
       return NextResponse.json(
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
-    console.log("quizSet:", quizSet);
+    console.log("API: quizSet:", quizSet);
 
     if (!quizSet) {
       return NextResponse.json(

@@ -65,7 +65,7 @@ export default function QuizMap() {
     <div
       className="flex flex-col items-center h-full"
       style={{
-        backgroundImage: `url('/certification/assets/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
       }}
     >
       <div

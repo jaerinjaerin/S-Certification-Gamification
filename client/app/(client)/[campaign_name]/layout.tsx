@@ -12,27 +12,20 @@ export default async function CampaignLayout({
 }) {
   console.log("CampaignLayout", params);
 
-  const url = `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
-  console.log("url", url);
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
+  console.log("CampaignLayout url", url);
   const response = await fetch(url, {
     method: "GET",
     // headers: { "Content-Type": "application/json" },
     cache: "force-cache",
   });
 
-  console.log("CampaignLayout response", response);
-
   const routeCommonError = () => {
     redirect("/error");
   };
 
   if (!response.ok) {
-    // routeCommonError();
-    return (
-      <div>
-        <h1>404 Not Found</h1>
-      </div>
-    );
+    routeCommonError();
     return;
   }
   const data = (await response.json()) as { item: Campaign };

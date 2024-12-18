@@ -83,11 +83,14 @@ export default function GuestRegisterPage() {
   const fetchConutries = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/certification/api/channels`, {
-        method: "GET",
-        // cache: "force-cache",
-        cache: "no-cache",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/channels`,
+        {
+          method: "GET",
+          // cache: "force-cache",
+          cache: "no-cache",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -168,7 +171,7 @@ export default function GuestRegisterPage() {
     }
     // TODO: 코드 수정 필요
     createItem({
-      url: `/certification/api/users/${session?.user.id}/register`,
+      url: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/register`,
       body: {
         domainCode: selectedCountry.code,
         subsidaryId: selectedCountry.subsidaryId,
@@ -196,7 +199,9 @@ export default function GuestRegisterPage() {
   return (
     <div
       className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: `url('/certification/assets/bg_main.png')` }}
+      style={{
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
+      }}
     >
       <Dialog open>
         <DialogContent>

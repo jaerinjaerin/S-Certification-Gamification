@@ -1,10 +1,10 @@
 import { prisma } from "@/prisma-client";
-import type { Adapter } from "@auth/core/adapters";
+import type { Adapter, AdapterUser } from "@auth/core/adapters";
+import { JWT } from "@auth/core/jwt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthType } from "@prisma/client";
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth, { DefaultSession, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvier from "next-auth/providers/google";
 import { SumtotalProfile } from "./app/lib/auth/sumtotal";
 import { encryptEmail } from "./utils/encrypt";
 const uuid = require("uuid");
@@ -22,6 +22,10 @@ declare module "next-auth" {
   }
 }
 
+type SessionParams =
+  | { session: Session; user: AdapterUser }
+  | { session: Session; token: JWT };
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -37,12 +41,16 @@ export const {
         params: {
           scope: "allapis offline_access",
           prompt: "select_account",
+          redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
         },
       },
       token: "https://samsung.sumtotal.host/apisecurity/connect/token",
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
+      redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
+      // callbackUrl: process.env.SUMTOTAL_CALLBACK_URL,
+      // callback: process.env.SUMTOTAL_CALLBACK_URL,
       profile: async (profile: SumtotalProfile, tokens) => {
         console.log("profile:", profile);
         console.log("accessToken:", tokens.access_token);
@@ -239,10 +247,6 @@ export const {
         return user;
       },
     }),
-    GoogleProvier({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
   ],
   secret: process.env.AUTH_SECRET,
   session: {
@@ -283,16 +287,43 @@ export const {
       }
       return token;
     },
-    session: async ({ session, token }) => {
-      if (session?.user && token.sub) {
-        session.user.id = token.sub;
-        session.user.provider = token.provider as string;
+    session: async (params): Promise<Session | DefaultSession> => {
+      const { session } = params;
+
+      // JWT 전략일 경우 token을 사용
+      if ("token" in params) {
+        const { token } = params;
+
+        if (session.user && token.sub) {
+          session.user.id = token.sub;
+          session.user.provider = (token as any).provider || "default"; // provider 필드 추가
+        }
       }
+
+      // Database 전략일 경우 추가 로직이 필요하면 여기서 처리
+      if ("user" in params) {
+        const { user } = params;
+
+        if (session.user) {
+          session.user.id = user.id;
+        }
+      }
+
       return session;
+      // if (session?.user && token.sub) {
+      //   session.user.id = token.sub;
+      //   session.user.provider = token.provider as string;
+      // }
+      // return session;
     },
     authorized: ({ auth }) => {
       // console.log('next-auth authorized', auth)
       return !!auth?.user; // this ensures there is a logged in user for -every- request
+    },
+    redirect: async ({ url, baseUrl }) => {
+      const result = url.startsWith(baseUrl) ? url : baseUrl;
+      console.log("next-auth redirect", url, baseUrl, result);
+      return result;
     },
   },
   pages: {

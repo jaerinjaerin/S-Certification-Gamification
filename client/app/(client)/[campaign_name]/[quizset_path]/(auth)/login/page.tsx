@@ -40,6 +40,9 @@ export default function Login() {
   const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/bg_01.png`;
   const processSignIn = async () => {
     const result = await signIn("sumtotal");
+    // const result = await signIn("sumtotal", {
+    //   callbackUrl: "/certification/s24/NAT_23961_fsm_ja/map",
+    // });
     console.log("result", result);
   };
 

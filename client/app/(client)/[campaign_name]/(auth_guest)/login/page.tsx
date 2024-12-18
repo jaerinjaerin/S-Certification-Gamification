@@ -56,7 +56,7 @@ export default function GuestLogin() {
 
     try {
       const response = await fetch(
-        "/certification/api/auth/send-verify-email",
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
         {
           method: "POST",
           // headers: { "Content-Type": "application/json" },
@@ -116,11 +116,18 @@ export default function GuestLogin() {
     }
   };
 
+  console.log(
+    "process.env.NEXT_PUBLIC_BASE_PATH",
+    process.env.NEXT_PUBLIC_BASE_PATH
+  );
+
   return (
     <>
       <div
         className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{ backgroundImage: `url('/certification/assets/bg_main.png')` }}
+        style={{
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
+        }}
       >
         <div className="flex flex-col items-center">
           <span className="block font-extrabold">Galaxy AI Expert</span>

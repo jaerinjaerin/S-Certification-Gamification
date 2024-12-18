@@ -24,10 +24,13 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/certification/api/sumtotal/user/profile", {
-        method: "GET",
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/user/profile`,
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -64,7 +67,7 @@ export default function TestPage() {
 
     try {
       const response = await fetch(
-        "/certification/api/users/job?org_ids=506631,751755",
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/job?org_ids=506631,751755`,
         {
           method: "GET",
           cache: "no-store",
@@ -93,7 +96,7 @@ export default function TestPage() {
 
     try {
       const response = await fetch(
-        "/certification/api/sumtotal/auth/refresh_token",
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/auth/refresh_token`,
         {
           method: "GET",
           cache: "no-store",
@@ -121,7 +124,7 @@ export default function TestPage() {
 
     try {
       const response = await fetch(
-        `/api/sumtotal/user/org?id=${organizationrg.id}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/user/org?id=${organizationrg.id}`,
         {
           method: "GET",
           cache: "no-store",
@@ -197,7 +200,7 @@ export default function TestPage() {
 
       while (true) {
         const response = await fetch(
-          `/api/sumtotal/activity?limit=${limit}&offset=${offset}`,
+          `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity?limit=${limit}&offset=${offset}`,
           {
             cache: "no-store",
           }
@@ -260,7 +263,7 @@ export default function TestPage() {
 
       while (true) {
         const response = await fetch(
-          `/api/sumtotal/domains?limit=${limit}&offset=${offset}`,
+          `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/domains?limit=${limit}&offset=${offset}`,
           {
             cache: "no-store",
           }
@@ -337,9 +340,12 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/certification/api/sumtotal/jobs", {
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/jobs`,
+        {
+          cache: "no-store",
+        }
+      );
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to fetch jobs");
@@ -365,7 +371,7 @@ export default function TestPage() {
 
     try {
       const response = await fetch(
-        "/certification/api/sumtotal/activity/register",
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
           method: "PUT",
           cache: "no-store",
@@ -397,15 +403,18 @@ export default function TestPage() {
     setError(null);
 
     try {
-      const response = await fetch("/certification/api/sumtotal/activity/end", {
-        method: "POST",
-        cache: "no-store",
-        body: JSON.stringify({
-          activityId: selectedActivity.activityId,
-          status,
-          elapsedSeconds: parseInt(elapsedSeconds as string, 10),
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: selectedActivity.activityId,
+            status,
+            elapsedSeconds: parseInt(elapsedSeconds as string, 10),
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -440,7 +449,9 @@ export default function TestPage() {
 
     try {
       const response = await fetch(
-        `/api/sumtotal/custom?api_path=${encodeURIComponent(apiPath)}`,
+        `${
+          process.env.NEXT_PUBLIC_BASE_PATH
+        }/api/sumtotal/custom?api_path=${encodeURIComponent(apiPath)}`,
         {
           method: "GET",
         }
@@ -505,7 +516,7 @@ export default function TestPage() {
       <br />
       <input
         type="text"
-        placeholder="/certification/api/v2/advanced/userprofile"
+        placeholder="/api/v2/advanced/userprofile"
         value={apiPath}
         onChange={(e) => setApiPath(e.target.value)}
         style={{ marginBottom: "10px", padding: "5px", width: "300px" }}

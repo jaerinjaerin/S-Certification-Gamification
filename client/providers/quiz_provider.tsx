@@ -218,7 +218,7 @@ export const QuizProvider = ({
   const postActivitieRegister = async (activityId: string) => {
     try {
       const response = await fetch(
-        "/certification/api/sumtotal/activity/register",
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
           method: "PUT",
           cache: "no-store",
@@ -245,15 +245,18 @@ export const QuizProvider = ({
     elapsedSeconds: number
   ) => {
     try {
-      const response = await fetch("/certification/api/sumtotal/activity/end", {
-        method: "POST",
-        cache: "no-store",
-        body: JSON.stringify({
-          activityId: activityId,
-          status: "Attended",
-          elapsedSeconds: elapsedSeconds,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+            status: "Attended",
+            elapsedSeconds: elapsedSeconds,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -392,13 +395,16 @@ export const QuizProvider = ({
     try {
       const result = Promise.all(
         quizLogs.map(async (quizLog) => {
-          await fetch("/certification/api/logs/quizzes/questions", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(quizLog),
-          });
+          await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/questions`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(quizLog),
+            }
+          );
         })
       );
     } catch (error) {
@@ -418,28 +424,31 @@ export const QuizProvider = ({
     badgeActivityId: string | null = null
   ): Promise<UserQuizStageLog> => {
     try {
-      const response = await fetch("/certification/api/logs/quizzes/stages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          campaignId: campaign.id,
-          userId: _quizLog.userId,
-          jobId: _quizLog.jobId || "",
-          domainId: quizLog.domainId,
-          quizSetId: quizSet.id,
-          stageIndex: currentQuizStageIndex,
-          quizStageId: currentQuizStage.id,
-          isCompleted: true,
-          isBadgeStage,
-          isBadgeAcquired,
-          badgeActivityId,
-          remainingHearts,
-          score,
-          elapsedSeconds,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/stages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            campaignId: campaign.id,
+            userId: _quizLog.userId,
+            jobId: _quizLog.jobId || "",
+            domainId: quizLog.domainId,
+            quizSetId: quizSet.id,
+            stageIndex: currentQuizStageIndex,
+            quizStageId: currentQuizStage.id,
+            isCompleted: true,
+            isBadgeStage,
+            isBadgeAcquired,
+            badgeActivityId,
+            remainingHearts,
+            score,
+            elapsedSeconds,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -462,7 +471,7 @@ export const QuizProvider = ({
   ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
-        `/certification/api/logs/quizzes/sets/${_quizLog.id}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/${_quizLog.id}`,
         {
           method: "PUT",
           headers: {

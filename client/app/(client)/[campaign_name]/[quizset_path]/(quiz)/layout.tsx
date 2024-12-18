@@ -32,15 +32,13 @@ export default async function QuizLayout({
   };
 
   // Fetch quiz data
-  const quizSetReponse = await fetchData(
-    `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
-    {
-      method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      // cache: "force-cache",
-      cache: "no-cache",
-    }
-  );
+  const quizApiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`;
+  console.log("QuizLayout quizApiUrl", quizApiUrl);
+  const quizSetReponse = await fetchData(quizApiUrl, {
+    method: "GET",
+    // cache: "force-cache",
+    cache: "no-cache",
+  });
 
   console.log("QuizLayout quizData", quizSetReponse);
 
@@ -51,7 +49,7 @@ export default async function QuizLayout({
 
   // Fetch quiz history
   const quizLogResponse = await fetchData(
-    `${process.env.API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
       cache: "no-cache",
     }
@@ -86,7 +84,7 @@ export default async function QuizLayout({
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
     const initHistoryResponse = await fetch(
-      `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
       {
         method: "POST",
         // headers: {
@@ -96,6 +94,8 @@ export default async function QuizLayout({
       }
     );
 
+    console.log("QuizLayout initHistoryResponse", initHistoryResponse);
+
     if (!initHistoryResponse.ok) {
       console.error("Failed to initialize quiz history:", initHistoryResponse);
       redirectToErrorPage();
@@ -103,6 +103,7 @@ export default async function QuizLayout({
     }
 
     const initHistoryData = await initHistoryResponse.json();
+    console.log("QuizLayout initHistoryData", initHistoryData);
 
     quizLog = initHistoryData.item.quizLog;
     quizStageLogs = initHistoryData.item.quizStageLogs;
@@ -112,8 +113,8 @@ export default async function QuizLayout({
   }
 
   // 다른 퀴즈페이지로 이동했는지 확인
-  console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
   if (quizLog.quizSetPath !== params.quizset_path) {
+    console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
     return (
       <div>
         <h1>퀴즈 페이지 이동</h1>
@@ -122,11 +123,13 @@ export default async function QuizLayout({
     );
   }
 
-  console.info("Render QuizLayout", quizLog);
+  console.info("QuizLayout quizLog:", quizLog);
   return (
     <div
       className="h-full bg-[#F0F0F0]"
-      style={{ backgroundImage: `url('/certification/assets/bg_main2.png')` }}
+      style={{
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
+      }}
     >
       {/* <LogoutButton /> */}
       <QuizProvider
