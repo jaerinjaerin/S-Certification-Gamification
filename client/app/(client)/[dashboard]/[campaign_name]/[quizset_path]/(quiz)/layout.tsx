@@ -95,7 +95,8 @@ export default async function QuizLayout({
       quizStageLogs = initHistoryData.item.quizStageLogs;
     } catch (error) {
       console.error("Failed to initialize quiz history:", error);
-      redirectToErrorPage();
+      // redirectToErrorPage();
+      return <>{error}</>;
       return null;
     }
   } else {
