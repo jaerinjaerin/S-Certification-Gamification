@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const domains = await prisma.domain.findMany();
 
-    console.log("domains:", domains);
+    // console.log("domains:", domains);
 
     // Map over domains to include parsed channelSegmentIds
     const enrichedDomains = await Promise.all(

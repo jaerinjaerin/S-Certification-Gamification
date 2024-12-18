@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 const sesClient = new SESClient({
   region: process.env.AWS_SES_REGION,
   // endpoint: "https://email.ap-northeast-2.amazonaws.com",
-  credentials: {
-    accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
-    secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
-  },
+  // credentials: {
+  //   accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
+  //   secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
+  // },
 });
 
 export async function POST(request: NextRequest) {

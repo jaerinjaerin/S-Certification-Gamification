@@ -204,6 +204,10 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log("user:", user);
+    console.log("language:", language);
+    console.log("job:", job);
+
     const userQuizLog = await prisma.userQuizLog.create({
       data: {
         userId: userId,
@@ -251,7 +255,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
 
-    // return NextResponse.json({ item: userQuizLog }, { status: 200 });
+    return NextResponse.json({ item: userQuizLog }, { status: 200 });
   } catch (e: unknown) {
     console.error("Error creating user campaign domain log:", e);
     return NextResponse.json({ error: e }, { status: 500 });
