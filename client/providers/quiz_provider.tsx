@@ -11,7 +11,8 @@ import {
   UserQuizStageLog,
 } from "@prisma/client";
 import assert from "assert";
-import { createContext, useContext, useRef, useState } from "react";
+import { useSession } from "next-auth/react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
 import QuizScoreManager from "./managers/quizScoreManager";
@@ -73,14 +74,20 @@ export const QuizProvider = ({
   language,
   quizLog,
   quizStageLogs,
+  userId,
+  quizSetPath,
 }: {
   children: React.ReactNode;
   quizSet: QuizSetEx;
   language: Language;
   quizLog: UserQuizLog;
   quizStageLogs: UserQuizStageLog[];
+  userId: string | undefined;
+  quizSetPath: string;
 }) => {
   const { campaign } = useCampaign();
+  const [currentQuizSetPath, setCurrentQuizSetPath] =
+    useState<string>(quizSetPath);
   const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
     quizStageLogs ?? []
@@ -109,6 +116,98 @@ export const QuizProvider = ({
 
   const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
   const quizLogManager = quizLogManagerRef.current;
+
+  const { data: session } = useSession();
+  const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
+
+  console.log("QuizProvider session", session);
+
+  // if (!quizLog) {
+  //   try {
+  //     const initHistoryResponse = await fetch(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ userId }),
+  //       }
+  //     );
+  //     if (!initHistoryResponse.ok) {
+  //       console.error(
+  //         "Failed to initialize quiz history:",
+  //         initHistoryResponse
+  //       );
+  //       // redirectToErrorPage();
+  //       return (
+  //         <>
+  //           {initHistoryResponse.status} {initHistoryResponse.statusText}
+  //         </>
+  //       );
+  //     }
+  //     const initHistoryData = await initHistoryResponse.json();
+  //     quizLog = initHistoryData.item.quizLog;
+  //     quizStageLogs = initHistoryData.item.quizStageLogs;
+  //   } catch (error) {
+  //     console.error("Failed to initialize quiz history:", error);
+  //     // redirectToErrorPage();
+  //     return <>{error}</>;
+  //     return null;
+  //   }
+  // }
+
+  console.log("QuizProvider quizLog", quizLog, userId);
+
+  useEffect(() => {
+    console.log("QuizProvider useEffect", userId, quizLog?.id);
+    if (!quizLog) {
+      createQuizLog();
+    }
+  }, [userId, quizLog?.id]);
+
+  const createQuizLog = async () => {
+    if (isCreatingQuizLogRef.current) {
+      console.log("createQuizLog is already running");
+      return; // 이미 실행 중인 경우 종료
+    }
+
+    isCreatingQuizLogRef.current = true; // 실행 상태 설정
+    try {
+      console.log("createQuizLog started", userId);
+      const initHistoryResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        }
+      );
+
+      if (!initHistoryResponse.ok) {
+        console.error(
+          "Failed to initialize quiz history:",
+          initHistoryResponse
+        );
+        return;
+      }
+
+      const initHistoryData = await initHistoryResponse.json();
+      const newQuizLog = initHistoryData.item.quizLog;
+      const newQuizStageLogs = initHistoryData.item.quizStageLogs;
+
+      setQuizLog(newQuizLog);
+      setQuizStageLogs(newQuizStageLogs);
+    } catch (error) {
+      console.error("Failed to initialize quiz history:", error);
+    } finally {
+      isCreatingQuizLogRef.current = false; // 실행 상태 해제
+    }
+  };
+
+  useEffect(() => {
+    if (session?.user.id) {
+      console.error("session?.user.id", session?.user.id);
+    }
+  }, [session?.user.id]);
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     const score = quizScoreManager.calculateStageScore({

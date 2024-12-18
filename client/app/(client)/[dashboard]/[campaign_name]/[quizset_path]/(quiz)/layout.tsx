@@ -65,48 +65,45 @@ export default async function QuizLayout({
 
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
-    const userId = session?.user.id;
-    try {
-      const initHistoryResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId }),
-        }
-      );
-
-      if (!initHistoryResponse.ok) {
-        console.error(
-          "Failed to initialize quiz history:",
-          initHistoryResponse
-        );
-        // redirectToErrorPage();
-        return (
-          <>
-            {initHistoryResponse.status} {initHistoryResponse.statusText}
-          </>
-        );
-      }
-
-      const initHistoryData = await initHistoryResponse.json();
-
-      quizLog = initHistoryData.item.quizLog;
-      quizStageLogs = initHistoryData.item.quizStageLogs;
-    } catch (error) {
-      console.error("Failed to initialize quiz history:", error);
-      // redirectToErrorPage();
-      return <>{error}</>;
-      return null;
-    }
+    // const userId = session?.user.id;
+    // try {
+    //   const initHistoryResponse = await fetch(
+    //     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+    //     {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({ userId }),
+    //     }
+    //   );
+    //   if (!initHistoryResponse.ok) {
+    //     console.error(
+    //       "Failed to initialize quiz history:",
+    //       initHistoryResponse
+    //     );
+    //     // redirectToErrorPage();
+    //     return (
+    //       <>
+    //         {initHistoryResponse.status} {initHistoryResponse.statusText}
+    //       </>
+    //     );
+    //   }
+    //   const initHistoryData = await initHistoryResponse.json();
+    //   quizLog = initHistoryData.item.quizLog;
+    //   quizStageLogs = initHistoryData.item.quizStageLogs;
+    // } catch (error) {
+    //   console.error("Failed to initialize quiz history:", error);
+    //   // redirectToErrorPage();
+    //   return <>{error}</>;
+    //   return null;
+    // }
   } else {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;
   }
 
   // 다른 퀴즈페이지로 이동했는지 확인
-  console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
-  if (quizLog.quizSetPath !== params.quizset_path) {
+  // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
+  if (quizLog && quizLog?.quizSetPath !== params.quizset_path) {
     return (
       <div>
         <h1>퀴즈 페이지 이동</h1>
@@ -127,6 +124,8 @@ export default async function QuizLayout({
         language={quizSetReponse.item.language}
         quizLog={quizLog}
         quizStageLogs={quizStageLogs}
+        userId={session?.user.id}
+        quizSetPath={params.quizset_path}
         // domain={quizLog.domain as Domain}
         // campaign={quizData.item.campaign as Campaign}
       >

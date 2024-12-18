@@ -468,6 +468,8 @@ model UserQuizLog {
   channelSegmentId String?
   storeId String?
   channelId String?
+
+  @@unique([userId, campaignId])
 }
 
 model UserQuizStageLog {
