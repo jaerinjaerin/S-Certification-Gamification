@@ -2,14 +2,13 @@
 
 import { BluePaperAirplaneIcon, QuestionMark, SPlusIcon } from "@/app/components/icons/icons";
 import { Button } from "@/app/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, sleep } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { sleep } from "@/app/lib/utils";
 import { animate, AnimatePresence, motion, useInView } from "motion/react";
 
 export default function QuizComplete() {
@@ -118,14 +117,7 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
     <>
       <AnimatePresence>
         {!done && (
-          <motion.div
-            key="not-done"
-            initial={{ opacity: 0, y: 50 }} // 시작 애니메이션
-            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
-            exit={{ opacity: 0, y: -100 }} // 사라질 때 애니메이션
-            transition={{ duration: 0.5, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
-            className="flex flex-col gap-[10px] justify-center"
-          >
+          <motion.div key="not-done" className="flex flex-col gap-[10px] justify-center">
             <div className="flex flex-col items-center">
               <h2 className="text-2xl">{translation("stage")}</h2>
               <h1 className="text-[50px]">{completedStage}</h1>
@@ -145,10 +137,10 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
         {done && (
           <motion.div
             key="done"
-            initial={{ opacity: 0, y: 100 }} // 시작 애니메이션
+            initial={{ opacity: 0, y: 0 }} // 시작 애니메이션
             animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
             exit={{ opacity: 0, y: -50 }} // 사라질 때 애니메이션
-            transition={{ duration: 1, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
+            transition={{ duration: 2, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
           >
             <ScoreRanked />
           </motion.div>

@@ -11,32 +11,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-
-// interface ChannelSegment {
-//   name: string;
-//   id: string;
-// }
 
 interface Job {
   name: string;
@@ -65,14 +47,10 @@ export default function GuestRegisterPage() {
   // state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
-    string | null
-  >(null);
+  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<string | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [languageCode, setLanguageCode] = useState<string | undefined>(
-    undefined
-  ); // 브라우저에서 주는 언어코드
+  const [languageCode, setLanguageCode] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<Country[]>([]);
@@ -123,12 +101,7 @@ export default function GuestRegisterPage() {
     fetchLanguage();
   }, []);
 
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
+  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
   useEffect(() => {
     if (campaignPath) {
@@ -166,7 +139,7 @@ export default function GuestRegisterPage() {
     if (!selectedCountry) {
       assert(false, "Please select a country.");
     }
-    // TODO: 코드 수정 필요
+
     createItem({
       url: `/api/users/${session?.user.id}/register`,
       body: {
@@ -181,9 +154,7 @@ export default function GuestRegisterPage() {
   };
 
   // const errorMessage = error || errorCreate;
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (errorCreate) {
       setErrorMessage(errorCreate);
@@ -191,13 +162,8 @@ export default function GuestRegisterPage() {
   }, [errorCreate]);
   const t = useTranslations("register");
 
-  // console.info("GuestRegisterPage render", isLoading, error, domains);
-
   return (
-    <div
-      className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: `url('/assets/bg_main.png')` }}
-    >
+    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
       <Dialog open>
         <DialogContent>
           <DialogHeader>
@@ -209,22 +175,12 @@ export default function GuestRegisterPage() {
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
-            <Select
-              defaultValue={t("country")}
-              onValueChange={(value) => selectCountry(value)}
-              value={t("country")}
-            >
+            <Select defaultValue={t("country")} onValueChange={(value) => selectCountry(value)} value={t("country")}>
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
-                className={cn(
-                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedCountry === null
-                    ? t("country")
-                    : selectedCountry.name}
-                </SelectValue>
+                <SelectValue>{selectedCountry === null ? t("country") : selectedCountry.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {countries.map((country, idx) => (
@@ -235,21 +191,12 @@ export default function GuestRegisterPage() {
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select
-              onValueChange={(value) => selectChannel(value)}
-              value={t("channel")}
-            >
+            <Select onValueChange={(value) => selectChannel(value)} value={t("channel")}>
               <SelectTrigger
                 disabled={loading || loadingCreate || channels.length === 0}
-                className={cn(
-                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedChannel === null
-                    ? t("channel")
-                    : selectedChannel.name}
-                </SelectValue>
+                <SelectValue>{selectedChannel === null ? t("channel") : selectedChannel.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {channels.map((channel) => (
@@ -312,29 +259,25 @@ export default function GuestRegisterPage() {
             <Button
               variant={"primary"}
               disabled={
-                // isLoading ||
                 loadingCreate ||
                 !selectedCountry ||
                 !selectedChannel ||
                 !selectedChannelSegmentId ||
                 !selectedJobId ||
-                !languageCode
+                !languageCode ||
+                (!loadingCreate && !!campaignPath)
               }
               onClick={routeQuizPage}
               className="disabled:bg-disabled"
             >
               {loadingCreate ? `${t("saving")}` : `${t("save")}`}
             </Button>
-            {/* {errorMessage && <p className="errorMessage">{errorMessage}</p>} */}
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* error alert */}
-      <AlertDialog
-        open={!!errorMessage}
-        onOpenChange={() => setErrorMessage(undefined)}
-      >
+      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Alert</AlertDialogTitle>
