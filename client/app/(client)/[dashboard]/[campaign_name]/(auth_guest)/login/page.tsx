@@ -47,6 +47,7 @@ export default function GuestLogin() {
     useCountdown({ countStart: 60 });
   const translation = useTranslations("login");
 
+  console.log(verifyToken);
   console.log("loading", loading, error, expiresAt);
 
   const sendEmail = async () => {
@@ -118,12 +119,12 @@ export default function GuestLogin() {
         className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
         style={{ backgroundImage: `url('/assets/bg_main.png')` }}
       >
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center h-full">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center my-auto">
             <div className="mb-[70px]">
-              <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">
+              <span className="block font-extrabold text-[44px] text-center mb-5">
                 {translation("be a galaxy ai expert")}
               </span>
               <span className="block text-[30px] font-medium text-center">

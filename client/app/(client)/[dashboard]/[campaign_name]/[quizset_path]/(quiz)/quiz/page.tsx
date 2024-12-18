@@ -14,7 +14,7 @@ import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
   const {
@@ -37,6 +37,7 @@ export default function QuizPage() {
     currentStageQuestions && currentStageQuestions[currentQuestionIndex];
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  console.log(selectedOptionIds);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState(false);
 
@@ -78,9 +79,9 @@ export default function QuizPage() {
         logUserAnswer(question.id, selectedOptIds, elapsedSeconds, true);
         await sleep(1000);
         await next();
+        resetCountdown();
+        return;
       }
-
-      resetCountdown();
     }
     // 틀렸으면 도전 횟수 차감
     else {
@@ -90,17 +91,19 @@ export default function QuizPage() {
   };
 
   const next = async () => {
-    setSelectedOptionIds([]);
     setIsCorrectAnswer(false);
 
     if (canNextQuestion()) {
+      setSelectedOptionIds([]);
       nextQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     const result: EndStageResult = await endStage(lifeCount); // 남은 하트수
+    setSelectedOptionIds([]);
     console.log("👉🏻", result);
-    alert(`스테이지 완료! 점수: ${result.score} 남은 하트 수: ${lifeCount}`);
+    // alert(`스테이지 완료! 점수: ${result.score} 남은 하트 수: ${lifeCount}`);
 
     // nextStage();
     routeToPage("complete");

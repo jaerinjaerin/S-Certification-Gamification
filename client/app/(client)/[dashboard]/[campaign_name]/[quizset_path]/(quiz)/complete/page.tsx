@@ -39,9 +39,8 @@ export default function QuizComplete() {
       routeToPage("map");
     };
 
-    if (!quizStageLogs.at(-1)) {
-      return;
-    }
+    if (!quizStageLogs.at(-1)) return;
+    if (isBadgeStage) return;
 
     routeToMapPage();
   }, [quizStageLogs]);
@@ -156,7 +155,8 @@ const GetBadgeAnnouncment = ({
   const translation = useTranslations("Completed");
   const [done, setDone] = useState(false);
 
-  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${badgeStage.badgeImageUrl}`;
+  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
+  console.log(badgeImageUrl);
 
   return (
     <>
@@ -247,7 +247,8 @@ const ScoreRanked = () => {
             height={179}
           />
           <p className="text-[22px] text-balance px-5">
-            {translation("rank_notification")}
+            {/* {translation("rank_notification")} */}
+            You are ranked in the top XX %
           </p>
         </div>
         {isCardOpen ? (
@@ -258,7 +259,8 @@ const ScoreRanked = () => {
               variant={"primary"}
               onClick={() => routeToPage("map")}
             >
-              {translation("reture_map")}
+              {/* {translation("reture_map")} */}
+              Return map
             </Button>
           </>
         ) : (
@@ -288,7 +290,7 @@ const SendEmailCard = () => {
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
         <BluePaperAirplaneIcon className="shrink-0" />
         <p className="text-[#1429A0] text-[12px] sm:text-[14px] font-normal text-left max-w-[230px]">
-          {translation("badge_deliver")}
+          Your Galaxy AI expert badge will be sent to your email in 5 minutes
         </p>
       </div>
     </div>
