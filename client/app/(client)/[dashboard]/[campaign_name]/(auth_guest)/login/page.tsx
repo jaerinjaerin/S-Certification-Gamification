@@ -56,11 +56,14 @@ export default function GuestLogin() {
     setError(null);
 
     try {
-      const response = await fetch("/api/auth/send-verify-email", {
-        method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ toAddress: email }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+        {
+          method: "POST",
+          // headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ toAddress: email }),
+        }
+      );
 
       if (response.ok) {
         setSuccessSendEmail("Email sent successfully!");

@@ -47,7 +47,7 @@ export default async function CampaignPage({
   }
 
   const historyResponse = await fetch(
-    `/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
     {
       method: "GET",
       // cache: "force-cache",

@@ -217,13 +217,16 @@ export const QuizProvider = ({
 
   const postActivitieRegister = async (activityId: string) => {
     try {
-      const response = await fetch("/api/sumtotal/activity/register", {
-        method: "PUT",
-        cache: "no-store",
-        body: JSON.stringify({
-          activityId: activityId,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/register`,
+        {
+          method: "PUT",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -242,15 +245,18 @@ export const QuizProvider = ({
     elapsedSeconds: number
   ) => {
     try {
-      const response = await fetch("/api/sumtotal/activity/end", {
-        method: "POST",
-        cache: "no-store",
-        body: JSON.stringify({
-          activityId: activityId,
-          status: "Attended",
-          elapsedSeconds: elapsedSeconds,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+            status: "Attended",
+            elapsedSeconds: elapsedSeconds,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -458,16 +464,19 @@ export const QuizProvider = ({
     isBadgeAcquired: boolean
   ): Promise<UserQuizLog> => {
     try {
-      const response = await fetch(`/api/logs/quizzes/sets/${_quizLog.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          lastCompletedStage: stageIndex + 1,
-          isBadgeAcquired,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/${_quizLog.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            lastCompletedStage: stageIndex + 1,
+            isBadgeAcquired,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
