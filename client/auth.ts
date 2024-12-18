@@ -145,6 +145,7 @@ export const {
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
               : null,
+          emailId: profile.businessAddress.email1,
           name: profile.name,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
@@ -220,7 +221,8 @@ export const {
             data: {
               // id: userId,
               name: "Guest User",
-              emailId: encryptedEmail,
+              email: encryptedEmail,
+              emailId: email as string,
               authType: AuthType.GUEST,
             },
           });

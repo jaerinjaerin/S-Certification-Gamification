@@ -27,7 +27,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -78,6 +80,9 @@ export default function GuestRegisterPage() {
   const [countries, setCountries] = useState<Country[]>([]);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
+
+  const { campaign } = useCampaign();
 
   // const {
   const fetchConutries = async () => {
@@ -123,6 +128,12 @@ export default function GuestRegisterPage() {
     fetchLanguage();
   }, []);
 
+  useEffect(() => {
+    if (session?.user.id) {
+      checkRegistered();
+    }
+  }, [session?.user.id]);
+
   const {
     isLoading: loadingCreate,
     error: errorCreate,
@@ -135,6 +146,37 @@ export default function GuestRegisterPage() {
       routeToPage(`${campaignPath}/map`);
     }
   }, [campaignPath, routeToPage]);
+
+  const checkRegistered = async () => {
+    try {
+      setCheckingRegisterd(true);
+      const response = await fetch(
+        `/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        {
+          method: "GET",
+          // cache: "force-cache",
+          cache: "no-cache",
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch domains");
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+      const userQuizLog = data.item as UserQuizLog;
+
+      if (data.item) {
+        routeToPage(`${userQuizLog.quizSetPath}/map`);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    } finally {
+      setCheckingRegisterd(false);
+    }
+  };
 
   const selectCountry = (countryCode: string) => {
     const country = countries.find((d) => d.code === countryCode);

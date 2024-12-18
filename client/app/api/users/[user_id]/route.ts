@@ -8,6 +8,26 @@ type Props = {
   };
 };
 
+export async function GET(props: Props) {
+  try {
+    const userId = props.params.user_id;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    return NextResponse.json({ item: user }, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PUT(request: Request, props: Props) {
   try {
     const userId = props.params.user_id;
