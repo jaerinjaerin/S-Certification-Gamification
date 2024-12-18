@@ -20,7 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
@@ -28,14 +27,11 @@ import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { useCountdown } from "usehooks-ts";
 
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
-    "init"
-  );
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,8 +39,7 @@ export default function GuestLogin() {
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({ countStart: 60 });
+  // const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
   const translation = useTranslations("login");
 
   console.log(verifyToken);
@@ -102,7 +97,6 @@ export default function GuestLogin() {
       if (result?.error) {
         alert("Invalid email or code");
       } else {
-        alert("Login successful!");
         routeToPage("/register");
       }
     } catch (err) {
@@ -115,21 +109,14 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{ backgroundImage: `url('/assets/bg_main.png')` }}
-      >
+      <div className="py-[20px] bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
         <div className="flex flex-col items-center h-full">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center my-auto">
             <div className="mb-[70px]">
-              <span className="block font-extrabold text-[44px] text-center mb-5">
-                {translation("be a galaxy ai expert")}
-              </span>
-              <span className="block text-[30px] font-medium text-center">
-                {translation("certification")}
-              </span>
+              <span className="block font-extrabold text-[44px] text-center mb-5">{translation("be a galaxy ai expert")}</span>
+              <span className="block text-[30px] font-medium text-center">{translation("certification")}</span>
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -140,9 +127,7 @@ export default function GuestLogin() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>{translation("login")}</DialogTitle>
-                  <DialogDescription>
-                    {translation("send code your email")}
-                  </DialogDescription>
+                  <DialogDescription>{translation("send code your email")}</DialogDescription>
                 </DialogHeader>
                 <div>
                   <form
@@ -159,6 +144,7 @@ export default function GuestLogin() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       autoFocus
+                      disabled={loading}
                       required
                     />
                   </form>
@@ -171,7 +157,7 @@ export default function GuestLogin() {
                     form="verify-email"
                     disabled={!email || loading}
                   >
-                    {translation("send code")}
+                    {loading ? "sending..." : `${translation("send code")}`}
                   </Button>
                   <DialogClose className="absolute top-5 right-5">
                     <X className="h-4 w-4" />
@@ -218,8 +204,8 @@ export default function GuestLogin() {
                 onClick={() => {
                   setSuccessSendEmail(null);
                   setStep("code");
-                  resetCountdown();
-                  startCountdown();
+                  // resetCountdown();
+                  // startCountdown();
                 }}
               >
                 OK
@@ -235,9 +221,7 @@ export default function GuestLogin() {
             <DialogTitle>{translation("confirm your email")}</DialogTitle>
             <DialogDescription>
               {translation.rich("magic link sent", {
-                address: (children) => (
-                  <span className="text-blue-500">{children}</span>
-                ),
+                address: (children) => <span className="text-blue-500">{children}</span>,
                 email,
               })}
             </DialogDescription>
@@ -260,15 +244,9 @@ export default function GuestLogin() {
                 autoFocus
                 required
               />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
-                {formatToMMSS(count)}
-              </div>
+              {/* <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div> */}
             </form>
-            {verifyToken?.expiresAt && (
-              <p>
-                Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
-              </p>
-            )}
+            {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
           </div>
           <DialogFooter
             className="flex-col items-center gap-5"
@@ -284,21 +262,18 @@ export default function GuestLogin() {
               disabled={!code || loading}
               onClick={verifyCode}
             >
-              {translation("submit")}
+              {loading ? "verifying..." : `${translation("submit")}`}
             </Button>
             <div className="mx-auto">
               <button
                 className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
-                disabled={count > 0}
                 onClick={sendEmail}
+                disabled
               >
                 {translation("resend code")}
               </button>
             </div>
-            <DialogClose
-              className="absolute top-5 right-5"
-              onClick={() => setStep("email")}
-            >
+            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </DialogClose>
@@ -307,13 +282,4 @@ export default function GuestLogin() {
       </Dialog>
     </>
   );
-}
-
-function formatToMMSS(value: number) {
-  const minutes = Math.floor(value / 60);
-  const seconds = value % 60;
-
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-  const formattedSeconds = seconds.toString().padStart(2, "0");
-  return `${formattedMinutes}:${formattedSeconds}`;
 }
