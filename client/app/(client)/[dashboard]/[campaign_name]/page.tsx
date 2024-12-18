@@ -31,7 +31,7 @@ export default async function CampaignPage({
   // const { data: session } = useSession();
   const session = await auth();
 
-  const url = `/api/campaigns?campaign_name=${params.campaign_name}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
   console.info("CampaignPage url", url);
   const response = await fetch(url, {
     method: "GET",
