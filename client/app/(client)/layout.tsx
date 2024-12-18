@@ -2,20 +2,15 @@ import AuthProvider from "@/providers/authProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
-export default async function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ClientLayout({ children }: { children: React.ReactNode }) {
   console.info("Render ClientLayout");
   const locale = await getLocale();
 
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
-
   return (
-    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
+    <div className="w-full bg-blue-300 flex justify-center min-h-svh min-w-[270px] max-w-[412px] mx-auto" lang={locale}>
       <NextIntlClientProvider messages={messages}>
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
