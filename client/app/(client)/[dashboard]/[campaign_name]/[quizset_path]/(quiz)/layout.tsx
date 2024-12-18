@@ -53,6 +53,7 @@ export default async function QuizLayout({
   const quizLogResponse = await fetchData(
     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
+      method: "GET",
       cache: "no-cache",
     }
   );
@@ -85,14 +86,13 @@ export default async function QuizLayout({
 
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
+    const userId = session?.user.id;
     const initHistoryResponse = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: session?.user.id }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
       }
     );
 
