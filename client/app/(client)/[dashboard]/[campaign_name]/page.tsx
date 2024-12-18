@@ -32,7 +32,7 @@ export default async function CampaignPage({
   const session = await auth();
 
   const response = await fetch(
-    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
     {
       method: "GET",
       // cache: "force-cache",
@@ -48,7 +48,7 @@ export default async function CampaignPage({
   }
 
   const historyResponse = await fetch(
-    `${process.env.API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
     {
       method: "GET",
       // cache: "force-cache",

@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   params: {
@@ -8,18 +8,19 @@ type Props = {
   };
 };
 
-export async function GET(request: Request, props: Props) {
+export async function GET(request: NextRequest, props: Props) {
   try {
+    console.log("props:", props.params);
     const userId = props.params.user_id;
     const campaignId = props.params.campaign_id;
     const log = await prisma.userQuizLog.findFirst({
       where: {
-        userId: userId,
-        campaignId: campaignId,
+        userId,
+        campaignId,
       },
-      include: {
-        quizSet: true,
-      },
+      // include: {
+      //   quizSet: true,
+      // },
     });
 
     console.log("log:", log);

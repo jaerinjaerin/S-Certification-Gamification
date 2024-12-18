@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cp -f .env.dev .env && next dev -p 3000",
-    "local": "cp -f .env.local .env && next dev -p 3000",
+    "local": "cp -f .env.loc .env && next dev -p 3000",
     "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": "next build",
     "build:analyze": "npm run build && source-map-explorer .next/static/**/*.js",

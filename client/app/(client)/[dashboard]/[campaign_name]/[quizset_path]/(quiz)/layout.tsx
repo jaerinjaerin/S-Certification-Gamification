@@ -33,7 +33,7 @@ export default async function QuizLayout({
 
   // Fetch quiz data
   const quizSetReponse = await fetchData(
-    `${process.env.API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
     {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
@@ -51,7 +51,7 @@ export default async function QuizLayout({
 
   // Fetch quiz history
   let quizLogResponse = await fetchData(
-    `${process.env.API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
     {
       cache: "no-cache",
     }
@@ -86,7 +86,7 @@ export default async function QuizLayout({
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
     const initHistoryResponse = await fetch(
-      `${process.env.API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
       {
         method: "POST",
         // headers: {
