@@ -126,3 +126,16 @@ export const SpinnerIcon = React.forwardRef<SVGSVGElement, IconProps>(({ ...prop
 });
 
 SpinnerIcon.displayName = "SpinnerIcon";
+
+export const StarIcon = React.forwardRef<SVGSVGElement, IconProps>(({ color, ...props }, forwardRef) => {
+  return (
+    <svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg" {...props} ref={forwardRef}>
+      <path
+        d="M30.9229 0C30.9229 0 37.5357 12.3569 43.7798 18.601C50.0239 24.8451 62.3808 31.4579 62.3808 31.4579C62.3808 31.4579 49.795 37.4469 43.6211 43.6208C37.4473 49.7947 31.4583 62.3805 31.4583 62.3805C31.4583 62.3805 24.8454 50.0236 18.6013 43.7795C12.3572 37.5354 0.00033109 30.9225 0.00033109 30.9225C0.00033109 30.9225 11.6411 25.4755 18.76 18.7597C25.8789 12.0438 30.9229 0 30.9229 0Z"
+        fill={color}
+      />
+    </svg>
+  );
+});
+
+StarIcon.displayName = "StarIcon";
