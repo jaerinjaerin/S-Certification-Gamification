@@ -58,27 +58,6 @@ export default async function QuizLayout({
     }
   );
 
-  // if (!quizHistory?.item) {
-  //   const initHistoryResponse = await fetch(
-  //     `${process.env.API_URL}/api/users/${session?.user.id}/register`,
-  //     {
-  //       method: "PUT",
-  //       body: JSON.stringify({ quizset_path: params.quizset_path }),
-  //     }
-  //   );
-
-  //   if (!initHistoryResponse.ok) {
-  //     console.error("Failed to initialize quiz history:", initHistoryResponse);
-  //     redirectToErrorPage();
-  //     return null;
-  //   }
-
-  //   const initHistoryData = await initHistoryResponse.json();
-  //   quizHistory = initHistoryData.item.userQuizLog;
-  // } else {
-  //   quizHistory = quizHistory.item;
-  // }
-
   let quizLog;
   let quizStageLogs;
 
