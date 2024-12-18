@@ -140,14 +140,25 @@ export const {
           }
         }
 
+        let name: string | null = null;
+        if (process.env.NODE_ENV !== "production") {
+          name =
+            profile.businessAddress.email1 != null
+              ? encryptEmail(profile.businessAddress.email1)
+              : null;
+        }
+
         return {
           id: profile.userId,
-          email:
+          // email:
+          //   profile.businessAddress.email1 != null
+          //     ? encryptEmail(profile.businessAddress.email1)
+          //     : null,
+          emailId:
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
               : null,
-          emailId: profile.businessAddress.email1,
-          name: profile.name,
+          name: name,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
@@ -203,7 +214,7 @@ export const {
         const encryptedEmail = encryptEmail(email as string);
 
         let user = await prisma.user.findFirst({
-          where: { email: encryptedEmail },
+          where: { emailId: encryptedEmail },
         });
 
         console.log("tokenRecord user", user);
@@ -222,8 +233,8 @@ export const {
             data: {
               // id: userId,
               name: "Guest User",
-              email: encryptedEmail,
-              emailId: email as string,
+              // email: encryptedEmail,
+              emailId: encryptedEmail,
               authType: AuthType.GUEST,
             },
           });
