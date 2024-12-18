@@ -38,14 +38,12 @@ export default function QuizComplete() {
         backgroundImage: `url('/assets/bg_main2.png')`,
       }}
     >
-      <div>
-        <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold">
-          {isBadgeStage ? (
-            <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
-          ) : (
-            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
-          )}
-        </div>
+      <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
+        {isBadgeStage ? (
+          <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
+        ) : (
+          <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+        )}
       </div>
     </div>
   );
@@ -126,6 +124,7 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
             animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
             exit={{ opacity: 0, y: -100 }} // 사라질 때 애니메이션
             transition={{ duration: 0.5, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
+            className="flex flex-col gap-[10px] justify-center"
           >
             <div className="flex flex-col items-center">
               <h2 className="text-2xl">{translation("stage")}</h2>
@@ -135,9 +134,11 @@ const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: n
               <h3 className="text-[22px] text-pretty">{translation("congratulation")}</h3>
               <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
             </div>
-            <Button className="text-[18px]" variant={"primary"} onClick={() => setDone(true)}>
-              {translation("done")}
-            </Button>
+            <div className="mt-[20px]">
+              <Button className="text-[18px]" variant={"primary"} onClick={() => setDone(true)}>
+                {translation("done")}
+              </Button>
+            </div>
           </motion.div>
         )}
 
