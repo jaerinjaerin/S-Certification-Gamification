@@ -235,7 +235,23 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ item: userQuizLog }, { status: 200 });
+    const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
+      where: {
+        quizSetId: userQuizLog?.quizSetId,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        item: {
+          quizLog: userQuizLog,
+          quizStageLogs: userQuizStageLogs,
+        },
+      },
+      { status: 200 }
+    );
+
+    // return NextResponse.json({ item: userQuizLog }, { status: 200 });
   } catch (e: unknown) {
     console.error("Error creating user campaign domain log:", e);
     return NextResponse.json({ error: e }, { status: 500 });

@@ -12,7 +12,7 @@ export default async function CampaignLayout({
   console.log("CampaignLayout", params);
 
   const response = await fetch(
-    `${process.env.API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
     {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
