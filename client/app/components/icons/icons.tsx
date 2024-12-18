@@ -119,7 +119,7 @@ export const SpinnerIcon = React.forwardRef<SVGSVGElement, IconProps>(({ ...prop
         fillRule="evenodd"
         clipRule="evenodd"
         d="M100 0C44.7715 0 0 44.7715 0 100C0 155.229 44.7715 200 100 200C155.229 200 200 155.229 200 100H180C180 144.183 144.183 180 100 180C55.8174 180 20 144.183 20 100C20 55.8171 55.8174 20 100 20V0Z"
-        fill="black"
+        fill="white"
       />
     </svg>
   );
