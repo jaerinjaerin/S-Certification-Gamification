@@ -66,25 +66,38 @@ export default async function QuizLayout({
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
     const userId = session?.user.id;
-    const initHistoryResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      }
-    );
+    try {
+      const initHistoryResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        }
+      );
 
-    if (!initHistoryResponse.ok) {
-      console.error("Failed to initialize quiz history:", initHistoryResponse);
+      if (!initHistoryResponse.ok) {
+        console.error(
+          "Failed to initialize quiz history:",
+          initHistoryResponse
+        );
+        // redirectToErrorPage();
+        return (
+          <>
+            {initHistoryResponse.status} {initHistoryResponse.statusText}
+          </>
+        );
+      }
+
+      const initHistoryData = await initHistoryResponse.json();
+
+      quizLog = initHistoryData.item.quizLog;
+      quizStageLogs = initHistoryData.item.quizStageLogs;
+    } catch (error) {
+      console.error("Failed to initialize quiz history:", error);
       redirectToErrorPage();
       return null;
     }
-
-    const initHistoryData = await initHistoryResponse.json();
-
-    quizLog = initHistoryData.item.quizLog;
-    quizStageLogs = initHistoryData.item.quizStageLogs;
   } else {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;

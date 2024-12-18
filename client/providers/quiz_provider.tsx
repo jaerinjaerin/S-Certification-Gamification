@@ -395,13 +395,16 @@ export const QuizProvider = ({
     try {
       const result = Promise.all(
         quizLogs.map(async (quizLog) => {
-          await fetch("/api/logs/quizzes/questions", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(quizLog),
-          });
+          await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(quizLog),
+            }
+          );
         })
       );
     } catch (error) {
@@ -421,28 +424,31 @@ export const QuizProvider = ({
     badgeActivityId: string | null = null
   ): Promise<UserQuizStageLog> => {
     try {
-      const response = await fetch("/api/logs/quizzes/stages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          campaignId: campaign.id,
-          userId: _quizLog.userId,
-          jobId: _quizLog.jobId || "",
-          domainId: quizLog.domainId,
-          quizSetId: quizSet.id,
-          stageIndex: currentQuizStageIndex,
-          quizStageId: currentQuizStage.id,
-          isCompleted: true,
-          isBadgeStage,
-          isBadgeAcquired,
-          badgeActivityId,
-          remainingHearts,
-          score,
-          elapsedSeconds,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/stages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            campaignId: campaign.id,
+            userId: _quizLog.userId,
+            jobId: _quizLog.jobId || "",
+            domainId: quizLog.domainId,
+            quizSetId: quizSet.id,
+            stageIndex: currentQuizStageIndex,
+            quizStageId: currentQuizStage.id,
+            isCompleted: true,
+            isBadgeStage,
+            isBadgeAcquired,
+            badgeActivityId,
+            remainingHearts,
+            score,
+            elapsedSeconds,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
