@@ -94,6 +94,8 @@ export const {
           results.forEach((result: any) => {
             if (!result) return; // null인 경우 건너뜀
 
+            console.log("optionalInfo", result.data[0]);
+
             const text9 = result.data[0]?.optionalInfo.text9;
             const text8 = result.data[0]?.optionalInfo.text8;
             const integer1 = result.data[0]?.optionalInfo.integer1;
@@ -140,14 +142,6 @@ export const {
           }
         }
 
-        let name: string | null = null;
-        if (process.env.NODE_ENV !== "production") {
-          name =
-            profile.businessAddress.email1 != null
-              ? encryptEmail(profile.businessAddress.email1)
-              : null;
-        }
-
         return {
           id: profile.userId,
           // email:
@@ -158,7 +152,10 @@ export const {
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
               : null,
-          name: name,
+          name:
+            process.env.NODE_ENV !== "production"
+              ? profile.businessAddress.email1
+              : null,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,

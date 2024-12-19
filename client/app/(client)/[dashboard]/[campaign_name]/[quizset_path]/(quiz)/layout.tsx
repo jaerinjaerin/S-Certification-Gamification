@@ -1,6 +1,7 @@
 import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
+import { AuthType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -103,7 +104,16 @@ export default async function QuizLayout({
 
   // 다른 퀴즈페이지로 이동했는지 확인
   // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
-  if (quizLog && quizLog?.quizSetPath !== params.quizset_path) {
+  if (
+    session?.user.provider === AuthType.SUMTOTAL &&
+    quizLog !== null &&
+    quizLog?.quizSetPath !== params.quizset_path
+  ) {
+    console.log(
+      "QuizLayout quizLog",
+      quizLog?.quizSetPath,
+      params.quizset_path
+    );
     return (
       <div>
         <h1>퀴즈 페이지 이동</h1>

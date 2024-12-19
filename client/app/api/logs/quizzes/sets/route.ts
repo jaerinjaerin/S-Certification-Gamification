@@ -147,6 +147,13 @@ export async function POST(request: NextRequest) {
       where: {
         code: domainCode,
       },
+      include: {
+        subsidary: {
+          include: {
+            region: true,
+          },
+        },
+      },
     });
 
     console.log("domain:", domain);
@@ -165,7 +172,7 @@ export async function POST(request: NextRequest) {
 
     console.log("job:", job);
 
-    const language = await prisma.job.findFirst({
+    const language = await prisma.language.findFirst({
       where: {
         code: languageCode,
       },
@@ -220,14 +227,14 @@ export async function POST(request: NextRequest) {
         isBadgeAcquired: false,
         jobId: user?.sumtotalJobId ?? job?.id,
         quizSetId: quizSet.id,
-        domainId: quizSet.domainId,
+        domainId: domain?.id,
         // firstBadgeActivityId: quizSet.firstBadgeActivityId,
         // lastBadgeActivityId: quizSet.lastBadgeActivityId,
         languageId: language?.id,
         quizSetPath: quizsetPath,
 
-        regionId: user?.regionId,
-        subsidaryId: user?.subsidaryId,
+        regionId: domain?.subsidary?.region?.id ?? user?.regionId,
+        subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
         channelSegmentId: user?.channelSegmentId,
         storeId: user?.storeId,
         channelId: user?.channelId,
