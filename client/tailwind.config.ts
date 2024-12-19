@@ -60,6 +60,16 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        "animate-loading": {
+          "0%": { transform: "rotate(0deg)" },
+          "50%": { transform: "rotate(180deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        loading: "animate-loading 1.1s linear infinite",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

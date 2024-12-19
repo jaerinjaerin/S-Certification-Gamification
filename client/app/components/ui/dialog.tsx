@@ -141,7 +141,7 @@ export const DialogHeader = ({ children }: { children: React.ReactNode }) => {
 
 // DialogTitle 컴포넌트
 export const DialogTitle = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <h2 className={cn("font-bold text-center text-[26px] mt-[32px] mb-[26px] font-one", className)}>{children}</h2>
+  <h2 className={cn("font-extrabold text-center text-[26px] mt-[32px] mb-[26px]", className)}>{children}</h2>
 );
 
 // DialogDescription 컴포넌트

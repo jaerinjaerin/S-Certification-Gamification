@@ -19,7 +19,7 @@ import { sleep } from "@/app/lib/utils";
 import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { animate, motion, useInView } from "motion/react";
+import { animate, AnimatePresence, motion, useInView } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -39,31 +39,28 @@ export default function QuizComplete() {
       routeToPage("map");
     };
 
-    if (!quizStageLogs.at(-1)) {
-      return;
-    }
+    if (!quizStageLogs.at(-1)) return;
+    if (isBadgeStage) return;
 
     routeToMapPage();
   }, [quizStageLogs]);
 
   return (
     <div
-      className="flex flex-col items-center h-full "
+      className="flex flex-col items-center h-full"
       style={{
         backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
       }}
     >
-      <div>
-        <div className="flex flex-col w-full items-center text-center gap-[46px] mx-auto pt-[60px] px-[9px] font-extrabold">
-          {isBadgeStage ? (
-            <GetBadgeAnnouncment
-              completedStage={currentQuizStageIndex}
-              badgeStage={currentStage}
-            />
-          ) : (
-            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
-          )}
-        </div>
+      <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
+        {isBadgeStage ? (
+          <GetBadgeAnnouncment
+            completedStage={currentQuizStageIndex}
+            badgeStage={currentStage}
+          />
+        ) : (
+          <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+        )}
       </div>
     </div>
   );
@@ -156,28 +153,59 @@ const GetBadgeAnnouncment = ({
   const translation = useTranslations("Completed");
   const [done, setDone] = useState(false);
 
-  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${badgeStage.badgeImageUrl}`;
+  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
 
   return (
     <>
-      <div>
-        <h2 className="text-2xl">{translation("stage")}</h2>
-        <h1 className="text-[50px]">{completedStage}</h1>
-      </div>
-      <div className="flex flex-col items-center gap-10">
-        <h3 className="text-[22px] text-pretty">
-          {translation("congratulation")}
-        </h3>
-        <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
-        <Button
-          className="text-[18px] mt-[26px]"
-          variant={"primary"}
-          onClick={() => setDone(true)}
-        >
-          {translation("done")}
-        </Button>
-      </div>
-      {done && <ScoreRanked />}
+      <AnimatePresence>
+        {!done && (
+          <motion.div
+            key="not-done"
+            initial={{ opacity: 0, y: 50 }} // 시작 애니메이션
+            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
+            exit={{ opacity: 0, y: -100 }} // 사라질 때 애니메이션
+            transition={{ duration: 0.5, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
+            className="flex flex-col gap-[10px] justify-center"
+          >
+            <div className="flex flex-col items-center">
+              <h2 className="text-2xl">{translation("stage")}</h2>
+              <h1 className="text-[50px]">{completedStage}</h1>
+            </div>
+            <div className="flex flex-col items-center gap-10">
+              <h3 className="text-[22px] text-pretty">
+                {translation("congratulation")}
+              </h3>
+              <Image
+                src={badgeImageUrl}
+                alt="badge image"
+                width={200}
+                height={200}
+              />
+            </div>
+            <div className="mt-[20px]">
+              <Button
+                className="text-[18px]"
+                variant={"primary"}
+                onClick={() => setDone(true)}
+              >
+                {translation("done")}
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
+        {done && (
+          <motion.div
+            key="done"
+            initial={{ opacity: 0, y: 100 }} // 시작 애니메이션
+            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
+            exit={{ opacity: 0, y: -50 }} // 사라질 때 애니메이션
+            transition={{ duration: 1, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
+          >
+            <ScoreRanked />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
@@ -194,7 +222,7 @@ const ScoreRanked = () => {
 
   return (
     <>
-      <div className="absolute top-[21px] right-[21px]">
+      <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
             <Button
@@ -247,7 +275,8 @@ const ScoreRanked = () => {
             height={179}
           />
           <p className="text-[22px] text-balance px-5">
-            {translation("rank_notification")}
+            {/* {translation("rank_notification")} */}
+            You are ranked in the top 20%
           </p>
         </div>
         {isCardOpen ? (
@@ -258,7 +287,8 @@ const ScoreRanked = () => {
               variant={"primary"}
               onClick={() => routeToPage("map")}
             >
-              {translation("reture_map")}
+              {/* {translation("reture_map")} */}
+              Return map
             </Button>
           </>
         ) : (
@@ -281,14 +311,14 @@ const ScoreRanked = () => {
 };
 
 const SendEmailCard = () => {
-  const translation = useTranslations("Score_guide");
+  // const translation = useTranslations("Score_guide");
 
   return (
     <div className="pt-[10px]">
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
         <BluePaperAirplaneIcon className="shrink-0" />
         <p className="text-[#1429A0] text-[12px] sm:text-[14px] font-normal text-left max-w-[230px]">
-          {translation("badge_deliver")}
+          Your Galaxy AI expert badge will be sent to your email in 5 minutes
         </p>
       </div>
     </div>

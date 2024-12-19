@@ -120,7 +120,7 @@ export default function QuizMap() {
         })}
       </div>
 
-      <PrivacyAndTerm />
+      <PrivacyAndTerm className="fixed bottom-7 z-30" />
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
     </div>

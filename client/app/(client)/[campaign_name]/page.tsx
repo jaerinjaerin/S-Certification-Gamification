@@ -31,14 +31,13 @@ export default async function CampaignPage({
   // const { data: session } = useSession();
   const session = await auth();
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
-    {
-      method: "GET",
-      // cache: "force-cache",
-      cache: "no-cache",
-    }
-  );
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
+  console.info("CampaignPage url", url);
+  const response = await fetch(url, {
+    method: "GET",
+    // cache: "force-cache",
+    cache: "no-cache",
+  });
 
   const data = await response.json();
   console.info("CampaignPage data", data, session?.user);

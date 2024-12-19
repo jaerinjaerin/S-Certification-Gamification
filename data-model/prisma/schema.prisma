@@ -412,6 +412,7 @@ model ChannelSegment {
 model UserQuizLog {
   id          String   @id @default(uuid())
   userId      String
+  campaignId String
   // quizSetId   String
   
   // activityId String
@@ -452,7 +453,7 @@ model UserQuizLog {
   quizSetPath String?
 
 
-  campaignId String
+  
   domainId String?
   languageId String?
 
@@ -467,6 +468,8 @@ model UserQuizLog {
   channelSegmentId String?
   storeId String?
   channelId String?
+
+  @@unique([userId, campaignId])
 }
 
 model UserQuizStageLog {

@@ -329,7 +329,7 @@ async function main() {
         const bgImages = [
           "/certification/s24/bg_01.png",
           "/certification/s24/bg_02.png",
-          "/certification/s24/bg_03png",
+          "/certification/s24/bg_03.png",
           "/certification/s24/bg_04.png",
           "/certification/s24/bg_05.png",
         ];

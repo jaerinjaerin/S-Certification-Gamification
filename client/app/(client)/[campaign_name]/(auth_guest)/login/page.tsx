@@ -48,6 +48,7 @@ export default function GuestLogin() {
   });
   const translation = useTranslations("login");
 
+  console.log(verifyToken);
   console.log("loading", loading, error, expiresAt);
 
   const sendEmail = async () => {
@@ -56,7 +57,7 @@ export default function GuestLogin() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
         {
           method: "POST",
           // headers: { "Content-Type": "application/json" },
@@ -129,12 +130,12 @@ export default function GuestLogin() {
           backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
         }}
       >
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center h-full">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center my-auto">
             <div className="mb-[70px]">
-              <span className="block mt-[180px] font-extrabold text-[44px] text-center mb-5">
+              <span className="block font-extrabold text-[44px] text-center mb-5">
                 {translation("be a galaxy ai expert")}
               </span>
               <span className="block text-[30px] font-medium text-center">

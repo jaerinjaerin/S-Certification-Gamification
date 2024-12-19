@@ -1,0 +1,46 @@
+import { CampaignProvider } from "@/providers/campaignProvider";
+import { Campaign } from "@prisma/client";
+import { redirect } from "next/navigation";
+
+export default async function CampaignLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { campaign_name: string };
+}) {
+  console.log("CampaignLayout", params);
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`,
+    {
+      method: "GET",
+      // headers: { "Content-Type": "application/json" },
+      cache: "force-cache",
+    }
+  );
+
+  const routeCommonError = () => {
+    redirect("/error");
+  };
+
+  if (!response.ok) {
+    routeCommonError();
+    return;
+  }
+  const data = (await response.json()) as { item: Campaign };
+
+  // console.log("QuizProvider fetchData data", data);
+
+  if (data.item == null) {
+    routeCommonError();
+    return;
+  }
+
+  console.info("Render CampaignLayout");
+  return (
+    <div className="h-full">
+      <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
+    </div>
+  );
+}

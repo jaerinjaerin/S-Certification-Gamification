@@ -8,6 +8,8 @@ export default async function ClientLayout({
   children: React.ReactNode;
 }) {
   console.info("Render ClientLayout");
+  const timeZone = "Seoul/Asia";
+
   const locale = await getLocale();
 
   // Providing all messages to the client
@@ -16,7 +18,7 @@ export default async function ClientLayout({
 
   return (
     <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
-      <NextIntlClientProvider messages={messages}>
+      <NextIntlClientProvider timeZone={timeZone} messages={messages}>
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
     </div>
