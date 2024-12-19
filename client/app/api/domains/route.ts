@@ -2,6 +2,8 @@ import { prisma } from "@/prisma-client";
 import { Domain } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import * as Sentry from "@sentry/nextjs";
+
 export async function GET() {
   try {
     const domains = await prisma.domain.findMany();
@@ -39,6 +41,8 @@ export async function GET() {
       })
     );
 
+    Sentry.captureMessage("Domain Data fetched successfully");
+
     const response = NextResponse.json(
       { items: enrichedDomains },
       { status: 200 }
@@ -47,6 +51,7 @@ export async function GET() {
     return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
+    Sentry.captureException(error);
 
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";

@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
@@ -180,6 +181,7 @@ export async function GET(request: NextRequest, props: Props) {
     return response;
   } catch (error) {
     console.error("Error fetching question data:", error);
+    Sentry.captureException(error);
 
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";
