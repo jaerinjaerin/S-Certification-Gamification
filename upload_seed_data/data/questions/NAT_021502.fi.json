@@ -10,7 +10,7 @@
     "importance": "A",
     "timeLimitSeconds": "30",
     "text": "Mikä on S24-puhelinten RAM-muistin määrä?",
-    "questionType": "SINGLE_CHOICE",
+    "questionType": "MULTIPLE_CHOICE",
     "options": [
       {
         "text": "S24: 6 Gt, S24+: 8 Gt, S24 Ultra: 10 Gt",
@@ -18,7 +18,7 @@
       },
       {
         "text": "S24: 8 Gt, S24+: 8 Gt, S24 Ultra: 8 Gt",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "S24: 8 Gt, S24+: 10 Gt, S24 Ultra: 12 Gt",

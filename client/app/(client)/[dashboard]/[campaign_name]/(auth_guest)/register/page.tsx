@@ -60,7 +60,7 @@ interface Country {
 }
 
 export default function GuestRegisterPage() {
-  const { routeToPage, routeToError } = usePathNavigator();
+  const { routeToPage } = usePathNavigator();
 
   const { data: session } = useSession();
 
@@ -82,17 +82,22 @@ export default function GuestRegisterPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
 
+  console.log("checkingRegisterd", checkingRegisterd);
+
   const { campaign } = useCampaign();
 
   // const {
   const fetchConutries = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/channels`, {
-        method: "GET",
-        // cache: "force-cache",
-        cache: "no-cache",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/channels`,
+        {
+          method: "GET",
+          // cache: "force-cache",
+          cache: "no-cache",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -151,7 +156,7 @@ export default function GuestRegisterPage() {
     try {
       setCheckingRegisterd(true);
       const response = await fetch(
-        `/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
         {
           method: "GET",
           // cache: "force-cache",
@@ -210,7 +215,7 @@ export default function GuestRegisterPage() {
     }
     // TODO: 코드 수정 필요
     createItem({
-      url: `/api/users/${session?.user.id}/register`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/register`,
       body: {
         domainCode: selectedCountry.code,
         subsidaryId: selectedCountry.subsidaryId,

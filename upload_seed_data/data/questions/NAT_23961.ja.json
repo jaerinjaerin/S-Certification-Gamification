@@ -10,7 +10,7 @@
     "importance": "A",
     "timeLimitSeconds": "30",
     "text": "S24 電話機の RAM の量はどれくらいですか?",
-    "questionType": "SINGLE_CHOICE",
+    "questionType": "MULTIPLE_CHOICE",
     "options": [
       {
         "text": "S24: 6 GB、S24+: 8 GB、S24 ウルトラ: 10 GB",
@@ -18,7 +18,7 @@
       },
       {
         "text": "S24: 8GB、S24+: 8GB、S24 ウルトラ: 8GB",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "S24: 8GB、S24+: 10GB、S24 ウルトラ: 12GB",

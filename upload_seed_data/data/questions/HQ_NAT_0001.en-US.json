@@ -10,7 +10,7 @@
     "importance": "A",
     "timeLimitSeconds": "30",
     "text": "What is the amount of RAM in S24 phones?",
-    "questionType": "SINGLE_CHOICE",
+    "questionType": "MULTIPLE_CHOICE",
     "options": [
       {
         "text": "S24: 6 GB, S24+: 8 GB, S24 Ultra: 10 GB",
@@ -18,7 +18,7 @@
       },
       {
         "text": "S24: 8GB, S24+: 8GB, S24 Ultra: 8GB",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "S24: 8GB, S24+: 10GB, S24 Ultra: 12GB",

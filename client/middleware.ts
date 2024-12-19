@@ -48,7 +48,7 @@ export async function middleware(request: NextRequest) {
 
   if (session && pathname.includes("/login")) {
     const url = campaignQuizSetId
-      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`
+      ? `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/map${search}`
       : `/${dashboardPath}/${campaignName}${search}`;
 
     console.log("url:", url);
@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (session && campaignQuizSetId && segments.length === 3) {
-    const url = `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/intro${search}`;
+    const url = `/${dashboardPath}/${campaignName}/${campaignQuizSetId}/map${search}`;
 
     console.log("url:", url);
 

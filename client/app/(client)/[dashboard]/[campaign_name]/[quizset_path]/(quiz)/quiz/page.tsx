@@ -14,21 +14,16 @@ import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export default function QuizPage() {
   const {
-    quizSet,
-    currentQuizStageIndex,
     currentQuestionIndex,
     currentQuizStage,
     currentStageQuestions,
     endStage,
-    confirmAnswer,
-    nextStage,
     nextQuestion,
     canNextQuestion,
-    quizStagesTotalScore,
     logUserAnswer,
   } = useQuiz();
 

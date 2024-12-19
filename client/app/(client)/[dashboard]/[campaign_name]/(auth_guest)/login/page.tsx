@@ -1,12 +1,12 @@
 "use client";
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import {
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -43,8 +43,9 @@ export default function GuestLogin() {
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({ countStart: 60 });
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
+    countStart: 60,
+  });
   const translation = useTranslations("login");
 
   console.log(verifyToken);
@@ -55,11 +56,14 @@ export default function GuestLogin() {
     setError(null);
 
     try {
-      const response = await fetch("/api/auth/send-verify-email", {
-        method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ toAddress: email }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+        {
+          method: "POST",
+          // headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ toAddress: email }),
+        }
+      );
 
       if (response.ok) {
         setSuccessSendEmail("Email sent successfully!");
@@ -67,7 +71,7 @@ export default function GuestLogin() {
         console.log("처음 코드 받았을때 verifyToken", verifyToken);
         setVerifyToken(verifyToken);
       } else {
-        const { error, code, expiresAt, verifyToken } = await response.json();
+        const { code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail("Verification email already sent");
           setVerifyToken(verifyToken);
