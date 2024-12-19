@@ -5,9 +5,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthType } from "@prisma/client";
 import NextAuth, { DefaultSession, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { SumtotalProfile } from "./app/lib/auth/sumtotal";
+import { default as SumTotal, SumtotalProfile } from "./app/lib/auth/sumtotal";
 import { encryptEmail } from "./utils/encrypt";
-const uuid = require("uuid");
 
 declare module "next-auth" {
   interface Session {
@@ -32,25 +31,9 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
-    {
-      id: "sumtotal",
-      name: "SumTotal",
-      type: "oauth",
-      authorization: {
-        url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
-        params: {
-          scope: "allapis offline_access",
-          prompt: "select_account",
-          redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
-        },
-      },
-      token: "https://samsung.sumtotal.host/apisecurity/connect/token",
-      userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+    SumTotal<SumtotalProfile>(process.env.SUMTOTAL_CALLBACK_URL!, {
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
-      // callbackUrl: process.env.SUMTOTAL_CALLBACK_URL,
-      // callback: process.env.SUMTOTAL_CALLBACK_URL,
       profile: async (profile: SumtotalProfile, tokens) => {
         console.log("profile:", profile);
         console.log("accessToken:", tokens.access_token);
@@ -129,7 +112,7 @@ export const {
         const domainCode = profile.personDomain?.find(
           (domain) => domain.isPrimary
         )?.code;
-        if (!domainCode) {
+        if (domainCode) {
           const domain = await prisma.domain.findFirst({
             where: {
               code: domainCode,
@@ -143,12 +126,11 @@ export const {
             },
           });
 
-          if (!domain) {
-            regionId = domain!.subsidary?.regionId || null;
-            subsidaryId = domain!.subsidaryId;
+          if (domain) {
+            regionId = domain.subsidary?.regionId || null;
+            subsidaryId = domain.subsidaryId;
           }
         }
-
         return {
           id: profile.userId,
           // email:
@@ -181,7 +163,156 @@ export const {
           subsidaryId: subsidaryId,
         };
       },
-    },
+    }),
+    // {
+    //   id: "sumtotal",
+    //   name: "SumTotal",
+    //   type: "oauth",
+    //   authorization: {
+    //     url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
+    //     params: {
+    //       scope: "allapis offline_access",
+    //       prompt: "select_account",
+    //       redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
+    //     },
+    //   },
+    //   token: "https://samsung.sumtotal.host/apisecurity/connect/token",
+    //   userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+    //   clientId: process.env.SUMTOTAL_CLIENT_ID,
+    //   clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
+    //   redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
+    //   // callbackUrl: process.env.SUMTOTAL_CALLBACK_URL,
+    //   // callback: process.env.SUMTOTAL_CALLBACK_URL,
+    //   profile: async (profile: SumtotalProfile, tokens) => {
+    //     console.log("profile:", profile);
+    //     console.log("accessToken:", tokens.access_token);
+    //     // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
+
+    //     const accessToken = tokens.access_token;
+    //     // job 및 store 추출
+    //     let jobId: string | null = null;
+    //     let storeId: string | null = null;
+    //     let channelSegmentId: string | null = null;
+
+    //     if (accessToken) {
+    //       const orgIds: string[] = profile.personOrganization.map((org) =>
+    //         org.organizationId.toString()
+    //       );
+
+    //       const fetchOrganizationData = async (
+    //         orgId: string,
+    //         accessToken: string
+    //       ) => {
+    //         try {
+    //           const response = await fetch(
+    //             `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
+    //             {
+    //               cache: "no-store",
+    //               headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${accessToken}`,
+    //               },
+    //             }
+    //           );
+
+    //           if (!response.ok) {
+    //             throw new Error(`Failed to fetch data: ${response.statusText}`);
+    //           }
+
+    //           return await response.json(); // 요청 성공 시 데이터 반환
+    //         } catch (error) {
+    //           console.error(`Error fetching data for orgId ${orgId}:`, error);
+    //           return null; // 실패한 요청은 null 반환
+    //         }
+    //       };
+
+    //       const results = await Promise.all(
+    //         orgIds.map((orgId) => fetchOrganizationData(orgId, accessToken))
+    //       );
+
+    //       results.forEach((result: any) => {
+    //         if (!result) return; // null인 경우 건너뜀
+
+    //         console.log("optionalInfo", result.data[0]);
+
+    //         const text9 = result.data[0]?.optionalInfo.text9;
+    //         const text8 = result.data[0]?.optionalInfo.text8;
+    //         const integer1 = result.data[0]?.optionalInfo.integer1;
+
+    //         if (!text9 || !integer1) return;
+
+    //         if (integer1 === "7" || integer1 === 7) {
+    //           jobId = text9;
+    //         }
+
+    //         if (integer1 === "5" || integer1 === 5) {
+    //           storeId = text9;
+    //         }
+
+    //         if (integer1 === "4" || integer1 === 4) {
+    //           channelSegmentId = text8;
+    //         }
+    //       });
+    //     }
+
+    //     // 확인 regionId, subsidaryId
+    //     let regionId: string | null = null;
+    //     let subsidaryId: string | null = null;
+    //     const domainCode = profile.personDomain?.find(
+    //       (domain) => domain.isPrimary
+    //     )?.code;
+    //     if (!domainCode) {
+    //       const domain = await prisma.domain.findFirst({
+    //         where: {
+    //           code: domainCode,
+    //         },
+    //         include: {
+    //           subsidary: {
+    //             include: {
+    //               region: true,
+    //             },
+    //           },
+    //         },
+    //       });
+
+    //       if (!domain) {
+    //         regionId = domain!.subsidary?.regionId || null;
+    //         subsidaryId = domain!.subsidaryId;
+    //       }
+    //     }
+    //     return {
+    //       id: profile.userId,
+    //       // email:
+    //       //   profile.businessAddress.email1 != null
+    //       //     ? encryptEmail(profile.businessAddress.email1)
+    //       //     : null,
+    //       emailId:
+    //         profile.businessAddress.email1 != null
+    //           ? encryptEmail(profile.businessAddress.email1)
+    //           : null,
+    //       name:
+    //         process.env.NODE_ENV !== "production"
+    //           ? profile.businessAddress.email1
+    //           : null,
+    //       image: profile.imagePath ?? null,
+    //       authType: AuthType.SUMTOTAL,
+    //       providerUserId: profile.userId,
+    //       providerPersonId: profile.personId,
+    //       sumtotalDomainId:
+    //         profile.personDomain
+    //           ?.find((domain) => domain.isPrimary)
+    //           ?.domainId?.toString() || null,
+    //       sumtotalDomainCode:
+    //         profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
+    //         null,
+    //       sumtotalJobId: jobId,
+    //       storeId: storeId,
+    //       channelSegmentId: channelSegmentId,
+    //       regionId: regionId,
+    //       subsidaryId: subsidaryId,
+    //     };
+    //   },
+    // },
     CredentialsProvider({
       id: "credentials",
       name: "credentials",
@@ -332,7 +463,6 @@ export const {
     },
     redirect: async ({ url, baseUrl }) => {
       const result = url.startsWith(baseUrl) ? url : baseUrl;
-      console.log("next-auth redirect", url, baseUrl, result);
       return result;
     },
   },

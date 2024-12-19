@@ -14,6 +14,7 @@
     "start:local": "cp -f .env.loc.production .env && next start -p 3000",
     "lint": "next lint",
     "test": "jest",
+    "postinstall": "patch-package",
     "test:watch": "jest --watch",
     "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
     "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma"
@@ -40,6 +41,8 @@
     "next": "14.1.0",
     "next-auth": "5.0.0-beta.4",
     "next-intl": "^3.25.3",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "react": "18",
     "react-dom": "18",
     "react-email": "^3.0.2",

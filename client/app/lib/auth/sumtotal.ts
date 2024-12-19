@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { OAuth2Config, OAuthUserConfig } from "@auth/core/providers";
 
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
 interface Address {
@@ -209,26 +209,56 @@ export interface SumtotalProfile extends Record<string, any> {
   personTM: PersonTM;
 }
 
-// export default function SumTotalProvider<p extends SumtotalProfile>(
-//   options: OAuthUserConfig<P>
-// ): OAuthConfig<P> {
+export interface ExtendedOAuth2Config<Profile> extends OAuth2Config<Profile> {
+  /**
+   * The callback URL for the OAuth provider.
+   * This can be used to specify a custom callback URL.
+   */
+  callbackUrl?: string;
+  options?: OAuthUserConfig<Profile>;
+}
+
+export default function SumTotal<SumtotalProfile>(
+  callbackUrl: string,
+  options: OAuthUserConfig<SumtotalProfile>
+): ExtendedOAuth2Config<SumtotalProfile> {
+  console.log("SumTotal callbackUrl:", callbackUrl);
+  return {
+    id: "sumtotal",
+    name: "SumTotal",
+    type: "oauth",
+    authorization: {
+      url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
+      params: {
+        scope: "allapis offline_access",
+        prompt: "select_account",
+        redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
+      },
+    },
+    token: "https://samsung.sumtotal.host/apisecurity/connect/token",
+    userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+    // redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
+    callbackUrl: callbackUrl,
+    // callback: process.env.SUMTOTAL_CALLBACK_URL,
+    options,
+  };
+}
+// export default function SumTotal<SumtotalProfile>(
+//   options: OAuthUserConfig<SumtotalProfile>
+// ): OAuthConfig<SumtotalProfile> {
 //   return {
-//     id: 'sumtotal',
-//     name: 'SumTotal',
-//     type: 'oauth',
+//     id: "sumtotal",
+//     name: "SumTotal",
+//     type: "oauth",
 //     authorization: {
-//       url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
+//       url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
 //       params: {
-//         scope: 'allapis',
+//         scope: "allapis",
 //       },
 //     },
-//     token: 'https://samsung.sumtotal.host/apisecurity/connect/token',
-//     userinfo: 'https://samsung.sumtotal.host/apis/api/v2/advanced/users',
-//     authorization: { params: { scope: 'openid email profile' } },
-//     idToken: true,
-//     checks: ['pkce', 'state'],
+//     token: "https://samsung.sumtotal.host/apisecurity/connect/token",
+//     userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
 //     profile: (profile: SumtotalProfile) => {
-//       console.log('profile:', profile);
 //       return {
 //         id: profile.userId,
 //         name: profile.fullName,
@@ -236,9 +266,10 @@ export interface SumtotalProfile extends Record<string, any> {
 //         image: profile.imagePath ?? null,
 //       };
 //     },
-//     options,
+//     // options,
 //   };
 // }
+
 /*
 export default function SumTotalProvider<SumtotalProfile>(
   options: OAuthUserConfig<SumtotalProfile>
