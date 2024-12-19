@@ -112,15 +112,13 @@ export default async function QuizLayout({ children, params }: { children: React
 
   console.info("Render QuizLayout", quizLog);
   return (
-    <div className="h-full w-full bg-[#F0F0F0] " style={{ backgroundImage: `url('/assets/bg_main2.png')` }}>
+    <div className="h-full w-full bg-white" style={{ backgroundImage: `url('/assets/bg_main2.png')` }}>
       {/* <LogoutButton /> */}
       <QuizProvider
         quizSet={quizSetReponse.item as QuizSetEx}
         language={quizSetReponse.item.language}
         quizLog={quizLog}
         quizStageLogs={quizStageLogs}
-        // domain={quizLog.domain as Domain}
-        // campaign={quizData.item.campaign as Campaign}
       >
         {children}
       </QuizProvider>

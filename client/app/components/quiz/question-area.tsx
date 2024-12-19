@@ -1,12 +1,7 @@
 import SpeechBubble from "./speech-bubble";
+import { TypewriteTextVer } from "./typewrite";
 
-export default function Qusetion({
-  currentQuizStage,
-  question,
-}: {
-  currentQuizStage: any;
-  question: any;
-}) {
+export default function Qusetion({ currentQuizStage, question }: { currentQuizStage: any; question: any }) {
   const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.backgroundImageUrl}`;
   const charImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.characterImageUrl}`;
 
@@ -17,7 +12,11 @@ export default function Qusetion({
         backgroundImage: `url(${bgImageUrl})`,
       }}
     >
-      <SpeechBubble>{question.text}</SpeechBubble>
+      <SpeechBubble>
+        <TypewriteTextVer question={question.text} />
+        {/* <Typewrite question={question.text} /> */}
+      </SpeechBubble>
+
       <div
         style={{
           backgroundImage: `url(${charImageUrl})`,

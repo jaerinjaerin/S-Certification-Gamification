@@ -19,7 +19,7 @@ export default function Login() {
   return (
     <>
       <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
+        className="py-[20px] h-svh bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `url(${bgImageUrl})`,
         }}
@@ -43,18 +43,10 @@ const LoginTitle = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex flex-col items-center", className)}>
       <div className="mb-[70px]">
-        <span className="block font-extrabold text-[44px] text-center mb-5">
-          Be a Galaxy AI Expert! (Paradigm)
-        </span>
-        <span className="block text-[30px] font-medium text-center uppercase">
-          certification
-        </span>
+        <span className="block font-extrabold text-[44px] text-center mb-5">Be a Galaxy AI Expert! (Paradigm)</span>
+        <span className="block text-[30px] font-medium text-center uppercase">certification</span>
       </div>
-      <Button
-        variant={"primary"}
-        onClick={() => processSignIn()}
-        className="font-extrabold text-[18px]"
-      >
+      <Button variant={"primary"} onClick={() => processSignIn()} className="font-extrabold text-[18px]">
         s+ login
       </Button>
     </div>

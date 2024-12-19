@@ -27,16 +27,11 @@ export default function QuizComplete() {
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
 
-    routeToMapPage();
+    // routeToMapPage();
   }, [quizStageLogs]);
 
   return (
-    <div
-      className="flex flex-col items-center h-full"
-      style={{
-        backgroundImage: `url('/assets/bg_main2.png')`,
-      }}
-    >
+    <div className="flex flex-col items-center min-h-svh overflow-x-hidden">
       <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
         {isBadgeStage ? (
           <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
@@ -99,7 +94,7 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{translation("score")}</p>
-            <Stat stageScore={stageScore} />
+            <Stat stageScore={quizStagesTotalScore} />
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ export default async function ClientLayout({ children }: { children: React.React
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <div className="w-full min-h-svh min-w-[270px] max-w-[412px] mx-auto" lang={locale}>
+    <div className="w-full min-w-[270px] max-w-[412px] mx-auto " lang={locale}>
       <NextIntlClientProvider messages={messages}>
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
