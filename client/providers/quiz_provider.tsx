@@ -118,6 +118,7 @@ export const QuizProvider = ({
   const quizLogManager = quizLogManagerRef.current;
 
   const { data: session } = useSession();
+
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
   console.log("QuizProvider session", session);
@@ -203,11 +204,21 @@ export const QuizProvider = ({
     }
   };
 
-  useEffect(() => {
-    if (session?.user.id) {
-      console.error("session?.user.id", session?.user.id);
-    }
-  }, [session?.user.id]);
+  // useEffect(() => {
+  //   if (session && session.user && session.user.id) {
+  //     console.log("User ID:", session.user.id);
+  //   } else if (session) {
+  //     console.warn("Session exists but user ID is missing:", session);
+  //   } else {
+  //     console.warn("No session data available");
+  //   }
+  // }, [session?.user?.id]);
+
+  // useEffect(() => {
+  //   if (session?.user.id) {
+  //     console.error("session?.user.id", session?.user.id);
+  //   }
+  // }, [session?.user.id]);
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     const score = quizScoreManager.calculateStageScore({
