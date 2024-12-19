@@ -2,9 +2,11 @@ import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 import { LockIcon } from "../icons/icons";
 import Image from "next/image";
+import { motion } from "motion/react";
+import { ActivePointer, Ping } from "./animation-element";
 
 interface StageProps {
-  currentQuizStageIndex: number; // 풀어야 할 stage
+  currentQuizStageIndex: number;
   routeNextQuizStage: () => Promise<void>;
   stage: any;
 }
@@ -16,16 +18,35 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
   const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
 
+  const renderLockIcon = () =>
+    !isActiveStage &&
+    !isStageCompleted && (
+      <div className="absolute right-[3px] -top-[14px] z-40 bg-white size-10 rounded-full flex justify-center items-center">
+        <LockIcon />
+      </div>
+    );
+
+  const renderButtonContent = () => {
+    if (stage.isBadgeStage) {
+      return (
+        <Image
+          alt="badge image"
+          src={badgeImageUrl}
+          width={200}
+          height={200}
+          className={cn("object-cover w-full h-full", !isActiveStage && !isStageCompleted && "grayscale")}
+        />
+      );
+    }
+    return `stage ${stageOrder}`;
+  };
+
   return (
     <div className="relative" ref={ref}>
       <div className={cn("relative z-10")}>
-        {!isActiveStage && !isStageCompleted && (
-          <div className="absolute right-[3px] -top-[14px] z-40 bg-white size-10 rounded-full flex justify-center items-center">
-            <LockIcon />
-          </div>
-        )}
+        {renderLockIcon()}
 
-        <button
+        <motion.button
           onClick={routeNextQuizStage}
           disabled={!isActiveStage || isStageCompleted}
           className={cn(
@@ -34,46 +55,15 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
             isStageCompleted && "bg-[#001276]"
           )}
         >
-          {stage.isBadgeStage ? (
-            <Image
-              alt="badge image"
-              src={badgeImageUrl}
-              width={200}
-              height={200}
-              className={cn(
-                "object-cover w-full h-full ",
-                !isActiveStage && !isStageCompleted && "grayscale"
-              )}
-            />
-          ) : (
-            `stage ${stageOrder}`
-          )}
-        </button>
+          {renderButtonContent()}
+        </motion.button>
 
         {isActiveStage && <ActivePointer />}
       </div>
 
-      {isActiveStage && <ActiveGradient />}
+      {isActiveStage && <Ping />}
     </div>
   );
 });
 
 Stage.displayName = "Stage";
-
-const ActivePointer = () => {
-  return (
-    <span
-      className="absolute bottom-[-30px] right-[-28px] size-[85px] "
-      style={{ backgroundImage: `url('/assets/pointer.svg')` }}
-    />
-  );
-};
-
-const ActiveGradient = () => {
-  return (
-    <>
-      <div className="absolute z-0 -inset-4 bg-[#80B5FF80]/50 rounded-full animate-pulse" />
-      <div className="absolute z-0 -inset-6 bg-[#5AAFFF4D]/30 rounded-full animate-pulse" />
-    </>
-  );
-};

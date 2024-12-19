@@ -1,5 +1,4 @@
 "use client";
-
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import { QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,6 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { QuizStageEx } from "@/app/types/type";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useQuiz } from "@/providers/quiz_provider";
-
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -32,13 +30,12 @@ export default function QuizMap() {
     setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
     const targetStage = itemsRef.current[nextStage - 1];
     // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
+    if (!targetStage) return;
 
-    if (targetStage) {
-      targetStage.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
+    targetStage.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   }, [quizLog?.lastCompletedStage, nextStage, quizSet.quizStages]);
 
   const routeNextQuizStage = async () => {
