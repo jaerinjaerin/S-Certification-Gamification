@@ -3,13 +3,7 @@ import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
 import { redirect } from "next/navigation";
 
-export default async function QuizLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { quizset_path: string };
-}) {
+export default async function QuizLayout({ children, params }: { children: React.ReactNode; params: { quizset_path: string } }) {
   const session = await auth();
   console.log("QuizLayout session", session);
 
@@ -32,15 +26,12 @@ export default async function QuizLayout({
   };
 
   // Fetch quiz data
-  const quizSetReponse = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
-    {
-      method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      // cache: "force-cache",
-      cache: "no-cache",
-    }
-  );
+  const quizSetReponse = await fetchData(`${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`, {
+    method: "GET",
+    // headers: { "Content-Type": "application/json" },
+    // cache: "force-cache",
+    cache: "no-cache",
+  });
 
   console.log("QuizLayout quizData", quizSetReponse);
 
@@ -85,16 +76,13 @@ export default async function QuizLayout({
 
   if (!quizLogResponse?.item.quizLog) {
     // Initialize quiz history if not found
-    const initHistoryResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-      {
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        body: JSON.stringify({ userId: session?.user.id }),
-      }
-    );
+    const initHistoryResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`, {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      body: JSON.stringify({ userId: session?.user.id }),
+    });
 
     if (!initHistoryResponse.ok) {
       console.error("Failed to initialize quiz history:", initHistoryResponse);
@@ -124,10 +112,7 @@ export default async function QuizLayout({
 
   console.info("Render QuizLayout", quizLog);
   return (
-    <div
-      className="h-full bg-[#F0F0F0]"
-      style={{ backgroundImage: `url('/assets/bg_main2.png')` }}
-    >
+    <div className="h-full w-full bg-[#F0F0F0] " style={{ backgroundImage: `url('/assets/bg_main2.png')` }}>
       {/* <LogoutButton /> */}
       <QuizProvider
         quizSet={quizSetReponse.item as QuizSetEx}

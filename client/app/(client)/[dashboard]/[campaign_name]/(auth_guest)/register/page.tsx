@@ -202,7 +202,7 @@ export default function GuestRegisterPage() {
   const t = useTranslations("register");
 
   return (
-    <div className="py-[20px] h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
+    <div className="py-[20px] min-h-svh bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
       <Dialog open>
         <DialogContent>
           <DialogHeader>

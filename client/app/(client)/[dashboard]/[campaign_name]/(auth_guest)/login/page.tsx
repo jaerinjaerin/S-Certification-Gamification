@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn, fixedClass } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
@@ -109,8 +110,10 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div className="py-[20px] bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url('/assets/bg_main.png')` }}>
-        <div className="flex flex-col items-center h-full">
+      <div className="py-[20px] bg-no-repeat bg-cover bg-center h-svh ">
+        <div className={cn(fixedClass, "top-0 bottom-0 bg-cover bg-center ")} style={{ backgroundImage: `url('/assets/bg_main.png')` }} />
+
+        <div className="flex flex-col items-center h-full relative z-10">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center my-auto">
