@@ -32,7 +32,9 @@ import { useState } from "react";
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
+    "init"
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -110,16 +112,35 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div className="py-[20px] bg-no-repeat bg-cover bg-center h-svh ">
-        <div className={cn(fixedClass, "top-0 bottom-0 bg-cover bg-center ")} style={{ backgroundImage: `url('/assets/bg_main.png')` }} />
+      <div className={cn("h-svh", fixedClass)}>
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`}
+            type="video/mp4"
+          />
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
+            type="video/webm"
+          />
+        </video>
 
-        <div className="flex flex-col items-center h-full relative z-10">
+        <div className="flex flex-col items-center h-full relative z-10 py-5">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center my-auto">
             <div className="mb-[70px]">
-              <span className="block font-extrabold text-[44px] text-center mb-5">{translation("be a galaxy ai expert")}</span>
-              <span className="block text-[30px] font-medium text-center">{translation("certification")}</span>
+              <span className="block font-extrabold text-[44px] text-center mb-5">
+                {translation("be a galaxy ai expert")}
+              </span>
+              <span className="block text-[30px] font-medium text-center">
+                {translation("certification")}
+              </span>
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -130,7 +151,9 @@ export default function GuestLogin() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>{translation("login")}</DialogTitle>
-                  <DialogDescription>{translation("send code your email")}</DialogDescription>
+                  <DialogDescription>
+                    {translation("send code your email")}
+                  </DialogDescription>
                 </DialogHeader>
                 <div>
                   <form
@@ -224,7 +247,9 @@ export default function GuestLogin() {
             <DialogTitle>{translation("confirm your email")}</DialogTitle>
             <DialogDescription>
               {translation.rich("magic link sent", {
-                address: (children) => <span className="text-blue-500">{children}</span>,
+                address: (children) => (
+                  <span className="text-blue-500">{children}</span>
+                ),
                 email,
               })}
             </DialogDescription>
@@ -249,7 +274,11 @@ export default function GuestLogin() {
               />
               {/* <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div> */}
             </form>
-            {verifyToken?.expiresAt && <p>Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}</p>}
+            {verifyToken?.expiresAt && (
+              <p>
+                Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
+              </p>
+            )}
           </div>
           <DialogFooter
             className="flex-col items-center gap-5"
@@ -276,7 +305,10 @@ export default function GuestLogin() {
                 {translation("resend code")}
               </button>
             </div>
-            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
+            <DialogClose
+              className="absolute top-5 right-5"
+              onClick={() => setStep("email")}
+            >
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </DialogClose>
