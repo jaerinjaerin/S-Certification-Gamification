@@ -76,9 +76,8 @@ export default function QuizPage() {
         setSuccess(true);
         logUserAnswer(question.id, selectedOptIds, elapsedSeconds, true);
         await sleep(1500);
-        setSuccess(false);
-
         await next();
+        setSuccess(false);
         return;
       }
     }

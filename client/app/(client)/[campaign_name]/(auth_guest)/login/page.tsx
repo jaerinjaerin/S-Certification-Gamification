@@ -20,14 +20,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn, fixedClass } from "@/lib/utils";
+import { cn, fixedClass, formatToMMSS } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCountdown } from "usehooks-ts";
 
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
@@ -42,11 +43,27 @@ export default function GuestLogin() {
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  // const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
+
+  const [countStart, setCountStart] = useState<number>(0);
+
+  const [count, { startCountdown, stopCountdown, resetCountdown }] =
+    useCountdown({ countStart });
+
   const translation = useTranslations("login");
 
-  console.log(verifyToken);
-  console.log("loading", loading, error, expiresAt);
+  useEffect(() => {
+    if (expiresAt) {
+      const now = new Date();
+      const diffInSeconds = Math.max(
+        0,
+        Math.floor((expiresAt.getTime() - now.getTime()) / 1000)
+      );
+
+      setCountStart(diffInSeconds);
+      resetCountdown();
+      startCountdown();
+    }
+  }, [expiresAt, resetCountdown]);
 
   const sendEmail = async () => {
     setLoading(true);
@@ -71,6 +88,7 @@ export default function GuestLogin() {
           setSuccessSendEmail("Email sent successfully!");
           setVerifyToken(verifyToken);
           setExpiresAt(new Date(expiresAt));
+          startCountdown();
         } else {
           setError("Failed to send email. Please try again.");
         }
@@ -82,6 +100,7 @@ export default function GuestLogin() {
           setVerifyToken(verifyToken);
 
           setExpiresAt(new Date(expiresAt));
+          startCountdown();
           return;
         }
 
@@ -115,7 +134,7 @@ export default function GuestLogin() {
       }
     } catch (err) {
       console.error(err);
-      setError("An unexpected error occurred.");
+      alert("An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -198,6 +217,7 @@ export default function GuestLogin() {
                     type="submit"
                     form="verify-email"
                     disabled={!email || loading}
+                    onClick={() => stopCountdown()}
                   >
                     {loading ? "sending..." : `${translation("send code")}`}
                   </Button>
@@ -288,13 +308,15 @@ export default function GuestLogin() {
                 autoFocus
                 required
               />
-              {/* <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div> */}
+              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
+                {formatToMMSS(count)}
+              </div>
             </form>
-            {verifyToken?.expiresAt && (
+            {/* {verifyToken?.expiresAt && (
               <p>
                 Expires At: {new Date(verifyToken.expiresAt).toLocaleString()}
               </p>
-            )}
+            )} */}
           </div>
           <DialogFooter
             className="flex-col items-center gap-5"

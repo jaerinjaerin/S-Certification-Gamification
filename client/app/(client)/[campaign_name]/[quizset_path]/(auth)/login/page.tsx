@@ -1,6 +1,7 @@
 "use client";
 
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import useLoader from "@/app/components/ui/loader";
 import Spinner from "@/app/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { cn, fixedClass } from "@/lib/utils";
@@ -40,28 +41,33 @@ export default function Login() {
 }
 
 const LoginTitle = ({ className }: { className?: string }) => {
+  const { loading, setLoading } = useLoader();
   const processSignIn = async () => {
+    setLoading(true);
     const result = await signIn("sumtotal");
     console.log("result", result);
   };
 
   return (
-    <div className={cn("flex flex-col items-center", className)}>
-      <div className="mb-[70px]">
-        <span className="block font-extrabold text-[44px] text-center mb-5">
-          Be a Galaxy AI Expert! (Paradigm)
-        </span>
-        <span className="block text-[30px] font-medium text-center uppercase">
-          certification
-        </span>
+    <>
+      <div className={cn("flex flex-col items-center", className)}>
+        <div className="mb-[70px]">
+          <span className="block font-extrabold text-[44px] text-center mb-5">
+            Be a Galaxy AI Expert! (Paradigm)
+          </span>
+          <span className="block text-[30px] font-medium text-center uppercase">
+            certification
+          </span>
+        </div>
+        <Button
+          variant={"primary"}
+          onClick={() => processSignIn()}
+          className="font-extrabold text-[18px] disabled:bg-disabled"
+          disabled={loading}
+        >
+          s+ login
+        </Button>
       </div>
-      <Button
-        variant={"primary"}
-        onClick={() => processSignIn()}
-        className="font-extrabold text-[18px]"
-      >
-        s+ login
-      </Button>
-    </div>
+    </>
   );
 };
