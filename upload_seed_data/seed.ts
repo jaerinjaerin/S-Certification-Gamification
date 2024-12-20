@@ -176,6 +176,22 @@ async function main() {
     });
   };
 
+  const charImages = [
+    "/certification/s24/character_m_01.png",
+    "/certification/s24/character_m_02.png",
+    "/certification/s24/character_m_03.png",
+    "/certification/s24/character_w_01.png",
+    "/certification/s24/character_w_02.png",
+  ];
+
+  const bgImages = [
+    "/certification/s24/images/bg_01.png",
+    "/certification/s24/images/bg_02.png",
+    "/certification/s24/images/bg_03.png",
+    "/certification/s24/images/bg_04.png",
+    "/certification/s24/images/bg_05.png",
+  ];
+
   const createOriginQuizSet = async () => {
     const campaign = await prisma.campaign.findFirst();
     const folderPath = path.join(process.cwd(), "data", "questions");
@@ -229,22 +245,6 @@ async function main() {
       const questions = JSON.parse(fileContent);
       const createdQuestions: any[] = [];
 
-      const charImages = [
-        "/certification/s24/character_m_01.png",
-        "/certification/s24/character_m_02.png",
-        "/certification/s24/character_m_03.png",
-        "/certification/s24/character_w_01.png",
-        "/certification/s24/character_w_02.png",
-      ];
-
-      const bgImages = [
-        "/certification/s24/bg_01.png",
-        "/certification/s24/bg_02.png",
-        "/certification/s24/bg_03.png",
-        "/certification/s24/bg_04.png",
-        "/certification/s24/bg_05.png",
-      ];
-
       for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
         const questionId = uuid.v4();
@@ -271,7 +271,7 @@ async function main() {
             product: question.product,
             questionType: question.questionType,
             order: question.orderInStage ?? 0,
-            backgroundImageUrl: bgImages[imageIndex],
+            backgroundImageUrl: bgImages[question.stage - 1],
             characterImageUrl: charImages[imageIndex],
           },
         });
@@ -338,6 +338,8 @@ async function main() {
             return hqQuestion?.id;
           }
         });
+
+        console.log("questionIds", questionIds);
 
         const isLastStage = i === stages.length - 1;
         await prisma.quizStage.create({
