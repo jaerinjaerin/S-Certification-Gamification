@@ -61,11 +61,7 @@ export default function QuizComplete() {
   );
 }
 
-export const ScoreAnnouncement = ({
-  completedStage,
-}: {
-  completedStage: number;
-}) => {
+const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const translation = useTranslations("Completed");
   const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
@@ -141,7 +137,7 @@ export const ScoreAnnouncement = ({
   );
 };
 
-export const GetBadgeAnnouncment = ({
+const GetBadgeAnnouncment = ({
   completedStage,
   badgeStage,
 }: {
@@ -178,7 +174,7 @@ export const GetBadgeAnnouncment = ({
   );
 };
 
-export const ScoreRankAnnouncement = () => {
+const ScoreRankAnnouncement = () => {
   // S+ 사용자인 경우와 미사용자인 경우 나눠야 함
   // S+ 사용자는 s+버튼, returnmap버튼
   // s+ 미사용자는 메일전송노티, returnmap 버튼
@@ -279,7 +275,7 @@ export const ScoreRankAnnouncement = () => {
   );
 };
 
-export const SendEmailCard = () => {
+const SendEmailCard = () => {
   const translation = useTranslations("Score_guide");
 
   return (
@@ -304,7 +300,7 @@ const SPRING_OPTIONS = {
   damping: 50,
 };
 
-export const SwipeCarousel = () => {
+const SwipeCarousel = () => {
   const { currentQuizStageIndex, quizSet } = useQuiz();
   const currentStage = quizSet.quizStages.find(
     (stage) => stage.order === currentQuizStageIndex
