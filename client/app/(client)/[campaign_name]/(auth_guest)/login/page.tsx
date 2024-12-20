@@ -66,10 +66,17 @@ export default function GuestLogin() {
       );
 
       if (response.ok) {
-        setSuccessSendEmail("Email sent successfully!");
-        const { verifyToken } = await response.json();
-        console.log("처음 코드 받았을때 verifyToken", verifyToken);
-        setVerifyToken(verifyToken);
+        const data = await response.json();
+        const { code, expiresAt, verifyToken } = await response.json();
+        console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
+
+        if (code === "EMAIL_SENT") {
+          setSuccessSendEmail("Email sent successfully!");
+          setVerifyToken(verifyToken);
+          setExpiresAt(new Date(expiresAt));
+        } else {
+          setError("Failed to send email. Please try again.");
+        }
       } else {
         const { code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
