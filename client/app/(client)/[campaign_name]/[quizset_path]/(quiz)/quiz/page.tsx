@@ -167,8 +167,16 @@ export default function QuizPage() {
       </div>
       <Qusetion
         question={question.text}
-        bgImageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImageUrl}`}
-        charImageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImageUrl}`}
+        bgImageUrl={
+          question.backgroundImageUrl
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImageUrl}`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/bg_01.png`
+        }
+        charImageUrl={
+          question.characterImageUrl
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImageUrl}`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/character_m_01.png`
+        }
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
         {question.options &&
