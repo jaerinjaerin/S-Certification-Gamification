@@ -35,11 +35,6 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-// interface ChannelSegment {
-//   name: string;
-//   id: string;
-// }
-
 interface Job {
   name: string;
   id: string;
@@ -213,7 +208,7 @@ export default function GuestRegisterPage() {
     if (!selectedCountry) {
       assert(false, "Please select a country.");
     }
-    // TODO: 코드 수정 필요
+
     createItem({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/register`,
       body: {
@@ -237,8 +232,6 @@ export default function GuestRegisterPage() {
     }
   }, [errorCreate]);
   const t = useTranslations("register");
-
-  // console.info("GuestRegisterPage render", isLoading, error, domains);
 
   return (
     <div
@@ -361,20 +354,19 @@ export default function GuestRegisterPage() {
             <Button
               variant={"primary"}
               disabled={
-                // isLoading ||
                 loadingCreate ||
                 !selectedCountry ||
                 !selectedChannel ||
                 !selectedChannelSegmentId ||
                 !selectedJobId ||
-                !languageCode
+                !languageCode ||
+                (!loadingCreate && !!campaignPath)
               }
               onClick={routeQuizPage}
               className="disabled:bg-disabled"
             >
               {loadingCreate ? `${t("saving")}` : `${t("save")}`}
             </Button>
-            {/* {errorMessage && <p className="errorMessage">{errorMessage}</p>} */}
           </DialogFooter>
         </DialogContent>
       </Dialog>

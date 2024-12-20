@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -7,7 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   return (
@@ -15,7 +17,7 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
     <div className={cn("", className)}>
       <Dialog>
         <DialogTrigger>Privacy</DialogTrigger>
-        <DialogContent dismissOnOverlayClick>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Privacy</DialogTitle>
           </DialogHeader>
@@ -48,14 +50,20 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
             inquiries, please contact us at [Contact Information].
           </div>
           <DialogFooter>
-            <DialogClose>Accept</DialogClose>
+            <DialogClose>
+              <Button variant={"primary"}>Accept</Button>
+            </DialogClose>
+            <DialogClose className="absolute top-5 right-5">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
       <span className="mx-2">|</span>
       <Dialog>
         <DialogTrigger>Terms</DialogTrigger>
-        <DialogContent dismissOnOverlayClick>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Terms</DialogTitle>
           </DialogHeader>
@@ -89,7 +97,13 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
             inquiries, please contact us at [Contact Information].
           </div>
           <DialogFooter>
-            <DialogClose>OK</DialogClose>
+            <DialogClose>
+              <Button variant={"primary"}>OK</Button>
+            </DialogClose>
+            <DialogClose className="absolute top-5 right-5">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -3,9 +3,12 @@
 import {
   BluePaperAirplaneIcon,
   QuestionMark,
-  SPlusIcon,
 } from "@/app/components/icons/icons";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { cn, sleep } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -15,14 +18,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { sleep } from "@/app/lib/utils";
-import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { animate, AnimatePresence, motion, useInView } from "motion/react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import Stat from "@/app/components/complete/stat";
+import { useInterval } from "usehooks-ts";
+import { useSession } from "next-auth/react";
 
 export default function QuizComplete() {
   const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
@@ -42,25 +43,19 @@ export default function QuizComplete() {
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
 
-    routeToMapPage();
+    // routeToMapPage();
   }, [quizStageLogs]);
 
   return (
-    <div
-      className="flex flex-col items-center h-full"
-      style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
-      }}
-    >
-      <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
-        {isBadgeStage ? (
-          <GetBadgeAnnouncment
-            completedStage={currentQuizStageIndex}
-            badgeStage={currentStage}
-          />
-        ) : (
-          <ScoreAnnouncement completedStage={currentQuizStageIndex} />
-        )}
+    <div className="flex flex-col items-center h-svh overflow-x-hidden">
+      <div className="flex w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
+        <SwipeCarousel />
+        {/* <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+        <GetBadgeAnnouncment
+          completedStage={currentQuizStageIndex}
+          badgeStage={currentStage}
+        />
+        <ScoreRankAnnouncement /> */}
       </div>
     </div>
   );
@@ -68,10 +63,9 @@ export default function QuizComplete() {
 
 const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const translation = useTranslations("Completed");
-  const { quizStageLogs, getAllStageMaxScore, quizStagesTotalScore } =
-    useQuiz();
+  const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
-  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+  // const stageScore = quizStageLogs.at(-1)?.score ?? 0;
   const CIRCLE_PERCENTAGE = Math.floor(
     (quizStagesTotalScore / getAllStageMaxScore()) * 100
   );
@@ -88,7 +82,7 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   // );
 
   return (
-    <>
+    <div className="w-full shrink-0">
       <div>
         <h2 className="text-2xl">{translation("stage")}</h2>
         <h1 className="text-[50px]">{completedStage}</h1>
@@ -135,11 +129,11 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{translation("score")}</p>
-            <Stat stageScore={stageScore} />
+            <Stat score={quizStagesTotalScore} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -151,77 +145,52 @@ const GetBadgeAnnouncment = ({
   badgeStage: any;
 }) => {
   const translation = useTranslations("Completed");
-  const [done, setDone] = useState(false);
 
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
 
   return (
-    <>
-      <AnimatePresence>
-        {!done && (
-          <motion.div
-            key="not-done"
-            initial={{ opacity: 0, y: 50 }} // 시작 애니메이션
-            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
-            exit={{ opacity: 0, y: -100 }} // 사라질 때 애니메이션
-            transition={{ duration: 0.5, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
-            className="flex flex-col gap-[10px] justify-center"
-          >
-            <div className="flex flex-col items-center">
-              <h2 className="text-2xl">{translation("stage")}</h2>
-              <h1 className="text-[50px]">{completedStage}</h1>
-            </div>
-            <div className="flex flex-col items-center gap-10">
-              <h3 className="text-[22px] text-pretty">
-                {translation("congratulation")}
-              </h3>
-              <Image
-                src={badgeImageUrl}
-                alt="badge image"
-                width={200}
-                height={200}
-              />
-            </div>
-            <div className="mt-[20px]">
-              <Button
-                className="text-[18px]"
-                variant={"primary"}
-                onClick={() => setDone(true)}
-              >
-                {translation("done")}
-              </Button>
-            </div>
-          </motion.div>
-        )}
-
-        {done && (
-          <motion.div
-            key="done"
-            initial={{ opacity: 0, y: 100 }} // 시작 애니메이션
-            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
-            exit={{ opacity: 0, y: -50 }} // 사라질 때 애니메이션
-            transition={{ duration: 1, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
-          >
-            <ScoreRanked />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <div className="w-full shrink-0">
+      <motion.div
+        key="not-done"
+        className="flex flex-col gap-[10px] justify-center"
+      >
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl">{translation("stage")}</h2>
+          <h1 className="text-[50px]">{completedStage}</h1>
+        </div>
+        <div className="flex flex-col items-center gap-10">
+          <h3 className="text-[22px] text-pretty">
+            {translation("congratulation")}
+          </h3>
+          <Image
+            src={badgeImageUrl}
+            alt="badge image"
+            width={200}
+            height={200}
+          />
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
-const ScoreRanked = () => {
-  // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
-  const [isCardOpen] = useState(true);
+const ScoreRankAnnouncement = () => {
+  // S+ 사용자인 경우와 미사용자인 경우 나눠야 함
+  // S+ 사용자는 s+버튼, returnmap버튼
+  // s+ 미사용자는 메일전송노티, returnmap 버튼
 
+  // 마지막 스테이지인지 나눠야 함
+  // 사용자는 N
   const translation = useTranslations("Score_guide");
-  const { quizStageLogs } = useQuiz();
   const { routeToPage } = usePathNavigator();
+  const { quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+  const { data: session } = useSession();
+  const user = session?.user;
 
-  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+  const isLastStage = currentQuizStageIndex === 4;
 
   return (
-    <>
+    <div className="w-full shrink-0">
       <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
@@ -264,7 +233,7 @@ const ScoreRanked = () => {
       {/* content */}
       <div>
         <h2 className="text-[32px]">Your Score</h2>
-        <h1 className="text-[60px]">{stageScore}</h1>
+        <h1 className="text-[60px]">{quizStagesTotalScore}</h1>
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
@@ -279,39 +248,35 @@ const ScoreRanked = () => {
             You are ranked in the top 20%
           </p>
         </div>
-        {isCardOpen ? (
-          <>
-            <SendEmailCard />
+
+        {user?.provider !== "sumtotal" && <SendEmailCard />}
+
+        <div className="flex justify-center gap-3">
+          {user?.provider === "sumtotal" && (
             <Button
               className="text-[18px] mt-7"
               variant={"primary"}
-              onClick={() => routeToPage("map")}
+              // onClick={() => routeToPage("map")}
             >
-              {/* {translation("reture_map")} */}
-              Return map
+              S+
             </Button>
-          </>
-        ) : (
-          <div className="gap-[10px] flex justify-center">
-            <Button className="text-[18px] mt-7" variant={"primary"}>
-              <SPlusIcon />
-            </Button>
-            <Button
-              className="text-[18px] mt-7"
-              variant={"primary"}
-              onClick={() => routeToPage("map")}
-            >
-              {translation("reture_map")}
-            </Button>
-          </div>
-        )}
+          )}
+          <Button
+            className="text-[18px] mt-7 "
+            variant={"primary"}
+            onClick={() => routeToPage("map")}
+          >
+            {/* {translation("reture_map")} */}
+            {isLastStage ? "Return map" : "Next Stage"}
+          </Button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
 const SendEmailCard = () => {
-  // const translation = useTranslations("Score_guide");
+  const translation = useTranslations("Score_guide");
 
   return (
     <div className="pt-[10px]">
@@ -325,25 +290,71 @@ const SendEmailCard = () => {
   );
 };
 
-const Stat = ({ stageScore }: { stageScore: number }) => {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const isInView = useInView(ref);
+const ONE_SECOND = 3000;
+const AUTO_DELAY = ONE_SECOND;
 
-  useEffect(() => {
-    if (!isInView) return;
+const SPRING_OPTIONS = {
+  type: "spring",
+  mass: 3,
+  stiffness: 400,
+  damping: 50,
+};
 
-    animate(0, stageScore, {
-      duration: 1,
-      onUpdate(value) {
-        if (!ref.current) return;
-        ref.current.textContent = value.toFixed(0);
-      },
+const SwipeCarousel = () => {
+  const { currentQuizStageIndex, quizSet } = useQuiz();
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+  const isBadgeStage = currentStage.isBadgeStage;
+  const [imgIndex, setImgIndex] = useState(0);
+  const carouselIndex = isBadgeStage ? 2 : 0;
+
+  const handleIndex = () => {
+    setImgIndex((pv) => {
+      return pv + 1;
     });
-  }, [stageScore, isInView]);
+  };
+
+  useInterval(handleIndex, imgIndex === carouselIndex ? null : AUTO_DELAY);
 
   return (
-    <h1 className="text-[50px] leading-normal" ref={ref}>
-      {stageScore}
-    </h1>
+    <>
+      <div className="relative overflow-hidden py-8 w-full">
+        <motion.div
+          animate={{
+            translateX: `-${imgIndex * 100}%`,
+          }}
+          transition={SPRING_OPTIONS}
+          className="flex items-center"
+        >
+          <motion.div
+            transition={SPRING_OPTIONS}
+            className="w-full aspect-video shrink-0 rounded-xl object-cover"
+          >
+            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+          </motion.div>
+
+          {isBadgeStage && (
+            <motion.div
+              transition={SPRING_OPTIONS}
+              className="w-full aspect-video shrink-0 rounded-xl object-cover"
+            >
+              <GetBadgeAnnouncment
+                completedStage={currentQuizStageIndex}
+                badgeStage={currentStage}
+              />
+            </motion.div>
+          )}
+          {isBadgeStage && (
+            <motion.div
+              transition={SPRING_OPTIONS}
+              className="w-full aspect-video shrink-0 rounded-xl object-cover"
+            >
+              <ScoreRankAnnouncement />
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </>
   );
 };

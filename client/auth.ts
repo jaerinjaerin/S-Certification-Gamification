@@ -289,7 +289,7 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // console.log("auth callbacks jwt", token, profile, user, account);
+      console.log("auth callbacks jwt", token, profile, user, account);
       if (account) {
         token.provider = account.provider;
       }
@@ -297,6 +297,7 @@ export const {
     },
     session: async (params): Promise<Session | DefaultSession> => {
       const { session } = params;
+      console.log("auth callbacks session", session);
 
       // JWT 전략일 경우 token을 사용
       if ("token" in params) {
@@ -325,7 +326,7 @@ export const {
       // return session;
     },
     authorized: ({ auth }) => {
-      // console.log('next-auth authorized', auth)
+      console.log("next-auth authorized", auth);
       return !!auth?.user; // this ensures there is a logged in user for -every- request
     },
     redirect: async ({ url, baseUrl }) => {

@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import { cn, fixedClass } from "@/lib/utils";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
@@ -28,7 +28,6 @@ import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { useCountdown } from "usehooks-ts";
 
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
@@ -43,9 +42,7 @@ export default function GuestLogin() {
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
-  const [count, { startCountdown, resetCountdown }] = useCountdown({
-    countStart: 60,
-  });
+  // const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: 60 });
   const translation = useTranslations("login");
 
   console.log(verifyToken);
@@ -66,10 +63,17 @@ export default function GuestLogin() {
       );
 
       if (response.ok) {
-        setSuccessSendEmail("Email sent successfully!");
-        const { verifyToken } = await response.json();
-        console.log("처음 코드 받았을때 verifyToken", verifyToken);
-        setVerifyToken(verifyToken);
+        const data = await response.json();
+        const { code, expiresAt, verifyToken } = await response.json();
+        console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
+
+        if (code === "EMAIL_SENT") {
+          setSuccessSendEmail("Email sent successfully!");
+          setVerifyToken(verifyToken);
+          setExpiresAt(new Date(expiresAt));
+        } else {
+          setError("Failed to send email. Please try again.");
+        }
       } else {
         const { code, expiresAt, verifyToken } = await response.json();
         if (code === "EMAIL_ALREADY_SENT") {
@@ -106,7 +110,6 @@ export default function GuestLogin() {
       if (result?.error) {
         alert("Invalid email or code");
       } else {
-        alert("Login successful!");
         routeToPage("/register");
       }
     } catch (err) {
@@ -124,13 +127,25 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
-        }}
-      >
-        <div className="flex flex-col items-center h-full">
+      <div className={cn("h-svh", fixedClass)}>
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`}
+            type="video/mp4"
+          />
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
+            type="video/webm"
+          />
+        </video>
+
+        <div className="flex flex-col items-center h-full relative z-10 py-5">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center my-auto">
@@ -170,6 +185,7 @@ export default function GuestLogin() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       autoFocus
+                      disabled={loading}
                       required
                     />
                   </form>
@@ -182,7 +198,7 @@ export default function GuestLogin() {
                     form="verify-email"
                     disabled={!email || loading}
                   >
-                    {translation("send code")}
+                    {loading ? "sending..." : `${translation("send code")}`}
                   </Button>
                   <DialogClose className="absolute top-5 right-5">
                     <X className="h-4 w-4" />
@@ -229,8 +245,8 @@ export default function GuestLogin() {
                 onClick={() => {
                   setSuccessSendEmail(null);
                   setStep("code");
-                  resetCountdown();
-                  startCountdown();
+                  // resetCountdown();
+                  // startCountdown();
                 }}
               >
                 OK
@@ -271,9 +287,7 @@ export default function GuestLogin() {
                 autoFocus
                 required
               />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
-                {formatToMMSS(count)}
-              </div>
+              {/* <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div> */}
             </form>
             {verifyToken?.expiresAt && (
               <p>
@@ -295,13 +309,13 @@ export default function GuestLogin() {
               disabled={!code || loading}
               onClick={verifyCode}
             >
-              {translation("submit")}
+              {loading ? "verifying..." : `${translation("submit")}`}
             </Button>
             <div className="mx-auto">
               <button
                 className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
-                disabled={count > 0}
                 onClick={sendEmail}
+                disabled
               >
                 {translation("resend code")}
               </button>
@@ -318,13 +332,4 @@ export default function GuestLogin() {
       </Dialog>
     </>
   );
-}
-
-function formatToMMSS(value: number) {
-  const minutes = Math.floor(value / 60);
-  const seconds = value % 60;
-
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-  const formattedSeconds = seconds.toString().padStart(2, "0");
-  return `${formattedMinutes}:${formattedSeconds}`;
 }

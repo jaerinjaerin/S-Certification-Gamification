@@ -15,20 +15,29 @@ export const usePathNavigator = () => {
   ): string => {
     const pathname = window.location.pathname;
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
-    const firstPath = segments[0];
-    const campaignName = segments[1];
-    // const campaignQuizSetId = segments.length > 1 ? segments[1] : null;
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Base path for additional flexibility
+    const isProduction = process.env.NODE_ENV === "production";
+
+    // Adjust index based on environment
+    const campaignName = isProduction ? segments[1] : segments[0];
     let campaignQuizSetId: string | null = null;
-    if (segments.length > 2 && isValidCampaignQuizSetId(segments[2])) {
-      campaignQuizSetId = segments[2];
+
+    if (isProduction) {
+      if (segments.length > 2 && isValidCampaignQuizSetId(segments[2])) {
+        campaignQuizSetId = segments[2];
+      }
+    } else {
+      if (segments.length > 1 && isValidCampaignQuizSetId(segments[1])) {
+        campaignQuizSetId = segments[1];
+      }
     }
 
     console.log("segments:", segments);
     console.log("campaignQuizSetId:", campaignQuizSetId);
 
     return campaignQuizSetId
-      ? `/${firstPath}/${campaignName}/${campaignQuizSetId}/${page}${search}`
-      : `/${firstPath}/${campaignName}/${page}${search}`;
+      ? `${basePath}/${campaignName}/${campaignQuizSetId}/${page}${search}`
+      : `${basePath}/${campaignName}/${page}${search}`;
   };
 
   /**
@@ -46,6 +55,7 @@ export const usePathNavigator = () => {
 
   /**
    * Redirects to the error/not-found page based on the current path.
+   * @param additionalPath - The additional path for error handling.
    * @param search - The query string (optional). Defaults to the current URL's query string.
    */
   const routeToError = (
@@ -54,13 +64,13 @@ export const usePathNavigator = () => {
   ) => {
     const pathname = window.location.pathname;
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
-    const firstPath = segments[0];
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Base path for additional flexibility
+    const isProduction = process.env.NODE_ENV === "production";
 
-    // Construct the new URL by appending the additional path
-    const newPath = `/${firstPath}/${additionalPath}`;
+    const campaignName = isProduction ? segments[1] : segments[0];
 
-    // Construct the final error URL
-    const errorUrl = `${newPath}${search}`;
+    // Construct the new error URL
+    const errorUrl = `${basePath}/${campaignName}/${additionalPath}${search}`;
 
     // Use window.location to navigate
     window.location.href = errorUrl;
