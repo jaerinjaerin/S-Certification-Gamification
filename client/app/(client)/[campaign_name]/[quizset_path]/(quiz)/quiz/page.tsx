@@ -131,6 +131,8 @@ export default function QuizPage() {
     }
   }, [lifeCount]);
 
+  console.log("question", question);
+
   return (
     <div className="pt-[70px] min-h-svh bg-slate-300/20 overflow-x-hidden">
       <div className={cn(fixedClass, "top-0 z-10")}>
