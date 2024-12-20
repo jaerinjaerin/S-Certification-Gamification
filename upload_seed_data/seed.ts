@@ -276,6 +276,8 @@ async function main() {
           },
         });
 
+        console.log("item", item);
+
         createdQuestions.push(item);
         if (domainCode === "HQ_NAT_0001") {
           hqNatQuestions.push(item);
