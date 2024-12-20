@@ -34,7 +34,10 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
           src={badgeImageUrl}
           width={200}
           height={200}
-          className={cn("object-cover w-full h-full", !isActiveStage && !isStageCompleted && "grayscale")}
+          className={cn(
+            "object-cover w-full h-full",
+            !isActiveStage && !isStageCompleted && "grayscale"
+          )}
         />
       );
     }

@@ -1,21 +1,37 @@
 "use client";
 
-import { BluePaperAirplaneIcon, QuestionMark, SPlusIcon } from "@/app/components/icons/icons";
-import { Button } from "@/app/components/ui/button";
+import {
+  BluePaperAirplaneIcon,
+  QuestionMark,
+} from "@/app/components/icons/icons";
+import { Button } from "@/components/ui/button";
 import { cn, sleep } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { animate, AnimatePresence, motion, useInView } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import Stat from "@/app/components/complete/stat";
+import { useInterval } from "usehooks-ts";
+import { useSession } from "next-auth/react";
 
 export default function QuizComplete() {
   const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
-  const currentStage = quizSet.quizStages.find((stage) => stage.order === currentQuizStageIndex);
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
   const isBadgeStage = currentStage.isBadgeStage;
 
   useEffect(() => {
@@ -31,24 +47,32 @@ export default function QuizComplete() {
   }, [quizStageLogs]);
 
   return (
-    <div className="flex flex-col items-center min-h-svh overflow-x-hidden">
-      <div className="flex flex-col w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
-        {isBadgeStage ? (
-          <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
-        ) : (
-          <ScoreAnnouncement completedStage={currentQuizStageIndex} />
-        )}
+    <div className="flex flex-col items-center h-svh overflow-x-hidden">
+      <div className="flex w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
+        <SwipeCarousel />
+        {/* <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+        <GetBadgeAnnouncment
+          completedStage={currentQuizStageIndex}
+          badgeStage={currentStage}
+        />
+        <ScoreRankAnnouncement /> */}
       </div>
     </div>
   );
 }
 
-const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
+export const ScoreAnnouncement = ({
+  completedStage,
+}: {
+  completedStage: number;
+}) => {
   const translation = useTranslations("Completed");
-  const { quizStageLogs, getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
+  const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
-  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
-  const CIRCLE_PERCENTAGE = Math.floor((quizStagesTotalScore / getAllStageMaxScore()) * 100);
+  // const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+  const CIRCLE_PERCENTAGE = Math.floor(
+    (quizStagesTotalScore / getAllStageMaxScore()) * 100
+  );
   const ANIMATION_DURATION = 1;
   const targetDasharray = `${CIRCLE_PERCENTAGE} ${100 - CIRCLE_PERCENTAGE}`;
 
@@ -62,16 +86,31 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   // );
 
   return (
-    <>
+    <div className="w-full shrink-0">
       <div>
         <h2 className="text-2xl">{translation("stage")}</h2>
         <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div>
-        <h1 className="mt-[26px] mb-[66px] text-[38px]">{translation("completed")}</h1>
+        <h1 className="mt-[26px] mb-[66px] text-[38px]">
+          {translation("completed")}
+        </h1>
         <div className="relative">
-          <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="200" cy="200" r={150} stroke="lightgray" strokeWidth="20" fill="none" />
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 400 400"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="200"
+              cy="200"
+              r={150}
+              stroke="lightgray"
+              strokeWidth="20"
+              fill="none"
+            />
             <motion.circle
               cx="0"
               cy="200"
@@ -94,73 +133,75 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
 
           <div className="pt-[15px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <p className="text-xl">{translation("score")}</p>
-            <Stat stageScore={quizStagesTotalScore} />
+            <Stat score={quizStagesTotalScore} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: number; badgeStage: any }) => {
+export const GetBadgeAnnouncment = ({
+  completedStage,
+  badgeStage,
+}: {
+  completedStage: number;
+  badgeStage: any;
+}) => {
   const translation = useTranslations("Completed");
-  const [done, setDone] = useState(false);
 
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
 
   return (
-    <>
-      <AnimatePresence>
-        {!done && (
-          <motion.div key="not-done" className="flex flex-col gap-[10px] justify-center">
-            <div className="flex flex-col items-center">
-              <h2 className="text-2xl">{translation("stage")}</h2>
-              <h1 className="text-[50px]">{completedStage}</h1>
-            </div>
-            <div className="flex flex-col items-center gap-10">
-              <h3 className="text-[22px] text-pretty">{translation("congratulation")}</h3>
-              <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
-            </div>
-            <div className="mt-[20px]">
-              <Button className="text-[18px]" variant={"primary"} onClick={() => setDone(true)}>
-                {translation("done")}
-              </Button>
-            </div>
-          </motion.div>
-        )}
-
-        {done && (
-          <motion.div
-            key="done"
-            initial={{ opacity: 0, y: 0 }} // 시작 애니메이션
-            animate={{ opacity: 1, y: 0 }} // 끝 애니메이션
-            exit={{ opacity: 0, y: -50 }} // 사라질 때 애니메이션
-            transition={{ duration: 2, ease: "easeInOut" }} // 애니메이션 속도 및 스타일
-          >
-            <ScoreRanked />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <div className="w-full shrink-0">
+      <motion.div
+        key="not-done"
+        className="flex flex-col gap-[10px] justify-center"
+      >
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl">{translation("stage")}</h2>
+          <h1 className="text-[50px]">{completedStage}</h1>
+        </div>
+        <div className="flex flex-col items-center gap-10">
+          <h3 className="text-[22px] text-pretty">
+            {translation("congratulation")}
+          </h3>
+          <Image
+            src={badgeImageUrl}
+            alt="badge image"
+            width={200}
+            height={200}
+          />
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
-const ScoreRanked = () => {
-  // TODO: 나중에 다른 내용으로 교체, 임시로 만들어둔 state
-  const [isCardOpen, setIsCardOpen] = useState(true);
+export const ScoreRankAnnouncement = () => {
+  // S+ 사용자인 경우와 미사용자인 경우 나눠야 함
+  // S+ 사용자는 s+버튼, returnmap버튼
+  // s+ 미사용자는 메일전송노티, returnmap 버튼
 
+  // 마지막 스테이지인지 나눠야 함
+  // 사용자는 N
   const translation = useTranslations("Score_guide");
-  const { quizStageLogs } = useQuiz();
   const { routeToPage } = usePathNavigator();
+  const { quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+  const { data: session } = useSession();
+  const user = session?.user;
 
-  const stageScore = quizStageLogs.at(-1)?.score ?? 0;
+  const isLastStage = currentQuizStageIndex === 4;
 
   return (
-    <>
+    <div className="w-full shrink-0">
       <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
+            <Button
+              className={cn("ml-auto border rounded-full border-black/50")}
+              size={"icon_md"}
+            >
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -178,12 +219,16 @@ const ScoreRanked = () => {
                 {translation("combo_score_description")}
               </div>
               <div>
-                <p className="font-extrabold">{translation("remaining_attempts")}</p>
+                <p className="font-extrabold">
+                  {translation("remaining_attempts")}
+                </p>
                 {translation("remaiing_attempts_description")}
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">{translation("ok")}</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+                {translation("ok")}
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -192,40 +237,49 @@ const ScoreRanked = () => {
       {/* content */}
       <div>
         <h2 className="text-[32px]">Your Score</h2>
-        <h1 className="text-[60px]">{stageScore}</h1>
+        <h1 className="text-[60px]">{quizStagesTotalScore}</h1>
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
-          <Image src={"/assets/rank_graph.png"} alt="rank graph" width={320} height={179} />
+          <Image
+            src={"/assets/rank_graph.png"}
+            alt="rank graph"
+            width={320}
+            height={179}
+          />
           <p className="text-[22px] text-balance px-5">
             {/* {translation("rank_notification")} */}
             You are ranked in the top 20%
           </p>
         </div>
-        {isCardOpen ? (
-          <>
-            <SendEmailCard />
-            <Button className="text-[18px] mt-7" variant={"primary"} onClick={() => routeToPage("map")}>
-              {/* {translation("reture_map")} */}
-              Return map
+
+        {user?.provider !== "sumtotal" && <SendEmailCard />}
+
+        <div className="flex justify-center gap-3">
+          {user?.provider === "sumtotal" && (
+            <Button
+              className="text-[18px] mt-7"
+              variant={"primary"}
+              // onClick={() => routeToPage("map")}
+            >
+              S+
             </Button>
-          </>
-        ) : (
-          <div className="gap-[10px] flex justify-center">
-            <Button className="text-[18px] mt-7" variant={"primary"}>
-              <SPlusIcon />
-            </Button>
-            <Button className="text-[18px] mt-7" variant={"primary"} onClick={() => routeToPage("map")}>
-              {translation("reture_map")}
-            </Button>
-          </div>
-        )}
+          )}
+          <Button
+            className="text-[18px] mt-7 "
+            variant={"primary"}
+            onClick={() => routeToPage("map")}
+          >
+            {/* {translation("reture_map")} */}
+            {isLastStage ? "Return map" : "Next Stage"}
+          </Button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
-const SendEmailCard = () => {
+export const SendEmailCard = () => {
   const translation = useTranslations("Score_guide");
 
   return (
@@ -240,25 +294,71 @@ const SendEmailCard = () => {
   );
 };
 
-const Stat = ({ stageScore }: { stageScore: number }) => {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const isInView = useInView(ref);
+const ONE_SECOND = 3000;
+const AUTO_DELAY = ONE_SECOND;
 
-  useEffect(() => {
-    if (!isInView) return;
+const SPRING_OPTIONS = {
+  type: "spring",
+  mass: 3,
+  stiffness: 400,
+  damping: 50,
+};
 
-    animate(0, stageScore, {
-      duration: 1,
-      onUpdate(value) {
-        if (!ref.current) return;
-        ref.current.textContent = value.toFixed(0);
-      },
+export const SwipeCarousel = () => {
+  const { currentQuizStageIndex, quizSet } = useQuiz();
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+  const isBadgeStage = currentStage.isBadgeStage;
+  const [imgIndex, setImgIndex] = useState(0);
+  const carouselIndex = isBadgeStage ? 2 : 0;
+
+  const handleIndex = () => {
+    setImgIndex((pv) => {
+      return pv + 1;
     });
-  }, [stageScore, isInView]);
+  };
+
+  useInterval(handleIndex, imgIndex === carouselIndex ? null : AUTO_DELAY);
 
   return (
-    <h1 className="text-[50px] leading-normal" ref={ref}>
-      {stageScore}
-    </h1>
+    <>
+      <div className="relative overflow-hidden py-8 w-full">
+        <motion.div
+          animate={{
+            translateX: `-${imgIndex * 100}%`,
+          }}
+          transition={SPRING_OPTIONS}
+          className="flex items-center"
+        >
+          <motion.div
+            transition={SPRING_OPTIONS}
+            className="w-full aspect-video shrink-0 rounded-xl object-cover"
+          >
+            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+          </motion.div>
+
+          {isBadgeStage && (
+            <motion.div
+              transition={SPRING_OPTIONS}
+              className="w-full aspect-video shrink-0 rounded-xl object-cover"
+            >
+              <GetBadgeAnnouncment
+                completedStage={currentQuizStageIndex}
+                badgeStage={currentStage}
+              />
+            </motion.div>
+          )}
+          {isBadgeStage && (
+            <motion.div
+              transition={SPRING_OPTIONS}
+              className="w-full aspect-video shrink-0 rounded-xl object-cover"
+            >
+              <ScoreRankAnnouncement />
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </>
   );
 };
