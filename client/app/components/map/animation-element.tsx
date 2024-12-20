@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-const LOOP_DURATION = 4;
+const LOOP_DURATION = 1.5;
 
 export const ActivePointer = () => {
   return (
@@ -41,12 +41,12 @@ export const AnimationCircle = ({ delay }) => {
         translateY: "-50%",
       }}
       initial={{
-        opacity: 0,
-        scale: 0.25,
+        opacity: 0.5,
+        scale: 0.9,
       }}
       animate={{
         opacity: [0, 1, 1, 0],
-        scale: 1,
+        scale: 1.5,
       }}
       transition={{
         repeat: Infinity,
@@ -56,7 +56,7 @@ export const AnimationCircle = ({ delay }) => {
         ease: "linear",
         delay,
       }}
-      className="absolute left-[50%] top-[50%] z-0 h-56 w-56 rounded-full border-[1px] border-[#5AAFFF4D] bg-gradient-to-br from-[#5AAFFF4D]/50 to-[#80B5FF80]/20 shadow-xl shadow-[#80B5FF80]/40"
+      className="absolute left-[50%] top-[50%] z-0 size-[130px] rounded-full border-[1px] border-[#5AAFFF4D] bg-gradient-to-br from-[#5AAFFF4D]/50 to-[#80B5FF80]/20 shadow-xl shadow-[#80B5FF80]/40"
     />
   );
 };
