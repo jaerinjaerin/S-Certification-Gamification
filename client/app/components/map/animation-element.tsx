@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 const LOOP_DURATION = 3;
 
 export const ActivePointer = () => {
+  const pointerImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/pointer.png`;
   return (
     <motion.span
       initial={{
@@ -17,7 +18,9 @@ export const ActivePointer = () => {
         ease: "linear",
       }}
       className="absolute bottom-[-16px] right-[-16px] size-[65px] bg-contain bg-center"
-      style={{ backgroundImage: `url('/assets/pointer.svg')` }}
+      style={{
+        backgroundImage: `url(${pointerImageUrl})`,
+      }}
     />
   );
 };
