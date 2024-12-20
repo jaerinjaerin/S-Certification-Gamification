@@ -229,6 +229,22 @@ async function main() {
       const questions = JSON.parse(fileContent);
       const createdQuestions: any[] = [];
 
+      const charImages = [
+        "/certification/s24/character_m_01.png",
+        "/certification/s24/character_m_02.png",
+        "/certification/s24/character_m_03.png",
+        "/certification/s24/character_w_01.png",
+        "/certification/s24/character_w_02.png",
+      ];
+
+      const bgImages = [
+        "/certification/s24/bg_01.png",
+        "/certification/s24/bg_02.png",
+        "/certification/s24/bg_03.png",
+        "/certification/s24/bg_04.png",
+        "/certification/s24/bg_05.png",
+      ];
+
       for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
         const questionId = uuid.v4();
@@ -240,6 +256,7 @@ async function main() {
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
               )?.id || null;
 
+        const imageIndex = i % charImages.length;
         const item = await prisma.question.create({
           data: {
             id: questionId,
@@ -254,6 +271,8 @@ async function main() {
             product: question.product,
             questionType: question.questionType,
             order: question.orderInStage ?? 0,
+            backgroundImageUrl: bgImages[imageIndex],
+            characterImageUrl: charImages[imageIndex],
           },
         });
 
@@ -318,22 +337,6 @@ async function main() {
           }
         });
 
-        const charImages = [
-          "/certification/s24/character_m_01.png",
-          "/certification/s24/character_m_02.png",
-          "/certification/s24/character_m_03.png",
-          "/certification/s24/character_w_01.png",
-          "/certification/s24/character_w_02.png",
-        ];
-
-        const bgImages = [
-          "/certification/s24/bg_01.png",
-          "/certification/s24/bg_02.png",
-          "/certification/s24/bg_03.png",
-          "/certification/s24/bg_04.png",
-          "/certification/s24/bg_05.png",
-        ];
-
         const isLastStage = i === stages.length - 1;
         await prisma.quizStage.create({
           data: {
@@ -347,8 +350,8 @@ async function main() {
             badgeImageUrl: isLastStage
               ? "/certification/s24/badgeFF.png"
               : null,
-            backgroundImageUrl: bgImages[i],
-            characterImageUrl: charImages[i],
+            // backgroundImageUrl: bgImages[i],
+            // characterImageUrl: charImages[i],
           },
         });
       }

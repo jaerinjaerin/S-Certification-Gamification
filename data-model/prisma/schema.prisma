@@ -341,7 +341,8 @@ model Question {
   
   // language    Language    @relation(fields: [languageId], references: [id])
   // userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
-
+  backgroundImageUrl String?
+  characterImageUrl String?
 
   category    String
   specificFeature   String

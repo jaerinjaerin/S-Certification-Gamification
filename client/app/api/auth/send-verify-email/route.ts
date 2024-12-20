@@ -3,25 +3,24 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { NextRequest, NextResponse } from "next/server";
 
 const sesClient =
-  // process.env.NODE_ENV !== "production"
-  //   ? new SESClient({
-  //       region: process.env.AWS_SES_REGION,
-  //       credentials: {
-  //         accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
-  //         secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
-  //       },
-  //     })
-  //   :
-  new SESClient({
-    region: process.env.AWS_SES_REGION,
-  });
+  process.env.NODE_ENV !== "production"
+    ? new SESClient({
+        region: process.env.AWS_SES_REGION,
+        credentials: {
+          accessKeyId: process.env.AWS_SES_IAM_ACCESS_KEY!,
+          secretAccessKey: process.env.AWS_SES_IAM_SECRET_KEY!,
+        },
+      })
+    : new SESClient({
+        region: process.env.AWS_SES_REGION,
+      });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { toAddress } = body as { toAddress: string };
 
-    const verifyToken = await prisma.verifyToken.findFirst({
+    let verifyToken = await prisma.verifyToken.findFirst({
       where: { email: toAddress },
     });
 
@@ -65,11 +64,11 @@ export async function POST(request: NextRequest) {
         Body: {
           Html: {
             Charset: "UTF-8",
-            Data: `<h1>Hello</h1><p>Please enter the verification code.</p>. Code: ${randomCode}`,
+            Data: `<h1>Authentication Code</h1><p>Please enter the verification code.</p>. Code: ${randomCode}`,
           },
           Text: {
             Charset: "UTF-8",
-            Data: `Hello\nPlease enter the verification code.\nCode: ${randomCode}`,
+            Data: `Authentication Code\nPlease enter the verification code.\nCode: ${randomCode}`,
           },
         },
         Subject: {
@@ -91,18 +90,30 @@ export async function POST(request: NextRequest) {
     if (data?.$metadata?.httpStatusCode == 200) {
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
 
-      await prisma.verifyToken.create({
+      verifyToken = await prisma.verifyToken.create({
         data: {
           email: toAddress,
           token: randomCode,
           expiresAt,
         },
       });
+
+      return NextResponse.json(
+        {
+          item: {
+            success: true,
+            verifyToken: verifyToken,
+            code: "EMAIL_SENT",
+            expiresAt: verifyToken.expiresAt,
+          },
+        },
+        { status: data?.$metadata?.httpStatusCode }
+      );
     }
 
     return NextResponse.json(
-      { item: { success: true } },
-      { status: data?.$metadata?.httpStatusCode }
+      { error: "Verification email not sent" },
+      { status: 400 }
     );
   } catch (error: unknown) {
     console.error("Error send email verify error: ", error);

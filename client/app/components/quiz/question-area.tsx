@@ -1,10 +1,16 @@
 import SpeechBubble from "./speech-bubble";
 import { TypewriteTextVer } from "./typewrite";
 
-export default function Qusetion({ currentQuizStage, question }: { currentQuizStage: any; question: any }) {
-  const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.backgroundImageUrl}`;
-  const charImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.characterImageUrl}`;
-
+export default function Qusetion({
+  question,
+  bgImageUrl,
+  charImageUrl,
+}: {
+  question: string;
+  bgImageUrl: string;
+  charImageUrl: string;
+}) {
+  console.log("question", question, charImageUrl);
   return (
     <div
       className="min-h-[480px] flex flex-col justify-between"
@@ -13,7 +19,7 @@ export default function Qusetion({ currentQuizStage, question }: { currentQuizSt
       }}
     >
       <SpeechBubble>
-        <TypewriteTextVer question={question.text} />
+        <TypewriteTextVer question={question} />
         {/* <Typewrite question={question.text} /> */}
       </SpeechBubble>
 
