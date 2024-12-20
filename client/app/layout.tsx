@@ -7,10 +7,18 @@ export const metadata: Metadata = {
   description: "Samsung+ Certification Gamification",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={`${samsungSans.className} ${one.variable} font-bold antialiased bg-yellow-50`}>{children}</body>
+      <body
+        className={`${samsungSans.className} ${one.variable} font-bold antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
