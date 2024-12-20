@@ -3,15 +3,14 @@
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import Spinner from "@/app/components/ui/spinner";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, fixedClass } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
 
 export default function Login() {
   const { status } = useSession();
 
-  const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/bg_01.png`;
-
-  // TODO: loading 컴포넌트로 교체
+  const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
+  const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
 
   if (status === "loading") {
     return <Spinner />;
@@ -19,13 +18,18 @@ export default function Login() {
 
   return (
     <>
-      <div
-        className="py-[20px] h-svh bg-no-repeat bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-        }}
-      >
-        <div className="flex flex-col items-center h-full">
+      <div className={cn("h-svh", fixedClass)}>
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src={videoMp4Url} type="video/mp4" />
+          <source src={videoWebmUrl} type="video/webm" />
+        </video>
+        <div className="flex flex-col items-center h-full py-[20px] relative">
           <span className="block font-extrabold">Galaxy AI Expert</span>
           <LoginTitle className="my-auto" />
           <PrivacyAndTerm />

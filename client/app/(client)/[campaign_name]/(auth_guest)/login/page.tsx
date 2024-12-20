@@ -120,13 +120,25 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
-        }}
-      >
-        <div className="flex flex-col items-center h-full">
+      <div className={cn("h-svh", fixedClass)}>
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`}
+            type="video/mp4"
+          />
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
+            type="video/webm"
+          />
+        </video>
+
+        <div className="flex flex-col items-center h-full relative z-10 py-5">
           <span className="block font-extrabold">Galaxy AI Expert</span>
 
           <div className="flex flex-col items-center my-auto">
