@@ -97,6 +97,27 @@ export default async function QuizLayout({
     //   return <>{error}</>;
     //   return null;
     // }
+    const initHistoryResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
+      {
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: JSON.stringify({ userId: session?.user.id }),
+      }
+    );
+
+    if (!initHistoryResponse.ok) {
+      console.error("Failed to initialize quiz history:", initHistoryResponse);
+      redirectToErrorPage();
+      return null;
+    }
+
+    const initHistoryData = await initHistoryResponse.json();
+
+    quizLog = initHistoryData.item.quizLog;
+    quizStageLogs = initHistoryData.item.quizStageLogs;
   } else {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;

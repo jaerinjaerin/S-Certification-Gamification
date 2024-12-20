@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${samsungSans.className} ${one.variable} font-bold antialiased flex justify-center `}>{children}</body>
+      <body className={`${samsungSans.className} ${one.variable} font-bold antialiased bg-yellow-50`}>{children}</body>
     </html>
   );
 }

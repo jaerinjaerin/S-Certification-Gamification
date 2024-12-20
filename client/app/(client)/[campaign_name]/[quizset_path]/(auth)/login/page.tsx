@@ -1,6 +1,7 @@
 "use client";
 
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import Spinner from "@/app/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
@@ -11,15 +12,15 @@ export default function Login() {
   const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/bg_01.png`;
 
   // TODO: loading 컴포넌트로 교체
-  console.log(status);
+
   if (status === "loading") {
-    return <div>loading...</div>;
+    return <Spinner />;
   }
 
   return (
     <>
       <div
-        className="py-[20px] h-full bg-no-repeat bg-cover bg-center"
+        className="py-[20px] h-svh bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `url(${bgImageUrl})`,
         }}

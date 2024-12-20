@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { CloseIcon } from "../icons/icons";
 import { useBodyScrollLock } from "@/app/hooks/useBodyScrollLock";
