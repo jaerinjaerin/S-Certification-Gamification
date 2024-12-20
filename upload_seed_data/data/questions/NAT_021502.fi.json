@@ -9,23 +9,23 @@
     "specificFeature": "Memory",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "S24 電話機の RAM の量はどれくらいですか?",
+    "text": "Mikä on S24-puhelinten RAM-muistin määrä?",
     "questionType": "MULTIPLE_CHOICE",
     "options": [
       {
-        "text": "S24: 6 GB、S24+: 8 GB、S24 ウルトラ: 10 GB",
+        "text": "S24: 6 Gt, S24+: 8 Gt, S24 Ultra: 10 Gt",
         "answerStatus": 0
       },
       {
-        "text": "S24: 8GB、S24+: 8GB、S24 ウルトラ: 8GB",
+        "text": "S24: 8 Gt, S24+: 8 Gt, S24 Ultra: 8 Gt",
         "answerStatus": 1
       },
       {
-        "text": "S24: 8GB、S24+: 10GB、S24 ウルトラ: 12GB",
+        "text": "S24: 8 Gt, S24+: 10 Gt, S24 Ultra: 12 Gt",
         "answerStatus": 0
       },
       {
-        "text": "S24: 8GB、S24+: 12GB、S24 ウルトラ: 12GB",
+        "text": "S24: 8 Gt, S24+: 12 Gt, S24 Ultra: 12 Gt",
         "answerStatus": 1
       }
     ]
@@ -40,23 +40,23 @@
     "specificFeature": "Screen",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "S24 携帯電話の画面のピーク輝度値はどれくらいですか?",
+    "text": "Mikä on S24-puhelinten näytön huippukirkkausarvo?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "1,600ニット",
+        "text": "1 600 nitiä",
         "answerStatus": 0
       },
       {
-        "text": "2,100ニット",
+        "text": "2 100 nitiä",
         "answerStatus": 0
       },
       {
-        "text": "2,600ニット",
+        "text": "2 600 nitiä",
         "answerStatus": 1
       },
       {
-        "text": "3,100ニット",
+        "text": "3 100 nitiä",
         "answerStatus": 0
       }
     ]
@@ -71,15 +71,15 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "すべての S24 携帯電話モデルは、これまでの Galaxy 携帯電話の中で最も耐久性のある金属であるチタンボディを特徴としています。",
+    "text": "Kaikissa S24-puhelinmalleissa on titaanirunko, joka on Galaxy-puhelinten tähän asti kestävintä metallia",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 0
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 1
       }
     ]
@@ -94,15 +94,15 @@
     "specificFeature": "Browsing Assist",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Galaxy AI を使用すると、Samsung インターネット ブラウザ上でのみ Web サイトの簡潔な概要を作成できます",
+    "text": "Galaxy AI:n avulla voit luoda ytimekkäät yhteenvedot verkkosivustoista vain Samsung Internet -selaimessa",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 1
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 0
       }
     ]
@@ -117,15 +117,15 @@
     "specificFeature": "Samsung Account",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Galaxy AI のすべての機能を使用するには、Google アカウントにサインインする必要があります。",
+    "text": "Kaikkien Galaxy AI -toimintojen käyttäminen edellyttää kirjautumista Google -tiliin.",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 0
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 1
       }
     ]
@@ -140,15 +140,15 @@
     "specificFeature": "Circle to Search",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Fold6 / Z Flip6 ユーザーは、Circle to Search が有効になっているときに QR コードの周囲に円を描くことで、QR コードのリンクを使用できます。",
+    "text": "Z Fold6- / Z Flip6-käyttäjät voivat käyttää QR-koodin linkkiä piirtämällä sen ympärille ympyrän, kun Circle to Search on aktivoitu.",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 1
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 0
       }
     ]
@@ -163,23 +163,23 @@
     "specificFeature": "Drawing Assist",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Z Fold6 でドラフトから画像への機能を有効にするにはどうすればよいですか? (出発点)",
+    "text": "Miten Luonnos kuvaksi -toiminto aktivoidaan Z Fold6:ssa? (aloituspiste)",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Sペンエアーコマンド",
+        "text": "S Pen -kynän ilmakomento",
         "answerStatus": 0
       },
       {
-        "text": "エッジパネル - 賢い選択",
+        "text": "Reunapaneeli - Älykäs valinta",
         "answerStatus": 0
       },
       {
-        "text": "写真の編集",
+        "text": "Valokuvien muokkaaminen",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -194,23 +194,23 @@
     "specificFeature": "Interpreter",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "標準的なスマートフォンと比較して、折りたたみ式携帯電話のどのような機能により、外国語でのコミュニケーションが容易になりますか?",
+    "text": "Mikä taitettavien puhelinten ominaisuus auttaa käyttäjiä kommunikoimaan entistä helpommin vieraskielisten kanssa verrattuna tavallisiin älypuhelimiin?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "通訳 - デュアルスクリーンビュー",
+        "text": "Tulkki - Kaksoisnäyttönäkymä",
         "answerStatus": 1
       },
       {
-        "text": "通訳 - リスニングモード。",
+        "text": "Tulkki - Kuuntelutilassa.",
         "answerStatus": 0
       },
       {
-        "text": "リアルタイム翻訳 - メッセージング アプリでの音声通話",
+        "text": "Reaaliaikainen käännös - Äänipuhelu viestisovelluksissa",
         "answerStatus": 0
       },
       {
-        "text": "会話アシスタント - テキスト会話翻訳",
+        "text": "Keskusteluavustaja - Tekstikeskustelun käännös",
         "answerStatus": 0
       }
     ]
@@ -225,15 +225,15 @@
     "specificFeature": "Live Translate",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "リアルタイム翻訳は、すべてのメッセージング アプリ (Z Fold6 / Z Flip6) の音声通話で利用できます。",
+    "text": "Reaaliaikainen käännös on käytettävissä KAIKKIEN viestisovellusten äänipuheluissa (Z Fold6 / Z Flip6)",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 0
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 1
       }
     ]
@@ -248,15 +248,15 @@
     "specificFeature": "Weight",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Z Fold6は前モデル（Z Fold5）よりも薄く、軽くなりました。",
+    "text": "Z Fold6 on ohuempi ja kevyempi kuin edellinen malli (Z Fold5)",
     "questionType": "TRUE_FALSE",
     "options": [
       {
-        "text": "きちんと",
+        "text": "OIKEIN",
         "answerStatus": 1
       },
       {
-        "text": "間違っている",
+        "text": "VÄÄRIN",
         "answerStatus": 0
       }
     ]
@@ -271,23 +271,23 @@
     "specificFeature": "AI",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Z Flip6 の写真用の新しい AI 機能とは何ですか?",
+    "text": "Mikä on valokuvien uusi AI-ominaisuus Z Flip6:ssa?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "ポートレートスタジオ",
+        "text": "Muotokuvastudio",
         "answerStatus": 0
       },
       {
-        "text": "写真用のスケッチ",
+        "text": "Luonnos kuvaan",
         "answerStatus": 0
       },
       {
-        "text": "リアルタイムエフェクト",
+        "text": "Reaaliaikainen tehoste",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -302,7 +302,7 @@
     "specificFeature": "Suggested replies",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "空白を埋めるのに最適な答えは何ですか?返信候補は、過去の最大 ___ メッセージを分析し、それに応じて推奨返信を生成します。",
+    "text": "Mikä on paras vastaus tyhjän kohdan täyttämiseen?\nEhdotetut vastaukset analysoi enintään ___ edellistä viestiä ja luo suositellut vastaukset sen mukaisesti.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -333,23 +333,23 @@
     "specificFeature": "FlexWindow",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Z Flip6 の Flex ウィンドウに表示できない AI 機能は何ですか?",
+    "text": "Mitä AI-ominaisuutta EI VOI näyttää Z Flip6:n Flex-ikkunassa?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "推奨される回答",
+        "text": "Ehdotetut vastaukset",
         "answerStatus": 0
       },
       {
-        "text": "デュアルスクリーンの通訳",
+        "text": "Tulkki kaksoisnäytössä",
         "answerStatus": 0
       },
       {
-        "text": "写真の雰囲気の壁紙",
+        "text": "Valokuvan tunnelma -taustakuvaa",
         "answerStatus": 0
       },
       {
-        "text": "リアルタイム翻訳",
+        "text": "Reaaliaikainen käännös",
         "answerStatus": 1
       }
     ]
@@ -364,23 +364,23 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Z Flip6 の耐久性に関係する機能は次のうちどれですか?",
+    "text": "Mikä seuraavista ominaisuuksista liittyy Z Flip6:n kestävyyteen?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "2レールヒンジ設計",
+        "text": "Kaksikiskoinen saranarakenne",
         "answerStatus": 0
       },
       {
-        "text": "Gorilla® Glass Victus® 2 (前面および背面)",
+        "text": "Gorilla® Glass Victus® 2 (edessä ja takana)",
         "answerStatus": 0
       },
       {
-        "text": "改良された装甲アルミニウムフレーム",
+        "text": "Parannettu panssarialumiinirunko",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -395,23 +395,23 @@
     "specificFeature": "Key CXPs",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "エネルギーポイントに影響を与える要因は何ですか?",
+    "text": "Mikä tekijä vaikuttaa energiapisteisiin?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "最後の夢",
+        "text": "Viimeisin uni",
         "answerStatus": 0
       },
       {
-        "text": "日々の活動",
+        "text": "Päivittäinen aktiivisuus",
         "answerStatus": 0
       },
       {
-        "text": "睡眠中の心拍数",
+        "text": "Unenaikainen syke",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -426,23 +426,23 @@
     "specificFeature": "Key CXPs",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "何健康/睡眠関連機能Watch Ultra / Watch7 で見つかりました",
+    "text": "Mikä terveyteen/uneen liittyvä ominaisuus löytyy Watch Ultrasta / Watch7:stä",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "エネルギーポイント",
+        "text": "Energiapisteet",
         "answerStatus": 0
       },
       {
-        "text": "運動のパーソナルコーチング",
+        "text": "Henkilökohtainen valmennus liikunnassa",
         "answerStatus": 0
       },
       {
-        "text": "自発性の向上と運動能力の向上",
+        "text": "Itsensä motivointi ja kehittäminen liikunnassa",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -457,23 +457,23 @@
     "specificFeature": "Sleep Coaching",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "とは何ですか最も適切な答え次の空白スペースへ？ ________はユーザーの状態を評価し、毎日の活動レベルを決定するのに役立ちます",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?  ________ arvioi käyttäjän tilan ja auttaa määrittämään hänen päivittäisen aktiivisuustasonsa",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "睡眠時無呼吸症候群",
+        "text": "Uniapnea",
         "answerStatus": 0
       },
       {
-        "text": "エネルギーポイント",
+        "text": "Energiapisteet",
         "answerStatus": 1
       },
       {
-        "text": "睡眠バランス",
+        "text": "Unitasapaino",
         "answerStatus": 0
       },
       {
-        "text": "活動時間",
+        "text": "Aktiivisuusaika",
         "answerStatus": 0
       }
     ]
@@ -488,7 +488,7 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": "30",
-    "text": "Buds3 イヤホンの防水性と防塵性の新しい保護レベルは何ですか?",
+    "text": "Mikä on Buds3-nappikuulokkeiden veden- ja pölynkestävyyden uusi suojausluokka?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -519,23 +519,23 @@
     "specificFeature": "Sound Optimization",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "ユーザーの使用状況に応じて最適なサウンドを提供するBuds3イヤホンの特徴は何ですか?",
+    "text": "Mikä Buds3-nappikuulokkeiden ominaisuus tarjoaa optimaalisen äänen käyttäjän käyttöolosuhteiden mukaan?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "適応型ノイズ制御",
+        "text": "Mukautuva melunsäätö",
         "answerStatus": 0
       },
       {
-        "text": "アクティブノイズリダクション",
+        "text": "Aktiivinen melunvaimennus",
         "answerStatus": 0
       },
       {
-        "text": "アダプティブEQ / アダプティブノイズリダクション",
+        "text": "Mukautuva taajuuskorjain / mukautuva melunvaimennus",
         "answerStatus": 1
       },
       {
-        "text": "自動騒音制御",
+        "text": "Automaattinen melunsäätö",
         "answerStatus": 0
       }
     ]
@@ -550,23 +550,23 @@
     "specificFeature": "Hi-Fi Sound",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "最新の Galaxy スマートフォンが Buds3 イヤホンにオーディオを送信できる最大オーディオ サンプル レートはどれくらいですか?",
+    "text": "Mikä on äänen suurin näytetaajuus, jolla uusimmat Galaxy-älypuhelimet voivat siirtää äänen Buds3-nappikuulokkeisiin?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "16ビット/48kHz",
+        "text": "16 bittiä / 48 kHz",
         "answerStatus": 0
       },
       {
-        "text": "24ビット/48kHz",
+        "text": "24 bittiä / 48 kHz",
         "answerStatus": 0
       },
       {
-        "text": "32ビット/96kHz",
+        "text": "32 bittiä / 96 kHz",
         "answerStatus": 0
       },
       {
-        "text": "24ビット/96kHz",
+        "text": "24 bittiä / 96 kHz",
         "answerStatus": 1
       }
     ]
@@ -581,23 +581,23 @@
     "specificFeature": "Crystal Clear Sound",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "Buds3 Pro イヤホンが最大 40 kHz の周波数範囲でクリアなサウンドを生成できるハードウェア テクノロジーは何ですか?",
+    "text": "Mikä on laitteistoteknologia, jonka avulla Buds3 Pro -nappikuulokkeet pystyvät tuottamaan selkeän äänen jopa 40 kHz:n taajuusalueella?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "教育データベース",
+        "text": "Koulutustietokanta",
         "answerStatus": 0
       },
       {
-        "text": "カスタム音声増幅",
+        "text": "Mukautettu äänenvahvistus",
         "answerStatus": 0
       },
       {
-        "text": "改良された双方向スピーカー",
+        "text": "Parannettu kaksitiekaiutin",
         "answerStatus": 1
       },
       {
-        "text": "自動一時停止と再開",
+        "text": "Automaattinen keskeytys ja jatkaminen",
         "answerStatus": 0
       }
     ]
@@ -612,23 +612,23 @@
     "specificFeature": "Key CXPs",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": " S24 FEとは何ですか重要な顧客体験?",
+    "text": "Mikä on S24 FE:n tärkeä asiakaskokemus?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "生活を楽にするAI",
+        "text": "Elämää helpottava AI",
         "answerStatus": 0
       },
       {
-        "text": "創造性の向上",
+        "text": "Parannettu luovuus",
         "answerStatus": 0
       },
       {
-        "text": "パワフルなパフォーマンス",
+        "text": "Tehokas suorituskyky",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -643,23 +643,23 @@
     "specificFeature": "Demo Points",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "次の空欄に対する最も適切な答えは何ですかショーケースとしてのS24 FE ? ________ は、あらゆるアプリケーションで簡単かつ高速な検索を提供します",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ tarjoaa helpon ja nopean haun missä tahansa sovelluksessa",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "丸で検索",
+        "text": "Circle to Search",
         "answerStatus": 1
       },
       {
-        "text": "リアルタイム翻訳",
+        "text": "Reaaliaikainen käännös",
         "answerStatus": 0
       },
       {
-        "text": "転写アシスタント",
+        "text": "Litterointiavustaja",
         "answerStatus": 0
       },
       {
-        "text": "撮影アシスタント",
+        "text": "Valokuva-avustaja",
         "answerStatus": 0
       }
     ]
@@ -674,23 +674,23 @@
     "specificFeature": "Demo Points",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "次の空欄に対する最も適切な答えは何ですかショーケースとしてのS24 FE ? ________ はあなたのコミュニケーションをリアルタイムで翻訳します。",
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan S24 FE:n esittelykohteena?\n ________ kääntää viestintäsi reaaliaikaisesti.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "丸で検索",
+        "text": "Circle to Search",
         "answerStatus": 0
       },
       {
-        "text": "リアルタイム翻訳",
+        "text": "Reaaliaikainen käännös",
         "answerStatus": 1
       },
       {
-        "text": "転写アシスタント",
+        "text": "Litterointiavustaja",
         "answerStatus": 0
       },
       {
-        "text": "撮影アシスタント",
+        "text": "Valokuva-avustaja",
         "answerStatus": 0
       }
     ]
@@ -705,23 +705,23 @@
     "specificFeature": "Key Improvements",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": " S24 FEとは何ですか重要な改善点S23はFEと比べて？",
+    "text": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Galaxy AI の完全な機能",
+        "text": "Täydet Galaxy AI -toiminnot",
         "answerStatus": 0
       },
       {
-        "text": "フラッグシップカメラ",
+        "text": "Lippulaivatasoinen kamera",
         "answerStatus": 0
       },
       {
-        "text": "より効率的なパフォーマンス",
+        "text": "Tehokkaampi suorituskyky",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -736,23 +736,23 @@
     "specificFeature": "Tailored Sales Talk",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "要求の高いモバイル ゲームをプレイしたい A シリーズ ユーザーに S24 FE へのアップグレードを勧める場合、最初にどの点を勧めるべきですか?",
+    "text": "Kun suosittelet A-sarjan käyttäjille, jotka pitävät vaativien mobiilipelien pelaamisesta, tekemään päivityksen S24 FE:hen, mitä näkökohtaa kannattaa suositella ensin?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "優れたカメラとフォトアシスタント",
+        "text": "Erinomainen kamera ja Valokuva-avustaja",
         "answerStatus": 0
       },
       {
-        "text": "フラッグシップパフォーマンス",
+        "text": "Lippulaivatasoinen suorituskyky",
         "answerStatus": 1
       },
       {
-        "text": "ギャラクシーAI",
+        "text": "Galaxy AI",
         "answerStatus": 0
       },
       {
-        "text": "優れた耐久性",
+        "text": "Erinomainen kestävyys",
         "answerStatus": 0
       }
     ]
@@ -767,23 +767,23 @@
     "specificFeature": "Galaxy Comparison",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": " S24 FEとは何ですか重要な改善点S23はFEと比べて？",
+    "text": "Mikä on S24 FE:n tärkeä parannus S23 FE:hen verrattuna?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Galaxy AI の完全な機能",
+        "text": "Täydet Galaxy AI -toiminnot",
         "answerStatus": 0
       },
       {
-        "text": "より大きな画面",
+        "text": "Suurempi näyttö",
         "answerStatus": 0
       },
       {
-        "text": "プロセッサーとバッテリーの改良",
+        "text": "Suorittimen ja akun parannukset",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
@@ -798,23 +798,23 @@
     "specificFeature": "Life-Boosting AI",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "なんて特徴があるんだろうS24 FE の実際の使用例として以下に説明しますか?「YouTubeを見ていて気になる自転車を見つけましたか？」まさにそのモデルを簡単に見つけることができます。」",
+    "text": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Löysitkö kiinnostavan polkupyörän katsellessasi YouTubea?  Etsi helposti juuri kyseinen malli.”",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "丸で検索",
+        "text": "Circle to Search",
         "answerStatus": 1
       },
       {
-        "text": "リアルタイム翻訳",
+        "text": "Reaaliaikainen käännös",
         "answerStatus": 0
       },
       {
-        "text": "チャットアシスタント",
+        "text": "Keskusteluavustaja",
         "answerStatus": 0
       },
       {
-        "text": "閲覧アシスタント",
+        "text": "Selausavustaja",
         "answerStatus": 0
       }
     ]
@@ -829,11 +829,11 @@
     "specificFeature": "Epic Camera with Photo Assist",
     "importance": "B",
     "timeLimitSeconds": "30",
-    "text": "なんて特徴があるんだろうS24 FE の実際の使用例として以下に説明しますか?「何か特別なものを Instagram にアップロードしたいですか?創造的な方法でポートレートをスタイリングしてください。」",
+    "text": "Mikä ominaisuus kuvataan alla S24 FE:n todellisena käyttötapauksena?\n”Haluatko ladata jotain erityistä Instagramiin? Muokkaa muotokuvasi tyyliä luovilla tavoilla.”",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "撮影アシスタント（ポートレートスタジオ）",
+        "text": "Valokuva-avustaja (Muotokuvastudio)",
         "answerStatus": 1
       },
       {
@@ -841,11 +841,11 @@
         "answerStatus": 0
       },
       {
-        "text": "急減速",
+        "text": "Pikahidastus",
         "answerStatus": 0
       },
       {
-        "text": "バッテリーの改善",
+        "text": "Akun parannus",
         "answerStatus": 0
       }
     ]
@@ -860,23 +860,23 @@
     "specificFeature": "Galaxy AI ",
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "Samsung Notes がサポートしていない機能は何ですか?",
+    "text": "Mitä ominaisuuksia Samsung Notes EI tue?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "PDFオーバーレイ翻訳",
+        "text": "PDF-päällekkäiskäännös",
         "answerStatus": 0
       },
       {
-        "text": "音訳と翻訳",
+        "text": "Litterointi ja käännös",
         "answerStatus": 0
       },
       {
-        "text": "ボイスメモ録音中のリアルタイム翻訳",
+        "text": "Reaaliaikainen käännös puhemuistion tallennuksen aikana",
         "answerStatus": 1
       },
       {
-        "text": "概要と自動フォーマット",
+        "text": "Yhteenveto ja automaattinen muotoilu",
         "answerStatus": 0
       }
     ]
@@ -891,15 +891,15 @@
     "specificFeature": "Display",
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "明るい照明下でのデバイスの表示をサポートする Tab S10 の新機能は何ですか?",
+    "text": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "ダイナミックAMOLED 2X",
+        "text": "Dynamic AMOLED 2X",
         "answerStatus": 0
       },
       {
-        "text": "アンチグレアスクリーン",
+        "text": "Heijastusta estävä näyttö",
         "answerStatus": 1
       },
       {
@@ -907,7 +907,7 @@
         "answerStatus": 0
       },
       {
-        "text": "大画面",
+        "text": "Suuri näyttö",
         "answerStatus": 0
       }
     ]
@@ -922,23 +922,23 @@
     "specificFeature": "Features",
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "生産性を求めるお客様のために、Tab S10 の機能の適切な組み合わせを選択してください。",
+    "text": "Valitse sopiva yhdistelmä Tab S10:n ominaisuuksia asiakkaille, jotka haluavat tuottavuutta.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Galaxy AI - Sペン - サウンド",
+        "text": "Galaxy AI - S Pen -kynä - Ääni",
         "answerStatus": 0
       },
       {
-        "text": "ディスプレイ - パフォーマンス - サウンド",
+        "text": "Näyttö - Suorituskyky - Ääni",
         "answerStatus": 0
       },
       {
-        "text": "Galaxy AI - S ペン - Samsung Note",
+        "text": "Galaxy AI - S Pen -kynä - Samsung Notes",
         "answerStatus": 1
       },
       {
-        "text": "画面 - カメラ - Sペン",
+        "text": "Näyttö - Kamera - S Pen -kynä",
         "answerStatus": 0
       }
     ]
@@ -953,23 +953,23 @@
     "specificFeature": "Features",
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "新しい Tab S10 ブックカバー キーボードの新機能は何ですか?",
+    "text": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "バックライト",
+        "text": "Taustavalo ",
         "answerStatus": 0
       },
       {
-        "text": "個別の AI キー",
+        "text": "Erillinen AI-näppäin",
         "answerStatus": 1
       },
       {
-        "text": "Samsung Note の起動",
+        "text": "Samsung Notesin käynnistys",
         "answerStatus": 0
       },
       {
-        "text": "Googleアシスタント",
+        "text": "Google Assistant",
         "answerStatus": 0
       }
     ]
@@ -984,23 +984,23 @@
     "specificFeature": "Memory",
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "Galaxy Tab S10がサポートするSDカードの最大容量はどれくらいですか?",
+    "text": "Mikä on SD-kortin enimmäiskapasiteetti, jota Galaxy Tab S10 tukee?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "512GB",
+        "text": "512 Gt",
         "answerStatus": 0
       },
       {
-        "text": "1GB",
+        "text": "1 Gt",
         "answerStatus": 0
       },
       {
-        "text": "1.5TB",
+        "text": "1,5 Tt",
         "answerStatus": 1
       },
       {
-        "text": "2TB",
+        "text": "2 Tt",
         "answerStatus": 0
       }
     ]
@@ -1015,23 +1015,23 @@
     "specificFeature": null,
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "主力の Galaxy スマートフォンのカメラ機能ではないものはどれですか?",
+    "text": "Mikä EI ole lippulaivatason Galaxy-älypuhelinten kameraominaisuus?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "夜間撮影",
+        "text": "Yökuvaus",
         "answerStatus": 0
       },
       {
-        "text": "高精度",
+        "text": "Suuri tarkkuus",
         "answerStatus": 0
       },
       {
-        "text": "ユーザーの好みに応じたさまざまなオプション（セルフィーの色調、カメラアシスタント）",
+        "text": "Eri vaihtoehdot käyttäjän mieltymysten mukaan (selfien värisävy, kamera-avustaja)",
         "answerStatus": 0
       },
       {
-        "text": "500倍ズーム",
+        "text": "500x-zoomaus",
         "answerStatus": 1
       }
     ]
@@ -1046,23 +1046,23 @@
     "specificFeature": null,
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "他のスマートフォンブランドと比べて、Galaxy AIのユニークな機能は何ですか?",
+    "text": "Mikä Galaxy AI -toiminto on ainutlaatuinen muihin älypuhelinmerkkeihin verrattuna?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "リアルタイム翻訳",
+        "text": "Reaaliaikainen käännös",
         "answerStatus": 1
       },
       {
-        "text": "丸で検索",
+        "text": "Circle to Search",
         "answerStatus": 0
       },
       {
-        "text": "通訳者",
+        "text": "Tulkki",
         "answerStatus": 0
       },
       {
-        "text": "AI消しゴム",
+        "text": "AI-pyyhekumi",
         "answerStatus": 0
       }
     ]
@@ -1077,23 +1077,23 @@
     "specificFeature": null,
     "importance": "C",
     "timeLimitSeconds": "30",
-    "text": "Galaxy AI の利点は何ですか?",
+    "text": "Mitä hyötyä Galaxy AI:stä on?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "すでに利用可能です",
+        "text": "Se on jo saatavilla",
         "answerStatus": 0
       },
       {
-        "text": "16言語対応（23か国・地域）",
+        "text": "16 kielen tuki (23 maata/aluetta)",
         "answerStatus": 0
       },
       {
-        "text": "デバイスに内蔵された人工知能を使用した個人データの保護",
+        "text": "Henkilökohtaisten tietojen suojaus laitteen sisäisen tekoälyn avulla",
         "answerStatus": 0
       },
       {
-        "text": "上記のすべて",
+        "text": "Kaikki edellä mainitut",
         "answerStatus": 1
       }
     ]
