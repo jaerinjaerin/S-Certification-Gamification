@@ -1,15 +1,15 @@
 import SpeechBubble from "./speech-bubble";
 
 export default function Qusetion({
-  currentQuizStage,
   question,
+  bgImageUrl,
+  charImageUrl,
 }: {
-  currentQuizStage: any;
-  question: any;
+  question: string;
+  bgImageUrl: string;
+  charImageUrl: string;
 }) {
-  const bgImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.backgroundImageUrl}`;
-  const charImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.characterImageUrl}`;
-
+  console.log("question", question, charImageUrl);
   return (
     <div
       className="min-h-[480px] flex flex-col justify-between"
@@ -17,7 +17,7 @@ export default function Qusetion({
         backgroundImage: `url(${bgImageUrl})`,
       }}
     >
-      <SpeechBubble>{question.text}</SpeechBubble>
+      <SpeechBubble>{question}</SpeechBubble>
       <div
         style={{
           backgroundImage: `url(${charImageUrl})`,

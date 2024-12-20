@@ -152,8 +152,11 @@ export default function QuizPage() {
         </div>
         <CountDownBar progress={TIME_PROGRESS} />
       </div>
-
-      <Qusetion currentQuizStage={currentQuizStage} question={question} />
+      <Qusetion
+        question={question.text}
+        bgImageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImageUrl}`}
+        charImageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImageUrl}`}
+      />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
         {question.options &&
           question.options.map((option: QuestionOption) => {
