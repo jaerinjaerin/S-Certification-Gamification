@@ -64,7 +64,7 @@ export default function GuestLogin() {
 
       if (response.ok) {
         const data = await response.json();
-        const { code, expiresAt, verifyToken } = await response.json();
+        const { code, expiresAt, verifyToken } = data.item;
         console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
 
         if (code === "EMAIL_SENT") {
@@ -75,7 +75,8 @@ export default function GuestLogin() {
           setError("Failed to send email. Please try again.");
         }
       } else {
-        const { code, expiresAt, verifyToken } = await response.json();
+        const data = await response.json();
+        const { code, expiresAt, verifyToken } = data.item;
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail("Verification email already sent");
           setVerifyToken(verifyToken);

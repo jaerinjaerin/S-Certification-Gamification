@@ -8,7 +8,12 @@ export default function successNotify() {
     if (success)
       return (
         <div className="fixed top-0 left-0 z-50 w-full h-screen bg-black/60 flex justify-center items-center">
-          <DotLottieReact src="/success.lottie" className="w-[400px] h-auto" loop autoplay />
+          <DotLottieReact
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/success.lottie`}
+            className="w-[400px] h-auto"
+            loop
+            autoplay
+          />
         </div>
       );
   };

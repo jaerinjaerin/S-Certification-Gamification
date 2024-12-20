@@ -101,7 +101,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           item: {
-            success: true,
             verifyToken: verifyToken,
             code: "EMAIL_SENT",
             expiresAt: verifyToken.expiresAt,
