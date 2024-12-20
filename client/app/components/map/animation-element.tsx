@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-const LOOP_DURATION = 1.5;
+const LOOP_DURATION = 3;
 
 export const ActivePointer = () => {
   return (
@@ -27,8 +27,8 @@ export const Ping = () => {
     <div className="absolute top-1/2 left-1/2 translate-x-1/2">
       <AnimationCircle delay={0} />
       <AnimationCircle delay={LOOP_DURATION * 0.15} />
-      <AnimationCircle delay={LOOP_DURATION * 0.35} />
-      <AnimationCircle delay={LOOP_DURATION * 0.5} />
+      <AnimationCircle delay={LOOP_DURATION * 0.45} />
+      <AnimationCircle delay={LOOP_DURATION * 0.7} />
     </div>
   );
 };
@@ -41,17 +41,18 @@ export const AnimationCircle = ({ delay }) => {
         translateY: "-50%",
       }}
       initial={{
-        opacity: 0.5,
-        scale: 0.9,
+        opacity: 0,
+        scale: 1,
       }}
       animate={{
         opacity: [0, 1, 1, 0],
-        scale: 1.5,
+        scale: 1.8,
       }}
       transition={{
         repeat: Infinity,
         repeatType: "loop",
-        times: [0, 0.5, 0.75, 1],
+        times: [0, 0.05, 0.75, 1],
+        // times: [0, 0.3, 0.7, 1], // 각 단계의 진행 비율
         duration: LOOP_DURATION,
         ease: "linear",
         delay,
