@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 export async function GET(request: Request) {
@@ -6,6 +7,7 @@ export async function GET(request: Request) {
   const campaignName = searchParams.get("campaign_name");
 
   if (!campaignName) {
+    Sentry.captureMessage("Missing required parameter: campaign_name");
     return NextResponse.json(
       { message: "Missing required parameter: campaign_name" },
       { status: 400 }
@@ -23,6 +25,7 @@ export async function GET(request: Request) {
     });
 
     if (campaign == null) {
+      Sentry.captureMessage("Campaign not found");
       return NextResponse.json(
         { message: "Campaign not found" },
         { status: 404 }
@@ -32,6 +35,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ item: campaign }, { status: 200 });
   } catch (error) {
     console.error("Error fetching campaigns:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

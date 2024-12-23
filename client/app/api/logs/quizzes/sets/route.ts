@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -13,6 +14,7 @@ export async function GET(request: NextRequest) {
     const quizsetPath = searchParams.get("quizset_path");
 
     if (!userId || !quizsetPath) {
+      Sentry.captureMessage("User ID is required");
       return NextResponse.json(
         {
           status: 400,
@@ -71,7 +73,7 @@ export async function GET(request: NextRequest) {
         userId: userId,
         campaignId: quizSet.campaignId,
         // jobId: quizSet.jobId,
-        domainId: quizSet.domainId,
+        // domainId: quizSet.domainId,
       },
     });
 
@@ -104,6 +106,7 @@ export async function GET(request: NextRequest) {
     );
   } catch (error: unknown) {
     console.error("Error fetching activity data:", error);
+    Sentry.captureException(error);
 
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
 
@@ -129,6 +132,7 @@ export async function POST(request: NextRequest) {
     console.log("quizSet post", quizsetPath);
 
     if (!quizsetPath) {
+      Sentry.captureMessage("Quiz set path is required");
       return NextResponse.json(
         {
           status: 400,
@@ -286,6 +290,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (e: unknown) {
     console.error("Error creating user campaign domain log:", e);
+    Sentry.captureException(e);
     return NextResponse.json({ error: e }, { status: 500 });
   } finally {
     await prisma.$disconnect();

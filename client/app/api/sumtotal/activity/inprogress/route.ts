@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -64,6 +65,8 @@ export async function GET() {
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error fetching activitie inprogress:", error);
+    Sentry.captureException(error);
+
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

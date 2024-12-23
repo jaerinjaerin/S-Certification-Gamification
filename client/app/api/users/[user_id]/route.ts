@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 type Props = {
@@ -21,6 +22,7 @@ export async function GET(request: Request, props: Props) {
     return NextResponse.json({ item: user }, { status: 200 });
   } catch (error) {
     console.error("Error fetching users:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }
@@ -68,6 +70,7 @@ export async function PUT(request: Request, props: Props) {
     return NextResponse.json({ item: user }, { status: 200 });
   } catch (error) {
     console.error("Error fetching users:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

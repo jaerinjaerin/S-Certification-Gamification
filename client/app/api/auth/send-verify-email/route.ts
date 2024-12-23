@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 const sesClient =
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
 
     if (verifyToken) {
       if (new Date() < verifyToken.expiresAt) {
+        Sentry.captureMessage("Verification email already sent");
         return NextResponse.json(
           {
             error: "Verification email already sent",
@@ -100,11 +102,9 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         {
-          item: {
-            verifyToken: verifyToken,
-            code: "EMAIL_SENT",
-            expiresAt: verifyToken.expiresAt,
-          },
+          verifyToken: verifyToken,
+          code: "EMAIL_SENT",
+          expiresAt: verifyToken.expiresAt,
         },
         { status: data?.$metadata?.httpStatusCode }
       );
@@ -116,6 +116,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: unknown) {
     console.error("Error send email verify error: ", error);
+    Sentry.captureException(error);
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     await prisma.$disconnect();

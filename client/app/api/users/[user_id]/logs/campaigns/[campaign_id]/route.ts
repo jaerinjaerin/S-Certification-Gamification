@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
@@ -29,6 +30,7 @@ export async function GET(request: NextRequest, props: Props) {
     return response;
   } catch (error) {
     console.error("Error UserCampaignQuizLog Data:", error);
+    Sentry.captureException(error);
 
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";

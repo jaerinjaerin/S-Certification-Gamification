@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -56,6 +57,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ item: questionLog }, { status: 200 });
   } catch (error) {
     console.error("Error create quiz question log :", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }
@@ -81,6 +83,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ item: quizLogs }, { status: 200 });
   } catch (error) {
     console.error("Error get quiz logs :", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

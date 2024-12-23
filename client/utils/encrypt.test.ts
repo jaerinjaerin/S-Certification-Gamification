@@ -1,6 +1,6 @@
 import { decryptEmail, encryptEmail } from "./encrypt";
 
-describe("Email Encryption and Decryption", () => {
+describe("Email Encryption and Decryption with Embedded IV", () => {
   const originalEmail = "example@example.com";
 
   beforeAll(() => {
@@ -9,34 +9,68 @@ describe("Email Encryption and Decryption", () => {
       "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"; // 64자 16진수 문자열
   });
 
-  test("Encrypting the same email should produce the same result", () => {
+  test("Encrypting and decrypting an email should return the original email", () => {
+    const encrypted = encryptEmail(originalEmail);
+    const decrypted = decryptEmail(encrypted);
+
+    // 복호화 결과가 원본 이메일과 동일해야 함
+    expect(decrypted).toBe(originalEmail);
+  });
+
+  test("Encrypting the same email twice should produce different results", () => {
     const encrypted1 = encryptEmail(originalEmail);
     const encrypted2 = encryptEmail(originalEmail);
 
-    expect(encrypted1).toBe(encrypted2); // 동일한 암호화 결과
+    // 같은 이메일이라도 암호화된 결과가 다를 수 있음 (랜덤 IV 사용)
+    expect(encrypted1).not.toBe(encrypted2);
   });
 
-  test("Decrypting an encrypted email should return the original email", () => {
+  test("Decrypting with an invalid encrypted format should throw an error", () => {
+    const invalidEncryptedData = "invalid:format";
+
+    // 잘못된 형식의 암호화 데이터는 복호화 시 에러를 발생해야 함
+    expect(() => decryptEmail(invalidEncryptedData)).toThrow(
+      "Invalid encrypted data format"
+    );
+  });
+
+  test("Decrypting with modified encrypted data should throw an error", () => {
     const encrypted = encryptEmail(originalEmail);
-    const decrypted = decryptEmail(encrypted, originalEmail);
 
-    expect(decrypted).toBe(originalEmail); // 원래 이메일로 복구
+    // 암호화된 데이터를 조작
+    const tamperedEncrypted = encrypted.replace(/.$/, "x");
+
+    // 복호화 시 에러 발생
+    expect(() => decryptEmail(tamperedEncrypted)).toThrow();
   });
 
-  test("Different emails should produce different encrypted outputs", () => {
-    const email1 = "example1@example.com";
-    const email2 = "example2@example.com";
+  test("Encrypting and decrypting multiple emails should work correctly", () => {
+    const emails = [
+      "test1@example.com",
+      "test2@example.com",
+      "test3@example.com",
+    ];
 
-    const encrypted1 = encryptEmail(email1);
-    const encrypted2 = encryptEmail(email2);
+    // 여러 이메일에 대해 암호화 및 복호화 확인
+    emails.forEach((email) => {
+      const encrypted = encryptEmail(email);
+      const decrypted = decryptEmail(encrypted);
 
-    expect(encrypted1).not.toBe(encrypted2); // 서로 다른 결과
+      expect(decrypted).toBe(email);
+    });
   });
 
-  test("Decrypting with a different email should fail", () => {
-    const encrypted = encryptEmail(originalEmail);
-    const wrongEmail = "wrong@example.com";
+  test("Invalid SECRET_KEY format should throw an error during encryption", () => {
+    const invalidKey = "123456"; // 유효하지 않은 키
+    process.env.ENCRYPT_SECRET_KEY = invalidKey;
 
-    expect(() => decryptEmail(encrypted, wrongEmail)).toThrow();
+    // SECRET_KEY가 유효하지 않을 경우 에러 발생
+    expect(() => encryptEmail(originalEmail)).toThrow(
+      "SECRET_KEY must be a 64-character hexadecimal string (32 bytes)."
+    );
+
+    // 기존 키 복구
+    process.env.ENCRYPT_SECRET_KEY =
+      "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
   });
 });

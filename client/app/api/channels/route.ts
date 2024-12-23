@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -17,6 +18,7 @@ export async function GET() {
     return NextResponse.json({ items: data }, { status: 201 });
   } catch (error) {
     console.error("Error in GET handler:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }
