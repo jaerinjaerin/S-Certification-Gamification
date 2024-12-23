@@ -14,50 +14,50 @@ function getSecretKey(): Buffer {
 const IV_LENGTH = 16; // AES uses a 16-byte IV
 
 /**
- * Generate a deterministic IV based on the input email
- * @param {string} email - Email to use for generating the IV
- * @returns {Buffer} - Generated IV
- */
-function generateDeterministicIV(email: string): Buffer {
-  const hash = crypto.createHash("md5").update(email).digest(); // 16 bytes
-  return hash.slice(0, IV_LENGTH); // Ensure the length is exactly 16 bytes
-}
-
-/**
  * Encrypt an email
  * @param {string} email - Email to encrypt
- * @returns {string} - Encrypted email in Base64 format
+ * @returns {string} - Encrypted email in Base64 format with IV prepended
  */
 export function encryptEmail(email: string): string {
   const secretKey = getSecretKey();
-  const iv = generateDeterministicIV(email); // Generate a deterministic IV
+  const iv = crypto.randomBytes(IV_LENGTH); // Generate a random IV
   const cipher = crypto.createCipheriv("aes-256-cbc", secretKey, iv);
 
   let encrypted = cipher.update(email, "utf8", "base64");
   encrypted += cipher.final("base64");
 
-  // Return the encrypted data without the IV (IV can be derived from the email)
-  return encrypted;
+  // Combine IV and encrypted data, separated by a colon
+  return `${iv.toString("hex")}:${encrypted}`;
 }
 
 /**
  * Decrypt an encrypted email
- * @param {string} encryptedData - Encrypted email
- * @param {string} email - Original email used for encryption
+ * @param {string} encryptedData - Encrypted email with IV prepended
  * @returns {string} - Decrypted email
  */
-export function decryptEmail(encryptedData: string, email: string): string {
+export function decryptEmail(encryptedData: string): string {
   const secretKey = getSecretKey();
-  const iv = generateDeterministicIV(email); // Generate the same deterministic IV
+
+  // Split the IV and encrypted data
+  const [ivHex, encrypted] = encryptedData.split(":");
+  if (!ivHex || !encrypted) {
+    throw new Error("Invalid encrypted data format");
+  }
+
+  let iv: Buffer;
+  try {
+    iv = Buffer.from(ivHex, "hex");
+    if (iv.length !== IV_LENGTH) {
+      throw new Error();
+    }
+  } catch {
+    throw new Error("Invalid encrypted data format");
+  }
+
   const decipher = crypto.createDecipheriv("aes-256-cbc", secretKey, iv);
 
-  let decrypted = decipher.update(encryptedData, "base64", "utf8");
+  let decrypted = decipher.update(encrypted, "base64", "utf8");
   decrypted += decipher.final("utf8");
-
-  // 이메일이 일치하지 않으면 예외를 발생시킴
-  if (decrypted !== email) {
-    throw new Error("Decryption failed: IV mismatch or invalid encrypted data");
-  }
 
   return decrypted;
 }

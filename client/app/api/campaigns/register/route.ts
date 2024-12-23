@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 type Props = {
@@ -36,6 +37,7 @@ export async function POST(request: Request, props: Props) {
     });
 
     if (user.domain == null || user.job == null || user.language == null) {
+      Sentry.captureMessage("Fail create quiz path");
       return NextResponse.json(
         {
           status: 404,
@@ -53,6 +55,7 @@ export async function POST(request: Request, props: Props) {
     return NextResponse.json({ item: quizPath }, { status: 200 });
   } catch (error) {
     console.error("Error register user quiz log:", error);
+    Sentry.captureMessage("Question not found");
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

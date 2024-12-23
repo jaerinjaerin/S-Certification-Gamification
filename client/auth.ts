@@ -191,27 +191,27 @@ export const {
         const { email, code } = credentials;
         console.log("Email + Code", email, code);
 
-        // 이메일과 인증 코드 확인
-        const tokenRecord = await prisma.verifyToken.findFirst({
-          where: { email: email as string },
-        });
+        // // 이메일과 인증 코드 확인
+        // const tokenRecord = await prisma.verifyToken.findFirst({
+        //   where: { email: email as string },
+        // });
 
-        console.log("tokenRecord", tokenRecord);
+        // console.log("tokenRecord", tokenRecord);
 
-        if (!tokenRecord) {
-          throw new Error("Invalid email or code");
-        }
+        // if (!tokenRecord) {
+        //   throw new Error("Invalid email or code");
+        // }
 
-        // 만료 시간 확인
-        if (new Date() > tokenRecord.expiresAt) {
-          await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
-          throw new Error("Code expired");
-        }
+        // // 만료 시간 확인
+        // if (new Date() > tokenRecord.expiresAt) {
+        //   await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
+        //   throw new Error("Code expired");
+        // }
 
-        // 인증 코드 확인
-        if (tokenRecord.token !== code) {
-          throw new Error("Invalid email or code");
-        }
+        // // 인증 코드 확인
+        // if (tokenRecord.token !== code) {
+        //   throw new Error("Invalid email or code");
+        // }
 
         const encryptedEmail = encryptEmail(email as string);
 
@@ -242,15 +242,15 @@ export const {
           });
         }
 
-        // 인증 코드 삭제
-        await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
+        // // 인증 코드 삭제
+        // await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
 
-        // 선택 사항
-        await prisma.verifyToken.deleteMany({
-          where: {
-            expiresAt: { lt: new Date() }, // 현재 시간보다 이전
-          },
-        });
+        // // 선택 사항
+        // await prisma.verifyToken.deleteMany({
+        //   where: {
+        //     expiresAt: { lt: new Date() }, // 현재 시간보다 이전
+        //   },
+        // });
 
         return user;
       },
@@ -297,7 +297,7 @@ export const {
     },
     session: async (params): Promise<Session | DefaultSession> => {
       const { session } = params;
-      console.log("auth callbacks session", session);
+      // console.log("auth callbacks session", session);
 
       // JWT 전략일 경우 token을 사용
       if ("token" in params) {

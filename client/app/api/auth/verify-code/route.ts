@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma-client";
-import { signIn } from "next-auth/react";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 // export async function verifyToken(email: string, token: string) {
@@ -43,8 +43,10 @@ export async function POST(request: NextRequest) {
     });
 
     if (!verifyToken) {
+      Sentry.captureMessage("Verification email not sent");
       return NextResponse.json(
         {
+          code: "EMAIL_NOT_SENT",
           error: "Verification email not sent",
         },
         { status: 400 }
@@ -52,8 +54,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (new Date() > verifyToken.expiresAt) {
+      Sentry.captureMessage("Verification email expired");
       return NextResponse.json(
         {
+          code: "EMAIL_EXPIRED",
           error: "Verification email expired",
         },
         { status: 400 }
@@ -61,8 +65,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (code !== verifyToken.token) {
+      Sentry.captureMessage("Verification code does not match");
       return NextResponse.json(
         {
+          code: "CODE_NOT_MATCH",
           error: "Verification code does not match",
         },
         { status: 400 }
@@ -77,7 +83,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    await signIn("email", { email });
+    return NextResponse.json({ success: true }, { status: 200 });
+
+    // await signIn("email", { email });
 
     // let userEmail = await prisma.userEmail.findFirst({
     //   where: { email: email },
@@ -106,12 +114,13 @@ export async function POST(request: NextRequest) {
     //   { status: data?.$metadata?.httpStatusCode }
     // );
     // return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      console.error("Error verify code:", e.message);
-      return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (error: unknown) {
+    Sentry.captureException(error);
+    if (error instanceof Error) {
+      console.error("Error verify code:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    console.error("Unknown error:", e);
+    console.error("Unknown error:", error);
     return NextResponse.json(
       { error: "An unexpected error occurred" },
       { status: 500 }

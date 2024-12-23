@@ -11,10 +11,10 @@ export type QuizLog = {
   questionId: string;
   quizStageId: string;
   quizStageIndex: number;
-  languageId: string;
   selectedOptionIds: string[];
   correctOptionIds: string[];
   jobId: string;
+  languageId: string | null;
   domainId: string | null;
   subsidaryId: string | null;
   category: string;

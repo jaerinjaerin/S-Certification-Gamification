@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -22,6 +23,7 @@ export async function GET() {
     console.log("account", account);
 
     if (!account) {
+      Sentry.captureException(new Error("Account not found"));
       return NextResponse.json(
         { message: "Account not found" },
         { status: 404 }
@@ -55,6 +57,7 @@ export async function GET() {
     return NextResponse.json(data, { status: 200 });
   } catch (error: unknown) {
     console.error("Error fetching jobs:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

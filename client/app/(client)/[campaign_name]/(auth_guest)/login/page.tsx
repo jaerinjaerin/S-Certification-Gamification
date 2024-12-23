@@ -81,7 +81,7 @@ export default function GuestLogin() {
 
       if (response.ok) {
         const data = await response.json();
-        const { code, expiresAt, verifyToken } = data.item;
+        const { code, expiresAt, verifyToken } = data;
         console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
 
         if (code === "EMAIL_SENT") {
@@ -94,7 +94,8 @@ export default function GuestLogin() {
         }
       } else {
         const data = await response.json();
-        const { code, expiresAt, verifyToken } = data.item;
+        console.log("data", data);
+        const { code, expiresAt, verifyToken } = data;
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail("Verification email already sent");
           setVerifyToken(verifyToken);
@@ -117,21 +118,53 @@ export default function GuestLogin() {
   };
 
   const verifyCode = async () => {
-    setLoading(true);
-    setError(null);
-
     try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/verify-code`,
+        {
+          method: "POST",
+          body: JSON.stringify({ email, code }),
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        const { code, error } = data;
+        if (code === "EMAIL_NOT_SENT") {
+          setError("Verification email not sent");
+          return;
+        }
+
+        if (code === "EMAIL_EXPIRED") {
+          setError("Verification email expired");
+          return;
+        }
+
+        if (code === "CODE_NOT_MATCH") {
+          setError("Verification code does not match");
+          return;
+        }
+
+        alert("Failed to verify code");
+        return;
+      }
+
+      const data = await response.json();
       const result = await signIn("credentials", {
         email,
         code,
         // callbackUrl: "/intro",
       });
 
-      if (result?.error) {
-        alert("Invalid email or code");
-      } else {
-        routeToPage("/register");
-      }
+      console.log("result", result);
+
+      // if (result?.error) {
+      //   alert("Invalid email or code");
+      // } else {
+      //   routeToPage("/register");
+      // }
     } catch (err) {
       console.error(err);
       alert("An unexpected error occurred.");

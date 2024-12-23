@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 const TOKEN_URL = "https://samsung.sumtotal.host/apisecurity/connect/token";
@@ -81,6 +82,7 @@ export async function GET() {
     return NextResponse.json(tokens, { status: 200 });
   } catch (error) {
     console.error("Error refresh token:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

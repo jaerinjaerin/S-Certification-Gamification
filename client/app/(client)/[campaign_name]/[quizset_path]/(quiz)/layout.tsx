@@ -1,7 +1,6 @@
 import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quiz_provider";
-import { AuthType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -9,10 +8,12 @@ export default async function QuizLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { quizset_path: string };
+  params: { campaign_name: string; quizset_path: string };
 }) {
   const session = await auth();
   console.log("QuizLayout session", session);
+
+  console.log("QuizLayout session?.user.provider", session?.user.provider);
 
   // Fetch data from API
   const fetchData = async (url: string, options: RequestInit = {}) => {
@@ -125,7 +126,7 @@ export default async function QuizLayout({
   // 다른 퀴즈페이지로 이동했는지 확인
   // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
   if (
-    session?.user.provider === AuthType.SUMTOTAL &&
+    session?.user.provider === "sumtotal" &&
     quizLog !== null &&
     quizLog?.quizSetPath !== params.quizset_path
   ) {
@@ -140,6 +141,47 @@ export default async function QuizLayout({
         <p>다른 퀴즈 페이지로 이동하셨습니다.</p>
       </div>
     );
+  }
+
+  if (session?.user.provider === "credentials") {
+    const userResponse = await fetchData(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}`,
+      {
+        method: "GET",
+        cache: "no-cache",
+      }
+    );
+
+    console.log("QuizLayout userResponse", userResponse);
+
+    if (!userResponse?.item) {
+      return (
+        <div>
+          <h1>사용자 정보를 찾을 수 없습니다.</h1>
+        </div>
+      );
+    }
+
+    const user = userResponse.item;
+    console.log("QuizLayout user", user);
+    if (user.jobId === null) {
+      redirect(`/${params.campaign_name}/register`);
+      return;
+    }
+  }
+
+  console.log(
+    "QuizLayout quizLog path",
+    quizLog?.quizSetPath,
+    params.quizset_path
+  );
+
+  if (
+    quizLog?.quizSetPath != null &&
+    quizLog?.quizSetPath !== params.quizset_path
+  ) {
+    redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
+    return;
   }
 
   console.info("QuizLayout quizLog:", quizLog);

@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 type Props = {
@@ -34,6 +35,7 @@ export async function POST(request: Request, props: Props) {
     });
 
     if (!question) {
+      Sentry.captureMessage("Question not found");
       return NextResponse.json(
         {
           status: 404,
@@ -95,6 +97,7 @@ export async function POST(request: Request, props: Props) {
     }
   } catch (error) {
     console.error("Error register user quiz log:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }
