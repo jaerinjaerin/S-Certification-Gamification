@@ -1,29 +1,42 @@
 {
-  "login": {
-    "be a galaxy ai expert": "Be a Galaxy AI (S24*) Expert!",
+  "Main": {
+    "galaxy_ai_expert": "Galaxy AI Expert",
+    "be_a_galaxy_ai_expert": "Be a Galaxy AI (S24*) Expert!",
     "certification": "Certification",
     "login": "Login",
-    "send code your email": "Log in by Send code your email.",
-    "email": "email",
-    "send code": "Send Code",
-    "confirm your email": "Confirm Your Email",
-    "magic link sent": "An email with a magic link has been sent to <address>{email}</address>. Click on the link to automatically log in.",
-    "submit": "Submit",
-    "resend code": "Resend Code"
+    "privacy": "Privacy",
+    "term": "Term"
   },
-  "register": {
-    "enter details": "Enter Details",
-    "select information": "Please select the information below.",
+  "Login_popup": {
+    "login_by_send_code": "Enter your email to receive a confirmation code",
+    "email": "email",
+    "send_code": "Send Code",
+    "confirm_your_email": "Confirm Your Email",
+    "send_magic_link": "A confirmation code has been sent to <address>{email}</address>. Enter the code below and click Submit to log in.",
+    "submit": "Submit",
+    "resend_code": "Resend Code",
+    "enter_details": "Enter Details",
+    "select_inforamiton": "Please select your country and channel afrom the options below.",
+    "mandatory_fields": "*Mandatory fields",
     "country": "Country",
     "channel": "Channel",
-    "job group": "Job Group",
-    "language": "Language",
-    "saving": "Saving...",
-    "save": "Save"
+    "job_group": "Job Group",
+    "FF": "FF",
+    "FSM": "FSM(FSC)",
+    "SES": "SES",
+    "save": "Save",
+    "privacy": "Privacy",
+    "privacy_content": "",
+    "accept": "Accept",
+    "term": "Term",
+    "term_content": "",
+    "ok": "OK"
   },
-  "map": {},
+  "Map": {
+    "total_score": "Total Score"
+  },
   "Map_guide": {
-    "how_to_play": "How to play “Be a Galaxy AI Expert! (Paradigm)” Certification",
+    "how_to_play": "How to play",
     "attempts_deduction": "1 heart deducted for each incorrect answer.",
     "time_limit_per_quiz": "Each quiz has a 30 sec time limit. Each stage has a limit of 5 incorrect quiz attempts.",
     "you_have_5_attemps": "If you reach the 5 incorrect quiz limit, you must restart at the first question of that stage.",
@@ -35,7 +48,7 @@
   },
   "Completed": {
     "stage": "Stage",
-    "completed": "Complet!",
+    "completed": "Complete!",
     "score": "Score",
     "congratulation": "Congratulations! You have earned the Galaxy AI Expert Badge",
     "done": "Done",
@@ -46,11 +59,24 @@
   "Score_guide": {
     "score": "Score",
     "base_score": "Base score",
-    "base_score_discription": "Each correct answer is worth 20 points",
+    "base_score_description": "Each correct answer is worth 20 points",
     "combo_score": "Combo score",
     "combo_score_description": "Each consecutive correct answer earns you an additional 2 points",
     "remaining_attempts": "Remaining attempts",
     "remaiing_attempts_description": "Upon completion of the stage, you will receive 10 points for each remaining attempt.",
     "ok": "OK"
+  },
+  "Alert": {
+    "alert_notification": "No attempts remaining. Do you want to retry? Selecting “No” will return you to stage selection.",
+    "no": "No",
+    "retry": "Retry",
+    "network_error": "The network is unstable. Please try again later.",
+    "code_error": "The verification code is invalid. Please check again.",
+    "email_error": "We are unable to complete your login. Please check the email address.",
+    "back": "Back"
+  },
+  "Email": {
+    "email_verify_code": "",
+    "email_badge": ""
   }
 }
