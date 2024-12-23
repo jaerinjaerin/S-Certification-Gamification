@@ -9,13 +9,36 @@ const prisma = new PrismaClient();
 // test url: http://localhost:3000/s24/{domain_code}/{job_name}/{lagnuage_code}
 // test url: http://localhost:3000/s24/ORG_502_ff_ko
 
-async function main() {
-  // const filePath = path.join(
-  //   __dirname,
-  //   "assets/excels/sample|NAT_021502|fi.xlsx"
-  // );
+const charImages = [
+  "/certification/s24/character_m_01.png",
+  "/certification/s24/character_m_02.png",
+  "/certification/s24/character_m_03.png",
+  "/certification/s24/character_w_01.png",
+  "/certification/s24/character_w_02.png",
+];
 
+const bgImages = [
+  "/certification/s24/images/bg_01.png",
+  "/certification/s24/images/bg_02.png",
+  "/certification/s24/images/bg_03.png",
+  "/certification/s24/images/bg_04.png",
+  "/certification/s24/images/bg_05.png",
+];
+
+async function main() {
   // Create Campaign
+  const createCampaign = async () => {
+    await prisma.campaign.create({
+      data: {
+        name: "S24",
+        description: "A campaign spanning multiple languages",
+        startedAt: new Date(),
+        endedAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+        createrId: "admin",
+      },
+    });
+  };
+
   const createSeeds = async () => {
     // Create Regions
     let filePath;
@@ -85,6 +108,16 @@ async function main() {
               (subsidiary) => subsidiary.domainId === country.parentDomainId
             )
             ?.domainId?.toString() ?? null,
+      })),
+      // skipDuplicates: true, // 중복된 데이터를 무시
+    });
+
+    const campaign = await prisma.campaign.findFirst();
+    await prisma.domainGoal.createMany({
+      data: domains.map((country: any) => ({
+        campaignId: campaign.id,
+        domainId: country.domainId.toString(),
+        userCount: 10000,
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
@@ -163,34 +196,6 @@ async function main() {
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
   };
-
-  const createCampaign = async () => {
-    await prisma.campaign.create({
-      data: {
-        name: "S24",
-        description: "A campaign spanning multiple languages",
-        startedAt: new Date(),
-        endedAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-        createrId: "admin",
-      },
-    });
-  };
-
-  const charImages = [
-    "/certification/s24/character_m_01.png",
-    "/certification/s24/character_m_02.png",
-    "/certification/s24/character_m_03.png",
-    "/certification/s24/character_w_01.png",
-    "/certification/s24/character_w_02.png",
-  ];
-
-  const bgImages = [
-    "/certification/s24/images/bg_01.png",
-    "/certification/s24/images/bg_02.png",
-    "/certification/s24/images/bg_03.png",
-    "/certification/s24/images/bg_04.png",
-    "/certification/s24/images/bg_05.png",
-  ];
 
   const createOriginQuizSet = async () => {
     const campaign = await prisma.campaign.findFirst();
@@ -342,14 +347,28 @@ async function main() {
         console.log("questionIds", questionIds);
 
         const isLastStage = i === stages.length - 1;
+        let isBadgeStage = false;
+        let badgeActivityId: string | null = null;
+        let badgeImageUrl: string | null = null;
+
+        if (i === 2) {
+          isBadgeStage = true;
+          badgeActivityId = "250659";
+          badgeImageUrl = "/certification/s24/images/badgeStage3.png";
+        } else if (i === 3) {
+          isBadgeStage = true;
+          badgeActivityId = "250659";
+          badgeImageUrl = "/certification/s24/images/badgeStage4.png";
+        }
+
         await prisma.quizStage.create({
           data: {
             name: stage.toString(),
             order: stage,
             questionIds,
-            lifeCount: stageQuestions.length,
+            lifeCount: 5,
             quizSetId: quizSet.id,
-            isBadgeStage: isLastStage,
+            isBadgeStage: isBadgeStage,
             badgeActivityId: isLastStage ? "249587" : null, // 250659, 250642, 250639, 250641
             badgeImageUrl: isLastStage
               ? "/certification/s24/badgeFF.png"
@@ -362,8 +381,8 @@ async function main() {
     }
   };
 
-  await createSeeds();
   await createCampaign();
+  await createSeeds();
   await createOriginQuizSet();
 
   console.log("Seeding completed!");

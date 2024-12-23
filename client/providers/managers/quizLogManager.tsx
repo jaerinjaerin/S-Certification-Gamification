@@ -10,13 +10,13 @@ export type QuizLog = {
   quizSetId: string;
   questionId: string;
   quizStageId: string;
+  quizStageIndex: number;
   languageId: string;
   selectedOptionIds: string[];
   correctOptionIds: string[];
   jobId: string;
   domainId: string | null;
   subsidaryId: string | null;
-  stageIndex: number;
   category: string;
   specificFeature: string;
   product: string;

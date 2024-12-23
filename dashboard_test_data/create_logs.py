@@ -67,7 +67,7 @@ def generate_large_user_quiz_stage_logs_with_dates(user_ids):
             "isCompleted": random.choice([True, False]),
             "elapsedSeconds": random.randint(50, 200),
             "score": random.randint(10, 20),
-            "stageIndex": random.randint(1, 5),
+            "quizStageIndex": random.randint(1, 5),
             "domainId": random_item(domains)["code"],
             "regionId": random_item(domains)["region"],
             "jobId": random_item(jobs)["id"],
