@@ -1,37 +1,24 @@
 "use client";
-
-import {
-  BluePaperAirplaneIcon,
-  QuestionMark,
-} from "@/app/components/icons/icons";
+import { BluePaperAirplaneIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/components/ui/button";
 import { cn, sleep } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import Stat from "@/app/components/complete/stat";
 import { useInterval } from "usehooks-ts";
 import { useSession } from "next-auth/react";
 
 export default function QuizComplete() {
-  const { quizStageLogs, currentQuizStageIndex, quizSet } = useQuiz();
+  const { quizStageLogs, currentQuizStageIndex, quizSet, isLastStage, quizLog } = useQuiz();
+  console.log("🚧isLastStage", isLastStage(), "🚧lastCompletedStage", quizLog?.lastCompletedStage, currentQuizStageIndex);
 
   const { routeToPage } = usePathNavigator();
-  const currentStage = quizSet.quizStages.find(
-    (stage) => stage.order === currentQuizStageIndex
-  );
+  const currentStage = quizSet.quizStages.find((stage) => stage.order === currentQuizStageIndex);
   const isBadgeStage = currentStage.isBadgeStage;
 
   useEffect(() => {
@@ -43,7 +30,7 @@ export default function QuizComplete() {
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
 
-    routeToMapPage();
+    // routeToMapPage();
   }, [quizStageLogs]);
 
   return (
@@ -66,9 +53,7 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
   // const stageScore = quizStageLogs.at(-1)?.score ?? 0;
-  const CIRCLE_PERCENTAGE = Math.floor(
-    (quizStagesTotalScore / getAllStageMaxScore()) * 100
-  );
+  const CIRCLE_PERCENTAGE = Math.floor((quizStagesTotalScore / getAllStageMaxScore()) * 100);
   const ANIMATION_DURATION = 1;
   const targetDasharray = `${CIRCLE_PERCENTAGE} ${100 - CIRCLE_PERCENTAGE}`;
 
@@ -88,25 +73,10 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
         <h1 className="text-[50px]">{completedStage}</h1>
       </div>
       <div>
-        <h1 className="mt-[26px] mb-[66px] text-[38px]">
-          {translation("completed")}
-        </h1>
+        <h1 className="mt-[26px] mb-[66px] text-[38px]">{translation("completed")}</h1>
         <div className="relative">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 400 400"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="200"
-              cy="200"
-              r={150}
-              stroke="lightgray"
-              strokeWidth="20"
-              fill="none"
-            />
+          <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="200" cy="200" r={150} stroke="lightgray" strokeWidth="20" fill="none" />
             <motion.circle
               cx="0"
               cy="200"
@@ -137,37 +107,21 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
   );
 };
 
-const GetBadgeAnnouncment = ({
-  completedStage,
-  badgeStage,
-}: {
-  completedStage: number;
-  badgeStage: any;
-}) => {
+const GetBadgeAnnouncment = ({ completedStage, badgeStage }: { completedStage: number; badgeStage: any }) => {
   const translation = useTranslations("Completed");
 
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
 
   return (
     <div className="w-full shrink-0">
-      <motion.div
-        key="not-done"
-        className="flex flex-col gap-[10px] justify-center"
-      >
+      <motion.div key="not-done" className="flex flex-col gap-[10px] justify-center">
         <div className="flex flex-col items-center">
           <h2 className="text-2xl">{translation("stage")}</h2>
           <h1 className="text-[50px]">{completedStage}</h1>
         </div>
         <div className="flex flex-col items-center gap-10">
-          <h3 className="text-[22px] text-pretty">
-            {translation("congratulation")}
-          </h3>
-          <Image
-            src={badgeImageUrl}
-            alt="badge image"
-            width={200}
-            height={200}
-          />
+          <h3 className="text-[22px] text-pretty">{translation("congratulation")}</h3>
+          <Image src={badgeImageUrl} alt="badge image" width={200} height={200} />
         </div>
       </motion.div>
     </div>
@@ -186,6 +140,7 @@ const ScoreRankAnnouncement = () => {
   const { quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
   const { data: session } = useSession();
   const user = session?.user;
+  const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
 
   const isLastStage = currentQuizStageIndex === 4;
 
@@ -194,10 +149,7 @@ const ScoreRankAnnouncement = () => {
       <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              className={cn("ml-auto border rounded-full border-black/50")}
-              size={"icon_md"}
-            >
+            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -215,16 +167,12 @@ const ScoreRankAnnouncement = () => {
                 {translation("combo_score_description")}
               </div>
               <div>
-                <p className="font-extrabold">
-                  {translation("remaining_attempts")}
-                </p>
+                <p className="font-extrabold">{translation("remaining_attempts")}</p>
                 {translation("remaiing_attempts_description")}
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">
-                {translation("ok")}
-              </DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">{translation("ok")}</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -237,12 +185,7 @@ const ScoreRankAnnouncement = () => {
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
-          <Image
-            src={"/assets/rank_graph.png"}
-            alt="rank graph"
-            width={320}
-            height={179}
-          />
+          <Image src={scoreRankImageUrl} alt="rank graph" width={320} height={179} />
           <p className="text-[22px] text-balance px-5">
             {/* {translation("rank_notification")} */}
             You are ranked in the top 20%
@@ -261,11 +204,7 @@ const ScoreRankAnnouncement = () => {
               S+
             </Button>
           )}
-          <Button
-            className="text-[18px] mt-7 "
-            variant={"primary"}
-            onClick={() => routeToPage("map")}
-          >
+          <Button className="text-[18px] mt-7 " variant={"primary"} onClick={() => routeToPage("map")}>
             {/* {translation("reture_map")} */}
             {isLastStage ? "Return map" : "Next Stage"}
           </Button>
@@ -302,9 +241,7 @@ const SPRING_OPTIONS = {
 
 const SwipeCarousel = () => {
   const { currentQuizStageIndex, quizSet } = useQuiz();
-  const currentStage = quizSet.quizStages.find(
-    (stage) => stage.order === currentQuizStageIndex
-  );
+  const currentStage = quizSet.quizStages.find((stage) => stage.order === currentQuizStageIndex);
   const isBadgeStage = currentStage.isBadgeStage;
   const [imgIndex, setImgIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;
@@ -327,29 +264,17 @@ const SwipeCarousel = () => {
           transition={SPRING_OPTIONS}
           className="flex items-center"
         >
-          <motion.div
-            transition={SPRING_OPTIONS}
-            className="w-full aspect-video shrink-0 rounded-xl object-cover"
-          >
+          <motion.div transition={SPRING_OPTIONS} className="w-full aspect-video shrink-0 rounded-xl object-cover">
             <ScoreAnnouncement completedStage={currentQuizStageIndex} />
           </motion.div>
 
           {isBadgeStage && (
-            <motion.div
-              transition={SPRING_OPTIONS}
-              className="w-full aspect-video shrink-0 rounded-xl object-cover"
-            >
-              <GetBadgeAnnouncment
-                completedStage={currentQuizStageIndex}
-                badgeStage={currentStage}
-              />
+            <motion.div transition={SPRING_OPTIONS} className="w-full aspect-video shrink-0 rounded-xl object-cover">
+              <GetBadgeAnnouncment completedStage={currentQuizStageIndex} badgeStage={currentStage} />
             </motion.div>
           )}
           {isBadgeStage && (
-            <motion.div
-              transition={SPRING_OPTIONS}
-              className="w-full aspect-video shrink-0 rounded-xl object-cover"
-            >
+            <motion.div transition={SPRING_OPTIONS} className="w-full aspect-video shrink-0 rounded-xl object-cover">
               <ScoreRankAnnouncement />
             </motion.div>
           )}

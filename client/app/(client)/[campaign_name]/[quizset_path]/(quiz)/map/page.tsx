@@ -16,13 +16,14 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
 
-export default function QuizMap() {
-  const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+// TODO: map 페이지에서 완료한 페이지는 review로 라우팅 이동
 
+export default function QuizMap() {
+  const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex, isLastStage } = useQuiz();
   const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
 
   const { routeToPage } = usePathNavigator();
-  const translation = useTranslations("Map_guide");
+  const translation = useTranslations();
 
   // 아이템을 참조할 배열
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -45,7 +46,7 @@ export default function QuizMap() {
 
   return (
     <div
-      className="flex flex-col items-center h-full"
+      className="flex flex-col items-center h-full min-h-svh"
       style={{
         backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
       }}
@@ -59,26 +60,23 @@ export default function QuizMap() {
           </DialogTrigger>
           <DialogContent dismissOnOverlayClick>
             <DialogHeader>
-              <DialogTitle>
-                {/* {translation("how_to_play")} */}
-                How To Play
-              </DialogTitle>
+              <DialogTitle>{translation("Map_guide.how_to_play")}</DialogTitle>
             </DialogHeader>
 
             <TutorialCarousel />
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">OK</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">{translation("Login_popup.ok")}</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="flex flex-col font-extrabold">
-          <span className="text-[24px]">Total Score</span>
+          <span className="text-[24px]">{translation("Map.total_score")}</span>
           <span className="text-[48px]">{quizStagesTotalScore}</span>
         </div>
       </div>
 
       <div className="flex flex-col-reverse items-center justify-center my-[230px]">
-        {quizSet.quizStages.map((stage: QuizStageEx, index) => {
+        {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
           return (
             <Fragment key={stage.id}>
               <Stage
@@ -103,8 +101,8 @@ export default function QuizMap() {
 }
 
 const TutorialCarousel = () => {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
   const translation = useTranslations("Map_guide");
 
   React.useEffect(() => {
@@ -119,18 +117,17 @@ const TutorialCarousel = () => {
     });
   }, [api]);
 
-  const handleMoveIndex = () => {};
   const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/map_guide.png`;
 
   return (
     <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>
-        {Array.from({ length: 3 }).map((_, index) => {
+        {Array.from({ length: 2 }).map((_, index) => {
           return (
             <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
-              <div className="p-1 h-full">
+              <div className="h-full relative max-w-[300px]">
                 {index === 0 && (
-                  <div className="bg-[#EDEDED] max-h-[320px] h-full relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
+                  <div className="bg-[#EDEDED]  max-h-[320px] h-full overflow-y-scroll relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
                     <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
                       {translation("attempts_deduction")}
                     </p>
@@ -143,40 +140,23 @@ const TutorialCarousel = () => {
                   </div>
                 )}
                 {index === 1 && (
-                  <Ol>
+                  <ol className="bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
                     <li>{translation("you_have_5_attemps")}</li>
                     <li>{translation("giveup_or_interrupt_quiz")}</li>
-                  </Ol>
-                )}
-                {index === 2 && (
-                  <Ol>
                     <li>{translation("answer_first_attempt")}</li>
-                  </Ol>
+                  </ol>
                 )}
+                <div className="rounded-b-[20px] bottom-0 right-0 left-0 absolute bg-[#EDEDED] h-[18px]" />
               </div>
             </CarouselItem>
           );
         })}
       </CarouselContent>
       <div className="flex justify-center gap-2 mt-[10px]">
-        {Array.from({ length: 3 }).map((_, index) => {
-          return (
-            <button
-              onClick={handleMoveIndex}
-              key={index}
-              className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")}
-            />
-          );
+        {Array.from({ length: 2 }).map((_, index) => {
+          return <div key={index} className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")} />;
         })}
       </div>
     </Carousel>
-  );
-};
-
-const Ol = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <ol className="bg-[#EDEDED] max-h-[320px] h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
-      {children}
-    </ol>
   );
 };

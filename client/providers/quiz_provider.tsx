@@ -2,14 +2,7 @@
 
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/app/types/type";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
-import {
-  Language,
-  Question,
-  QuestionOption,
-  QuestionType,
-  UserQuizLog,
-  UserQuizStageLog,
-} from "@prisma/client";
+import { Language, Question, QuestionOption, QuestionType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -35,17 +28,8 @@ interface QuizContextType {
   nextQuestion(): boolean;
   nextStage(): boolean;
   canNextQuestion(): boolean;
-  confirmAnswer(
-    questionId: string,
-    selectedOptionIds: string[],
-    elapsedSeconds: number
-  ): ConfirmAnswerResponse;
-  logUserAnswer(
-    questionId: string,
-    selectedOptionIds: string[],
-    elapsedSeconds: number,
-    isCorrect: boolean
-  ): void;
+  confirmAnswer(questionId: string, selectedOptionIds: string[], elapsedSeconds: number): ConfirmAnswerResponse;
+  logUserAnswer(questionId: string, selectedOptionIds: string[], elapsedSeconds: number, isCorrect: boolean): void;
   getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
   quizStagesTotalScore: number;
@@ -86,28 +70,16 @@ export const QuizProvider = ({
   quizSetPath: string;
 }) => {
   const { campaign } = useCampaign();
-  const [currentQuizSetPath, setCurrentQuizSetPath] =
-    useState<string>(quizSetPath);
+  const [currentQuizSetPath, setCurrentQuizSetPath] = useState<string>(quizSetPath);
   const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
-  const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
-    quizStageLogs ?? []
-  );
+  const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(quizStageLogs ?? []);
   const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
-    (quizStageLogs ?? []).reduce(
-      (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
-      0
-    )
+    (quizStageLogs ?? []).reduce((total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0), 0)
   );
-  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
-    quizLog?.lastCompletedStage ?? 0
-  );
+  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizLog?.lastCompletedStage ?? 0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
-    quizSet.quizStages[currentQuizStageIndex]
-  );
-  const [currentStageQuestions, setCurrentStageQuestions] = useState<
-    QuestionEx[] | null
-  >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(quizSet.quizStages[currentQuizStageIndex]);
+  const [currentStageQuestions, setCurrentStageQuestions] = useState<QuestionEx[] | null>(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -174,20 +146,14 @@ export const QuizProvider = ({
     isCreatingQuizLogRef.current = true; // 실행 상태 설정
     try {
       console.log("createQuizLog started", userId);
-      const initHistoryResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId }),
-        }
-      );
+      const initHistoryResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
 
       if (!initHistoryResponse.ok) {
-        console.error(
-          "Failed to initialize quiz history:",
-          initHistoryResponse
-        );
+        console.error("Failed to initialize quiz history:", initHistoryResponse);
         return;
       }
 
@@ -250,10 +216,7 @@ export const QuizProvider = ({
     setQuizStagesTotalScore(quizStagesTotalScore + score);
     setQuizStageLogs([..._quizStageLogs, quizStageLog]);
 
-    const quizLog: UserQuizLog = await updateQuizStageCompleteLog(
-      currentQuizStageIndex,
-      badgeStage
-    );
+    const quizLog: UserQuizLog = await updateQuizStageCompleteLog(currentQuizStageIndex, badgeStage);
     setQuizLog(quizLog);
 
     quizLogManager.endStage();
@@ -307,9 +270,7 @@ export const QuizProvider = ({
     return currentQuizStage.badgeActivityId;
   };
 
-  const processBadgeAcquisition = async (
-    elapsedSeconds: number
-  ): Promise<boolean> => {
+  const processBadgeAcquisition = async (elapsedSeconds: number): Promise<boolean> => {
     // call sumtotal badge api
     const activityId = getCurrentStageBadgeActivityId();
     if (!activityId) {
@@ -327,16 +288,13 @@ export const QuizProvider = ({
 
   const postActivitieRegister = async (activityId: string) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
-        {
-          method: "PUT",
-          cache: "no-store",
-          body: JSON.stringify({
-            activityId: activityId,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`, {
+        method: "PUT",
+        cache: "no-store",
+        body: JSON.stringify({
+          activityId: activityId,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -350,23 +308,17 @@ export const QuizProvider = ({
     }
   };
 
-  const postActivitieEnd = async (
-    activityId: string,
-    elapsedSeconds: number
-  ) => {
+  const postActivitieEnd = async (activityId: string, elapsedSeconds: number) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
-        {
-          method: "POST",
-          cache: "no-store",
-          body: JSON.stringify({
-            activityId: activityId,
-            status: "Attended",
-            elapsedSeconds: elapsedSeconds,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`, {
+        method: "POST",
+        cache: "no-store",
+        body: JSON.stringify({
+          activityId: activityId,
+          status: "Attended",
+          elapsedSeconds: elapsedSeconds,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -389,28 +341,17 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const confirmAnswer = (
-    questionId: string,
-    selectedOptionIds: string[],
-    elapsedSeconds: number
-  ): ConfirmAnswerResponse => {
+  const confirmAnswer = (questionId: string, selectedOptionIds: string[], elapsedSeconds: number): ConfirmAnswerResponse => {
     try {
-      const question = currentQuizStage?.questions.find(
-        (q: Question) => q.id === questionId
-      );
+      const question = currentQuizStage?.questions.find((q: Question) => q.id === questionId);
 
       if (!question) {
         throw new Error("Question not found");
       }
 
-      const correctOptionIds = question.options
-        .filter((option: QuestionOption) => option.isCorrect)
-        .map((option: QuestionOption) => option.id);
+      const correctOptionIds = question.options.filter((option: QuestionOption) => option.isCorrect).map((option: QuestionOption) => option.id);
 
-      const isCorrect = areArraysEqualUnordered(
-        correctOptionIds,
-        selectedOptionIds
-      );
+      const isCorrect = areArraysEqualUnordered(correctOptionIds, selectedOptionIds);
       const result = {
         isCorrect: isCorrect,
         questionType: question.questionType,
@@ -446,23 +387,14 @@ export const QuizProvider = ({
     }
   };
 
-  const logUserAnswer = (
-    questionId: string,
-    selectedOptionIds: string[],
-    elapsedSeconds: number,
-    isCorrect: boolean
-  ): void => {
-    const question = currentQuizStage?.questions.find(
-      (q: Question) => q.id === questionId
-    );
+  const logUserAnswer = (questionId: string, selectedOptionIds: string[], elapsedSeconds: number, isCorrect: boolean): void => {
+    const question = currentQuizStage?.questions.find((q: Question) => q.id === questionId);
 
     if (!question) {
       assert(false, "Question not found");
     }
 
-    const correctOptionIds = question.options
-      .filter((option: QuestionOption) => option.isCorrect)
-      .map((option: QuestionOption) => option.id);
+    const correctOptionIds = question.options.filter((option: QuestionOption) => option.isCorrect).map((option: QuestionOption) => option.id);
 
     quizLogManager.addLog({
       isCorrect,
@@ -488,40 +420,31 @@ export const QuizProvider = ({
   };
 
   const getCorrectOptionIds = (questionId: string): string[] => {
-    const question = currentQuizStage?.questions.find(
-      (q: Question) => q.id === questionId
-    );
+    const question = currentQuizStage?.questions.find((q: Question) => q.id === questionId);
 
     if (!question) {
       throw new Error("Question not found");
     }
 
-    return question.options
-      .filter((option: QuestionOption) => option.isCorrect)
-      .map((option: QuestionOption) => option.id);
+    return question.options.filter((option: QuestionOption) => option.isCorrect).map((option: QuestionOption) => option.id);
   };
 
   const createQuizQuestionLogs = async (quizLogs: QuizLog[]): Promise<void> => {
     try {
       const result = Promise.all(
         quizLogs.map(async (quizLog) => {
-          await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/questions`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(quizLog),
-            }
-          );
+          await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/questions`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(quizLog),
+          });
         })
       );
     } catch (error) {
       console.error("Error createQuizQuestionLogs:", error);
-      throw new Error(
-        "An unexpected error occurred while registering quiz log"
-      );
+      throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
 
@@ -534,31 +457,28 @@ export const QuizProvider = ({
     badgeActivityId: string | null = null
   ): Promise<UserQuizStageLog> => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/stages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            campaignId: campaign.id,
-            userId: _quizLog.userId,
-            jobId: _quizLog.jobId || "",
-            domainId: quizLog.domainId,
-            quizSetId: quizSet.id,
-            stageIndex: currentQuizStageIndex,
-            quizStageId: currentQuizStage.id,
-            isCompleted: true,
-            isBadgeStage,
-            isBadgeAcquired,
-            badgeActivityId,
-            remainingHearts,
-            score,
-            elapsedSeconds,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/stages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          campaignId: campaign.id,
+          userId: _quizLog.userId,
+          jobId: _quizLog.jobId || "",
+          domainId: quizLog.domainId,
+          quizSetId: quizSet.id,
+          stageIndex: currentQuizStageIndex,
+          quizStageId: currentQuizStage.id,
+          isCompleted: true,
+          isBadgeStage,
+          isBadgeAcquired,
+          badgeActivityId,
+          remainingHearts,
+          score,
+          elapsedSeconds,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -569,30 +489,22 @@ export const QuizProvider = ({
       return data.item as UserQuizStageLog;
     } catch (error) {
       console.error("Error createQuizStageLog:", error);
-      throw new Error(
-        "An unexpected error occurred while registering quiz log"
-      );
+      throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
 
-  const updateQuizStageCompleteLog = async (
-    stageIndex: number,
-    isBadgeAcquired: boolean
-  ): Promise<UserQuizLog> => {
+  const updateQuizStageCompleteLog = async (stageIndex: number, isBadgeAcquired: boolean): Promise<UserQuizLog> => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/${_quizLog.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            lastCompletedStage: stageIndex + 1,
-            isBadgeAcquired,
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/${_quizLog.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lastCompletedStage: stageIndex + 1,
+          isBadgeAcquired,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -603,9 +515,7 @@ export const QuizProvider = ({
       return data.item as UserQuizLog;
     } catch (error) {
       console.error("Error updateQuizStageCompleteLog:", error);
-      throw new Error(
-        "An unexpected error occurred while registering quiz log"
-      );
+      throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
 

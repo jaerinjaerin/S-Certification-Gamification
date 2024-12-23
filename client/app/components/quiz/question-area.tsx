@@ -1,16 +1,7 @@
 import SpeechBubble from "./speech-bubble";
 import { TypewriteTextVer } from "./typewrite";
 
-export default function Qusetion({
-  question,
-  bgImageUrl,
-  charImageUrl,
-}: {
-  question: string;
-  bgImageUrl: string;
-  charImageUrl: string;
-}) {
-  console.log("question", question, charImageUrl);
+export default function Qusetion({ question, bgImageUrl, charImageUrl }: { question: string; bgImageUrl: string; charImageUrl: string }) {
   return (
     <div
       className="min-h-[480px] flex flex-col justify-between"
@@ -20,9 +11,7 @@ export default function Qusetion({
     >
       <SpeechBubble>
         <TypewriteTextVer question={question} />
-        {/* <Typewrite question={question.text} /> */}
       </SpeechBubble>
-
       <div
         style={{
           backgroundImage: `url(${charImageUrl})`,
