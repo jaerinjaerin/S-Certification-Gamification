@@ -116,7 +116,7 @@ export const QuizProvider = ({
 
   if (
     currentQuizStageIndex >= quizSet.quizStages.length &&
-    !window.location.pathname.includes("/map")
+    window.location.pathname.includes("/quiz")
   ) {
     routeToPage("map");
   }
