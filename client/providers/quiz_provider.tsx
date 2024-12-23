@@ -121,6 +121,7 @@ export const QuizProvider = ({
       ? 0
       : Math.min(quizLog?.lastCompletedStage + 1, quizSet.quizStages.length - 1)
   );
+  // const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizLog?.lastCompletedStage != null ? quizLog?.lastCompletedStage + 1 : 0);
 
   console.log(
     "QuizProvider quizQuestionLogs",

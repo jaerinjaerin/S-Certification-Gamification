@@ -189,7 +189,7 @@ export default async function QuizLayout({
     <div
       className="h-full bg-[#F0F0F0]"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/assets/bg_main2.png')`,
       }}
     >
       {/* <LogoutButton /> */}

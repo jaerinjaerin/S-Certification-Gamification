@@ -1,5 +1,4 @@
 "use client";
-
 import Stat from "@/app/components/complete/stat";
 import {
   BluePaperAirplaneIcon,
@@ -26,16 +25,26 @@ import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 
 export default function QuizComplete() {
-  const { quizStageLogs, currentQuizStageIndex, quizSet, currentQuizStage } =
-    useQuiz();
+  const {
+    quizStageLogs,
+    currentQuizStageIndex,
+    quizSet,
+    isLastStage,
+    quizLog,
+  } = useQuiz();
+  console.log(
+    "🚧isLastStage",
+    isLastStage(),
+    "🚧lastCompletedStage",
+    quizLog?.lastCompletedStage,
+    currentQuizStageIndex
+  );
 
   const { routeToPage } = usePathNavigator();
-  // const currentStage = quizSet.quizStages.find(
-  //   (stage) => stage.order === currentQuizStageIndex
-  // );
-
-  console.log("currentStage: ", currentQuizStage);
-  const isBadgeStage = currentQuizStage.isBadgeStage;
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+  const isBadgeStage = currentStage.isBadgeStage;
 
   useEffect(() => {
     const routeToMapPage = async () => {
@@ -189,6 +198,7 @@ const ScoreRankAnnouncement = () => {
   const { quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
   const { data: session } = useSession();
   const user = session?.user;
+  const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
 
   const isLastStage = currentQuizStageIndex === 4;
 
@@ -241,7 +251,7 @@ const ScoreRankAnnouncement = () => {
       <div className="w-full">
         <div className="flex flex-col items-center gap-[29px] mb-7">
           <Image
-            src={"/assets/rank_graph.png"}
+            src={scoreRankImageUrl}
             alt="rank graph"
             width={320}
             height={179}
@@ -304,13 +314,11 @@ const SPRING_OPTIONS = {
 };
 
 const SwipeCarousel = () => {
-  // const { currentQuizStageIndex, quizSet } = useQuiz();
-  const { quizStageLogs, currentQuizStageIndex, quizSet, currentQuizStage } =
-    useQuiz();
-  // const currentStage = quizSet.quizStages.find(
-  //   (stage) => stage.order === currentQuizStageIndex
-  // );
-  const isBadgeStage = currentQuizStage.isBadgeStage;
+  const { currentQuizStageIndex, quizSet } = useQuiz();
+  const currentStage = quizSet.quizStages.find(
+    (stage) => stage.order === currentQuizStageIndex
+  );
+  const isBadgeStage = currentStage.isBadgeStage;
   const [imgIndex, setImgIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;
 
@@ -346,7 +354,7 @@ const SwipeCarousel = () => {
             >
               <GetBadgeAnnouncment
                 completedStage={currentQuizStageIndex}
-                badgeStage={currentQuizStage}
+                badgeStage={currentStage}
               />
             </motion.div>
           )}
