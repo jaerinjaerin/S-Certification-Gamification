@@ -16,8 +16,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
 
-// TODO: map 페이지에서 완료한 페이지는 review로 라우팅 이동
-
 export default function QuizMap() {
   const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex, isLastStage } = useQuiz();
   const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
@@ -48,7 +46,7 @@ export default function QuizMap() {
     <div
       className="flex flex-col items-center h-full min-h-svh"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/assets/bg_main2.png')`,
       }}
     >
       <div className={cn(fixedClass, "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col")}>

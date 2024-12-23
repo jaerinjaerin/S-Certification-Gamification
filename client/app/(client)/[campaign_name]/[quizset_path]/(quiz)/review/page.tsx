@@ -5,52 +5,51 @@ import Spinner from "@/app/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { motion } from "motion/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
-// TODO:
-// 1. review?stage=1 query를 통해 몇번째 stage를 보여줄건지 결정
-// 2. 상단헤더: 문제이동(문제 뒤로가기, 앞으로 가기) | 몇번째 문제인지 | x버튼(route 'map')
-// 3. 문제, 선택한 답변
-
 export default function ReviewPage() {
-  const { currentQuestionIndex, currentQuizStage, currentStageQuestions } = useQuiz();
+  const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } = useQuiz();
 
-  const { routeToPage } = usePathNavigator();
-  const question = currentStageQuestions && currentStageQuestions[currentQuestionIndex];
+  // const { routeToPage } = usePathNavigator();
+  const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-
   const [loading, setLoading] = useState(false);
 
-  const totalQuestions = currentStageQuestions?.length;
   const searchParams = useSearchParams();
-  const search = searchParams.get("stage");
+  const searchStage = Number(searchParams.get("stage"));
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const reviewQuizQuestionLogs = quizQuestionLogs.filter((log) => log.quizStageIndex + 1 === searchStage);
 
-  // const next = async () => {
-  //   setIsCorrectAnswer(false);
+  useEffect(() => {
+    const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs[currentQuestionIndex];
+    setSelectedOptionIds([...currentReviewQuizQuestionLogs.correctOptionIds, ...currentReviewQuizQuestionLogs.selectedOptionIds]);
+  }, [currentQuestionIndex]);
 
-  //   if (canNextQuestion()) {
-  //     setSelectedOptionIds([]);
-  //     nextQuestion();
-  //     window.scrollTo({ top: 0, behavior: "smooth" });
+  const questions = quizSet.quizStages.filter((quiz) => quiz.order === searchStage)[0].questions;
+  const question = questions[currentQuestionIndex];
 
-  //     return;
-  //   }
+  const next = () => {
+    if (currentQuestionIndex === questions.length - 1) return;
 
-  //   setLoading(true);
+    setSelectedOptionIds([]);
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  };
 
-  //   setSelectedOptionIds([]);
-
-  //   // nextStage();
-  //   routeToPage("complete");
-  // };
+  const previous = () => {
+    if (currentQuestionIndex === 0) return;
+    setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  };
 
   useEffect(() => {
     if (!currentQuizStage || !currentStageQuestions) {
@@ -63,27 +62,28 @@ export default function ReviewPage() {
       <div className="sticky top-0 z-10">
         <div className={cn("bg-background p-5 grid grid-cols-12 gap-[2px]")}>
           <div className="col-span-4 content-center text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold">
-            <Button size={"icon"} className="mr-4">
+            <Button size={"icon"} className="mr-4 " onClick={previous} disabled={currentQuestionIndex === 0}>
               <ArrowLeft />
             </Button>
-            <Button size={"icon"}>
+            <Button size={"icon"} onClick={next} disabled={currentQuestionIndex === questions.length - 1}>
               <ArrowRight />
             </Button>
           </div>
           <div className="col-span-4 justify-items-center content-center">
             <motion.div
               className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px]"
+              key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.5, ease: "easeInOut", stiffness: 500 }}
             >
               <span>{currentQuestionIndex + 1}</span>
               <span>/</span>
-              <span>{totalQuestions}</span>
+              <span>{questions.length}</span>
             </motion.div>
           </div>
           <div className="col-span-4 flex self-center gap-1 justify-end">
-            <Button size={"icon"} onClick={() => routeToPage("map")}>
+            <Button size={"icon"} onClick={() => router.push("map")}>
               <X />
             </Button>
           </div>
@@ -104,27 +104,20 @@ export default function ReviewPage() {
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
         {question.options &&
-          question.options.map((option: QuestionOption) => {
+          question.options.map((option: QuestionOption, index: number) => {
             return (
               <motion.label
+                aria-readonly
                 key={option.id}
                 className={cn(
                   "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
                   selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white pointer-events-none",
                   selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white pointer-events-none",
-                  isCorrectAnswer && "pointer-events-none"
+                  "pointer-events-none"
                 )}
               >
                 {option.text}({option.isCorrect ? "o" : "x"})
-                <input
-                  type="checkbox"
-                  checked={selectedOptionIds.includes(option.id)}
-                  readOnly
-                  className="hidden"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                />
+                <input type="checkbox" checked={selectedOptionIds.includes(option.id)} readOnly className="hidden" />
               </motion.label>
             );
           })}

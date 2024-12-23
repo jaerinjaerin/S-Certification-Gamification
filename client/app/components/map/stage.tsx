@@ -4,6 +4,7 @@ import Image from "next/image";
 import { forwardRef } from "react";
 import { LockIcon } from "../icons/icons";
 import { ActivePointer, Ping } from "./animation-element";
+import { useRouter } from "next/navigation";
 
 interface StageProps {
   currentQuizStageIndex: number;
@@ -13,11 +14,12 @@ interface StageProps {
 
 export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
   const { routeNextQuizStage, currentQuizStageIndex, stage } = props;
+  const router = useRouter();
   const stageOrder = stage.order;
   const isStageCompleted = currentQuizStageIndex >= stageOrder;
   const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
-  console.log("stage.badgeImageUrl", stage.badgeImageUrl);
+  // console.log("stage.badgeImageUrl", stage.badgeImageUrl);
 
   const renderLockIcon = () =>
     !isActiveStage &&
@@ -48,8 +50,14 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
         {renderLockIcon()}
 
         <motion.button
-          onClick={routeNextQuizStage}
-          disabled={!isActiveStage || isStageCompleted}
+          onClick={() => {
+            if (isStageCompleted) {
+              router.push(`review?stage=${stageOrder}`);
+              return;
+            }
+            routeNextQuizStage();
+          }}
+          disabled={!isActiveStage && !isStageCompleted}
           className={cn(
             "size-[80px] border-[10px] border-[#A6CFFF] box-content bg-[#666666] flex justify-center items-center rounded-full text-white hover:scale-105 transition-all disabled:hover:scale-100",
             isActiveStage && "size-[100px] bg-[#001276] border-[#0027EB]",

@@ -26,8 +26,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { domainCode, jobCode /* languageCode */ } =
-      extractCodesFromPath(quizsetPath);
+    const { domainCode, jobCode /* languageCode */ } = extractCodesFromPath(quizsetPath);
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -88,6 +87,9 @@ export async function GET(request: NextRequest) {
         quizSetId: userQuizLog?.quizSetId,
         userId: userId,
       },
+      orderBy: {
+        createdAt: "asc", // 오름차순 정렬
+      },
     });
 
     return NextResponse.json(
@@ -103,8 +105,7 @@ export async function GET(request: NextRequest) {
   } catch (error: unknown) {
     console.error("Error fetching activity data:", error);
 
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
 
     return NextResponse.json(
       {
@@ -145,8 +146,7 @@ export async function POST(request: NextRequest) {
     console.log("body", body);
     const { userId } = body;
 
-    const { domainCode, jobCode, languageCode } =
-      extractCodesFromPath(quizsetPath);
+    const { domainCode, jobCode, languageCode } = extractCodesFromPath(quizsetPath);
 
     console.log("domainCode", domainCode);
     console.log("jobCode", jobCode);

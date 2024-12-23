@@ -4,13 +4,7 @@ import { QuizProvider } from "@/providers/quiz_provider";
 import { AuthType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export default async function QuizLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { quizset_path: string };
-}) {
+export default async function QuizLayout({ children, params }: { children: React.ReactNode; params: { quizset_path: string } }) {
   const session = await auth();
   console.log("QuizLayout session", session);
 
@@ -33,15 +27,12 @@ export default async function QuizLayout({
   };
 
   // Fetch quiz data
-  const quizSetReponse = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`,
-    {
-      method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      // cache: "force-cache",
-      cache: "no-cache",
-    }
-  );
+  const quizSetReponse = await fetchData(`${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}`, {
+    method: "GET",
+    // headers: { "Content-Type": "application/json" },
+    // cache: "force-cache",
+    cache: "no-cache",
+  });
 
   console.log("QuizLayout quizData", quizSetReponse);
 
@@ -124,16 +115,8 @@ export default async function QuizLayout({
 
   // 다른 퀴즈페이지로 이동했는지 확인
   // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
-  if (
-    session?.user.provider === AuthType.SUMTOTAL &&
-    quizLog !== null &&
-    quizLog?.quizSetPath !== params.quizset_path
-  ) {
-    console.log(
-      "QuizLayout quizLog",
-      quizLog?.quizSetPath,
-      params.quizset_path
-    );
+  if (session?.user.provider === AuthType.SUMTOTAL && quizLog !== null && quizLog?.quizSetPath !== params.quizset_path) {
+    console.log("QuizLayout quizLog", quizLog?.quizSetPath, params.quizset_path);
     return (
       <div>
         <h1>퀴즈 페이지 이동</h1>
@@ -147,7 +130,7 @@ export default async function QuizLayout({
     <div
       className="h-full bg-[#F0F0F0]"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/assets/bg_main2.png')`,
       }}
     >
       {/* <LogoutButton /> */}

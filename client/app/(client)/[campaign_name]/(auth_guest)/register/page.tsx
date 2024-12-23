@@ -207,7 +207,7 @@ export default function GuestRegisterPage() {
     <div
       className="py-[20px] min-h-svh bg-no-repeat bg-cover bg-center"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/assets/bg_main.png')`,
       }}
     >
       <Dialog open>
