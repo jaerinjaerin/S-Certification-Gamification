@@ -25,26 +25,10 @@ import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 
 export default function QuizComplete() {
-  const {
-    quizStageLogs,
-    currentQuizStageIndex,
-    quizSet,
-    isLastStage,
-    quizLog,
-  } = useQuiz();
-  console.log(
-    "🚧isLastStage",
-    isLastStage(),
-    "🚧lastCompletedStage",
-    quizLog?.lastCompletedStage,
-    currentQuizStageIndex
-  );
+  const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
-  const currentStage = quizSet.quizStages.find(
-    (stage) => stage.order === currentQuizStageIndex
-  );
-  const isBadgeStage = currentStage.isBadgeStage;
+  const isBadgeStage = lastCompletedQuizStage.isBadgeStage;
 
   useEffect(() => {
     const routeToMapPage = async () => {
@@ -62,9 +46,9 @@ export default function QuizComplete() {
     <div className="flex flex-col items-center h-svh overflow-x-hidden">
       <div className="flex w-full items-center text-center gap-[46px] py-[30px] mx-auto px-[9px] font-extrabold h-full flex-1">
         <SwipeCarousel />
-        {/* <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+        {/* <ScoreAnnouncement stageName={currentQuizStageIndex} />
         <GetBadgeAnnouncment
-          completedStage={currentQuizStageIndex}
+          stageName={currentQuizStageIndex}
           badgeStage={currentStage}
         />
         <ScoreRankAnnouncement /> */}
@@ -73,7 +57,7 @@ export default function QuizComplete() {
   );
 }
 
-const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
+const ScoreAnnouncement = ({ stageName }: { stageName: string }) => {
   const translation = useTranslations("Completed");
   const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
@@ -97,7 +81,7 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
     <div className="w-full shrink-0">
       <div>
         <h2 className="text-2xl">{translation("stage")}</h2>
-        <h1 className="text-[50px]">{completedStage}</h1>
+        <h1 className="text-[50px]">{stageName}</h1>
       </div>
       <div>
         <h1 className="mt-[26px] mb-[66px] text-[38px]">
@@ -150,10 +134,10 @@ const ScoreAnnouncement = ({ completedStage }: { completedStage: number }) => {
 };
 
 const GetBadgeAnnouncment = ({
-  completedStage,
+  stageName,
   badgeStage,
 }: {
-  completedStage: number;
+  stageName: string;
   badgeStage: any;
 }) => {
   const translation = useTranslations("Completed");
@@ -168,7 +152,7 @@ const GetBadgeAnnouncment = ({
       >
         <div className="flex flex-col items-center">
           <h2 className="text-2xl">{translation("stage")}</h2>
-          <h1 className="text-[50px]">{completedStage}</h1>
+          <h1 className="text-[50px]">{stageName}</h1>
         </div>
         <div className="flex flex-col items-center gap-10">
           <h3 className="text-[22px] text-pretty">
@@ -195,12 +179,13 @@ const ScoreRankAnnouncement = () => {
   // 사용자는 N
   const translation = useTranslations("Score_guide");
   const { routeToPage } = usePathNavigator();
-  const { quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+  const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
+  const isLastStage =
+    quizSet.quizStages[quizSet.quizStages.length - 1].id ===
+    lastCompletedQuizStage.id;
   const { data: session } = useSession();
   const user = session?.user;
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
-
-  const isLastStage = currentQuizStageIndex === 4;
 
   return (
     <div className="w-full shrink-0">
@@ -314,11 +299,9 @@ const SPRING_OPTIONS = {
 };
 
 const SwipeCarousel = () => {
-  const { currentQuizStageIndex, quizSet } = useQuiz();
-  const currentStage = quizSet.quizStages.find(
-    (stage) => stage.order === currentQuizStageIndex
-  );
-  const isBadgeStage = currentStage.isBadgeStage;
+  const { lastCompletedQuizStage } = useQuiz();
+  const isBadgeStage = lastCompletedQuizStage.isBadgeStage;
+  console.log("🚧isBadgeStage", isBadgeStage);
   const [imgIndex, setImgIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;
 
@@ -344,7 +327,7 @@ const SwipeCarousel = () => {
             transition={SPRING_OPTIONS}
             className="w-full aspect-video shrink-0 rounded-xl object-cover"
           >
-            <ScoreAnnouncement completedStage={currentQuizStageIndex} />
+            <ScoreAnnouncement stageName={lastCompletedQuizStage.name} />
           </motion.div>
 
           {isBadgeStage && (
@@ -353,8 +336,8 @@ const SwipeCarousel = () => {
               className="w-full aspect-video shrink-0 rounded-xl object-cover"
             >
               <GetBadgeAnnouncment
-                completedStage={currentQuizStageIndex}
-                badgeStage={currentStage}
+                stageName={lastCompletedQuizStage.name}
+                badgeStage={lastCompletedQuizStage}
               />
             </motion.div>
           )}

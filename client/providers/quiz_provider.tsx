@@ -30,6 +30,7 @@ interface QuizContextType {
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
   currentQuizStage: QuizStageEx | null;
+  lastCompletedQuizStage: QuizStageEx | null;
   currentStageQuestions: QuestionEx[] | null;
   isBadgeStage(): boolean;
   processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
@@ -139,6 +140,11 @@ export const QuizProvider = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
     quizSet.quizStages[currentQuizStageIndex]
+  );
+  const [lastCompletedQuizStage] = useState<QuizStageEx | null>(
+    quizLog?.lastCompletedStage != null
+      ? quizSet.quizStages[quizLog?.lastCompletedStage]
+      : null
   );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
     QuestionEx[] | null
@@ -730,6 +736,7 @@ export const QuizProvider = ({
         currentQuizStageIndex,
         currentQuestionIndex,
         currentQuizStage,
+        lastCompletedQuizStage,
         currentStageQuestions,
         isComplete,
         isLastStage,
