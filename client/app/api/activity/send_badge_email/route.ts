@@ -94,8 +94,3 @@ export async function POST(request: NextRequest) {
     await prisma.$disconnect();
   }
 }
-function generateRandomCode() {
-  // 6자리 랜덤 숫자 생성
-  const code = Math.floor(100000 + Math.random() * 900000);
-  return code.toString(); // 문자열로 반환
-}
