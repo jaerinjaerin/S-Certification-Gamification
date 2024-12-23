@@ -75,8 +75,17 @@ body {
 @layer base {
   * {
     @apply border-border;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .removeScroll::-webkit-scrollbar {
+    display: none;
+  }
+  .removeScroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
