@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
+import Image from "next/image";
 import { forwardRef } from "react";
 import { LockIcon } from "../icons/icons";
-import Image from "next/image";
-import { motion } from "motion/react";
 import { ActivePointer, Ping } from "./animation-element";
 
 interface StageProps {
@@ -17,6 +17,7 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
   const isStageCompleted = currentQuizStageIndex >= stageOrder;
   const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
+  console.log("stage.badgeImageUrl", stage.badgeImageUrl);
 
   const renderLockIcon = () =>
     !isActiveStage &&
@@ -27,7 +28,7 @@ export const Stage = forwardRef<HTMLDivElement, StageProps>((props, ref) => {
     );
 
   const renderButtonContent = () => {
-    if (stage.isBadgeStage) {
+    if (stage.isBadgeStage && stage.badgeImageUrl) {
       return (
         <Image
           alt="badge image"

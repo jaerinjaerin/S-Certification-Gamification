@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       correctOptionIds,
       jobId,
       domainId,
-      stageIndex,
+      quizStageIndex,
       category,
       specificFeature,
       product,
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         correctOptionIds,
         jobId,
         domainId,
-        stageIndex,
+        quizStageIndex,
         category,
         specificFeature,
         product,
@@ -56,6 +56,31 @@ export async function POST(request: Request) {
     return NextResponse.json({ item: questionLog }, { status: 200 });
   } catch (error) {
     console.error("Error create quiz question log :", error);
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("user_id");
+  const quizSetId = searchParams.get("quiz_set_id");
+  const quizStageId = searchParams.get("quiz_stage_id");
+
+  try {
+    const quizLogs = await prisma.userQuizQuestionLog.findMany({
+      where: {
+        userId: userId as string,
+        quizSetId: quizSetId as string,
+        quizStageId: quizStageId as string,
+      },
+    });
+
+    return NextResponse.json({ item: quizLogs }, { status: 200 });
+  } catch (error) {
+    console.error("Error get quiz logs :", error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

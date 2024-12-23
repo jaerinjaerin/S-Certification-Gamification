@@ -61,6 +61,7 @@ export default async function QuizLayout({
 
   let quizLog;
   let quizStageLogs;
+  let quizQuestionLogs;
 
   console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
@@ -118,6 +119,7 @@ export default async function QuizLayout({
   } else {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;
+    quizQuestionLogs = quizLogResponse.item.quizQuestionLogs;
   }
 
   // 다른 퀴즈페이지로 이동했는지 확인
@@ -154,6 +156,7 @@ export default async function QuizLayout({
         language={quizSetReponse.item.language}
         quizLog={quizLog}
         quizStageLogs={quizStageLogs}
+        quizQuestionLogs={quizQuestionLogs}
         userId={session?.user.id}
         quizSetPath={params.quizset_path}
         // domain={quizLog.domain as Domain}

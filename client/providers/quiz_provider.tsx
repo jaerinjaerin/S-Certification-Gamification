@@ -1,8 +1,10 @@
 "use client";
 
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/app/types/type";
+import { usePathNavigator } from "@/route/usePathNavigator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
-import { Language, Question, QuestionOption, QuestionType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
+import { Language, Question, QuestionOption, QuestionType, UserQuizLog, UserQuizQuestionLog, UserQuizStageLog } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -13,6 +15,7 @@ import QuizScoreManager from "./managers/quizScoreManager";
 interface QuizContextType {
   quizSet: QuizSetEx | null;
   quizStageLogs: UserQuizStageLog[];
+  quizQuestionLogs: UserQuizQuestionLog[];
   language: Language | null;
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
@@ -58,6 +61,7 @@ export const QuizProvider = ({
   language,
   quizLog,
   quizStageLogs,
+  quizQuestionLogs,
   userId,
   quizSetPath,
 }: {
@@ -66,17 +70,27 @@ export const QuizProvider = ({
   language: Language;
   quizLog: UserQuizLog;
   quizStageLogs: UserQuizStageLog[];
+  quizQuestionLogs: UserQuizQuestionLog[];
   userId: string | undefined;
   quizSetPath: string;
 }) => {
+  const { routeToPage } = usePathNavigator();
   const { campaign } = useCampaign();
   const [currentQuizSetPath, setCurrentQuizSetPath] = useState<string>(quizSetPath);
   const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(quizStageLogs ?? []);
+  const [_quizQuestionLogs, setQuizQuestionLogs] = useState<UserQuizQuestionLog[]>(quizQuestionLogs ?? []);
   const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
     (quizStageLogs ?? []).reduce((total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0), 0)
   );
-  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizLog?.lastCompletedStage ?? 0);
+  const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizLog?.lastCompletedStage != null ? quizLog?.lastCompletedStage + 1 : 0);
+
+  console.log("QuizProvider quizQuestionLogs", quizQuestionLogs);
+
+  if (currentQuizStageIndex >= quizSet.quizStages.length && window.location.pathname.includes("/quiz")) {
+    routeToPage("map");
+  }
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(quizSet.quizStages[currentQuizStageIndex]);
   const [currentStageQuestions, setCurrentStageQuestions] = useState<QuestionEx[] | null>(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
@@ -93,7 +107,12 @@ export const QuizProvider = ({
 
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
-  console.log("QuizProvider session", session);
+  const isLastStage = (): boolean => {
+    console.log("QuizProvider isLastStage", quizSet.quizStages.length - 1, currentQuizStageIndex);
+    return quizSet.quizStages.length - 1 === currentQuizStageIndex;
+  };
+
+  console.log("QuizProvider session", session, isLastStage());
 
   // if (!quizLog) {
   //   try {
@@ -160,45 +179,33 @@ export const QuizProvider = ({
       const initHistoryData = await initHistoryResponse.json();
       const newQuizLog = initHistoryData.item.quizLog;
       const newQuizStageLogs = initHistoryData.item.quizStageLogs;
+      const newQuizQuestionLogs = initHistoryData.item.quizQuestionLogs;
 
       setQuizLog(newQuizLog);
       setQuizStageLogs(newQuizStageLogs);
+      setQuizQuestionLogs(newQuizQuestionLogs);
     } catch (error) {
       console.error("Failed to initialize quiz history:", error);
+      Sentry.captureException(error);
     } finally {
       isCreatingQuizLogRef.current = false; // 실행 상태 해제
     }
   };
-
-  // useEffect(() => {
-  //   if (session && session.user && session.user.id) {
-  //     console.log("User ID:", session.user.id);
-  //   } else if (session) {
-  //     console.warn("Session exists but user ID is missing:", session);
-  //   } else {
-  //     console.warn("No session data available");
-  //   }
-  // }, [session?.user?.id]);
-
-  // useEffect(() => {
-  //   if (session?.user.id) {
-  //     console.error("session?.user.id", session?.user.id);
-  //   }
-  // }, [session?.user.id]);
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     const score = quizScoreManager.calculateStageScore({
       quizLogs: quizLogManager.getLogs(),
       remainingHearts: remainingHearts,
     });
+    const totalScore = quizStagesTotalScore + score;
 
     console.info("score", score);
 
     const totalElapsedSeconds = quizLogManager.getTotalElapsedSeconds();
     setIsLoading(true);
 
-    let isBadgeAcquired = false;
     let badgeStage = isBadgeStage();
+    let isBadgeAcquired = false;
     if (badgeStage) {
       isBadgeAcquired = await processBadgeAcquisition(totalElapsedSeconds);
     }
@@ -213,7 +220,7 @@ export const QuizProvider = ({
       getCurrentStageBadgeActivityId()
     );
 
-    setQuizStagesTotalScore(quizStagesTotalScore + score);
+    setQuizStagesTotalScore(totalScore);
     setQuizStageLogs([..._quizStageLogs, quizStageLog]);
 
     const quizLog: UserQuizLog = await updateQuizStageCompleteLog(currentQuizStageIndex, badgeStage);
@@ -282,6 +289,7 @@ export const QuizProvider = ({
       await postActivitieEnd(activityId, elapsedSeconds);
       return true;
     } catch (error) {
+      Sentry.captureException(error);
       return false;
     }
   };
@@ -337,10 +345,6 @@ export const QuizProvider = ({
     return _quizLog.isCompleted ?? false;
   };
 
-  const isLastStage = (): boolean => {
-    return quizSet.quizStages.length - 1 === currentQuizStageIndex;
-  };
-
   const confirmAnswer = (questionId: string, selectedOptionIds: string[], elapsedSeconds: number): ConfirmAnswerResponse => {
     try {
       const question = currentQuizStage?.questions.find((q: Question) => q.id === questionId);
@@ -371,7 +375,7 @@ export const QuizProvider = ({
         correctOptionIds: result.correctOptionIds,
         domainId: quizLog.domainId,
         subsidaryId: quizLog.subsidaryId,
-        stageIndex: currentQuizStageIndex,
+        quizStageIndex: currentQuizStageIndex,
         category: question.category,
         specificFeature: question.specificFeature,
         product: question.product,
@@ -383,6 +387,7 @@ export const QuizProvider = ({
 
       return result;
     } catch (error) {
+      Sentry.captureException(error);
       throw error;
     }
   };
@@ -408,7 +413,7 @@ export const QuizProvider = ({
       correctOptionIds: correctOptionIds,
       domainId: quizLog.domainId,
       subsidaryId: quizLog.subsidaryId,
-      stageIndex: currentQuizStageIndex,
+      quizStageIndex: currentQuizStageIndex,
       category: question.category,
       specificFeature: question.specificFeature,
       product: question.product,
@@ -433,7 +438,7 @@ export const QuizProvider = ({
     try {
       const result = Promise.all(
         quizLogs.map(async (quizLog) => {
-          await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/questions`, {
+          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -444,6 +449,7 @@ export const QuizProvider = ({
       );
     } catch (error) {
       console.error("Error createQuizQuestionLogs:", error);
+      Sentry.captureException(error);
       throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
@@ -457,18 +463,16 @@ export const QuizProvider = ({
     badgeActivityId: string | null = null
   ): Promise<UserQuizStageLog> => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/stages`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/stages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          campaignId: campaign.id,
           userId: _quizLog.userId,
           jobId: _quizLog.jobId || "",
-          domainId: quizLog.domainId,
           quizSetId: quizSet.id,
-          stageIndex: currentQuizStageIndex,
+          quizStageIndex: currentQuizStageIndex,
           quizStageId: currentQuizStage.id,
           isCompleted: true,
           isBadgeStage,
@@ -477,6 +481,9 @@ export const QuizProvider = ({
           remainingHearts,
           score,
           elapsedSeconds,
+          campaignId: campaign.id,
+          domainId: quizLog.domainId,
+          languageId: language.id,
         }),
       });
 
@@ -489,19 +496,21 @@ export const QuizProvider = ({
       return data.item as UserQuizStageLog;
     } catch (error) {
       console.error("Error createQuizStageLog:", error);
+      Sentry.captureException(error);
       throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
 
-  const updateQuizStageCompleteLog = async (stageIndex: number, isBadgeAcquired: boolean): Promise<UserQuizLog> => {
+  const updateQuizStageCompleteLog = async (quizStageIndex: number, isBadgeAcquired: boolean): Promise<UserQuizLog> => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/${_quizLog.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/${_quizLog.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          lastCompletedStage: stageIndex + 1,
+          lastCompletedStage: quizStageIndex,
+          isCompleted: quizStageIndex === quizSet.quizStages.length - 1,
           isBadgeAcquired,
         }),
       });
@@ -515,6 +524,7 @@ export const QuizProvider = ({
       return data.item as UserQuizLog;
     } catch (error) {
       console.error("Error updateQuizStageCompleteLog:", error);
+      Sentry.captureException(error);
       throw new Error("An unexpected error occurred while registering quiz log");
     }
   };
@@ -533,6 +543,7 @@ export const QuizProvider = ({
       value={{
         quizSet,
         quizStageLogs: _quizStageLogs,
+        quizQuestionLogs: _quizQuestionLogs,
         language,
         quizLog: _quizLog,
         currentQuizStageIndex,

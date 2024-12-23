@@ -79,6 +79,14 @@ export async function GET(request: NextRequest) {
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
         quizSetId: userQuizLog?.quizSetId,
+        userId: userId,
+      },
+    });
+
+    const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+      where: {
+        quizSetId: userQuizLog?.quizSetId,
+        userId: userId,
       },
     });
 
@@ -87,6 +95,7 @@ export async function GET(request: NextRequest) {
         item: {
           quizLog: userQuizLog,
           quizStageLogs: userQuizStageLogs,
+          quizQuestionLogs: userQuizQuestionLogs,
         },
       },
       { status: 200 }
@@ -252,6 +261,14 @@ export async function POST(request: NextRequest) {
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
         quizSetId: userQuizLog?.quizSetId,
+        userId: userId,
+      },
+    });
+
+    const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+      where: {
+        quizSetId: userQuizLog?.quizSetId,
+        userId: userId,
       },
     });
 
@@ -262,6 +279,7 @@ export async function POST(request: NextRequest) {
         item: {
           quizLog: userQuizLog,
           quizStageLogs: userQuizStageLogs,
+          quizQuestionLogs: userQuizQuestionLogs,
         },
       },
       { status: 200 }
