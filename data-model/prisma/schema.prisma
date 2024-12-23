@@ -201,6 +201,7 @@ model Campaign {
 
   // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
+  domainGoals  DomainGoal[]
 }
 
 model Hq {
@@ -253,6 +254,19 @@ model Domain {
   quizSets  QuizSet[]
   // channelSegmentIds String
   users User[]
+  domainGoals  DomainGoal[]
+}
+
+model DomainGoal {
+  id         String   @id @default(uuid())
+  campaignId String
+  domainId   String
+  userCount   Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  campaign   Campaign    @relation(fields: [campaignId], references: [id])
+  domain     Domain      @relation(fields: [domainId], references: [id])
 }
 
 model QuizSet {
@@ -349,6 +363,8 @@ model Question {
   enabled     Boolean
   product    String
   questionType    QuestionType
+
+  userQuizQuestionLogs UserQuizQuestionLog[]
 }
 
 enum QuestionType {
@@ -426,7 +442,7 @@ model UserQuizLog {
   // badgeAcquisitionDates DateTime[]
   isBadgeAcquired Boolean?
   lastCompletedStage    Int?
-  timeSpent    Int?      // Time spent on this activity (in seconds)
+  elapsedSeconds    Int?      // Time spent on this activity (in seconds)
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
@@ -473,16 +489,46 @@ model UserQuizLog {
   @@unique([userId, campaignId])
 }
 
+model UserQuizBadgeStageLog {
+  id          String   @id @default(uuid())
+  userId      String
+  campaignId String
+  
+  isBadgeAcquired Boolean?
+  badgeActivityId String?
+  elapsedSeconds    Int?
+  createdAt   DateTime @default(now()) // 히스토리 생성 시간
+  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
+
+  quizSetId String
+  quizStageId String
+  quizStageIndex Int
+  
+  score       Int
+
+  domainId String?
+  languageId String?
+  jobId       String?
+  regionId String?
+  subsidaryId String?
+  channelSegmentId String?
+  storeId String?
+  channelId String?
+
+  @@unique([userId, campaignId, quizStageId])
+}
+
+
 model UserQuizStageLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
-  jobId String
+  
   // user         User     @relation(fields: [userId], references: [id])
 
   campaignId  String
   quizStageId      String      // Foreign key to Stage
   quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
-  isCompleted  Boolean  // Whether the stage was completed
+  // isCompleted  Boolean  // Whether the stage was completed
   // timeSpent    Int      // Time spent on this stage (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -497,7 +543,7 @@ model UserQuizStageLog {
   // domainId String
   // campaignDomainQuizSetId String
   quizSetId String
-  stageIndex Int
+  quizStageIndex Int
 
   elapsedSeconds Int
 
@@ -509,6 +555,8 @@ model UserQuizStageLog {
   // campaignActivityId  String
 
   domainId String
+  languageId String?
+  jobId String
   
   regionId String?
   subsidaryId String?
@@ -524,14 +572,14 @@ model UserQuizQuestionLog {
   
   // user result
   questionId   String      // Foreign key to Question
-  // question     Question @relation(fields: [questionId], references: [id])
+  question     Question? @relation(fields: [questionId], references: [id])
   isCorrect    Boolean  // Whether the user answered the question correctly
   selectedOptionIds String[]
   correctOptionIds String[]
   quizStageId String
   // quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
 
-  stageIndex  Int
+  quizStageIndex  Int
   elapsedSeconds Int
 
   // question

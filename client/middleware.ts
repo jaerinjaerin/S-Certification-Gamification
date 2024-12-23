@@ -6,7 +6,7 @@ import { isValidCampaignQuizSetId } from "./utils/validationUtils";
 
 export async function middleware(request: NextRequest) {
   const session = await auth();
-  console.log("middleware session:", session);
+  // console.log("middleware session:", session);
 
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";

@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     //       campaignId: body.campaignId,
     //       userId: body.userId,
     //       quizSetId: body.quizSetId,
-    //       stageIndex: body.stageIndex,
+    //       quizStageIndex: body.quizStageIndex,
     //     },
     //   });
 
@@ -42,27 +42,75 @@ export async function POST(request: Request) {
     //   body.remainingHearts
     // );
 
-    // const {
-    //   campaignId,
-    //   userId,
-    //   jobId,
-    //   domainId,
-    //   quizSetId,
-    //   quizStageId,
-    //   isCompleted,
-    //   isBadgeStage,
-    //   remainingHearts,
-    //   isBadgeAcquired,
-    //   badgeActivityId,
-    //   elapsedSeconds,
-    //   score,
-    // } = body;
+    const {
+      userId,
+      campaignId,
+      quizStageId,
+      isBadgeStage,
+      isBadgeAcquired,
+      badgeActivityId,
+      remainingHearts,
+      quizSetId,
+      quizStageIndex,
+      elapsedSeconds,
+      score,
+    } = body;
 
-    const log = await await prisma.userQuizStageLog.create({
-      data: body,
+    const quizLog = await await prisma.userQuizLog.findFirst({
+      where: {
+        quizSetId,
+      },
     });
 
-    return NextResponse.json({ item: log }, { status: 200 });
+    const quizStageLog = await await prisma.userQuizStageLog.create({
+      data: {
+        userId,
+        campaignId,
+        isBadgeStage,
+        isBadgeAcquired,
+        badgeActivityId,
+        remainingHearts,
+        quizSetId,
+        quizStageId,
+        quizStageIndex,
+        elapsedSeconds,
+        score,
+        domainId: quizLog?.domainId!,
+        languageId: quizLog?.languageId,
+        jobId: quizLog?.jobId!,
+        regionId: quizLog?.regionId,
+        subsidaryId: quizLog?.subsidaryId,
+        channelSegmentId: quizLog?.channelSegmentId,
+        storeId: quizLog?.storeId,
+        channelId: quizLog?.channelId,
+      },
+    });
+
+    if (isBadgeStage) {
+      await await prisma.userQuizBadgeStageLog.create({
+        data: {
+          userId,
+          campaignId,
+          isBadgeAcquired,
+          badgeActivityId,
+          quizSetId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds: elapsedSeconds,
+          score,
+          domainId: quizLog?.domainId,
+          languageId: quizLog?.languageId,
+          jobId: quizLog?.jobId,
+          regionId: quizLog?.regionId,
+          subsidaryId: quizLog?.subsidaryId,
+          channelSegmentId: quizLog?.channelSegmentId,
+          storeId: quizLog?.storeId,
+          channelId: quizLog?.channelId,
+        },
+      });
+    }
+
+    return NextResponse.json({ item: quizStageLog }, { status: 200 });
   } catch (error) {
     console.error("Error create quiz stage log:", error);
     return NextResponse.json(

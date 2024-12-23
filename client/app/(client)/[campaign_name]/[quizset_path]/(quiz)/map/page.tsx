@@ -5,11 +5,24 @@ import { QuestionMark } from "@/app/components/icons/icons";
 import Connection from "@/app/components/map/connection";
 import Gradient from "@/app/components/map/gradient";
 import { Stage } from "@/app/components/map/stage";
-import { cn, fixedClass } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 import { QuizStageEx } from "@/app/types/type";
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { cn, fixedClass } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
@@ -17,9 +30,12 @@ import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
-  const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+  const { quizSet, quizLog, quizStagesTotalScore, currentQuizStageIndex } =
+    useQuiz();
 
-  const [nextStage, setNextStage] = useState<number>((quizLog?.lastCompletedStage ?? 0) + 1);
+  const [nextStage, setNextStage] = useState<number>(
+    (quizLog?.lastCompletedStage ?? 0) + 1
+  );
 
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations("Map_guide");
@@ -50,10 +66,18 @@ export default function QuizMap() {
         backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH}/assets/bg_main2.png')`,
       }}
     >
-      <div className={cn(fixedClass, "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col")}>
+      <div
+        className={cn(
+          fixedClass,
+          "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col"
+        )}
+      >
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={cn("ml-auto border rounded-full border-black/50")} size={"icon_md"}>
+            <Button
+              className={cn("ml-auto border rounded-full border-black/50")}
+              size={"icon_md"}
+            >
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -67,7 +91,9 @@ export default function QuizMap() {
 
             <TutorialCarousel />
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">OK</DialogClose>
+              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+                OK
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -127,7 +153,10 @@ const TutorialCarousel = () => {
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => {
           return (
-            <CarouselItem key={index} className={cn(current === index ? "w-full" : "w-0")}>
+            <CarouselItem
+              key={index}
+              className={cn(current === index ? "w-full" : "w-0")}
+            >
               <div className="p-1 h-full">
                 {index === 0 && (
                   <div className="bg-[#EDEDED] max-h-[320px] h-full relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
@@ -135,7 +164,12 @@ const TutorialCarousel = () => {
                       {translation("attempts_deduction")}
                     </p>
                     <div className="flex justify-center pt-[10px]">
-                      <Image src={mapGuideImageUrl} alt="map_guide1_image" width={270} height={160} />
+                      <Image
+                        src={mapGuideImageUrl}
+                        alt="map_guide1_image"
+                        width={270}
+                        height={160}
+                      />
                     </div>
                     <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
                       {translation("time_limit_per_quiz")}
@@ -164,7 +198,10 @@ const TutorialCarousel = () => {
             <button
               onClick={handleMoveIndex}
               key={index}
-              className={cn("bg-black/30 size-2 text-white rounded-full", current === index && "bg-black/100")}
+              className={cn(
+                "bg-black/30 size-2 text-white rounded-full",
+                current === index && "bg-black/100"
+              )}
             />
           );
         })}
