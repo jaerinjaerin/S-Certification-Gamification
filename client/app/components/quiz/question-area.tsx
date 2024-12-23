@@ -10,7 +10,6 @@ export default function Qusetion({
   bgImageUrl: string;
   charImageUrl: string;
 }) {
-  console.log("question", question, charImageUrl);
   return (
     <div
       className="min-h-[480px] flex flex-col justify-between"

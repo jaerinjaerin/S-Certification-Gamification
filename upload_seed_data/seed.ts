@@ -369,10 +369,8 @@ async function main() {
             lifeCount: 5,
             quizSetId: quizSet.id,
             isBadgeStage: isBadgeStage,
-            badgeActivityId: isLastStage ? "249587" : null, // 250659, 250642, 250639, 250641
-            badgeImageUrl: isLastStage
-              ? "/certification/s24/badgeFF.png"
-              : null,
+            badgeActivityId: badgeActivityId, // 250659, 250642, 250639, 250641
+            badgeImageUrl: badgeImageUrl,
             // backgroundImageUrl: bgImages[i],
             // characterImageUrl: charImages[i],
           },

@@ -515,7 +515,7 @@ model UserQuizBadgeStageLog {
   storeId String?
   channelId String?
 
-  @@unique([userId, campaignId])
+  @@unique([userId, campaignId, quizStageId])
 }
 
 

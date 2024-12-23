@@ -63,7 +63,7 @@ class QuizLogManager {
    * @param log 퀴즈 로그 객체
    */
   addLog(log: QuizLog): void {
-    console.info("QuizLogManager log", this.stageIndex, log.stageIndex);
+    console.info("QuizLogManager log", this.stageIndex, log.quizStageIndex);
     if (this.stageIndex === null) {
       // throw new Error("Stage has not started. Call startStage() first.");
       assert(
@@ -72,10 +72,10 @@ class QuizLogManager {
       );
     }
 
-    if (log.stageIndex !== this.stageIndex) {
+    if (log.quizStageIndex !== this.stageIndex) {
       assert(
-        log.stageIndex === this.stageIndex,
-        `Log stageIndex (${log.stageIndex}) does not match current stageIndex (${this.stageIndex}).`
+        log.quizStageIndex === this.stageIndex,
+        `Log stageIndex (${log.quizStageIndex}) does not match current stageIndex (${this.stageIndex}).`
       );
       // throw new Error(
       //   `Log stageIndex (${log.stageIndex}) does not match current stageIndex (${this.stageIndex}).`
