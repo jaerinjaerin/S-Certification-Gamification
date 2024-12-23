@@ -128,7 +128,7 @@ export const {
         const domainCode = profile.personDomain?.find(
           (domain) => domain.isPrimary
         )?.code;
-        if (!domainCode) {
+        if (domainCode) {
           const domain = await prisma.domain.findFirst({
             where: {
               code: domainCode,
@@ -142,7 +142,7 @@ export const {
             },
           });
 
-          if (!domain) {
+          if (domain) {
             regionId = domain!.subsidary?.regionId || null;
             subsidaryId = domain!.subsidaryId;
           }
