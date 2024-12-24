@@ -7,7 +7,6 @@ export default async function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.info("Render ClientLayout");
   const timeZone = "Seoul/Asia";
 
   const locale = await getLocale();

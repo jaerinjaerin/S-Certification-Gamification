@@ -33,7 +33,9 @@ import { useCountdown } from "usehooks-ts";
 export default function GuestLogin() {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
+    "init"
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,14 +45,18 @@ export default function GuestLogin() {
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
 
   const [countStart, setCountStart] = useState<number>(0);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart });
+  const [count, { startCountdown, stopCountdown, resetCountdown }] =
+    useCountdown({ countStart });
 
   const translation = useTranslations();
 
   useEffect(() => {
     if (expiresAt) {
       const now = new Date();
-      const diffInSeconds = Math.max(0, Math.floor((expiresAt.getTime() - now.getTime()) / 1000));
+      const diffInSeconds = Math.max(
+        0,
+        Math.floor((expiresAt.getTime() - now.getTime()) / 1000)
+      );
 
       setCountStart(diffInSeconds);
       resetCountdown();
@@ -63,11 +69,86 @@ export default function GuestLogin() {
     setError(null);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`, {
-        method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ toAddress: email }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            toAddress: email,
+            subject: "Autherntication Code for Galaxy AI Expert.",
+            bodyHtml: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <style>
+                  body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #000000;
+                    color: #333333;
+                  }
+                  .email-container {
+                    max-width: 840px;
+                    width: 100%;
+                    height: 414px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    padding: 80px;
+                    border-radius: 10px;
+                    text-align: center;
+                    background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png");
+                    background-repeat: repeat;
+                    background-size: 50%;
+                    background-position: center;
+                  }
+                  .header {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                  }
+                  .code {
+                    font-size: 48px;
+                    font-weight: bold;
+                    margin: 20px 0;
+                  }
+                  .message {
+                    font-size: 14px;
+                    color: #555555;
+                    margin-top: 20px;
+                  }
+                  .footer {
+                    font-size: 12px;
+                    color: #aaaaaa;
+                    margin-top: 30px;
+                    text-align: center;
+                  }
+                </style>
+              </head>
+              <body>
+                <div class="email-container">
+                  <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
+                  <div class="code">
+                    $CODE$
+                  </div>
+                  <div class="message">
+                    Please enter this code on the verification page to complete the
+                    process.<br />
+                    For your security, this code will expire in [time limit, e.g., 5
+                    minutes].
+                  </div>
+                </div>
+                <div class="footer">
+                  This message was automatically delivered by Samsung+ service. Do not reply
+                  to this message.<br />
+                  Copyright © 2024 SAMSUNG all rights reserved.
+                </div>
+              </body>
+            </html>
+          `,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -163,23 +244,44 @@ export default function GuestLogin() {
     }
   };
 
-  console.log("process.env.NEXT_PUBLIC_BASE_PATH", process.env.NEXT_PUBLIC_BASE_PATH);
+  console.log(
+    "process.env.NEXT_PUBLIC_BASE_PATH",
+    process.env.NEXT_PUBLIC_BASE_PATH
+  );
 
   return (
     <>
       <div className={cn("h-svh", fixedClass)}>
-        <video className="w-full h-svh object-fill absolute " autoPlay loop muted playsInline>
-          <source src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`} type="video/mp4" />
-          <source src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`} type="video/webm" />
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`}
+            type="video/mp4"
+          />
+          <source
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
+            type="video/webm"
+          />
         </video>
 
         <div className="flex flex-col items-center h-full relative z-10 py-5">
-          <span className="block font-extrabold">{translation("Main.galaxy_ai_expert")}</span>
+          <span className="block font-extrabold">
+            {translation("Main.galaxy_ai_expert")}
+          </span>
 
           <div className="flex flex-col items-center my-auto">
             <div className="mb-[70px]">
-              <span className="block font-extrabold text-[44px] text-center mb-5">{translation("Main.be_a_galaxy_ai_expert")}</span>
-              <span className="block text-[30px] font-medium text-center">{translation("Main.certification")}</span>
+              <span className="block font-extrabold text-[44px] text-center mb-5">
+                {translation("Main.be_a_galaxy_ai_expert")}
+              </span>
+              <span className="block text-[30px] font-medium text-center">
+                {translation("Main.certification")}
+              </span>
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -190,7 +292,9 @@ export default function GuestLogin() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>{translation("Main.login")}</DialogTitle>
-                  <DialogDescription>{translation("Login_popup.login_by_send_code")}</DialogDescription>
+                  <DialogDescription>
+                    {translation("Login_popup.login_by_send_code")}
+                  </DialogDescription>
                 </DialogHeader>
                 <div>
                   <form
@@ -221,7 +325,9 @@ export default function GuestLogin() {
                     disabled={!email || loading}
                     onClick={() => stopCountdown()}
                   >
-                    {loading ? "sending..." : `${translation("Login_popup.send_code")}`}
+                    {loading
+                      ? "sending..."
+                      : `${translation("Login_popup.send_code")}`}
                   </Button>
                   <DialogClose className="absolute top-5 right-5">
                     <X className="h-4 w-4" />
@@ -282,10 +388,14 @@ export default function GuestLogin() {
       <Dialog open={step === "code"}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{translation("Login_popup.confirm_your_email")}</DialogTitle>
+            <DialogTitle>
+              {translation("Login_popup.confirm_your_email")}
+            </DialogTitle>
             <DialogDescription>
               {translation.rich("Login_popup.send_magic_link", {
-                address: (children) => <span className="text-blue-500">{children}</span>,
+                address: (children) => (
+                  <span className="text-blue-500">{children}</span>
+                ),
                 email,
               })}
             </DialogDescription>
@@ -308,7 +418,9 @@ export default function GuestLogin() {
                 autoFocus
                 required
               />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">{formatToMMSS(count)}</div>
+              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
+                {formatToMMSS(count)}
+              </div>
             </form>
             {/* {verifyToken?.expiresAt && (
               <p>
@@ -330,7 +442,9 @@ export default function GuestLogin() {
               disabled={!code || loading}
               onClick={verifyCode}
             >
-              {loading ? "verifying..." : `${translation("Login_popup.submit")}`}
+              {loading
+                ? "verifying..."
+                : `${translation("Login_popup.submit")}`}
             </Button>
             <div className="mx-auto">
               <button
@@ -341,7 +455,10 @@ export default function GuestLogin() {
                 {translation("Login_popup.resend_code")}
               </button>
             </div>
-            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
+            <DialogClose
+              className="absolute top-5 right-5"
+              onClick={() => setStep("email")}
+            >
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </DialogClose>

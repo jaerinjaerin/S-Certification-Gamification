@@ -14,7 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { QuizStageEx } from "@/app/types/type";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -23,7 +22,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn, fixedClass } from "@/lib/utils";
-import { useQuiz } from "@/providers/quiz_provider";
+import { QuizStageEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -67,7 +66,7 @@ export default function QuizMap() {
     <div
       className="flex flex-col items-center h-full min-h-svh"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/assets/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.png')`,
       }}
     >
       <div

@@ -28,7 +28,7 @@ export default function QuizComplete() {
   const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
-  const isBadgeStage = lastCompletedQuizStage.isBadgeStage;
+  const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
   useEffect(() => {
     const routeToMapPage = async () => {
@@ -180,9 +180,10 @@ const ScoreRankAnnouncement = () => {
   const translation = useTranslations("Score_guide");
   const { routeToPage } = usePathNavigator();
   const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
-  const isLastStage =
-    quizSet.quizStages[quizSet.quizStages.length - 1].id ===
-    lastCompletedQuizStage.id;
+  const isLastStage = !lastCompletedQuizStage
+    ? false
+    : quizSet.quizStages[quizSet.quizStages.length - 1].id ===
+      lastCompletedQuizStage.id;
   const { data: session } = useSession();
   const user = session?.user;
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
@@ -300,7 +301,7 @@ const SPRING_OPTIONS = {
 
 const SwipeCarousel = () => {
   const { lastCompletedQuizStage } = useQuiz();
-  const isBadgeStage = lastCompletedQuizStage.isBadgeStage;
+  const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
   console.log("🚧isBadgeStage", isBadgeStage);
   const [imgIndex, setImgIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;
@@ -327,7 +328,7 @@ const SwipeCarousel = () => {
             transition={SPRING_OPTIONS}
             className="w-full aspect-video shrink-0 rounded-xl object-cover"
           >
-            <ScoreAnnouncement stageName={lastCompletedQuizStage.name} />
+            <ScoreAnnouncement stageName={lastCompletedQuizStage?.name ?? ""} />
           </motion.div>
 
           {isBadgeStage && (
@@ -336,7 +337,7 @@ const SwipeCarousel = () => {
               className="w-full aspect-video shrink-0 rounded-xl object-cover"
             >
               <GetBadgeAnnouncment
-                stageName={lastCompletedQuizStage.name}
+                stageName={lastCompletedQuizStage?.name ?? ""}
                 badgeStage={lastCompletedQuizStage}
               />
             </motion.div>
