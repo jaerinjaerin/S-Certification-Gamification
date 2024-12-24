@@ -517,7 +517,7 @@ model UserQuizStageLog {
 
   campaignId  String
   quizStageId      String      // Foreign key to Stage
-  quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
+  // quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
   // isCompleted  Boolean  // Whether the stage was completed
   // timeSpent    Int      // Time spent on this stage (in seconds)
   createdAt    DateTime @default(now())
