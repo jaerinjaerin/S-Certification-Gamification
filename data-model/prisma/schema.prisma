@@ -354,7 +354,7 @@ model Question {
   product    String
   questionType    QuestionType
 
-  userQuizQuestionLogs UserQuizQuestionLog[]
+  // userQuizQuestionLogs UserQuizQuestionLog[]
 }
 
 enum QuestionType {
