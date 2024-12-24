@@ -13,26 +13,37 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
-  const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } = useQuiz();
+  const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
+    useQuiz();
 
   // const { routeToPage } = usePathNavigator();
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const reviewQuizQuestionLogs = quizQuestionLogs.filter((log) => log.quizStageIndex + 1 === searchStage);
+  const reviewQuizQuestionLogs = quizQuestionLogs.filter(
+    (log) => log.quizStageIndex + 1 === searchStage
+  );
 
   useEffect(() => {
-    const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs[currentQuestionIndex];
-    setSelectedOptionIds([...currentReviewQuizQuestionLogs.correctOptionIds, ...currentReviewQuizQuestionLogs.selectedOptionIds]);
+    const currentReviewQuizQuestionLogs =
+      reviewQuizQuestionLogs[currentQuestionIndex];
+    setSelectedOptionIds([
+      ...currentReviewQuizQuestionLogs.correctOptionIds,
+      ...currentReviewQuizQuestionLogs.selectedOptionIds,
+    ]);
   }, [currentQuestionIndex]);
 
-  const questions = quizSet.quizStages.filter((quiz) => quiz.order === searchStage)[0].questions;
+  const questions = quizSet.quizStages.filter(
+    (quiz) => quiz.order === searchStage
+  )[0].questions;
   const question = questions[currentQuestionIndex];
 
   const next = () => {
@@ -58,20 +69,39 @@ export default function ReviewPage() {
   }, [currentQuizStage, currentStageQuestions]);
 
   return (
-    <div className="min-h-svh bg-slate-300/20">
+    <div className="min-h-svh bg-slate-200/20">
       <div className="sticky top-0 z-10">
-        <div className={cn("bg-background p-5 grid grid-cols-12 gap-[2px]")}>
-          <div className="col-span-4 content-center text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold">
-            <Button size={"icon"} className="mr-4 " onClick={previous} disabled={currentQuestionIndex === 0}>
+        <div className="bg-white p-5 relative">
+          {/* 양쪽  */}
+          <div className="text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold absolute top-4">
+            <Button
+              size={"icon_md"}
+              onClick={previous}
+              disabled={currentQuestionIndex === 0}
+              className="mr-4"
+            >
               <ArrowLeft />
             </Button>
-            <Button size={"icon"} onClick={next} disabled={currentQuestionIndex === questions.length - 1}>
+            <Button
+              size={"icon_md"}
+              onClick={next}
+              disabled={currentQuestionIndex === questions.length - 1}
+            >
               <ArrowRight />
             </Button>
           </div>
-          <div className="col-span-4 justify-items-center content-center">
+          <Button
+            size={"icon_md"}
+            onClick={() => router.push("map")}
+            className="absolute right-5 top-4 "
+          >
+            <X />
+          </Button>
+
+          {/* 문항수 */}
+          <div className="w-full">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px]"
+              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
@@ -81,11 +111,6 @@ export default function ReviewPage() {
               <span>/</span>
               <span>{questions.length}</span>
             </motion.div>
-          </div>
-          <div className="col-span-4 flex self-center gap-1 justify-end">
-            <Button size={"icon"} onClick={() => router.push("map")}>
-              <X />
-            </Button>
           </div>
         </div>
       </div>
@@ -111,13 +136,22 @@ export default function ReviewPage() {
                 key={option.id}
                 className={cn(
                   "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
-                  selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white pointer-events-none",
-                  selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white pointer-events-none",
+                  selectedOptionIds.includes(option.id) &&
+                    !option.isCorrect &&
+                    "bg-[#EE3434] text-white pointer-events-none",
+                  selectedOptionIds.includes(option.id) &&
+                    option.isCorrect &&
+                    "bg-[#2686F5] text-white pointer-events-none",
                   "pointer-events-none"
                 )}
               >
                 {option.text}({option.isCorrect ? "o" : "x"})
-                <input type="checkbox" checked={selectedOptionIds.includes(option.id)} readOnly className="hidden" />
+                <input
+                  type="checkbox"
+                  checked={selectedOptionIds.includes(option.id)}
+                  readOnly
+                  className="hidden"
+                />
               </motion.label>
             );
           })}

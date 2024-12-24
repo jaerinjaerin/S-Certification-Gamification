@@ -54,7 +54,8 @@
     "done": "Done",
     "rank_notification": "You are ranked in the top XX %",
     "badge_deliver": "Your badge is being issued. Please allow up to 5 minutes for it to appear.",
-    "reture_map": "Return map"
+    "reture_map": "Return map",
+    "next_stage": "Next Stage"
   },
   "Score_guide": {
     "score": "Score",
@@ -73,6 +74,10 @@
     "network_error": "The network is unstable. Please try again later.",
     "code_error": "The verification code is invalid. Please check again.",
     "email_error": "We are unable to complete your login. Please check the email address.",
+    "email_success": "Email sent successfully!",
+    "email_already_sent": "Verification email already sent",
+    "email_failed": "Failed to send email. Please try again.",
+    "unexpected_error": "An unexpected error occurred.",
     "back": "Back"
   },
   "Email": {

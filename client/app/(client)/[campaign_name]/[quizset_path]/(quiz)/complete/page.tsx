@@ -61,7 +61,6 @@ const ScoreAnnouncement = ({ stageName }: { stageName: string }) => {
   const translation = useTranslations("Completed");
   const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
 
-  // const stageScore = quizStageLogs.at(-1)?.score ?? 0;
   const CIRCLE_PERCENTAGE = Math.floor(
     (quizStagesTotalScore / getAllStageMaxScore()) * 100
   );
@@ -171,13 +170,8 @@ const GetBadgeAnnouncment = ({
 };
 
 const ScoreRankAnnouncement = () => {
-  // S+ 사용자인 경우와 미사용자인 경우 나눠야 함
-  // S+ 사용자는 s+버튼, returnmap버튼
-  // s+ 미사용자는 메일전송노티, returnmap 버튼
-
-  // 마지막 스테이지인지 나눠야 함
-  // 사용자는 N
   const translation = useTranslations("Score_guide");
+  const completed_translation = useTranslations("Completed");
   const { routeToPage } = usePathNavigator();
   const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
   const isLastStage =
@@ -230,7 +224,7 @@ const ScoreRankAnnouncement = () => {
 
       {/* content */}
       <div>
-        <h2 className="text-[32px]">Your Score</h2>
+        <h2 className="text-[32px]">{completed_translation("score")}</h2>
         <h1 className="text-[60px]">{quizStagesTotalScore}</h1>
       </div>
       <div className="w-full">
@@ -242,8 +236,7 @@ const ScoreRankAnnouncement = () => {
             height={179}
           />
           <p className="text-[22px] text-balance px-5">
-            {/* {translation("rank_notification")} */}
-            You are ranked in the top 20%
+            {completed_translation("rank_notification")}
           </p>
         </div>
 
@@ -251,11 +244,7 @@ const ScoreRankAnnouncement = () => {
 
         <div className="flex justify-center gap-3">
           {user?.provider === "sumtotal" && (
-            <Button
-              className="text-[18px] mt-7"
-              variant={"primary"}
-              // onClick={() => routeToPage("map")}
-            >
+            <Button className="text-[18px] mt-7" variant={"primary"}>
               S+
             </Button>
           )}
@@ -264,8 +253,9 @@ const ScoreRankAnnouncement = () => {
             variant={"primary"}
             onClick={() => routeToPage("map")}
           >
-            {/* {translation("reture_map")} */}
-            {isLastStage ? "Return map" : "Next Stage"}
+            {isLastStage
+              ? completed_translation("reture_map")
+              : completed_translation("next_stage")}
           </Button>
         </div>
       </div>

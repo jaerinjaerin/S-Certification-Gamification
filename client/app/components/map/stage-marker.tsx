@@ -40,7 +40,7 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
             width={200}
             height={200}
             className={cn(
-              "object-cover w-full h-full",
+              "object-cover w-full h-full ",
               !isActiveStage && !isCompleted && "grayscale"
             )}
           />
