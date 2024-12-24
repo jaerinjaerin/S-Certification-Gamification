@@ -127,7 +127,7 @@ export default async function QuizLayout({
   // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
   if (
     session?.user.provider === "sumtotal" &&
-    quizLog !== null &&
+    quizLog?.quizSetPath != null &&
     quizLog?.quizSetPath !== params.quizset_path
   ) {
     console.log(
