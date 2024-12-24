@@ -286,6 +286,7 @@ export const QuizProvider = ({
     // 퀴즈 스테이지 로그 생성
     const quizStageLog: UserQuizStageLog = await createQuizStageLog(
       score,
+      totalScore,
       totalElapsedSeconds,
       remainingHearts,
       badgeStage,
@@ -630,6 +631,7 @@ export const QuizProvider = ({
 
   const createQuizStageLog = async (
     score,
+    totalScore,
     elapsedSeconds,
     remainingHearts: number,
     isBadgeStage: boolean,
@@ -656,6 +658,7 @@ export const QuizProvider = ({
             badgeActivityId,
             remainingHearts,
             score,
+            totalScore,
             elapsedSeconds,
             campaignId: campaign.id,
             domainId: quizLog.domainId,

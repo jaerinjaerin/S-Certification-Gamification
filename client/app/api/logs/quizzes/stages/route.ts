@@ -54,6 +54,7 @@ export async function POST(request: Request) {
       quizStageIndex,
       elapsedSeconds,
       score,
+      totalScore,
     } = body;
 
     const quizLog = await await prisma.userQuizLog.findFirst({
@@ -97,7 +98,7 @@ export async function POST(request: Request) {
           quizStageId,
           quizStageIndex,
           elapsedSeconds: elapsedSeconds,
-          score,
+          score: totalScore,
           domainId: quizLog?.domainId,
           languageId: quizLog?.languageId,
           jobId: quizLog?.jobId,
