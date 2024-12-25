@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
+} from "@/components/ui/dialog";
 import { QuizStageEx } from "@/app/types/type";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,6 +28,7 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
+import { X } from "lucide-react";
 
 export default function QuizMap() {
   const {
@@ -79,13 +80,13 @@ export default function QuizMap() {
         <Dialog>
           <DialogTrigger asChild>
             <Button
-              className={cn("ml-auto border rounded-full border-black/50")}
+              className="ml-auto border rounded-full border-black/50 [&_svg]:size-4"
               size={"icon_md"}
             >
               <QuestionMark />
             </Button>
           </DialogTrigger>
-          <DialogContent dismissOnOverlayClick>
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>{translation("Map_guide.how_to_play")}</DialogTitle>
             </DialogHeader>
@@ -93,7 +94,13 @@ export default function QuizMap() {
             <TutorialCarousel />
             <DialogFooter>
               <DialogClose className="text-[18px] py-[22px] px-[34px]">
-                {translation("Login_popup.ok")}
+                <Button variant={"primary"}>
+                  {translation("Login_popup.ok")}
+                </Button>
+                <DialogClose className="absolute top-5 right-5">
+                  <X className="h-4 w-4" />
+                  <span className="sr-only">Close</span>
+                </DialogClose>
               </DialogClose>
             </DialogFooter>
           </DialogContent>

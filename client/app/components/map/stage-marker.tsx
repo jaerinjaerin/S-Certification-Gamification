@@ -21,7 +21,6 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
     const stageOrder = stage.order;
     const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
     const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
-    // console.log("stage.badgeImageUrl", stage.badgeImageUrl);
 
     const renderLockIcon = () =>
       !isActiveStage &&
@@ -72,10 +71,10 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
             {renderButtonContent()}
           </motion.button>
 
-          {isActiveStage && <ActivePointer />}
+          {isActiveStage && !isCompleted && <ActivePointer />}
         </div>
 
-        {isActiveStage && <Ping />}
+        {isActiveStage && !isCompleted && <Ping />}
       </div>
     );
   }

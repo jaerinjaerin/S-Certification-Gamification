@@ -16,7 +16,7 @@ export default async function ClientLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <div className="w-full min-w-[280px] max-w-[412px] mx-auto " lang={locale}>
+    <div className="w-full min-w-[280px] max-w-[412px] mx-auto" lang={locale}>
       <NextIntlClientProvider timeZone={timeZone} messages={messages}>
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
