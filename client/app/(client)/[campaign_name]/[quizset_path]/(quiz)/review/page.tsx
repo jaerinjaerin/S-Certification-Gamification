@@ -16,7 +16,6 @@ export default function ReviewPage() {
   const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
     useQuiz();
 
-  // const { routeToPage } = usePathNavigator();
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
@@ -32,19 +31,29 @@ export default function ReviewPage() {
     (log) => log.quizStageIndex + 1 === searchStage
   );
 
-  useEffect(() => {
-    const currentReviewQuizQuestionLogs =
-      reviewQuizQuestionLogs[currentQuestionIndex];
-    setSelectedOptionIds([
-      ...currentReviewQuizQuestionLogs.correctOptionIds,
-      ...currentReviewQuizQuestionLogs.selectedOptionIds,
-    ]);
-  }, [currentQuestionIndex]);
-
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage
   )[0].questions;
   const question = questions[currentQuestionIndex];
+
+  useEffect(() => {
+    const currentReviewQuizQuestionLogs =
+      reviewQuizQuestionLogs.length <= currentQuestionIndex
+        ? null
+        : reviewQuizQuestionLogs[currentQuestionIndex];
+
+    if (!currentReviewQuizQuestionLogs) {
+      const correctOptionIds = question.options
+        .filter((option) => option.isCorrect)
+        .map((option) => option.id);
+      setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+    } else {
+      setSelectedOptionIds([
+        ...currentReviewQuizQuestionLogs.correctOptionIds,
+        ...currentReviewQuizQuestionLogs.selectedOptionIds,
+      ]);
+    }
+  }, [currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
@@ -69,29 +78,39 @@ export default function ReviewPage() {
   }, [currentQuizStage, currentStageQuestions]);
 
   return (
-    <div className="min-h-svh bg-slate-300/20">
+    <div className="min-h-svh bg-slate-200/20">
       <div className="sticky top-0 z-10">
-        <div className={cn("bg-background p-5 grid grid-cols-12 gap-[2px]")}>
-          <div className="col-span-4 content-center text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold">
+        <div className="bg-white p-5 relative">
+          {/* 양쪽  */}
+          <div className="text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold absolute top-4">
             <Button
-              size={"icon"}
-              className="mr-4 "
+              size={"icon_md"}
               onClick={previous}
               disabled={currentQuestionIndex === 0}
+              className="mr-4"
             >
               <ArrowLeft />
             </Button>
             <Button
-              size={"icon"}
+              size={"icon_md"}
               onClick={next}
               disabled={currentQuestionIndex === questions.length - 1}
             >
               <ArrowRight />
             </Button>
           </div>
-          <div className="col-span-4 justify-items-center content-center">
+          <Button
+            size={"icon_md"}
+            onClick={() => router.push("map")}
+            className="absolute right-5 top-4 "
+          >
+            <X />
+          </Button>
+
+          {/* 문항수 */}
+          <div className="w-full">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px]"
+              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
@@ -101,11 +120,6 @@ export default function ReviewPage() {
               <span>/</span>
               <span>{questions.length}</span>
             </motion.div>
-          </div>
-          <div className="col-span-4 flex self-center gap-1 justify-end">
-            <Button size={"icon"} onClick={() => router.push("map")}>
-              <X />
-            </Button>
           </div>
         </div>
       </div>

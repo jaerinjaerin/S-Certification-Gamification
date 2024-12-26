@@ -11,7 +11,6 @@ export default function successNotify() {
           <DotLottieReact
             src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/success.json`}
             className="w-[400px] h-auto"
-            loop
             autoplay
           />
         </div>

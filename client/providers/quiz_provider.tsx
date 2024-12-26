@@ -47,9 +47,9 @@ interface QuizContextType {
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
-  currentQuizStage: QuizStageEx | null;
+  currentQuizStage: QuizStageEx;
   lastCompletedQuizStage: QuizStageEx | null;
-  currentStageQuestions: QuestionEx[] | null;
+  currentStageQuestions: QuestionEx[];
   isBadgeStage(): boolean;
   processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
   isComplete(): boolean;
@@ -156,7 +156,7 @@ export const QuizProvider = ({
   }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
     quizSet.quizStages[currentQuizStageIndex]
   );
   const [lastCompletedQuizStage] = useState<QuizStageEx | null>(
@@ -165,7 +165,7 @@ export const QuizProvider = ({
       : null
   );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
-    QuestionEx[] | null
+    QuestionEx[]
   >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -583,14 +583,14 @@ export const QuizProvider = ({
         isCorrect: result.isCorrect,
         campaignId: campaign.id,
         userId: _quizLog.userId,
-        jobId: _quizLog.jobId || "",
+        // jobId: _quizLog.jobId || "",
         quizSetId: quizSet.id,
         questionId: questionId,
-        languageId: language?.id,
+        // languageId: language?.id,
         selectedOptionIds: selectedOptionIds,
         correctOptionIds: result.correctOptionIds,
-        domainId: quizLog.domainId,
-        subsidaryId: quizLog.subsidaryId,
+        // domainId: quizLog.domainId,
+        // subsidaryId: quizLog.subsidaryId,
         quizStageIndex: currentQuizStageIndex,
         category: question.category,
         specificFeature: question.specificFeature,
@@ -599,6 +599,14 @@ export const QuizProvider = ({
         elapsedSeconds: elapsedSeconds,
         quizStageId: currentQuizStage?.id ?? "",
         createdAt: new Date().toISOString(),
+        domainId: _quizLog.domainId,
+        languageId: quizLog?.languageId,
+        jobId: _quizLog.jobId || "",
+        regionId: _quizLog?.regionId,
+        subsidaryId: _quizLog?.subsidaryId,
+        channelSegmentId: _quizLog?.channelSegmentId,
+        storeId: _quizLog?.storeId,
+        channelId: _quizLog?.channelId,
       });
 
       return result;
@@ -630,14 +638,14 @@ export const QuizProvider = ({
       isCorrect,
       campaignId: campaign.id,
       userId: _quizLog.userId,
-      jobId: _quizLog.jobId || "",
+
       quizSetId: quizSet.id,
       questionId: questionId,
-      languageId: language?.id,
+      // languageId: language?.id,
       selectedOptionIds: selectedOptionIds,
       correctOptionIds: correctOptionIds,
-      domainId: quizLog.domainId,
-      subsidaryId: quizLog.subsidaryId,
+      // domainId: quizLog.domainId,
+      // subsidaryId: quizLog.subsidaryId,
       quizStageIndex: currentQuizStageIndex,
       category: question.category,
       specificFeature: question.specificFeature,
@@ -646,6 +654,15 @@ export const QuizProvider = ({
       elapsedSeconds: elapsedSeconds,
       quizStageId: currentQuizStage?.id ?? "",
       createdAt: new Date().toISOString(),
+
+      domainId: _quizLog.domainId,
+      languageId: quizLog?.languageId,
+      jobId: _quizLog.jobId || "",
+      regionId: _quizLog?.regionId,
+      subsidaryId: _quizLog?.subsidaryId,
+      channelSegmentId: _quizLog?.channelSegmentId,
+      storeId: _quizLog?.storeId,
+      channelId: _quizLog?.channelId,
     });
   };
 
@@ -708,7 +725,7 @@ export const QuizProvider = ({
           },
           body: JSON.stringify({
             userId: _quizLog.userId,
-            jobId: _quizLog.jobId || "",
+            // jobId: _quizLog.jobId || "",
             quizSetId: quizSet.id,
             quizStageIndex: currentQuizStageIndex,
             quizStageId: currentQuizStage?.id ?? "",
@@ -721,8 +738,16 @@ export const QuizProvider = ({
             totalScore,
             elapsedSeconds,
             campaignId: campaign.id,
-            domainId: quizLog.domainId,
-            languageId: language?.id,
+            // domainId: quizLog.domainId,
+            // languageId: language?.id,
+            domainId: _quizLog.domainId,
+            languageId: quizLog?.languageId,
+            jobId: _quizLog.jobId || "",
+            regionId: _quizLog?.regionId,
+            subsidaryId: _quizLog?.subsidaryId,
+            channelSegmentId: _quizLog?.channelSegmentId,
+            storeId: _quizLog?.storeId,
+            channelId: _quizLog?.channelId,
           }),
         }
       );

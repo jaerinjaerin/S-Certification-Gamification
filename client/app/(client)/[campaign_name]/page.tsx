@@ -43,6 +43,8 @@ export default async function CampaignPage({
     redirect("error-notfound");
   }
 
+  console.info("CampaignPage campaign", data);
+
   const historyResponse = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
     {

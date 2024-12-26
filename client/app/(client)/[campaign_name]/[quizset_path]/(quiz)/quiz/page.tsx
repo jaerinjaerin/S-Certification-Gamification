@@ -1,40 +1,53 @@
 "use client";
 // import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
-import { ErrorAlertDialog, GameOverAlertDialog } from "@/app/components/quiz/alert-dialog";
+import {
+  ErrorAlertDialog,
+  GameOverAlertDialog,
+} from "@/app/components/quiz/alert-dialog";
 import CountDownBar from "@/app/components/quiz/countdown-bar";
 import Qusetion from "@/app/components/quiz/question-area";
 import successNotify from "@/app/components/quiz/success-notify";
 import Spinner from "@/app/components/ui/spinner";
 import { useCountdown } from "@/app/hooks/useCountdown";
 import { cn, sleep } from "@/lib/utils";
-import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
+import { EndStageResult, QuestionEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 export default function QuizPage() {
-  const { currentQuestionIndex, currentQuizStage, currentStageQuestions, endStage, nextQuestion, canNextQuestion, logUserAnswer } = useQuiz();
+  const {
+    currentQuestionIndex,
+    currentQuizStage,
+    currentStageQuestions,
+    endStage,
+    nextQuestion,
+    canNextQuestion,
+    logUserAnswer,
+  } = useQuiz();
   const trnaslation = useTranslations("Quiz");
-
-  const LIFE_COUNT = 5; // currentQuizStage.lifeCount
-
   const { routeToPage } = usePathNavigator();
-  const question = currentStageQuestions && currentStageQuestions[currentQuestionIndex];
+
+  const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
+  const currentStageTotalQuestions = currentStageQuestions?.length;
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
+
+  const LIFE_COUNT = currentQuizStage?.lifeCount ?? 5; // currentQuizStage.lifeCount
   const [gameOver, setGameOver] = useState(false);
-
   const [lifeCount, setLifeCount] = useState<number>(LIFE_COUNT);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({ countStart: question.timeLimitSeconds });
-  const [loading, setLoading] = useState(false);
-
+  const [count, { startCountdown, stopCountdown, resetCountdown }] =
+    useCountdown({ countStart: question.timeLimitSeconds });
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
-  const totalQuestions = currentStageQuestions?.length; // stage 당 문제 개수
+
+  const [loading, setLoading] = useState(false);
   const { success, setSuccess, renderSuccessLottie } = successNotify();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const handleOptionSave = (optionId: string) => {
     setSelectedOptionIds((prevSelected) => {
@@ -50,10 +63,11 @@ export default function QuizPage() {
     const selectedOptIds = [...new Set([...selectedOptionIds, optionId])];
     const elapsedSeconds = question.timeLimitSeconds - count;
 
-    // 맞았으면
     if (result.isCorrect) {
       // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
-      const isAllCorrectSelected = question.options.every((option) => (option.isCorrect ? selectedOptIds.includes(option.id) : true));
+      const isAllCorrectSelected = question.options.every((option) =>
+        option.isCorrect ? selectedOptIds.includes(option.id) : true
+      );
 
       if (isAllCorrectSelected) {
         setIsCorrectAnswer(true);
@@ -65,9 +79,7 @@ export default function QuizPage() {
         setSuccess(false);
         return;
       }
-    }
-    // 틀렸으면 도전 횟수 차감
-    else {
+    } else {
       setLifeCount((lifeCount) => lifeCount - 1);
       logUserAnswer(question.id, selectedOptIds, elapsedSeconds, false);
     }
@@ -92,6 +104,21 @@ export default function QuizPage() {
     routeToPage("complete");
   };
 
+  const handleGameOver = useCallback(() => {
+    stopCountdown();
+    setGameOver(true);
+  }, [stopCountdown, setGameOver]);
+
+  const handleRestart = useCallback(() => {
+    resetCountdown();
+    startCountdown();
+  }, [resetCountdown, startCountdown]);
+
+  const handleLifeDecrease = useCallback(() => {
+    setLifeCount((prev) => prev - 1);
+    handleRestart();
+  }, [resetCountdown, setLifeCount, startCountdown]);
+
   useEffect(() => {
     if (!currentQuizStage || !currentStageQuestions) {
       setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
@@ -99,32 +126,41 @@ export default function QuizPage() {
   }, [currentQuizStage, currentStageQuestions]);
 
   useEffect(() => {
-    startCountdown();
+    handleRestart();
+  }, [currentQuestionIndex, resetCountdown, startCountdown]);
 
-    if (count === 0) {
-      setLifeCount((lifeCount) => lifeCount - 1);
-      resetCountdown();
+  useEffect(() => {
+    if (count <= 0) {
+      handleLifeDecrease();
     }
-  }, [count]);
+  }, [count, handleLifeDecrease]);
 
   useEffect(() => {
     if (lifeCount === 0) {
-      stopCountdown();
-      setGameOver(true);
+      handleGameOver();
     }
-  }, [lifeCount]);
+  }, [lifeCount, handleGameOver]);
 
   return (
     <div className="min-h-svh bg-slate-300/20">
-      {/* <div className={cn(fixedClass, "top-0 z-10")}> */}
       <div className="sticky top-0 z-10">
-        <div className={cn("bg-background p-5 grid grid-cols-12 gap-[2px]")}>
-          <div className="col-span-4 content-center text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold">
+        <div className="bg-white p-5 relative">
+          <div className="text-[10px] min-[300px]:text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold absolute">
             {trnaslation("galaxy_ai_expert")}
           </div>
-          <div className="col-span-4 justify-items-center content-center">
+          <div className="flex absolute right-5 top-1/2 -translate-y-1/2 gap-1">
+            {Array.from({ length: LIFE_COUNT }).map((_, index) => (
+              <AnimatedHeartIcon
+                key={index}
+                index={index}
+                lifeCount={lifeCount}
+              />
+            ))}
+          </div>
+
+          <div className="w-full">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px]"
+              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
@@ -132,13 +168,8 @@ export default function QuizPage() {
             >
               <span>{currentQuestionIndex + 1}</span>
               <span>/</span>
-              <span>{totalQuestions}</span>
+              <span>{currentStageTotalQuestions}</span>
             </motion.div>
-          </div>
-          <div className="col-span-4 flex self-center gap-1 justify-end">
-            {Array.from({ length: LIFE_COUNT }).map((_, index) => (
-              <AnimatedHeartIcon key={index} index={index} lifeCount={lifeCount} />
-            ))}
           </div>
         </div>
         <CountDownBar progress={TIME_PROGRESS} />
@@ -168,8 +199,12 @@ export default function QuizPage() {
                 }}
                 className={cn(
                   "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
-                  selectedOptionIds.includes(option.id) && !option.isCorrect && "bg-[#EE3434] text-white pointer-events-none",
-                  selectedOptionIds.includes(option.id) && option.isCorrect && "bg-[#2686F5] text-white pointer-events-none",
+                  selectedOptionIds.includes(option.id) &&
+                    !option.isCorrect &&
+                    "bg-[#EE3434] text-white pointer-events-none",
+                  selectedOptionIds.includes(option.id) &&
+                    option.isCorrect &&
+                    "bg-[#2686F5] text-white pointer-events-none",
                   isCorrectAnswer && "pointer-events-none"
                 )}
                 animate={
@@ -203,11 +238,20 @@ export default function QuizPage() {
   );
 }
 
-const AnimatedHeartIcon = ({ index, lifeCount, onAnimationEnd }: { index: number; lifeCount: number; onAnimationEnd?: () => void }) => {
+const AnimatedHeartIcon = ({
+  index,
+  lifeCount,
+  onAnimationEnd,
+}: {
+  index: number;
+  lifeCount: number;
+  onAnimationEnd?: () => void;
+}) => {
   return (
     <Fragment key={index}>
       {index < lifeCount ? (
         <motion.svg
+          className="size-[14px] min-[360px]:size-[20px]"
           width="19"
           height="17"
           viewBox="0 0 19 17"
@@ -230,6 +274,7 @@ const AnimatedHeartIcon = ({ index, lifeCount, onAnimationEnd }: { index: number
         </motion.svg>
       ) : (
         <motion.svg
+          className="size-[14px] min-[360px]:size-[20px]"
           width="20"
           height="19"
           viewBox="0 0 20 19"

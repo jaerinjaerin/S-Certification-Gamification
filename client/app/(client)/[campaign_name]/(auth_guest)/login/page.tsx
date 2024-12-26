@@ -21,7 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn, fixedClass, formatToMMSS } from "@/lib/utils";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
@@ -41,7 +40,6 @@ export default function GuestLogin() {
   const [error, setError] = useState<string | null>(null);
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
-  const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
 
   const [countStart, setCountStart] = useState<number>(0);
@@ -230,12 +228,6 @@ export default function GuestLogin() {
       });
 
       console.log("result", result);
-
-      // if (result?.error) {
-      //   alert("Invalid email or code");
-      // } else {
-      //   routeToPage("/register");
-      // }
     } catch (err) {
       console.error(err);
       alert("An unexpected error occurred.");
@@ -310,7 +302,6 @@ export default function GuestLogin() {
                       className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      autoFocus
                       disabled={loading}
                       required
                     />
@@ -415,7 +406,6 @@ export default function GuestLogin() {
                 className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                autoFocus
                 required
               />
               <div className="absolute right-[10px] top-1/2 -translate-y-1/2">

@@ -18,13 +18,22 @@ export async function POST(request: Request) {
       elapsedSeconds,
       score,
       totalScore,
+
+      domainId,
+      languageId,
+      jobId,
+      regionId,
+      subsidaryId,
+      channelSegmentId,
+      storeId,
+      channelId,
     } = body;
 
-    const quizLog = await await prisma.userQuizLog.findFirst({
-      where: {
-        quizSetId,
-      },
-    });
+    // const quizLog = await await prisma.userQuizLog.findFirst({
+    //   where: {
+    //     quizSetId,
+    //   },
+    // });
 
     const quizStageLog = await await prisma.userQuizStageLog.create({
       data: {
@@ -39,14 +48,22 @@ export async function POST(request: Request) {
         quizStageIndex,
         elapsedSeconds,
         score,
-        domainId: quizLog?.domainId!,
-        languageId: quizLog?.languageId,
-        jobId: quizLog?.jobId!,
-        regionId: quizLog?.regionId,
-        subsidaryId: quizLog?.subsidaryId,
-        channelSegmentId: quizLog?.channelSegmentId,
-        storeId: quizLog?.storeId,
-        channelId: quizLog?.channelId,
+        domainId,
+        languageId,
+        jobId,
+        regionId,
+        subsidaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        // domainId: quizLog?.domainId!,
+        // languageId: quizLog?.languageId,
+        // jobId: quizLog?.jobId!,
+        // regionId: quizLog?.regionId,
+        // subsidaryId: quizLog?.subsidaryId,
+        // channelSegmentId: quizLog?.channelSegmentId,
+        // storeId: quizLog?.storeId,
+        // channelId: quizLog?.channelId,
       },
     });
 
@@ -62,14 +79,14 @@ export async function POST(request: Request) {
           quizStageIndex,
           elapsedSeconds: elapsedSeconds,
           score: totalScore,
-          domainId: quizLog?.domainId,
-          languageId: quizLog?.languageId,
-          jobId: quizLog?.jobId,
-          regionId: quizLog?.regionId,
-          subsidaryId: quizLog?.subsidaryId,
-          channelSegmentId: quizLog?.channelSegmentId,
-          storeId: quizLog?.storeId,
-          channelId: quizLog?.channelId,
+          domainId,
+          languageId,
+          jobId,
+          regionId,
+          subsidaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
         },
       });
     }
