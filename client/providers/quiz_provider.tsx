@@ -184,7 +184,7 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  console.log("QuizProvider quizLog", quizLog, userId);
+  // console.log("QuizProvider quizLog", quizLog, userId);
 
   useEffect(() => {
     console.log("QuizProvider useEffect", userId, quizLog?.id);
@@ -489,7 +489,7 @@ export const QuizProvider = ({
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
-          method: "PUT",
+          method: "POST",
           cache: "no-store",
           body: JSON.stringify({
             activityId: activityId,
