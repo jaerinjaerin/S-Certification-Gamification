@@ -1,13 +1,16 @@
 "use client";
 
-import { QuestionEx, QuizSetEx, QuizStageEx } from "@/app/types/type";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
+  Campaign,
+  Domain,
   Language,
   Question,
   QuestionOption,
   QuestionType,
+  QuizSet,
+  QuizStage,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -21,17 +24,32 @@ import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
 import QuizScoreManager from "./managers/quizScoreManager";
 
+export interface QuizSetEx extends QuizSet {
+  language: Language;
+  campaign: Campaign;
+  domain: Domain;
+  quizStages: QuizStageEx[];
+}
+
+export interface QuizStageEx extends QuizStage {
+  questions: QuestionEx[];
+}
+
+export interface QuestionEx extends Question {
+  options: QuestionOption[];
+}
+
 interface QuizContextType {
-  quizSet: QuizSetEx | null;
+  quizSet: QuizSetEx;
   quizStageLogs: UserQuizStageLog[];
   quizQuestionLogs: UserQuizQuestionLog[];
   language: Language | null;
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
-  currentQuizStage: QuizStageEx | null;
+  currentQuizStage: QuizStageEx;
   lastCompletedQuizStage: QuizStageEx | null;
-  currentStageQuestions: QuestionEx[] | null;
+  currentStageQuestions: QuestionEx[];
   isBadgeStage(): boolean;
   processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
   isComplete(): boolean;
@@ -124,11 +142,11 @@ export const QuizProvider = ({
   );
   // const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(quizLog?.lastCompletedStage != null ? quizLog?.lastCompletedStage + 1 : 0);
 
-  console.log(
-    "QuizProvider quizQuestionLogs",
-    quizQuestionLogs,
-    currentQuizStageIndex
-  );
+  // console.log(
+  //   "QuizProvider quizQuestionLogs",
+  //   quizQuestionLogs,
+  //   currentQuizStageIndex
+  // );
 
   if (
     currentQuizStageIndex >= quizSet.quizStages.length &&
@@ -138,7 +156,7 @@ export const QuizProvider = ({
   }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
     quizSet.quizStages[currentQuizStageIndex]
   );
   const [lastCompletedQuizStage] = useState<QuizStageEx | null>(
@@ -147,7 +165,7 @@ export const QuizProvider = ({
       : null
   );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
-    QuestionEx[] | null
+    QuestionEx[]
   >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -163,48 +181,8 @@ export const QuizProvider = ({
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
   const isLastStage = (): boolean => {
-    console.log(
-      "QuizProvider isLastStage",
-      quizSet.quizStages.length - 1,
-      currentQuizStageIndex
-    );
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
-
-  console.log("QuizProvider session", session, isLastStage());
-
-  // if (!quizLog) {
-  //   try {
-  //     const initHistoryResponse = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ userId }),
-  //       }
-  //     );
-  //     if (!initHistoryResponse.ok) {
-  //       console.error(
-  //         "Failed to initialize quiz history:",
-  //         initHistoryResponse
-  //       );
-  //       // redirectToErrorPage();
-  //       return (
-  //         <>
-  //           {initHistoryResponse.status} {initHistoryResponse.statusText}
-  //         </>
-  //       );
-  //     }
-  //     const initHistoryData = await initHistoryResponse.json();
-  //     quizLog = initHistoryData.item.quizLog;
-  //     quizStageLogs = initHistoryData.item.quizStageLogs;
-  //   } catch (error) {
-  //     console.error("Failed to initialize quiz history:", error);
-  //     // redirectToErrorPage();
-  //     return <>{error}</>;
-  //     return null;
-  //   }
-  // }
 
   console.log("QuizProvider quizLog", quizLog, userId);
 
@@ -278,8 +256,6 @@ export const QuizProvider = ({
       isBadgeAcquired = await processBadgeAcquisition(totalElapsedSeconds);
     }
 
-    // TODO: 퀴즈 로그 처리를 transaction으로 처리 필요
-
     // 퀴즈 스테이지 로그 생성
     await createQuizQuestionLogs(quizLogManager.getLogs());
 
@@ -295,9 +271,11 @@ export const QuizProvider = ({
     );
 
     // 퀴즈 로그 업데이트
-    const quizLog: UserQuizLog = await updateQuizStageCompleteLog(
+    const quizLog: UserQuizLog = await updateQuizSummaryLog(
       currentQuizStageIndex,
-      badgeStage
+      badgeStage,
+      totalScore,
+      totalElapsedSeconds
     );
 
     // 퀴즈 로그 업데이트
@@ -314,11 +292,14 @@ export const QuizProvider = ({
       score: quizStageLog.score ?? 0,
       isBadgeAcquired: isBadgeAcquired,
       badgeStage: badgeStage,
-      badgeImageURL: currentQuizStage?.badgeImageURL ?? "",
+      badgeImageURL: currentQuizStage?.badgeImageUrl ?? "",
     };
   };
 
   const isLastQuestionOnState = (): boolean => {
+    if (!currentQuizStage?.questions) {
+      return false;
+    }
     return currentQuizStage?.questions.length - 1 === currentQuestionIndex;
   };
 
@@ -350,16 +331,16 @@ export const QuizProvider = ({
   };
 
   const isBadgeStage = (): boolean => {
-    return currentQuizStage.isBadgeStage;
+    return currentQuizStage?.isBadgeStage ?? false;
   };
 
   const getCurrentStageBadgeActivityId = (): string | null => {
-    return currentQuizStage.badgeActivityId;
+    return currentQuizStage?.badgeActivityId ?? null;
   };
 
   const getCurrentStageBadgeImageUrl = (): string | null => {
-    if (currentQuizStage.badgeImageURL) {
-      return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.badgeImageURL}`;
+    if (currentQuizStage?.badgeImageUrl) {
+      return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.badgeImageUrl}`;
     }
     return null;
   };
@@ -392,8 +373,87 @@ export const QuizProvider = ({
   const sendBadgeEmail = async (badgeImageUrl: string) => {
     try {
       const userId: string | undefined = session?.user.id;
-      const subject: string = "Badge 획득을 축하합니다!";
-      const bodyHtml: string = `<h1>Badge 획득을 축하합니다!</h1><img src="${badgeImageUrl}" alt="Badge Image" />`;
+      const subject: string = "You have earned the Galaxy AI Expert Badge.";
+      const bodyHtml: string = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: Arial, sans-serif;
+              background-color: #000000;
+              color: #333333;
+            }
+            .email-container {
+              max-width: 840px;
+              width: 100%;
+              height: 414px;
+              margin: 0 auto;
+              background-color: #ffffff;
+              padding: 40px;
+              border-radius: 10px;
+              text-align: center;
+              background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png"); /* 배경 패턴 URL */
+              background-repeat: repeat;
+              background-size: 50%;
+              background-position: center;
+            }
+            .header {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 20px;
+            }
+            .badge-image {
+              margin: 20px auto;
+              width: 120px;
+              height: 120px;
+            }
+            .badge-title {
+              font-size: 16px;
+              font-weight: bold;
+              margin: 10px 0;
+            }
+            .date {
+              font-size: 14px;
+              margin: 5px 0 20px 0;
+              color: #555555;
+            }
+            .congratulations {
+              font-size: 14px;
+              font-weight: bold;
+              margin-top: 20px;
+            }
+            .footer {
+              font-size: 12px;
+              color: #aaaaaa;
+              margin-top: 30px;
+              text-align: center;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="email-container">
+            <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
+            <img
+              src="${badgeImageUrl}"
+              alt="Galaxy AI Expert Badge"
+              class="badge-image"
+            />
+            <div class="congratulations">
+              Congratulations!<br />
+              You have earned the Galaxy AI Expert Badge.
+            </div>
+          </div>
+          <div class="footer">
+            This message was automatically delivered by Samsung+ service. Do not reply
+            to this message.<br />
+            Copyright © 2024 SAMSUNG all rights reserved.
+          </div>
+        </body>
+      </html>
+`;
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send_badge_email`,
@@ -411,7 +471,7 @@ export const QuizProvider = ({
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 이메일 전송 오류 저장해 놓기
-        // throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
@@ -440,7 +500,7 @@ export const QuizProvider = ({
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
-        // throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
@@ -473,7 +533,7 @@ export const QuizProvider = ({
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
-        // throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to fetch activities");
       }
 
       const data = await response.json();
@@ -523,22 +583,30 @@ export const QuizProvider = ({
         isCorrect: result.isCorrect,
         campaignId: campaign.id,
         userId: _quizLog.userId,
-        jobId: _quizLog.jobId || "",
+        // jobId: _quizLog.jobId || "",
         quizSetId: quizSet.id,
         questionId: questionId,
-        languageId: language?.id,
+        // languageId: language?.id,
         selectedOptionIds: selectedOptionIds,
         correctOptionIds: result.correctOptionIds,
-        domainId: quizLog.domainId,
-        subsidaryId: quizLog.subsidaryId,
+        // domainId: quizLog.domainId,
+        // subsidaryId: quizLog.subsidaryId,
         quizStageIndex: currentQuizStageIndex,
         category: question.category,
         specificFeature: question.specificFeature,
         product: question.product,
         questionType: question.questionType,
         elapsedSeconds: elapsedSeconds,
-        quizStageId: currentQuizStage.id,
+        quizStageId: currentQuizStage?.id ?? "",
         createdAt: new Date().toISOString(),
+        domainId: _quizLog.domainId,
+        languageId: quizLog?.languageId,
+        jobId: _quizLog.jobId || "",
+        regionId: _quizLog?.regionId,
+        subsidaryId: _quizLog?.subsidaryId,
+        channelSegmentId: _quizLog?.channelSegmentId,
+        storeId: _quizLog?.storeId,
+        channelId: _quizLog?.channelId,
       });
 
       return result;
@@ -570,22 +638,31 @@ export const QuizProvider = ({
       isCorrect,
       campaignId: campaign.id,
       userId: _quizLog.userId,
-      jobId: _quizLog.jobId || "",
+
       quizSetId: quizSet.id,
       questionId: questionId,
-      languageId: language?.id,
+      // languageId: language?.id,
       selectedOptionIds: selectedOptionIds,
       correctOptionIds: correctOptionIds,
-      domainId: quizLog.domainId,
-      subsidaryId: quizLog.subsidaryId,
+      // domainId: quizLog.domainId,
+      // subsidaryId: quizLog.subsidaryId,
       quizStageIndex: currentQuizStageIndex,
       category: question.category,
       specificFeature: question.specificFeature,
       product: question.product,
       questionType: question.questionType,
       elapsedSeconds: elapsedSeconds,
-      quizStageId: currentQuizStage.id,
+      quizStageId: currentQuizStage?.id ?? "",
       createdAt: new Date().toISOString(),
+
+      domainId: _quizLog.domainId,
+      languageId: quizLog?.languageId,
+      jobId: _quizLog.jobId || "",
+      regionId: _quizLog?.regionId,
+      subsidaryId: _quizLog?.subsidaryId,
+      channelSegmentId: _quizLog?.channelSegmentId,
+      storeId: _quizLog?.storeId,
+      channelId: _quizLog?.channelId,
     });
   };
 
@@ -648,10 +725,10 @@ export const QuizProvider = ({
           },
           body: JSON.stringify({
             userId: _quizLog.userId,
-            jobId: _quizLog.jobId || "",
+            // jobId: _quizLog.jobId || "",
             quizSetId: quizSet.id,
             quizStageIndex: currentQuizStageIndex,
-            quizStageId: currentQuizStage.id,
+            quizStageId: currentQuizStage?.id ?? "",
             isCompleted: true,
             isBadgeStage,
             isBadgeAcquired,
@@ -661,8 +738,16 @@ export const QuizProvider = ({
             totalScore,
             elapsedSeconds,
             campaignId: campaign.id,
-            domainId: quizLog.domainId,
-            languageId: language?.id,
+            // domainId: quizLog.domainId,
+            // languageId: language?.id,
+            domainId: _quizLog.domainId,
+            languageId: quizLog?.languageId,
+            jobId: _quizLog.jobId || "",
+            regionId: _quizLog?.regionId,
+            subsidaryId: _quizLog?.subsidaryId,
+            channelSegmentId: _quizLog?.channelSegmentId,
+            storeId: _quizLog?.storeId,
+            channelId: _quizLog?.channelId,
           }),
         }
       );
@@ -683,9 +768,11 @@ export const QuizProvider = ({
     }
   };
 
-  const updateQuizStageCompleteLog = async (
+  const updateQuizSummaryLog = async (
     quizStageIndex: number,
-    isBadgeAcquired: boolean
+    isBadgeAcquired: boolean,
+    totalScore,
+    elapsedSeconds
   ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
@@ -699,6 +786,8 @@ export const QuizProvider = ({
             lastCompletedStage: quizStageIndex,
             isCompleted: quizStageIndex === quizSet.quizStages.length - 1,
             isBadgeAcquired,
+            score: totalScore,
+            elapsedSeconds: elapsedSeconds,
           }),
         }
       );
@@ -711,16 +800,12 @@ export const QuizProvider = ({
       const data = await response.json();
       return data.item as UserQuizLog;
     } catch (error) {
-      console.error("Error updateQuizStageCompleteLog:", error);
+      console.error("Error updateQuizSummaryLog:", error);
       Sentry.captureException(error);
       throw new Error(
         "An unexpected error occurred while registering quiz log"
       );
     }
-  };
-
-  const sendQuizCompleteLog = async () => {
-    //
   };
 
   // TODO: 실제 계산로직으로 변경해야함.
@@ -763,7 +848,7 @@ export const QuizProvider = ({
   );
 };
 
-export const useQuiz = () => {
+export const useQuiz = (): QuizContextType => {
   const context = useContext(QuizContext);
   if (context === undefined) {
     throw new Error("useQuiz는 QuizProvider 내에서만 사용할 수 있습니다.");

@@ -16,7 +16,6 @@ export default function ReviewPage() {
   const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
     useQuiz();
 
-  // const { routeToPage } = usePathNavigator();
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
@@ -32,19 +31,29 @@ export default function ReviewPage() {
     (log) => log.quizStageIndex + 1 === searchStage
   );
 
-  useEffect(() => {
-    const currentReviewQuizQuestionLogs =
-      reviewQuizQuestionLogs[currentQuestionIndex];
-    setSelectedOptionIds([
-      ...currentReviewQuizQuestionLogs.correctOptionIds,
-      ...currentReviewQuizQuestionLogs.selectedOptionIds,
-    ]);
-  }, [currentQuestionIndex]);
-
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage
   )[0].questions;
   const question = questions[currentQuestionIndex];
+
+  useEffect(() => {
+    const currentReviewQuizQuestionLogs =
+      reviewQuizQuestionLogs.length <= currentQuestionIndex
+        ? null
+        : reviewQuizQuestionLogs[currentQuestionIndex];
+
+    if (!currentReviewQuizQuestionLogs) {
+      const correctOptionIds = question.options
+        .filter((option) => option.isCorrect)
+        .map((option) => option.id);
+      setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+    } else {
+      setSelectedOptionIds([
+        ...currentReviewQuizQuestionLogs.correctOptionIds,
+        ...currentReviewQuizQuestionLogs.selectedOptionIds,
+      ]);
+    }
+  }, [currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;

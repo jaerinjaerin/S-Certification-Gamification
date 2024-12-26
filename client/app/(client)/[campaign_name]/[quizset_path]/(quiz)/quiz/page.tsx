@@ -10,7 +10,7 @@ import successNotify from "@/app/components/quiz/success-notify";
 import Spinner from "@/app/components/ui/spinner";
 import { useCountdown } from "@/app/hooks/useCountdown";
 import { cn, sleep } from "@/lib/utils";
-import { EndStageResult, useQuiz } from "@/providers/quiz_provider";
+import { EndStageResult, QuestionEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
@@ -30,14 +30,13 @@ export default function QuizPage() {
   const trnaslation = useTranslations("Quiz");
   const { routeToPage } = usePathNavigator();
 
-  const question =
-    currentStageQuestions && currentStageQuestions[currentQuestionIndex];
+  const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
   const currentStageTotalQuestions = currentStageQuestions?.length;
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
 
-  const LIFE_COUNT = currentQuizStage.lifeCount; // currentQuizStage.lifeCount
+  const LIFE_COUNT = currentQuizStage?.lifeCount ?? 5; // currentQuizStage.lifeCount
   const [gameOver, setGameOver] = useState(false);
   const [lifeCount, setLifeCount] = useState<number>(LIFE_COUNT);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =

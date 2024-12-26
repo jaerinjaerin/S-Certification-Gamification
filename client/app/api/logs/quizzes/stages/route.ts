@@ -5,43 +5,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // const questionsLogs: UserQuizQuestionLog[] =
-    //   await prisma.userQuizQuestionLog.findMany({
-    //     where: {
-    //       campaignId: body.campaignId,
-    //       userId: body.userId,
-    //       quizSetId: body.quizSetId,
-    //       quizStageIndex: body.quizStageIndex,
-    //     },
-    //   });
-
-    // console.log("questionsLogs", questionsLogs);
-
-    // const totalElapsedSeconds = questionsLogs.reduce(
-    //   (total, log) => total + log.elapsedSeconds,
-    //   0
-    // );
-
-    // if (questionsLogs.length === 0) {
-    //   return NextResponse.json(
-    //     {
-    //       status: 404,
-    //       message: "questionsLogs Not found",
-    //       error: {
-    //         code: "NOT_FOUND",
-    //         details: "Fail create quiz stage log",
-    //       },
-    //     },
-    //     { status: 404 }
-    //   );
-    // }
-
-    // const quizScoreCalculator = new QuizScoreCalculator();
-    // const score = quizScoreCalculator.calculateStageScore(
-    //   questionsLogs,
-    //   body.remainingHearts
-    // );
-
     const {
       userId,
       campaignId,
@@ -55,13 +18,22 @@ export async function POST(request: Request) {
       elapsedSeconds,
       score,
       totalScore,
+
+      domainId,
+      languageId,
+      jobId,
+      regionId,
+      subsidaryId,
+      channelSegmentId,
+      storeId,
+      channelId,
     } = body;
 
-    const quizLog = await await prisma.userQuizLog.findFirst({
-      where: {
-        quizSetId,
-      },
-    });
+    // const quizLog = await await prisma.userQuizLog.findFirst({
+    //   where: {
+    //     quizSetId,
+    //   },
+    // });
 
     const quizStageLog = await await prisma.userQuizStageLog.create({
       data: {
@@ -76,14 +48,22 @@ export async function POST(request: Request) {
         quizStageIndex,
         elapsedSeconds,
         score,
-        domainId: quizLog?.domainId!,
-        languageId: quizLog?.languageId,
-        jobId: quizLog?.jobId!,
-        regionId: quizLog?.regionId,
-        subsidaryId: quizLog?.subsidaryId,
-        channelSegmentId: quizLog?.channelSegmentId,
-        storeId: quizLog?.storeId,
-        channelId: quizLog?.channelId,
+        domainId,
+        languageId,
+        jobId,
+        regionId,
+        subsidaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        // domainId: quizLog?.domainId!,
+        // languageId: quizLog?.languageId,
+        // jobId: quizLog?.jobId!,
+        // regionId: quizLog?.regionId,
+        // subsidaryId: quizLog?.subsidaryId,
+        // channelSegmentId: quizLog?.channelSegmentId,
+        // storeId: quizLog?.storeId,
+        // channelId: quizLog?.channelId,
       },
     });
 
@@ -99,14 +79,14 @@ export async function POST(request: Request) {
           quizStageIndex,
           elapsedSeconds: elapsedSeconds,
           score: totalScore,
-          domainId: quizLog?.domainId,
-          languageId: quizLog?.languageId,
-          jobId: quizLog?.jobId,
-          regionId: quizLog?.regionId,
-          subsidaryId: quizLog?.subsidaryId,
-          channelSegmentId: quizLog?.channelSegmentId,
-          storeId: quizLog?.storeId,
-          channelId: quizLog?.channelId,
+          domainId,
+          languageId,
+          jobId,
+          regionId,
+          subsidaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
         },
       });
     }

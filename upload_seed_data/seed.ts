@@ -353,11 +353,11 @@ async function main() {
 
         if (i === 2) {
           isBadgeStage = true;
-          badgeActivityId = "250659";
+          badgeActivityId = "251537";
           badgeImageUrl = "/certification/s24/images/badgeStage3.png";
         } else if (i === 3) {
           isBadgeStage = true;
-          badgeActivityId = "250659";
+          badgeActivityId = "251540";
           badgeImageUrl = "/certification/s24/images/badgeStage4.png";
         }
 

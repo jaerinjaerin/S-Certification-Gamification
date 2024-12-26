@@ -1,6 +1,5 @@
-import { QuizSetEx } from "@/app/types/type";
 import { auth } from "@/auth";
-import { QuizProvider } from "@/providers/quiz_provider";
+import { QuizProvider, QuizSetEx } from "@/providers/quiz_provider";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -46,7 +45,9 @@ export default async function QuizLayout({
 
   console.log("QuizLayout quizData", quizSetReponse);
 
-  if (!quizSetReponse?.item) {
+  const quizSet: QuizSetEx | null = quizSetReponse.item;
+
+  if (!quizSet) {
     redirectToErrorPage();
     return null;
   }
@@ -66,58 +67,7 @@ export default async function QuizLayout({
 
   console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
-  if (!quizLogResponse?.item.quizLog) {
-    // Initialize quiz history if not found
-    // const userId = session?.user.id;
-    // try {
-    //   const initHistoryResponse = await fetch(
-    //     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-    //     {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ userId }),
-    //     }
-    //   );
-    //   if (!initHistoryResponse.ok) {
-    //     console.error(
-    //       "Failed to initialize quiz history:",
-    //       initHistoryResponse
-    //     );
-    //     // redirectToErrorPage();
-    //     return (
-    //       <>
-    //         {initHistoryResponse.status} {initHistoryResponse.statusText}
-    //       </>
-    //     );
-    //   }
-    //   const initHistoryData = await initHistoryResponse.json();
-    //   quizLog = initHistoryData.item.quizLog;
-    //   quizStageLogs = initHistoryData.item.quizStageLogs;
-    // } catch (error) {
-    //   console.error("Failed to initialize quiz history:", error);
-    //   // redirectToErrorPage();
-    //   return <>{error}</>;
-    //   return null;
-    // }
-    // const initHistoryResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${params.quizset_path}`,
-    //   {
-    //     method: "POST",
-    //     // headers: {
-    //     //   "Content-Type": "application/json",
-    //     // },
-    //     body: JSON.stringify({ userId: session?.user.id }),
-    //   }
-    // );
-    // if (!initHistoryResponse.ok) {
-    //   console.error("Failed to initialize quiz history:", initHistoryResponse);
-    //   redirectToErrorPage();
-    //   return null;
-    // }
-    // const initHistoryData = await initHistoryResponse.json();
-    // quizLog = initHistoryData.item.quizLog;
-    // quizStageLogs = initHistoryData.item.quizStageLogs;
-  } else {
+  if (quizLogResponse?.item.quizLog) {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;
     quizQuestionLogs = quizLogResponse.item.quizQuestionLogs;
@@ -194,15 +144,13 @@ export default async function QuizLayout({
     >
       {/* <LogoutButton /> */}
       <QuizProvider
-        quizSet={quizSetReponse.item as QuizSetEx}
+        quizSet={quizSet}
         language={quizSetReponse.item.language}
         quizLog={quizLog}
         quizStageLogs={quizStageLogs}
         quizQuestionLogs={quizQuestionLogs}
         userId={session?.user.id}
         quizSetPath={params.quizset_path}
-        // domain={quizLog.domain as Domain}
-        // campaign={quizData.item.campaign as Campaign}
       >
         {children}
       </QuizProvider>
