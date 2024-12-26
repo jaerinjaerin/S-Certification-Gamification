@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
-  const translation = useTranslations("Login_popup");
+  const translation = useTranslations();
   return (
     <div className={cn("", className)}>
       <Dialog>

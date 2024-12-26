@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn, fixedClass, formatToMMSS } from "@/lib/utils";
+import { formatToMMSS } from "@/lib/utils";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
@@ -62,7 +62,7 @@ export default function GuestLogin() {
 
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!regex.test(email)) {
-      setError(translation("Alert.email_failed"));
+      setError(translation("email_failed"));
       setLoading(false);
       return;
     }
@@ -72,7 +72,7 @@ export default function GuestLogin() {
         method: "POST",
         body: JSON.stringify({
           toAddress: email,
-          subject: "Autherntication Code for Galaxy AI Expert.",
+          subject: `${translation("email_title")}`,
           bodyHtml: `
             <!DOCTYPE html>
             <html>
@@ -98,47 +98,62 @@ export default function GuestLogin() {
                     background-repeat: repeat;
                     background-size: 50%;
                     background-position: center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
                   }
                   .header {
                     font-size: 18px;
                     font-weight: bold;
                     margin-bottom: 20px;
+                    text-align: start;
                   }
                   .code {
                     font-size: 48px;
                     font-weight: bold;
                     margin: 20px 0;
+                    text-align: center;
                   }
                   .message {
                     font-size: 14px;
                     color: #555555;
                     margin-top: 20px;
+                    text-align: start;
                   }
                   .footer {
                     font-size: 12px;
-                    color: #aaaaaa;
                     margin-top: 30px;
                     text-align: center;
+                  }
+                  .footer-description {
+                    color: #989898;
+                    font-weight: 500;
+                  }
+                  .footer-copywright {
+                    color: #ffffff;
+                    margin-top: 10px;
+                    font-size: 13px;
                   }
                 </style>
               </head>
               <body>
                 <div class="email-container">
-                  <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
+                  <div class="header">S+ ${translation("galaxy_ai_expert")}</div>
                   <div class="code">
                     $CODE$
                   </div>
                   <div class="message">
-                    Please enter this code on the verification page to complete the
-                    process.<br />
-                    For your security, this code will expire in [time limit, e.g., 5
-                    minutes].
+                   ${translation("email_verify_code_description_1")}<br />
+                   ${translation("email_verify_code_description_2")}
                   </div>
                 </div>
                 <div class="footer">
-                  This message was automatically delivered by Samsung+ service. Do not reply
-                  to this message.<br />
-                  Copyright © 2024 SAMSUNG all rights reserved.
+                  <div class="footer-description">
+                    ${translation("email_badge_description_4")}<br />
+                  </div>
+                  <span class="footer-copywright">
+                    Copyright © 2024 SAMSUNG all rights reserved.
+                  </span>
                 </div>
               </body>
             </html>
@@ -152,19 +167,19 @@ export default function GuestLogin() {
         console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
 
         if (code === "EMAIL_SENT") {
-          setSuccessSendEmail("Email sent successfully!");
+          setSuccessSendEmail(translation("email_success"));
           setVerifyToken(verifyToken);
           setExpiresAt(new Date(expiresAt));
           startCountdown();
         } else {
-          setError("Failed to send email. Please try again.");
+          setError(translation("email_failed"));
         }
       } else {
         const data = await response.json();
         console.log("data", data);
         const { code, expiresAt, verifyToken } = data;
         if (code === "EMAIL_ALREADY_SENT") {
-          setSuccessSendEmail("Verification email already sent");
+          setSuccessSendEmail(translation("email_already_sent"));
           setVerifyToken(verifyToken);
 
           setExpiresAt(new Date(expiresAt));
@@ -172,11 +187,11 @@ export default function GuestLogin() {
           return;
         }
 
-        setError("Failed to send email. Please try again.");
+        setError(translation("email_failed"));
       }
     } catch (err) {
       console.error(err);
-      setError("An unexpected error occurred.");
+      setError(translation("unexpected_error"));
     } finally {
       setLoading(false);
     }
@@ -188,7 +203,7 @@ export default function GuestLogin() {
 
     const regex = /^\d{3,}$/;
     if (!regex.test(code)) {
-      setError(translation("Alert.code_error"));
+      setError(translation("code_error"));
       setLoading(false);
       return;
     }
@@ -202,21 +217,21 @@ export default function GuestLogin() {
         const data = await response.json();
         const { code, error } = data;
         if (code === "EMAIL_NOT_SENT") {
-          setError("Verification email not sent");
+          setError(translation("email_not_sent"));
           return;
         }
 
         if (code === "EMAIL_EXPIRED") {
-          setError("Verification email expired");
+          setError(translation("email_expired"));
           return;
         }
 
         if (code === "CODE_NOT_MATCH") {
-          setError("Verification code does not match");
+          setError(translation("code_not_match"));
           return;
         }
 
-        alert("Failed to verify code");
+        alert(translation("verify_code_failed"));
         return;
       }
 
@@ -230,7 +245,7 @@ export default function GuestLogin() {
       console.log("result", result);
     } catch (err) {
       console.error(err);
-      alert("An unexpected error occurred.");
+      alert(translation("unexpected_error"));
     } finally {
       setLoading(false);
     }
@@ -240,77 +255,85 @@ export default function GuestLogin() {
 
   return (
     <>
-      <div className={cn("h-svh", fixedClass)}>
-        <video className="w-full h-svh object-fill absolute " autoPlay loop muted playsInline>
+      <div className="relative">
+        <video className="w-full h-svh object-fill " autoPlay loop muted playsInline>
           <source src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`} type="video/mp4" />
           <source src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`} type="video/webm" />
         </video>
 
-        <div className="flex flex-col items-center h-full relative z-10 py-5">
-          <span className="block font-extrabold">{translation("Main.galaxy_ai_expert")}</span>
+        <div className="flex flex-col items-center size-full absolute top-0 z-10 py-5">
+          <span className="block font-extrabold">{translation("galaxy_ai_expert")}</span>
 
-          <div className="flex flex-col items-center my-auto">
-            <div className="mb-[70px]">
-              <span className="block font-extrabold text-[44px] text-center mb-5">{translation("Main.be_a_galaxy_ai_expert")}</span>
-              <span className="block text-[30px] font-medium text-center">{translation("Main.certification")}</span>
+          <div className="m-auto">
+            <div
+              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal"
+              style={{
+                wordBreak: "break-word",
+              }}
+            >
+              {translation("be_a_galaxy_ai_expert")}
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={"primary"}
-                  onClick={() => {
-                    setStep("email");
-                  }}
-                >
-                  {translation("Main.login")}
-                </Button>
-              </DialogTrigger>
-              <DialogContent
-                onOpenAutoFocus={(event) => {
-                  event.preventDefault();
-                }}
-              >
-                <DialogHeader>
-                  <DialogTitle>{translation("Main.login")}</DialogTitle>
-                  <DialogDescription>{translation("Login_popup.login_by_send_code")}</DialogDescription>
-                </DialogHeader>
-                <div>
-                  <form
-                    id="verify-email"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      sendEmail();
-                    }}
-                  >
-                    <input
-                      placeholder={translation("Login_popup.email")}
-                      inputMode="email"
-                      className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      disabled={loading}
-                      required
-                    />
-                  </form>
-                </div>
-                <DialogFooter>
+            <span className="block text-[30px] font-medium text-center">{translation("certification")}</span>
+            <div className="text-center mt-[70px]">
+              <Dialog>
+                <DialogTrigger asChild>
                   <Button
                     variant={"primary"}
-                    className="text-[18px] disabled:bg-disabled"
-                    type="submit"
-                    form="verify-email"
-                    disabled={!email || loading}
+                    onClick={() => {
+                      setStep("email");
+                    }}
                   >
-                    {translation("Login_popup.send_code")}
+                    {translation("login")}
                   </Button>
-                  <DialogClose className="absolute top-5 right-5">
-                    <X className="h-4 w-4" />
-                    <span className="sr-only">Close</span>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                </DialogTrigger>
+                <DialogContent
+                  onOpenAutoFocus={(event) => {
+                    event.preventDefault();
+                  }}
+                >
+                  <DialogHeader>
+                    <DialogTitle>{translation("login")}</DialogTitle>
+                    <DialogDescription>{translation("login_by_send_code")}</DialogDescription>
+                  </DialogHeader>
+                  <div>
+                    <form
+                      id="verify-email"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        sendEmail();
+                      }}
+                    >
+                      <input
+                        placeholder={translation("email")}
+                        inputMode="email"
+                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={loading}
+                        required
+                      />
+                    </form>
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      variant={"primary"}
+                      className="text-[18px] disabled:bg-disabled"
+                      type="submit"
+                      form="verify-email"
+                      disabled={!email || loading}
+                    >
+                      {translation("send_code")}
+                    </Button>
+                    <DialogClose className="absolute top-5 right-5">
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Close</span>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
+
           <PrivacyAndTerm />
         </div>
       </div>
@@ -328,7 +351,7 @@ export default function GuestLogin() {
                 setError(null);
               }}
             >
-              OK
+              {translation("ok")}
             </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -338,7 +361,6 @@ export default function GuestLogin() {
       <AlertDialog open={!!successSendEmail}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Success</AlertDialogTitle>
             <AlertDialogDescription>{successSendEmail}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -348,11 +370,9 @@ export default function GuestLogin() {
                 onClick={() => {
                   setSuccessSendEmail(null);
                   setStep("code");
-                  // resetCountdown();
-                  // startCountdown();
                 }}
               >
-                OK
+                {translation("ok")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -366,9 +386,9 @@ export default function GuestLogin() {
           }}
         >
           <DialogHeader>
-            <DialogTitle>{translation("Login_popup.confirm_your_email")}</DialogTitle>
+            <DialogTitle>{translation("confirm_your_email")}</DialogTitle>
             <DialogDescription>
-              {translation.rich("Login_popup.send_magic_link", {
+              {translation.rich("send_magic_link", {
                 address: (children) => <span className="text-blue-500">{children}</span>,
                 email,
               })}
@@ -410,7 +430,7 @@ export default function GuestLogin() {
                 verifyCode();
               }}
             >
-              {translation("Login_popup.submit")}
+              {translation("submit")}
             </Button>
             <div className="mx-auto">
               <button
@@ -418,7 +438,7 @@ export default function GuestLogin() {
                 onClick={sendEmail}
                 disabled
               >
-                {translation("Login_popup.resend_code")}
+                {translation("resend_code")}
               </button>
             </div>
             <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>

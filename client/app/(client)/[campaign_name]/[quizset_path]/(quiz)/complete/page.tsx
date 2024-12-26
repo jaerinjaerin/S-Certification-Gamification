@@ -11,8 +11,7 @@ import ScoreAnnouncement from "./score-announcement";
 import ScoreRankAnnouncement from "./score-rank-announcement";
 
 export default function QuizComplete() {
-  const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } =
-    useQuiz();
+  const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
@@ -39,34 +38,24 @@ export default function QuizComplete() {
     routeToMapPage();
   }, [quizStageLogs]);
 
-  useInterval(
-    handleIndex,
-    switchlIndex === carouselIndex
-      ? null
-      : switchlIndex === 1
-      ? 4_000
-      : AUTO_DELAY
-  );
+  useInterval(handleIndex, switchlIndex === carouselIndex ? null : switchlIndex === 1 ? 4_000 : AUTO_DELAY);
 
   return (
     <div className="min-h-svh overflow-x-hidden">
       <motion.div
-        className="flex w-full h-full  items-center text-center py-[20px] font-extrabold"
+        className="flex w-full h-full items-center text-center py-[20px] font-extrabold"
         animate={{
           translateX: `-${switchlIndex * 100}%`,
         }}
       >
-        <ScoreAnnouncement
-          currentQuizStageIndex={currentQuizStageIndex}
-          className="w-full h-full shrink-0"
-        />
+        <ScoreAnnouncement currentQuizStageIndex={currentQuizStageIndex} className="w-full h-full shrink-0" />
 
         {isBadgeStage && (
           <>
             <GetBadgeAnnouncment
               currentQuizStageIndex={currentQuizStageIndex}
               badgeStage={lastCompletedQuizStage}
-              className=" w-full h-full shrink-0"
+              className="w-full h-full shrink-0"
             />
             <ScoreRankAnnouncement className="w-full h-full shrink-0" />
           </>
