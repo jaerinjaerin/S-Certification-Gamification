@@ -474,17 +474,30 @@ export default function TestPage() {
 
   return (
     <div>
-      <button onClick={() => signOut()}>Sign out</button>
-      <h1>Activity 메달 획득 테스트</h1>
+      <button
+        onClick={() => signOut()}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "red" }}
+      >
+        Sign out
+      </button>
+      <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "green" }}>
+        Sumtotal API 테스트 페이지
+      </h1>
       <h3>유저 정보</h3>
       <ul>
         <li>
           <strong>이름:</strong> {session?.user.name}
         </li>
       </ul>
-      <button onClick={fetchUserProfile} disabled={loading}>
+      <br />
+      <button
+        onClick={fetchUserProfile}
+        disabled={loading}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
         {loading ? "Loading..." : "유저 Job 정보 조회"}
       </button>
+      <br />
       {resultUser && (
         <div style={{ marginTop: "1rem" }}>
           <p>{resultUser}</p>
@@ -496,35 +509,56 @@ export default function TestPage() {
         </div>
       )}
       <br />
-      <button onClick={refreshToken} disabled={loading}>
+      <button
+        onClick={refreshToken}
+        disabled={loading}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
         {loading ? "Loading..." : "토큰 갱신"}
       </button>
+      <br />
       {message && <p style={{ color: "blue" }}>Message: {message}</p>}
       <br />
-      <button onClick={fetchAllActivities} disabled={loading}>
+      <br />
+      <button
+        onClick={fetchAllActivities}
+        disabled={loading}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
         {loading ? "Loading..." : "Activity 목록 조회"}
       </button>
       <br />
-      <button onClick={fetchDomains} disabled={loading}>
+      {/* <button onClick={fetchDomains} disabled={loading}>
         {loading ? "Loading..." : "Domain 목록 조회"}
       </button>
       <br />
       <button onClick={fetchJobs} disabled={loading}>
         {loading ? "Loading..." : "Job 목록 조회"}
+      </button> */}
+      <br />
+      <br />
+
+      <button
+        onClick={fetchApi}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "Call Api (아래 입력란에 API 직접 입력) "}
       </button>
-      <br />
-      <br />
+      <p>https://samsung.sumtotal.host/apis/documentation 에서 API 참조</p>
       <input
         type="text"
         placeholder="/api/v2/advanced/userprofile"
         value={apiPath}
         onChange={(e) => setApiPath(e.target.value)}
-        style={{ marginBottom: "10px", padding: "5px", width: "300px" }}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "300px",
+          background: "#cccccc",
+        }}
       />
       <br />
-      <button onClick={fetchApi} disabled={loading || apiPath == null}>
-        {loading ? "Loading..." : "Call Api (API 직접 입력)"}
-      </button>
 
       {activities.length > 0 && (
         <ul
@@ -571,7 +605,11 @@ export default function TestPage() {
 
       {selectedActivity && selectedActivity.assignmentStatus === "Assigned" && (
         <>
-          <button onClick={postActivitieRegister} disabled={loading}>
+          <button
+            onClick={postActivitieRegister}
+            disabled={loading}
+            style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+          >
             {loading ? "Loading..." : "Activity 등록"}
           </button>
           {/* <button onClick={postActivitieEnd} disabled={loading}>
@@ -615,7 +653,11 @@ export default function TestPage() {
               style={{ marginLeft: "10px" }}
             />
           </div>
-          <button onClick={postActivitieEnd} disabled={loading}>
+          <button
+            onClick={postActivitieEnd}
+            disabled={loading}
+            style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+          >
             {loading ? "Loading..." : "Activity 이벤트 보내기"}
           </button>
         </>
@@ -664,9 +706,9 @@ export default function TestPage() {
 
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
 
-      <button onClick={getUserJobAndChannel} disabled={loading}>
+      {/* <button onClick={getUserJobAndChannel} disabled={loading}>
         {loading ? "Loading..." : "유저 Job 와 Channel 정보 조회"}
-      </button>
+      </button> */}
     </div>
   );
 }
