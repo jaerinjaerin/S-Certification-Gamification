@@ -11,21 +11,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -63,14 +50,10 @@ export default function GuestRegisterPage() {
   // state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
-    string | null
-  >(null);
+  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<string | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [languageCode, setLanguageCode] = useState<string | undefined>(
-    undefined
-  ); // 브라우저에서 주는 언어코드
+  const [languageCode, setLanguageCode] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<Country[]>([]);
@@ -91,14 +74,11 @@ export default function GuestRegisterPage() {
   const fetchConutries = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/channels`,
-        {
-          method: "GET",
-          // cache: "force-cache",
-          cache: "no-cache",
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/channels`, {
+        method: "GET",
+        // cache: "force-cache",
+        cache: "no-cache",
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -140,12 +120,7 @@ export default function GuestRegisterPage() {
     }
   }, [session?.user.id]);
 
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
+  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
   useEffect(() => {
     if (campaignPath) {
@@ -156,14 +131,11 @@ export default function GuestRegisterPage() {
   const checkRegistered = async () => {
     try {
       setCheckingRegisterd(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
-        {
-          method: "GET",
-          // cache: "force-cache",
-          cache: "no-cache",
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`, {
+        method: "GET",
+        // cache: "force-cache",
+        cache: "no-cache",
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -233,9 +205,7 @@ export default function GuestRegisterPage() {
   };
 
   // const errorMessage = error || errorCreate;
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (errorCreate) {
       setErrorMessage(errorCreate);
@@ -255,29 +225,17 @@ export default function GuestRegisterPage() {
             <DialogTitle>{translation("enter_details")}</DialogTitle>
             <DialogDescription className="text-left">
               {translation("select_inforamiton")}
-              <span className="block text-[#0037FF]">
-                {translation("mandatory_fields")}
-              </span>
+              <span className="block text-[#0037FF]">{translation("mandatory_fields")}</span>
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
-            <Select
-              defaultValue={translation("country")}
-              onValueChange={(value) => selectCountry(value)}
-              value={translation("country")}
-            >
+            <Select onValueChange={(value) => selectCountry(value)} value={`${translation("country")}*`}>
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
-                className={cn(
-                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedCountry === null
-                    ? translation("country")
-                    : selectedCountry.name}
-                </SelectValue>
+                <SelectValue>{selectedCountry === null ? `${translation("country")}*` : selectedCountry.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {countries.map((country, idx) => (
@@ -288,21 +246,12 @@ export default function GuestRegisterPage() {
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select
-              onValueChange={(value) => selectChannel(value)}
-              value={translation("channel")}
-            >
+            <Select onValueChange={(value) => selectChannel(value)} value={`${translation("channel")}*`}>
               <SelectTrigger
                 disabled={loading || loadingCreate || channels.length === 0}
-                className={cn(
-                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedChannel === null
-                    ? translation("channel")
-                    : selectedChannel.name}
-                </SelectValue>
+                <SelectValue>{selectedChannel === null ? `${translation("channel")}*` : selectedChannel.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {channels.map((channel) => (
@@ -318,14 +267,9 @@ export default function GuestRegisterPage() {
               </SelectContent>
             </Select>
             {/* job group */}
-            <Select
-              onValueChange={(value) => selectJob(value)}
-              value={selectedJobId || ""}
-            >
+            <Select onValueChange={(value) => selectJob(value)} value={selectedJobId || ""}>
               {/* <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}> */}
-              <SelectTrigger
-                disabled={loading || loadingCreate || selectedChannel === null}
-              >
+              <SelectTrigger disabled={loading || loadingCreate || selectedChannel === null}>
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
               <SelectContent>
@@ -364,10 +308,7 @@ export default function GuestRegisterPage() {
       </Dialog>
 
       {/* error alert */}
-      <AlertDialog
-        open={!!errorMessage}
-        onOpenChange={() => setErrorMessage(undefined)}
-      >
+      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Alert</AlertDialogTitle>
