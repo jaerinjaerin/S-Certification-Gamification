@@ -1,63 +1,31 @@
-import {
-  BluePaperAirplaneIcon,
-  QuestionMark,
-} from "@/app/components/icons/icons";
+import { BluePaperAirplaneIcon, QuestionMark } from "@/app/components/icons/icons";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
-export default function ScoreRankAnnouncement({
-  className,
-}: {
-  className?: string;
-}) {
+export default function ScoreRankAnnouncement({ className }: { className?: string }) {
   const translation = useTranslations("Score_guide");
   const completed_translation = useTranslations("Completed");
 
   const { routeToPage } = usePathNavigator();
   const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
-  const isLastStage =
-    quizSet.quizStages[quizSet.quizStages.length - 1].id ===
-    lastCompletedQuizStage.id;
+  const isLastStage = quizSet.quizStages[quizSet.quizStages.length - 1].id === lastCompletedQuizStage!.id;
 
   const { data: session } = useSession();
   const user = session?.user;
   console.log(user);
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
 
-  const AUTO_DELAY = 3_000;
-
-  const SPRING_OPTIONS = {
-    type: "spring",
-    mass: 3,
-    stiffness: 400,
-    damping: 50,
-  };
-
   return (
     <div className={cn("", className)}>
       <div className="w-full flex">
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              className={cn(
-                "ml-auto border rounded-full border-black/50 [&_svg]:size-4"
-              )}
-              size={"icon_md"}
-            >
+            <Button className={cn("ml-auto border rounded-full border-black/50 [&_svg]:size-4")} size={"icon_md"}>
               <QuestionMark />
             </Button>
           </DialogTrigger>
@@ -75,9 +43,7 @@ export default function ScoreRankAnnouncement({
                 {translation("combo_score_description")}
               </div>
               <div>
-                <p className="font-extrabold">
-                  {translation("remaining_attempts")}
-                </p>
+                <p className="font-extrabold">{translation("remaining_attempts")}</p>
                 {translation("remaiing_attempts_description")}
               </div>
             </div>
@@ -97,19 +63,17 @@ export default function ScoreRankAnnouncement({
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[25px] mb-7">
-          <div className="w-full h-[180px]">
-            <Image
-              src={scoreRankImageUrl}
-              alt="rank graph"
-              width={320}
-              height={179}
-              className="mx-auto object-contain"
-            />
-          </div>
+          <div
+            className="w-full h-[180px]"
+            style={{
+              backgroundImage: `url(${scoreRankImageUrl})`,
+              backgroundPosition: "center",
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
 
-          <p className="text-[22px] text-balance px-5">
-            {completed_translation("rank_notification")}
-          </p>
+          <p className="text-[22px] text-balance px-5">{completed_translation("rank_notification")}</p>
         </div>
 
         {user?.provider !== "sumtotal" && <SendEmailCard />}
@@ -120,14 +84,8 @@ export default function ScoreRankAnnouncement({
               S+
             </Button>
           )}
-          <Button
-            className="text-[18px] mt-7 "
-            variant={"primary"}
-            onClick={() => routeToPage("map")}
-          >
-            {isLastStage
-              ? completed_translation("reture_map")
-              : completed_translation("next_stage")}
+          <Button className="text-[18px] mt-7 " variant={"primary"} onClick={() => routeToPage("map")}>
+            {isLastStage ? completed_translation("reture_map") : completed_translation("next_stage")}
           </Button>
         </div>
       </div>
