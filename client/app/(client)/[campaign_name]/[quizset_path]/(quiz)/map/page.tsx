@@ -38,9 +38,9 @@ export default function QuizMap() {
     currentQuizStageIndex,
     quizStageLogs,
   } = useQuiz();
-  const [nextStage, setNextStage] = useState<number>(
-    (quizLog?.lastCompletedStage ?? 0) + 1
-  );
+  // const [nextStage, setNextStage] = useState<number>(
+  //   (quizLog?.lastCompletedStage ?? 0) + 1
+  // );
 
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
@@ -49,16 +49,16 @@ export default function QuizMap() {
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
-    const targetStage = itemsRef.current[nextStage - 1];
-    // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
+    // setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
+    const targetStage = itemsRef.current[currentQuizStageIndex];
+
     if (!targetStage) return;
 
     targetStage.scrollIntoView({
       behavior: "smooth",
       block: "center",
     });
-  }, [quizLog?.lastCompletedStage, nextStage, quizSet.quizStages]);
+  }, [currentQuizStageIndex]);
 
   const routeNextQuizStage = async () => {
     routeToPage("/quiz");
