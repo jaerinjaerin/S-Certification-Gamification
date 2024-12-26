@@ -14,6 +14,8 @@ export default function QuizComplete() {
   const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } =
     useQuiz();
 
+  console.log("lastCompletedQuizStage:", lastCompletedQuizStage);
+
   const { routeToPage } = usePathNavigator();
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
@@ -32,10 +34,8 @@ export default function QuizComplete() {
       await sleep(3000);
       routeToPage("map");
     };
-
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
-
     routeToMapPage();
   }, [quizStageLogs]);
 
@@ -57,14 +57,14 @@ export default function QuizComplete() {
         }}
       >
         <ScoreAnnouncement
-          currentQuizStageIndex={currentQuizStageIndex}
+          stageName={lastCompletedQuizStage?.name ?? ""}
           className="w-full h-full shrink-0"
         />
 
         {isBadgeStage && (
           <>
             <GetBadgeAnnouncment
-              currentQuizStageIndex={currentQuizStageIndex}
+              stageName={lastCompletedQuizStage?.name ?? ""}
               badgeStage={lastCompletedQuizStage}
               className=" w-full h-full shrink-0"
             />
