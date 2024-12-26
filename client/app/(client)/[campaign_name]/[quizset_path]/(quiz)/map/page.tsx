@@ -5,6 +5,13 @@ import { QuestionMark } from "@/app/components/icons/icons";
 import Connection from "@/app/components/map/connection";
 import Gradient from "@/app/components/map/gradient";
 import { StageMarker } from "@/app/components/map/stage-marker";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import {
   Dialog,
   DialogClose,
@@ -13,17 +20,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+} from "@/components/ui/dialog";
 import { cn, fixedClass } from "@/lib/utils";
 import { QuizStageEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
@@ -36,9 +37,9 @@ export default function QuizMap() {
     currentQuizStageIndex,
     quizStageLogs,
   } = useQuiz();
-  const [nextStage, setNextStage] = useState<number>(
-    (quizLog?.lastCompletedStage ?? 0) + 1
-  );
+  // const [nextStage, setNextStage] = useState<number>(
+  //   (quizLog?.lastCompletedStage ?? 0) + 1
+  // );
 
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
@@ -47,16 +48,16 @@ export default function QuizMap() {
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
-    const targetStage = itemsRef.current[nextStage - 1];
-    // targetStage는 itemsRef[]의 인덱스가 0부터 시작하기 때문에 인덱스 값을 맞추기 위해 -1을 하였음
+    // setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
+    const targetStage = itemsRef.current[currentQuizStageIndex];
+
     if (!targetStage) return;
 
     targetStage.scrollIntoView({
       behavior: "smooth",
       block: "center",
     });
-  }, [quizLog?.lastCompletedStage, nextStage, quizSet.quizStages]);
+  }, [currentQuizStageIndex]);
 
   const routeNextQuizStage = async () => {
     routeToPage("/quiz");
@@ -78,13 +79,13 @@ export default function QuizMap() {
         <Dialog>
           <DialogTrigger asChild>
             <Button
-              className={cn("ml-auto border rounded-full border-black/50")}
+              className="ml-auto border rounded-full border-black/50 [&_svg]:size-4"
               size={"icon_md"}
             >
               <QuestionMark />
             </Button>
           </DialogTrigger>
-          <DialogContent dismissOnOverlayClick>
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>{translation("Map_guide.how_to_play")}</DialogTitle>
             </DialogHeader>
@@ -92,7 +93,13 @@ export default function QuizMap() {
             <TutorialCarousel />
             <DialogFooter>
               <DialogClose className="text-[18px] py-[22px] px-[34px]">
-                {translation("Login_popup.ok")}
+                <Button variant={"primary"}>
+                  {translation("Login_popup.ok")}
+                </Button>
+                <DialogClose className="absolute top-5 right-5">
+                  <X className="h-4 w-4" />
+                  <span className="sr-only">Close</span>
+                </DialogClose>
               </DialogClose>
             </DialogFooter>
           </DialogContent>

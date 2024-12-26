@@ -22,12 +22,20 @@ export default function Login() {
   return (
     <>
       <div className={cn("h-svh", fixedClass)}>
-        <video className="w-full h-svh object-fill absolute " autoPlay loop muted playsInline>
+        <video
+          className="w-full h-svh object-fill absolute "
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
           <source src={videoMp4Url} type="video/mp4" />
           <source src={videoWebmUrl} type="video/webm" />
         </video>
         <div className="flex flex-col items-center h-full py-[20px] relative">
-          <span className="block font-extrabold">{translation("galaxy_ai_expert")}</span>
+          <span className="block font-extrabold">
+            {translation("galaxy_ai_expert")}
+          </span>
           <LoginTitle className="my-auto" />
           <PrivacyAndTerm />
         </div>
@@ -49,11 +57,20 @@ const LoginTitle = ({ className }: { className?: string }) => {
     <>
       <div className={cn("flex flex-col items-center", className)}>
         <div className="mb-[70px]">
-          <span className="block font-extrabold text-[44px] text-center mb-5">{translation("be_a_galaxy_ai_expert")}</span>
-          <span className="block text-[30px] font-medium text-center uppercase">{translation("certification")}</span>
+          <span className="block font-extrabold text-[44px] text-center mb-5">
+            {translation("be_a_galaxy_ai_expert")}
+          </span>
+          <span className="block text-[30px] font-medium text-center uppercase">
+            {translation("certification")}
+          </span>
         </div>
-        <Button variant={"primary"} onClick={() => processSignIn()} className="font-extrabold text-[18px] disabled:bg-disabled" disabled={loading}>
-          s+ {translation("login")}
+        <Button
+          variant={"primary"}
+          onClick={() => processSignIn()}
+          className="font-extrabold text-[18px] disabled:bg-disabled"
+          disabled={loading}
+        >
+          S+ {translation("login")}
         </Button>
       </div>
     </>
