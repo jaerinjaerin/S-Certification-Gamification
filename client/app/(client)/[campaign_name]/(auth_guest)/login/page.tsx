@@ -186,11 +186,20 @@ export default function GuestLogin() {
             </div>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant={"primary"} onClick={() => setStep("email")}>
+                <Button
+                  variant={"primary"}
+                  onClick={() => {
+                    setStep("email");
+                  }}
+                >
                   {translation("Main.login")}
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent
+                onOpenAutoFocus={(event) => {
+                  event.preventDefault();
+                }}
+              >
                 <DialogHeader>
                   <DialogTitle>{translation("Main.login")}</DialogTitle>
                   <DialogDescription>{translation("Login_popup.login_by_send_code")}</DialogDescription>
@@ -221,7 +230,6 @@ export default function GuestLogin() {
                     type="submit"
                     form="verify-email"
                     disabled={!email || loading}
-                    onClick={() => stopCountdown()}
                   >
                     {translation("Login_popup.send_code")}
                   </Button>
@@ -282,7 +290,11 @@ export default function GuestLogin() {
       </AlertDialog>
 
       <Dialog open={step === "code"}>
-        <DialogContent>
+        <DialogContent
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+          }}
+        >
           <DialogHeader>
             <DialogTitle>{translation("Login_popup.confirm_your_email")}</DialogTitle>
             <DialogDescription>
@@ -325,7 +337,6 @@ export default function GuestLogin() {
               form="verify-code"
               disabled={!code || loading}
               onClick={() => {
-                stopCountdown();
                 verifyCode();
               }}
             >
