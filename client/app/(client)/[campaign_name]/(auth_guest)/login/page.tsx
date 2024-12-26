@@ -21,7 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn, fixedClass, formatToMMSS } from "@/lib/utils";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
@@ -41,7 +40,6 @@ export default function GuestLogin() {
   const [error, setError] = useState<string | null>(null);
   const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
-  const { routeToPage } = usePathNavigator();
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
 
   const [countStart, setCountStart] = useState<number>(0);
@@ -73,8 +71,80 @@ export default function GuestLogin() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
         {
           method: "POST",
-          // headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ toAddress: email }),
+          body: JSON.stringify({
+            toAddress: email,
+            subject: "Autherntication Code for Galaxy AI Expert.",
+            bodyHtml: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <style>
+                  body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #000000;
+                    color: #333333;
+                  }
+                  .email-container {
+                    max-width: 840px;
+                    width: 100%;
+                    height: 414px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    padding: 80px;
+                    border-radius: 10px;
+                    text-align: center;
+                    background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png");
+                    background-repeat: repeat;
+                    background-size: 50%;
+                    background-position: center;
+                  }
+                  .header {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                  }
+                  .code {
+                    font-size: 48px;
+                    font-weight: bold;
+                    margin: 20px 0;
+                  }
+                  .message {
+                    font-size: 14px;
+                    color: #555555;
+                    margin-top: 20px;
+                  }
+                  .footer {
+                    font-size: 12px;
+                    color: #aaaaaa;
+                    margin-top: 30px;
+                    text-align: center;
+                  }
+                </style>
+              </head>
+              <body>
+                <div class="email-container">
+                  <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
+                  <div class="code">
+                    $CODE$
+                  </div>
+                  <div class="message">
+                    Please enter this code on the verification page to complete the
+                    process.<br />
+                    For your security, this code will expire in [time limit, e.g., 5
+                    minutes].
+                  </div>
+                </div>
+                <div class="footer">
+                  This message was automatically delivered by Samsung+ service. Do not reply
+                  to this message.<br />
+                  Copyright © 2024 SAMSUNG all rights reserved.
+                </div>
+              </body>
+            </html>
+          `,
+          }),
         }
       );
 
@@ -158,12 +228,6 @@ export default function GuestLogin() {
       });
 
       console.log("result", result);
-
-      // if (result?.error) {
-      //   alert("Invalid email or code");
-      // } else {
-      //   routeToPage("/register");
-      // }
     } catch (err) {
       console.error(err);
       alert("An unexpected error occurred.");

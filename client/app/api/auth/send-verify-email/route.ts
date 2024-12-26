@@ -19,7 +19,11 @@ const sesClient =
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { toAddress } = body as { toAddress: string };
+    const { toAddress, subject, bodyHtml } = body as {
+      toAddress: string;
+      subject: string;
+      bodyHtml: string;
+    };
 
     let verifyToken = await prisma.verifyToken.findFirst({
       where: { email: toAddress },
@@ -56,6 +60,7 @@ export async function POST(request: NextRequest) {
 
     // const token = crypto.randomBytes(32).toString("hex");
     const randomCode = generateRandomCode();
+    const bodyHtmlWithCode = bodyHtml.replace("$CODE$", randomCode);
     // const newVerifyToken = await createVerifyToken(toAddress);
 
     const params = {
@@ -66,16 +71,16 @@ export async function POST(request: NextRequest) {
         Body: {
           Html: {
             Charset: "UTF-8",
-            Data: `<h1>Authentication Code</h1><p>Please enter the verification code.</p>. Code: ${randomCode}`,
+            Data: bodyHtmlWithCode,
           },
           Text: {
             Charset: "UTF-8",
-            Data: `Authentication Code\nPlease enter the verification code.\nCode: ${randomCode}`,
+            Data: bodyHtmlWithCode,
           },
         },
         Subject: {
           Charset: "UTF-8",
-          Data: "Test Email",
+          Data: subject,
         },
       },
       Source: process.env.AWS_SES_SENDER,

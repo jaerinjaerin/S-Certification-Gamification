@@ -5,6 +5,13 @@ import { QuestionMark } from "@/app/components/icons/icons";
 import Connection from "@/app/components/map/connection";
 import Gradient from "@/app/components/map/gradient";
 import { StageMarker } from "@/app/components/map/stage-marker";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import {
   Dialog,
   DialogClose,
@@ -14,21 +21,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { QuizStageEx } from "@/app/types/type";
-import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
 import { cn, fixedClass } from "@/lib/utils";
-import { useQuiz } from "@/providers/quiz_provider";
+import { QuizStageEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
-import { X } from "lucide-react";
 
 export default function QuizMap() {
   const {

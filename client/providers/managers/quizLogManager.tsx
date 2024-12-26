@@ -13,16 +13,20 @@ export type QuizLog = {
   quizStageIndex: number;
   selectedOptionIds: string[];
   correctOptionIds: string[];
-  jobId: string;
-  languageId: string | null;
-  domainId: string | null;
-  subsidaryId: string | null;
   category: string;
   specificFeature: string;
   product: string;
   questionType: QuestionType;
   elapsedSeconds: number;
   createdAt: string;
+  domainId: string | null;
+  regionId: string | null;
+  subsidaryId: string | null;
+  channelSegmentId: string | null;
+  channelId: string | null;
+  storeId: string | null;
+  jobId: string;
+  languageId: string | null;
 };
 
 class QuizLogManager {

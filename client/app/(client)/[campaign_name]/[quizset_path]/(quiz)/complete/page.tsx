@@ -3,19 +3,19 @@
 import { sleep } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useInterval } from "usehooks-ts";
 import GetBadgeAnnouncment from "./get-badge-announcement";
 import ScoreAnnouncement from "./score-announcement";
 import ScoreRankAnnouncement from "./score-rank-announcement";
-import { useInterval } from "usehooks-ts";
-import { motion } from "motion/react";
 
 export default function QuizComplete() {
   const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } =
     useQuiz();
 
   const { routeToPage } = usePathNavigator();
-  const isBadgeStage = lastCompletedQuizStage.isBadgeStage;
+  const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
   const [switchlIndex, setSwitchIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;

@@ -11,8 +11,6 @@ export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  console.log("middleware: basePath:", basePath);
-
   if (
     pathname.includes("/error") ||
     pathname.includes("/logout") ||
@@ -33,8 +31,6 @@ export async function middleware(request: NextRequest) {
   if (isValidCampaignQuizSetId(segments[1])) {
     campaignQuizSetPath = segments[1] as string;
   }
-
-  console.log("campaignQuizSetPath:", campaignName, campaignQuizSetPath);
 
   // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
   if (

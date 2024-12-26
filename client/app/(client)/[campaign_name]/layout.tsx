@@ -10,8 +10,6 @@ export default async function CampaignLayout({
   children: React.ReactNode;
   params: { campaign_name: string };
 }) {
-  console.log("CampaignLayout", params);
-
   const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
   console.log("CampaignLayout url", url);
   const response = await fetch(url, {
@@ -43,7 +41,6 @@ export default async function CampaignLayout({
   // side is the easiest way to get started
   // const messages = await getMessages();
 
-  console.info("Render CampaignLayout");
   return (
     <div className="min-w-[280px] max-w-[412px] w-full min-h-svh" lang={locale}>
       {/* <NextIntlClientProvider messages={messages}> */}
