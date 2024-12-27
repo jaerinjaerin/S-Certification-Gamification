@@ -1,17 +1,18 @@
 "use client";
 
+import GetBadgeAnnouncment from "@/app/components/complete/get-badge-announcement";
+import ScoreAnnouncement from "@/app/components/complete/score-announcement";
+import ScoreRankAnnouncement from "@/app/components/complete/score-rank-announcement";
 import { sleep } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
-import GetBadgeAnnouncment from "./get-badge-announcement";
-import ScoreAnnouncement from "./score-announcement";
-import ScoreRankAnnouncement from "./score-rank-announcement";
 
 export default function QuizComplete() {
-  const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } = useQuiz();
+  const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } =
+    useQuiz();
 
   const { routeToPage } = usePathNavigator();
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
@@ -38,7 +39,14 @@ export default function QuizComplete() {
     routeToMapPage();
   }, [quizStageLogs]);
 
-  useInterval(handleIndex, switchlIndex === carouselIndex ? null : switchlIndex === 1 ? 4_000 : AUTO_DELAY);
+  useInterval(
+    handleIndex,
+    switchlIndex === carouselIndex
+      ? null
+      : switchlIndex === 1
+      ? 4_000
+      : AUTO_DELAY
+  );
 
   return (
     <div className="min-h-svh overflow-x-hidden">
@@ -48,7 +56,10 @@ export default function QuizComplete() {
           translateX: `-${switchlIndex * 100}%`,
         }}
       >
-        <ScoreAnnouncement currentQuizStageIndex={currentQuizStageIndex} className="w-full h-full shrink-0" />
+        <ScoreAnnouncement
+          currentQuizStageIndex={currentQuizStageIndex}
+          className="w-full h-full shrink-0"
+        />
 
         {isBadgeStage && (
           <>

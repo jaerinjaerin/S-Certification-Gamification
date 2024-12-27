@@ -168,17 +168,18 @@ const TutorialCarousel = () => {
                     <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
                       {translation("attempts_deduction")}
                     </p>
-                    <div className="flex justify-center pt-[10px]">
-                      <div
-                        className="w-[270px] h-[160px]"
-                        style={{
-                          backgroundImage: `url(${mapGuideImageUrl})`,
-                          backgroundPosition: "center",
-                          backgroundSize: "contain",
-                        }}
-                      ></div>
-                    </div>
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[10px] text-[12px] sm:text-[14px] text-pretty">
+
+                    <div
+                      className="w-full h-[160px] sm:mt-[10px]"
+                      style={{
+                        backgroundImage: `url(${mapGuideImageUrl})`,
+                        backgroundPosition: "center",
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    ></div>
+
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[15px] text-[12px] sm:text-[14px] text-pretty">
                       {translation("time_limit_per_quiz")}
                     </p>
                   </div>

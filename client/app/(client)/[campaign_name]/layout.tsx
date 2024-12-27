@@ -3,7 +3,13 @@ import { Campaign } from "@prisma/client";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
-export default async function CampaignLayout({ children, params }: { children: React.ReactNode; params: { campaign_name: string } }) {
+export default async function CampaignLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { campaign_name: string };
+}) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
   console.log("CampaignLayout url", url);
   const response = await fetch(url, {
@@ -36,11 +42,11 @@ export default async function CampaignLayout({ children, params }: { children: R
   // const messages = await getMessages();
 
   return (
-    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto" lang={locale}>
+    <div
+      className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto"
+      lang={locale}
+    >
       <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
     </div>
-    // <div className="h-full">
-    //   <CampaignProvider campaign={data.item}>{children}</CampaignProvider>
-    // </div>
   );
 }

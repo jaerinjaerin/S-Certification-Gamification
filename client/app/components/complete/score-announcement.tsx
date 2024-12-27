@@ -1,8 +1,7 @@
 import { useTranslations } from "next-intl";
-
-import ScoreCircleAnimation from "./score-circle-animation";
 import { cn } from "@/lib/utils";
 import CompleteStage from "./stage-complete";
+import ScoreCircleAnimation from "./score-circle-animation";
 
 export default function ScoreAnnouncement({
   currentQuizStageIndex,

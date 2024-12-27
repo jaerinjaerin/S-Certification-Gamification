@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+
 const LOOP_DURATION = 3;
 
 export const ActivePointer = () => {
@@ -55,7 +56,6 @@ export const AnimationCircle = ({ delay }) => {
         repeat: Infinity,
         repeatType: "loop",
         times: [0, 0.05, 0.75, 1],
-        // times: [0, 0.3, 0.7, 1], // 각 단계의 진행 비율
         duration: LOOP_DURATION,
         ease: "linear",
         delay,
