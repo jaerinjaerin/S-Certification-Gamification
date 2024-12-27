@@ -4,6 +4,7 @@ import QuizScoreCalculator from "@/app/lib/score/quizScoreCalculator";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
+  AuthType,
   Campaign,
   Domain,
   Language,
@@ -100,6 +101,7 @@ export const QuizProvider = ({
   quizStageLogs,
   quizQuestionLogs,
   userId,
+  authType,
   quizSetPath,
 }: {
   children: React.ReactNode;
@@ -109,6 +111,7 @@ export const QuizProvider = ({
   quizStageLogs: UserQuizStageLog[];
   quizQuestionLogs: UserQuizQuestionLog[];
   userId: string | undefined;
+  authType: AuthType | undefined;
   quizSetPath: string;
 }) => {
   const { routeToPage } = usePathNavigator();
@@ -276,7 +279,7 @@ export const QuizProvider = ({
       remainingHearts,
       badgeStage,
       isBadgeAcquired,
-      getCurrentStageBadgeActivityId()
+      authType === AuthType.SUMTOTAL ? getCurrentStageBadgeActivityId() : null
     );
 
     // 퀴즈 로그 업데이트
@@ -362,7 +365,8 @@ export const QuizProvider = ({
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      if (session?.user.provider === "sumtotal") {
+      console.log("processBadgeAcquisition", authType);
+      if (authType === AuthType.SUMTOTAL) {
         const activityId = getCurrentStageBadgeActivityId();
         if (!activityId) {
           return false;
@@ -372,7 +376,8 @@ export const QuizProvider = ({
         return result;
       } else {
         const badgeImageUrl = getCurrentStageBadgeImageUrl();
-        if (!badgeImageUrl) {
+        console.log("badgeImageUrl", badgeImageUrl);
+        if (badgeImageUrl) {
           const result = await sendBadgeEmail(badgeImageUrl!);
           return result;
         }
@@ -471,7 +476,7 @@ export const QuizProvider = ({
 `;
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send_badge_email`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send-badge-email`,
         {
           method: "POST",
           cache: "no-store",
@@ -490,7 +495,7 @@ export const QuizProvider = ({
       }
 
       const data = await response.json();
-      console.log("data", data);
+      console.log("sendBadgeEmail data", data);
 
       return true;
     } catch (err: any) {
@@ -549,7 +554,7 @@ export const QuizProvider = ({
             activityId: activityId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
-            elapsedSeconds: 10,
+            elapsedSeconds: 2000,
           }),
         }
       );
@@ -606,7 +611,10 @@ export const QuizProvider = ({
         message: isCorrect ? "정답입니다!" : "틀렸습니다!",
       };
 
+      console.log("confirmAnswer", authType);
+
       quizLogManager.addLog({
+        authType: authType,
         isCorrect: result.isCorrect,
         campaignId: campaign.id,
         userId: _quizLog.userId,
@@ -631,9 +639,9 @@ export const QuizProvider = ({
         jobId: _quizLog.jobId || "",
         regionId: _quizLog?.regionId,
         subsidaryId: _quizLog?.subsidaryId,
-        channelSegmentId: _quizLog?.channelSegmentId,
         storeId: _quizLog?.storeId,
         channelId: _quizLog?.channelId,
+        channelSegmentId: _quizLog?.channelSegmentId,
       });
 
       return result;
@@ -661,7 +669,10 @@ export const QuizProvider = ({
       .filter((option: QuestionOption) => option.isCorrect)
       .map((option: QuestionOption) => option.id);
 
+    console.log("logUserAnswer", authType);
+
     quizLogManager.addLog({
+      authType: authType,
       isCorrect,
       campaignId: campaign.id,
       userId: _quizLog.userId,
@@ -681,15 +692,14 @@ export const QuizProvider = ({
       elapsedSeconds: elapsedSeconds,
       quizStageId: currentQuizStage?.id ?? "",
       createdAt: new Date().toISOString(),
-
       domainId: _quizLog.domainId,
       languageId: quizLog?.languageId,
       jobId: _quizLog.jobId || "",
       regionId: _quizLog?.regionId,
       subsidaryId: _quizLog?.subsidaryId,
-      channelSegmentId: _quizLog?.channelSegmentId,
       storeId: _quizLog?.storeId,
       channelId: _quizLog?.channelId,
+      channelSegmentId: _quizLog?.channelSegmentId,
     });
   };
 
@@ -752,6 +762,7 @@ export const QuizProvider = ({
           },
           body: JSON.stringify({
             userId: _quizLog.userId,
+            authType: authType,
             // jobId: _quizLog.jobId || "",
             quizSetId: quizSet.id,
             quizStageIndex: currentQuizStageIndex,
@@ -772,9 +783,9 @@ export const QuizProvider = ({
             jobId: _quizLog.jobId || "",
             regionId: _quizLog?.regionId,
             subsidaryId: _quizLog?.subsidaryId,
-            channelSegmentId: _quizLog?.channelSegmentId,
             storeId: _quizLog?.storeId,
             channelId: _quizLog?.channelId,
+            channelSegmentId: _quizLog?.channelSegmentId,
           }),
         }
       );

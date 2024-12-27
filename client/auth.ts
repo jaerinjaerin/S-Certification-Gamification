@@ -2,10 +2,13 @@ import { prisma } from "@/prisma-client";
 import type { Adapter, AdapterUser } from "@auth/core/adapters";
 import { JWT } from "@auth/core/jwt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { AuthType } from "@prisma/client";
+import { AuthType, User } from "@prisma/client";
 import NextAuth, { DefaultSession, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { SumtotalProfile } from "./app/lib/auth/sumtotal";
+import {
+  fetchOrganizationDetails,
+  SumtotalProfile,
+} from "./app/lib/auth/sumtotal";
 import { encryptEmail } from "./utils/encrypt";
 
 declare module "next-auth" {
@@ -16,6 +19,7 @@ declare module "next-auth" {
       // providerUserId: string;
       // providerPersonId: string;
       provider: string;
+      authType: AuthType;
       // sumtotalOrganizationIds: string | null;
     } & DefaultSession["user"];
   }
@@ -52,74 +56,27 @@ export const {
       // callback: process.env.SUMTOTAL_CALLBACK_URL,
       profile: async (profile: SumtotalProfile, tokens) => {
         console.log("profile:", profile);
-        console.log("accessToken:", tokens.access_token);
+        // console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
 
         const accessToken = tokens.access_token;
         // job 및 store 추출
+
         let jobId: string | null = null;
         let storeId: string | null = null;
+        let storeSegmentText: string | null = null;
+        let channelId: string | null = null;
         let channelSegmentId: string | null = null;
 
         if (accessToken) {
-          const orgIds: string[] = profile.personOrganization.map((org) =>
-            org.organizationId.toString()
-          );
-
-          const fetchOrganizationData = async (
-            orgId: string,
-            accessToken: string
-          ) => {
-            try {
-              const response = await fetch(
-                `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
-                {
-                  cache: "no-store",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                }
-              );
-
-              if (!response.ok) {
-                throw new Error(`Failed to fetch data: ${response.statusText}`);
-              }
-
-              return await response.json(); // 요청 성공 시 데이터 반환
-            } catch (error) {
-              console.error(`Error fetching data for orgId ${orgId}:`, error);
-              return null; // 실패한 요청은 null 반환
-            }
-          };
-
-          const results = await Promise.all(
-            orgIds.map((orgId) => fetchOrganizationData(orgId, accessToken))
-          );
-
-          results.forEach((result: any) => {
-            if (!result) return; // null인 경우 건너뜀
-
-            console.log("optionalInfo", result.data[0]);
-
-            const text9 = result.data[0]?.optionalInfo.text9;
-            const text8 = result.data[0]?.optionalInfo.text8;
-            const integer1 = result.data[0]?.optionalInfo.integer1;
-
-            if (!text9 || !integer1) return;
-
-            if (integer1 === "7" || integer1 === 7) {
-              jobId = text9;
-            }
-
-            if (integer1 === "5" || integer1 === 5) {
-              storeId = text9;
-            }
-
-            if (integer1 === "4" || integer1 === 4) {
-              channelSegmentId = text8;
-            }
-          });
+          const result = await fetchOrganizationDetails(accessToken, profile);
+          if (result) {
+            jobId = result.jobId;
+            storeId = result.storeId;
+            storeSegmentText = result.storeSegmentText;
+            channelId = result.channelId;
+            channelSegmentId = result.channelSegmentId;
+          }
         }
 
         // 확인 regionId, subsidaryId
@@ -143,10 +100,11 @@ export const {
           });
 
           if (domain) {
-            regionId = domain!.subsidary?.regionId || null;
-            subsidaryId = domain!.subsidaryId;
+            regionId = domain.subsidary?.regionId || null;
+            subsidaryId = domain.subsidaryId;
           }
         }
+
         return {
           id: profile.userId,
           // email:
@@ -165,15 +123,17 @@ export const {
           authType: AuthType.SUMTOTAL,
           providerUserId: profile.userId,
           providerPersonId: profile.personId,
-          sumtotalDomainId:
+          domainId:
             profile.personDomain
               ?.find((domain) => domain.isPrimary)
               ?.domainId?.toString() || null,
-          sumtotalDomainCode:
+          domainCode:
             profile.personDomain?.find((domain) => domain.isPrimary)?.code ||
             null,
-          sumtotalJobId: jobId,
+          jobId: jobId,
           storeId: storeId,
+          storeSegmentText: storeSegmentText,
+          channelId: channelId,
           channelSegmentId: channelSegmentId,
           regionId: regionId,
           subsidaryId: subsidaryId,
@@ -293,6 +253,9 @@ export const {
       if (account) {
         token.provider = account.provider;
       }
+      if (user) {
+        token.authType = (user as User).authType;
+      }
       return token;
     },
     session: async (params): Promise<Session | DefaultSession> => {
@@ -305,7 +268,8 @@ export const {
 
         if (session.user && token.sub) {
           session.user.id = token.sub;
-          session.user.provider = (token as any).provider || "default"; // provider 필드 추가
+          session.user.provider = (token as any).provider;
+          session.user.authType = (token as any).authType;
         }
       }
 

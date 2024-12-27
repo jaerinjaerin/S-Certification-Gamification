@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -235,25 +236,30 @@ export async function POST(request: NextRequest) {
     const userQuizLog = await prisma.userQuizLog.create({
       data: {
         userId: userId,
+        authType: user?.authType || AuthType.UNKNOWN,
         campaignId: quizSet.campaignId,
         // badgeStages: quizSet.badgeStages,
         // firstBadgeStage: quizSet.badgeStages,
         // isFirstBadgeStageCompleted: false,
         isCompleted: false,
         isBadgeAcquired: false,
-        jobId: user?.sumtotalJobId ?? job?.id,
+
+        jobId: job?.id,
         quizSetId: quizSet.id,
-        domainId: domain?.id,
+
         // firstBadgeActivityId: quizSet.firstBadgeActivityId,
         // lastBadgeActivityId: quizSet.lastBadgeActivityId,
         languageId: language?.id,
         quizSetPath: quizsetPath,
 
+        domainId: domain?.id,
         regionId: domain?.subsidary?.region?.id ?? user?.regionId,
         subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
-        channelSegmentId: user?.channelSegmentId,
+
         storeId: user?.storeId,
+        storeSegmentText: user?.storeSegmentText,
         channelId: user?.channelId,
+        channelSegmentId: user?.channelSegmentId,
 
         // regionId String?
         // subsidaryId String?

@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
-    console.log("domain:", domain);
+    // console.log("domain:", domain);
 
     // const job = await prisma.job.findFirst({
     //   where: {
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
-    console.log("API: quizSet:", quizSet);
+    // console.log("API: quizSet:", quizSet);
 
     if (!quizSet) {
       return NextResponse.json(
@@ -120,7 +120,7 @@ export async function GET(request: NextRequest, props: Props) {
       })
     );
 
-    console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
+    // console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
     // return {
     //   ...quizSet,

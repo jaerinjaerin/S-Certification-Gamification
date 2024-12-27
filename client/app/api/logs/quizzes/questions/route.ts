@@ -10,6 +10,7 @@ export async function POST(request: Request) {
       isCorrect,
       campaignId,
       userId,
+      authType,
       quizSetId,
       quizStageId,
       questionId,
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
 
     const questionLog = await prisma.userQuizQuestionLog.create({
       data: {
+        authType,
         isCorrect,
         campaignId,
         userId,

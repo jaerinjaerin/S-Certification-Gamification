@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { QuizProvider, QuizSetEx } from "@/providers/quiz_provider";
+import { AuthType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -10,6 +11,7 @@ export default async function QuizLayout({
   params: { campaign_name: string; quizset_path: string };
 }) {
   const session = await auth();
+  console.log("QuizLayout session", session);
 
   // Fetch data from API
   const fetchData = async (url: string, options: RequestInit = {}) => {
@@ -40,7 +42,7 @@ export default async function QuizLayout({
     }
   );
 
-  console.log("QuizLayout quizData", quizSetReponse);
+  // console.log("QuizLayout quizData", quizSetReponse);
 
   const quizSet: QuizSetEx | null = quizSetReponse.item;
 
@@ -62,7 +64,7 @@ export default async function QuizLayout({
   let quizStageLogs;
   let quizQuestionLogs;
 
-  console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
+  // console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
   if (quizLogResponse?.item.quizLog) {
     quizLog = quizLogResponse.item.quizLog;
@@ -73,7 +75,7 @@ export default async function QuizLayout({
   // 다른 퀴즈페이지로 이동했는지 확인
   // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
   if (
-    session?.user.provider === "sumtotal" &&
+    session?.user.authType === AuthType.SUMTOTAL &&
     quizLog?.quizSetPath != null &&
     quizLog?.quizSetPath !== params.quizset_path
   ) {
@@ -90,7 +92,7 @@ export default async function QuizLayout({
     );
   }
 
-  if (session?.user.provider === "credentials") {
+  if (session?.user.authType === AuthType.GUEST) {
     const userResponse = await fetchData(
       `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}`,
       {
@@ -99,7 +101,7 @@ export default async function QuizLayout({
       }
     );
 
-    console.log("QuizLayout userResponse", userResponse);
+    // console.log("QuizLayout userResponse", userResponse);
 
     if (!userResponse?.item) {
       return (
@@ -110,7 +112,7 @@ export default async function QuizLayout({
     }
 
     const user = userResponse.item;
-    console.log("QuizLayout user", user);
+    // console.log("QuizLayout user", user);
     if (user.jobId === null) {
       redirect(`/${params.campaign_name}/register`);
       return;
@@ -131,7 +133,7 @@ export default async function QuizLayout({
     return;
   }
 
-  console.info("QuizLayout quizLog:", quizLog);
+  // console.info("QuizLayout quizLog:", quizLog);
   return (
     <div
       className="h-full bg-[#F0F0F0]"
@@ -147,6 +149,7 @@ export default async function QuizLayout({
         quizStageLogs={quizStageLogs}
         quizQuestionLogs={quizQuestionLogs}
         userId={session?.user.id}
+        authType={session?.user.authType}
         quizSetPath={params.quizset_path}
       >
         {children}
