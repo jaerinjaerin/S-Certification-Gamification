@@ -11,8 +11,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -30,10 +43,12 @@ interface Job {
 interface Channel {
   name: string;
   job: Job;
+  channelId: string;
   channelSegmentId: string;
 }
 
-interface Country {
+interface DomainDetail {
+  id: string;
   channels: Channel[];
   name: string;
   code: string;
@@ -48,20 +63,26 @@ export default function GuestRegisterPage() {
   const translation = useTranslations("Login_popup");
 
   // state
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<DomainDetail | null>(
+    null
+  );
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
-  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<string | null>(null);
+  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
+    string | null
+  >(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [languageCode, setLanguageCode] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
+  const [languageCode, setLanguageCode] = useState<string | undefined>(
+    undefined
+  ); // 브라우저에서 주는 언어코드
 
   // select box options
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<DomainDetail[]>([]);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [jobs] = useState<Job[]>([
     { name: "FSM", id: "8" },
     { name: "FF", id: "9" },
-    { name: "Customer Services", id: "10" },
+    // { name: "Customer Services", id: "10" },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
@@ -70,32 +91,41 @@ export default function GuestRegisterPage() {
 
   const { campaign } = useCampaign();
 
-  // const {
   const fetchConutries = async () => {
-    setLoading(true);
+    console.log("fetchConutries");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/channels`, {
+      setLoading(true);
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/api/channels`,
+      //   {
+      //     method: "GET",
+      //     // cache: "force-cache",
+      //     cache: "no-cache",
+      //   }
+      // );
+
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.message || "Failed to fetch domains");
+      // }
+
+      // const data = await response.json();
+
+      // const data = await res.json();
+      // console.log("data", data);
+      // setCountries(data.items as Country[]);
+
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20241227.json`;
+      console.log("jsonUrl", jsonUrl);
+      const res = await fetch(jsonUrl, {
         method: "GET",
         // cache: "force-cache",
         cache: "no-cache",
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch domains");
-      }
-
-      const data = await response.json();
-
-      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels.json`;
-      // console.log("jsonUrl", jsonUrl);
-      // const res = await fetch(
-      //   jsonUrl
-      //   // `http://localhost:3000/assets/jsons/channels.json`
-      // ); // 개발 중에는 localhost, 배포 시에는 배포 URL
-      // const data = await res.json();
-      // console.log("data", data);
-      setCountries(data.items as Country[]);
+      const data = await res.json();
+      console.log("data", data);
+      setCountries(data as DomainDetail[]);
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
@@ -120,7 +150,12 @@ export default function GuestRegisterPage() {
     }
   }, [session?.user.id]);
 
-  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
+  const {
+    isLoading: loadingCreate,
+    error: errorCreate,
+    item: campaignPath,
+    createItem,
+  } = useCreateItem<string>();
 
   useEffect(() => {
     if (campaignPath) {
@@ -131,11 +166,14 @@ export default function GuestRegisterPage() {
   const checkRegistered = async () => {
     try {
       setCheckingRegisterd(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`, {
-        method: "GET",
-        // cache: "force-cache",
-        cache: "no-cache",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        {
+          method: "GET",
+          // cache: "force-cache",
+          cache: "no-cache",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -194,18 +232,22 @@ export default function GuestRegisterPage() {
     createItem({
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/register`,
       body: {
+        domainId: selectedCountry.id,
         domainCode: selectedCountry.code,
         subsidaryId: selectedCountry.subsidaryId,
         regionId: selectedCountry.regionId,
         jobId: selectedJobId,
         languageCode: languageCode,
+        channelId: selectedChannel?.channelId,
         channelSegmentId: selectedChannelSegmentId,
       },
     });
   };
 
   // const errorMessage = error || errorCreate;
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   useEffect(() => {
     if (errorCreate) {
       setErrorMessage(errorCreate);
@@ -225,17 +267,28 @@ export default function GuestRegisterPage() {
             <DialogTitle>{translation("enter_details")}</DialogTitle>
             <DialogDescription className="text-left">
               {translation("select_inforamiton")}
-              <span className="block text-[#0037FF]">{translation("mandatory_fields")}</span>
+              <span className="block text-[#0037FF]">
+                {translation("mandatory_fields")}
+              </span>
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
-            <Select onValueChange={(value) => selectCountry(value)} value={`${translation("country")}*`}>
+            <Select
+              onValueChange={(value) => selectCountry(value)}
+              value={`${translation("country")}*`}
+            >
               <SelectTrigger
                 disabled={loading || loadingCreate || countries == null}
-                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
+                className={cn(
+                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
+                )}
               >
-                <SelectValue>{selectedCountry === null ? `${translation("country")}*` : selectedCountry.name}</SelectValue>
+                <SelectValue>
+                  {selectedCountry === null
+                    ? `${translation("country")}*`
+                    : selectedCountry.name}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {countries.map((country, idx) => (
@@ -246,12 +299,21 @@ export default function GuestRegisterPage() {
               </SelectContent>
             </Select>
             {/* channel */}
-            <Select onValueChange={(value) => selectChannel(value)} value={`${translation("channel")}*`}>
+            <Select
+              onValueChange={(value) => selectChannel(value)}
+              value={`${translation("channel")}*`}
+            >
               <SelectTrigger
                 disabled={loading || loadingCreate || channels.length === 0}
-                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
+                className={cn(
+                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
+                )}
               >
-                <SelectValue>{selectedChannel === null ? `${translation("channel")}*` : selectedChannel.name}</SelectValue>
+                <SelectValue>
+                  {selectedChannel === null
+                    ? `${translation("channel")}*`
+                    : selectedChannel.name}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px]">
                 {channels.map((channel) => (
@@ -267,9 +329,14 @@ export default function GuestRegisterPage() {
               </SelectContent>
             </Select>
             {/* job group */}
-            <Select onValueChange={(value) => selectJob(value)} value={selectedJobId || ""}>
+            <Select
+              onValueChange={(value) => selectJob(value)}
+              value={selectedJobId || ""}
+            >
               {/* <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}> */}
-              <SelectTrigger disabled={loading || loadingCreate || selectedChannel === null}>
+              <SelectTrigger
+                disabled={loading || loadingCreate || selectedChannel === null}
+              >
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
               <SelectContent>
@@ -308,7 +375,10 @@ export default function GuestRegisterPage() {
       </Dialog>
 
       {/* error alert */}
-      <AlertDialog open={!!errorMessage} onOpenChange={() => setErrorMessage(undefined)}>
+      <AlertDialog
+        open={!!errorMessage}
+        onOpenChange={() => setErrorMessage(undefined)}
+      >
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Alert</AlertDialogTitle>

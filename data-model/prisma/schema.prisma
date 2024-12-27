@@ -69,7 +69,7 @@ model User {
   
   // profileId String?      @unique
   // profile   UserProfile?
-  authType  AuthType?
+  authType  AuthType
 
   providerUserId        String?
   providerPersonId      Int?
@@ -79,10 +79,10 @@ model User {
   
 
 
-  sumtotalDomainId              String?
-  sumtotalDomainCode              String?
-  sumtotalJobId              String?
-  sumtotalLanguageId              String?
+  // sumtotalDomainId              String?
+  // sumtotalDomainCode              String?
+  // sumtotalJobId              String?
+  // languageId              String?
   // sumtotalOrganizationIds String?
   
   // sumtotalChannelSegmentId           String?
@@ -93,20 +93,22 @@ model User {
   // channel  String?
   
 
-  domain      Domain? @relation(fields: [domainId], references: [id])
-  language    Language? @relation(fields: [languageId], references: [id])
+  // domain      Domain? @relation(fields: [domainId], references: [id])
+  // language    Language? @relation(fields: [languageId], references: [id])
 
 
 
 
   domainId              String?
+  domainCode              String?
   languageId              String?
 
   regionId String?
   subsidaryId String?
-  channelSegmentId String?
   storeId String?
+  storeSegmentText String?
   channelId String?
+  channelSegmentId String?
 
   // userQuizLogs     UserQuizLog[]
   userQuizLogs UserQuizLog[]
@@ -117,12 +119,12 @@ model User {
   @@map("users")
 }
 
-model UserEmail {
-  id     String  @id @default(cuid())
-  email  String  
-  // user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-}
+// model UserEmail {
+//   id     String  @id @default(cuid())
+//   email  String  
+//   // user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId String?
+// }
 
 model VerificationRequest {
   id         String   @id @default(cuid())
@@ -161,6 +163,7 @@ model VerifyToken {
 enum AuthType {
   SUMTOTAL
   GUEST
+  UNKNOWN
 }
 
 
@@ -172,7 +175,7 @@ model Language {
   // campaignDomainQuizSets CampaignDomainQuizSet[]
   // questions Question[]
   // questionOption QuestionOption[]
-  users User[]
+  // users User[]
 }
 
 // model Countr
@@ -243,7 +246,7 @@ model Domain {
   // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
   // channelSegmentIds String
-  users User[]
+  // users User[]
   domainGoals  DomainGoal[]
 }
 
@@ -401,6 +404,12 @@ model Store {
   updatedAt   DateTime    @updatedAt
 }
 
+model Channel {
+  id            String                @id @default(uuid())
+  name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
+  // salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
+}
+
 model ChannelSegment {
   id            String                @id @default(uuid())
   name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
@@ -419,6 +428,7 @@ model ChannelSegment {
 model UserQuizLog {
   id          String   @id @default(uuid())
   userId      String
+  authType  AuthType
   campaignId String
   // quizSetId   String
   
@@ -437,7 +447,6 @@ model UserQuizLog {
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
   user        User    @relation(fields: [userId], references: [id])
-  
 
 
   // campaignDomainQuizSetId String
@@ -472,9 +481,10 @@ model UserQuizLog {
 
   regionId String?
   subsidaryId String?
-  channelSegmentId String?
   storeId String?
+  storeSegmentText String?
   channelId String?
+  channelSegmentId String?
 
   @@unique([userId, campaignId])
 }
@@ -482,6 +492,7 @@ model UserQuizLog {
 model UserQuizBadgeStageLog {
   id          String   @id @default(uuid())
   userId      String
+  authType  AuthType
   campaignId String
   
   isBadgeAcquired Boolean?
@@ -501,9 +512,10 @@ model UserQuizBadgeStageLog {
   jobId       String?
   regionId String?
   subsidaryId String?
-  channelSegmentId String?
   storeId String?
+  storeSegmentText String?
   channelId String?
+  channelSegmentId String?
 
   @@unique([userId, campaignId, quizStageId])
 }
@@ -512,6 +524,7 @@ model UserQuizBadgeStageLog {
 model UserQuizStageLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
+  authType  AuthType
   
   // user         User     @relation(fields: [userId], references: [id])
 
@@ -550,14 +563,16 @@ model UserQuizStageLog {
   
   regionId String?
   subsidaryId String?
-  channelSegmentId String?
   storeId String?
+  storeSegmentText String?
   channelId String?
+  channelSegmentId String?
 }
 
 model UserQuizQuestionLog {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
+  authType  AuthType
   quizSetId   String      // Foreign key to QuizSet
   
   // user result
@@ -587,9 +602,10 @@ model UserQuizQuestionLog {
 
   regionId String?
   subsidaryId String?
-  channelSegmentId String?
   storeId String?
+  storeSegmentText String?
   channelId String?
+  channelSegmentId String?
   
 
   createdAt    DateTime @default(now())

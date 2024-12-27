@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { AuthType } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
@@ -102,10 +103,10 @@ export default function ScoreRankAnnouncement({
           </p>
         </div>
 
-        {user?.provider !== "sumtotal" && <SendEmailCard />}
+        {user?.authType !== AuthType.SUMTOTAL && <SendEmailCard />}
 
         <div className=" w-full space-x-0 sm:space-x-3">
-          {user?.provider === "sumtotal" && (
+          {user?.authType === AuthType.SUMTOTAL && (
             <Button className="text-[18px] mt-7" variant={"primary"}>
               S+
             </Button>

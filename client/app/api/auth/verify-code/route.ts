@@ -84,36 +84,6 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
-
-    // await signIn("email", { email });
-
-    // let userEmail = await prisma.userEmail.findFirst({
-    //   where: { email: email },
-    // });
-
-    // if (!userEmail) {
-    //   const userId = cuid();
-    //   userEmail = await prisma.userEmail.create({
-    //     data: {
-    //       email: email,
-    //       userId: userId,
-    //     },
-    //   });
-
-    //   const user = await prisma.user.create({
-    //     data: {
-    //       userId: userId,
-    //       emailId: userEmail.id,
-    //       authType: AuthType.GUEST,
-    //     },
-    //   });
-    // }
-
-    // return NextResponse.json(
-    //   { item: data },
-    //   { status: data?.$metadata?.httpStatusCode }
-    // );
-    // return NextResponse.json({ item: userCampaignDomainLog }, { status: 200 });
   } catch (error: unknown) {
     Sentry.captureException(error);
     if (error instanceof Error) {

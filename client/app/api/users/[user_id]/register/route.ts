@@ -1,3 +1,4 @@
+import { defaultLanguageCode } from "@/app/config/default";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
@@ -21,38 +22,56 @@ export async function POST(request: Request) {
 
     const domain = await prisma.domain.findFirst({
       where: {
-        code: body.domainCode,
+        id: body.domainId,
       },
     });
 
-    const language = await prisma.language.findFirst({
+    let language = await prisma.language.findFirst({
       where: {
         code: body.languageCode,
       },
     });
 
-    const user = await prisma.user.update({
+    const job = await prisma.job.findFirst({
+      where: {
+        id: body.jobId,
+      },
+    });
+
+    if (!language) {
+      language = await prisma.language.findFirst({
+        where: {
+          code: defaultLanguageCode,
+        },
+      });
+    }
+
+    const languageCode = language?.code ?? defaultLanguageCode;
+
+    await prisma.user.update({
       where: {
         id: session?.user.id,
       },
       data: {
         domainId: domain?.id,
-        languageId: language?.id ?? "en-US",
+        languageId: language!.id,
         jobId: body.jobId,
         regionId: body.regionId,
         subsidaryId: body.subsidaryId,
-        channelSegmentId: body.channelSegmentId,
         storeId: body.storeId,
+        storeSegmentText: body.storeSegmentText,
         channelId: body.channelId,
+        channelSegmentId: body.channelSegmentId,
       },
-      include: {
-        domain: true,
-        language: true,
-        job: true,
-      },
+      // include: {
+      //   // domain: true,
+      //   // language: true,
+      //   job: true,
+      // },
     });
 
-    if (user.domain == null || user.job == null || user.language == null) {
+    // if (user.domain == null || user.job == null) {
+    if (domain == null || job == null) {
       return NextResponse.json(
         {
           status: 404,
@@ -65,7 +84,8 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    const quizPath = `${user.domain.code}_${user.job.code}_${user.language.code}`;
+    // const quizPath = `${user.domain.code}_${user.job.code}_${languageCode}`;
+    const quizPath = `${domain?.code}_${job?.code}_${languageCode}`;
 
     return NextResponse.json({ item: quizPath }, { status: 200 });
   } catch (error) {

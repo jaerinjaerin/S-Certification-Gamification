@@ -50,9 +50,10 @@ export async function POST(request: NextRequest) {
             error: "Verification email recently sent",
             // code: "EMAIL_RECENTLY_SENT",
             code: "EMAIL_ALREADY_SENT",
-            retryAfter: new Date(
-              verifyToken.updatedAt.getTime() + 2 * 60 * 1000
-            ),
+            expiresAt: verifyToken.expiresAt,
+            // retryAfter: new Date(
+            //   verifyToken.updatedAt.getTime() + 2 * 60 * 1000
+            // ),
           },
           { status: 429 } // Too Many Requests
         );

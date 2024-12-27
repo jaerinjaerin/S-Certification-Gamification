@@ -7,6 +7,7 @@ export async function POST(request: Request) {
 
     const {
       userId,
+      authType,
       campaignId,
       quizStageId,
       isBadgeStage,
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
     const quizStageLog = await await prisma.userQuizStageLog.create({
       data: {
         userId,
+        authType,
         campaignId,
         isBadgeStage,
         isBadgeAcquired,
@@ -71,6 +73,7 @@ export async function POST(request: Request) {
       await await prisma.userQuizBadgeStageLog.create({
         data: {
           userId,
+          authType,
           campaignId,
           isBadgeAcquired,
           badgeActivityId,

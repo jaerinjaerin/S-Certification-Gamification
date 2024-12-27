@@ -1,9 +1,10 @@
 "use client";
 
-import { QuestionType } from "@prisma/client";
+import { AuthType, QuestionType } from "@prisma/client";
 import assert from "assert";
 
 export type QuizLog = {
+  authType: AuthType | undefined;
   isCorrect: boolean;
   campaignId: string;
   userId: string;
@@ -22,8 +23,8 @@ export type QuizLog = {
   domainId: string | null;
   regionId: string | null;
   subsidaryId: string | null;
-  channelSegmentId: string | null;
   channelId: string | null;
+  channelSegmentId: string | null;
   storeId: string | null;
   jobId: string;
   languageId: string | null;
