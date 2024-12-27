@@ -19,7 +19,7 @@ export default function Stat({ score }: { score: number }) {
 
   return (
     <h1 className="text-[50px] leading-normal" ref={ref}>
-      {score}
+      0
     </h1>
   );
 }

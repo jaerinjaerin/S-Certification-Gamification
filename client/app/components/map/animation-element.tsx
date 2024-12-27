@@ -17,7 +17,7 @@ export const ActivePointer = () => {
         duration: LOOP_DURATION,
         ease: "linear",
       }}
-      className="absolute bottom-[-16px] right-[-16px] size-[65px] bg-contain bg-center"
+      className="absolute bottom-[-16px] right-[-16px] size-[65px] bg-contain bg-center pointer-events-none"
       style={{
         backgroundImage: `url(${pointerImageUrl})`,
       }}
