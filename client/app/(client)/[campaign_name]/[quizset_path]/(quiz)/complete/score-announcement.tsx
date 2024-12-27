@@ -1,7 +1,8 @@
 import { useTranslations } from "next-intl";
-import Stage from "./stage-complete";
+
 import ScoreCircleAnimation from "./score-circle-animation";
 import { cn } from "@/lib/utils";
+import CompleteStage from "./stage-complete";
 
 export default function ScoreAnnouncement({
   currentQuizStageIndex,
@@ -14,11 +15,9 @@ export default function ScoreAnnouncement({
 
   return (
     <div className={cn(className)}>
-      <Stage currentQuizStageIndex={currentQuizStageIndex}>
-        <div className="text-[38px] my-[50px]">
-          {translation("Completed.completed")}
-        </div>
-      </Stage>
+      <CompleteStage currentQuizStageIndex={currentQuizStageIndex}>
+        <div className="text-[38px] my-[50px]">{translation("completed")}</div>
+      </CompleteStage>
       <ScoreCircleAnimation />
     </div>
   );

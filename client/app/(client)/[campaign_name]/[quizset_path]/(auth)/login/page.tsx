@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 
 export default function Login() {
   const { status } = useSession();
-  const translation = useTranslations("Main");
+  const translation = useTranslations();
 
   const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
   const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
@@ -45,7 +45,7 @@ export default function Login() {
 }
 
 const LoginTitle = ({ className }: { className?: string }) => {
-  const translation = useTranslations("Main");
+  const translation = useTranslations();
   const { loading, setLoading } = useLoader();
   const processSignIn = async () => {
     setLoading(true);
@@ -57,7 +57,10 @@ const LoginTitle = ({ className }: { className?: string }) => {
     <>
       <div className={cn("flex flex-col items-center", className)}>
         <div className="mb-[70px]">
-          <span className="block font-extrabold text-[44px] text-center mb-5">
+          <span
+            className="block font-extrabold text-[44px] text-center mb-5"
+            style={{ wordBreak: "break-word" }}
+          >
             {translation("be_a_galaxy_ai_expert")}
           </span>
           <span className="block text-[30px] font-medium text-center uppercase">

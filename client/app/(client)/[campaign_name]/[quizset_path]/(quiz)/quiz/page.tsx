@@ -27,7 +27,7 @@ export default function QuizPage() {
     canNextQuestion,
     logUserAnswer,
   } = useQuiz();
-  const trnaslation = useTranslations("Quiz");
+  const trnaslation = useTranslations();
   const { routeToPage } = usePathNavigator();
 
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];

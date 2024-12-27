@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 export default function ScoreCircleAnimation() {
   const { getAllStageMaxScore, quizStagesTotalScore } = useQuiz();
-  const translation = useTranslations("Completed");
+  const translation = useTranslations();
 
   const CIRCLE_PERCENTAGE = Math.floor(
     (quizStagesTotalScore / getAllStageMaxScore()) * 100

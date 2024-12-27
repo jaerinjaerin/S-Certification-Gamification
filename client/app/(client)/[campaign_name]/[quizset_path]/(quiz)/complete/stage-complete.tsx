@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
 
-export default function Stage({
+export default function CompleteStage({
   currentQuizStageIndex,
   children,
 }: {
   currentQuizStageIndex: number;
   children: React.ReactNode;
 }) {
-  const translation = useTranslations("Completed");
+  const translation = useTranslations();
 
   return (
     <div className="flex flex-col pt-10">
