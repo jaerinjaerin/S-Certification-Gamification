@@ -105,26 +105,24 @@ export async function POST(request: NextRequest) {
     if (data?.$metadata?.httpStatusCode == 200) {
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
 
-      // verifyToken = await prisma.verifyToken.create({
-      //   data: {
-      //     email: toAddress,
-      //     token: randomCode,
-      //     expiresAt,
-      //   },
-      // });
-      verifyToken = await prisma.verifyToken.upsert({
-        where: { id: verifyToken?.id },
-        update: {
-          token: randomCode,
-          expiresAt,
-          updatedAt: new Date(),
-        },
-        create: {
-          email: toAddress,
-          token: randomCode,
-          expiresAt,
-        },
-      });
+      if (verifyToken) {
+        verifyToken = await prisma.verifyToken.update({
+          where: { id: verifyToken?.id },
+          data: {
+            token: randomCode,
+            expiresAt,
+            updatedAt: new Date(),
+          },
+        });
+      } else {
+        verifyToken = await prisma.verifyToken.create({
+          data: {
+            email: toAddress,
+            token: randomCode,
+            expiresAt,
+          },
+        });
+      }
 
       return NextResponse.json(
         {

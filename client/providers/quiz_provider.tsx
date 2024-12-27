@@ -191,7 +191,7 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  console.log("QuizProvider quizLog", quizLog, userId);
+  // console.log("QuizProvider quizLog", quizLog, userId);
 
   useEffect(() => {
     console.log("QuizProvider useEffect", userId, quizLog?.id);
@@ -361,17 +361,18 @@ export const QuizProvider = ({
         if (!activityId) {
           return false;
         }
-        await postActivitieRegister(activityId);
-        // await postActivitieEnd(activityId, elapsedSeconds);
-        await postActivitieEnd(activityId, 30);
+        const registered = await postActivitieRegister(activityId);
+        const result = await postActivitieEnd(activityId, elapsedSeconds);
+        return result;
       } else {
         const badgeImageUrl = getCurrentStageBadgeImageUrl();
         if (!badgeImageUrl) {
-          await sendBadgeEmail(badgeImageUrl!);
+          const result = await sendBadgeEmail(badgeImageUrl!);
+          return result;
         }
       }
 
-      return true;
+      return false;
     } catch (error) {
       Sentry.captureException(error);
       return false;
@@ -484,20 +485,25 @@ export const QuizProvider = ({
 
       const data = await response.json();
       console.log("data", data);
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 이메일 전송 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }
   };
 
-  const postActivitieRegister = async (activityId: string) => {
+  const postActivitieRegister = async (
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
-          method: "PUT",
+          method: "POST",
           cache: "no-store",
           body: JSON.stringify({
             activityId: activityId,
@@ -512,9 +518,12 @@ export const QuizProvider = ({
       }
 
       const data = await response.json();
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }
@@ -523,7 +532,7 @@ export const QuizProvider = ({
   const postActivitieEnd = async (
     activityId: string,
     elapsedSeconds: number
-  ) => {
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
@@ -533,7 +542,8 @@ export const QuizProvider = ({
           body: JSON.stringify({
             activityId: activityId,
             status: "Attended",
-            elapsedSeconds: elapsedSeconds,
+            // elapsedSeconds: elapsedSeconds,
+            elapsedSeconds: 10,
           }),
         }
       );
@@ -546,9 +556,12 @@ export const QuizProvider = ({
 
       const data = await response.json();
       console.log("data", data);
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }

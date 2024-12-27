@@ -6,7 +6,7 @@
     "dev": "cp -f .env.dev .env && next dev -p 3000",
     "local": "cp -f .env.loc .env && next dev -p 3000",
     "stage": "cp -f .env.stage .env && next dev -p 3000",
-    "build": "next build",
+    "build": " rm -rf .next && next build",
     "build:local": "cp -f .env.loc.production .env && next build",
     "build:analyze": "npm run build && source-map-explorer .next/static/**/*.js",
     "analyze": "ANALYZE=true next build",

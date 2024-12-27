@@ -11,8 +11,7 @@ import ScoreAnnouncement from "./score-announcement";
 import ScoreRankAnnouncement from "./score-rank-announcement";
 
 export default function QuizComplete() {
-  const { quizStageLogs, lastCompletedQuizStage, currentQuizStageIndex } =
-    useQuiz();
+  const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
   const { routeToPage } = usePathNavigator();
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
@@ -32,10 +31,8 @@ export default function QuizComplete() {
       await sleep(3000);
       routeToPage("map");
     };
-
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
-
     routeToMapPage();
   }, [quizStageLogs]);
 
@@ -57,14 +54,14 @@ export default function QuizComplete() {
         }}
       >
         <ScoreAnnouncement
-          currentQuizStageIndex={currentQuizStageIndex}
+          stageName={lastCompletedQuizStage?.name ?? ""}
           className="w-full h-full shrink-0"
         />
 
         {isBadgeStage && (
           <>
             <GetBadgeAnnouncment
-              currentQuizStageIndex={currentQuizStageIndex}
+              stageName={lastCompletedQuizStage?.name ?? ""}
               badgeStage={lastCompletedQuizStage}
               className=" w-full h-full shrink-0"
             />

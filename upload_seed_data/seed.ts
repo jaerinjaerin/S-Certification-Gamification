@@ -22,7 +22,7 @@ const bgImages = [
   "/certification/s24/images/bg_02.png",
   "/certification/s24/images/bg_03.png",
   "/certification/s24/images/bg_04.png",
-  "/certification/s24/images/bg_05.png",
+  // "/certification/s24/images/bg_05.png",
 ];
 
 async function main() {
