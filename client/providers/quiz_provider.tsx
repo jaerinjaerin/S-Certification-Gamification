@@ -248,29 +248,31 @@ export const QuizProvider = ({
       quizLogManager.getLogs(),
       remainingHearts
     );
-    const totalScore = quizStagesTotalScore + score;
+    const totalQuizScore = quizStagesTotalScore + score;
 
     console.info("score", score);
 
     // 현재 스테이지의 총 소요시간 계산
-    const totalElapsedSeconds = quizLogManager.getTotalElapsedSeconds();
+    const stageElapsedSeconds = quizLogManager.getTotalElapsedSeconds();
+    const totalQuizTime = getQuizTotalElapsedSeconds() + stageElapsedSeconds;
+
     setIsLoading(true);
 
     // 뱃지 스테이지 여부 확인
     let badgeStage = isBadgeStage();
     let isBadgeAcquired = false;
     if (badgeStage) {
-      isBadgeAcquired = await processBadgeAcquisition(totalElapsedSeconds);
+      isBadgeAcquired = await processBadgeAcquisition(stageElapsedSeconds);
     }
 
     // 퀴즈 스테이지 로그 생성
     await createQuizQuestionLogs(quizLogManager.getLogs());
 
     // 퀴즈 스테이지 로그 생성
-    const quizStageLog: UserQuizStageLog = await createQuizStageLog(
+    const newQuizStageLog: UserQuizStageLog = await createQuizStageLog(
       score,
-      totalScore,
-      totalElapsedSeconds,
+      totalQuizScore,
+      stageElapsedSeconds,
       remainingHearts,
       badgeStage,
       isBadgeAcquired,
@@ -278,17 +280,17 @@ export const QuizProvider = ({
     );
 
     // 퀴즈 로그 업데이트
-    const quizLog: UserQuizLog = await updateQuizSummaryLog(
+    const updatedQuizLog: UserQuizLog = await updateQuizSummaryLog(
       currentQuizStageIndex,
       badgeStage,
-      totalScore,
-      totalElapsedSeconds
+      totalQuizScore,
+      totalQuizTime
     );
 
     // 퀴즈 로그 State 업데이트
-    setQuizStagesTotalScore(totalScore);
-    setQuizStageLogs([..._quizStageLogs, quizStageLog]);
-    setQuizLog(quizLog);
+    setQuizStagesTotalScore(totalQuizScore);
+    setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+    setQuizLog(updatedQuizLog);
 
     // 다음 스테이지로 이동
     quizLogManager.endStage();
@@ -296,11 +298,15 @@ export const QuizProvider = ({
     setIsLoading(false);
 
     return {
-      score: quizStageLog.score ?? 0,
+      score: newQuizStageLog.score ?? 0,
       isBadgeAcquired: isBadgeAcquired,
       badgeStage: badgeStage,
       badgeImageURL: currentQuizStage?.badgeImageUrl ?? "",
     };
+  };
+
+  const getQuizTotalElapsedSeconds = (): number => {
+    return _quizStageLogs.reduce((total, log) => total + log.elapsedSeconds, 0);
   };
 
   const isLastQuestionOnState = (): boolean => {

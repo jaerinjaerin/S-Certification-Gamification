@@ -58,12 +58,14 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // 만료된 토큰 삭제
-      await prisma.verifyToken.deleteMany({
-        where: {
-          expiresAt: { lt: now },
-        },
-      });
+      if (now < verifyToken.expiresAt) {
+        // 만료된 토큰 삭제
+        await prisma.verifyToken.deleteMany({
+          where: {
+            expiresAt: { lt: now },
+          },
+        });
+      }
     }
 
     // const token = crypto.randomBytes(32).toString("hex");
