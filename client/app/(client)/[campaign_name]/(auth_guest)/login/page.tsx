@@ -249,11 +249,6 @@ export default function GuestLogin() {
     }
   };
 
-  console.log(
-    "process.env.NEXT_PUBLIC_BASE_PATH",
-    process.env.NEXT_PUBLIC_BASE_PATH
-  );
-
   return (
     <>
       <div className="relative">

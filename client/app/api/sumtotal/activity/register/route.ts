@@ -61,7 +61,8 @@ export async function POST(request: Request) {
         }
 
         const data = await response.json();
-        console.log("data", data);
+        console.log("api/register data", data);
+        Sentry.captureMessage("response", data);
         return NextResponse.json(data, { status: 200 });
       } catch (error) {
         console.error(`Error during attempt ${attempt + 1}:`, error);

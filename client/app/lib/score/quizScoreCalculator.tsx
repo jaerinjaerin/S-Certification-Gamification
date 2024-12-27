@@ -1,5 +1,6 @@
-"use server";
+// "use server";
 
+import { QuizLog } from "@/providers/managers/quizLogManager";
 // type QuizLog = {
 //   isCorrect: boolean; // 정답 여부
 //   selectedOptionIds: string[]; // 사용자가 선택한 옵션
@@ -7,31 +8,24 @@
 //   elapsedSeconds: number; // 한 문제 풀이 시간 (초 단위)
 // };
 
-import { UserQuizQuestionLog } from "@prisma/client";
-
 class QuizScoreCalculator {
   private baseScore = 20; // 기본 점수
   private comboBonus = 2; // 연속 정답 보너스
   private timeBonusThreshold = 60; // 문제 풀이 시간 보너스 기준 (초)
-  private timeBonus = 5; // 문제 풀이 시간 보너스 점수
-  private levelTimeThresholds = [120, 180, 300]; // 레벨 소요 시간 기준 (초)
-  private levelTimeScores = [20, 10, 0]; // 레벨 소요 시간 점수
+  // private timeBonus = 5; // 문제 풀이 시간 보너스 점수
+  private levelTimeThresholds = [180, 210, 240, 270, 300, 330, 360, 420]; // 레벨 소요 시간 기준 (초)
+  private levelTimeScores = [40, 35, 30, 25, 20, 15, 10, 5]; // 레벨 소요 시간 점수
   private heartBonus = 10; // 하트 보너스 점수
 
   /**
    * 문제별 점수를 계산합니다.
    */
-  calculateQuizScore(log: UserQuizQuestionLog): number {
+  calculateQuizScore(log: QuizLog): number {
     let score = 0;
 
     // 정답 체크
     if (log.isCorrect) {
       score += this.baseScore; // 기본 점수 추가
-
-      // 문제 풀이 시간 보너스
-      if (log.elapsedSeconds <= this.timeBonusThreshold) {
-        score += this.timeBonus;
-      }
     } else {
       // 오답이지만 멀티 선택 문제일 경우 정답 개수에 따른 점수 부여
       // 정답 개수에 따른 점수 분배
@@ -41,7 +35,11 @@ class QuizScoreCalculator {
       ).length;
 
       // 정답 점수 분배 (기본 점수 / 정답 개수) * 맞춘 개수
-      score += Math.round((this.baseScore / correctCount) * correctSelections);
+      if (correctCount > 0) {
+        score += Math.round(
+          (this.baseScore / correctCount) * correctSelections
+        );
+      }
     }
 
     return score;
@@ -50,10 +48,7 @@ class QuizScoreCalculator {
   /**
    * 레벨별 점수를 계산합니다.
    */
-  calculateStageScore(
-    quizLogs: UserQuizQuestionLog[],
-    remainingHearts: number
-  ): number {
+  calculateStageScore(quizLogs: QuizLog[], remainingHearts: number): number {
     let totalScore = 0;
     let comboCount = 0;
 
@@ -88,6 +83,34 @@ class QuizScoreCalculator {
   }
 
   /**
+   * 문제 개수와 하트 개수를 입력받아 만점을 계산합니다.
+   */
+  calculateMaxScore(totalQuestions: number, totalHearts: number): number {
+    let maxScore = 0;
+    let comboCount = 0;
+
+    // 각 문제를 정답으로 가정하여 점수 계산
+    for (let i = 0; i < totalQuestions; i++) {
+      // maxScore += this.baseScore +  this.timeBonus; // 기본 점수 + 시간 보너스
+      maxScore += this.baseScore; // 기본 점수
+
+      // 연속 정답 보너스
+      comboCount++;
+      maxScore += comboCount > 1 ? this.comboBonus : 0;
+    }
+
+    // 레벨 소요 시간 보너스 (최소 시간으로 가정)
+    // const minLevelTime = totalQuestions * 5;
+    const minLevelTime = this.levelTimeThresholds[0] - 1;
+    maxScore += this.calculateLevelTimeBonus(minLevelTime);
+
+    // 하트 보너스
+    maxScore += totalHearts * this.heartBonus;
+
+    return maxScore;
+  }
+
+  /**
    * 레벨 소요 시간에 따른 보너스 점수를 계산합니다.
    */
   private calculateLevelTimeBonus(levelTimeSeconds: number): number {
@@ -98,16 +121,6 @@ class QuizScoreCalculator {
     }
     return 0;
   }
-
-  /**
-   * 전체 레벨 점수를 합산합니다.
-   */
-  // calculateTotalScore(levelLogs: LevelLog[]): number {
-  //   return levelLogs.reduce(
-  //     (total, levelLog) => total + this.calculateStageScore(levelLog),
-  //     0
-  //   );
-  // }
 }
 
 export default QuizScoreCalculator;

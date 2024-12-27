@@ -29,7 +29,7 @@ export default function ScoreRankAnnouncement({
   const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
   const isLastStage =
     quizSet.quizStages[quizSet.quizStages.length - 1].id ===
-    lastCompletedQuizStage!.id;
+    lastCompletedQuizStage?.id;
 
   const { data: session } = useSession();
   const user = session?.user;
@@ -70,7 +70,7 @@ export default function ScoreRankAnnouncement({
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+              <DialogClose className="text-[18px] py-[22px] px-[34px]" asChild>
                 <Button variant={"primary"}>{translation("ok")}</Button>
               </DialogClose>
             </DialogFooter>

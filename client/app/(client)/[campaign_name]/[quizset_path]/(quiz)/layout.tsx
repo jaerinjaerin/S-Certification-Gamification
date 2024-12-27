@@ -10,9 +10,6 @@ export default async function QuizLayout({
   params: { campaign_name: string; quizset_path: string };
 }) {
   const session = await auth();
-  console.log("QuizLayout session", session);
-
-  console.log("QuizLayout session?.user.provider", session?.user.provider);
 
   // Fetch data from API
   const fetchData = async (url: string, options: RequestInit = {}) => {

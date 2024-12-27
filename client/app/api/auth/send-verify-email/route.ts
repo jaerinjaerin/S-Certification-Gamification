@@ -37,25 +37,35 @@ export async function POST(request: NextRequest) {
     );
 
     if (verifyToken) {
-      if (new Date() < verifyToken.expiresAt) {
-        Sentry.captureMessage("Verification email already sent");
+      const now = new Date();
+
+      // 이메일이 이미 발송되었고, 2분 이내에 재전송하려는 경우
+      if (
+        now < verifyToken.expiresAt &&
+        now.getTime() - verifyToken.updatedAt.getTime() < 2 * 60 * 1000
+      ) {
+        Sentry.captureMessage("Verification email recently sent");
         return NextResponse.json(
           {
-            error: "Verification email already sent",
-            verifyToken: verifyToken,
+            error: "Verification email recently sent",
+            // code: "EMAIL_RECENTLY_SENT",
             code: "EMAIL_ALREADY_SENT",
-            expiresAt: verifyToken.expiresAt,
+            retryAfter: new Date(
+              verifyToken.updatedAt.getTime() + 2 * 60 * 1000
+            ),
           },
-          { status: 409 }
+          { status: 429 } // Too Many Requests
         );
       }
 
-      // 만료된 토큰 삭제
-      await prisma.verifyToken.deleteMany({
-        where: {
-          expiresAt: { lt: new Date() }, // 현재 시간보다 이전
-        },
-      });
+      if (now < verifyToken.expiresAt) {
+        // 만료된 토큰 삭제
+        await prisma.verifyToken.deleteMany({
+          where: {
+            expiresAt: { lt: now },
+          },
+        });
+      }
     }
 
     // const token = crypto.randomBytes(32).toString("hex");
@@ -97,13 +107,24 @@ export async function POST(request: NextRequest) {
     if (data?.$metadata?.httpStatusCode == 200) {
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10분 후 만료
 
-      verifyToken = await prisma.verifyToken.create({
-        data: {
-          email: toAddress,
-          token: randomCode,
-          expiresAt,
-        },
-      });
+      if (verifyToken) {
+        verifyToken = await prisma.verifyToken.update({
+          where: { id: verifyToken?.id },
+          data: {
+            token: randomCode,
+            expiresAt,
+            updatedAt: new Date(),
+          },
+        });
+      } else {
+        verifyToken = await prisma.verifyToken.create({
+          data: {
+            email: toAddress,
+            token: randomCode,
+            expiresAt,
+          },
+        });
+      }
 
       return NextResponse.json(
         {

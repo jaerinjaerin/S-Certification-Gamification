@@ -1,13 +1,13 @@
-import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import Stage from "./stage-complete";
+import { useTranslations } from "next-intl";
+import CompleteStage from "./stage-complete";
 
 export default function GetBadgeAnnouncment({
-  currentQuizStageIndex,
+  stageName,
   badgeStage,
   className,
 }: {
-  currentQuizStageIndex: number;
+  stageName: string;
   badgeStage: any;
   className?: string;
 }) {
@@ -17,16 +17,15 @@ export default function GetBadgeAnnouncment({
   return (
     <div className={cn("w-full shrink-0", className)}>
       <div className="flex flex-col gap-[10px] justify-center">
-        <Stage currentQuizStageIndex={currentQuizStageIndex}>
+        <CompleteStage stageName={stageName}>
           <div className="text-[22px] text-pretty my-[30px] text-center">
             <span className="block">
-              {translation("email_badge_description_1")}
-            </span>
-            <span className="block">
-              {translation("email_badge_description_2")}
+              {stageName === "3"
+                ? translation("congratulation 1")
+                : translation("congratulation 2")}
             </span>
           </div>
-        </Stage>
+        </CompleteStage>
         <div
           className="size-[200px] mx-auto"
           style={{

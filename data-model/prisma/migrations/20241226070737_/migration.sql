@@ -145,7 +145,7 @@ CREATE TABLE "Region" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "hqId" TEXT NOT NULL,
+    "hqId" TEXT,
 
     CONSTRAINT "Region_pkey" PRIMARY KEY ("id")
 );
@@ -155,7 +155,7 @@ CREATE TABLE "Subsidary" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "regionId" TEXT NOT NULL,
+    "regionId" TEXT,
 
     CONSTRAINT "Subsidary_pkey" PRIMARY KEY ("id")
 );
@@ -165,7 +165,7 @@ CREATE TABLE "Domain" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "subsidaryId" TEXT NOT NULL,
+    "subsidaryId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -173,10 +173,23 @@ CREATE TABLE "Domain" (
 );
 
 -- CreateTable
-CREATE TABLE "QuizSet" (
+CREATE TABLE "DomainGoal" (
     "id" TEXT NOT NULL,
     "campaignId" TEXT NOT NULL,
     "domainId" TEXT NOT NULL,
+    "userCount" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "DomainGoal_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "QuizSet" (
+    "id" TEXT NOT NULL,
+    "campaignId" TEXT NOT NULL,
+    "domainId" TEXT,
+    "subsidaryId" TEXT,
     "jobCodes" TEXT[],
     "createrId" TEXT NOT NULL,
     "updaterId" TEXT,
@@ -216,6 +229,8 @@ CREATE TABLE "Question" (
     "originalIndex" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "backgroundImageUrl" TEXT,
+    "characterImageUrl" TEXT,
     "category" TEXT NOT NULL,
     "specificFeature" TEXT NOT NULL,
     "enabled" BOOLEAN NOT NULL,
@@ -274,17 +289,17 @@ CREATE TABLE "ChannelSegment" (
 CREATE TABLE "UserQuizLog" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "campaignId" TEXT NOT NULL,
     "isCompleted" BOOLEAN,
     "isBadgeAcquired" BOOLEAN,
     "lastCompletedStage" INTEGER,
-    "timeSpent" INTEGER,
+    "elapsedSeconds" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "quizSetId" TEXT NOT NULL,
     "score" INTEGER,
-    "quizsetPath" TEXT,
-    "campaignId" TEXT NOT NULL,
-    "domainId" TEXT NOT NULL,
+    "quizSetPath" TEXT,
+    "domainId" TEXT,
     "languageId" TEXT,
     "jobId" TEXT,
     "regionId" TEXT,
@@ -297,13 +312,37 @@ CREATE TABLE "UserQuizLog" (
 );
 
 -- CreateTable
+CREATE TABLE "UserQuizBadgeStageLog" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "campaignId" TEXT NOT NULL,
+    "isBadgeAcquired" BOOLEAN,
+    "badgeActivityId" TEXT,
+    "elapsedSeconds" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "quizSetId" TEXT NOT NULL,
+    "quizStageId" TEXT NOT NULL,
+    "quizStageIndex" INTEGER NOT NULL,
+    "score" INTEGER NOT NULL,
+    "domainId" TEXT,
+    "languageId" TEXT,
+    "jobId" TEXT,
+    "regionId" TEXT,
+    "subsidaryId" TEXT,
+    "channelSegmentId" TEXT,
+    "storeId" TEXT,
+    "channelId" TEXT,
+
+    CONSTRAINT "UserQuizBadgeStageLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "UserQuizStageLog" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "jobId" TEXT NOT NULL,
     "campaignId" TEXT NOT NULL,
     "quizStageId" TEXT NOT NULL,
-    "isCompleted" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "isBadgeStage" BOOLEAN,
@@ -311,10 +350,12 @@ CREATE TABLE "UserQuizStageLog" (
     "badgeActivityId" TEXT,
     "remainingHearts" INTEGER NOT NULL,
     "quizSetId" TEXT NOT NULL,
-    "stageIndex" INTEGER NOT NULL,
+    "quizStageIndex" INTEGER NOT NULL,
     "elapsedSeconds" INTEGER NOT NULL,
     "score" INTEGER,
     "domainId" TEXT NOT NULL,
+    "languageId" TEXT,
+    "jobId" TEXT NOT NULL,
     "regionId" TEXT,
     "subsidaryId" TEXT,
     "channelSegmentId" TEXT,
@@ -334,7 +375,7 @@ CREATE TABLE "UserQuizQuestionLog" (
     "selectedOptionIds" TEXT[],
     "correctOptionIds" TEXT[],
     "quizStageId" TEXT NOT NULL,
-    "stageIndex" INTEGER NOT NULL,
+    "quizStageIndex" INTEGER NOT NULL,
     "elapsedSeconds" INTEGER NOT NULL,
     "category" TEXT NOT NULL,
     "specificFeature" TEXT NOT NULL,
@@ -343,7 +384,7 @@ CREATE TABLE "UserQuizQuestionLog" (
     "campaignId" TEXT NOT NULL,
     "jobId" TEXT NOT NULL,
     "languageId" TEXT,
-    "domainId" TEXT NOT NULL,
+    "domainId" TEXT,
     "regionId" TEXT,
     "subsidaryId" TEXT,
     "channelSegmentId" TEXT,
@@ -394,6 +435,12 @@ CREATE UNIQUE INDEX "Subsidary_code_key" ON "Subsidary"("code");
 -- CreateIndex
 CREATE UNIQUE INDEX "Domain_code_key" ON "Domain"("code");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "UserQuizLog_userId_campaignId_key" ON "UserQuizLog"("userId", "campaignId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UserQuizBadgeStageLog_userId_campaignId_quizStageId_key" ON "UserQuizBadgeStageLog"("userId", "campaignId", "quizStageId");
+
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -410,19 +457,28 @@ ALTER TABLE "users" ADD CONSTRAINT "users_domainId_fkey" FOREIGN KEY ("domainId"
 ALTER TABLE "users" ADD CONSTRAINT "users_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Region" ADD CONSTRAINT "Region_hqId_fkey" FOREIGN KEY ("hqId") REFERENCES "Hq"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Region" ADD CONSTRAINT "Region_hqId_fkey" FOREIGN KEY ("hqId") REFERENCES "Hq"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Subsidary" ADD CONSTRAINT "Subsidary_regionId_fkey" FOREIGN KEY ("regionId") REFERENCES "Region"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Subsidary" ADD CONSTRAINT "Subsidary_regionId_fkey" FOREIGN KEY ("regionId") REFERENCES "Region"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Domain" ADD CONSTRAINT "Domain_subsidaryId_fkey" FOREIGN KEY ("subsidaryId") REFERENCES "Subsidary"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Domain" ADD CONSTRAINT "Domain_subsidaryId_fkey" FOREIGN KEY ("subsidaryId") REFERENCES "Subsidary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DomainGoal" ADD CONSTRAINT "DomainGoal_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DomainGoal" ADD CONSTRAINT "DomainGoal_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_subsidaryId_fkey" FOREIGN KEY ("subsidaryId") REFERENCES "Subsidary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuizStage" ADD CONSTRAINT "QuizStage_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -435,6 +491,3 @@ ALTER TABLE "UserQuizLog" ADD CONSTRAINT "UserQuizLog_userId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "UserQuizLog" ADD CONSTRAINT "UserQuizLog_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "UserQuizStageLog" ADD CONSTRAINT "UserQuizStageLog_quizStageId_fkey" FOREIGN KEY ("quizStageId") REFERENCES "QuizStage"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
