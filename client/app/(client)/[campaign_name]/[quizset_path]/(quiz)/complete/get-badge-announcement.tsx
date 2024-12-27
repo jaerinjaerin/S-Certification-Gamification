@@ -1,15 +1,14 @@
-import { useTranslations } from "next-intl";
-import { motion } from "motion/react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Stage from "./stage-complete";
 
 export default function GetBadgeAnnouncment({
-  currentQuizStageIndex,
+  stageName,
   badgeStage,
   className,
 }: {
-  currentQuizStageIndex: number;
+  stageName: string;
   badgeStage: any;
   className?: string;
 }) {
@@ -19,7 +18,7 @@ export default function GetBadgeAnnouncment({
   return (
     <div className={cn("w-full shrink-0", className)}>
       <div className="flex flex-col gap-[10px] justify-center">
-        <Stage currentQuizStageIndex={currentQuizStageIndex}>
+        <Stage stageName={stageName}>
           <div className="text-[22px] text-pretty my-[30px]">
             {translation("congratulation")}
           </div>

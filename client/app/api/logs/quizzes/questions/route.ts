@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       channelId,
     } = body;
 
-    console.log("body", body);
+    // console.log("body", body);
 
     // const quizLog = await await prisma.userQuizLog.findFirst({
     //   where: {

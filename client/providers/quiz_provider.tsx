@@ -1,5 +1,6 @@
 "use client";
 
+import QuizScoreCalculator from "@/app/lib/score/quizScoreCalculator";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
@@ -22,7 +23,6 @@ import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
-import QuizScoreManager from "./managers/quizScoreManager";
 
 export interface QuizSetEx extends QuizSet {
   language: Language;
@@ -170,8 +170,15 @@ export const QuizProvider = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const quizScoreManagerRef = useRef(new QuizScoreManager()); // 유지되는 인스턴스
-  const quizScoreManager = quizScoreManagerRef.current;
+  const quizScoreCalculator = new QuizScoreCalculator();
+
+  // const quizScoreCalculatorRef = useRef<QuizScoreCalculator | null>(null);
+
+  // if (quizScoreCalculatorRef.current === null) {
+  //   quizScoreCalculatorRef.current = new QuizScoreCalculator(); // 인스턴스 생성
+  // }
+
+  // const quizScoreCalculator = quizScoreCalculatorRef.current;
 
   const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
   const quizLogManager = quizLogManagerRef.current;
@@ -184,7 +191,7 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  console.log("QuizProvider quizLog", quizLog, userId);
+  // console.log("QuizProvider quizLog", quizLog, userId);
 
   useEffect(() => {
     console.log("QuizProvider useEffect", userId, quizLog?.id);
@@ -237,10 +244,10 @@ export const QuizProvider = ({
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     // 현재 스테이지의 점수 계산
-    const score = quizScoreManager.calculateStageScore({
-      quizLogs: quizLogManager.getLogs(),
-      remainingHearts: remainingHearts,
-    });
+    const score = quizScoreCalculator.calculateStageScore(
+      quizLogManager.getLogs(),
+      remainingHearts
+    );
     const totalScore = quizStagesTotalScore + score;
 
     console.info("score", score);
@@ -278,7 +285,7 @@ export const QuizProvider = ({
       totalElapsedSeconds
     );
 
-    // 퀴즈 로그 업데이트
+    // 퀴즈 로그 State 업데이트
     setQuizStagesTotalScore(totalScore);
     setQuizStageLogs([..._quizStageLogs, quizStageLog]);
     setQuizLog(quizLog);
@@ -354,16 +361,18 @@ export const QuizProvider = ({
         if (!activityId) {
           return false;
         }
-        await postActivitieRegister(activityId);
-        await postActivitieEnd(activityId, elapsedSeconds);
+        const registered = await postActivitieRegister(activityId);
+        const result = await postActivitieEnd(activityId, elapsedSeconds);
+        return result;
       } else {
         const badgeImageUrl = getCurrentStageBadgeImageUrl();
         if (!badgeImageUrl) {
-          await sendBadgeEmail(badgeImageUrl!);
+          const result = await sendBadgeEmail(badgeImageUrl!);
+          return result;
         }
       }
 
-      return true;
+      return false;
     } catch (error) {
       Sentry.captureException(error);
       return false;
@@ -476,20 +485,25 @@ export const QuizProvider = ({
 
       const data = await response.json();
       console.log("data", data);
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 이메일 전송 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }
   };
 
-  const postActivitieRegister = async (activityId: string) => {
+  const postActivitieRegister = async (
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
-          method: "PUT",
+          method: "POST",
           cache: "no-store",
           body: JSON.stringify({
             activityId: activityId,
@@ -504,9 +518,12 @@ export const QuizProvider = ({
       }
 
       const data = await response.json();
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }
@@ -515,7 +532,7 @@ export const QuizProvider = ({
   const postActivitieEnd = async (
     activityId: string,
     elapsedSeconds: number
-  ) => {
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
@@ -525,7 +542,8 @@ export const QuizProvider = ({
           body: JSON.stringify({
             activityId: activityId,
             status: "Attended",
-            elapsedSeconds: elapsedSeconds,
+            // elapsedSeconds: elapsedSeconds,
+            elapsedSeconds: 10,
           }),
         }
       );
@@ -538,9 +556,12 @@ export const QuizProvider = ({
 
       const data = await response.json();
       console.log("data", data);
+
+      return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
       Sentry.captureException(err);
+      return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
     }
@@ -808,9 +829,18 @@ export const QuizProvider = ({
     }
   };
 
-  // TODO: 실제 계산로직으로 변경해야함.
   const getAllStageMaxScore = () => {
-    return 2000;
+    const maxScore = quizSet.quizStages.reduce(
+      (total, stage: QuizStageEx) =>
+        quizScoreCalculator.calculateMaxScore(
+          stage.questions.length,
+          stage.lifeCount
+        ) + total,
+      0
+    );
+
+    console.log("getAllStageMaxScore", maxScore);
+    return maxScore;
   };
 
   return (
