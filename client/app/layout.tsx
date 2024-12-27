@@ -3,8 +3,20 @@ import "./globals.css";
 import { one, samsungSans } from "./font/font";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_ASSETS_DOMAIN ||
+      "https://assets-stage.samsungplus.net"
+  ),
   title: "Samsung+ Certification Gamification",
   description: "Samsung+ Certification Gamification",
+  icons: {
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/splus_logo.png`,
+  },
+  openGraph: {
+    images: [
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/badgeStage3.png`,
+    ],
+  },
 };
 
 export default async function RootLayout({

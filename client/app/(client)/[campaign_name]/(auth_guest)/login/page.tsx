@@ -172,12 +172,12 @@ export default function GuestLogin() {
       } else {
         const data = await response.json();
         console.log("data", data);
-        const { code, expiresAt, verifyToken } = data;
+        const { code, expiresAt, verifyToken, retryAfter } = data;
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail(translation("email_already_sent"));
           setVerifyToken(verifyToken);
 
-          setExpiresAt(new Date(expiresAt));
+          setExpiresAt(new Date(retryAfter));
           startCountdown();
           return;
         }
@@ -375,6 +375,9 @@ export default function GuestLogin() {
       <AlertDialog open={!!successSendEmail}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
+            <AlertDialogTitle aria-hidden className="hidden">
+              Alert
+            </AlertDialogTitle>
             <AlertDialogDescription>{successSendEmail}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -454,7 +457,7 @@ export default function GuestLogin() {
               <button
                 className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
                 onClick={sendEmail}
-                disabled
+                disabled={count > 0}
               >
                 {translation("resend_code")}
               </button>

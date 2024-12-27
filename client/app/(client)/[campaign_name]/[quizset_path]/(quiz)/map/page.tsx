@@ -90,12 +90,12 @@ export default function QuizMap() {
 
             <TutorialCarousel />
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]">
+              <DialogClose className="text-[18px] py-[22px] px-[34px]" asChild>
                 <Button variant={"primary"}>{translation("ok")}</Button>
-                <DialogClose className="absolute top-5 right-5">
-                  <X className="h-4 w-4" />
-                  <span className="sr-only">Close</span>
-                </DialogClose>
+              </DialogClose>
+              <DialogClose className="absolute top-5 right-5">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
               </DialogClose>
             </DialogFooter>
           </DialogContent>
@@ -164,13 +164,23 @@ const TutorialCarousel = () => {
             >
               <div className="h-full relative max-w-[300px]">
                 {index === 0 && (
-                  <div className="bg-[#EDEDED]  max-h-[320px] h-full overflow-y-scroll relative rounded-[20px] text-[#4E4E4E] p-4 py-5">
-                    <p className="text-right absolute right-[62px] sm:right-[84px] top-[23px] sm:top-[21px] text-[12px] sm:text-[14px]">
+                  <div
+                    className={cn(
+                      " max-h-[320px] h-full overflow-y-scroll relative",
+                      "bg-[#EDEDED] rounded-[20px] text-[#4E4E4E] p-4 py-5",
+                      "flex flex-col"
+                    )}
+                  >
+                    <p
+                      className={cn(
+                        "text-right text-[12px] sm:text-[14px] w-[70%]"
+                      )}
+                    >
                       {translation("attempts_deduction")}
                     </p>
 
                     <div
-                      className="w-full h-[160px] sm:mt-[10px]"
+                      className="w-full h-[160px] shrink-0 -mt-[50px] sm:-mt-[22px] "
                       style={{
                         backgroundImage: `url(${mapGuideImageUrl})`,
                         backgroundPosition: "center",
@@ -179,7 +189,7 @@ const TutorialCarousel = () => {
                       }}
                     ></div>
 
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[8px] sm:-mt-[15px] text-[12px] sm:text-[14px] text-pretty">
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-[12px] sm:text-[14px] text-pretty">
                       {translation("time_limit_per_quiz")}
                     </p>
                   </div>
