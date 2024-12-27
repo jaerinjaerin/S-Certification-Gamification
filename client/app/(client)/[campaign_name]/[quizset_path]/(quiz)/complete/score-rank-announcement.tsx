@@ -31,7 +31,7 @@ export default function ScoreRankAnnouncement({
   const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
   const isLastStage =
     quizSet.quizStages[quizSet.quizStages.length - 1].id ===
-    lastCompletedQuizStage.id;
+    lastCompletedQuizStage?.id;
 
   const { data: session } = useSession();
   const user = session?.user;

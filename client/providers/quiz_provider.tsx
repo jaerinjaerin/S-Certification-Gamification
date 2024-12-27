@@ -1,5 +1,6 @@
 "use client";
 
+import QuizScoreCalculator from "@/app/lib/score/quizScoreCalculator";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
@@ -22,7 +23,6 @@ import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
-import QuizScoreManager from "./managers/quizScoreManager";
 
 export interface QuizSetEx extends QuizSet {
   language: Language;
@@ -170,8 +170,15 @@ export const QuizProvider = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const quizScoreManagerRef = useRef(new QuizScoreManager()); // 유지되는 인스턴스
-  const quizScoreManager = quizScoreManagerRef.current;
+  const quizScoreCalculator = new QuizScoreCalculator();
+
+  // const quizScoreCalculatorRef = useRef<QuizScoreCalculator | null>(null);
+
+  // if (quizScoreCalculatorRef.current === null) {
+  //   quizScoreCalculatorRef.current = new QuizScoreCalculator(); // 인스턴스 생성
+  // }
+
+  // const quizScoreCalculator = quizScoreCalculatorRef.current;
 
   const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
   const quizLogManager = quizLogManagerRef.current;
@@ -237,10 +244,10 @@ export const QuizProvider = ({
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     // 현재 스테이지의 점수 계산
-    const score = quizScoreManager.calculateStageScore({
-      quizLogs: quizLogManager.getLogs(),
-      remainingHearts: remainingHearts,
-    });
+    const score = quizScoreCalculator.calculateStageScore(
+      quizLogManager.getLogs(),
+      remainingHearts
+    );
     const totalScore = quizStagesTotalScore + score;
 
     console.info("score", score);
@@ -278,7 +285,7 @@ export const QuizProvider = ({
       totalElapsedSeconds
     );
 
-    // 퀴즈 로그 업데이트
+    // 퀴즈 로그 State 업데이트
     setQuizStagesTotalScore(totalScore);
     setQuizStageLogs([..._quizStageLogs, quizStageLog]);
     setQuizLog(quizLog);
@@ -355,7 +362,8 @@ export const QuizProvider = ({
           return false;
         }
         await postActivitieRegister(activityId);
-        await postActivitieEnd(activityId, elapsedSeconds);
+        // await postActivitieEnd(activityId, elapsedSeconds);
+        await postActivitieEnd(activityId, 30);
       } else {
         const badgeImageUrl = getCurrentStageBadgeImageUrl();
         if (!badgeImageUrl) {
@@ -808,9 +816,18 @@ export const QuizProvider = ({
     }
   };
 
-  // TODO: 실제 계산로직으로 변경해야함.
   const getAllStageMaxScore = () => {
-    return 2000;
+    const maxScore = quizSet.quizStages.reduce(
+      (total, stage: QuizStageEx) =>
+        quizScoreCalculator.calculateMaxScore(
+          stage.questions.length,
+          stage.lifeCount
+        ) + total,
+      0
+    );
+
+    console.log("getAllStageMaxScore", maxScore);
+    return maxScore;
   };
 
   return (
