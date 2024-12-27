@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Stage from "./stage-complete";
 
 export default function GetBadgeAnnouncment({
@@ -23,15 +22,14 @@ export default function GetBadgeAnnouncment({
             {translation("congratulation")}
           </div>
         </Stage>
-        <div className="size-[200px] mx-auto">
-          <Image
-            src={badgeImageUrl}
-            alt="badge image"
-            className="w-full h-full object-cover"
-            width={200}
-            height={200}
-          />
-        </div>
+        <div
+          className="size-[200px] mx-auto"
+          style={{
+            backgroundImage: `url(${badgeImageUrl})`,
+            backgroundPosition: "center",
+            backgroundSize: "contain",
+          }}
+        />
       </div>
     </div>
   );

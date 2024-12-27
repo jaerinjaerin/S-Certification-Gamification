@@ -7,6 +7,8 @@ export default function Qusetion({ question, bgImageUrl, charImageUrl }: { quest
       className="min-h-[480px] flex flex-col justify-between"
       style={{
         backgroundImage: `url(${bgImageUrl})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
       }}
     >
       <SpeechBubble>

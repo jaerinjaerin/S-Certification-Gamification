@@ -17,7 +17,6 @@ import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 export default function ScoreRankAnnouncement({
   className,
@@ -37,15 +36,6 @@ export default function ScoreRankAnnouncement({
   const user = session?.user;
   console.log(user);
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
-
-  const AUTO_DELAY = 3_000;
-
-  const SPRING_OPTIONS = {
-    type: "spring",
-    mass: 3,
-    stiffness: 400,
-    damping: 50,
-  };
 
   return (
     <div className={cn("", className)}>
@@ -97,15 +87,15 @@ export default function ScoreRankAnnouncement({
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[25px] mb-7">
-          <div className="w-full h-[180px]">
-            <Image
-              src={scoreRankImageUrl}
-              alt="rank graph"
-              width={320}
-              height={179}
-              className="mx-auto object-contain"
-            />
-          </div>
+          <div
+            className="w-full h-[180px]"
+            style={{
+              backgroundImage: `url(${scoreRankImageUrl})`,
+              backgroundPosition: "center",
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
 
           <p className="text-[22px] text-balance px-5">
             {completed_translation("rank_notification")}
