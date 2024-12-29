@@ -283,11 +283,12 @@ export const QuizProvider = ({
     );
 
     // 퀴즈 로그 업데이트
+    const isLastStage = currentQuizStageIndex === quizSet.quizStages.length - 1;
     const updatedQuizLog: UserQuizLog = await updateQuizSummaryLog(
       currentQuizStageIndex,
       badgeStage,
-      totalQuizScore,
-      totalQuizTime
+      isLastStage ? totalQuizScore : null,
+      isLastStage ? totalQuizTime : null
     );
 
     // 퀴즈 로그 State 업데이트
@@ -809,8 +810,8 @@ export const QuizProvider = ({
   const updateQuizSummaryLog = async (
     quizStageIndex: number,
     isBadgeAcquired: boolean,
-    totalScore,
-    elapsedSeconds
+    totalScore: number | null,
+    elapsedSeconds: number | null
   ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
