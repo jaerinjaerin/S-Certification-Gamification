@@ -111,7 +111,7 @@ model User {
   channelSegmentId String?
 
   // userQuizLogs     UserQuizLog[]
-  userQuizLogs UserQuizLog[]
+  // userQuizLogs UserQuizLog[]
   // userQuizStageLogs     UserQuizStageLog[]
   // userQuizSetLogs     UserQuizSetLog[]
   // userQuestionAttempt UserQuestionAttempt[]
@@ -194,7 +194,7 @@ model Campaign {
 
   // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
-  domainGoals  DomainGoal[]
+  // domainGoals  DomainGoal[]
 }
 
 model Hq {
@@ -247,19 +247,21 @@ model Domain {
   quizSets  QuizSet[]
   // channelSegmentIds String
   // users User[]
-  domainGoals  DomainGoal[]
+  // domainGoals  DomainGoal[]
 }
 
 model DomainGoal {
   id         String   @id @default(uuid())
   campaignId String
-  domainId   String
   userCount   Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  domain     Domain      @relation(fields: [domainId], references: [id])
+  // campaign   Campaign    @relation(fields: [campaignId], references: [id])
+  // domain     Domain      @relation(fields: [domainId], references: [id])
+  domainId   String
+  regionId String?
+  subsidaryId String?
 }
 
 model QuizSet {
@@ -295,7 +297,7 @@ model QuizSet {
   subsidary   Subsidary?      @relation(fields: [subsidaryId], references: [id])
   // language     Language      @relation(fields: [languageId], references: [id])
 
-  userQuizLogs UserQuizLog[]
+  // userQuizLogs UserQuizLog[]
 }
 
 model QuizStage {
@@ -337,7 +339,7 @@ model Question {
   options     QuestionOption[] // Associated options
   // quizStageId     String?         // Foreign key to Stage
   order       Int
-  // quizStage       QuizStage       @relation(fields: [quizStageId], references: [id])
+  // quizStage       QuizStage       @relation(fields: [quuserQuizQuestionLogizStageId], references: [id])
   
   languageId  String      // Foreign key to Language
   originalQuestionId    String     // Foreign key to Question
@@ -351,11 +353,13 @@ model Question {
   backgroundImageUrl String?
   characterImageUrl String?
 
-  category    String
-  specificFeature   String
+  category    String?
+  specificFeature   String?
+  importance String?
+  product    String?
   enabled     Boolean
-  product    String
   questionType    QuestionType
+  
 
   // userQuizQuestionLogs UserQuizQuestionLog[]
 }
@@ -446,13 +450,13 @@ model UserQuizLog {
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
-  user        User    @relation(fields: [userId], references: [id])
+  // user        User    @relation(fields: [userId], references: [id])
 
 
   // campaignDomainQuizSetId String
   // campaignDomainQuizSet    CampaignDomainQuizSet  @relation(fields: [campaignDomainQuizSetId], references: [id])
   quizSetId String
-  quizSet    QuizSet  @relation(fields: [quizSetId], references: [id])
+  // quizSet    QuizSet?  @relation(fields: [quizSetId], references: [id])
   // campaignActivityId String
   // campaignActivity  CampaignActivity  @relation(fields: [campaignActivityId], references: [id])
   // quizSet QuizSet? @relation(fields: [quizSetId], references: [id])
@@ -577,6 +581,7 @@ model UserQuizQuestionLog {
   
   // user result
   questionId   String      // Foreign key to Question
+  questionText String?
   // question     Question? @relation(fields: [questionId], references: [id])
   isCorrect    Boolean  // Whether the user answered the question correctly
   selectedOptionIds String[]
@@ -588,10 +593,11 @@ model UserQuizQuestionLog {
   elapsedSeconds Int
 
   // question
-  category    String
-  specificFeature   String
-  product    String
   questionType    QuestionType
+  category    String?
+  product    String?
+  specificFeature   String?
+  importance String?
 
   // country
   campaignId  String

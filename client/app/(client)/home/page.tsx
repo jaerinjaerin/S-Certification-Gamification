@@ -7,6 +7,17 @@ export default function Home() {
   const { status, data: session } = useSession();
   console.log("Home session", session);
 
+  const sendTestGetScore = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/score?userId=user_0&quizStageIndex=3&campaignId=s24`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
+    console.log("get score", data);
+  };
+
   const sendTestEmail = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
@@ -210,6 +221,15 @@ export default function Home() {
         >
           Send Badge Email
         </button>
+        <br />
+        <br />
+        <button
+          onClick={() => {
+            sendTestGetScore();
+          }}
+        >
+          Test Get Score
+        </button>
       </>
     );
   }
@@ -238,6 +258,15 @@ export default function Home() {
         }}
       >
         Send Email
+      </button>
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          sendTestGetScore();
+        }}
+      >
+        Test Get Score
       </button>
       {status === "loading" && <p>Loading...</p>}
     </div>

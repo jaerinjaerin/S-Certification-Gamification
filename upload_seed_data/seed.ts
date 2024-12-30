@@ -114,11 +114,24 @@ async function main() {
 
     const campaign = await prisma.campaign.findFirst();
     await prisma.domainGoal.createMany({
-      data: domains.map((country: any) => ({
-        campaignId: campaign.id,
-        domainId: country.domainId.toString(),
-        userCount: 10000,
-      })),
+      data: domains.map((country: any) => {
+        const domainId = country.domainId.toString();
+        const subsidaryId =
+          subsidaries
+            .find((subsidiary) => subsidiary.domainId === domainId)
+            ?.domainId?.toString() ?? null;
+        const regionsId =
+          regions
+            .find((region) => region.domainId === subsidaryId)
+            ?.domainId?.toString() ?? null;
+        return {
+          campaignId: campaign.id,
+          domainId: domainId,
+          regionId: regionsId,
+          subsidaryId: subsidaryId,
+          userCount: 1000,
+        };
+      }),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
