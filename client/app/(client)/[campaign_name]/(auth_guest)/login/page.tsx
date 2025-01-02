@@ -21,7 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { formatToMMSS } from "@/lib/utils";
-import { VerifyToken } from "@prisma/client";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
@@ -38,13 +37,14 @@ export default function GuestLogin() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [verifyToken, setVerifyToken] = useState<VerifyToken | null>(null);
+  // const [_, setVerifyToken] = useState<VerifyToken | null>(null);
   const [expiresAt, setExpiresAt] = useState<Date | null>(null);
   const [successSendEmail, setSuccessSendEmail] = useState<string | null>(null);
 
   const [countStart, setCountStart] = useState<number>(0);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({ countStart });
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
+    countStart,
+  });
 
   const translation = useTranslations();
 
@@ -75,7 +75,7 @@ export default function GuestLogin() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -321,7 +321,7 @@ export default function GuestLogin() {
 
         if (code === "EMAIL_SENT") {
           setSuccessSendEmail(translation("email_success"));
-          setVerifyToken(verifyToken);
+          // setVerifyToken(verifyToken);
           setExpiresAt(new Date(expiresAt));
           startCountdown();
         } else {
@@ -330,10 +330,10 @@ export default function GuestLogin() {
       } else {
         const data = await response.json();
         console.log("data", data);
-        const { code, expiresAt, verifyToken, retryAfter } = data;
+        const { code, expiresAt } = data;
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail(translation("email_already_sent"));
-          setVerifyToken(verifyToken);
+          // setVerifyToken(verifyToken);
 
           setExpiresAt(new Date(expiresAt));
           startCountdown();
@@ -371,7 +371,7 @@ export default function GuestLogin() {
       );
       if (!response.ok) {
         const data = await response.json();
-        const { code, error } = data;
+        const { code } = data;
         if (code === "EMAIL_NOT_SENT") {
           setError(translation("email_not_sent"));
           return;
@@ -391,7 +391,7 @@ export default function GuestLogin() {
         return;
       }
 
-      const data = await response.json();
+      await response.json();
       const result = await signIn("credentials", {
         email,
         code,

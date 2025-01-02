@@ -12,8 +12,8 @@ export default function Login() {
   const { status } = useSession();
   const translation = useTranslations();
 
-  const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
-  const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
+  // const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
+  // const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
 
   if (status === "loading") {
     return <Spinner />;

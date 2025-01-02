@@ -42,8 +42,8 @@ export default async function QuizLayout({
     {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
-      // cache: "force-cache",
-      cache: "no-cache",
+      cache: "force-cache",
+      // cache: "no-cache",
     }
   );
 

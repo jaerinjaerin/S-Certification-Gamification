@@ -22,7 +22,7 @@ export default function ReviewPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
@@ -138,7 +138,7 @@ export default function ReviewPage() {
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
         {question.options &&
-          question.options.map((option: QuestionOption, index: number) => {
+          question.options.map((option: QuestionOption) => {
             return (
               <motion.label
                 aria-readonly

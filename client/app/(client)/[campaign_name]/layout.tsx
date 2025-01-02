@@ -14,7 +14,6 @@ export default async function CampaignLayout({
   console.log("CampaignLayout url", url);
   const response = await fetch(url, {
     method: "GET",
-    // headers: { "Content-Type": "application/json" },
     cache: "force-cache",
   });
 

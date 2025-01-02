@@ -235,7 +235,7 @@ export const QuizProvider = ({
     try {
       console.log("createQuizLog started", userId);
       const initHistoryResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -407,9 +407,10 @@ export const QuizProvider = ({
     console.log("get score");
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/score?userId=${userId}&quizStageIndex=${quizStageIndex}&campaignId=${campaign.id}&userScore=${score}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?userId=${userId}&quizStageIndex=${quizStageIndex}&campaignId=${campaign.id}&userScore=${score}`,
         {
           method: "GET",
+          cache: "no-store",
         }
       );
       const data = await response.json();
@@ -787,7 +788,7 @@ export const QuizProvider = ({
       const result = Promise.all(
         quizLogs.map(async (quizLog) => {
           await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions`,
+            `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/questions`,
             {
               method: "POST",
               headers: {
@@ -820,7 +821,7 @@ export const QuizProvider = ({
   ): Promise<UserQuizStageLog> => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/stages`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/stages`,
         {
           method: "POST",
           headers: {
@@ -887,7 +888,7 @@ export const QuizProvider = ({
   ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/${_quizLog?.id}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/${_quizLog?.id}`,
         {
           method: "PUT",
           headers: {

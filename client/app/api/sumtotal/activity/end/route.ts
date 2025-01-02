@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { activityId, status, elapsedSeconds } = body as {
+    const { activityId, status } = body as {
       activityId: string;
       status: string;
       elapsedSeconds: number;

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function TestPage() {
   const [activities, setActivities] = useState<any[]>([]);
-  const [domains, setDomains] = useState<any[]>([]);
+  const [domains] = useState<any[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,34 +61,34 @@ export default function TestPage() {
     }
   };
 
-  const getUserJobAndChannel = async () => {
-    setLoading(true);
-    setError(null);
+  // const getUserJobAndChannel = async () => {
+  //   setLoading(true);
+  //   setError(null);
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/job?org_ids=506631,751755`,
-        {
-          method: "GET",
-          cache: "no-store",
-        }
-      );
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/job?org_ids=506631,751755`,
+  //       {
+  //         method: "GET",
+  //         cache: "no-store",
+  //       }
+  //     );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || "Failed to fetch user job and channel"
-        );
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(
+  //         errorData.message || "Failed to fetch user job and channel"
+  //       );
+  //     }
 
-      const data = await response.json();
-      console.log("data", data);
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("data", data);
+  //   } catch (err: any) {
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const refreshToken = async () => {
     setLoading(true);
@@ -251,115 +251,115 @@ export default function TestPage() {
   };
 
   // API 호출 함수
-  const fetchDomains = async () => {
-    setLoading(true);
-    setError(null);
-    setDomains([]); // Clear any existing domains
+  // const fetchDomains = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   setDomains([]); // Clear any existing domains
 
-    try {
-      let allDomains: any[] = []; // To accumulate all domain data
-      let offset = 1; // Start from page 0
-      const limit = 100; // Number of items per page
+  //   try {
+  //     let allDomains: any[] = []; // To accumulate all domain data
+  //     let offset = 1; // Start from page 0
+  //     const limit = 100; // Number of items per page
 
-      while (true) {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/domains?limit=${limit}&offset=${offset}`,
-          {
-            cache: "no-store",
-          }
-        );
+  //     while (true) {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/domains?limit=${limit}&offset=${offset}`,
+  //         {
+  //           cache: "no-store",
+  //         }
+  //       );
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch domains");
-        }
+  //       if (!response.ok) {
+  //         const errorData = await response.json();
+  //         throw new Error(errorData.message || "Failed to fetch domains");
+  //       }
 
-        const data = await response.json();
+  //       const data = await response.json();
 
-        // Combine fetched domains with accumulated domains
-        allDomains = [...allDomains, ...data.data];
+  //       // Combine fetched domains with accumulated domains
+  //       allDomains = [...allDomains, ...data.data];
 
-        // Remove duplicates by domainId (or a unique identifier)
-        const domainMap = new Map();
-        allDomains.forEach((domain) => {
-          domainMap.set(domain.domainId, domain); // Replace `domainId` with the actual unique key for domains
-        });
-        allDomains = Array.from(domainMap.values());
+  //       // Remove duplicates by domainId (or a unique identifier)
+  //       const domainMap = new Map();
+  //       allDomains.forEach((domain) => {
+  //         domainMap.set(domain.domainId, domain); // Replace `domainId` with the actual unique key for domains
+  //       });
+  //       allDomains = Array.from(domainMap.values());
 
-        console.log("allDomains", allDomains.length);
+  //       console.log("allDomains", allDomains.length);
 
-        // Check if we've fetched all pages
-        if (allDomains.length >= data.pagination.total) {
-          break;
-        }
+  //       // Check if we've fetched all pages
+  //       if (allDomains.length >= data.pagination.total) {
+  //         break;
+  //       }
 
-        // Increment the page number for the next request
-        offset += 1;
-      }
+  //       // Increment the page number for the next request
+  //       offset += 1;
+  //     }
 
-      console.log(`Fetched allDomains`, allDomains);
-      saveAsJson(allDomains, "allDomains.json");
+  //     console.log(`Fetched allDomains`, allDomains);
+  //     saveAsJson(allDomains, "allDomains.json");
 
-      setDomains(allDomains); // Store all domains
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setDomains(allDomains); // Store all domains
+  //   } catch (err: any) {
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const saveAsJson = (data, fileName = "data.json") => {
-    // Convert the data to a JSON string
-    const jsonString = JSON.stringify(data, null, 2); // `null, 2` for pretty printing
+  // const saveAsJson = (data, fileName = "data.json") => {
+  //   // Convert the data to a JSON string
+  //   const jsonString = JSON.stringify(data, null, 2); // `null, 2` for pretty printing
 
-    // Create a Blob object
-    const blob = new Blob([jsonString], { type: "application/json" });
+  //   // Create a Blob object
+  //   const blob = new Blob([jsonString], { type: "application/json" });
 
-    // Create a temporary anchor element
-    const link = document.createElement("a");
+  //   // Create a temporary anchor element
+  //   const link = document.createElement("a");
 
-    // Set the download URL and file name
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
+  //   // Set the download URL and file name
+  //   link.href = URL.createObjectURL(blob);
+  //   link.download = fileName;
 
-    // Append the anchor to the body (required for Firefox)
-    document.body.appendChild(link);
+  //   // Append the anchor to the body (required for Firefox)
+  //   document.body.appendChild(link);
 
-    // Programmatically click the anchor to trigger the download
-    link.click();
+  //   // Programmatically click the anchor to trigger the download
+  //   link.click();
 
-    // Remove the anchor from the document
-    document.body.removeChild(link);
+  //   // Remove the anchor from the document
+  //   document.body.removeChild(link);
 
-    // Revoke the Blob URL
-    URL.revokeObjectURL(link.href);
-  };
+  //   // Revoke the Blob URL
+  //   URL.revokeObjectURL(link.href);
+  // };
 
-  const fetchJobs = async () => {
-    setLoading(true);
-    setError(null);
+  // const fetchJobs = async () => {
+  //   setLoading(true);
+  //   setError(null);
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/jobs`,
-        {
-          cache: "no-store",
-        }
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch jobs");
-      }
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/jobs`,
+  //       {
+  //         cache: "no-store",
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Failed to fetch jobs");
+  //     }
 
-      const data = await response.json();
-      console.log("fetchJobs data", data);
-      setDomains(data.data); // Extract and store activities array
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("fetchJobs data", data);
+  //     setDomains(data.data); // Extract and store activities array
+  //   } catch (err: any) {
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleActivitySelect = (activity: any) => {
     setSelectedActivity(activity);

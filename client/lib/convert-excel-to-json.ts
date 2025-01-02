@@ -1,8 +1,6 @@
-// @ts-nocheck
-
-const fs = require("fs");
-const path = require("path");
-const XLSX = require("xlsx");
+import fs from "fs";
+import path from "path";
+import XLSX from "xlsx";
 
 const convertLangPackXlsxToJson = (data) => {
   return data.reduce((acc, el) => {
@@ -33,7 +31,10 @@ const convertLangPackFolerToJson = async () => {
       const key = file.split(".xlsx")[0].trim();
       const strings = convertLangPackXlsxToJson(jsonData);
 
-      fs.writeFileSync(`../messages/${key}.json`, JSON.stringify(strings, null, 2));
+      fs.writeFileSync(
+        `../messages/${key}.json`,
+        JSON.stringify(strings, null, 2)
+      );
     });
   } catch (error) {
     console.error("Unable to scan directory: ", error);

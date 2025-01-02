@@ -7,21 +7,22 @@ export default function Home() {
   const { status, data: session } = useSession();
   console.log("Home session", session);
 
-  const sendTestGetScore = async () => {
-    console.log("get score");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/score?userId=user_0&quizStageIndex=3&campaignId=s24`,
-      {
-        method: "GET",
-      }
-    );
-    const data = await response.json();
-    console.log("get score", data);
-  };
+  // const sendTestGetScore = async () => {
+  //   console.log("get score");
+  //   const response = await fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?userId=user_0&quizStageIndex=3&campaignId=s24`,
+  //     {
+  //       method: "GET",
+  //       cache: "no-store",
+  //     }
+  //   );
+  //   const data = await response.json();
+  //   console.log("get score", data);
+  // };
 
   const sendTestEmail = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -105,8 +106,8 @@ export default function Home() {
   const sendTestBadgeEmail = async () => {
     const badgeImageUrl =
       "https://assets-stage.samsungplus.net/certification/s24/images/badgeStage3.png";
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-verify-email`,
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -224,13 +225,13 @@ export default function Home() {
         </button>
         <br />
         <br />
-        <button
+        {/* <button
           onClick={() => {
             sendTestGetScore();
           }}
         >
           Test Get Score
-        </button>
+        </button> */}
       </>
     );
   }
@@ -262,13 +263,13 @@ export default function Home() {
       </button>
       <br />
       <br />
-      <button
+      {/* <button
         onClick={() => {
           sendTestGetScore();
         }}
       >
         Test Get Score
-      </button>
+      </button> */}
       {status === "loading" && <p>Loading...</p>}
     </div>
   );

@@ -1,8 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
+  "ignorePatterns": ["node_modules/"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": ["off"],
-    "ignorePatterns": ["node_modules/"]
+    "@typescript-eslint/no-explicit-any": ["off"]
   }
 }
 

@@ -39,7 +39,7 @@ export interface QuizSet {
   questions: QuizQuestion[];
   metadata: QuizMetadata;
 }
-*/
+
 // 오류 상세 정보 타입
 export interface ErrorDetails {
   code: string; // 오류 코드
@@ -65,3 +65,4 @@ export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 // 퀴즈 세트 API 응답 타입
 export interface QuizSetApiResponse extends ApiResponse<QuizSet> {}
+*/

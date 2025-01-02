@@ -10,7 +10,7 @@ import successNotify from "@/app/components/quiz/success-notify";
 import Spinner from "@/app/components/ui/spinner";
 import { useCountdown } from "@/app/hooks/useCountdown";
 import { cn, sleep } from "@/lib/utils";
-import { EndStageResult, QuestionEx, useQuiz } from "@/providers/quiz_provider";
+import { QuestionEx, useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
@@ -44,7 +44,8 @@ export default function QuizPage() {
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
 
   const [loading, setLoading] = useState(false);
-  const { success, setSuccess, renderSuccessLottie } = successNotify();
+  const [success, setSuccess] = useState(false);
+  const { renderSuccessLottie } = successNotify();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
@@ -97,7 +98,7 @@ export default function QuizPage() {
     }
 
     setLoading(true);
-    const result: EndStageResult = await endStage(lifeCount); // 남은 하트수
+    await endStage(lifeCount); // 남은 하트수
     setSelectedOptionIds([]);
 
     // nextStage();

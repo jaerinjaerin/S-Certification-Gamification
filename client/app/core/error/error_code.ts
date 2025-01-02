@@ -1,4 +1,4 @@
-enum EmailAuthErrorCode {
+export enum EmailAuthErrorCode {
   EMAIL_NOT_SENT = "EMAIL_NOT_SENT",
   EMAIL_EXPIRED = "EMAIL_EXPIRED",
   CODE_NOT_MATCH = "CODE_NOT_MATCH",

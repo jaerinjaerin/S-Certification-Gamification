@@ -150,7 +150,7 @@ export default function GuestRegisterPage() {
     try {
       setCheckingRegisterd(true);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
         {
           method: "GET",
           cache: "no-cache",
@@ -229,7 +229,7 @@ export default function GuestRegisterPage() {
     }
 
     createItem({
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/register`,
+      url: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/register`,
       body: {
         domainId: selectedCountry.id,
         domainCode: selectedCountry.code,

@@ -27,25 +27,25 @@ const nextConfig = {
         ]
       : [];
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      const TerserPlugin = config.optimization.minimizer.find(
-        (plugin) => plugin.constructor.name === "TerserPlugin"
-      );
+  // webpack: (config, { isServer }) => {
+  //   if (!isServer) {
+  //     const TerserPlugin = config.optimization.minimizer.find(
+  //       (plugin) => plugin.constructor.name === "TerserPlugin"
+  //     );
 
-      if (TerserPlugin) {
-        TerserPlugin.options.terserOptions = {
-          ...TerserPlugin.options.terserOptions,
-          compress: {
-            ...TerserPlugin.options.terserOptions.compress,
-            drop_console: false, // console.log를 제거하지 않음
-          },
-        };
-      }
-    }
+  //     if (TerserPlugin) {
+  //       TerserPlugin.options.terserOptions = {
+  //         ...TerserPlugin.options.terserOptions,
+  //         compress: {
+  //           ...TerserPlugin.options.terserOptions.compress,
+  //           drop_console: false, // console.log를 제거하지 않음
+  //         },
+  //       };
+  //     }
+  //   }
 
-    return config;
-  },
+  //   return config;
+  // },
 };
 
 const sentryConfig = {
