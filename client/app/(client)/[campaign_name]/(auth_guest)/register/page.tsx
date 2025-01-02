@@ -70,6 +70,7 @@ export default function GuestRegisterPage() {
   const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
     string | null
   >(null);
+  const [channelInput, setChannelInput] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   const [languageCode, setLanguageCode] = useState<string | undefined>(
@@ -95,25 +96,6 @@ export default function GuestRegisterPage() {
     console.log("fetchConutries");
     try {
       setLoading(true);
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/api/channels`,
-      //   {
-      //     method: "GET",
-      //     // cache: "force-cache",
-      //     cache: "no-cache",
-      //   }
-      // );
-
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   throw new Error(errorData.message || "Failed to fetch domains");
-      // }
-
-      // const data = await response.json();
-
-      // const data = await res.json();
-      // console.log("data", data);
-      // setCountries(data.items as Country[]);
 
       const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20241227.json`;
       console.log("jsonUrl", jsonUrl);
@@ -170,7 +152,6 @@ export default function GuestRegisterPage() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
         {
           method: "GET",
-          // cache: "force-cache",
           cache: "no-cache",
         }
       );
@@ -256,9 +237,12 @@ export default function GuestRegisterPage() {
 
   return (
     <div
-      className="py-[20px] min-h-svh bg-no-repeat bg-cover bg-center"
+      className="py-[20px] min-h-svh"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.png')`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
       <Dialog open>
@@ -275,7 +259,10 @@ export default function GuestRegisterPage() {
           <div className="flex flex-col gap-[14px]">
             {/* countries */}
             <Select
-              onValueChange={(value) => selectCountry(value)}
+              onValueChange={(value) => {
+                selectCountry(value);
+                setChannelInput(false);
+              }}
               value={`${translation("country")}*`}
             >
               <SelectTrigger
@@ -300,7 +287,20 @@ export default function GuestRegisterPage() {
             </Select>
             {/* channel */}
             <Select
-              onValueChange={(value) => selectChannel(value)}
+              onValueChange={(value) => {
+                if (value === "input_directly") {
+                  console.log("🚧", value);
+                  console.log("🔥", selectedChannel);
+
+                  setChannelInput(true);
+                  setSelectedChannel(null);
+                  // TODO:
+
+                  return;
+                }
+                selectChannel(value);
+                setChannelInput(false);
+              }}
               value={`${translation("channel")}*`}
             >
               <SelectTrigger
@@ -321,19 +321,28 @@ export default function GuestRegisterPage() {
                     {channel.name}
                   </SelectItem>
                 ))}
-                {/* TODO: 
-                 1. 직접입력 클릭 시  input 컴포넌트 생성
-                 2. input의 입력된 값을 channel로 전달
-                */}
-                {/* <SelectItem value={"직접입력할거에요"}>직접입력</SelectItem> */}
+
+                <SelectItem value={"input_directly"}>
+                  {translation("input_directly")}
+                </SelectItem>
               </SelectContent>
+              {channelInput && (
+                <input
+                  type="text"
+                  className="relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 text-sm rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]"
+                  placeholder={translation("input_directly")}
+                  onChange={(e) => {
+                    const value = e.target.value.trim();
+                    // TODO: setSelectdChannel
+                  }}
+                />
+              )}
             </Select>
             {/* job group */}
             <Select
               onValueChange={(value) => selectJob(value)}
               value={selectedJobId || ""}
             >
-              {/* <SelectTrigger disabled={isLoading || loadingCreate || channels.length === 0 || salesFormats.length === 0} value={selectedSalesFormat}> */}
               <SelectTrigger
                 disabled={loading || loadingCreate || selectedChannel === null}
               >
@@ -345,11 +354,6 @@ export default function GuestRegisterPage() {
                     {job.name}
                   </SelectItem>
                 ))}
-                {/* {salesFormats.map((format) => (
-                  <SelectItem key={format.id} value={format.id}>
-                    {format.storeType} ({format.job.code})
-                  </SelectItem>
-                ))} */}
               </SelectContent>
             </Select>
           </div>

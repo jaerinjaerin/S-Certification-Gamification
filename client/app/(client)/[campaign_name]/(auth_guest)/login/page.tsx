@@ -412,7 +412,7 @@ export default function GuestLogin() {
   return (
     <>
       <div className="relative">
-        <video
+        {/* <video
           className="w-full h-svh object-fill "
           autoPlay
           loop
@@ -427,7 +427,17 @@ export default function GuestLogin() {
             src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
             type="video/webm"
           />
-        </video>
+        </video> */}
+
+        <div
+          className="w-full h-svh object-fill"
+          style={{
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.png')`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        />
 
         <div className="flex flex-col items-center size-full absolute top-0 z-10 py-5">
           <span className="block font-extrabold">

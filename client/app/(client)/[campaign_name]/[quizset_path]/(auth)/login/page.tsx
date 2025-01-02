@@ -22,7 +22,7 @@ export default function Login() {
   return (
     <>
       <div className={cn("h-svh", fixedClass)}>
-        <video
+        {/* <video
           className="w-full h-svh object-fill absolute "
           autoPlay
           loop
@@ -31,7 +31,17 @@ export default function Login() {
         >
           <source src={videoMp4Url} type="video/mp4" />
           <source src={videoWebmUrl} type="video/webm" />
-        </video>
+        </video> */}
+        <div
+          className="w-full h-svh object-fill"
+          style={{
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.png')`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        />
+
         <div className="flex flex-col items-center h-full py-[20px] relative">
           <span className="block font-extrabold">
             {translation("galaxy_ai_expert")}
