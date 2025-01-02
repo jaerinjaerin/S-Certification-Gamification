@@ -35,9 +35,6 @@ export default function QuizMap() {
     currentQuizStageIndex,
     quizStageLogs,
   } = useQuiz();
-  // const [nextStage, setNextStage] = useState<number>(
-  //   (quizLog?.lastCompletedStage ?? 0) + 1
-  // );
 
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
@@ -46,7 +43,6 @@ export default function QuizMap() {
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // setNextStage((quizLog?.lastCompletedStage ?? 0) + 1);
     const targetStage = itemsRef.current[currentQuizStageIndex];
 
     if (!targetStage) return;
@@ -94,7 +90,7 @@ export default function QuizMap() {
                 <Button variant={"primary"}>{translation("ok")}</Button>
               </DialogClose>
               <DialogClose className="absolute top-5 right-5">
-                <X className="h-4 w-4" />
+                <X />
                 <span className="sr-only">Close</span>
               </DialogClose>
             </DialogFooter>
