@@ -238,17 +238,11 @@ export async function POST(request: NextRequest) {
         userId: userId,
         authType: user?.authType || AuthType.UNKNOWN,
         campaignId: quizSet.campaignId,
-        // badgeStages: quizSet.badgeStages,
-        // firstBadgeStage: quizSet.badgeStages,
-        // isFirstBadgeStageCompleted: false,
         isCompleted: false,
         isBadgeAcquired: false,
 
         jobId: job?.id,
         quizSetId: quizSet.id,
-
-        // firstBadgeActivityId: quizSet.firstBadgeActivityId,
-        // lastBadgeActivityId: quizSet.lastBadgeActivityId,
         languageId: language?.id,
         quizSetPath: quizsetPath,
 
@@ -259,13 +253,8 @@ export async function POST(request: NextRequest) {
         storeId: user?.storeId,
         storeSegmentText: user?.storeSegmentText,
         channelId: user?.channelId,
+        channelName: user?.channelName,
         channelSegmentId: user?.channelSegmentId,
-
-        // regionId String?
-        // subsidaryId String?
-        // channelSegmentId String?
-        // storeId String?
-        // channelId String?
       },
     });
 

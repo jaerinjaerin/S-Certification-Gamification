@@ -28,13 +28,8 @@ export async function POST(request: Request) {
       channelSegmentId,
       storeId,
       channelId,
+      channelName,
     } = body;
-
-    // const quizLog = await await prisma.userQuizLog.findFirst({
-    //   where: {
-    //     quizSetId,
-    //   },
-    // });
 
     const quizStageLog = await await prisma.userQuizStageLog.create({
       data: {
@@ -58,14 +53,7 @@ export async function POST(request: Request) {
         channelSegmentId,
         storeId,
         channelId,
-        // domainId: quizLog?.domainId!,
-        // languageId: quizLog?.languageId,
-        // jobId: quizLog?.jobId!,
-        // regionId: quizLog?.regionId,
-        // subsidaryId: quizLog?.subsidaryId,
-        // channelSegmentId: quizLog?.channelSegmentId,
-        // storeId: quizLog?.storeId,
-        // channelId: quizLog?.channelId,
+        channelName,
       },
     });
 
@@ -90,6 +78,7 @@ export async function POST(request: Request) {
           channelSegmentId,
           storeId,
           channelId,
+          channelName,
         },
       });
     }

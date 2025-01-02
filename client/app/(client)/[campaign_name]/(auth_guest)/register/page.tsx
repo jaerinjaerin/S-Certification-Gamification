@@ -67,6 +67,7 @@ export default function GuestRegisterPage() {
     null
   );
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [channelName, setChannelName] = useState<string | null>(null);
   const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
     string | null
   >(null);
@@ -184,9 +185,26 @@ export default function GuestRegisterPage() {
     const channels = country!.channels;
     setChannels(channels ?? []);
     setSelectedChannel(null);
+    setChannelName(null);
+    setSelectedJobId(null);
   };
 
   const selectChannel = (channelName: string) => {
+    console.log("🚧", channelName);
+    if (channelName === "input_directly") {
+      console.log("🔥", selectedChannel);
+
+      setChannelInput(true);
+      setSelectedChannel(null);
+      // TODO:
+
+      setSelectedJobId(jobs[0].id);
+
+      return;
+    }
+
+    setChannelName(null);
+    setChannelInput(false);
     const channel = channels?.find((c: Channel) => c.name === channelName);
     if (!channel) {
       assert(false, "Channel not found. Please select a valid channel.");
@@ -220,6 +238,7 @@ export default function GuestRegisterPage() {
         jobId: selectedJobId,
         languageCode: languageCode,
         channelId: selectedChannel?.channelId,
+        channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
       },
     });
@@ -261,7 +280,6 @@ export default function GuestRegisterPage() {
             <Select
               onValueChange={(value) => {
                 selectCountry(value);
-                setChannelInput(false);
               }}
               value={`${translation("country")}*`}
             >
@@ -288,18 +306,7 @@ export default function GuestRegisterPage() {
             {/* channel */}
             <Select
               onValueChange={(value) => {
-                if (value === "input_directly") {
-                  console.log("🚧", value);
-                  console.log("🔥", selectedChannel);
-
-                  setChannelInput(true);
-                  setSelectedChannel(null);
-                  // TODO:
-
-                  return;
-                }
                 selectChannel(value);
-                setChannelInput(false);
               }}
               value={`${translation("channel")}*`}
             >
@@ -333,7 +340,7 @@ export default function GuestRegisterPage() {
                   placeholder={translation("input_directly")}
                   onChange={(e) => {
                     const value = e.target.value.trim();
-                    // TODO: setSelectdChannel
+                    setChannelName(value);
                   }}
                 />
               )}
@@ -344,7 +351,12 @@ export default function GuestRegisterPage() {
               value={selectedJobId || ""}
             >
               <SelectTrigger
-                disabled={loading || loadingCreate || selectedChannel === null}
+                disabled={
+                  loading ||
+                  loadingCreate ||
+                  (selectedChannel === null &&
+                    (channelName === null || channelName.trim().length < 1))
+                }
               >
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
@@ -363,8 +375,8 @@ export default function GuestRegisterPage() {
               disabled={
                 loadingCreate ||
                 !selectedCountry ||
-                !selectedChannel ||
-                !selectedChannelSegmentId ||
+                (!selectedChannel &&
+                  (!channelName || channelName.trim().length < 3)) ||
                 !selectedJobId ||
                 !languageCode ||
                 (!loadingCreate && !!campaignPath)

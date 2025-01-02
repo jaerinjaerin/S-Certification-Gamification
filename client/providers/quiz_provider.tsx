@@ -373,7 +373,7 @@ export const QuizProvider = ({
           return false;
         }
         const registered = await postActivitieRegister(activityId);
-        const result = await postActivitieEnd(activityId, elapsedSeconds);
+        const result = await postActivityEnd(activityId, elapsedSeconds);
         return result;
       } else {
         const badgeImageUrl = getCurrentStageBadgeImageUrl();
@@ -541,7 +541,7 @@ export const QuizProvider = ({
     }
   };
 
-  const postActivitieEnd = async (
+  const postActivityEnd = async (
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -642,6 +642,7 @@ export const QuizProvider = ({
         subsidaryId: _quizLog?.subsidaryId,
         storeId: _quizLog?.storeId,
         channelId: _quizLog?.channelId,
+        channelName: _quizLog?.channelName,
         channelSegmentId: _quizLog?.channelSegmentId,
       });
 
@@ -700,6 +701,7 @@ export const QuizProvider = ({
       subsidaryId: _quizLog?.subsidaryId,
       storeId: _quizLog?.storeId,
       channelId: _quizLog?.channelId,
+      channelName: _quizLog?.channelName,
       channelSegmentId: _quizLog?.channelSegmentId,
     });
   };
@@ -786,6 +788,7 @@ export const QuizProvider = ({
             subsidaryId: _quizLog?.subsidaryId,
             storeId: _quizLog?.storeId,
             channelId: _quizLog?.channelId,
+            channelName: _quizLog?.channelName,
             channelSegmentId: _quizLog?.channelSegmentId,
           }),
         }

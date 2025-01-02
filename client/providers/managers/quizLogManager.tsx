@@ -24,6 +24,7 @@ export type QuizLog = {
   regionId: string | null;
   subsidaryId: string | null;
   channelId: string | null;
+  channelName: string | null;
   channelSegmentId: string | null;
   storeId: string | null;
   jobId: string;
