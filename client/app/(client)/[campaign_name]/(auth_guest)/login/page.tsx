@@ -81,237 +81,235 @@ export default function GuestLogin() {
           body: JSON.stringify({
             toAddress: email,
             subject: `${translation("email_title")}`,
-            bodyHtml: `<!DOCTYPE html>
-                        <html style="font-weight: 400">
-                          <head style="font-weight: 400">
-                            <meta charset="utf-8" style="font-weight: 400" />
-                            <meta
-                              name="viewport"
-                              content="width=device-width, initial-scale=1"
-                              style="font-weight: 400"
-                            />
+            bodyHtml: `
+<!DOCTYPE html>
+<html style="font-weight: 400">
+  <head style="font-weight: 400">
+    <meta charset="utf-8" style="font-weight: 400" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      style="font-weight: 400"
+    />
 
-                            <!-- TODO: 삼성폰트로 교체 -->
-                            <!-- <style type="text/css" style="font-weight: 400">
-                              @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-                            </style> -->
+    <style type="text/css" style="font-weight: 400">
+      @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+    </style>
 
-                            <style type="text/css" style="font-weight: 400"></style>
-                          </head>
-                          <body
-                            style="
-                              font-weight: 400;
-                              width: 100%;
-                              min-width: 100svw;
-                              font-size: 16px;
-                              font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-                              background-color: #fff;
-                              color: #2f2936;
-                              -webkit-font-smoothing: antialiased;
-                              margin: 0;
-                              padding: 0;
-                              background-color: #000;
-                            "
-                          >
-                            <div
-                              class="preheader"
-                              style="
-                                font-weight: 400;
-                                display: none;
-                                font-size: 0;
-                                max-height: 0;
-                                line-height: 0;
-                                mso-hide: all;
-                                padding: 0;
-                              "
-                            >
-                              Authentication Code for Galaxy AI Expert.
-                            </div>
-                            <table
-                              style="
-                                font-weight: 400;
-                                max-width: 840px;
-                                width: 100%;
-                                border-collapse: separate;
-                                font-size: 16px;
-                                font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-                                background-color: #fff;
-                                color: #2f2936;
-                                -webkit-font-smoothing: antialiased;
-                                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                                border-radius: 4px;
-                                border: 1px solid #c7d0d4;
-                                border-spacing: 0;
-                                margin: 30px auto;
-                                padding: 40px;
-                                background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png);
-                                background-size: contain;
-                              "
-                            >
-                              <tr style="font-weight: 400">
-                                <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-                                  <div
-                                    class="header"
-                                    style="
-                                      font-weight: 400;
-                                      font-size: 14px;
-                                      border-bottom: 1px solid #dee7eb;
-                                      padding: 23px 0;
-                                    "
-                                  >
-                                    <div
-                                      class="container"
-                                      style="
-                                        font-weight: 400;
-                                        text-align: left;
-                                        margin: 0 auto;
-                                        padding: 0 20px;
-                                      "
-                                    >
-                                      <!-- 첫번째 타이틀 -->
-                                      <div
-                                        style="
-                                          font-weight: 400;
-                                          display: inline-block;
-                                          width: 100%;
-                                          align-items: center;
-                                        "
-                                      >
-                                        <h1
-                                          style="
-                                            font-weight: 500;
-                                            float: left;
-                                            font-size: 18px;
-                                            line-height: 42px;
-                                            color: #000;
-                                            letter-spacing: -1px;
-                                            margin: 0;
-                                            padding: 0;
-                                          "
-                                        >
-                                          S+ ${translation("galaxy_ai_expert")}
-                                        </h1>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr style="font-weight: 400">
-                                <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-                                  <div
-                                    class="container"
-                                    style="
-                                      max-width: 600px;
-                                      text-align: left;
-                                      margin: 70px auto;
-                                      padding: 0 20px;
-                                    "
-                                  >
-                                    <div
-                                      class="inner"
-                                      style="
-                                        font-weight: 400;
-                                        background-color: transparent;
-                                        padding: 30px 0 20px;
-                                      "
-                                    >
-                                      <h2
-                                        style="
-                                          font-weight: 700;
-                                          font-size: 54px;
-                                          margin: 0 0 4px;
-                                          text-align: center;
-                                        "
-                                      >
-                                        $CODE$
-                                      </h2>
-                                    </div>
-                                  </div>
+  
+    <style>
+     @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212 !important; /* 다크 모드 배경 */
+          color: #ffffff !important;           /* 다크 모드 텍스트 */
+        }
+      }
 
-                                  <div
-                                    class="container"
-                                    style="
-                                      font-weight: 400;
-                                      max-width: 600px;
-                                      text-align: left;
-                                      padding: 0 20px;
-                                    "
-                                  >
-                                    <div class="footer" style="font-weight: 400; line-height: 2">
-                                      <span
-                                        style="font-weight: 500; color: #687276; text-decoration: none"
-                                      >
-                                        ${translation(
-                                          "email_verify_code_description_1"
-                                        )}
-                                      </span>
-                                      <span
-                                        style="font-weight: 500; color: #687276; text-decoration: none"
-                                      >
-                                        ${translation(
-                                          "email_verify_code_description_2"
-                                        )}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                            <table
-                              style="
-                                font-weight: 400;
-                                max-width: 840px;
-                                width: 100%;
-                                border-collapse: separate;
-                                font-size: 16px;
-                                font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-                                color: white;
-                                -webkit-font-smoothing: antialiased;
-                                border-spacing: 0;
-                                margin: 30px auto;
-                                padding: 0 40px;
-                              "
-                            >
-                              <tr style="font-weight: 400">
-                                <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-                                  <div
-                                    class="container"
-                                    style="
-                                      font-weight: 400;
+      @media (prefers-color-scheme: light) {
+        body {
+          background-color: #ffffff !important; /* 라이트 모드 배경 */
+          color: #000000 !important;           /* 라이트 모드 텍스트 */
+        }
+      }
+  </style>
+  </head>
+  <body
+    style="
+      font-weight: 400;
+      width: 100%;
+      font-size: 16px;
+      font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+      background-color: #000000 !important;
+    "
+  >
+    <table
+      class="main"
+      style="
+        font-weight: 400;
+        width: 100%;
+        border-collapse: separate;
+        font-size: 16px;
+        font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png);
+        -webkit-font-smoothing: antialiased;
+        max-width: 800px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        border: 1px solid #c7d0d4;
+        border-spacing: 0;
+        margin: 15px auto;
+        padding: 0;
+      "
+    >
+      <tr style="font-weight: 400">
+        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
+          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+            <div
+              style="
+                font-weight: 400;
+                max-width: 600px;
+                text-align: left;
+                margin: 0 auto;
+                padding: 0 20px;
+              "
+            >
+              <div
+                style="
+                  font-weight: 600;
+                  display: inline-block;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <h1
+                  style="
+                    font-weight: 700;
+                    float: left;
+                    font-size: 38px;
+                    line-height: 42px;
+                    letter-spacing: -1px;
+                    margin: 0;
+                    padding: 0;
+                  "
+                >S+ ${translation("galaxy_ai_expert")}</h1>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr style="font-weight: 400">
+        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
+          <div
+            class="container"
+            style="
+              font-weight: 400;
+              max-width: 600px;
+              text-align: left;
+              margin: 0 auto;
+              padding: 0 20px;
+            "
+          >
+            <div class="inner" style="font-weight: 400; padding: 30px 0 20px">
+              <h2
+                style="
+                  font-weight: 700;
+                  font-size: 54px;
+                  margin: 70px 0;
+                  text-align: center;
+                "
+              >
+                $CODE$
+              </h2>
 
-                                      text-align: left;
-                                      padding: 0 20px;
-                                    "
-                                  >
-                                    <div
-                                      class="footer"
-                                      style="font-weight: 400; line-height: 2; text-align: center"
-                                    >
-                                      <span
-                                        style="
-                                          font-weight: 500;
-                                          color: #989898;
-                                          text-decoration: none;
-                                          display: block;
-                                        "
-                                      >
-                                        ${translation(
-                                          "email_badge_description_4"
-                                        )}
-                                      </span>
-                                      <span
-                                        style="font-weight: 500; color: white; text-decoration: none"
-                                      >
-                                        Copyright ⓒ 2024 SAMSUNG all rights reserved.
-                                      </span>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
-                          </body>
-                        </html>
-                        `,
+              <div
+                class="interface"
+                style="font-weight: 400; margin-bottom: 30px; "
+              >
+                <h3
+                  class="title"
+                  style="
+                    font-weight: 700;
+                    font-size: 18px;
+                    margin: 0 0 15px;
+                  "
+                ></h3>
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                    padding: 15px;
+                  "
+                >${translation("email_verify_code_description_1")}</pre>
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    color:black
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                    padding: 15px;
+                  "
+                >${translation("email_verify_code_description_2")}</pre>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr style="font-weight: 400">
+        <td
+          style="
+            font-weight: 400;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #121212 !important;
+            color: #ffffff !important;
+          "
+        >
+          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+            <div
+              style="
+                font-weight: 400;
+                max-width: 600px;
+                text-align: left;
+                margin: 0 auto;
+                padding: 0 20px;
+              "
+            >
+              <div
+                class="header-with-buttons"
+                style="
+                  font-weight: 400;
+                  display: inline-block;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                  "
+                >${translation("email_badge_description_4")}</pre>
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                  "
+                >Copyright ⓒ 2024 SAMSUNG all rights reserved.</pre>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`,
           }),
         }
       );
@@ -337,7 +335,7 @@ export default function GuestLogin() {
           setSuccessSendEmail(translation("email_already_sent"));
           setVerifyToken(verifyToken);
 
-          setExpiresAt(new Date(retryAfter));
+          setExpiresAt(new Date(expiresAt));
           startCountdown();
           return;
         }
@@ -509,7 +507,7 @@ export default function GuestLogin() {
                       {translation("send_code")}
                     </Button>
                     <DialogClose className="absolute top-5 right-5">
-                      <X className="h-4 w-4" />
+                      <X />
                       <span className="sr-only">Close</span>
                     </DialogClose>
                   </DialogFooter>
@@ -636,7 +634,7 @@ export default function GuestLogin() {
               className="absolute top-5 right-5"
               onClick={() => setStep("email")}
             >
-              <X className="h-4 w-4" />
+              <X />
               <span className="sr-only">Close</span>
             </DialogClose>
           </DialogFooter>

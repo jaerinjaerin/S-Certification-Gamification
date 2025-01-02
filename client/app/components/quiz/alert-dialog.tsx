@@ -23,7 +23,7 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
             Selecting “No” will return to stage selection
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="sm:justify-center">
           <AlertDialogCancel onClick={() => routeToPage("map")}>
             No
           </AlertDialogCancel>
