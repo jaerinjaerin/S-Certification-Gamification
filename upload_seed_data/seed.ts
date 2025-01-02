@@ -409,11 +409,11 @@ async function main() {
 
         if (i === 2) {
           isBadgeStage = true;
-          badgeActivityId = stage4BadgeActivityId;
+          badgeActivityId = stage3BadgeActivityId;
           badgeImageUrl = "/certification/s24/images/badge/badge_stage3.png";
         } else if (i === 3) {
           isBadgeStage = true;
-          badgeActivityId = stage3BadgeActivityId;
+          badgeActivityId = stage4BadgeActivityId;
           badgeImageUrl = "/certification/s24/images/badge/badge_stage4.png";
         }
 

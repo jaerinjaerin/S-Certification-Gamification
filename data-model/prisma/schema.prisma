@@ -67,38 +67,13 @@ model User {
 
   emailId   String?
   
-  // profileId String?      @unique
-  // profile   UserProfile?
   authType  AuthType
 
   providerUserId        String?
   providerPersonId      Int?
-  // // jobName             String?
   jobId             String?
   job               Job? @relation(fields: [jobId], references: [id])
   
-
-
-  // sumtotalDomainId              String?
-  // sumtotalDomainCode              String?
-  // sumtotalJobId              String?
-  // languageId              String?
-  // sumtotalOrganizationIds String?
-  
-  // sumtotalChannelSegmentId           String?
-  // sumtotalStoreId           String?
-  
-  // channelSegmentId            String?
-  // salesFormatId  String?
-  // channel  String?
-  
-
-  // domain      Domain? @relation(fields: [domainId], references: [id])
-  // language    Language? @relation(fields: [languageId], references: [id])
-
-
-
-
   domainId              String?
   domainCode              String?
   languageId              String?
@@ -110,21 +85,10 @@ model User {
   channelId String?
   channelSegmentId String?
 
-  // userQuizLogs     UserQuizLog[]
-  // userQuizLogs UserQuizLog[]
-  // userQuizStageLogs     UserQuizStageLog[]
-  // userQuizSetLogs     UserQuizSetLog[]
-  // userQuestionAttempt UserQuestionAttempt[]
+  channelName String? // S+미사용 유저가 채널을 직접 입력한 경우, 여기에 저장
 
   @@map("users")
 }
-
-// model UserEmail {
-//   id     String  @id @default(cuid())
-//   email  String  
-//   // user      User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   userId String?
-// }
 
 model VerificationRequest {
   id         String   @id @default(cuid())
@@ -171,11 +135,6 @@ model Language {
   id         String   @id @default(uuid())
   code       String   @unique // Language code (e.g., en, fr, es)
   name       String   // Language name
-
-  // campaignDomainQuizSets CampaignDomainQuizSet[]
-  // questions Question[]
-  // questionOption QuestionOption[]
-  // users User[]
 }
 
 // model Countr
@@ -192,7 +151,6 @@ model Campaign {
   createrId   String
   updaterId   String?
 
-  // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
   // domainGoals  DomainGoal[]
 }
@@ -214,8 +172,6 @@ model Region {
   hq Hq? @relation(fields: [hqId], references: [id])
 
   subsidaries Subsidary[]
-
-  // domain Domain[]
 }
 
 model Subsidary {
@@ -234,20 +190,14 @@ model Domain {
   id         String   @id 
   name       String
   code       String   @unique // Domain name
-  // regionId   String
   subsidaryId  String?
 
-  // region   Region @relation(fields: [regionId], references: [id])
   subsidary   Subsidary? @relation(fields: [subsidaryId], references: [id])
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  // campaignDomainQuizSets  CampaignDomainQuizSet[]
   quizSets  QuizSet[]
-  // channelSegmentIds String
-  // users User[]
-  // domainGoals  DomainGoal[]
 }
 
 model DomainGoal {
@@ -267,24 +217,11 @@ model DomainGoal {
 model QuizSet {
   id         String   @id @default(uuid())
 
-  // path       String
-  // paths       String[]
   campaignId String      // Foreign key to Campaign
   domainId   String?      // Foreign key to Domain
   subsidaryId   String?      // Foreign key to Subsidary
-  // jobId             String
-  // jobIds             String[]
   jobCodes             String[]
-  // languageIds        String[]
-  // languageIds        String
-  // questionIds       String
   quizStages     QuizStage[]
-
-  // badgeStages    Int[]
-  // badgeActivityIds String[]
-  // firstBadgeStage    Int?
-  // firstBadgeActivityId String?
-  // lastBadgeActivityId String?
 
   createrId   String
   updaterId   String?
@@ -295,7 +232,6 @@ model QuizSet {
   campaign   Campaign    @relation(fields: [campaignId], references: [id])
   domain     Domain?      @relation(fields: [domainId], references: [id])
   subsidary   Subsidary?      @relation(fields: [subsidaryId], references: [id])
-  // language     Language      @relation(fields: [languageId], references: [id])
 
   // userQuizLogs UserQuizLog[]
 }
@@ -304,24 +240,14 @@ model QuizStage {
   id         String   @id @default(uuid())
   name       String     // Name of the stage
   order      Int        // Order of the stage within the quiz set
-  // questions  Question[] // Associated questions
+  
   questionIds       String[]
   lifeCount   Int         // Number of lives for the question
-  // quizSetId  String        // Foreign key to QuizSet
-  // quizSet    QuizSet    @relation(fields: [quizSetId], references: [id])
-  // campaignDomainQuizSetId  String        // Foreign key to QuizSet
-  // campaignDomainQuizSet    CampaignDomainQuizSet @relation(fields: [campaignDomainQuizSetId], references: [id])
-
   quizSetId  String
   quizSet  QuizSet @relation(fields: [quizSetId], references: [id])
 
-  // campaign    Campaign    @relation(fields: [campaignId], references: [id])
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-
-  // userQuizStageLogs UserQuizStageLog[]
-  // userQuizQuestionLogs UserQuizQuestionLog[]
-
 
   isBadgeStage Boolean?
   badgeActivityId String?
@@ -337,9 +263,7 @@ model Question {
   
   timeLimitSeconds   Int         // Expiration time for the question in seconds
   options     QuestionOption[] // Associated options
-  // quizStageId     String?         // Foreign key to Stage
   order       Int
-  // quizStage       QuizStage       @relation(fields: [quuserQuizQuestionLogizStageId], references: [id])
   
   languageId  String      // Foreign key to Language
   originalQuestionId    String     // Foreign key to Question
@@ -348,8 +272,6 @@ model Question {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   
-  // language    Language    @relation(fields: [languageId], references: [id])
-  // userQuizQuestionLog    UserQuizQuestionLog[] // Logs of user interactions with this question
   backgroundImageUrl String?
   characterImageUrl String?
 
@@ -359,9 +281,6 @@ model Question {
   product    String?
   enabled     Boolean
   questionType    QuestionType
-  
-
-  // userQuizQuestionLogs UserQuizQuestionLog[]
 }
 
 enum QuestionType {
@@ -374,11 +293,9 @@ model QuestionOption {
   id          String   @id @default(uuid())
   text        String              // Text of the option
   order       Int                 // Order of the option within the question
-  // translations QuestionOptionTranslation[]
   questionId  String                 // Foreign key to Question
   question    Question            @relation(fields: [questionId], references: [id])
   languageId   String
-  // language    Language            @relation(fields: [languageId], references: [id])
   isCorrect   Boolean             // Whether the option is correct
 
   createdAt   DateTime    @default(now())
@@ -387,17 +304,14 @@ model QuestionOption {
 
 model Job {
   id         String   @id
-  // groupCode  String
   code        String
   group        String
   name       String   // Name of the user group (e.g., A, B)
   description String? // Optional description
-  // countryJobQuestionsUeage QuestionUsage[] // Associated CountryGroup entries
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
   users User[]
-  // salesFormats SalesFormat[]
 }
 
 model Store {
@@ -411,39 +325,19 @@ model Store {
 model Channel {
   id            String                @id @default(uuid())
   name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
-  // salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
 }
 
 model ChannelSegment {
   id            String                @id @default(uuid())
   name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
-  // salesFormats  SalesFormat[]   // One-to-many relationship with SalesFormat
 }
-
-// model SalesFormat {
-//   id                String                @id @default(uuid())
-//   // channelSegmentId  String             // Foreign key to ChannelSegment
-//   // channelSegment    ChannelSegment  @relation(fields: [channelSegmentId], references: [id])
-//   storeType         String          // e.g., "Off line Store", "On line Store"
-//   // jobId             String          // Replaced 'format' with 'jobCode' (e.g., "FSM(C&R)", "FF", "SES")
-//   // job               Job             @relation(fields: [jobId], references: [id])
-// }
 
 model UserQuizLog {
   id          String   @id @default(uuid())
   userId      String
   authType  AuthType
   campaignId String
-  // quizSetId   String
-  
-  // activityId String
-  // metadataId String
-  // firstBadgeStage   Int?
-  // isFirstBadgeStageCompleted    Boolean?
-  // badgeStages    Int[]
-  // badgeActivityIds String[]
   isCompleted    Boolean?
-  // badgeAcquisitionDates DateTime[]
   isBadgeAcquired Boolean?
   lastCompletedStage    Int?
   elapsedSeconds    Int?      // Time spent on this activity (in seconds)
@@ -452,22 +346,8 @@ model UserQuizLog {
 
   // user        User    @relation(fields: [userId], references: [id])
 
-
-  // campaignDomainQuizSetId String
-  // campaignDomainQuizSet    CampaignDomainQuizSet  @relation(fields: [campaignDomainQuizSetId], references: [id])
   quizSetId String
-  // quizSet    QuizSet?  @relation(fields: [quizSetId], references: [id])
-  // campaignActivityId String
-  // campaignActivity  CampaignActivity  @relation(fields: [campaignActivityId], references: [id])
-  // quizSet QuizSet? @relation(fields: [quizSetId], references: [id])
 
-  // countryCode String
-
-  
-  // firstBadgeActivityId String?
-  // lastBadgeActivityId String?
-  // languageCode String?
-  
   score       Int?
 
   quizSetPath String?
@@ -479,16 +359,13 @@ model UserQuizLog {
 
   jobId       String?
 
-  // @@unique([userId, campaignId, domainId]) // 각 유저는 특정 퀴즈 세트에 대해 하나의 히스토리만 가질 수 있음
-
-
-
   regionId String?
   subsidaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
   channelSegmentId String?
+  channelName String?
 
   @@unique([userId, campaignId])
 }
@@ -520,6 +397,7 @@ model UserQuizBadgeStageLog {
   storeSegmentText String?
   channelId String?
   channelSegmentId String?
+  channelName String?
 
   @@unique([userId, campaignId, quizStageId])
 }
@@ -530,13 +408,8 @@ model UserQuizStageLog {
   userId       String      // Foreign key to User
   authType  AuthType
   
-  // user         User     @relation(fields: [userId], references: [id])
-
   campaignId  String
   quizStageId      String      // Foreign key to Stage
-  // quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
-  // isCompleted  Boolean  // Whether the stage was completed
-  // timeSpent    Int      // Time spent on this stage (in seconds)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isBadgeStage Boolean?
@@ -545,23 +418,14 @@ model UserQuizStageLog {
 
   remainingHearts Int
 
-  // countryCode String
-  // campaignDomainId String
-  // domainId String
-  // campaignDomainQuizSetId String
   quizSetId String
   quizStageIndex Int
 
   elapsedSeconds Int
 
-  // startedAt DateTime?
-  // endedAt DateTime?
   score       Int?
   percentile  Int?
   scoreRange  String?
-  // languageCode String
-  // activityId  String
-  // campaignActivityId  String
 
   domainId String
   languageId String?
@@ -573,6 +437,7 @@ model UserQuizStageLog {
   storeSegmentText String?
   channelId String?
   channelSegmentId String?
+  channelName String?
 }
 
 model UserQuizQuestionLog {
@@ -584,12 +449,11 @@ model UserQuizQuestionLog {
   // user result
   questionId   String      // Foreign key to Question
   questionText String?
-  // question     Question? @relation(fields: [questionId], references: [id])
+
   isCorrect    Boolean  // Whether the user answered the question correctly
   selectedOptionIds String[]
   correctOptionIds String[]
   quizStageId String
-  // quizStage        QuizStage    @relation(fields: [quizStageId], references: [id])
 
   quizStageIndex  Int
   elapsedSeconds Int
@@ -614,7 +478,7 @@ model UserQuizQuestionLog {
   storeSegmentText String?
   channelId String?
   channelSegmentId String?
-  
+  channelName String?
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

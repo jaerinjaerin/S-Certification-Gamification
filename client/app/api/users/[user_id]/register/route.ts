@@ -61,6 +61,7 @@ export async function POST(request: Request) {
         storeId: body.storeId,
         storeSegmentText: body.storeSegmentText,
         channelId: body.channelId,
+        channelName: body.channelName,
         channelSegmentId: body.channelSegmentId,
       },
       // include: {
