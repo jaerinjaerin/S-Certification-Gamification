@@ -22,7 +22,7 @@ with open('../upload_seed_data/data/seeds/channel_segments.json', 'r') as f:
 BASE_S3_PATH = "./results/"
 START_DATE = datetime(2025, 1, 20)
 END_DATE = datetime(2025, 6, 30)
-NUM_USERS = 260_000
+NUM_USERS = 50_000
 QUESTIONS_PER_STAGE = 10
 STAGES_PER_USER = 4
 BADGE_STAGES = [2, 3]

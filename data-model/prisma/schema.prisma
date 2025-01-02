@@ -557,6 +557,8 @@ model UserQuizStageLog {
   // startedAt DateTime?
   // endedAt DateTime?
   score       Int?
+  percentile  Int?
+  scoreRange  String?
   // languageCode String
   // activityId  String
   // campaignActivityId  String

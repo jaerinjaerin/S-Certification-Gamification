@@ -8,6 +8,7 @@ export default function Home() {
   console.log("Home session", session);
 
   const sendTestGetScore = async () => {
+    console.log("get score");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/score?userId=user_0&quizStageIndex=3&campaignId=s24`,
       {

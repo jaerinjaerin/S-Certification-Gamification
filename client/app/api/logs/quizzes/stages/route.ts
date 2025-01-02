@@ -19,7 +19,8 @@ export async function POST(request: Request) {
       elapsedSeconds,
       score,
       totalScore,
-
+      percentile,
+      scoreRange,
       domainId,
       languageId,
       jobId,
@@ -50,6 +51,8 @@ export async function POST(request: Request) {
         quizStageIndex,
         elapsedSeconds,
         score,
+        percentile,
+        scoreRange,
         domainId,
         languageId,
         jobId,

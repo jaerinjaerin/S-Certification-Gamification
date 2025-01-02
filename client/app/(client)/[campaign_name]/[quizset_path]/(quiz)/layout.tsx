@@ -1,6 +1,11 @@
 import { auth } from "@/auth";
 import { QuizProvider, QuizSetEx } from "@/providers/quiz_provider";
-import { AuthType } from "@prisma/client";
+import {
+  AuthType,
+  UserQuizLog,
+  UserQuizQuestionLog,
+  UserQuizStageLog,
+} from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -60,9 +65,9 @@ export default async function QuizLayout({
     }
   );
 
-  let quizLog;
-  let quizStageLogs;
-  let quizQuestionLogs;
+  let quizLog: UserQuizLog | null = null;
+  let quizStageLogs: UserQuizStageLog[] | null = null;
+  let quizQuestionLogs: UserQuizQuestionLog[] | null = null;
 
   // console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 

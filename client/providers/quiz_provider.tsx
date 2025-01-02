@@ -52,7 +52,7 @@ interface QuizContextType {
   lastCompletedQuizStage: QuizStageEx | null;
   currentStageQuestions: QuestionEx[];
   isBadgeStage(): boolean;
-  processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
+  // processBadgeAcquisition(elapsedSeconds: number): Promise<boolean>;
   isComplete(): boolean;
   isLastQuestionOnState(): boolean;
   isLastStage(): boolean;
@@ -84,8 +84,30 @@ interface ConfirmAnswerResponse {
   message: string;
 }
 
+// 각 데이터 항목에 대한 타입 정의
+export interface DataItem {
+  range: string; // 범위 ("0-9", "10-19" 등)
+  count: number; // 해당 범위에 속하는 사용자 수
+  userIncluded: boolean; // 사용자가 이 범위에 포함되어 있는지 여부
+}
+
+// userBin 타입 정의
+export interface UserBin {
+  range: string; // 사용자가 속한 범위 ("0-9" 등)
+  count: number; // 해당 범위에 속하는 사용자 수
+}
+
+// 전체 데이터 구조 타입 정의
+export interface ScoreData {
+  data: DataItem[]; // 점수 범위에 따른 데이터 배열
+  sampleSize: number | null; // 전체 샘플 크기
+  userBin: UserBin | null; // 사용자가 속한 범위 정보
+  userScore: number; // 사용자의 점수
+  percentile: number | null; // 상위 %
+}
+
 export interface EndStageResult {
-  score: number;
+  score: ScoreData;
   isBadgeAcquired: boolean;
   badgeStage: boolean;
   badgeImageURL: string;
@@ -94,24 +116,25 @@ export interface EndStageResult {
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider = ({
+  userId,
+  authType,
   children,
   quizSet,
   language,
   quizLog,
   quizStageLogs,
   quizQuestionLogs,
-  userId,
-  authType,
+
   quizSetPath,
 }: {
+  userId: string | undefined;
+  authType: AuthType | undefined;
   children: React.ReactNode;
   quizSet: QuizSetEx;
   language: Language;
-  quizLog: UserQuizLog;
-  quizStageLogs: UserQuizStageLog[];
-  quizQuestionLogs: UserQuizQuestionLog[];
-  userId: string | undefined;
-  authType: AuthType | undefined;
+  quizLog: UserQuizLog | null;
+  quizStageLogs: UserQuizStageLog[] | null;
+  quizQuestionLogs: UserQuizQuestionLog[] | null;
   quizSetPath: string;
 }) => {
   const { routeToPage } = usePathNavigator();
@@ -120,7 +143,7 @@ export const QuizProvider = ({
   const { campaign } = useCampaign();
   const [currentQuizSetPath, setCurrentQuizSetPath] =
     useState<string>(quizSetPath);
-  const [_quizLog, setQuizLog] = useState<UserQuizLog>(quizLog);
+  const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
     quizStageLogs ?? []
   );
@@ -197,11 +220,11 @@ export const QuizProvider = ({
   // console.log("QuizProvider quizLog", quizLog, userId);
 
   useEffect(() => {
-    console.log("QuizProvider useEffect", userId, quizLog?.id);
-    if (!quizLog) {
+    console.log("QuizProvider useEffect", userId, _quizLog?.id);
+    if (!_quizLog) {
       createQuizLog();
     }
-  }, [userId, quizLog?.id]);
+  }, [userId, _quizLog?.id]);
 
   const createQuizLog = async () => {
     if (isCreatingQuizLogRef.current) {
@@ -252,8 +275,7 @@ export const QuizProvider = ({
       remainingHearts
     );
     const totalQuizScore = quizStagesTotalScore + score;
-
-    console.info("score", score);
+    const isLastStage = currentQuizStageIndex === quizSet.quizStages.length - 1;
 
     // 현재 스테이지의 총 소요시간 계산
     const stageElapsedSeconds = quizLogManager.getTotalElapsedSeconds();
@@ -268,6 +290,16 @@ export const QuizProvider = ({
       isBadgeAcquired = await processBadgeAcquisition(stageElapsedSeconds);
     }
 
+    // 랭킹 및 그래프 데이터 가져오기
+    let scoreData: ScoreData | null = null;
+    if (badgeStage || isLastStage) {
+      scoreData = await getRankAndGraphData(
+        currentQuizStageIndex,
+        totalQuizScore
+      );
+      console.log("scoreData", scoreData);
+    }
+
     // 퀴즈 스테이지 로그 생성
     await createQuizQuestionLogs(quizLogManager.getLogs());
 
@@ -275,6 +307,8 @@ export const QuizProvider = ({
     const newQuizStageLog: UserQuizStageLog = await createQuizStageLog(
       score,
       totalQuizScore,
+      scoreData?.percentile || null,
+      scoreData?.userBin?.range || null,
       stageElapsedSeconds,
       remainingHearts,
       badgeStage,
@@ -283,13 +317,14 @@ export const QuizProvider = ({
     );
 
     // 퀴즈 로그 업데이트
-    const isLastStage = currentQuizStageIndex === quizSet.quizStages.length - 1;
     const updatedQuizLog: UserQuizLog = await updateQuizSummaryLog(
       currentQuizStageIndex,
       badgeStage,
       isLastStage ? totalQuizScore : null,
       isLastStage ? totalQuizTime : null
     );
+
+    console.info("scoreData", scoreData);
 
     // 퀴즈 로그 State 업데이트
     setQuizStagesTotalScore(totalQuizScore);
@@ -302,7 +337,11 @@ export const QuizProvider = ({
     setIsLoading(false);
 
     return {
-      score: newQuizStageLog.score ?? 0,
+      score:
+        scoreData ??
+        ({
+          userScore: totalQuizScore,
+        } as ScoreData),
       isBadgeAcquired: isBadgeAcquired,
       badgeStage: badgeStage,
       badgeImageURL: currentQuizStage?.badgeImageUrl ?? "",
@@ -360,6 +399,29 @@ export const QuizProvider = ({
       return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${currentQuizStage.badgeImageUrl}`;
     }
     return null;
+  };
+
+  const getRankAndGraphData = async (
+    quizStageIndex: number,
+    score: number
+  ): Promise<ScoreData | null> => {
+    console.log("get score");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/score?userId=${userId}&quizStageIndex=${quizStageIndex}&campaignId=${campaign.id}&userScore=${score}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      console.log("get score", data);
+
+      return data as ScoreData;
+    } catch (error) {
+      console.error("Failed to get score:", error);
+      Sentry.captureException(error);
+      return null;
+    }
   };
 
   const processBadgeAcquisition = async (
@@ -555,7 +617,7 @@ export const QuizProvider = ({
             activityId: activityId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
-            elapsedSeconds: 2000,
+            elapsedSeconds: 30,
           }),
         }
       );
@@ -580,7 +642,7 @@ export const QuizProvider = ({
   };
 
   const isComplete = (): boolean => {
-    return _quizLog.isCompleted ?? false;
+    return _quizLog?.isCompleted ?? false;
   };
 
   const confirmAnswer = (
@@ -618,7 +680,7 @@ export const QuizProvider = ({
         authType: authType,
         isCorrect: result.isCorrect,
         campaignId: campaign.id,
-        userId: _quizLog.userId,
+        userId: userId ?? _quizLog?.userId ?? "",
         // jobId: _quizLog.jobId || "",
         quizSetId: quizSet.id,
         questionId: questionId,
@@ -635,9 +697,9 @@ export const QuizProvider = ({
         elapsedSeconds: elapsedSeconds,
         quizStageId: currentQuizStage?.id ?? "",
         createdAt: new Date().toISOString(),
-        domainId: _quizLog.domainId,
-        languageId: quizLog?.languageId,
-        jobId: _quizLog.jobId || "",
+        domainId: _quizLog?.domainId,
+        languageId: _quizLog?.languageId,
+        jobId: _quizLog?.jobId || "",
         regionId: _quizLog?.regionId,
         subsidaryId: _quizLog?.subsidaryId,
         storeId: _quizLog?.storeId,
@@ -676,7 +738,7 @@ export const QuizProvider = ({
       authType: authType,
       isCorrect,
       campaignId: campaign.id,
-      userId: _quizLog.userId,
+      userId: userId ?? _quizLog?.userId ?? "",
 
       quizSetId: quizSet.id,
       questionId: questionId,
@@ -693,9 +755,9 @@ export const QuizProvider = ({
       elapsedSeconds: elapsedSeconds,
       quizStageId: currentQuizStage?.id ?? "",
       createdAt: new Date().toISOString(),
-      domainId: _quizLog.domainId,
-      languageId: quizLog?.languageId,
-      jobId: _quizLog.jobId || "",
+      domainId: _quizLog?.domainId,
+      languageId: _quizLog?.languageId,
+      jobId: _quizLog?.jobId || "",
       regionId: _quizLog?.regionId,
       subsidaryId: _quizLog?.subsidaryId,
       storeId: _quizLog?.storeId,
@@ -745,8 +807,10 @@ export const QuizProvider = ({
   };
 
   const createQuizStageLog = async (
-    score,
-    totalScore,
+    score: number,
+    totalScore: number,
+    percentile: number | null,
+    scoreRange: string | null,
     elapsedSeconds,
     remainingHearts: number,
     isBadgeStage: boolean,
@@ -762,9 +826,9 @@ export const QuizProvider = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: _quizLog.userId,
+            userId: userId ?? _quizLog?.userId ?? "",
             authType: authType,
-            // jobId: _quizLog.jobId || "",
+            // jobId: _quizLog?.jobId || "",
             quizSetId: quizSet.id,
             quizStageIndex: currentQuizStageIndex,
             quizStageId: currentQuizStage?.id ?? "",
@@ -774,14 +838,16 @@ export const QuizProvider = ({
             badgeActivityId,
             remainingHearts,
             score,
+            percentile,
+            scoreRange,
             totalScore,
             elapsedSeconds,
             campaignId: campaign.id,
             // domainId: quizLog.domainId,
             // languageId: language?.id,
-            domainId: _quizLog.domainId,
-            languageId: quizLog?.languageId,
-            jobId: _quizLog.jobId || "",
+            domainId: _quizLog?.domainId,
+            languageId: _quizLog?.languageId,
+            jobId: _quizLog?.jobId || "",
             regionId: _quizLog?.regionId,
             subsidaryId: _quizLog?.subsidaryId,
             storeId: _quizLog?.storeId,
@@ -790,6 +856,10 @@ export const QuizProvider = ({
           }),
         }
       );
+
+      //     percentile  Int?
+      // scoreRange  String?
+      // // languageCode String
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -815,7 +885,7 @@ export const QuizProvider = ({
   ): Promise<UserQuizLog> => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/${_quizLog.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/${_quizLog?.id}`,
         {
           method: "PUT",
           headers: {
@@ -884,7 +954,7 @@ export const QuizProvider = ({
         nextQuestion,
         canNextQuestion,
         isBadgeStage,
-        processBadgeAcquisition,
+        // processBadgeAcquisition,
         getCorrectOptionIds,
         isLoading,
         quizStagesTotalScore,

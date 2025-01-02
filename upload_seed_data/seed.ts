@@ -10,19 +10,41 @@ const prisma = new PrismaClient();
 // test url: http://localhost:3000/s24/ORG_502_ff_ko
 
 const charImages = [
-  "/certification/s24/character_m_01.png",
-  "/certification/s24/character_m_02.png",
-  "/certification/s24/character_m_03.png",
-  "/certification/s24/character_w_01.png",
-  "/certification/s24/character_w_02.png",
+  [
+    "/certification/s24/images/character/stage1_1.png",
+    "/certification/s24/images/character/stage1_2.png",
+    "/certification/s24/images/character/stage1_3.png",
+    "/certification/s24/images/character/stage1_4.png",
+    "/certification/s24/images/character/stage1_5.png",
+  ],
+  [
+    "/certification/s24/images/character/stage2_1.png",
+    "/certification/s24/images/character/stage2_2.png",
+    "/certification/s24/images/character/stage2_3.png",
+    "/certification/s24/images/character/stage2_4.png",
+    "/certification/s24/images/character/stage2_5.png",
+  ],
+  [
+    "/certification/s24/images/character/stage3_1.png",
+    "/certification/s24/images/character/stage3_2.png",
+    "/certification/s24/images/character/stage3_3.png",
+    "/certification/s24/images/character/stage3_4.png",
+    "/certification/s24/images/character/stage3_5.png",
+  ],
+  [
+    "/certification/s24/images/character/stage4_1.png",
+    "/certification/s24/images/character/stage4_2.png",
+    "/certification/s24/images/character/stage4_3.png",
+    "/certification/s24/images/character/stage4_4.png",
+    "/certification/s24/images/character/stage4_5.png",
+  ],
 ];
 
 const bgImages = [
-  "/certification/s24/images/bg_01.png",
-  "/certification/s24/images/bg_02.png",
-  "/certification/s24/images/bg_03.png",
-  "/certification/s24/images/bg_04.png",
-  // "/certification/s24/images/bg_05.png",
+  "/certification/s24/images/background/bg_1.png",
+  "/certification/s24/images/background/bg_2.png",
+  "/certification/s24/images/background/bg_3.png",
+  "/certification/s24/images/background/bg_4.png",
 ];
 
 async function main() {
@@ -274,45 +296,63 @@ async function main() {
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
               )?.id || null;
 
-        const imageIndex = i % charImages.length;
-        const item = await prisma.question.create({
-          data: {
-            id: questionId,
-            text: question.text.toString(),
-            timeLimitSeconds: parseInt(question.timeLimitSeconds),
-            languageId: language.id,
+        const stageIndex = question.stage - 1;
+        const imageIndex = i % charImages[stageIndex].length;
+        let item = await prisma.question.findFirst({
+          where: {
             originalQuestionId,
-            originalIndex: question.originQuestionIndex,
-            category: question.category,
-            specificFeature: question.specificFeature ?? "",
-            enabled: question.enabled === 1 || question.enabled === "1",
-            product: question.product,
-            questionType: question.questionType,
-            order: question.orderInStage ?? 0,
-            backgroundImageUrl: bgImages[question.stage - 1],
-            characterImageUrl: charImages[imageIndex],
+            languageId: language.id,
           },
         });
+
+        if (!item) {
+          item = await prisma.question.create({
+            data: {
+              id: questionId,
+              text: question.text.toString(),
+              timeLimitSeconds: parseInt(question.timeLimitSeconds),
+              languageId: language.id,
+              originalQuestionId,
+              originalIndex: question.originQuestionIndex,
+              category: question.category,
+              specificFeature: question.specificFeature ?? "",
+              importance: question.importance,
+              enabled: question.enabled === 1 || question.enabled === "1",
+              product: question.product,
+              questionType: question.questionType,
+              order: question.orderInStage ?? 0,
+              backgroundImageUrl: bgImages[stageIndex],
+              characterImageUrl: charImages[stageIndex][imageIndex],
+            },
+          });
+
+          for (let j = 0; j < question.options.length; j++) {
+            const option = question.options[j];
+            await prisma.questionOption.findFirst({
+              where: {
+                questionId,
+                order: j,
+                languageId: language.id,
+              },
+            });
+            await prisma.questionOption.create({
+              data: {
+                text: option.text.toString(),
+                order: j,
+                questionId,
+                isCorrect:
+                  option.answerStatus === 1 || option.answerStatus === "1",
+                languageId: language.id,
+              },
+            });
+          }
+        }
 
         console.log("item", item);
 
         createdQuestions.push(item);
         if (domainCode === "HQ_NAT_0001") {
           hqNatQuestions.push(item);
-        }
-
-        for (let j = 0; j < question.options.length; j++) {
-          const option = question.options[j];
-          await prisma.questionOption.create({
-            data: {
-              text: option.text.toString(),
-              order: j,
-              questionId,
-              isCorrect:
-                option.answerStatus === 1 || option.answerStatus === "1",
-              languageId: language.id,
-            },
-          });
         }
       }
 
@@ -364,14 +404,17 @@ async function main() {
         let badgeActivityId: string | null = null;
         let badgeImageUrl: string | null = null;
 
+        const stage3BadgeActivityId = "251537";
+        const stage4BadgeActivityId = "251540";
+
         if (i === 2) {
           isBadgeStage = true;
-          badgeActivityId = "251537";
-          badgeImageUrl = "/certification/s24/images/badgeStage3.png";
+          badgeActivityId = stage4BadgeActivityId;
+          badgeImageUrl = "/certification/s24/images/badge/badge_stage3.png";
         } else if (i === 3) {
           isBadgeStage = true;
-          badgeActivityId = "251540";
-          badgeImageUrl = "/certification/s24/images/badgeStage4.png";
+          badgeActivityId = stage3BadgeActivityId;
+          badgeImageUrl = "/certification/s24/images/badge/badge_stage4.png";
         }
 
         await prisma.quizStage.create({

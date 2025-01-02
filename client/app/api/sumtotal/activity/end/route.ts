@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           status,
           date: new Date().toISOString(),
-          elapsedSeconds,
+          // elapsedSeconds,
         }),
         headers: {
           "Content-Type": "application/json",

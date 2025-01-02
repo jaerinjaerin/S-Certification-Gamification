@@ -4,6 +4,10 @@ const path = require("path");
 
 const prisma = new PrismaClient();
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function main() {
   console.log("Seeding database...");
 
@@ -27,6 +31,8 @@ async function main() {
       await prisma[tableName].createMany({
         data: data.slice(i, i + BATCH_SIZE),
       });
+
+      await sleep(500);
     }
 
     if (global.gc) {
@@ -40,8 +46,8 @@ async function main() {
 
   // Paths to directories containing JSON files
   const directories = [
-    { path: "./results/user_quiz_logs/2025", table: "userQuizLog" },
-    { path: "./results/user_quiz_stage_logs/2025", table: "userQuizStageLog" },
+    // { path: "./results/user_quiz_logs/2025", table: "userQuizLog" },
+    // { path: "./results/user_quiz_stage_logs/2025", table: "userQuizStageLog" },
     {
       path: "./results/user_quiz_question_logs/2025",
       table: "userQuizQuestionLog",
@@ -59,6 +65,8 @@ async function main() {
       const filePath = path.join(__dirname, dirPath, file);
       await loadAndInsertData(filePath, table);
     }
+
+    console.log(`Data inserted into ${table} table.`);
   }
 
   console.log("Database seeding completed!");

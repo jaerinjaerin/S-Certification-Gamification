@@ -1,79 +1,79 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/prisma-client";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
-
-export async function GET(request) {
+export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const campaignId = searchParams.get("campaignId");
-    const quizStageIndex = parseInt(searchParams.get("quizStageIndex") || "");
-    const userId = searchParams.get("userId");
 
-    if (!campaignId || !quizStageIndex || !userId) {
+    // Extract filter parameters
+    const campaignId = searchParams.get("campaignId");
+    const quizStageIndex = parseInt(searchParams.get("quizStageIndex") || "0");
+    const userScore = parseInt(searchParams.get("userScore") || "0");
+    const sampleSize = 1000; // 샘플링 크기
+
+    // Validate required fields
+    if (!campaignId || isNaN(quizStageIndex)) {
       return NextResponse.json(
-        { message: "Missing required parameters." },
+        { message: "Campaign ID and quizStageIndex are required" },
         { status: 400 }
       );
     }
 
-    // Get all scores for the specified campaign and quiz stage index
-    const scores = await prisma.userQuizStageLog.findMany({
+    // 샘플링된 점수 가져오기
+    const sampledScores = await prisma.userQuizStageLog.findMany({
       where: {
         campaignId,
         quizStageIndex,
       },
       select: {
-        userId: true,
         score: true,
+      },
+      take: sampleSize, // 샘플링 크기만큼 데이터 가져오기
+      orderBy: {
+        createdAt: "asc", // 데이터가 일정하게 섞이도록 정렬
       },
     });
 
-    if (!scores.length) {
-      return NextResponse.json(
-        { message: "No data found for the specified parameters." },
-        { status: 404 }
-      );
-    }
+    // 샘플 점수에서 null 값을 0으로 처리
+    const scores = sampledScores.map((record) => record.score || 0);
 
-    // Sort scores in descending order
-    const sortedScores = scores.sort((a: any, b: any) => b.score - a.score);
+    // 점수를 10 단위로 그룹화
+    const bins = Array(10).fill(0);
+    scores.forEach((score) => {
+      const binIndex = Math.min(Math.floor(score / 10), 9); // Ensure score 100 is in the last bin
+      bins[binIndex]++;
+    });
 
-    // Find the rank of the current user
-    const userRank =
-      sortedScores.findIndex((entry) => entry.userId === userId) + 1;
-    const userScore = sortedScores[userRank - 1]?.score;
+    // 사용자 점수가 포함된 구간 확인
+    const userBinIndex = Math.min(Math.floor(userScore / 10), 9);
+    const userBinRange = `${userBinIndex * 10}-${userBinIndex * 10 + 9}`;
+    const userBinCount = bins[userBinIndex];
 
-    // Calculate total users
-    const totalUsers = scores.length;
+    // 사용자 상위 % 계산
+    scores.sort((a, b) => a - b); // 점수를 오름차순으로 정렬
+    const userRank = scores.findIndex((score) => userScore <= score);
+    const percentile =
+      userRank >= 0 ? ((userRank / scores.length) * 100).toFixed(2) : "100.00";
 
-    // Percentile 데이터를 계산
-    const percentileData: any[] = [];
-    for (let i = 1; i <= 10; i++) {
-      const percentile = i * 10; // 10%, 20%, ..., 100%
-      const index = Math.floor((percentile / 100) * totalUsers) - 1; // 해당 퍼센트에 해당하는 인덱스
-      const scoreAtPercentile = scores[index]?.score || 0; // 점수 가져오기
-      const percentage = ((index + 1) / totalUsers) * 100; // 해당 퍼센트에 해당하는 비율 계산
-
-      percentileData.push({
-        percentile, // 상위 몇 %
-        score: scoreAtPercentile, // 해당 구간의 점수
-        percentage: parseFloat(percentage.toFixed(2)), // 유저 비율
-      });
-    }
-
-    // Determine user's percentile rank
-    const userPercentile = Math.ceil((userRank / totalUsers) * 100);
+    // 결과 포맷팅
+    const result = bins.map((count, index) => ({
+      range: `${index * 10}-${index * 10 + 9}`, // e.g., "0-10", "11-20"
+      count,
+      userIncluded: index === userBinIndex, // 사용자 포함 여부
+    }));
 
     return NextResponse.json({
+      data: result,
       userScore,
-      userRank,
-      userPercentile,
-      totalUsers,
-      percentileData,
+      userBin: {
+        range: userBinRange,
+        count: userBinCount,
+      },
+      sampleSize,
+      percentile: parseFloat(percentile), // 상위 %
     });
   } catch (error) {
-    console.error("Error fetching stage ranking data:", error);
+    console.error("Error fetching data:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

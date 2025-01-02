@@ -1,4 +1,4 @@
-import { defaultLanguageCode } from "@/app/config/default";
+import { defaultLanguageCode } from "@/app/core/config/default";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
