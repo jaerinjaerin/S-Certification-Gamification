@@ -33,7 +33,7 @@ export default function Login() {
           <source src={videoWebmUrl} type="video/webm" />
         </video> */}
         <div
-          className="w-full h-svh object-fill"
+          className="w-full h-svh object-fill absolute"
           style={{
             backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.png')`,
             backgroundSize: "cover",
