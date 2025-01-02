@@ -87,8 +87,6 @@ model User {
 
   channelName String? // S+미사용 유저가 채널을 직접 입력한 경우, 여기에 저장
 
-  userQuizLogs UserQuizLog[]
-
   @@map("users")
 }
 
@@ -154,7 +152,7 @@ model Campaign {
   updaterId   String?
 
   quizSets  QuizSet[]
-  domainGoals  DomainGoal[]
+  // domainGoals  DomainGoal[]
 }
 
 model Hq {
@@ -200,19 +198,20 @@ model Domain {
   updatedAt   DateTime    @updatedAt
 
   quizSets  QuizSet[]
-  domainGoals  DomainGoal[]
 }
 
 model DomainGoal {
   id         String   @id @default(uuid())
   campaignId String
-  domainId   String
   userCount   Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  domain     Domain      @relation(fields: [domainId], references: [id])
+  // campaign   Campaign    @relation(fields: [campaignId], references: [id])
+  // domain     Domain      @relation(fields: [domainId], references: [id])
+  domainId   String
+  regionId String?
+  subsidaryId String?
 }
 
 model QuizSet {
@@ -234,7 +233,7 @@ model QuizSet {
   domain     Domain?      @relation(fields: [domainId], references: [id])
   subsidary   Subsidary?      @relation(fields: [subsidaryId], references: [id])
 
-  userQuizLogs UserQuizLog[]
+  // userQuizLogs UserQuizLog[]
 }
 
 model QuizStage {
@@ -276,10 +275,11 @@ model Question {
   backgroundImageUrl String?
   characterImageUrl String?
 
-  category    String
-  specificFeature   String
+  category    String?
+  specificFeature   String?
+  importance String?
+  product    String?
   enabled     Boolean
-  product    String
   questionType    QuestionType
 }
 
@@ -344,10 +344,9 @@ model UserQuizLog {
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
-  user        User    @relation(fields: [userId], references: [id])
+  // user        User    @relation(fields: [userId], references: [id])
 
   quizSetId String
-  quizSet    QuizSet  @relation(fields: [quizSetId], references: [id])
 
   score       Int?
 
@@ -425,6 +424,8 @@ model UserQuizStageLog {
   elapsedSeconds Int
 
   score       Int?
+  percentile  Int?
+  scoreRange  String?
 
   domainId String
   languageId String?
@@ -447,6 +448,8 @@ model UserQuizQuestionLog {
   
   // user result
   questionId   String      // Foreign key to Question
+  questionText String?
+
   isCorrect    Boolean  // Whether the user answered the question correctly
   selectedOptionIds String[]
   correctOptionIds String[]
@@ -456,10 +459,11 @@ model UserQuizQuestionLog {
   elapsedSeconds Int
 
   // question
-  category    String
-  specificFeature   String
-  product    String
   questionType    QuestionType
+  category    String?
+  product    String?
+  specificFeature   String?
+  importance String?
 
   // country
   campaignId  String

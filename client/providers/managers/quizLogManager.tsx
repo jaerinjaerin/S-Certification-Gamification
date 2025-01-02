@@ -14,21 +14,21 @@ export type QuizLog = {
   quizStageIndex: number;
   selectedOptionIds: string[];
   correctOptionIds: string[];
-  category: string;
-  specificFeature: string;
-  product: string;
+  category: string | null | undefined;
+  specificFeature: string | null | undefined;
+  product: string | null | undefined;
   questionType: QuestionType;
   elapsedSeconds: number;
   createdAt: string;
-  domainId: string | null;
-  regionId: string | null;
-  subsidaryId: string | null;
-  channelId: string | null;
-  channelName: string | null;
-  channelSegmentId: string | null;
-  storeId: string | null;
+  domainId: string | null | undefined;
+  regionId: string | null | undefined;
+  subsidaryId: string | null | undefined;
+  channelId: string | null | undefined;
+  channelName: string | null | undefined;
+  channelSegmentId: string | null | undefined;
+  storeId: string | null | undefined;
   jobId: string;
-  languageId: string | null;
+  languageId: string | null | undefined;
 };
 
 class QuizLogManager {
