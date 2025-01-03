@@ -95,7 +95,7 @@ export default function QuizMap() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <div className="flex flex-col font-extrabold">
+        <div className="flex flex-col font-extrabold space-y-3">
           <span className="text-[24px]">{translation("total_score")}</span>
           <span className="text-[48px]">{quizStagesTotalScore}</span>
         </div>
@@ -149,7 +149,7 @@ const TutorialCarousel = () => {
   const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/map_guide.png`;
 
   return (
-    <Carousel className="w-full" setApi={setApi}>
+    <Carousel className="w-full font-one font-medium" setApi={setApi}>
       <CarouselContent>
         {Array.from({ length: 2 }).map((_, index) => {
           return (

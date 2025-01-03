@@ -34,6 +34,22 @@
     format("truetype");
 }
 
+@font-face {
+  font-family: "one";
+  font-weight: 600;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/one/SamsungOne-600_v1.1.ttf)
+    format("truetype");
+}
+
+@font-face {
+  font-family: "one";
+  font-weight: 700;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/one/SamsungOne-700_v1.1.ttf)
+    format("truetype");
+}
+
 :root {
   --disabled: #d0d0d0;
 }

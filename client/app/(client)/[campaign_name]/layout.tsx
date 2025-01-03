@@ -43,7 +43,7 @@ export default async function CampaignLayout({
 
   return (
     <div
-      className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto"
+      className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto text-base"
       lang={locale}
     >
       <CampaignProvider campaign={data.item}>{children}</CampaignProvider>

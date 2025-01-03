@@ -22,7 +22,7 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
           <DialogHeader>
             <DialogTitle>{translation("privacy")}</DialogTitle>
           </DialogHeader>
-          <div className="max-h-[50svh] overflow-hidden overflow-y-scroll">
+          <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
             Information Collection: We collect only the necessary personal
             information to provide our services. Purpose of Use: Your data is
             used for service delivery, improvement, customer support, and
@@ -69,7 +69,7 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
             <DialogTitle>{translation("term")}</DialogTitle>
           </DialogHeader>
 
-          <div className="max-h-[50svh] overflow-hidden overflow-y-scroll">
+          <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
             Information Collection: We collect only the necessary personal
             information to provide our services. Purpose of Use: Your data is
             used for service delivery, improvement, customer support, and

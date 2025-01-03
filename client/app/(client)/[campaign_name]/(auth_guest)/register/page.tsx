@@ -272,7 +272,7 @@ export default function GuestRegisterPage() {
               </span>
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-[14px]">
+          <div className="flex flex-col gap-[14px] font-one font-medium">
             {/* countries */}
             <Select
               onValueChange={(value) => {
@@ -292,7 +292,7 @@ export default function GuestRegisterPage() {
                     : selectedCountry.name}
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="max-h-[220px]">
+              <SelectContent className="max-h-[220px] font-one font-medium">
                 {countries.map((country, idx) => (
                   <SelectItem key={idx} value={country.code}>
                     {country.name}
@@ -319,7 +319,7 @@ export default function GuestRegisterPage() {
                     : selectedChannel.name}
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="max-h-[220px]">
+              <SelectContent className="max-h-[220px] font-one font-medium">
                 {channels.map((channel) => (
                   <SelectItem key={channel.name} value={channel.name}>
                     {channel.name}
@@ -333,7 +333,7 @@ export default function GuestRegisterPage() {
               {channelInput && (
                 <input
                   type="text"
-                  className="relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 text-sm rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]"
+                  className="relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]"
                   placeholder={translation("input_directly")}
                   onChange={(e) => {
                     const value = e.target.value.trim();
@@ -357,7 +357,7 @@ export default function GuestRegisterPage() {
               >
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="font-one font-medium">
                 {jobs.map((job) => (
                   <SelectItem key={job.id} value={job.id}>
                     {job.name}
