@@ -27,7 +27,12 @@ export default function ScoreRankAnnouncement({
   const translation = useTranslations();
 
   const { routeToPage } = usePathNavigator();
-  const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
+  const {
+    quizStagesTotalScore,
+    lastCompletedQuizStage,
+    quizSet,
+    quizStageLogs,
+  } = useQuiz();
   const isLastStage =
     quizSet.quizStages[quizSet.quizStages.length - 1].id ===
     lastCompletedQuizStage?.id;
@@ -35,6 +40,8 @@ export default function ScoreRankAnnouncement({
   const { data: session } = useSession();
   const user = session?.user;
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
+  const percentile = (quizStageLogs && quizStageLogs.at(-1)!.percentile) || 0;
+  const topRank = 100 - percentile || 1;
 
   return (
     <div className={cn("", className)}>
@@ -97,7 +104,7 @@ export default function ScoreRankAnnouncement({
           />
 
           <p className="text-[22px] text-balance px-5">
-            {translation("rank_notification")}
+            {translation("rank_notification").replace("XX", String(topRank))}
           </p>
         </div>
 

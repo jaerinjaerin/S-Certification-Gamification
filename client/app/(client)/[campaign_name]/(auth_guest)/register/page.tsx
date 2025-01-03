@@ -192,11 +192,8 @@ export default function GuestRegisterPage() {
   const selectChannel = (channelName: string) => {
     console.log("🚧", channelName);
     if (channelName === "input_directly") {
-      console.log("🔥", selectedChannel);
-
       setChannelInput(true);
       setSelectedChannel(null);
-      // TODO:
 
       setSelectedJobId(jobs[0].id);
 
@@ -397,7 +394,7 @@ export default function GuestRegisterPage() {
       >
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Alert</AlertDialogTitle>
+            <AlertDialogTitle></AlertDialogTitle>
             <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

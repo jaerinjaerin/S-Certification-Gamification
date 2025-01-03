@@ -35,6 +35,7 @@ export default async function CampaignLayout({
   }
 
   const locale = await getLocale();
+  console.log("🥶", locale);
 
   // Providing all messages to the client
   // side is the easiest way to get started
