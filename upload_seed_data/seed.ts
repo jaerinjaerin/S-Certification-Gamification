@@ -47,102 +47,199 @@ const bgImages = [
   "/certification/s24/images/background/bg_4.png",
 ];
 
-// async function createTriggers() {
-//   // Trigger function for UserQuizLog -> UserQuizStatistics
-//   await prisma.$executeRaw`
-//     CREATE OR REPLACE FUNCTION update_user_quiz_statistics()
-//     RETURNS TRIGGER AS $$
-//     BEGIN
-//       INSERT INTO "UserQuizStatistics" (userId, campaignId, quizSetId, totalElapsedSeconds, totalScore)
-//       VALUES (NEW.userId, NEW.campaignId, NEW.quizSetId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
-//       ON CONFLICT (userId, campaignId, quizSetId)
-//       DO UPDATE SET
-//         totalElapsedSeconds = COALESCE("UserQuizStatistics".totalElapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
-//         totalScore = COALESCE("UserQuizStatistics".totalScore, 0) + COALESCE(NEW.score, 0);
+async function createTriggers() {
+  // Trigger function for UserQuizLog -> UserQuizStatistics
+  await prisma.$executeRaw`
+    CREATE OR REPLACE FUNCTION sync_user_quiz_statistics()
+    RETURNS TRIGGER AS $$
+    BEGIN
+        -- 데이터가 존재하면 업데이트
+        IF EXISTS (SELECT 1 FROM "UserQuizStatistics" WHERE id = NEW.id) THEN
+            UPDATE "UserQuizStatistics"
+            SET 
+                "userId" = COALESCE(NEW.userId, "userId"),
+                "authType" = COALESCE(NEW.authType, "authType"),
+                "campaignId" = COALESCE(NEW.campaignId, "campaignId"),
+                "isCompleted" = COALESCE(NEW.isCompleted, "isCompleted"),
+                "isBadgeAcquired" = COALESCE(NEW.isBadgeAcquired, "isBadgeAcquired"),
+                "lastCompletedStage" = COALESCE(NEW.lastCompletedStage, "lastCompletedStage"),
+                "elapsedSeconds" = COALESCE(NEW.elapsedSeconds, "elapsedSeconds"),
+                "createdAt" = COALESCE(NEW.createdAt, "createdAt"),
+                "updatedAt" = COALESCE(NEW.createdAt, "updatedAt"),
+                "quizSetId" = COALESCE(NEW.quizSetId, "quizSetId"),
+                "score" = COALESCE(NEW.score, "score"),
+                "quizSetPath" = COALESCE(NEW.quizSetPath, "quizSetPath"),
+                "domainId" = COALESCE(NEW.domainId, "domainId"),
+                "languageId" = COALESCE(NEW.languageId, "languageId"),
+                "jobId" = COALESCE(NEW.jobId, "jobId"),
+                "regionId" = COALESCE(NEW.regionId, "regionId"),
+                "subsidaryId" = COALESCE(NEW.subsidaryId, "subsidaryId"),
+                "storeId" = COALESCE(NEW.storeId, "storeId"),
+                "storeSegmentText" = COALESCE(NEW.storeSegmentText, "storeSegmentText"),
+                "channelId" = COALESCE(NEW.channelId, "channelId"),
+                "channelSegmentId" = COALESCE(NEW.channelSegmentId, "channelSegmentId"),
+                "channelName" = COALESCE(NEW.channelName, "channelName")
+            WHERE id = NEW.id;
+        ELSE
+            -- 데이터가 없으면 삽입
+            INSERT INTO "UserQuizStatistics" (
+                "id",
+                "userId", 
+                "authType", 
+                "campaignId", 
+                "isCompleted", 
+                "isBadgeAcquired",
+                "lastCompletedStage", 
+                "elapsedSeconds", 
+                "createdAt", 
+                "updatedAt",
+                "quizSetId", 
+                "score", 
+                "quizSetPath", 
+                "domainId", 
+                "languageId", 
+                "jobId",
+                "regionId", 
+                "subsidaryId", 
+                "storeId", 
+                "storeSegmentText", 
+                "channelId",
+                "channelSegmentId", 
+                "channelName"
+            )
+            VALUES (
+                NEW.id, 
+                COALESCE(NEW.userId, ''),
+                COALESCE(NEW.authType, ''),
+                COALESCE(NEW.campaignId, ''),
+                COALESCE(NEW.isCompleted, FALSE),
+                COALESCE(NEW.isBadgeAcquired, FALSE),
+                COALESCE(NEW.lastCompletedStage, 0),
+                COALESCE(NEW.elapsedSeconds, 0),
+                COALESCE(NEW.createdAt, now()),
+                COALESCE(NEW.updatedAt, now()),
+                NEW.quizSetId,
+                COALESCE(NEW.score, 0),
+                NEW.quizSetPath,
+                NEW.domainId,
+                NEW.languageId,
+                NEW.jobId,
+                NEW.regionId,
+                NEW.subsidaryId,
+                NEW.storeId,
+                NEW.storeSegmentText,
+                NEW.channelId,
+                NEW.channelSegmentId,
+                NEW.channelName
+            );
+        END IF;
 
-//       RETURN NEW;
-//     END;
-//     $$ LANGUAGE plpgsql;
-//   `;
+        RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+  `;
 
-//   await prisma.$executeRaw`
-//     CREATE TRIGGER after_user_quiz_log_insert
-//     AFTER INSERT OR UPDATE ON "UserQuizLog"
-//     FOR EACH ROW
-//     EXECUTE FUNCTION update_user_quiz_statistics();
-//   `;
+  await prisma.$executeRaw`
+    CREATE TRIGGER trigger_sync_user_quiz_statistics
+    AFTER INSERT OR UPDATE ON "UserQuizLog"
+    FOR EACH ROW
+    EXECUTE FUNCTION sync_user_quiz_statistics();
+  `;
 
-//   // Trigger function for UserQuizBadgeStageLog -> UserQuizBadgeStageStatistics
-//   await prisma.$executeRaw`
-//     CREATE OR REPLACE FUNCTION update_user_quiz_badge_stage_statistics()
-//     RETURNS TRIGGER AS $$
-//     BEGIN
-//       INSERT INTO "UserQuizBadgeStageStatistics" (userId, campaignId, quizStageId, isBadgeAcquired)
-//       VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, NEW.isBadgeAcquired)
-//       ON CONFLICT (userId, campaignId, quizStageId)
-//       DO UPDATE SET
-//         isBadgeAcquired = NEW.isBadgeAcquired;
+  // await prisma.$executeRaw`
+  //   CREATE OR REPLACE FUNCTION update_user_quiz_statistics()
+  //   RETURNS TRIGGER AS $$
+  //   BEGIN
+  //     INSERT INTO "UserQuizStatistics" (userId, campaignId, quizSetId, totalElapsedSeconds, totalScore)
+  //     VALUES (NEW.userId, NEW.campaignId, NEW.quizSetId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
+  //     ON CONFLICT (userId, campaignId, quizSetId)
+  //     DO UPDATE SET
+  //       totalElapsedSeconds = COALESCE("UserQuizStatistics".totalElapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
+  //       totalScore = COALESCE("UserQuizStatistics".totalScore, 0) + COALESCE(NEW.score, 0);
 
-//       RETURN NEW;
-//     END;
-//     $$ LANGUAGE plpgsql;
-//   `;
+  //     RETURN NEW;
+  //   END;
+  //   $$ LANGUAGE plpgsql;
+  // `;
 
-//   await prisma.$executeRaw`
-//     CREATE TRIGGER after_user_quiz_badge_stage_log_insert
-//     AFTER INSERT OR UPDATE ON "UserQuizBadgeStageLog"
-//     FOR EACH ROW
-//     EXECUTE FUNCTION update_user_quiz_badge_stage_statistics();
-//   `;
+  // await prisma.$executeRaw`
+  //   CREATE TRIGGER after_user_quiz_log_insert
+  //   AFTER INSERT OR UPDATE ON "UserQuizLog"
+  //   FOR EACH ROW
+  //   EXECUTE FUNCTION update_user_quiz_statistics();
+  // `;
 
-//   // Trigger function for UserQuizStageLog -> UserQuizStageStatistics
-//   await prisma.$executeRaw`
-//     CREATE OR REPLACE FUNCTION update_user_quiz_stage_statistics()
-//     RETURNS TRIGGER AS $$
-//     BEGIN
-//       INSERT INTO "UserQuizStageStatistics" (userId, campaignId, quizStageId, elapsedSeconds, score)
-//       VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
-//       ON CONFLICT (userId, campaignId, quizStageId)
-//       DO UPDATE SET
-//         elapsedSeconds = COALESCE("UserQuizStageStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
-//         score = COALESCE("UserQuizStageStatistics".score, 0) + COALESCE(NEW.score, 0);
+  // // Trigger function for UserQuizBadgeStageLog -> UserQuizBadgeStageStatistics
+  // await prisma.$executeRaw`
+  //   CREATE OR REPLACE FUNCTION update_user_quiz_badge_stage_statistics()
+  //   RETURNS TRIGGER AS $$
+  //   BEGIN
+  //     INSERT INTO "UserQuizBadgeStageStatistics" (userId, campaignId, quizStageId, isBadgeAcquired)
+  //     VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, NEW.isBadgeAcquired)
+  //     ON CONFLICT (userId, campaignId, quizStageId)
+  //     DO UPDATE SET
+  //       isBadgeAcquired = NEW.isBadgeAcquired;
 
-//       RETURN NEW;
-//     END;
-//     $$ LANGUAGE plpgsql;
-//   `;
+  //     RETURN NEW;
+  //   END;
+  //   $$ LANGUAGE plpgsql;
+  // `;
 
-//   await prisma.$executeRaw`
-//     CREATE TRIGGER after_user_quiz_stage_log_insert
-//     AFTER INSERT OR UPDATE ON "UserQuizStageLog"
-//     FOR EACH ROW
-//     EXECUTE FUNCTION update_user_quiz_stage_statistics();
-//   `;
+  // await prisma.$executeRaw`
+  //   CREATE TRIGGER after_user_quiz_badge_stage_log_insert
+  //   AFTER INSERT OR UPDATE ON "UserQuizBadgeStageLog"
+  //   FOR EACH ROW
+  //   EXECUTE FUNCTION update_user_quiz_badge_stage_statistics();
+  // `;
 
-//   // Trigger function for UserQuizQuestionLog -> UserQuizQuestionStatistics
-//   await prisma.$executeRaw`
-//     CREATE OR REPLACE FUNCTION update_user_quiz_question_statistics()
-//     RETURNS TRIGGER AS $$
-//     BEGIN
-//       INSERT INTO "UserQuizQuestionStatistics" (userId, quizSetId, questionId, isCorrect, elapsedSeconds)
-//       VALUES (NEW.userId, NEW.quizSetId, NEW.questionId, NEW.isCorrect, COALESCE(NEW.elapsedSeconds, 0))
-//       ON CONFLICT (userId, quizSetId, questionId)
-//       DO UPDATE SET
-//         isCorrect = NEW.isCorrect,
-//         elapsedSeconds = COALESCE("UserQuizQuestionStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0);
+  // // Trigger function for UserQuizStageLog -> UserQuizStageStatistics
+  // await prisma.$executeRaw`
+  //   CREATE OR REPLACE FUNCTION update_user_quiz_stage_statistics()
+  //   RETURNS TRIGGER AS $$
+  //   BEGIN
+  //     INSERT INTO "UserQuizStageStatistics" (userId, campaignId, quizStageId, elapsedSeconds, score)
+  //     VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
+  //     ON CONFLICT (userId, campaignId, quizStageId)
+  //     DO UPDATE SET
+  //       elapsedSeconds = COALESCE("UserQuizStageStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
+  //       score = COALESCE("UserQuizStageStatistics".score, 0) + COALESCE(NEW.score, 0);
 
-//       RETURN NEW;
-//     END;
-//     $$ LANGUAGE plpgsql;
-//   `;
+  //     RETURN NEW;
+  //   END;
+  //   $$ LANGUAGE plpgsql;
+  // `;
 
-//   await prisma.$executeRaw`
-//     CREATE TRIGGER after_user_quiz_question_log_insert
-//     AFTER INSERT OR UPDATE ON "UserQuizQuestionLog"
-//     FOR EACH ROW
-//     EXECUTE FUNCTION update_user_quiz_question_statistics();
-//   `;
-// }
+  // await prisma.$executeRaw`
+  //   CREATE TRIGGER after_user_quiz_stage_log_insert
+  //   AFTER INSERT OR UPDATE ON "UserQuizStageLog"
+  //   FOR EACH ROW
+  //   EXECUTE FUNCTION update_user_quiz_stage_statistics();
+  // `;
+
+  // // Trigger function for UserQuizQuestionLog -> UserQuizQuestionStatistics
+  // await prisma.$executeRaw`
+  //   CREATE OR REPLACE FUNCTION update_user_quiz_question_statistics()
+  //   RETURNS TRIGGER AS $$
+  //   BEGIN
+  //     INSERT INTO "UserQuizQuestionStatistics" (userId, quizSetId, questionId, isCorrect, elapsedSeconds)
+  //     VALUES (NEW.userId, NEW.quizSetId, NEW.questionId, NEW.isCorrect, COALESCE(NEW.elapsedSeconds, 0))
+  //     ON CONFLICT (userId, quizSetId, questionId)
+  //     DO UPDATE SET
+  //       isCorrect = NEW.isCorrect,
+  //       elapsedSeconds = COALESCE("UserQuizQuestionStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0);
+
+  //     RETURN NEW;
+  //   END;
+  //   $$ LANGUAGE plpgsql;
+  // `;
+
+  // await prisma.$executeRaw`
+  //   CREATE TRIGGER after_user_quiz_question_log_insert
+  //   AFTER INSERT OR UPDATE ON "UserQuizQuestionLog"
+  //   FOR EACH ROW
+  //   EXECUTE FUNCTION update_user_quiz_question_statistics();
+  // `;
+}
 
 async function main() {
   // Create Campaign

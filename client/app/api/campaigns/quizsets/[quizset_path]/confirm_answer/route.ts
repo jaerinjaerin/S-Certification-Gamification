@@ -54,23 +54,6 @@ export async function POST(request: Request, props: Props) {
       .map((option) => option.id);
 
     if (areArraysEqualUnordered(correctOptionIds, selectedOptionIds)) {
-      // await prisma.userQuizQuestionLog.create({
-      //   data: {
-      //     isCorrect: true,
-      //     userId: session?.user.id ?? "",
-      //     questionId: questionId,
-      //     languageId: quizset.languageId,
-      //     selectedOptionIds: selectedOptionIds.join(","),
-      //     domainId: quizset.domainId,
-      //     stageIndex: quizStage.stageIndex,
-      //     category: question.category,
-      //     specificFeatur: question.category,
-      //     enabled: question.enabled,
-      //     product: question.product,
-      //     questionType: question.questionType,
-      //     elapsedSeconds: elapsedSeconds,
-      //   },
-      // });
       return NextResponse.json(
         {
           result: {

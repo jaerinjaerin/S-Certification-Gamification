@@ -77,9 +77,9 @@ export async function GET(request: NextRequest) {
           has: job?.code,
         },
       },
-      include: {
-        quizStages: true, // Include quizStages
-      },
+      // include: {
+      //   quizStages: true, // Include quizStages
+      // },
     });
 
     if (!quizSet) {
@@ -99,7 +99,9 @@ export async function GET(request: NextRequest) {
     const userQuizLog = await prisma.userQuizLog.findFirst({
       where: {
         userId: userId,
-        campaignId: quizSet.campaignId,
+        quizSetId: quizSet.id,
+        // userId: userId,
+        // campaignId: quizSet.campaignId,
         // jobId: quizSet.jobId,
         // domainId: quizSet.domainId,
       },
@@ -107,15 +109,15 @@ export async function GET(request: NextRequest) {
 
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
-        quizSetId: userQuizLog?.quizSetId,
         userId: userId,
+        quizSetId: quizSet.id,
       },
     });
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
-        quizSetId: userQuizLog?.quizSetId,
         userId: userId,
+        quizSetId: quizSet.id,
       },
       orderBy: {
         createdAt: "asc", // 오름차순 정렬
@@ -176,13 +178,11 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    // console.log("body", body);
     const { userId } = body;
 
     const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
 
     console.log("domainCode", domainCode);
-    // console.log("jobCode", jobCode);
     console.log("languageCode", languageCode);
 
     const domain = await prisma.domain.findFirst({
@@ -225,18 +225,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // const job = await prisma.job.findFirst({
-    //   where: {
-    //     code: jobCode,
-    //   },
-    // });
-
-    // const job = await prisma.job.findFirst({
-    //   where: {
-    //     code: jobCode,
-    //   },
-    // });
-
     console.log("job:", job);
 
     const language = await prisma.language.findFirst({
@@ -275,63 +263,70 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // const user = await prisma.user.findFirst({
-    //   where: {
-    //     id: userId,
-    //   },
-    // });
-
     console.log("user:", user);
 
-    const userQuizLog = await prisma.userQuizLog.create({
-      data: {
-        userId: userId,
-        authType: user?.authType || AuthType.UNKNOWN,
-        campaignId: quizSet.campaignId,
-        isCompleted: false,
-        isBadgeAcquired: false,
+    const result = await prisma.$transaction(async (tx) => {
+      const userQuizLog = await tx.userQuizLog.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId: quizSet.campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
 
-        jobId: job?.id,
-        quizSetId: quizSet.id,
-        languageId: language?.id,
-        quizSetPath: quizsetPath,
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: quizsetPath,
 
-        domainId: domain?.id,
-        regionId: domain?.subsidary?.region?.id ?? user?.regionId,
-        subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
+          domainId: domain?.id,
+          regionId: domain?.subsidary?.region?.id ?? user?.regionId,
+          subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
 
-        storeId: user?.storeId,
-        storeSegmentText: user?.storeSegmentText,
-        channelId: user?.channelId,
-        channelName: user?.channelName,
-        channelSegmentId: user?.channelSegmentId,
-      },
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+
+      const userQuizStatistics = await tx.userQuizStatistics.create({
+        data: {
+          id: userQuizLog.id,
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId: quizSet.campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: quizsetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidary?.region?.id ?? user?.regionId,
+          subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+
+      return { userQuizLog, userQuizStatistics };
     });
 
-    console.log("userQuizLog:", userQuizLog);
-
-    // const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
-    //   where: {
-    //     quizSetId: userQuizLog?.quizSetId,
-    //     userId: userId,
-    //   },
-    // });
-
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     quizSetId: userQuizLog?.quizSetId,
-    //     userId: userId,
-    //   },
-    // });
-
-    // console.log("userQuizStageLogs:", userQuizStageLogs);
+    console.log("userQuizLog:", result.userQuizLog);
+    console.log("userQuizStatistics:", result.userQuizStatistics);
 
     return NextResponse.json(
       {
         item: {
-          quizLog: userQuizLog,
-          // quizStageLogs: userQuizStageLogs,
-          // quizQuestionLogs: userQuizQuestionLogs,
+          quizLog: result.userQuizLog,
         },
       },
       { status: 200 }

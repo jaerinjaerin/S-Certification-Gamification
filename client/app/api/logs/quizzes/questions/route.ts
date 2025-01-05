@@ -38,38 +38,78 @@ export async function POST(request: Request) {
       channelName,
     } = body;
 
-    const questionLog = await prisma.userQuizQuestionLog.create({
-      data: {
-        authType,
-        isCorrect,
-        campaignId,
-        userId,
-        quizSetId,
-        questionId,
-        quizStageId,
-        selectedOptionIds,
-        correctOptionIds,
-        quizStageIndex,
-        category,
-        specificFeature,
-        product,
-        questionType,
-        elapsedSeconds,
-        createdAt,
+    const result = await prisma.$transaction(async (tx) => {
+      const userQuizQuestionLog = await tx.userQuizQuestionLog.create({
+        data: {
+          authType,
+          isCorrect,
+          campaignId,
+          userId,
+          quizSetId,
+          questionId,
+          quizStageId,
+          selectedOptionIds,
+          correctOptionIds,
+          quizStageIndex,
+          category,
+          specificFeature,
+          product,
+          questionType,
+          elapsedSeconds,
+          createdAt,
 
-        domainId,
-        languageId,
-        jobId,
-        regionId,
-        subsidaryId,
-        channelSegmentId,
-        storeId,
-        channelId,
-        channelName,
-      },
+          domainId,
+          languageId,
+          jobId,
+          regionId,
+          subsidaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+
+      const userQuizQuestionStatistics =
+        await tx.userQuizQuestionStatistics.create({
+          data: {
+            id: userQuizQuestionLog.id,
+            authType,
+            isCorrect,
+            campaignId,
+            userId,
+            quizSetId,
+            questionId,
+            quizStageId,
+            selectedOptionIds,
+            correctOptionIds,
+            quizStageIndex,
+            category,
+            specificFeature,
+            product,
+            questionType,
+            elapsedSeconds,
+            createdAt,
+
+            domainId,
+            languageId,
+            jobId,
+            regionId,
+            subsidaryId,
+            channelSegmentId,
+            storeId,
+            channelId,
+            channelName,
+          },
+        });
+
+      return { userQuizQuestionLog, userQuizQuestionStatistics };
     });
 
-    return NextResponse.json({ item: questionLog }, { status: 200 });
+    return NextResponse.json(
+      { item: result.userQuizQuestionLog },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error create quiz question log :", error);
     Sentry.captureException(error);

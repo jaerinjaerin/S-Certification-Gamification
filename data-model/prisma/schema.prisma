@@ -518,8 +518,6 @@ model UserQuizStatistics {
   channelId String?
   channelSegmentId String?
   channelName String?
-
-  @@unique([userId, campaignId])
 }
 
 model UserQuizBadgeStageStatistics {

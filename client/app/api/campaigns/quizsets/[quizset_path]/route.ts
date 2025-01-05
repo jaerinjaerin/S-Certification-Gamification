@@ -67,14 +67,6 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
-    // console.log("domain:", domain);
-
-    // const job = await prisma.job.findFirst({
-    //   where: {
-    //     code: jobCode,
-    //   },
-    // });
-
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: domain?.id,
@@ -149,52 +141,6 @@ export async function GET(request: NextRequest, props: Props) {
         };
       })
     );
-
-    // console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
-
-    // return {
-    //   ...quizSet,
-    //   quizStages: quizStagesWithQuestions,
-    // };
-
-    // const result = await prisma.campaignDomainQuizSet.findFirst({
-    //   where: {
-    //     path: {
-    //       equals: quizsetPath,
-    //       mode: "insensitive", // 대소문자 구분 없이 검색
-    //     },
-    //   },
-    //   include: {
-    //     language: true,
-    //     campaign: true,
-    //     domain: true,
-    //     quizStages: true, // Include the stages associated with the quiz set
-    //   },
-    // });
-
-    // console.log("result:", result);
-
-    // // Fetch questions for each quizStage
-    // const stagesWithQuestions = await Promise.all(
-    //   result?.quizStages.map(async (stage) => {
-    //     const questionIds = JSON.parse(stage.questionIds || "[]");
-    //     const questions = await prisma.question.findMany({
-    //       where: {
-    //         id: {
-    //           in: questionIds,
-    //         },
-    //       },
-    //       include: {
-    //         options: true, // Include all related options for each question
-    //       },
-    //     });
-
-    //     return {
-    //       ...stage,
-    //       questions, // Add questions with options to the stage
-    //     };
-    //   }) || []
-    // );
 
     const response = NextResponse.json(
       {

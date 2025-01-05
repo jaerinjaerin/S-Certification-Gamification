@@ -32,47 +32,23 @@ export async function POST(request: Request) {
       channelName,
     } = body;
 
-    const quizStageLog = await await prisma.userQuizStageLog.create({
-      data: {
-        userId,
-        authType,
-        campaignId,
-        isBadgeStage,
-        isBadgeAcquired,
-        badgeActivityId,
-        remainingHearts,
-        quizSetId,
-        quizStageId,
-        quizStageIndex,
-        elapsedSeconds,
-        score,
-        percentile,
-        scoreRange,
-        domainId,
-        languageId,
-        jobId,
-        regionId,
-        subsidaryId,
-        channelSegmentId,
-        storeId,
-        channelId,
-        channelName,
-      },
-    });
-
-    if (isBadgeStage) {
-      await await prisma.userQuizBadgeStageLog.create({
+    const result = await prisma.$transaction(async (tx) => {
+      const userQuizStageLog = await tx.userQuizStageLog.create({
         data: {
           userId,
           authType,
           campaignId,
+          isBadgeStage,
           isBadgeAcquired,
           badgeActivityId,
+          remainingHearts,
           quizSetId,
           quizStageId,
           quizStageIndex,
-          elapsedSeconds: elapsedSeconds,
-          score: totalScore,
+          elapsedSeconds,
+          score,
+          percentile,
+          scoreRange,
           domainId,
           languageId,
           jobId,
@@ -84,9 +60,100 @@ export async function POST(request: Request) {
           channelName,
         },
       });
-    }
 
-    return NextResponse.json({ item: quizStageLog }, { status: 200 });
+      const userQuizStageStatistics = await tx.userQuizStageStatistics.create({
+        data: {
+          id: userQuizStageLog.id,
+          userId,
+          authType,
+          campaignId,
+          isBadgeStage,
+          isBadgeAcquired,
+          badgeActivityId,
+          remainingHearts,
+          quizSetId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds,
+          score,
+          percentile,
+          scoreRange,
+          domainId,
+          languageId,
+          jobId,
+          regionId,
+          subsidaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+
+      if (isBadgeStage) {
+        const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
+          data: {
+            userId,
+            authType,
+            campaignId,
+            isBadgeAcquired,
+            badgeActivityId,
+            quizSetId,
+            quizStageId,
+            quizStageIndex,
+            elapsedSeconds,
+            score: totalScore,
+            domainId,
+            languageId,
+            jobId,
+            regionId,
+            subsidaryId,
+            channelSegmentId,
+            storeId,
+            channelId,
+            channelName,
+          },
+        });
+
+        const userQuizBadgeStageStatistics =
+          await tx.userQuizBadgeStageStatistics.create({
+            data: {
+              id: userQuizBadgeStageLog.id,
+              userId,
+              authType,
+              campaignId,
+              isBadgeAcquired,
+              badgeActivityId,
+              quizSetId,
+              quizStageId,
+              quizStageIndex,
+              elapsedSeconds,
+              score: totalScore,
+              domainId,
+              languageId,
+              jobId,
+              regionId,
+              subsidaryId,
+              channelSegmentId,
+              storeId,
+              channelId,
+              channelName,
+            },
+          });
+
+        return {
+          userQuizStageLog,
+          userQuizStageStatistics,
+          userQuizBadgeStageLog,
+          userQuizBadgeStageStatistics,
+        };
+      }
+    });
+
+    return NextResponse.json(
+      { item: result?.userQuizStageLog },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error create quiz stage log:", error);
     return NextResponse.json(
