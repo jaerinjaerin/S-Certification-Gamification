@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { AuthType } from "@prisma/client";
+import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
@@ -27,7 +28,12 @@ export default function ScoreRankAnnouncement({
   const translation = useTranslations();
 
   const { routeToPage } = usePathNavigator();
-  const { quizStagesTotalScore, lastCompletedQuizStage, quizSet } = useQuiz();
+  const {
+    quizStagesTotalScore,
+    lastCompletedQuizStage,
+    quizSet,
+    quizStageLogs,
+  } = useQuiz();
   const isLastStage =
     quizSet.quizStages[quizSet.quizStages.length - 1].id ===
     lastCompletedQuizStage?.id;
@@ -35,6 +41,8 @@ export default function ScoreRankAnnouncement({
   const { data: session } = useSession();
   const user = session?.user;
   const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
+  const percentile = (quizStageLogs && quizStageLogs.at(-1)!.percentile) || 0;
+  const topRank = 100 - percentile || 1;
 
   return (
     <div className={cn("", className)}>
@@ -54,7 +62,7 @@ export default function ScoreRankAnnouncement({
             <DialogHeader>
               <DialogTitle>{translation("score")}</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-4 text-[14px] text-[#4E4E4E]">
+            <div className="flex flex-col gap-4 text-[14px] text-[#4E4E4E] font-one font-medium">
               <div>
                 <p className="font-extrabold">{translation("base_score")}</p>
                 {translation("base_score_description")}
@@ -74,6 +82,11 @@ export default function ScoreRankAnnouncement({
               <DialogClose className="text-[18px] py-[22px] px-[34px]" asChild>
                 <Button variant={"primary"}>{translation("ok")}</Button>
               </DialogClose>
+
+              <DialogClose className="absolute top-5 right-5">
+                <X />
+                <span className="sr-only">Close</span>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -82,7 +95,7 @@ export default function ScoreRankAnnouncement({
       {/* content */}
       <div>
         <h2 className="text-[32px]">{translation("score")}</h2>
-        <h1 className="text-[60px] ">{quizStagesTotalScore}</h1>
+        <h1 className="text-[60px] my-9">{quizStagesTotalScore}</h1>
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-[25px] mb-7">
@@ -97,7 +110,7 @@ export default function ScoreRankAnnouncement({
           />
 
           <p className="text-[22px] text-balance px-5">
-            {translation("rank_notification")}
+            {translation("rank_notification").replace("XX", String(topRank))}
           </p>
         </div>
 

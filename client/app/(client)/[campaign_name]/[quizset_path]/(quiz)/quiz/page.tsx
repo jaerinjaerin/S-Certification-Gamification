@@ -199,7 +199,7 @@ export default function QuizPage() {
                   handleConfirmAnswer(question, option.id);
                 }}
                 className={cn(
-                  "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
+                  "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer font-one font-semibold text-[18px]",
                   selectedOptionIds.includes(option.id) &&
                     !option.isCorrect &&
                     "bg-[#EE3434] text-white pointer-events-none",

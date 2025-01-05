@@ -444,7 +444,7 @@ export default function GuestLogin() {
 
           <div className="m-auto">
             <div
-              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal"
+              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal leading-normal"
               style={{
                 wordBreak: "break-word",
               }}
@@ -488,7 +488,7 @@ export default function GuestLogin() {
                       <input
                         placeholder={translation("email")}
                         inputMode="email"
-                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px]"
+                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={loading}
@@ -524,7 +524,7 @@ export default function GuestLogin() {
       <AlertDialog open={!!error}>
         <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Alert</AlertDialogTitle>
+            <AlertDialogTitle></AlertDialogTitle>
             <AlertDialogDescription>{error}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -593,7 +593,7 @@ export default function GuestLogin() {
               <input
                 placeholder="code"
                 inputMode="numeric"
-                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
+                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 required

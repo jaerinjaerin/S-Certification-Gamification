@@ -26,12 +26,17 @@ export function TypewriteTextVer({ question }: { question: string }) {
     }
   };
 
-  useInterval(letterInterval, letterIndex < question.length ? SWAP_DELAY_IN_MS : null);
+  useInterval(
+    letterInterval,
+    letterIndex < question.length ? SWAP_DELAY_IN_MS : null
+  );
 
   return (
-    <div className="">
+    <div className="font-one text-[18px] font-bold">
       {QUIZ_PATH ? letter : question}
-      {QUIZ_PATH && letterIndex !== question.length && <motion.span className="ml-1">|</motion.span>}
+      {QUIZ_PATH && letterIndex !== question.length && (
+        <motion.span className="ml-1">|</motion.span>
+      )}
     </div>
   );
 }

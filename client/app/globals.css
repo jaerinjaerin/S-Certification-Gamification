@@ -2,6 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "SamsungSharpSans";
+  font-weight: 400;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Regular.woff)
+    format("woff");
+}
+
+@font-face {
+  font-family: "SamsungSharpSans";
+  font-weight: 500;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Medium.woff)
+    format("woff");
+}
+
+@font-face {
+  font-family: "SamsungSharpSans";
+  font-weight: 700;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Bold.woff)
+    format("woff");
+}
+
+@font-face {
+  font-family: "one";
+  font-weight: 500;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/one/SamsungOne-500_v1.1.ttf)
+    format("truetype");
+}
+
+@font-face {
+  font-family: "one";
+  font-weight: 600;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/one/SamsungOne-600_v1.1.ttf)
+    format("truetype");
+}
+
+@font-face {
+  font-family: "one";
+  font-weight: 700;
+  font-style: normal;
+  src: url(https://assets-stage.samsungplus.net/certification/s24/fonts/one/SamsungOne-700_v1.1.ttf)
+    format("truetype");
+}
+
 :root {
   --disabled: #d0d0d0;
 }
@@ -13,7 +61,7 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "SamsungSharpSans", sans-serif;
 }
 
 @layer base {

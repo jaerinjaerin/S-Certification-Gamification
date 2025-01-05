@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { one, samsungSans } from "./font/font";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -29,11 +28,7 @@ export default async function RootLayout({
       <head>
         <meta name="google" content="notranslate" />
       </head>
-      <body
-        className={`${samsungSans.className} ${one.variable} font-bold antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`font-sharpSans font-bold antialiased`}>{children}</body>
     </html>
   );
 }
