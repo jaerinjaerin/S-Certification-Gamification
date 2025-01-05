@@ -1,9 +1,9 @@
 "use client";
 
-import ExpertsSummary from "@/app/dashboard/overview/components/experts-summary";
-import GoalProgressChart from "@/app/dashboard/overview/components/goal-progress-chart";
-import ParticipantsVsExperts from "@/app/dashboard/overview/components/participants_experts";
-import StatisticsTable from "@/app/dashboard/overview/components/statistics_table";
+import ExpertsSummary from "@/app/playground/overview/components/experts-summary";
+import GoalProgressChart from "@/app/playground/overview/components/goal-progress-chart";
+import ParticipantsVsExperts from "@/app/playground/overview/components/participants_experts";
+import StatisticsTable from "@/app/playground/overview/components/statistics_table";
 import FilterBar from "@/components/filter_bar";
 import React, { useState } from "react";
 
@@ -45,12 +45,12 @@ const initialFilters: FilterState = {
   dateRange: getDefaultDateRange(),
 };
 
-const DashboardOverView: React.FC = () => {
+const PlaygroundOverView: React.FC = () => {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+    <div className="p-6 border-8 border-solid">
+      <h1 className="text-2xl font-bold mb-4">Playground</h1>
       <FilterBar filters={filters} onFiltersChange={setFilters} />
       <StatisticsTable filters={filters} />
       <GoalProgressChart campaignId="s24" />
@@ -60,4 +60,4 @@ const DashboardOverView: React.FC = () => {
   );
 };
 
-export default DashboardOverView;
+export default PlaygroundOverView;
