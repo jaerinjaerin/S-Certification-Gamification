@@ -123,7 +123,6 @@ export const QuizProvider = ({
   quizLog,
   quizStageLogs,
   quizQuestionLogs,
-
   quizSetPath,
 }: {
   userId: string | undefined;
@@ -253,12 +252,12 @@ export const QuizProvider = ({
 
       const initHistoryData = await initHistoryResponse.json();
       const newQuizLog = initHistoryData.item.quizLog;
-      const newQuizStageLogs = initHistoryData.item.quizStageLogs;
-      const newQuizQuestionLogs = initHistoryData.item.quizQuestionLogs;
+      // const newQuizStageLogs = initHistoryData.item.quizStageLogs;
+      // const newQuizQuestionLogs = initHistoryData.item.quizQuestionLogs;
 
       setQuizLog(newQuizLog);
-      setQuizStageLogs(newQuizStageLogs);
-      setQuizQuestionLogs(newQuizQuestionLogs);
+      // setQuizStageLogs(newQuizStageLogs ?? []);
+      // setQuizQuestionLogs(newQuizQuestionLogs ?? []);
     } catch (error) {
       console.error("Failed to initialize quiz history:", error);
       Sentry.captureException(error);

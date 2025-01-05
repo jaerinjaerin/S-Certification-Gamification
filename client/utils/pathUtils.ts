@@ -1,6 +1,5 @@
 export function extractCodesFromPath(path: string): {
   domainCode: string;
-  jobCode: string;
   languageCode: string;
 } {
   if (!path || typeof path !== "string") {
@@ -8,22 +7,22 @@ export function extractCodesFromPath(path: string): {
   }
 
   // Match the pattern "domainCode_jobCode_languageCode"
-  const match = path.match(/^(.*)_(.*?)_(.*?)$/);
+  const match = path.match(/^(.*)_(.*?)$/);
 
   if (!match) {
     throw new Error(
-      `Invalid path format: "${path}". Expected format is "domainCode_job_languageCode".`
+      `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     );
   }
 
-  const [, domainCode, jobCode, languageCode] = match;
+  const [, domainCode, languageCode] = match;
 
   // Ensure all parts are non-empty
-  if (!domainCode || !jobCode || !languageCode) {
+  if (!domainCode || !languageCode) {
     throw new Error(
-      `Invalid path format: "${path}". Expected format is "domainCode_job_languageCode".`
+      `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     );
   }
 
-  return { domainCode, jobCode, languageCode };
+  return { domainCode, languageCode };
 }

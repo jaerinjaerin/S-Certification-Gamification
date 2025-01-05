@@ -88,7 +88,7 @@ def generate_large_user_quiz_question_logs_with_dates(user_ids):
             "selectedOptionIds": [str(uuid.uuid4()) for _ in range(random.randint(1, 3))],
             "correctOptionIds": [str(uuid.uuid4()) for _ in range(random.randint(1, 3))],
             "elapsedSeconds": random.randint(10, 50),
-            "questionType": random.choice(["MULTIPLE_CHOICE", "TRUE_FALSE"]),
+            "questionType": random.choice(["MULTI_CHOICE", "TRUE_FALSE"]),
             "domainId": random_item(domains)["code"],
             "regionId": random_item(domains)["region"],
             "languageId": random_item(languages)["code"],

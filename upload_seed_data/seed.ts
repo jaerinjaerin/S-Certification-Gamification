@@ -47,6 +47,103 @@ const bgImages = [
   "/certification/s24/images/background/bg_4.png",
 ];
 
+// async function createTriggers() {
+//   // Trigger function for UserQuizLog -> UserQuizStatistics
+//   await prisma.$executeRaw`
+//     CREATE OR REPLACE FUNCTION update_user_quiz_statistics()
+//     RETURNS TRIGGER AS $$
+//     BEGIN
+//       INSERT INTO "UserQuizStatistics" (userId, campaignId, quizSetId, totalElapsedSeconds, totalScore)
+//       VALUES (NEW.userId, NEW.campaignId, NEW.quizSetId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
+//       ON CONFLICT (userId, campaignId, quizSetId)
+//       DO UPDATE SET
+//         totalElapsedSeconds = COALESCE("UserQuizStatistics".totalElapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
+//         totalScore = COALESCE("UserQuizStatistics".totalScore, 0) + COALESCE(NEW.score, 0);
+
+//       RETURN NEW;
+//     END;
+//     $$ LANGUAGE plpgsql;
+//   `;
+
+//   await prisma.$executeRaw`
+//     CREATE TRIGGER after_user_quiz_log_insert
+//     AFTER INSERT OR UPDATE ON "UserQuizLog"
+//     FOR EACH ROW
+//     EXECUTE FUNCTION update_user_quiz_statistics();
+//   `;
+
+//   // Trigger function for UserQuizBadgeStageLog -> UserQuizBadgeStageStatistics
+//   await prisma.$executeRaw`
+//     CREATE OR REPLACE FUNCTION update_user_quiz_badge_stage_statistics()
+//     RETURNS TRIGGER AS $$
+//     BEGIN
+//       INSERT INTO "UserQuizBadgeStageStatistics" (userId, campaignId, quizStageId, isBadgeAcquired)
+//       VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, NEW.isBadgeAcquired)
+//       ON CONFLICT (userId, campaignId, quizStageId)
+//       DO UPDATE SET
+//         isBadgeAcquired = NEW.isBadgeAcquired;
+
+//       RETURN NEW;
+//     END;
+//     $$ LANGUAGE plpgsql;
+//   `;
+
+//   await prisma.$executeRaw`
+//     CREATE TRIGGER after_user_quiz_badge_stage_log_insert
+//     AFTER INSERT OR UPDATE ON "UserQuizBadgeStageLog"
+//     FOR EACH ROW
+//     EXECUTE FUNCTION update_user_quiz_badge_stage_statistics();
+//   `;
+
+//   // Trigger function for UserQuizStageLog -> UserQuizStageStatistics
+//   await prisma.$executeRaw`
+//     CREATE OR REPLACE FUNCTION update_user_quiz_stage_statistics()
+//     RETURNS TRIGGER AS $$
+//     BEGIN
+//       INSERT INTO "UserQuizStageStatistics" (userId, campaignId, quizStageId, elapsedSeconds, score)
+//       VALUES (NEW.userId, NEW.campaignId, NEW.quizStageId, COALESCE(NEW.elapsedSeconds, 0), COALESCE(NEW.score, 0))
+//       ON CONFLICT (userId, campaignId, quizStageId)
+//       DO UPDATE SET
+//         elapsedSeconds = COALESCE("UserQuizStageStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0),
+//         score = COALESCE("UserQuizStageStatistics".score, 0) + COALESCE(NEW.score, 0);
+
+//       RETURN NEW;
+//     END;
+//     $$ LANGUAGE plpgsql;
+//   `;
+
+//   await prisma.$executeRaw`
+//     CREATE TRIGGER after_user_quiz_stage_log_insert
+//     AFTER INSERT OR UPDATE ON "UserQuizStageLog"
+//     FOR EACH ROW
+//     EXECUTE FUNCTION update_user_quiz_stage_statistics();
+//   `;
+
+//   // Trigger function for UserQuizQuestionLog -> UserQuizQuestionStatistics
+//   await prisma.$executeRaw`
+//     CREATE OR REPLACE FUNCTION update_user_quiz_question_statistics()
+//     RETURNS TRIGGER AS $$
+//     BEGIN
+//       INSERT INTO "UserQuizQuestionStatistics" (userId, quizSetId, questionId, isCorrect, elapsedSeconds)
+//       VALUES (NEW.userId, NEW.quizSetId, NEW.questionId, NEW.isCorrect, COALESCE(NEW.elapsedSeconds, 0))
+//       ON CONFLICT (userId, quizSetId, questionId)
+//       DO UPDATE SET
+//         isCorrect = NEW.isCorrect,
+//         elapsedSeconds = COALESCE("UserQuizQuestionStatistics".elapsedSeconds, 0) + COALESCE(NEW.elapsedSeconds, 0);
+
+//       RETURN NEW;
+//     END;
+//     $$ LANGUAGE plpgsql;
+//   `;
+
+//   await prisma.$executeRaw`
+//     CREATE TRIGGER after_user_quiz_question_log_insert
+//     AFTER INSERT OR UPDATE ON "UserQuizQuestionLog"
+//     FOR EACH ROW
+//     EXECUTE FUNCTION update_user_quiz_question_statistics();
+//   `;
+// }
+
 async function main() {
   // Create Campaign
   const createCampaign = async () => {
@@ -404,8 +501,8 @@ async function main() {
         let badgeActivityId: string | null = null;
         let badgeImageUrl: string | null = null;
 
-        const stage3BadgeActivityId = "251537";
-        const stage4BadgeActivityId = "251540";
+        const stage3BadgeActivityId = "251748";
+        const stage4BadgeActivityId = "251749";
 
         if (i === 2) {
           isBadgeStage = true;
@@ -438,6 +535,7 @@ async function main() {
   await createCampaign();
   await createSeeds();
   await createOriginQuizSet();
+  // await createTriggers();
 
   console.log("Seeding completed!");
 }

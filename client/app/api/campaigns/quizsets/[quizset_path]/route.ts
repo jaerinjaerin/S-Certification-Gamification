@@ -1,3 +1,4 @@
+import { sumtotalUserOthersJobId } from "@/app/core/config/default";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
@@ -11,10 +12,13 @@ type Props = {
 
 export async function GET(request: NextRequest, props: Props) {
   try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("user_id");
+
     const quizsetPath = props.params.quizset_path;
     console.log("API: quizsetPath", quizsetPath);
 
-    if (!quizsetPath) {
+    if (!quizsetPath || !userId) {
       return NextResponse.json(
         {
           status: 400,
@@ -28,8 +32,34 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
-    const { domainCode, jobCode, languageCode } =
-      extractCodesFromPath(quizsetPath);
+    const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
+    console.log("API: domainCode", domainCode);
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "User not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    const job = await prisma.job.findFirst({
+      where: {
+        id: user?.jobId ?? sumtotalUserOthersJobId,
+      },
+    });
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -49,7 +79,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: {
         domainId: domain?.id,
         jobCodes: {
-          has: jobCode,
+          has: job?.code,
         },
         // paths: {
         //   has: quizsetPath, // Ensure jobId exists in the jobIds array

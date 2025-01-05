@@ -1,3 +1,4 @@
+import { sumtotalUserOthersJobId } from "@/app/core/config/default";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { AuthType } from "@prisma/client";
@@ -29,12 +30,37 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { domainCode, jobCode /* languageCode */ } =
-      extractCodesFromPath(quizsetPath);
+    const { domainCode /* languageCode */ } = extractCodesFromPath(quizsetPath);
 
     const domain = await prisma.domain.findFirst({
       where: {
         code: domainCode,
+      },
+    });
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "User not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    const job = await prisma.job.findFirst({
+      where: {
+        id: user?.jobId ?? sumtotalUserOthersJobId,
       },
     });
 
@@ -48,7 +74,7 @@ export async function GET(request: NextRequest) {
       where: {
         domainId: domain?.id,
         jobCodes: {
-          has: jobCode,
+          has: job?.code,
         },
       },
       include: {
@@ -153,11 +179,10 @@ export async function POST(request: NextRequest) {
     // console.log("body", body);
     const { userId } = body;
 
-    const { domainCode, jobCode, languageCode } =
-      extractCodesFromPath(quizsetPath);
+    const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
 
     console.log("domainCode", domainCode);
-    console.log("jobCode", jobCode);
+    // console.log("jobCode", jobCode);
     console.log("languageCode", languageCode);
 
     const domain = await prisma.domain.findFirst({
@@ -174,6 +199,31 @@ export async function POST(request: NextRequest) {
     });
 
     console.log("domain:", domain);
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "User not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    const job = await prisma.job.findFirst({
+      where: {
+        id: user?.jobId ?? sumtotalUserOthersJobId,
+      },
+    });
 
     // const job = await prisma.job.findFirst({
     //   where: {
@@ -181,11 +231,11 @@ export async function POST(request: NextRequest) {
     //   },
     // });
 
-    const job = await prisma.job.findFirst({
-      where: {
-        code: jobCode,
-      },
-    });
+    // const job = await prisma.job.findFirst({
+    //   where: {
+    //     code: jobCode,
+    //   },
+    // });
 
     console.log("job:", job);
 
@@ -201,7 +251,7 @@ export async function POST(request: NextRequest) {
       where: {
         domainId: domain?.id,
         jobCodes: {
-          has: jobCode,
+          has: job?.code,
         },
       },
       include: {
@@ -225,11 +275,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
+    // const user = await prisma.user.findFirst({
+    //   where: {
+    //     id: userId,
+    //   },
+    // });
 
     console.log("user:", user);
 
@@ -260,28 +310,28 @@ export async function POST(request: NextRequest) {
 
     console.log("userQuizLog:", userQuizLog);
 
-    const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
-      where: {
-        quizSetId: userQuizLog?.quizSetId,
-        userId: userId,
-      },
-    });
+    // const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
+    //   where: {
+    //     quizSetId: userQuizLog?.quizSetId,
+    //     userId: userId,
+    //   },
+    // });
 
-    const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-      where: {
-        quizSetId: userQuizLog?.quizSetId,
-        userId: userId,
-      },
-    });
+    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+    //   where: {
+    //     quizSetId: userQuizLog?.quizSetId,
+    //     userId: userId,
+    //   },
+    // });
 
-    console.log("userQuizStageLogs:", userQuizStageLogs);
+    // console.log("userQuizStageLogs:", userQuizStageLogs);
 
     return NextResponse.json(
       {
         item: {
           quizLog: userQuizLog,
-          quizStageLogs: userQuizStageLogs,
-          quizQuestionLogs: userQuizQuestionLogs,
+          // quizStageLogs: userQuizStageLogs,
+          // quizQuestionLogs: userQuizQuestionLogs,
         },
       },
       { status: 200 }

@@ -2,7 +2,7 @@
 CREATE TYPE "AuthType" AS ENUM ('SUMTOTAL', 'GUEST');
 
 -- CreateEnum
-CREATE TYPE "QuestionType" AS ENUM ('MULTIPLE_CHOICE', 'SINGLE_CHOICE', 'TRUE_FALSE');
+CREATE TYPE "QuestionType" AS ENUM ('MULTI_CHOICE', 'SINGLE_CHOICE', 'TRUE_FALSE');
 
 -- CreateTable
 CREATE TABLE "accounts" (

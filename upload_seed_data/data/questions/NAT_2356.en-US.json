@@ -9,24 +9,24 @@
     "specificFeature": "Key Improvement",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is a key improvement of the Galaxy S24 Series compared to the S23 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Which of the following is NOT a key improvement of the Galaxy S24 Series compared to the S23 Series?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Circle to Search with Google",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Photo Assist & Nightography Zoom",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Gaming Performance",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Number of Cameras",
-        "answerStatus": 0
+        "answerStatus": 1
       }
     ]
   },
@@ -40,23 +40,23 @@
     "specificFeature": "-",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to the Galaxy S24 Series' design?",
+    "text": "Which of the following is NOT related to the Galaxy S24 Series' design?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Plastic Design",
+        "text": "Premium Design",
         "answerStatus": 0
       },
       {
         "text": "Sleek Edge Design",
-        "answerStatus": 0
-      },
-      {
-        "text": "Flat Display & Titanium Frame(Galaxy S24 Ultra)",
         "answerStatus": 1
       },
       {
-        "text": "Boring colours",
+        "text": "Flat Display & Titanium Frame(Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Timeless color collections derived from nature’s enduring solidity",
         "answerStatus": 0
       }
     ]
@@ -71,7 +71,7 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are the Galaxy S24 Series' features related to Desing and Materials? (Select two)",
+    "text": "Which of the following are the Galaxy S24 Series' features related to enhanced durability? (Select two)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
@@ -83,7 +83,7 @@
         "answerStatus": 1
       },
       {
-        "text": "Titanium Frame(Galaxy S24 Ultra) & Armor Aluminum Frame(Galaxy S24+ | Galaxy S24)",
+        "text": "Titanium Frame(Galaxy S24 Ultra) & Enhanced Armor Aluminum Frame(Galaxy S24+ | Galaxy S24)",
         "answerStatus": 1
       },
       {
@@ -102,24 +102,24 @@
     "specificFeature": "Circle to Search with Google",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are a use case of Circle to Search with Google? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Which of the following is NOT a use case of Circle to Search with Google?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Record meetings and get a quick summary.",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "Find fashion items while watching videos.",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Discover a travel spot you saw on the feed.",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Look up a recipe for a dish you saw on YouTube.",
-        "answerStatus": 1
+        "answerStatus": 0
       }
     ]
   },
@@ -195,24 +195,24 @@
     "specificFeature": "Note Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to Note Assist and Samsung Note features newly added to Galaxy S24 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Which of the following is NOT related to Note Assist and Samsung Note features newly added to Galaxy S24 Series?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Automatically aligning & spacing S Pen handwriting",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Organizing notes to be more structured",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Generating covers with summary based on your notes",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Getting highlights of the most important points",
-        "answerStatus": 0
+        "answerStatus": 1
       }
     ]
   },
@@ -257,7 +257,7 @@
     "specificFeature": "Nightography",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ of Galaxy S24 Ultra for bright, clear zoom photos even at night",
+    "text": "What is the most appropriate answer to the following blank?\n________ of Galaxy S24 Ultra for brighter, clearer zoom photos even at night",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -381,24 +381,24 @@
     "specificFeature": "Gaming Performance",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an improvement of the Galaxy S24 Series' Gaming Performance? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Which of the following is NOT an improvement of the Galaxy S24 Series' Gaming Performance?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Fastest Processor Ever in Galaxy",
-        "answerStatus": 1
-      },
-      {
-        "text": "Larger Vapor Chamber(1.9x for Galaxy S24 Ultra)",
-        "answerStatus": 1
-      },
-      {
-        "text": "AI Slow Motion",
         "answerStatus": 0
       },
       {
-        "text": "Enhanced Ray Tracing Technology",
+        "text": "Larger Vapor Chamber(1.9x for Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI Slow Motion",
         "answerStatus": 1
+      },
+      {
+        "text": "Enhanced Ray Tracing Technology",
+        "answerStatus": 0
       }
     ]
   },
@@ -412,24 +412,24 @@
     "specificFeature": "Immersive Display",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an element of the Galaxy S24 Series' Immersive Display? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Which of the following is NOT an element of the Galaxy S24 Series' Immersive Display?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Larger Screen with Slimmer Bezels",
-        "answerStatus": 1
-      },
-      {
-        "text": "Object-aware Engine",
         "answerStatus": 0
       },
       {
-        "text": "HBM Peak 2600 nits",
+        "text": "Object-aware Engine",
         "answerStatus": 1
       },
       {
+        "text": "HBM Peak 2600 nits",
+        "answerStatus": 0
+      },
+      {
         "text": "Vision Booster",
-        "answerStatus": 1
+        "answerStatus": 0
       }
     ]
   },

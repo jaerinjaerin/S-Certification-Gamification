@@ -9,24 +9,24 @@
     "specificFeature": "Key Improvement",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is a key improvement of the Galaxy S24 Series compared to the S23 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Manakah dari hal berikut ini yang BUKAN merupakan peningkatan utama dari Seri Galaxy S24 dibandingkan dengan Seri S23?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
         "text": "Circle to Search with Google",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Photo Assist & Nightography Zoom",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Gaming Performance",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
-        "text": "Number of Cameras",
-        "answerStatus": 0
+        "text": "Jumlah Kamera",
+        "answerStatus": 1
       }
     ]
   },
@@ -40,23 +40,23 @@
     "specificFeature": "-",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to the Galaxy S24 Series' design?",
+    "text": "Manakah dari hal berikut ini yang TIDAK terkait dengan desain Seri Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Plastic Design",
+        "text": "Desain premium",
         "answerStatus": 0
       },
       {
-        "text": "Sleek Edge Design",
-        "answerStatus": 0
-      },
-      {
-        "text": "Flat Display & Titanium Frame(Galaxy S24 Ultra)",
+        "text": "Desain Tepi yang Ramping",
         "answerStatus": 1
       },
       {
-        "text": "Boring colours",
+        "text": "Layar Flat & Frame Titanium (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Koleksi warna timeless yang berasal dari alam",
         "answerStatus": 0
       }
     ]
@@ -71,23 +71,23 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are the Galaxy S24 Series' features related to Desing and Materials? (Select two)",
+    "text": "Manakah dari pilihan berikut ini yang merupakan fitur Seri Galaxy S24 yang terkait dengan peningkatan daya tahan? (Pilih dua)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "IPX8-rated Water Resistance",
+        "text": "Ketahanan Air dengan peringkat IPX8",
         "answerStatus": 0
       },
       {
-        "text": "Corning® Gorilla® Armor(Galaxy S24 Ultra)",
+        "text": "Armor Corning® Gorilla® (Galaxy S24 Ultra)",
         "answerStatus": 1
       },
       {
-        "text": "Titanium Frame(Galaxy S24 Ultra) & Armor Aluminum Frame(Galaxy S24+ | Galaxy S24)",
+        "text": "Rangka Titanium (Galaxy S24 Ultra) & Rangka Aluminium Armor yang Disempurnakan (Galaxy S24+ | Galaxy S24)",
         "answerStatus": 1
       },
       {
-        "text": "Flex Hinge",
+        "text": "Engsel Fleksibel",
         "answerStatus": 0
       }
     ]
@@ -102,24 +102,24 @@
     "specificFeature": "Circle to Search with Google",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are a use case of Circle to Search with Google? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Manakah dari hal berikut ini yang BUKAN penggunaan yang tepat untuk fitur Circle to Search with Google?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Record meetings and get a quick summary.",
+        "text": "Merekam meeting dan dapatkan ringkasan singkat.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Memilih item fashion sambil menonton video.",
         "answerStatus": 0
       },
       {
-        "text": "Find fashion items while watching videos.",
-        "answerStatus": 1
+        "text": "Menemukan tempat wisata yang Anda lihat di feed.",
+        "answerStatus": 0
       },
       {
-        "text": "Discover a travel spot you saw on the feed.",
-        "answerStatus": 1
-      },
-      {
-        "text": "Look up a recipe for a dish you saw on YouTube.",
-        "answerStatus": 1
+        "text": "Mencari resep masakan yang Anda lihat di YouTube.",
+        "answerStatus": 0
       }
     ]
   },
@@ -133,7 +133,7 @@
     "specificFeature": "Chat Assist",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n ________ can translate incoming and outgoing chats in real time on various messaging apps, and tailor the tone of your words to your situation as Professional, Casual, Social, Polite and Emojify.",
+    "text": "Apa jawaban yang tepat untuk mengisi garis bawah kosong di bawah ini?\n ________ dapat menerjemahkan chat masuk dan keluar secara real-time di berbagai aplikasi perpesanan, dan menyesuaikan nada kata-kata Anda dengan situasi Anda sebagai Profesional, Casual, Sosial, Sopan, dan Emojify.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -164,23 +164,23 @@
     "specificFeature": "Live Translate",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the correct explanation of Live Translate?",
+    "text": "Manakah di bawah ini yang merupakan penjelasan yang benar tentang Live Translate?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "It is a real-time voice translation both ways.",
+        "text": "Fitur ini adalah terjemahan suara real-time dua arah.",
         "answerStatus": 1
       },
       {
-        "text": "It works with 3rd party apps without switching to another translation app.",
+        "text": "Aplikasi ini dapat digunakan dengan aplikasi pihak ketiga tanpa harus beralih ke aplikasi penerjemahan lain.",
         "answerStatus": 0
       },
       {
-        "text": "It automatically aligns your handwriting.",
+        "text": "Secara otomatis menyelaraskan tulisan tangan Anda.",
         "answerStatus": 0
       },
       {
-        "text": "It organizes notes to be more structured.",
+        "text": "Fitur ini mengatur catatan agar lebih terstruktur.",
         "answerStatus": 0
       }
     ]
@@ -195,24 +195,24 @@
     "specificFeature": "Note Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to Note Assist and Samsung Note features newly added to Galaxy S24 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Manakah dari hal berikut ini yang TIDAK terkait dengan fitur Note Assist dan Samsung Note yang baru saja ditambahkan ke Seri Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Automatically aligning & spacing S Pen handwriting",
-        "answerStatus": 1
-      },
-      {
-        "text": "Organizing notes to be more structured",
-        "answerStatus": 1
-      },
-      {
-        "text": "Generating covers with summary based on your notes",
-        "answerStatus": 1
-      },
-      {
-        "text": "Getting highlights of the most important points",
+        "text": "Secara otomatis menyelaraskan & memberi spasi pada tulisan tangan S Pen",
         "answerStatus": 0
+      },
+      {
+        "text": "Mengatur catatan agar lebih terstruktur",
+        "answerStatus": 0
+      },
+      {
+        "text": "Membuat sampul dengan ringkasan berdasarkan catatan Anda",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mendapatkan highlight dari poin-poin yang paling penting",
+        "answerStatus": 1
       }
     ]
   },
@@ -226,7 +226,7 @@
     "specificFeature": "Space Zoom",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the highest available resolution of photo with optical 5x zoom from Galaxy S24 Ultra camera?",
+    "text": "Berapa resolusi foto tertinggi yang tersedia dengan zoom optik 5x dari kamera Galaxy S24 Ultra?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -257,11 +257,11 @@
     "specificFeature": "Nightography",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ of Galaxy S24 Ultra for bright, clear zoom photos even at night",
+    "text": "Apa jawaban yang tepat untuk mengisi garis bawah kosong di bawah ini?\n________ dari Galaxy S24 Ultra untuk foto zoom yang lebih terang dan jernih bahkan saat di malam hari",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "1.6x Larger Pixel",
+        "text": "Piksel 1,6x Lebih Besar",
         "answerStatus": 1
       },
       {
@@ -288,7 +288,7 @@
     "specificFeature": "Photo Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ can fill the background while straightening(tilting) images and move/resize objects in photos with auto-fill.",
+    "text": "Apa jawaban yang tepat untuk mengisi garis bawah kosong di bawah ini?\n________ dapat mengisi latar belakang sambil meluruskan (memiringkan) gambar dan memindahkan/mengubah ukuran objek dalam foto dengan pengisian otomatis.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -319,23 +319,23 @@
     "specificFeature": "Photo Assist",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "How can you activate Edit Suggestion of Photo Assist feature on Galaxy S24 Series' Gallery app for instant photo editing(Portrait effect, Remaster, Remove reflection and more)?",
+    "text": "Bagaimana cara mengaktifkan fitur Edit Suggestion di Photo Assist pada aplikasi Galeri Seri Galaxy S24 untuk pengeditan foto secara instan (Portrait effect, Remaster, Menghilangkan pantulan, dan lainnya)?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Download and open the photo edit app, and apply the effects one by one.",
+        "text": "Unduh dan buka aplikasi edit foto, lalu terapkan efek satu per satu.",
         "answerStatus": 0
       },
       {
-        "text": "Tap the edit icon, and tap the Photo Assist icon.",
+        "text": "Ketuk ikon edit, lalu ketuk ikon Photo Assist.",
         "answerStatus": 0
       },
       {
-        "text": "Tap the icon or just swipe up the photo, and you can check the suggested edit options.",
+        "text": "Ketuk ikon atau cukup swipe ke atas foto tersebut, dan Anda bisa mencentang opsi pengeditan yang disarankan.",
         "answerStatus": 1
       },
       {
-        "text": "Open the social app, and choose the filter you want to apply on the photo.",
+        "text": "Buka aplikasi sosial, lalu pilih filter yang ingin Anda terapkan pada foto.",
         "answerStatus": 0
       }
     ]
@@ -350,15 +350,15 @@
     "specificFeature": "Social Camera",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the least related to Galaxy S24 Series' camera features on social media apps' camera?",
+    "text": "Manakah dari hal berikut ini yang paling tidak terkait dengan fitur kamera Seri Galaxy S24 pada kamera aplikasi media sosial?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "HDR Photos",
+        "text": "Foto HDR",
         "answerStatus": 0
       },
       {
-        "text": "Nightography: Brighter night photos and videos with reduced noise",
+        "text": "Nightography: Foto dan video malam hari yang lebih cerah dengan noise yang berkurang",
         "answerStatus": 0
       },
       {
@@ -381,24 +381,24 @@
     "specificFeature": "Gaming Performance",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an improvement of the Galaxy S24 Series' Gaming Performance? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Manakah dari hal berikut ini yang BUKAN merupakan peningkatan Performa Gaming Seri Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Fastest Processor Ever in Galaxy",
-        "answerStatus": 1
-      },
-      {
-        "text": "Larger Vapor Chamber(1.9x for Galaxy S24 Ultra)",
-        "answerStatus": 1
-      },
-      {
-        "text": "AI Slow Motion",
+        "text": "Prosesor Tercepat yang Pernah Ada di Galaxy",
         "answerStatus": 0
       },
       {
-        "text": "Enhanced Ray Tracing Technology",
+        "text": "Vapor Chamber yang Lebih Besar (1,9x untuk Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Slow Motion AI",
         "answerStatus": 1
+      },
+      {
+        "text": "Teknologi Ray Tracing yang Disempurnakan",
+        "answerStatus": 0
       }
     ]
   },
@@ -412,24 +412,24 @@
     "specificFeature": "Immersive Display",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an element of the Galaxy S24 Series' Immersive Display? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Manakah dari hal berikut ini yang BUKAN merupakan elemen dari Tampilan Imersif Seri Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Larger Screen with Slimmer Bezels",
-        "answerStatus": 1
-      },
-      {
-        "text": "Object-aware Engine",
+        "text": "Layar Lebih Besar dengan Bezel yang Lebih Ramping",
         "answerStatus": 0
       },
       {
-        "text": "HBM Peak 2600 nits",
+        "text": "Mesin pendeteksi Objek",
         "answerStatus": 1
       },
       {
-        "text": "Vision Booster",
-        "answerStatus": 1
+        "text": "Maksimal HBM 2.600 nits",
+        "answerStatus": 0
+      },
+      {
+        "text": "Peningkat Visibilitas",
+        "answerStatus": 0
       }
     ]
   },
@@ -443,11 +443,11 @@
     "specificFeature": "Longer Battery Life",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are the features related to the Longer Battery Life of the Galaxy S24 Series? (Select two)",
+    "text": "Manakah dari hal berikut ini yang merupakan fitur yang terkait dengan Daya Tahan Baterai yang Lebih Lama pada Seri Galaxy S24? (Pilih dua)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Larger Battery Capacity",
+        "text": "Kapasitas Baterai yang Lebih Besar",
         "answerStatus": 1
       },
       {
@@ -455,11 +455,11 @@
         "answerStatus": 0
       },
       {
-        "text": "Generative Wallpaper",
+        "text": "Wallpaper Generatif",
         "answerStatus": 0
       },
       {
-        "text": "Adaptive Refresh Rate of Display",
+        "text": "Adaptive Refresh Rate pada Display",
         "answerStatus": 1
       }
     ]
@@ -474,7 +474,7 @@
     "specificFeature": "Memory & Storage",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is correct for memory specification by each Galaxy S24 Series model?",
+    "text": "Manakah dari hal berikut ini yang benar untuk spesifikasi memori pada setiap model Seri Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -505,15 +505,15 @@
     "specificFeature": "One UI 6",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the least related to the Galaxy S24 Series' One UI 6?",
+    "text": "Manakah dari hal berikut ini yang paling tidak terkait dengan One UI 6 Seri Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Eye-catching Quick Panel",
+        "text": "Quick Panel yang Eye Catching",
         "answerStatus": 0
       },
       {
-        "text": "Improved Emoji Design",
+        "text": "Desain Emoji yang Lebih Baik",
         "answerStatus": 0
       },
       {
@@ -521,7 +521,7 @@
         "answerStatus": 1
       },
       {
-        "text": "Camera Widget & Weather Insight Widget",
+        "text": "Widget Kamera & Widget Informasi Cuaca",
         "answerStatus": 0
       }
     ]
@@ -536,7 +536,7 @@
     "specificFeature": "Galaxy Ecosystem",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ is perfectly compatible sharing between all phones, tablets and PCs(Android, Windows, etc.).",
+    "text": "Apa jawaban yang tepat untuk mengisi garis bawah kosong di bawah ini?\n________ adalah fitur berbagi yang sangat kompatibel di antara semua ponsel, tablet, dan PC (Android, Windows, dan lain-lain).",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -567,23 +567,23 @@
     "specificFeature": "Samsung Account",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is a benefit of Samsung Account?",
+    "text": "Manakah dari opsi berikut ini yang merupakan manfaat Samsung Account?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Enriched AI experience to make life effortless",
+        "text": "Memiliki pengalaman AI yang diperkaya untuk membuat hidup lebih mudah",
         "answerStatus": 0
       },
       {
-        "text": "Find your lost phone even if it's offline",
+        "text": "Menemukan ponsel Anda yang hilang meskipun dalam keadaan offline",
         "answerStatus": 0
       },
       {
-        "text": "Access & sync all your Samsung services and devices",
+        "text": "Mengakses & menyinkronkan semua layanan dan perangkat Samsung Anda",
         "answerStatus": 0
       },
       {
-        "text": "All of the above",
+        "text": "Semuanya",
         "answerStatus": 1
       }
     ]
@@ -595,27 +595,27 @@
     "stage": 4,
     "product": "S24",
     "category": "Sales",
-    "specificFeature": "Cross Sell",
+    "specificFeature": "Purchase Benefit",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the most appropriate introduction of the Galaxy Watch6 when cross-selling with the Galaxy S24 Series?",
+    "text": "Manfaat pembelian apa saja yang harus disebutkan ketika pelanggan memiliki kekhawatiran terkait harga?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Change Galaxy S24 Series' the lock screen & AOD to express your style by it.",
+        "text": "Trade-in",
         "answerStatus": 0
       },
       {
-        "text": "Capture photos and videos directly from it.",
+        "text": "Finance Program\n(e.g. EIP, Student offer)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Promo",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
         "answerStatus": 1
-      },
-      {
-        "text": "Enjoy a comfortable viewing experience with it.",
-        "answerStatus": 0
-      },
-      {
-        "text": "It automatically switches the sound to the active device.",
-        "answerStatus": 0
       }
     ]
   }

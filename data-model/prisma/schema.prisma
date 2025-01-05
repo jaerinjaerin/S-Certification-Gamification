@@ -284,7 +284,7 @@ model Question {
 }
 
 enum QuestionType {
-  MULTIPLE_CHOICE
+  MULTI_CHOICE
   SINGLE_CHOICE
   TRUE_FALSE
 }
@@ -441,6 +441,158 @@ model UserQuizStageLog {
 }
 
 model UserQuizQuestionLog {
+  id           String   @id @default(uuid())
+  userId       String      // Foreign key to User
+  authType  AuthType
+  quizSetId   String      // Foreign key to QuizSet
+  
+  // user result
+  questionId   String      // Foreign key to Question
+  questionText String?
+
+  isCorrect    Boolean  // Whether the user answered the question correctly
+  selectedOptionIds String[]
+  correctOptionIds String[]
+  quizStageId String
+
+  quizStageIndex  Int
+  elapsedSeconds Int
+
+  // question
+  questionType    QuestionType
+  category    String?
+  product    String?
+  specificFeature   String?
+  importance String?
+
+  // country
+  campaignId  String
+  jobId String
+  languageId String?
+
+  domainId String?
+
+  regionId String?
+  subsidaryId String?
+  storeId String?
+  storeSegmentText String?
+  channelId String?
+  channelSegmentId String?
+  channelName String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model UserQuizStatistics {
+  id          String   @id @default(uuid())
+  userId      String
+  authType  AuthType
+  campaignId String
+  isCompleted    Boolean?
+  isBadgeAcquired Boolean?
+  lastCompletedStage    Int?
+  elapsedSeconds    Int?      // Time spent on this activity (in seconds)
+  createdAt   DateTime @default(now()) // 히스토리 생성 시간
+  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
+
+  // user        User    @relation(fields: [userId], references: [id])
+
+  quizSetId String
+
+  score       Int?
+
+  quizSetPath String?
+
+
+  
+  domainId String?
+  languageId String?
+
+  jobId       String?
+
+  regionId String?
+  subsidaryId String?
+  storeId String?
+  storeSegmentText String?
+  channelId String?
+  channelSegmentId String?
+  channelName String?
+
+  @@unique([userId, campaignId])
+}
+
+model UserQuizBadgeStageStatistics {
+  id          String   @id @default(uuid())
+  userId      String
+  authType  AuthType
+  campaignId String
+  
+  isBadgeAcquired Boolean?
+  badgeActivityId String?
+  elapsedSeconds    Int?
+  createdAt   DateTime @default(now()) // 히스토리 생성 시간
+  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
+
+  quizSetId String
+  quizStageId String
+  quizStageIndex Int
+  
+  score       Int
+
+  domainId String?
+  languageId String?
+  jobId       String?
+  regionId String?
+  subsidaryId String?
+  storeId String?
+  storeSegmentText String?
+  channelId String?
+  channelSegmentId String?
+  channelName String?
+
+  @@unique([userId, campaignId, quizStageId])
+}
+
+
+model UserQuizStageStatistics {
+  id           String   @id @default(uuid())
+  userId       String      // Foreign key to User
+  authType  AuthType
+  
+  campaignId  String
+  quizStageId      String      // Foreign key to Stage
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  isBadgeStage Boolean?
+  isBadgeAcquired   Boolean?
+  badgeActivityId String?
+
+  remainingHearts Int
+
+  quizSetId String
+  quizStageIndex Int
+
+  elapsedSeconds Int
+
+  score       Int?
+  percentile  Int?
+  scoreRange  String?
+
+  domainId String
+  languageId String?
+  jobId String
+  
+  regionId String?
+  subsidaryId String?
+  storeId String?
+  storeSegmentText String?
+  channelId String?
+  channelSegmentId String?
+  channelName String?
+}
+
+model UserQuizQuestionStatistics {
   id           String   @id @default(uuid())
   userId       String      // Foreign key to User
   authType  AuthType

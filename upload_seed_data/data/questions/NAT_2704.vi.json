@@ -9,24 +9,24 @@
     "specificFeature": "Key Improvement",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is a key improvement of the Galaxy S24 Series compared to the S23 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Ý nào sau đây KHÔNG PHẢI là cải tiến chính của Dòng Galaxy S24 so với Dòng S23?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Circle to Search with Google",
-        "answerStatus": 1
-      },
-      {
-        "text": "Photo Assist & Nightography Zoom",
-        "answerStatus": 1
-      },
-      {
-        "text": "Gaming Performance",
-        "answerStatus": 1
-      },
-      {
-        "text": "Number of Cameras",
+        "text": "Khoanh tròn Search đa năng bằng Google",
         "answerStatus": 0
+      },
+      {
+        "text": "Khai phóng sáng tạo & Zoom Mắt thần bóng đêm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thăng hạng hiệu năng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Số lượng camera",
+        "answerStatus": 1
       }
     ]
   },
@@ -40,23 +40,23 @@
     "specificFeature": "-",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to the Galaxy S24 Series' design?",
+    "text": "Ý nào sau đây KHÔNG liên quan đến thiết kế của Dòng Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Plastic Design",
+        "text": "Thiết kế Đẳng cấp",
         "answerStatus": 0
       },
       {
-        "text": "Sleek Edge Design",
-        "answerStatus": 0
-      },
-      {
-        "text": "Flat Display & Titanium Frame(Galaxy S24 Ultra)",
+        "text": "Thiết kế cạnh tinh tế",
         "answerStatus": 1
       },
       {
-        "text": "Boring colours",
+        "text": "Màn hình phẳng và Khung Titan (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bộ sưu tập màu sắc ấn tượng, lấy cảm hứng từ khoáng sản quý giá và bền bỉ với thời gian",
         "answerStatus": 0
       }
     ]
@@ -71,23 +71,23 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are the Galaxy S24 Series' features related to Desing and Materials? (Select two)",
+    "text": "Tính năng nào sau đây của Dòng Galaxy S24 liên quan đến cải tiến độ bền? (Chọn hai)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "IPX8-rated Water Resistance",
+        "text": "Kháng nước chuẩn IPX8",
         "answerStatus": 0
       },
       {
-        "text": "Corning® Gorilla® Armor(Galaxy S24 Ultra)",
+        "text": "Mặt kính Corning® Gorilla® Armor (Galaxy S24 Ultra)",
         "answerStatus": 1
       },
       {
-        "text": "Titanium Frame(Galaxy S24 Ultra) & Armor Aluminum Frame(Galaxy S24+ | Galaxy S24)",
+        "text": "Khung titan (Galaxy S24 Ultra) và Armor Aluminum cải tiến (Galaxy S24+ | Galaxy S24)",
         "answerStatus": 1
       },
       {
-        "text": "Flex Hinge",
+        "text": "Bản lề Flex",
         "answerStatus": 0
       }
     ]
@@ -102,24 +102,24 @@
     "specificFeature": "Circle to Search with Google",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are a use case of Circle to Search with Google? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Tình huống sử dụng nào sau đây KHÔNG PHẢI là tình huống sử dụng tính năng Khoanh vùng Search đa năng bằng Google?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Record meetings and get a quick summary.",
+        "text": "Ghi âm cuộc họp và nhận bản tóm tắt nhanh chóng.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tìm các món đồ thời trang khi đang xem video.",
         "answerStatus": 0
       },
       {
-        "text": "Find fashion items while watching videos.",
-        "answerStatus": 1
+        "text": "Khám phá một địa điểm du lịch bạn nhìn thấy trên bảng tin.",
+        "answerStatus": 0
       },
       {
-        "text": "Discover a travel spot you saw on the feed.",
-        "answerStatus": 1
-      },
-      {
-        "text": "Look up a recipe for a dish you saw on YouTube.",
-        "answerStatus": 1
+        "text": "Tra cứu công thức món ăn bạn thấy trên YouTube.",
+        "answerStatus": 0
       }
     ]
   },
@@ -133,23 +133,23 @@
     "specificFeature": "Chat Assist",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n ________ can translate incoming and outgoing chats in real time on various messaging apps, and tailor the tone of your words to your situation as Professional, Casual, Social, Polite and Emojify.",
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n ________ có thể dịch các cuộc trò chuyện đến và đi trong thời gian thực trên nhiều ứng dụng nhắn tin khác nhau và điều chỉnh cách diễn đạt sao cho phù hợp với tình huống của bạn như Chuyên nghiệp, Bình thường, Xã giao, Lịch sự và Biểu cảm bằng biểu tượng cảm xúc.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Live Translate",
+        "text": "Phiên dịch trực tiếp cuộc gọi",
         "answerStatus": 0
       },
       {
-        "text": "Chat Assist",
+        "text": "Trợ lý Chat thông minh",
         "answerStatus": 1
       },
       {
-        "text": "Note Assist",
+        "text": "Trợ lý Note quyền năng",
         "answerStatus": 0
       },
       {
-        "text": "Transcript Assist",
+        "text": "Trợ lý ghi âm thông minh",
         "answerStatus": 0
       }
     ]
@@ -164,23 +164,23 @@
     "specificFeature": "Live Translate",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the correct explanation of Live Translate?",
+    "text": "Ý nào sau đây giải thích đúng về Phiên dịch trực tiếp cuộc gọi?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "It is a real-time voice translation both ways.",
+        "text": "Là bản dịch giọng nói theo thời gian thực cả hai chiều.",
         "answerStatus": 1
       },
       {
-        "text": "It works with 3rd party apps without switching to another translation app.",
+        "text": "Khả dụng với ứng dụng của bên thứ 3 mà không cần chuyển sang ứng dụng dịch khác.",
         "answerStatus": 0
       },
       {
-        "text": "It automatically aligns your handwriting.",
+        "text": "Tự động căn chỉnh chữ viết tay của bạn.",
         "answerStatus": 0
       },
       {
-        "text": "It organizes notes to be more structured.",
+        "text": "Sắp xếp ghi chú theo trật tự.",
         "answerStatus": 0
       }
     ]
@@ -195,24 +195,24 @@
     "specificFeature": "Note Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is related to Note Assist and Samsung Note features newly added to Galaxy S24 Series? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Ý nào dưới đây KHÔNG liên quan đến các tính năngTrợ lý Note quyền năng bổ sung cho Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Automatically aligning & spacing S Pen handwriting",
-        "answerStatus": 1
-      },
-      {
-        "text": "Organizing notes to be more structured",
-        "answerStatus": 1
-      },
-      {
-        "text": "Generating covers with summary based on your notes",
-        "answerStatus": 1
-      },
-      {
-        "text": "Getting highlights of the most important points",
+        "text": "Tự động căn chỉnh và giãn cách chữ viết tay khi dùng S Pen",
         "answerStatus": 0
+      },
+      {
+        "text": "Sắp xếp ghi chú theo trật tự",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tạo bìa cho bản tóm tắt dựa trên ghi chú của bạn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Liệt kê ý nổi bật của các điểm quan trọng nhất",
+        "answerStatus": 1
       }
     ]
   },
@@ -226,7 +226,7 @@
     "specificFeature": "Space Zoom",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the highest available resolution of photo with optical 5x zoom from Galaxy S24 Ultra camera?",
+    "text": "Độ phân giải cao nhất hiện có khi chụp ảnh bằng Camera Zoom quang học 5x trên Galaxy S24 Ultra là bao nhiêu?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -257,23 +257,23 @@
     "specificFeature": "Nightography",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ of Galaxy S24 Ultra for bright, clear zoom photos even at night",
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ của Galaxy S24 Ultra cho ảnh chụp thu phóng sáng hơn, rõ nét hơn ngay cả vào buổi tối",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "1.6x Larger Pixel",
+        "text": "Pixel lớn hơn 1,6 lần",
         "answerStatus": 1
       },
       {
-        "text": "Wider OIS",
+        "text": "OIS rộng hơn",
         "answerStatus": 0
       },
       {
-        "text": "Single Take",
+        "text": "Chụp một chạm",
         "answerStatus": 0
       },
       {
-        "text": "New Adaptive Pixel",
+        "text": "Pixel thích ứng mới",
         "answerStatus": 0
       }
     ]
@@ -288,23 +288,23 @@
     "specificFeature": "Photo Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ can fill the background while straightening(tilting) images and move/resize objects in photos with auto-fill.",
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ có thể vừa lấp đầy nền vừa canh thẳng (nghiêng) hình ảnh và di chuyển/thay đổi kích thước các đối tượng trong ảnh bằng tính năng tự động điền.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Night Portrait",
+        "text": "Ảnh chân dung ban đêm",
         "answerStatus": 0
       },
       {
-        "text": "Photo Assist(Generative Edit)",
+        "text": "Hậu kỳ sáng tạo",
         "answerStatus": 1
       },
       {
-        "text": "200 MP High-resolution",
+        "text": "Độ phân giải cao 200 MP",
         "answerStatus": 0
       },
       {
-        "text": "Note Assist",
+        "text": "Trợ lý Note quyền năng",
         "answerStatus": 0
       }
     ]
@@ -319,23 +319,23 @@
     "specificFeature": "Photo Assist",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "How can you activate Edit Suggestion of Photo Assist feature on Galaxy S24 Series' Gallery app for instant photo editing(Portrait effect, Remaster, Remove reflection and more)?",
+    "text": "Làm thế nào để kích hoạt tính năng AI đề xuất chỉnh sửa của Dòng Galaxy S24 để chỉnh sửa ảnh tức thì (Hiệu ứng chân dung, Nâng cấp ảnh, Xóa hình phản chiếu, v.v.)?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Download and open the photo edit app, and apply the effects one by one.",
+        "text": "Tải xuống và mở ứng dụng chỉnh sửa ảnh rồi áp dụng lần lượt từng hiệu ứng.",
         "answerStatus": 0
       },
       {
-        "text": "Tap the edit icon, and tap the Photo Assist icon.",
+        "text": "Chạm vào biểu tượng chỉnh sửa và nhấn vào biểu tượng Hỗ trợ ảnh.",
         "answerStatus": 0
       },
       {
-        "text": "Tap the icon or just swipe up the photo, and you can check the suggested edit options.",
+        "text": "Chạm vào biểu tượng hoặc chỉ cần vuốt ảnh lên và bạn có thể xem các tùy chọn chỉnh sửa được đề xuất.",
         "answerStatus": 1
       },
       {
-        "text": "Open the social app, and choose the filter you want to apply on the photo.",
+        "text": "Mở ứng dụng mạng xã hội và chọn bộ lọc bạn muốn áp dụng cho ảnh.",
         "answerStatus": 0
       }
     ]
@@ -350,23 +350,23 @@
     "specificFeature": "Social Camera",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the least related to Galaxy S24 Series' camera features on social media apps' camera?",
+    "text": "Ý nào sau đây ít liên quan nhất đến các tính năng camera của Dòng Galaxy S24 trên camera của ứng dụng mạng xã hội?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "HDR Photos",
+        "text": "Ảnh HDR",
         "answerStatus": 0
       },
       {
-        "text": "Nightography: Brighter night photos and videos with reduced noise",
+        "text": "Chụp đêm: Tăng độ sáng, giảm độ nhiễu cho ảnh và video ban đêm",
         "answerStatus": 0
       },
       {
-        "text": "Space Zoom",
+        "text": "Thu phóng chuẩn không gian",
         "answerStatus": 1
       },
       {
-        "text": "Video Stabilizer",
+        "text": "Chống rung video",
         "answerStatus": 0
       }
     ]
@@ -381,24 +381,24 @@
     "specificFeature": "Gaming Performance",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an improvement of the Galaxy S24 Series' Gaming Performance? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Ý nào sau đây KHÔNG PHẢI là cải tiến Hiệu năng chơi game của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Fastest Processor Ever in Galaxy",
-        "answerStatus": 1
-      },
-      {
-        "text": "Larger Vapor Chamber(1.9x for Galaxy S24 Ultra)",
-        "answerStatus": 1
-      },
-      {
-        "text": "AI Slow Motion",
+        "text": "Bộ xử lý nhanh nhất từ trước đến nay của Galaxy",
         "answerStatus": 0
       },
       {
-        "text": "Enhanced Ray Tracing Technology",
+        "text": "Hệ thống tản nhiệt buồng hơi lớn hơn (1,9 lần đối với Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chuyển động chậm AI",
         "answerStatus": 1
+      },
+      {
+        "text": "Công nghệ dò tia cải tiến",
+        "answerStatus": 0
       }
     ]
   },
@@ -412,24 +412,24 @@
     "specificFeature": "Immersive Display",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is an element of the Galaxy S24 Series' Immersive Display? (Select all that apply)",
-    "questionType": "MULTI_CHOICE",
+    "text": "Ý nào sau đây KHÔNG PHẢI là một thành phần của Màn hình cuốn hút của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Larger Screen with Slimmer Bezels",
-        "answerStatus": 1
-      },
-      {
-        "text": "Object-aware Engine",
+        "text": "Màn hình lớn hơn, viền mỏng hơn",
         "answerStatus": 0
       },
       {
-        "text": "HBM Peak 2600 nits",
+        "text": "Công cụ nhận biết vật thể",
         "answerStatus": 1
       },
       {
-        "text": "Vision Booster",
-        "answerStatus": 1
+        "text": "HBM tối đa 2.600 nit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nâng cấp thị giác",
+        "answerStatus": 0
       }
     ]
   },
@@ -443,11 +443,11 @@
     "specificFeature": "Longer Battery Life",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Which of the following are the features related to the Longer Battery Life of the Galaxy S24 Series? (Select two)",
+    "text": "Những tính năng nào sau đây liên quan đến Thời lượng pin lâu dài của Dòng Galaxy S24? (Chọn hai)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Larger Battery Capacity",
+        "text": "Dung lượng pin lớn hơn",
         "answerStatus": 1
       },
       {
@@ -455,11 +455,11 @@
         "answerStatus": 0
       },
       {
-        "text": "Generative Wallpaper",
+        "text": "Hình nền tạo sinh",
         "answerStatus": 0
       },
       {
-        "text": "Adaptive Refresh Rate of Display",
+        "text": "Tần số quét tự động tinh chỉnh",
         "answerStatus": 1
       }
     ]
@@ -474,7 +474,7 @@
     "specificFeature": "Memory & Storage",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is correct for memory specification by each Galaxy S24 Series model?",
+    "text": "Ý nào sau đây là thông số chính xác của bộ nhớ của từng mẫu thuộc Dòng Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -505,15 +505,15 @@
     "specificFeature": "One UI 6",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the least related to the Galaxy S24 Series' One UI 6?",
+    "text": "Ý nào sau đây ít liên quan nhất đến One UI 6 của Dòng Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Eye-catching Quick Panel",
+        "text": "Bảng điều khiển nhanh bắt mắt",
         "answerStatus": 0
       },
       {
-        "text": "Improved Emoji Design",
+        "text": "Thiết kế biểu tượng cảm xúc cải tiến",
         "answerStatus": 0
       },
       {
@@ -521,7 +521,7 @@
         "answerStatus": 1
       },
       {
-        "text": "Camera Widget & Weather Insight Widget",
+        "text": "Widget camera & Widget thông tin thời tiết",
         "answerStatus": 0
       }
     ]
@@ -536,11 +536,11 @@
     "specificFeature": "Galaxy Ecosystem",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "What is the most appropriate answer to the following blank?\n________ is perfectly compatible sharing between all phones, tablets and PCs(Android, Windows, etc.).",
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ là tính năng chia sẻ hoàn toàn tương thích giữa tất cả điện thoại, máy tính bảng và PC (Android, Windows, v.v).",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Quick Share",
+        "text": "Chia sẻ nhanh",
         "answerStatus": 1
       },
       {
@@ -567,23 +567,23 @@
     "specificFeature": "Samsung Account",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is a benefit of Samsung Account?",
+    "text": "Ý nào dưới đây là lợi ích của Samsung Account?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Enriched AI experience to make life effortless",
+        "text": "Trải nghiệm AI đa dạng giúp đơn giản hoá cuộc sống",
         "answerStatus": 0
       },
       {
-        "text": "Find your lost phone even if it's offline",
+        "text": "Tìm điện thoại bị mất ngay cả khi điện thoại không kết nối mạng",
         "answerStatus": 0
       },
       {
-        "text": "Access & sync all your Samsung services and devices",
+        "text": "Truy cập và đồng bộ tất cả các dịch vụ và thiết bị Samsung của bạn",
         "answerStatus": 0
       },
       {
-        "text": "All of the above",
+        "text": "Tất cả các ý trên",
         "answerStatus": 1
       }
     ]
@@ -598,23 +598,23 @@
     "specificFeature": "Cross Sell",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Which of the following is the most appropriate introduction of the Galaxy Watch6 when cross-selling with the Galaxy S24 Series?",
+    "text": "Ý nào sau đây là lời giới thiệu Galaxy Watch6 phù hợp nhất khi bán chéo với Dòng Galaxy S24?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Change Galaxy S24 Series' the lock screen & AOD to express your style by it.",
+        "text": "Thay đổi màn hình khóa & AOD của Dòng Galaxy S24 để thể hiện cá tính của bạn bằng thiết bị.",
         "answerStatus": 0
       },
       {
-        "text": "Capture photos and videos directly from it.",
+        "text": "Chụp ảnh và quay video trực tiếp bằng thiết bị này.",
         "answerStatus": 1
       },
       {
-        "text": "Enjoy a comfortable viewing experience with it.",
+        "text": "Tận hưởng trải nghiệm xem thoải mái trên thiết bị này.",
         "answerStatus": 0
       },
       {
-        "text": "It automatically switches the sound to the active device.",
+        "text": "Thiết bị sẽ tự động chuyển âm thanh sang thiết bị đang hoạt động.",
         "answerStatus": 0
       }
     ]

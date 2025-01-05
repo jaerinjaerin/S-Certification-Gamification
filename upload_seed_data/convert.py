@@ -43,11 +43,11 @@ def process_excel(file_path, output_path):
     df = df[1:].reset_index(drop=True)
 
     # "No" 열이 숫자인지 확인 및 변환
-    df["No"] = pd.to_numeric(df["No"], errors="coerce")
+    df["No."] = pd.to_numeric(df["No."], errors="coerce")
 
     # "No" 열 기준으로 그룹화 및 JSON 변환
-    grouped_data = df.groupby("No").apply(lambda group: {
-        "originQuestionIndex": group.name,  # 그룹화 기준 키 값을 사용
+    grouped_data = df.groupby("No.").apply(lambda group: {
+        "originQuestionIndex": int(group.name),  # 그룹화 기준 키 값을 사용
         "orderInStage": group["New No."].iloc[0] if "New No." in group else None,
         "enabled": group["Enabled"].iloc[0] if "Enabled" in group else None,
         "stage": group["Stage"].iloc[0] if "Stage" in group else None,
