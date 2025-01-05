@@ -1,4 +1,4 @@
-import { FilterState } from "@/app/dashboard/overview/page";
+import { FilterState } from "@/app/playground/overview/page";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ interface ExpertData {
 const ExpertsSummary: React.FC<{ filters: FilterState }> = ({ filters }) => {
   const [data, setData] = useState<ExpertData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,9 +51,9 @@ const ExpertsSummary: React.FC<{ filters: FilterState }> = ({ filters }) => {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error}</p>;
+  // }
 
   if (!data) {
     return <p>No data available.</p>;

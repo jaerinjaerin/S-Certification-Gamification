@@ -1,11 +1,13 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
-    darkMode: ["class"],
-    content: [
+  darkMode: ["class"],
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/(*)/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@shadcn/ui/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -50,14 +52,47 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		fontFamily: {
+  			inter: [
+  				'var(--font-inter)',
+                    ...fontFamily.sans
+                ],
+  			roboto: [
+  				'var(--font-roboto)',
+                    ...fontFamily.sans
+                ]
+  		},
+  		fontSize: {
+  			'size-10px': '0.625rem',
+  			'size-12px': '0.75rem',
+  			'size-14px': '0.875rem',
+  			'size-15px': '0.9375rem',
+  			'size-16px': '1rem',
+  			'size-18px': '1.125rem',
+  			'size-20px': '1.25rem',
+  			'size-24px': '1.5rem',
+  			'size-30px': '1.875rem',
+  			'size-36px': '2.25rem',
+  			'size-48px': '3rem',
+  			'size-64px': '4rem'
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
