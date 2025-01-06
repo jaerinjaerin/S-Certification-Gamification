@@ -1,4 +1,4 @@
-import ContentWithTitleSection from "@/components/content-with-title-section";
+import ContentWithTitleSection from "@/components/system/content-with-title-section";
 import CurrentBreadCrumb from "@/components/layout/current-bread-crumb";
 import LeftMenu from "@/components/layout/left-menu";
 import Topbar from "@/components/layout/top-bar";
