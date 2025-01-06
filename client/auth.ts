@@ -8,7 +8,7 @@ import {
   fetchOrganizationDetails,
   SumtotalProfile,
 } from "./app/lib/auth/sumtotal";
-import { encryptEmail } from "./utils/encrypt";
+import { encrypt } from "./utils/encrypt";
 
 declare module "next-auth" {
   interface Session {
@@ -94,10 +94,10 @@ export const {
         }
 
         return {
-          id: profile.userId,
+          id: encrypt(profile.userId),
           emailId:
             profile.businessAddress.email1 != null
-              ? encryptEmail(profile.businessAddress.email1)
+              ? encrypt(profile.businessAddress.email1)
               : null,
           name:
             process.env.NODE_ENV !== "production"
@@ -105,8 +105,10 @@ export const {
               : null,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
-          providerUserId: profile.userId,
-          providerPersonId: profile.personId,
+          providerUserId: profile.userId ? encrypt(profile.userId) : null,
+          providerPersonId: profile.personId
+            ? encrypt(profile.personId.toString())
+            : null,
           domainId:
             profile.personDomain
               ?.find((domain) => domain.isPrimary)
@@ -133,7 +135,7 @@ export const {
       },
       async authorize(credentials) {
         const { email, code } = credentials;
-        const encryptedEmail = encryptEmail(email as string);
+        const encryptedEmail = encrypt(email as string);
 
         let user = await prisma.user.findFirst({
           where: { emailId: encryptedEmail },

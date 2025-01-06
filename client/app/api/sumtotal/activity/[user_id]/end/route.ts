@@ -1,16 +1,19 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
-import { decrypt } from "@/utils/encrypt";
 import * as Sentry from "@sentry/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const offset = searchParams.get("offset"); // 인증 코드 추출
-  const limit = searchParams.get("limit"); // 인증 코드 추출
+type Props = {
+  params: {
+    user_id: string;
+  };
+};
 
+export async function GET(request: NextRequest, props: Props) {
   try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("user_id");
     const session = await auth();
 
     if (!session) {
@@ -34,12 +37,27 @@ export async function GET(request: Request) {
       );
     }
 
+    const body = await request.json();
+    const { activityId, status, elapsedSeconds } = body as {
+      activityId: string;
+      status: string;
+      elapsedSeconds: number;
+    };
+
+    // try {
     const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/v2/users/${decrypt(
-        account.providerAccountId
-      )}/activities?limit=${limit}&offset=${offset}`,
+      // `https://samsung.sumtotal.host/apis/api/v1/learner/activities/${activityId}/progress`,
+      // `https://samsung.sumtotal.host/apis/api/v1/learner/activities/${activityId}/progress-roster-details`,
+      `https://samsung.sumtotal.host/apis/api/v2/users/${userId}/activities/${activityId}/user-progress`,
       {
+        method: "PUT",
+        // mode: 'no-cors',
         cache: "no-store",
+        body: JSON.stringify({
+          status,
+          date: new Date().toISOString(),
+          elapsedSeconds,
+        }),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${account.access_token}`, // 액세스 토큰 사용
@@ -47,7 +65,10 @@ export async function GET(request: Request) {
       }
     );
 
+    console.log("activity/progress response", response);
+
     if (!response.ok) {
+      // const errorData = await response.json();
       return NextResponse.json(
         { message: response.statusText || "Failed to fetch activities" },
         { status: response.status }
@@ -56,9 +77,10 @@ export async function GET(request: Request) {
 
     const data = await response.json();
     console.log("data", data);
+    Sentry.captureMessage("response", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activity:", error);
+    console.error("Error fetching activitie:", error);
     Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },

@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import { decrypt } from "@/utils/encrypt";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
@@ -33,7 +34,9 @@ export async function GET() {
     const response = await fetch(
       // `https://samsung.sumtotal.host/apis/api/v1/jobs`,
       // `https://samsung.sumtotal.host/apis/api/v2/advanced/person/${account.personId}`,
-      `https://samsung.sumtotal.host/apis/api/v1/users/${account.providerAccountId}`,
+      `https://samsung.sumtotal.host/apis/api/v1/users/${decrypt(
+        account.providerAccountId
+      )}`,
       // `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=506631`,
       // `https://samsung.sumtotal.host/apis/api/v1/users/summary`,
       // `https://samsung.sumtotal.host/apis/api/v1/advanced/users/${account.providerAccountId}`,

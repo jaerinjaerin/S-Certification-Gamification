@@ -154,8 +154,10 @@ export const QuizProvider = ({
       0
     )
   );
+  console.log("quizStageLogs", quizStageLogs);
   console.log(
     "QuizProvider quizStagesTotalScore",
+    quizStagesTotalScore,
     (quizLog?.lastCompletedStage ?? 0) + 1,
     quizSet.quizStages.length - 1
   );

@@ -18,7 +18,7 @@ const IV_LENGTH = 16; // AES uses a 16-byte IV
  * @param {string} email - Email to encrypt
  * @returns {string} - Encrypted email in Base64 format with IV prepended
  */
-export function encryptEmail(email: string): string {
+export function encrypt(email: string): string {
   const secretKey = getSecretKey();
   const iv = crypto.randomBytes(IV_LENGTH); // Generate a random IV
   const cipher = crypto.createCipheriv("aes-256-cbc", secretKey, iv);
@@ -35,7 +35,7 @@ export function encryptEmail(email: string): string {
  * @param {string} encryptedData - Encrypted email with IV prepended
  * @returns {string} - Decrypted email
  */
-export function decryptEmail(encryptedData: string): string {
+export function decrypt(encryptedData: string): string {
   const secretKey = getSecretKey();
 
   // Split the IV and encrypted data
