@@ -16,7 +16,6 @@ export default async function QuizLayout({
   params: { campaign_name: string; quizset_path: string };
 }) {
   const session = await auth();
-  console.log("QuizLayout session", session);
 
   // Fetch data from API
   const fetchData = async (url: string, options: RequestInit = {}) => {
@@ -45,13 +44,19 @@ export default async function QuizLayout({
     }
   );
 
+  if (!quizSetReponse) {
+    redirect("/error/campaign/not-ready");
+    return;
+  }
+
   // console.log("QuizLayout quizData", quizSetReponse);
 
   const quizSet: QuizSetEx | null = quizSetReponse.item;
 
   if (!quizSet) {
+    console.error("QuizSet not found");
     redirectToErrorPage();
-    return null;
+    return;
   }
 
   // Fetch quiz history
@@ -122,7 +127,7 @@ export default async function QuizLayout({
     <div
       className="h-full bg-[#F0F0F0]"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.png')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.jpg')`,
       }}
     >
       {/* <LogoutButton /> */}

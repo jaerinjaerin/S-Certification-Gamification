@@ -1,11 +1,10 @@
 import { extractCodesFromPath } from "./pathUtils";
 
 describe("extractCodesFromPath", () => {
-  it("should correctly extract domainCode, jobCode, and languageCode for a valid input", () => {
-    const input = "ORG_502_ff_ko";
+  it("should correctly extract domainCode, and languageCode for a valid input", () => {
+    const input = "ORG_502_ko";
     const expectedOutput = {
       domainCode: "ORG_502",
-      jobCode: "ff",
       languageCode: "ko",
     };
 

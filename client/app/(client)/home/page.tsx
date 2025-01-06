@@ -49,7 +49,7 @@ export default function Home() {
                     padding: 80px;
                     border-radius: 10px;
                     text-align: center;
-                    background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png");
+                    background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg");
                     background-repeat: repeat;
                     background-size: 50%;
                     background-position: center;
@@ -105,7 +105,7 @@ export default function Home() {
 
   const sendTestBadgeEmail = async () => {
     const badgeImageUrl =
-      "https://assets-stage.samsungplus.net/certification/s24/images/badgeStage3.png";
+      "https://assets-stage.samsungplus.net/certification/s24/images/badge/badge_stage3.png";
     await fetch(
       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
       {
@@ -134,7 +134,7 @@ export default function Home() {
                       padding: 40px;
                       border-radius: 10px;
                       text-align: center;
-                      background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png"); /* 배경 패턴 URL */
+                      background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg"); /* 배경 패턴 URL */
                       background-repeat: repeat;
                       background-size: 50%;
                       background-position: center;

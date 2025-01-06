@@ -141,7 +141,6 @@ export const {
           where: { emailId: encryptedEmail },
         });
 
-        console.log("tokenRecord user", user);
         // 사용자 계정이 없으면 생성
         if (!user) {
           user = await prisma.user.create({
@@ -152,6 +151,8 @@ export const {
             },
           });
         }
+
+        console.log("authorize user", user);
 
         return user;
       },
@@ -203,10 +204,11 @@ export const {
       console.log("next-auth authorized", auth);
       return !!auth?.user; // this ensures there is a logged in user for -every- request
     },
-    redirect: async ({ url, baseUrl }) => {
-      const result = url.startsWith(baseUrl) ? url : baseUrl;
-      return result;
-    },
+    // redirect: async ({ url, baseUrl }) => {
+    //   console.log("next-auth redirect", url, baseUrl);
+    //   const result = url.startsWith(baseUrl) ? url : baseUrl;
+    //   return result;
+    // },
   },
   pages: {
     signIn: "/login",

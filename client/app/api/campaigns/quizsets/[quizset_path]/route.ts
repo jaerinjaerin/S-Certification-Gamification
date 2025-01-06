@@ -1,4 +1,7 @@
-import { sumtotalUserOthersJobId } from "@/app/core/config/default";
+import {
+  defaultLanguageCode,
+  sumtotalUserOthersJobId,
+} from "@/app/core/config/default";
 import { ApiError } from "@/app/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -38,12 +41,10 @@ export async function GET(request: NextRequest, props: Props) {
     const job = await prisma.job.findFirst({
       where: { id: user?.jobId ?? sumtotalUserOthersJobId },
     });
-    console.log("job:", job);
 
     const domain = await prisma.domain.findFirst({
       where: { code: domainCode },
     });
-    console.log("domain:", domain);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -69,6 +70,10 @@ export async function GET(request: NextRequest, props: Props) {
       });
     }
 
+    const defaultLanguage = await prisma.language.findFirst({
+      where: { code: defaultLanguageCode },
+    });
+
     const languageId = language?.id;
 
     const quizStagesWithQuestions = await Promise.all(
@@ -76,16 +81,27 @@ export async function GET(request: NextRequest, props: Props) {
         const questions = await prisma.question.findMany({
           where: {
             originalQuestionId: { in: quizStage.questionIds },
-            languageId,
+            languageId: { in: [languageId!, defaultLanguage!.id] },
           },
           include: {
             options: true,
           },
         });
 
+        // languageId 우선, 없으면 defaultLanguage.id
+        const prioritizedQuestions = questions.filter(
+          (q) => q.languageId === languageId
+        );
+        const fallbackQuestions = questions.filter(
+          (q) => q.languageId === defaultLanguage!.id
+        );
+
         return {
           ...quizStage,
-          questions,
+          questions:
+            prioritizedQuestions.length > 0
+              ? prioritizedQuestions
+              : fallbackQuestions,
         };
       })
     );

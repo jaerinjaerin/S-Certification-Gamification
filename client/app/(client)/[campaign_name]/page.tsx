@@ -1,6 +1,5 @@
-import LogoutButton from "@/app/components/button/logout_button";
 import { auth } from "@/auth";
-import { UserQuizLog } from "@prisma/client";
+import { AuthType, UserQuizLog } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function CampaignPage({
@@ -31,6 +30,10 @@ export default async function CampaignPage({
   // const { data: session } = useSession();
   const session = await auth();
 
+  if (!session?.user) {
+    redirect("/login");
+  }
+
   // const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
   // const response = await fetch(url, {
   //   method: "GET",
@@ -55,34 +58,34 @@ export default async function CampaignPage({
     }
   );
 
-  if (!historyResponse.ok) {
+  let userQuizLog: UserQuizLog | null = null;
+  if (historyResponse.ok) {
     console.error("CampaignPage quizHistory error", historyResponse);
 
-    return <div>Server Error</div>;
+    const historyData = await historyResponse.json();
+    userQuizLog = historyData.item;
   }
 
-  const historyData = await historyResponse.json();
-  const userQuizLog: UserQuizLog = historyData.item;
+  console.info("CampaignPage quizHistory", userQuizLog, session?.user);
 
-  console.info("CampaignPage quizHistory", historyData, session?.user);
-
-  if (!userQuizLog) {
-    console.log("gogo register");
-    if (session?.user.provider !== "sumtotal") {
-      redirect(`${params.campaign_name}/register`);
-    }
-
-    return (
-      <div>
-        <LogoutButton />
-        <p>Sumtotal로 로그인했지만 잘못된 경로로 들어온 경우입니다.</p>
-      </div>
-    );
-  }
-
-  if (userQuizLog.quizSetPath) {
+  // 퀴즈로그가 있으면 해당 퀴즈셋으로 이동
+  if (userQuizLog?.quizSetPath) {
     redirect(`${params.campaign_name}/${userQuizLog.quizSetPath}`);
   }
 
-  redirect(`${params.campaign_name}/register`);
+  // 퀴즈로그가 없고 게스트 유저라면 회원가입 페이지로 이동
+  if (!userQuizLog && session?.user.authType === AuthType.GUEST) {
+    console.log("gogo register");
+    redirect(`${params.campaign_name}/register`);
+  }
+
+  // 퀴즈로그가 없고 삼플 유저라면 에러페이지로 이동
+  return (
+    <div>
+      <h1>퀴즈 셋이 없습니다.</h1>
+      <p>퀴즈로그가 없고 삼플 유저인 경우 (실제로 이런 경우는 거의 없음)</p>
+    </div>
+  );
+
+  redirect("error/not-found");
 }

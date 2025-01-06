@@ -154,13 +154,13 @@ export const QuizProvider = ({
       0
     )
   );
-  console.log("quizStageLogs", quizStageLogs);
-  console.log(
-    "QuizProvider quizStagesTotalScore",
-    quizStagesTotalScore,
-    (quizLog?.lastCompletedStage ?? 0) + 1,
-    quizSet.quizStages.length - 1
-  );
+  // console.log("quizStageLogs", quizStageLogs);
+  // console.log(
+  //   "QuizProvider quizStagesTotalScore",
+  //   quizStagesTotalScore,
+  //   (quizLog?.lastCompletedStage ?? 0) + 1,
+  //   quizSet.quizStages.length - 1
+  // );
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
     quizLog?.lastCompletedStage == null
       ? 0
@@ -480,7 +480,7 @@ export const QuizProvider = ({
               padding: 40px;
               border-radius: 10px;
               text-align: center;
-              background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png"); /* 배경 패턴 URL */
+              background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg"); /* 배경 패턴 URL */
               background-repeat: repeat;
               background-size: 50%;
               background-position: center;

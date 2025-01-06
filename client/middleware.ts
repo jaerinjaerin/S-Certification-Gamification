@@ -6,10 +6,11 @@ import { isValidCampaignQuizSetId } from "./utils/validationUtils";
 
 export async function middleware(request: NextRequest) {
   const session = await auth();
-  // console.log("middleware session:", session);
 
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  console.log("middleware:", session, pathname, search);
 
   if (
     pathname.includes("/error") ||
@@ -21,7 +22,9 @@ export async function middleware(request: NextRequest) {
   }
 
   const segments = pathname.split("/").filter(Boolean); // 빈 문자열 제거
+  console.log("middleware: segments:", segments);
   if (segments.length < 1) {
+    console.log("middleware: not found");
     return NextResponse.redirect(new URL("/error/not-found", request.url));
   }
 
@@ -44,6 +47,8 @@ export async function middleware(request: NextRequest) {
     const url = campaignQuizSetPath
       ? `${basePath}/${campaignName}/${campaignQuizSetPath}/login${search}`
       : `${basePath}/${campaignName}/login${search}`;
+
+    console.log("login middleware: url:", url);
 
     return NextResponse.redirect(new URL(url, request.url));
   }

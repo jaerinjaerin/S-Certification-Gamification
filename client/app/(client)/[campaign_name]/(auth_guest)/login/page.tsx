@@ -28,7 +28,11 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
-export default function GuestLogin() {
+export default function GuestLogin({
+  params,
+}: {
+  params: { campaign_name: string };
+}) {
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
@@ -133,7 +137,7 @@ export default function GuestLogin() {
         border-collapse: separate;
         font-size: 16px;
         font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.png);
+        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
         -webkit-font-smoothing: antialiased;
         max-width: 800px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -395,7 +399,7 @@ export default function GuestLogin() {
       const result = await signIn("credentials", {
         email,
         code,
-        // callbackUrl: "/intro",
+        callbackUrl: `/${params.campaign_name}/register`,
       });
 
       console.log("result", result);
@@ -430,7 +434,7 @@ export default function GuestLogin() {
         <div
           className="w-full h-svh object-fill"
           style={{
-            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.png')`,
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",

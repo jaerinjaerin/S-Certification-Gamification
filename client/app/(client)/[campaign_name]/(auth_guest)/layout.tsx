@@ -11,6 +11,8 @@ export default async function GuestLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
+  console.log("GuestLayout locale", locale);
+
   return (
     <div lang={locale}>
       <NextIntlClientProvider timeZone={timeZone} messages={messages}>

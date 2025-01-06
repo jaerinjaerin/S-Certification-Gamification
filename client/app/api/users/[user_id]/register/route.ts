@@ -117,7 +117,8 @@ export async function POST(request: Request, props: Props) {
       );
     }
     // const quizPath = `${user.domain.code}_${user.job.code}_${languageCode}`;
-    const quizPath = `${domain?.code}_${job?.code}_${languageCode}`;
+    // const quizPath = `${domain?.code}_${job?.code}_${languageCode}`;
+    const quizPath = `${domain?.code}_${languageCode}`;
 
     return NextResponse.json({ item: quizPath }, { status: 200 });
   } catch (error) {

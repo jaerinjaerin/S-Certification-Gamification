@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    console.log("campaign:", campaign);
+    // console.log("campaign:", campaign);
 
     if (!campaign) {
       throw new ApiError(
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    console.log("userQuizLog:", userQuizLog);
+    // console.log("userQuizLog:", userQuizLog);
 
     if (!userQuizLog) {
       throw new ApiError(
@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    console.log("userQuizStageLogs:", userQuizStageLogs);
+    // console.log("userQuizStageLogs:", userQuizStageLogs);
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log("domain:", domain);
+    // console.log("domain:", domain);
     const user = await prisma.user.findFirst({
       where: {
         id: userId,
@@ -192,8 +192,6 @@ export async function POST(request: NextRequest) {
         id: user?.jobId ?? sumtotalUserOthersJobId,
       },
     });
-
-    console.log("job:", job);
 
     const language = await prisma.language.findFirst({
       where: {
