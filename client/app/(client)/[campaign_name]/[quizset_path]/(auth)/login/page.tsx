@@ -2,14 +2,11 @@
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import useLoader from "@/app/components/ui/loader";
 import Spinner from "@/app/components/ui/spinner";
-import { setUserLocale } from "@/app/services/locale";
 import { Button } from "@/components/ui/button";
-import { Locale, locales } from "@/i18n/config";
 import { cn, fixedClass } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Login() {
   const { status } = useSession();
@@ -21,18 +18,18 @@ export default function Login() {
   // const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
   // const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
 
-  const isValidLocale = (code: string | undefined): code is Locale =>
-    locales.includes(code as Locale);
+  // const isValidLocale = (code: string | undefined): code is Locale =>
+  //   locales.includes(code as Locale);
 
-  useEffect(() => {
-    setLoading(true);
-    if (!pathLanguageCode) return;
+  // useEffect(() => {
+  //   setLoading(true);
+  //   if (!pathLanguageCode) return;
 
-    if (isValidLocale(pathLanguageCode)) {
-      setUserLocale(pathLanguageCode);
-    }
-    setLoading(false);
-  }, []);
+  //   if (isValidLocale(pathLanguageCode)) {
+  //     // setPathLocale({ path: pathLanguageCode });
+  //   }
+  //   setLoading(false);
+  // }, []);
 
   if (status === "loading") {
     return <Spinner />;
