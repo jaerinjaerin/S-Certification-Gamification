@@ -616,7 +616,7 @@ export const QuizProvider = ({
             activityId: activityId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
-            elapsedSeconds: 30,
+            elapsedSeconds: 120,
           }),
         }
       );

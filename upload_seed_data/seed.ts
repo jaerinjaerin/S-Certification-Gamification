@@ -404,8 +404,8 @@ async function main() {
         let badgeActivityId: string | null = null;
         let badgeImageUrl: string | null = null;
 
-        const stage3BadgeActivityId = "251537";
-        const stage4BadgeActivityId = "251540";
+        const stage3BadgeActivityId = "251745";
+        const stage4BadgeActivityId = "251747";
 
         if (i === 2) {
           isBadgeStage = true;
