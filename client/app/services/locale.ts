@@ -1,6 +1,6 @@
 "use server";
-import { cookies, headers } from "next/headers";
-import { defaultLocale, Locale } from "@/i18n/config";
+import { headers } from "next/headers";
+import { defaultLocale } from "@/i18n/config";
 import Languages from "@/public/assets/seeds/languages.json";
 
 // const supportedLanguagesCode = [
@@ -59,16 +59,8 @@ import Languages from "@/public/assets/seeds/languages.json";
 // ];
 
 const supportedLanguagesCode = Languages.map((lang) => lang.code);
-const COOKIE_NAME = "NEXT_LOCALE";
 
 export async function getUserLocale() {
-  const cookieStore = await cookies();
-  const localeFromCookie = cookieStore.get(COOKIE_NAME)?.value;
-
-  if (localeFromCookie) {
-    return localeFromCookie;
-  }
-
   const headersList = await headers();
   const acceptLanguage = headersList.get("accept-language")?.split(",")[0];
 
@@ -110,6 +102,8 @@ export async function getUserLocale() {
   }
 }
 
-export async function setUserLocale(locale: Locale) {
-  (await cookies()).set(COOKIE_NAME, locale);
-}
+// export async function setPathLocale({ path }: { path: Locale }) {
+//   console.log("🤔", path);
+
+//   return "es-ES";
+// }
