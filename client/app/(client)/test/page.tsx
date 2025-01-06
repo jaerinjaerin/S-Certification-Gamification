@@ -15,9 +15,15 @@ export default function TestPage() {
   const [resultDomain, setResultDomain] = useState<any | null>(null);
   const [resultActivity, setResultActivity] = useState<any | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+
   const [elapsedSeconds, setElapsedSeconds] = useState<number | "">("");
   const [apiPath, setApiPath] = useState("");
   const [apiResult, setApiResult] = useState(null);
+
+  const [activityId, setActivityId] = useState("");
+  const [activityId2, setActivityId2] = useState("");
+  const [activityElapsedSeconds, setActivityElapsedSeconds] = useState("");
+  const [activityStatus, setActivityStatus] = useState<string | null>(null);
 
   const fetchUserProfile = async () => {
     setLoading(true);
@@ -373,7 +379,7 @@ export default function TestPage() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
-          method: "PUT",
+          method: "POST",
           cache: "no-store",
           body: JSON.stringify({
             activityId: selectedActivity.activityId,
@@ -472,6 +478,148 @@ export default function TestPage() {
     }
   };
 
+  const callRegisterActivity = async () => {
+    if (!activityId || activityId === "") {
+      alert("Activity ID를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        console.error(response);
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log("data", result);
+      setApiResult(result);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const callUpdateActivity = async () => {
+    if (!activityId2 || activityId2 === "") {
+      alert("Activity ID를 입력해주세요.");
+      return;
+    }
+    if (activityStatus === "" || activityStatus === null) {
+      alert("Activity Status를 선택해주세요.");
+    }
+    // if (activityElapsedSeconds === "" || activityElapsedSeconds === null) {
+    //   alert("Activity ElapsedSeconds를 입력해주세요.");
+    //   return;
+    // }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId2,
+            status: activityStatus,
+            elapsedSeconds: parseInt(activityElapsedSeconds as string, 10),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log("data", result);
+      setApiResult(result);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const callRegisterActivityByAdmin = async (
+    userId: string,
+    activityId: string
+  ) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/register`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        console.error(response);
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log("data", result);
+      setApiResult(result);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const callUpdateActivityByAdmin = async (
+    userId: string,
+    activityId: string
+  ) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId,
+            status: "Attended",
+            elapsedSeconds: 120,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log("data", result);
+      setApiResult(result);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <button
@@ -536,28 +684,6 @@ export default function TestPage() {
         {loading ? "Loading..." : "Job 목록 조회"}
       </button> */}
       <br />
-      <br />
-
-      <button
-        onClick={fetchApi}
-        disabled={loading || apiPath == null}
-        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
-      >
-        {loading ? "Loading..." : "Call Api (아래 입력란에 API 직접 입력) "}
-      </button>
-      <p>https://samsung.sumtotal.host/apis/documentation 에서 API 참조</p>
-      <input
-        type="text"
-        placeholder="/api/v2/advanced/userprofile"
-        value={apiPath}
-        onChange={(e) => setApiPath(e.target.value)}
-        style={{
-          marginBottom: "10px",
-          padding: "5px",
-          width: "300px",
-          background: "#cccccc",
-        }}
-      />
       <br />
 
       {activities.length > 0 && (
@@ -697,6 +823,28 @@ export default function TestPage() {
         </ul>
       )}
 
+      <button
+        onClick={fetchApi}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "Call Api (아래 입력란에 API 직접 입력) "}
+      </button>
+      <p>https://samsung.sumtotal.host/apis/documentation 에서 API 참조</p>
+      <input
+        type="text"
+        placeholder="/api/v2/advanced/userprofile"
+        value={apiPath}
+        onChange={(e) => setApiPath(e.target.value)}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "300px",
+          background: "#cccccc",
+        }}
+      />
+      <br />
+
       {apiResult && (
         <div>
           <h2>Api Result:</h2>
@@ -709,6 +857,96 @@ export default function TestPage() {
       {/* <button onClick={getUserJobAndChannel} disabled={loading}>
         {loading ? "Loading..." : "유저 Job 와 Channel 정보 조회"}
       </button> */}
+
+      <br />
+      <h1 style={{ fontSize: "2rem", fontWeight: "bold", color: "orange" }}>
+        Activity 배지 테스트
+      </h1>
+      <button
+        onClick={callRegisterActivity}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "1. Activity 등록하기"}
+      </button>
+      <input
+        type="text"
+        placeholder="activity id"
+        value={activityId}
+        onChange={(e) => setActivityId(e.target.value)}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "300px",
+          background: "#cccccc",
+        }}
+      />
+      <br />
+      <button
+        onClick={callUpdateActivity}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "2. Activity 상태변경 하기"}
+      </button>
+      <input
+        type="text"
+        placeholder="activity id"
+        value={activityId2}
+        onChange={(e) => setActivityId2(e.target.value)}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "300px",
+          background: "#cccccc",
+        }}
+      />
+      <div style={{ marginTop: "1rem" }}>
+        <label htmlFor="statusSelect">
+          <strong>Status:</strong>
+        </label>
+        <select
+          id="statusSelect"
+          value={activityStatus ?? ""}
+          onChange={(e) => setActivityStatus(e.target.value)}
+          style={{ marginLeft: "10px" }}
+        >
+          <option value="Inprogress">In Progress</option>
+          <option value="Attended">Attended</option>
+          <option value="Cancelled">Cancel</option>
+        </select>
+      </div>
+      <input
+        type="text"
+        placeholder="elapsedSeconds"
+        value={activityElapsedSeconds}
+        onChange={(e) => setActivityElapsedSeconds(e.target.value)}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "300px",
+          background: "#cccccc",
+        }}
+      />
+
+      <br />
+      <br />
+
+      <button
+        onClick={() => callRegisterActivityByAdmin("2135159", "251745")}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "어드민 - Activity 등록하기"}
+      </button>
+      <br />
+      <button
+        onClick={() => callUpdateActivityByAdmin("2135159", "251745")}
+        disabled={loading || apiPath == null}
+        style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
+      >
+        {loading ? "Loading..." : "어드민 - Activity 상태변경 하기"}
+      </button>
     </div>
   );
 }

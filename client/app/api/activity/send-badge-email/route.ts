@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma-client";
-import { decryptEmail } from "@/utils/encrypt";
+import { decrypt } from "@/utils/encrypt";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       throw new Error("User email not found");
     }
 
-    const email = decryptEmail(user.emailId!);
+    const email = decrypt(user.emailId!);
 
     const params = {
       Destination: {
