@@ -593,13 +593,13 @@ async function main() {
 
         console.log("questionIds", questionIds);
 
-        const isLastStage = i === stages.length - 1;
+        // const isLastStage = i === stages.length - 1;
         let isBadgeStage = false;
         let badgeActivityId: string | null = null;
         let badgeImageUrl: string | null = null;
 
-        const stage3BadgeActivityId = "251748";
-        const stage4BadgeActivityId = "251749";
+        const stage3BadgeActivityId = "251745";
+        const stage4BadgeActivityId = "251747";
 
         if (i === 2) {
           isBadgeStage = true;

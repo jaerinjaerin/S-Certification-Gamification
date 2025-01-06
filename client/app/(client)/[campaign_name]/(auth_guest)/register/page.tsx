@@ -150,7 +150,8 @@ export default function GuestRegisterPage() {
     try {
       setCheckingRegisterd(true);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        // `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${campaign.name}`,
         {
           method: "GET",
           cache: "no-cache",

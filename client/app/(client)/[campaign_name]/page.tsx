@@ -31,22 +31,23 @@ export default async function CampaignPage({
   // const { data: session } = useSession();
   const session = await auth();
 
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
-  const response = await fetch(url, {
-    method: "GET",
-    // cache: "force-cache",
-    cache: "no-cache",
-  });
+  // const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
+  // const response = await fetch(url, {
+  //   method: "GET",
+  //   // cache: "force-cache",
+  //   cache: "no-cache",
+  // });
 
-  const data = await response.json();
-  if (!data.item) {
-    redirect("error-notfound");
-  }
+  // const data = await response.json();
+  // if (!data.item) {
+  //   redirect("error-notfound");
+  // }
 
-  console.info("CampaignPage campaign", data);
+  // console.info("CampaignPage campaign", data);
 
   const historyResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
+    // `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${params.campaign_name}`,
     {
       method: "GET",
       // cache: "force-cache",

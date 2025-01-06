@@ -1,6 +1,5 @@
 import { prisma } from "@/prisma-client";
-import type { Adapter, AdapterUser } from "@auth/core/adapters";
-import { JWT } from "@auth/core/jwt";
+import type { Adapter } from "@auth/core/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthType, User } from "@prisma/client";
 import NextAuth, { DefaultSession, Session } from "next-auth";
@@ -14,20 +13,12 @@ import { encryptEmail } from "./utils/encrypt";
 declare module "next-auth" {
   interface Session {
     user: {
-      /** The user's id. */
       id: string;
-      // providerUserId: string;
-      // providerPersonId: string;
       provider: string;
       authType: AuthType;
-      // sumtotalOrganizationIds: string | null;
     } & DefaultSession["user"];
   }
 }
-
-type SessionParams =
-  | { session: Session; user: AdapterUser }
-  | { session: Session; token: JWT };
 
 export const {
   handlers: { GET, POST },
@@ -51,9 +42,6 @@ export const {
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      // redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
-      // callbackUrl: process.env.SUMTOTAL_CALLBACK_URL,
-      // callback: process.env.SUMTOTAL_CALLBACK_URL,
       profile: async (profile: SumtotalProfile, tokens) => {
         console.log("profile:", profile);
         // console.log("accessToken:", tokens.access_token);
@@ -107,10 +95,6 @@ export const {
 
         return {
           id: profile.userId,
-          // email:
-          //   profile.businessAddress.email1 != null
-          //     ? encryptEmail(profile.businessAddress.email1)
-          //     : null,
           emailId:
             profile.businessAddress.email1 != null
               ? encryptEmail(profile.businessAddress.email1)
@@ -149,30 +133,6 @@ export const {
       },
       async authorize(credentials) {
         const { email, code } = credentials;
-        console.log("Email + Code", email, code);
-
-        // // 이메일과 인증 코드 확인
-        // const tokenRecord = await prisma.verifyToken.findFirst({
-        //   where: { email: email as string },
-        // });
-
-        // console.log("tokenRecord", tokenRecord);
-
-        // if (!tokenRecord) {
-        //   throw new Error("Invalid email or code");
-        // }
-
-        // // 만료 시간 확인
-        // if (new Date() > tokenRecord.expiresAt) {
-        //   await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
-        //   throw new Error("Code expired");
-        // }
-
-        // // 인증 코드 확인
-        // if (tokenRecord.token !== code) {
-        //   throw new Error("Invalid email or code");
-        // }
-
         const encryptedEmail = encryptEmail(email as string);
 
         let user = await prisma.user.findFirst({
@@ -182,35 +142,14 @@ export const {
         console.log("tokenRecord user", user);
         // 사용자 계정이 없으면 생성
         if (!user) {
-          // const userId = uuid.v4();
-
-          // const userEmail = await prisma.userEmail.create({
-          //   data: {
-          //     email: encryptedEmail,
-          //     userId: userId,
-          //   },
-          // });
-
           user = await prisma.user.create({
             data: {
-              // id: userId,
               name: "Guest User",
-              // email: encryptedEmail,
               emailId: encryptedEmail,
               authType: AuthType.GUEST,
             },
           });
         }
-
-        // // 인증 코드 삭제
-        // await prisma.verifyToken.delete({ where: { id: tokenRecord.id } });
-
-        // // 선택 사항
-        // await prisma.verifyToken.deleteMany({
-        //   where: {
-        //     expiresAt: { lt: new Date() }, // 현재 시간보다 이전
-        //   },
-        // });
 
         return user;
       },
@@ -220,32 +159,6 @@ export const {
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, //30일
-  },
-  events: {
-    createUser: async (message) => {
-      console.log("next-auth createUser", message);
-      // const { user } = message;
-      // if (user.email != null) {
-      //   const userEmail = await prisma.userEmail.create({
-      //     data: {
-      //       email: user.email,
-      //       userId: user.id,
-      //     },
-      //   });
-
-      //   await prisma.user.update({
-      //     where: { id: user.id },
-      //     data: {
-      //       email: null,
-      //       emailId: userEmail.id,
-      //     },
-      //   });
-      // }
-    },
-    // getUserByEmail: (email) => prisma.user.findFirst({ where: { email } }),
-    linkAccount: ({ user, profile }) => {
-      console.log("next-auth linkAccount", user, profile);
-    },
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
@@ -283,11 +196,6 @@ export const {
       }
 
       return session;
-      // if (session?.user && token.sub) {
-      //   session.user.id = token.sub;
-      //   session.user.provider = token.provider as string;
-      // }
-      // return session;
     },
     authorized: ({ auth }) => {
       console.log("next-auth authorized", auth);
@@ -300,8 +208,6 @@ export const {
   },
   pages: {
     signIn: "/login",
-    // signOut: '/login',
-    // newUser
     error: "/error",
     verifyRequest: "/verify-request",
   },

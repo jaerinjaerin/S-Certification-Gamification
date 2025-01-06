@@ -1,13 +1,30 @@
 import { defaultLanguageCode } from "@/app/core/config/default";
-import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+type Props = {
+  params: {
+    user_id: string;
+  };
+};
+
+export async function POST(request: Request, props: Props) {
   try {
-    const session = await auth();
+    const userId = props.params.user_id;
+    // const session = await auth();
     const body = await request.json();
+    const {
+      domainId,
+      // domainCode,
+      subsidaryId,
+      regionId,
+      jobId,
+      languageCode,
+      channelId,
+      channelName,
+      channelSegmentId,
+    } = body;
 
     /*
     body: {
@@ -22,19 +39,27 @@ export async function POST(request: Request) {
 
     const domain = await prisma.domain.findFirst({
       where: {
-        id: body.domainId,
+        id: domainId,
       },
     });
+
+    if (!domain) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Fail create quiz path",
+          },
+        },
+        { status: 404 }
+      );
+    }
 
     let language = await prisma.language.findFirst({
       where: {
-        code: body.languageCode,
-      },
-    });
-
-    const job = await prisma.job.findFirst({
-      where: {
-        id: body.jobId,
+        code: languageCode,
       },
     });
 
@@ -46,23 +71,29 @@ export async function POST(request: Request) {
       });
     }
 
-    const languageCode = language?.code ?? defaultLanguageCode;
+    const job = await prisma.job.findFirst({
+      where: {
+        id: jobId,
+      },
+    });
+
+    // const languageCode = language?.code ?? defaultLanguageCode;
 
     await prisma.user.update({
       where: {
-        id: session?.user.id,
+        id: userId,
       },
       data: {
-        domainId: domain?.id,
+        domainId,
         languageId: language!.id,
-        jobId: body.jobId,
-        regionId: body.regionId,
-        subsidaryId: body.subsidaryId,
-        storeId: body.storeId,
-        storeSegmentText: body.storeSegmentText,
-        channelId: body.channelId,
-        channelName: body.channelName,
-        channelSegmentId: body.channelSegmentId,
+        jobId: job?.id,
+        regionId: regionId,
+        subsidaryId: subsidaryId,
+        // storeId: storeId,
+        // storeSegmentText: body.storeSegmentText,
+        channelId: channelId,
+        channelName: channelName,
+        channelSegmentId: channelSegmentId,
       },
       // include: {
       //   // domain: true,

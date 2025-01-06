@@ -1,4 +1,5 @@
 import { sumtotalUserOthersJobId } from "@/app/core/config/default";
+import { ApiError } from "@/app/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
@@ -14,130 +15,77 @@ export async function GET(request: NextRequest, props: Props) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("user_id");
-
     const quizsetPath = props.params.quizset_path;
-    console.log("API: quizsetPath", quizsetPath);
 
     if (!quizsetPath || !userId) {
-      return NextResponse.json(
-        {
-          status: 400,
-          message: "Bad request",
-          error: {
-            code: "BAD_REQUEST",
-            details: "Invalid quiz set ID",
-          },
-        },
-        { status: 400 }
+      throw new ApiError(
+        400,
+        "BAD_REQUEST",
+        "Quiz set path and User ID are required"
       );
     }
 
     const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
-    console.log("API: domainCode", domainCode);
+    console.log("domainCode:", domainCode, "languageCode:", languageCode);
 
     const user = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
+      where: { id: userId },
     });
-
     if (!user) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "User not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "User not found",
-          },
-        },
-        { status: 404 }
-      );
+      throw new ApiError(404, "NOT_FOUND", "User not found");
     }
 
     const job = await prisma.job.findFirst({
-      where: {
-        id: user?.jobId ?? sumtotalUserOthersJobId,
-      },
+      where: { id: user?.jobId ?? sumtotalUserOthersJobId },
     });
+    console.log("job:", job);
 
     const domain = await prisma.domain.findFirst({
-      where: {
-        code: domainCode,
-      },
+      where: { code: domainCode },
     });
+    console.log("domain:", domain);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: domain?.id,
-        jobCodes: {
-          has: job?.code,
-        },
-        // paths: {
-        //   has: quizsetPath, // Ensure jobId exists in the jobIds array
-        // },
+        jobCodes: { has: job?.code },
       },
       include: {
-        quizStages: true, // Include quizStages
-        // language: true,
-        // campaign: true,
-        // domain: true,
+        quizStages: true,
       },
     });
 
-    // console.log("API: quizSet:", quizSet);
-
     if (!quizSet) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "Quiz set not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Quiz set not found",
-          },
-        },
-        { status: 404 }
-      );
+      throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
     }
 
     let language = await prisma.language.findFirst({
-      where: {
-        code: languageCode,
-      },
+      where: { code: languageCode },
     });
 
-    // TODO: 지원 언어가 없을 경우 기본 언어로 설정
     if (!language) {
       language = await prisma.language.findFirst({
-        where: {
-          code: "en",
-        },
+        where: { code: "en" },
       });
     }
 
-    console.log("language:", language);
-
     const languageId = language?.id;
 
-    // 각 quizStage의 questionIds를 기반으로 Question 데이터를 가져오기
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
         const questions = await prisma.question.findMany({
           where: {
-            originalQuestionId: {
-              in: quizStage.questionIds, // Match question IDs from quizStage
-            },
-            languageId, // Filter by languageId
+            originalQuestionId: { in: quizStage.questionIds },
+            languageId,
           },
           include: {
-            options: true, // Include options if needed
+            options: true,
           },
         });
 
         return {
           ...quizStage,
-          questions, // Attach filtered questions
+          questions,
         };
       })
     );
@@ -147,8 +95,8 @@ export async function GET(request: NextRequest, props: Props) {
         item: {
           ...quizSet,
           quizStages: quizStagesWithQuestions,
-          language: language,
-          domain: domain,
+          language,
+          domain,
         },
       },
       { status: 200 }
@@ -157,18 +105,35 @@ export async function GET(request: NextRequest, props: Props) {
     return response;
   } catch (error) {
     console.error("Error fetching question data:", error);
+
     Sentry.captureException(error);
 
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
+    // ApiError 처리
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        {
+          status: error.statusCode,
+          message: error.message,
+          error: {
+            code: error.code,
+            details: error.message,
+          },
+        },
+        { status: error.statusCode }
+      );
+    }
 
+    // 예상치 못한 에러 처리
     return NextResponse.json(
       {
         status: 500,
         message: "Internal server error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
-          details: errorMessage,
+          details:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
         },
       },
       { status: 500 }

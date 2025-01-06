@@ -234,11 +234,12 @@ export const QuizProvider = ({
     try {
       console.log("createQuizLog started", userId);
       const initHistoryResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
+        // `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets/?quizset_path=${currentQuizSetPath}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId }),
+          body: JSON.stringify({ userId, quizsetPath: currentQuizSetPath }),
         }
       );
 
@@ -616,7 +617,7 @@ export const QuizProvider = ({
             activityId: activityId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
-            elapsedSeconds: 30,
+            elapsedSeconds: 120,
           }),
         }
       );

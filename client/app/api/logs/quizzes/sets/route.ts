@@ -1,4 +1,5 @@
 import { sumtotalUserOthersJobId } from "@/app/core/config/default";
+import { ApiError } from "@/app/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { AuthType } from "@prisma/client";
@@ -8,119 +9,61 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   try {
     const url = request.url;
-
-    // URL 객체 생성
     const { searchParams } = new URL(url);
-    // const quizsetPath = props.params.quizset_path;
     const userId = searchParams.get("user_id");
-    const quizsetPath = searchParams.get("quizset_path");
+    const campaignName = searchParams.get("campaign_name");
 
-    if (!userId || !quizsetPath) {
-      Sentry.captureMessage("User ID is required");
-      return NextResponse.json(
-        {
-          status: 400,
-          message: "Bad request",
-          error: {
-            code: "BAD_REQUEST",
-            details: "User ID is required",
-          },
-        },
-        { status: 400 }
+    if (!userId || !campaignName) {
+      throw new ApiError(
+        400,
+        "BAD_REQUEST",
+        "User ID and Campaign Name are required"
       );
     }
 
-    const { domainCode /* languageCode */ } = extractCodesFromPath(quizsetPath);
-
-    const domain = await prisma.domain.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
-        code: domainCode,
+        name: campaignName,
       },
     });
 
-    const user = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "User not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "User not found",
-          },
-        },
-        { status: 404 }
-      );
-    }
-
-    const job = await prisma.job.findFirst({
-      where: {
-        id: user?.jobId ?? sumtotalUserOthersJobId,
-      },
-    });
-
-    // const job = await prisma.job.findFirst({
-    //   where: {
-    //     code: jobCode,
-    //   },
-    // });
-
-    const quizSet = await prisma.quizSet.findFirst({
-      where: {
-        domainId: domain?.id,
-        jobCodes: {
-          has: job?.code,
-        },
-      },
-      // include: {
-      //   quizStages: true, // Include quizStages
-      // },
-    });
-
-    if (!quizSet) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "Quiz set not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Quiz set not found",
-          },
-        },
-        { status: 404 }
+    if (!campaign) {
+      throw new ApiError(
+        404,
+        "NOT_FOUND",
+        "Campaign with the specified name does not exist"
       );
     }
 
     const userQuizLog = await prisma.userQuizLog.findFirst({
       where: {
         userId: userId,
-        quizSetId: quizSet.id,
-        // userId: userId,
-        // campaignId: quizSet.campaignId,
-        // jobId: quizSet.jobId,
-        // domainId: quizSet.domainId,
+        campaignId: campaign.id,
       },
     });
+
+    if (!userQuizLog) {
+      throw new ApiError(
+        404,
+        "NOT_FOUND",
+        "No quiz log found for the given user and campaign"
+      );
+    }
 
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
         userId: userId,
-        quizSetId: quizSet.id,
+        quizSetId: userQuizLog.id,
       },
     });
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
         userId: userId,
-        quizSetId: quizSet.id,
+        quizSetId: userQuizLog.id,
       },
       orderBy: {
-        createdAt: "asc", // 오름차순 정렬
+        createdAt: "asc",
       },
     });
 
@@ -135,11 +78,24 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("Error fetching activity data:", error);
     Sentry.captureException(error);
 
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
+    // ApiError에 대한 특수 처리
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        {
+          status: error.statusCode,
+          message: error.message,
+          error: {
+            code: error.statusCode === 400 ? "BAD_REQUEST" : "NOT_FOUND",
+            details: error.message,
+          },
+        },
+        { status: error.statusCode }
+      );
+    }
+
+    console.error("Unexpected error:", error);
 
     return NextResponse.json(
       {
@@ -147,7 +103,10 @@ export async function GET(request: NextRequest) {
         message: "Internal server error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
-          details: errorMessage,
+          details:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
         },
       },
       { status: 500 }
@@ -157,10 +116,13 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const url = request.url;
-    const { searchParams } = new URL(url);
-    const quizsetPath = searchParams.get("quizset_path");
-    console.log("quizSet post", quizsetPath);
+    // const url = request.url;
+    // const { searchParams } = new URL(url);
+    // const quizsetPath = searchParams.get("quizset_path");
+    // console.log("quizSet post", quizsetPath);
+
+    const body = await request.json();
+    const { userId, quizsetPath } = body;
 
     if (!quizsetPath) {
       Sentry.captureMessage("Quiz set path is required");
@@ -176,9 +138,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    const body = await request.json();
-    const { userId } = body;
 
     const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
 

@@ -26,7 +26,6 @@ export default async function QuizLayout({
       return await response.json();
     } catch (error) {
       console.error("Fetch error:", error);
-      redirectToErrorPage();
       return null;
     }
   };
@@ -41,9 +40,8 @@ export default async function QuizLayout({
     `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}?user_id=${session?.user.id}`,
     {
       method: "GET",
-      // headers: { "Content-Type": "application/json" },
-      cache: "force-cache",
-      // cache: "no-cache",
+      // cache: "force-cache",
+      cache: "no-cache",
     }
   );
 
@@ -58,7 +56,7 @@ export default async function QuizLayout({
 
   // Fetch quiz history
   const quizLogResponse = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets/?user_id=${session?.user.id}&quizset_path=${params.quizset_path}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${params.campaign_name}`,
     {
       method: "GET",
       cache: "no-cache",
@@ -71,32 +69,11 @@ export default async function QuizLayout({
 
   // console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
-  if (quizLogResponse?.item.quizLog) {
+  if (quizLogResponse?.ok && quizLogResponse?.item.quizLog) {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;
     quizQuestionLogs = quizLogResponse.item.quizQuestionLogs;
   }
-
-  // 다른 퀴즈페이지로 이동했는지 확인
-  // console.log("QuizLayout quizLog", quizLog.quizSetPath, params.quizset_path);
-  // if (
-  //   session?.user.authType === AuthType.SUMTOTAL &&
-  //   quizLog?.quizSetPath != null &&
-  //   quizLog?.quizSetPath !== params.quizset_path
-  // ) {
-  //   // console.log(
-  //   //   "QuizLayout quizLog",
-  //   //   quizLog?.quizSetPath,
-  //   //   params.quizset_path
-  //   // );
-  //   // return (
-  //   //   <div>
-  //   //     <h1>퀴즈 페이지 이동</h1>
-  //   //     <p>다른 퀴즈 페이지로 이동하셨습니다.</p>
-  //   //   </div>
-  //   // );
-  //   redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
-  // }
 
   if (session?.user.authType === AuthType.GUEST) {
     const userResponse = await fetchData(
@@ -131,6 +108,7 @@ export default async function QuizLayout({
     params.quizset_path
   );
 
+  // 다른 퀴즈페이지로 이동했는지 확인
   if (
     quizLog?.quizSetPath != null &&
     quizLog?.quizSetPath !== params.quizset_path
