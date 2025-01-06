@@ -23,9 +23,14 @@ export async function GET(request: NextRequest) {
 
     const campaign = await prisma.campaign.findFirst({
       where: {
-        name: campaignName,
+        name: {
+          equals: campaignName,
+          mode: "insensitive", // 대소문자 구분 없이 검색
+        },
       },
     });
+
+    console.log("campaign:", campaign);
 
     if (!campaign) {
       throw new ApiError(
@@ -42,6 +47,8 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    console.log("userQuizLog:", userQuizLog);
+
     if (!userQuizLog) {
       throw new ApiError(
         404,
@@ -56,6 +63,8 @@ export async function GET(request: NextRequest) {
         quizSetId: userQuizLog.id,
       },
     });
+
+    console.log("userQuizStageLogs:", userQuizStageLogs);
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {

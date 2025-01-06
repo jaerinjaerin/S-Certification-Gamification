@@ -69,7 +69,7 @@ export default async function QuizLayout({
 
   // console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
 
-  if (quizLogResponse?.ok && quizLogResponse?.item.quizLog) {
+  if (quizLogResponse?.item.quizLog) {
     quizLog = quizLogResponse.item.quizLog;
     quizStageLogs = quizLogResponse.item.quizStageLogs;
     quizQuestionLogs = quizLogResponse.item.quizQuestionLogs;
