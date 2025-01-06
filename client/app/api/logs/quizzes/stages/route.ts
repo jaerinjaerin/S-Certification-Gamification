@@ -5,6 +5,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    console.log("body", body);
+
     const {
       userId,
       authType,
@@ -90,9 +92,43 @@ export async function POST(request: Request) {
         },
       });
 
-      if (isBadgeStage) {
-        const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
+      console.log("userQuizStageLog", userQuizStageLog);
+
+      if (!isBadgeStage) {
+        return {
+          userQuizStageLog,
+          userQuizStageStatistics,
+        };
+      }
+
+      const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
+        data: {
+          userId,
+          authType,
+          campaignId,
+          isBadgeAcquired,
+          badgeActivityId,
+          quizSetId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds,
+          score: totalScore,
+          domainId,
+          languageId,
+          jobId,
+          regionId,
+          subsidaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+
+      const userQuizBadgeStageStatistics =
+        await tx.userQuizBadgeStageStatistics.create({
           data: {
+            id: userQuizBadgeStageLog.id,
             userId,
             authType,
             campaignId,
@@ -115,39 +151,14 @@ export async function POST(request: Request) {
           },
         });
 
-        const userQuizBadgeStageStatistics =
-          await tx.userQuizBadgeStageStatistics.create({
-            data: {
-              id: userQuizBadgeStageLog.id,
-              userId,
-              authType,
-              campaignId,
-              isBadgeAcquired,
-              badgeActivityId,
-              quizSetId,
-              quizStageId,
-              quizStageIndex,
-              elapsedSeconds,
-              score: totalScore,
-              domainId,
-              languageId,
-              jobId,
-              regionId,
-              subsidaryId,
-              channelSegmentId,
-              storeId,
-              channelId,
-              channelName,
-            },
-          });
+      console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
 
-        return {
-          userQuizStageLog,
-          userQuizStageStatistics,
-          userQuizBadgeStageLog,
-          userQuizBadgeStageStatistics,
-        };
-      }
+      return {
+        userQuizStageLog,
+        userQuizStageStatistics,
+        userQuizBadgeStageLog,
+        userQuizBadgeStageStatistics,
+      };
     });
 
     return NextResponse.json(
