@@ -21,7 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 // 메뉴 데이터를 배열로 정의
 const menuItems: MenuItems = [
@@ -62,9 +62,8 @@ const menuItems: MenuItems = [
 // Menu 컴포넌트
 const LeftMenu = () => {
   const router = useRouter();
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>(
-    {}
-  );
+  const pathname = usePathname();
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const toggleSection = (label: string) => {
     setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -83,9 +82,10 @@ const LeftMenu = () => {
             <SidebarGroupContent>
               {group.items.map((item, itemIndex) => {
                 return (
-                  <SidebarMenu key={itemIndex}>
+                  <SidebarMenu key={itemIndex} className="mb-1">
                     {/* 상위 메뉴 */}
                     <SidebarMenuButton
+                      isActive={pathname === item.href}
                       disabled={!item?.children && !item?.href}
                       className="flex items-center justify-between !px-4 !py-6"
                       onClick={() => {
@@ -97,7 +97,7 @@ const LeftMenu = () => {
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <item.icon className="w-5 h-5 text-zinc-600" />
+                        <item.icon className="w-5 h-5" />
                         <span>{item.label}</span>
                       </div>
                       {item?.children &&
