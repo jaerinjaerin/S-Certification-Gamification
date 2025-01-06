@@ -3,61 +3,6 @@ import { headers } from "next/headers";
 import { defaultLocale } from "@/i18n/config";
 import Languages from "@/public/assets/seeds/languages.json";
 
-// const supportedLanguagesCode = [
-//   "en-US",
-//   "fr-CA",
-//   "fr-FR",
-//   "it-IT",
-//   "es-ES",
-//   "pt-PT",
-//   "pl",
-//   "de-DE",
-//   "bg",
-//   "ro",
-//   "cs",
-//   "sk-SK",
-//   "sq",
-//   "bs",
-//   "hr-HR",
-//   "mk",
-//   "sr-Cyrl",
-//   "sl",
-//   "hu",
-//   "et",
-//   "lv",
-//   "lt",
-//   "el",
-//   "sv",
-//   "fi",
-//   "nb",
-//   "da",
-//   "en-GB",
-//   "nl",
-//   "lb",
-//   "ru",
-//   "az",
-//   "ka",
-//   "kk",
-//   "ky",
-//   "tg",
-//   "uz",
-//   "zh-CN",
-//   "zh-TW",
-//   "id",
-//   "th",
-//   "km",
-//   "lo",
-//   "my",
-//   "vi",
-//   "bn",
-//   "es-419",
-//   "pt-BR",
-//   "ar-AE",
-//   "he",
-//   "tr",
-//   "ja",
-// ];
-
 const supportedLanguagesCode = Languages.map((lang) => lang.code);
 
 export async function getUserLocale() {
@@ -101,9 +46,3 @@ export async function getUserLocale() {
     return defaultLocale;
   }
 }
-
-// export async function setPathLocale({ path }: { path: Locale }) {
-//   console.log("🤔", path);
-
-//   return "es-ES";
-// }
