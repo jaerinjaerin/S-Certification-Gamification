@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     const userQuizStageLogs = await prisma.userQuizStageLog.findMany({
       where: {
         userId: userId,
-        quizSetId: userQuizLog.id,
+        quizSetId: userQuizLog.quizSetId,
       },
     });
 
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
         userId: userId,
-        quizSetId: userQuizLog.id,
+        quizSetId: userQuizLog.quizSetId,
       },
       orderBy: {
         createdAt: "asc",
