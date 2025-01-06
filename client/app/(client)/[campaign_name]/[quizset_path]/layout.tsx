@@ -10,7 +10,9 @@ export default async function SumtotalUserLayout({
 }) {
   const timeZone = "Seoul/Asia";
   const locale = quizset_path.split("_").at(-1);
-  const messages = (await import(`@/messages/${locale}.json`)).default;
+  const messages = await fetch(
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${locale}.json`
+  ).then((res) => res.json());
 
   return (
     <div lang={locale}>
