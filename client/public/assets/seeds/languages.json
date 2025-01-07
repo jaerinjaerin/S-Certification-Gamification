@@ -190,5 +190,9 @@
   {
     "code": "az",
     "name": "Language for AZ"
+  },
+  {
+    "code": "uk",
+    "name": "Language for UK"
   }
 ]
