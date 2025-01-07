@@ -16,7 +16,7 @@ import { cn, sleep } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
   const {
@@ -42,7 +42,6 @@ export default function QuizPage() {
   const [lifeCount, setLifeCount] = useState<number>(LIFE_COUNT);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({ countStart: question.timeLimitSeconds });
-  const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -50,6 +49,33 @@ export default function QuizPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+
+  const animationRef = useRef<Boolean | null>(null); // 애니메이션 상태 관리
+  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+
+  const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
+  const ANIMATON_DURATION = 3_000;
+
+  // 애니메이션 트리거
+  const triggerAnimation = () => {
+    if (animationRef.current) return; // 이미 실행 중인 경우 방지
+
+    animationRef.current = true; // 애니메이션 실행 중
+    animationTimeoutRef.current = setTimeout(() => {
+      stopAnimation(); // 최대 2초 후 애니메이션 중단
+    }, ANIMATON_DURATION);
+  };
+
+  // 애니메이션 중단
+  const stopAnimation = () => {
+    animationRef.current = false; // 애니메이션 상태 초기화
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+      animationTimeoutRef.current = null;
+    }
+  };
 
   const handleOptionSave = (optionId: string) => {
     setSelectedOptionIds((prevSelected) => {
@@ -76,13 +102,16 @@ export default function QuizPage() {
         stopCountdown();
         setSuccess(true);
         logUserAnswer(question.id, selectedOptIds, elapsedSeconds, true);
+        stopAnimation();
         await sleep(1500);
         await next();
         setSuccess(false);
+
         return;
       }
     } else {
       setLifeCount((lifeCount) => lifeCount - 1);
+      triggerAnimation();
       logUserAnswer(question.id, selectedOptIds, elapsedSeconds, false);
     }
   };
@@ -134,14 +163,33 @@ export default function QuizPage() {
   useEffect(() => {
     if (count <= 0) {
       handleLifeDecrease();
+      triggerAnimation();
     }
   }, [count, handleLifeDecrease]);
 
   useEffect(() => {
     if (lifeCount === 0) {
       handleGameOver();
+      stopAnimation();
     }
   }, [lifeCount, handleGameOver]);
+
+  function getAnimateState(option: QuestionOption) {
+    if (selectedOptionIds.includes(option.id)) {
+      return {
+        x: !option.isCorrect ? [0, -5, 5, -5, 5, 0] : 0,
+        scale: !option.isCorrect ? 1 : [1, 1.1, 1],
+        backgroundColor: option.isCorrect ? "#2686F5" : "#EE3434",
+        color: "#ffffff",
+        PointerEvent: "none" as const,
+      };
+    }
+
+    return {
+      x: 0,
+      scale: 1,
+    };
+  }
 
   return (
     <div className="min-h-svh bg-slate-300/20">
@@ -200,22 +248,11 @@ export default function QuizPage() {
                   handleConfirmAnswer(question, option.id);
                 }}
                 className={cn(
-                  "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer font-one font-semibold text-[18px]",
-                  selectedOptionIds.includes(option.id) &&
-                    !option.isCorrect &&
-                    "bg-[#EE3434] text-white pointer-events-none",
-                  selectedOptionIds.includes(option.id) &&
-                    option.isCorrect &&
-                    "bg-[#2686F5] text-white pointer-events-none",
+                  "relative rounded-[20px] py-4 px-6  hover:cursor-pointer font-one font-semibold text-[18px] overflow-hidden",
                   isCorrectAnswer && "pointer-events-none"
                 )}
-                animate={
-                  selectedOptionIds.includes(option.id) && !option.isCorrect
-                    ? { x: [0, -5, 5, -5, 5, 0] }
-                    : selectedOptionIds.includes(option.id) && option.isCorrect
-                    ? { scale: [1, 1.1, 1] }
-                    : { x: 0, scale: 1 }
-                }
+                initial={{ backgroundColor: "#FFFFFF" }}
+                animate={getAnimateState(option)}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {option.text}({option.isCorrect ? "o" : "x"})
@@ -228,6 +265,15 @@ export default function QuizPage() {
                     e.stopPropagation();
                   }}
                 />
+                {option.isCorrect && animationRef.current && (
+                  <div
+                    className={cn(
+                      "absolute w-full h-full top-0 left-0 rounded-[20px]"
+                    )}
+                  >
+                    <HintAnimation />
+                  </div>
+                )}
               </motion.label>
             );
           })}
@@ -303,5 +349,60 @@ const AnimatedHeartIcon = ({
         </motion.svg>
       )}
     </Fragment>
+  );
+};
+
+const HintAnimation = () => {
+  return (
+    <div className="relative z-0 flex overflow-hidden ">
+      <TranslateWrapper>
+        <svg
+          width="201"
+          height="100%"
+          viewBox="0 0 201 auto"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="0.741943"
+            width="200"
+            height="100%"
+            transform="rotate(0.285261 0.741943 0)"
+            fill="url(#paint0_linear_1561_8491)"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear_1561_8491"
+              x1="175.172"
+              y1="34.132"
+              x2="90.7222"
+              y2="110.213"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#C3E0F8" stopOpacity="0" />
+              <stop offset="0.525" stopColor="#C3E0F8" stopOpacity="0.6" />
+              <stop offset="1" stopColor="#C3E0F8" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </TranslateWrapper>
+    </div>
+  );
+};
+
+const TranslateWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <motion.div
+      initial={{ translateX: "-100%" }}
+      animate={{ translateX: "160%" }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="h-full px-2"
+    >
+      {children}
+    </motion.div>
   );
 };
