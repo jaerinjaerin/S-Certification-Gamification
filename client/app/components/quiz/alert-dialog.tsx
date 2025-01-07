@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/app/components/ui/alert-dialog";
 import { usePathNavigator } from "@/route/usePathNavigator";
 
 export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {

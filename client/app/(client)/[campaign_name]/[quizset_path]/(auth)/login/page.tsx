@@ -2,7 +2,7 @@
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
 import useLoader from "@/app/components/ui/loader";
 import Spinner from "@/app/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";

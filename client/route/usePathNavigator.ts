@@ -16,13 +16,13 @@ export const usePathNavigator = () => {
     const pathname = window.location.pathname;
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Base path for additional flexibility
-    const isProduction = process.env.NODE_ENV === "production";
+    const hasBasePath = basePath !== "";
 
     // Adjust index based on environment
-    const campaignName = isProduction ? segments[1] : segments[0];
+    const campaignName = hasBasePath ? segments[1] : segments[0];
     let campaignQuizSetId: string | null = null;
 
-    if (isProduction) {
+    if (hasBasePath) {
       if (segments.length > 2 && isValidCampaignQuizSetId(segments[2])) {
         campaignQuizSetId = segments[2];
       }
@@ -65,9 +65,9 @@ export const usePathNavigator = () => {
     const pathname = window.location.pathname;
     const segments = pathname.split("/").filter(Boolean); // Remove empty segments
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Base path for additional flexibility
-    const isProduction = process.env.NODE_ENV === "production";
+    const hasBasePath = basePath !== "";
 
-    const campaignName = isProduction ? segments[1] : segments[0];
+    const campaignName = hasBasePath ? segments[1] : segments[0];
 
     // Construct the new error URL
     const errorUrl = `${basePath}/${campaignName}/${additionalPath}${search}`;

@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import Languages from "@/public/assets/seeds/languages.json";
 import { cn } from "@/utils/utils";
 
