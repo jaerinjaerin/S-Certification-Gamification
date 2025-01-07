@@ -20,6 +20,8 @@ export default async function SumtotalUserLayout({
       console.error("SumtotalUserLayout get message error", error)
     );
 
+  console.log("SumtotalUserLayout messages", messages);
+
   return (
     <div lang={locale}>
       <NextIntlClientProvider timeZone={timeZone} messages={messages}>
