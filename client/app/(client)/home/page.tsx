@@ -202,7 +202,14 @@ export default function Home() {
 
   if (session) {
     return (
-      <>
+      <div
+        style={{
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
         :) Signed in as {session.user?.email} {session.user?.name}
         <br />
         <button onClick={() => signOut()}>Sign out</button>
@@ -233,7 +240,7 @@ export default function Home() {
         >
           Test Get Score
         </button> */}
-      </>
+      </div>
     );
   }
 
@@ -243,7 +250,14 @@ export default function Home() {
   // };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       {/* <h1>Sumtotal Test Login</h1>
       <button
         onClick={() => {
