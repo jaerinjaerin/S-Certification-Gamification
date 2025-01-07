@@ -2,7 +2,7 @@
 import { ErrorAlertDialog } from "@/app/components/quiz/alert-dialog";
 import Qusetion from "@/app/components/quiz/question-area";
 import Spinner from "@/app/components/ui/spinner";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { useQuiz } from "@/providers/quiz_provider";
 import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";

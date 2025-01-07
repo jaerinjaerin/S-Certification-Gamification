@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/app/components/ui/button";
 import Languages from "@/public/assets/seeds/languages.json";
+import { cn } from "@/utils/utils";
 
 const matchingTable = {
   Albanian: "sq",

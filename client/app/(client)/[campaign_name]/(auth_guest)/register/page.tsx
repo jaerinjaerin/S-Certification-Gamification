@@ -8,7 +8,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/app/components/ui/alert-dialog";
 import {
   Dialog,
   DialogContent,
@@ -16,14 +16,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/app/components/ui/select";
 import useCreateItem from "@/hooks/useCreateItem";
 import { getUserLocale } from "@/i18n/locale";
 import { useCampaign } from "@/providers/campaignProvider";

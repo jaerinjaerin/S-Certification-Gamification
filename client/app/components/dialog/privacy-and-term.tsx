@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { cn } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
