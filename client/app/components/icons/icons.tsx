@@ -1,4 +1,4 @@
-import { IconProps } from "@/app/types/type";
+import { IconProps } from "@/types/type";
 import React from "react";
 
 export const CloseIcon = React.forwardRef<SVGSVGElement, IconProps>(

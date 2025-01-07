@@ -20,9 +20,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn, fixedClass } from "@/lib/utils";
-import { QuizStageEx, useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { QuizStageEx } from "@/types/apiTypes";
+import { cn, fixedClass } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";

@@ -1,7 +1,5 @@
 "use client";
 import { Button } from "@/app/components/ui/button";
-import useCreateItem from "@/app/hooks/useCreateItem";
-import { getUserLocale } from "@/app/services/locale";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,9 +24,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import useCreateItem from "@/hooks/useCreateItem";
+import { getUserLocale } from "@/i18n/locale";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { fetchQuizLog } from "@/services/quizService";
+import { cn } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
@@ -129,7 +130,7 @@ export default function GuestRegisterPage() {
 
   useEffect(() => {
     if (session?.user.id) {
-      checkRegistered();
+      checkRegistered(session?.user.id);
     }
   }, [session?.user.id]);
 
@@ -146,29 +147,14 @@ export default function GuestRegisterPage() {
     }
   }, [campaignPath, routeToPage]);
 
-  const checkRegistered = async () => {
+  const checkRegistered = async (userId: string) => {
     try {
       setCheckingRegisterd(true);
-      const response = await fetch(
-        // `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/logs/campaigns/${campaign.id}`,
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${campaign.name}`,
-        {
-          method: "GET",
-          cache: "no-cache",
-        }
-      );
+      const quizLogResponse = await fetchQuizLog(userId, campaign.name);
+      const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch domains");
-      }
-
-      const data = await response.json();
-      console.log("data", data);
-      const userQuizLog = data.item as UserQuizLog;
-
-      if (data.item) {
-        routeToPage(`${userQuizLog.quizSetPath}/map`);
+      if (quizLog) {
+        routeToPage(`${quizLog.quizSetPath}/map`);
       }
     } catch (error) {
       console.error("Failed to fetch data", error);

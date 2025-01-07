@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { formatToMMSS } from "@/lib/utils";
+import { formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";

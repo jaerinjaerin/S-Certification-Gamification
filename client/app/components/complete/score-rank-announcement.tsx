@@ -12,9 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { cn } from "@/utils/utils";
 import { AuthType } from "@prisma/client";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";

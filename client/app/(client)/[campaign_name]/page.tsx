@@ -63,7 +63,7 @@ export default async function CampaignPage({
     console.error("CampaignPage quizHistory error", historyResponse);
 
     const historyData = await historyResponse.json();
-    userQuizLog = historyData.item;
+    userQuizLog = historyData?.item?.quizLog;
   }
 
   console.info("CampaignPage quizHistory", userQuizLog, session?.user);

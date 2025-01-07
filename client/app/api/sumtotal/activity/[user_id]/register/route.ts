@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
-import { refreshToken } from "@/app/lib/api/refresh_token";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import { refreshToken } from "@/services/api/refresh_token";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 

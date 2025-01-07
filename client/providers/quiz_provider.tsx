@@ -1,18 +1,14 @@
 "use client";
 
-import QuizScoreCalculator from "@/app/lib/score/quizScoreCalculator";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { QuestionEx, QuizSetEx, QuizStageEx } from "@/types/apiTypes";
+import QuizScoreCalculator from "@/utils/quizScoreCalculator";
 import { areArraysEqualUnordered } from "@/utils/validationUtils";
 import {
   AuthType,
-  Campaign,
-  Domain,
-  Language,
   Question,
   QuestionOption,
   QuestionType,
-  QuizSet,
-  QuizStage,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -25,26 +21,11 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import QuizLogManager, { QuizLog } from "./managers/quizLogManager";
 
-export interface QuizSetEx extends QuizSet {
-  language: Language;
-  campaign: Campaign;
-  domain: Domain;
-  quizStages: QuizStageEx[];
-}
-
-export interface QuizStageEx extends QuizStage {
-  questions: QuestionEx[];
-}
-
-export interface QuestionEx extends Question {
-  options: QuestionOption[];
-}
-
 interface QuizContextType {
   quizSet: QuizSetEx;
   quizStageLogs: UserQuizStageLog[];
   quizQuestionLogs: UserQuizQuestionLog[];
-  language: Language | null;
+  // language: Language | null;
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
@@ -119,7 +100,7 @@ export const QuizProvider = ({
   authType,
   children,
   quizSet,
-  language,
+  // language,
   quizLog,
   quizStageLogs,
   quizQuestionLogs,
@@ -129,7 +110,7 @@ export const QuizProvider = ({
   authType: AuthType | undefined;
   children: React.ReactNode;
   quizSet: QuizSetEx;
-  language: Language;
+  // language: Language;
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
   quizQuestionLogs: UserQuizQuestionLog[] | null;
@@ -197,14 +178,6 @@ export const QuizProvider = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const quizScoreCalculator = new QuizScoreCalculator();
-
-  // const quizScoreCalculatorRef = useRef<QuizScoreCalculator | null>(null);
-
-  // if (quizScoreCalculatorRef.current === null) {
-  //   quizScoreCalculatorRef.current = new QuizScoreCalculator(); // 인스턴스 생성
-  // }
-
-  // const quizScoreCalculator = quizScoreCalculatorRef.current;
 
   const quizLogManagerRef = useRef(new QuizLogManager(currentQuizStageIndex)); // 유지되는 인스턴스
   const quizLogManager = quizLogManagerRef.current;
@@ -942,7 +915,7 @@ export const QuizProvider = ({
         quizSet,
         quizStageLogs: _quizStageLogs,
         quizQuestionLogs: _quizQuestionLogs,
-        language,
+        // language,
         quizLog: _quizLog,
         currentQuizStageIndex,
         currentQuestionIndex,

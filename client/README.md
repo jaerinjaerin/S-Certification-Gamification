@@ -25,6 +25,10 @@ $ npx prisma studio
 - middleware.ts
   - session이 없는 경우, S+ 유저는 https://example.com/{campaign_name}/{quizset_path}/login 으로 랜딩. S+ 미사용 유저는 https://example.com/{campaign_name}/login으로 랜딩
 
+## 환경 설정 파일
+
+https://docs.bien.ltd/workspace/b03d84d0-8deb-435f-8ab5-947410d96204/wFImcZOfXKY3TGOdaNHks
+
 ## 유저에 따른 URL 정보
 
 https://docs.bien.ltd/workspace/b03d84d0-8deb-435f-8ab5-947410d96204/-gmbwVIItKO2j9Qa7esrt

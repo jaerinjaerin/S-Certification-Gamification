@@ -10,7 +10,7 @@ export default async function CampaignLayout({
   params: { campaign_name: string };
 }) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
-  console.log("CampaignLayout url", url);
+  // console.log("CampaignLayout url", url);
   const response = await fetch(url, {
     method: "GET",
     cache: "force-cache",

@@ -1,5 +1,5 @@
-import { sumtotalUserOthersJobId } from "@/app/core/config/default";
-import { ApiError } from "@/app/core/error/api_error";
+import { sumtotalUserOthersJobId } from "@/core/config/default";
+import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { AuthType } from "@prisma/client";
@@ -50,10 +50,21 @@ export async function GET(request: NextRequest) {
     // console.log("userQuizLog:", userQuizLog);
 
     if (!userQuizLog) {
-      throw new ApiError(
-        404,
-        "NOT_FOUND",
-        "No quiz log found for the given user and campaign"
+      // throw new ApiError(
+      //   204,
+      //   "NOT_FOUND",
+      //   "No quiz log found for the given user and campaign"
+      // );
+      // return NextResponse.json(null, { status: 204 });
+      return NextResponse.json(
+        {
+          item: {
+            quizLog: null,
+            quizStageLogs: [],
+            quizQuestionLogs: [],
+          },
+        },
+        { status: 200 }
       );
     }
 
@@ -87,6 +98,8 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
+    console.error("API Get - QuizSet :", error);
+
     Sentry.captureException(error);
 
     // ApiError에 대한 특수 처리
@@ -103,8 +116,6 @@ export async function GET(request: NextRequest) {
         { status: error.statusCode }
       );
     }
-
-    console.error("Unexpected error:", error);
 
     return NextResponse.json(
       {

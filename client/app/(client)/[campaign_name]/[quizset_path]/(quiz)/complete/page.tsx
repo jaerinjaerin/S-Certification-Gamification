@@ -3,9 +3,9 @@
 import GetBadgeAnnouncment from "@/app/components/complete/get-badge-announcement";
 import ScoreAnnouncement from "@/app/components/complete/score-announcement";
 import ScoreRankAnnouncement from "@/app/components/complete/score-rank-announcement";
-import { sleep } from "@/lib/utils";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { sleep } from "@/utils/utils";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";

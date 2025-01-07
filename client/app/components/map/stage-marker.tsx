@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { forwardRef } from "react";

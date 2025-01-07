@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CustomError } from "../types/type";
+import { CustomError } from "../../types/type";
 
 type useGetItemListProps = {
   url: string;

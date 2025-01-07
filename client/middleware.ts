@@ -10,6 +10,7 @@ export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+  console.log("============ middleware ============");
   console.log("middleware:", session, pathname, search);
 
   if (
@@ -30,11 +31,14 @@ export async function middleware(request: NextRequest) {
 
   // const certificationPath = segments[0];
   const campaignName = segments[0];
+  const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
+    segments[1]
+  )
+    ? segments[1]
+    : null;
 
-  let campaignQuizSetPath: string | null = null;
-  if (isValidCampaignQuizSetId(segments[1])) {
-    campaignQuizSetPath = segments[1] as string;
-  }
+  console.log("middleware: campaignName:", campaignName);
+  console.log("middleware: campaignQuizSetPath:", campaignQuizSetPath);
 
   // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
   if (

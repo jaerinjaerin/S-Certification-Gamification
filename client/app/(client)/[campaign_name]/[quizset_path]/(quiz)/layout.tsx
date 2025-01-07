@@ -1,7 +1,15 @@
+// src/app/quiz/[campaign_name]/[quizset_path]/layout.tsx
 import { auth } from "@/auth";
-import { QuizProvider, QuizSetEx } from "@/providers/quiz_provider";
+import { QuizProvider } from "@/providers/quiz_provider";
 import {
-  AuthType,
+  redirectToCampaignNotReady,
+  redirectToQuizSet,
+  redirectToRegisterPage,
+} from "@/route/redirectHelpers";
+import { fetchQuizLog, fetchQuizSet } from "@/services/quizService";
+import { fetchUserInfo } from "@/services/userService";
+import { hasSavedDetails } from "@/utils/userHelper";
+import {
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -16,133 +24,72 @@ export default async function QuizLayout({
   params: { campaign_name: string; quizset_path: string };
 }) {
   const session = await auth();
+  const userId = session?.user.id;
 
-  // Fetch data from API
-  const fetchData = async (url: string, options: RequestInit = {}) => {
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-      return await response.json();
-    } catch (error) {
-      console.error("Fetch error:", error);
+  if (!userId) {
+    redirect("/login");
+  }
+
+  try {
+    // 1. Fetch quiz set data
+    const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
+    const quizSet = quizSetResponse.item;
+
+    if (!quizSet) {
+      redirectToCampaignNotReady();
       return null;
     }
-  };
 
-  // Redirect to error page
-  const redirectToErrorPage = () => {
-    redirect("/error/not-found");
-  };
+    // 2. Fetch quiz logs
+    const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
+    const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
+    const quizStageLogs: UserQuizStageLog[] | null =
+      quizLogResponse.item?.quizStageLogs || null;
+    const quizQuestionLogs: UserQuizQuestionLog[] | null =
+      quizLogResponse.item?.quizQuestionLogs || null;
 
-  // Fetch quiz data
-  const quizSetReponse = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${params.quizset_path}?user_id=${session?.user.id}`,
-    {
-      method: "GET",
-      // cache: "force-cache",
-      cache: "no-cache",
-    }
-  );
+    // 3. Check guest user details
+    if (session?.user.authType === "GUEST") {
+      const userResponse = await fetchUserInfo(userId);
+      const user = userResponse.item;
 
-  if (!quizSetReponse) {
-    redirect("/error/campaign/not-ready");
-    return;
-  }
-
-  // console.log("QuizLayout quizData", quizSetReponse);
-
-  const quizSet: QuizSetEx | null = quizSetReponse.item;
-
-  if (!quizSet) {
-    console.error("QuizSet not found");
-    redirectToErrorPage();
-    return;
-  }
-
-  // Fetch quiz history
-  const quizLogResponse = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${params.campaign_name}`,
-    {
-      method: "GET",
-      cache: "no-cache",
-    }
-  );
-
-  let quizLog: UserQuizLog | null = null;
-  let quizStageLogs: UserQuizStageLog[] | null = null;
-  let quizQuestionLogs: UserQuizQuestionLog[] | null = null;
-
-  // console.log("QuizLayout quizLogResponse", quizLogResponse, session?.user.id);
-
-  if (quizLogResponse?.item.quizLog) {
-    quizLog = quizLogResponse.item.quizLog;
-    quizStageLogs = quizLogResponse.item.quizStageLogs;
-    quizQuestionLogs = quizLogResponse.item.quizQuestionLogs;
-  }
-
-  if (session?.user.authType === AuthType.GUEST) {
-    const userResponse = await fetchData(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}`,
-      {
-        method: "GET",
-        cache: "no-cache",
+      if (!hasSavedDetails(user)) {
+        redirectToRegisterPage(params.campaign_name);
+        return null;
       }
-    );
-
-    // console.log("QuizLayout userResponse", userResponse);
-
-    if (!userResponse?.item) {
-      return (
-        <div>
-          <h1>사용자 정보를 찾을 수 없습니다.</h1>
-        </div>
-      );
     }
 
-    const user = userResponse.item;
-    // console.log("QuizLayout user", user);
-    if (user.jobId === null) {
-      redirect(`/${params.campaign_name}/register`);
-      return;
+    // 4. Redirect if user is on a different quiz set
+    if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
+      redirectToQuizSet(params.campaign_name, quizLog.quizSetPath);
+      return null;
     }
-  }
 
-  console.log(
-    "QuizLayout quizLog path",
-    quizLog?.quizSetPath,
-    params.quizset_path
-  );
-
-  // 다른 퀴즈페이지로 이동했는지 확인
-  if (
-    quizLog?.quizSetPath != null &&
-    quizLog?.quizSetPath !== params.quizset_path
-  ) {
-    redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
-    return;
-  }
-
-  // console.info("QuizLayout quizLog:", quizLog);
-  return (
-    <div
-      className="h-full bg-[#F0F0F0]"
-      style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.jpg')`,
-      }}
-    >
-      {/* <LogoutButton /> */}
-      <QuizProvider
-        quizSet={quizSet}
-        language={quizSetReponse.item.language}
-        quizLog={quizLog}
-        quizStageLogs={quizStageLogs}
-        quizQuestionLogs={quizQuestionLogs}
-        userId={session?.user.id}
-        authType={session?.user.authType}
-        quizSetPath={params.quizset_path}
+    // 5. Render children with QuizProvider
+    return (
+      <div
+        className="h-full bg-[#F0F0F0]"
+        style={{
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.jpg')`,
+        }}
       >
-        {children}
-      </QuizProvider>
-    </div>
-  );
+        <QuizProvider
+          quizSet={quizSet}
+          // language={quizSetResponse.item.language}
+          quizLog={quizLog}
+          quizStageLogs={quizStageLogs}
+          quizQuestionLogs={quizQuestionLogs}
+          userId={userId}
+          authType={session?.user.authType}
+          quizSetPath={params.quizset_path}
+        >
+          {children}
+        </QuizProvider>
+      </div>
+    );
+  } catch (error) {
+    console.error("Error in QuizLayout:", error);
+    redirect("/error/not-found");
+    return null;
+  }
 }

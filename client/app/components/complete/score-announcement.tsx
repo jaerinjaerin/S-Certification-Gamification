@@ -1,5 +1,5 @@
+import { cn } from "@/utils/utils";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
 import ScoreCircleAnimation from "./score-circle-animation";
 import CompleteStage from "./stage-complete";
 

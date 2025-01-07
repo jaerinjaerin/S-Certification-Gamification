@@ -7,7 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import {
   fetchOrganizationDetails,
   SumtotalProfile,
-} from "./app/lib/auth/sumtotal";
+} from "./services/auth/sumtotal";
 import { encrypt } from "./utils/encrypt";
 
 declare module "next-auth" {

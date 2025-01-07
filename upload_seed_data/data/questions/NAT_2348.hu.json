@@ -9,23 +9,23 @@
     "specificFeature": "Key Improvement",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Parmi les éléments suivants, lequel n’est PAS une amélioration clé du Galaxy S24 Series par rapport au S23 Series ?",
+    "text": "Az alábbiak közül melyik NEM a Galaxy S24 sorozat egyik kulcsfontosságú fejlesztése az S23 sorozathoz képest?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Entourer et rechercher avec Google",
+        "text": "Circle to search by Google - Karikázz és keress a Google-lel",
         "answerStatus": 0
       },
       {
-        "text": "Assistant de photo et zoom nocturne",
+        "text": "Képszerkesztő segéd és éjszakai zoom",
         "answerStatus": 0
       },
       {
-        "text": "Rendement pour le jeu",
+        "text": "Megnövelt Játékteljesítmény",
         "answerStatus": 0
       },
       {
-        "text": "Nombre d’appareils photo",
+        "text": "Kamerák száma",
         "answerStatus": 1
       }
     ]
@@ -40,23 +40,23 @@
     "specificFeature": "-",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Parmi les éléments suivants, lequel n’est PAS une caractéristique du design de la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik NEM kapcsolódik a Galaxy S24 sorozat kialakításához?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Design haut de gamme",
+        "text": "Prémium kialakítás",
         "answerStatus": 0
       },
       {
-        "text": "Cadre épuré",
+        "text": "Kerek dizájn",
         "answerStatus": 1
       },
       {
-        "text": "Écran plat et cadre en titane (Galaxy S24 Ultra)",
+        "text": "Lapos kijelző és titán keret (Galaxy S24 Ultra)",
         "answerStatus": 0
       },
       {
-        "text": "Collections de couleurs intemporelles inspirées par la robustesse de la nature",
+        "text": "Időtlen színkollekciók, amelyek a természet tartós szilárdságából származnak",
         "answerStatus": 0
       }
     ]
@@ -71,23 +71,23 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Parmi les fonctionnalités suivantes, lesquelles sont liées à la durabilité améliorée de la série Galaxy S24 ? (Sélectionnez deux réponses)",
+    "text": "Az alábbiak közül melyek a Galaxy S24 sorozat fokozott tartósságával kapcsolatos jellemzők? (Kettőt válassz)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Résistance à l’eau avec la cote IPX8",
+        "text": "IPX8 besorolású vízállóság",
         "answerStatus": 0
       },
       {
-        "text": "Verre Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
         "answerStatus": 1
       },
       {
-        "text": "Cadre en titane (Galaxy S24 Ultra) et cadre en aluminium renforcé (Galaxy S24+ | Galaxy S24)",
+        "text": "Titán keret (Galaxy S24 Ultra) és továbbfejlesztett alumínium páncél keret (Galaxy S24+ | Galaxy S24)",
         "answerStatus": 1
       },
       {
-        "text": "Charnière Flex",
+        "text": "Rugalmas zsanér",
         "answerStatus": 0
       }
     ]
@@ -102,23 +102,23 @@
     "specificFeature": "Circle to Search with Google",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Laquelle des propositions suivantes n’est PAS un cas d’utilisation de la fonction Entourer et rechercher avec Google ?",
+    "text": "Az alábbi használati esetek melyike NEM kapcsolódik a Bekarikázós Google kereséshez?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Enregistrer les réunions et obtenir un résumé rapide.",
+        "text": "Értekezletek felvétele és gyors összefoglaló.",
         "answerStatus": 1
       },
       {
-        "text": "Trouver des articles de mode tout en regardant des vidéos.",
+        "text": "Divatcikkek keresése videók nézése közben.",
         "answerStatus": 0
       },
       {
-        "text": "Découvrir un lieu de voyage que vous avez vu sur votre fil d’actualité.",
+        "text": "Utazási helyek felfedezése, amit a hírcsatornán láttál.",
         "answerStatus": 0
       },
       {
-        "text": "Rechercher la recette d’un plat que vous avez vu sur YouTube.",
+        "text": "Ételrecept keresése, amit a YouTube-on láttál.",
         "answerStatus": 0
       }
     ]
@@ -133,23 +133,23 @@
     "specificFeature": "Chat Assist",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Quels sont les mots les plus appropriés pour remplir le texte à trou suivant ?\n ________ peut traduire instantanément les messages entrants et sortants sur diverses applications de messagerie, et adapter le ton de vos paroles à la situation : professionnelle, décontractée, sociale, polie et avec des émoticônes.",
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n ________ képes a bejövő és kimenő csevegéseket valós időben lefordítani a különböző üzenetküldő alkalmazásokon, és a szavak hangnemét a helyzethez igazítani: Professzionális, Hétköznapi, Közösségi, Udvarias és Emoji-s.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Traduction en direct",
+        "text": "Az Élő fordítás",
         "answerStatus": 0
       },
       {
-        "text": "Chat Assist ",
+        "text": "A chat segéd",
         "answerStatus": 1
       },
       {
-        "text": "Assistant de note",
+        "text": "A jegyzet segéd",
         "answerStatus": 0
       },
       {
-        "text": "Assistant de transcription",
+        "text": "Az átíró segéd",
         "answerStatus": 0
       }
     ]
@@ -164,23 +164,23 @@
     "specificFeature": "Live Translate",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Lequel des énoncés suivants décrit correctement l’application Traduction en direct ?",
+    "text": "Az alábbiak melyike helyes magyarázat az Élő fordításra?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Il s’agit d’une application de traduction vocale instantanée dans les deux sens.",
+        "text": "Egy mindkét irányba működő valós idejű hangfordítás.",
         "answerStatus": 1
       },
       {
-        "text": "Elle fonctionne avec des applications tierces sans qu’il soit nécessaire de passer par une autre application de traduction.",
+        "text": "Működik harmadik fél alkalmazásokkal anélkül, hogy egy másik fordítóalkalmazásra kellene váltanod.",
         "answerStatus": 0
       },
       {
-        "text": "Elle convertit automatiquement votre écriture en texte dactylographié.",
+        "text": "Automatikusan javítja a kézírásod.",
         "answerStatus": 0
       },
       {
-        "text": "Elle organise vos notes de manière plus structurée.",
+        "text": "A jegyzeteket strukturáltabbá rendszerezi.",
         "answerStatus": 0
       }
     ]
@@ -195,23 +195,23 @@
     "specificFeature": "Note Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Laquelle des fonctionnalités suivantes n’est PAS liée aux fonctions Note Assist (assistant de note) et Samsung Note nouvellement ajoutées à la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik NEM kapcsolódik a Jegyzet segéd és a Galaxy S24 sorozathoz újonnan hozzáadott Samsung Note funkciókhoz?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Alignement et espacement automatiques de l’écriture au stylet S Pen",
+        "text": "Automatikus javítás és igazítás S Pen kézírással",
         "answerStatus": 0
       },
       {
-        "text": "Organisation des notes pour un résultat plus structuré",
+        "text": "A jegyzeteket strukturáltabbá rendszerezi",
         "answerStatus": 0
       },
       {
-        "text": "Génération d’une page de couverture avec un résumé basé sur vos notes",
+        "text": "Összefoglaló borítók készítése a jegyzetek alapján",
         "answerStatus": 0
       },
       {
-        "text": "Mise en évidence des points essentiels",
+        "text": "A legfontosabb pontok kiemelése",
         "answerStatus": 1
       }
     ]
@@ -226,23 +226,23 @@
     "specificFeature": "Space Zoom",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Quelle est la résolution photo maximale de l’appareil photo avec zoom optique 5x du Galaxy S24 Ultra ?",
+    "text": "Mekkora az elérhető legnagyobb felbontású fénykép a Galaxy S24 Ultra kamera 5-szörös optikai nagyításával?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "8 MP",
+        "text": "8 MP",
         "answerStatus": 0
       },
       {
-        "text": "10 MP",
+        "text": "10 MP",
         "answerStatus": 0
       },
       {
-        "text": "12 MP",
+        "text": "12 MP",
         "answerStatus": 0
       },
       {
-        "text": "50 MP",
+        "text": "50 MP",
         "answerStatus": 1
       }
     ]
@@ -257,23 +257,23 @@
     "specificFeature": "Nightography",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Quels sont les mots les plus appropriés pour remplir le texte à trou suivant ? La ________ du Galaxy S24 Ultra garantit des photos plus lumineuses avec un zoom plus clair, même la nuit.",
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n________ a Galaxy S24 Ultra számára a fényesebb, tisztább nagyítású fényképekhez, akár még éjszaka is",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Taille des pixels 1,6 x plus grande",
+        "text": "1,6x nagyobb pixel",
         "answerStatus": 1
       },
       {
-        "text": "OIS plus large",
+        "text": "Szélesebb OIS",
         "answerStatus": 0
       },
       {
-        "text": "Capture unique",
+        "text": "Okosfelvétel",
         "answerStatus": 0
       },
       {
-        "text": "Nouveau pixel adaptatif",
+        "text": "Új adaptív pixel",
         "answerStatus": 0
       }
     ]
@@ -288,23 +288,23 @@
     "specificFeature": "Photo Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Quels sont les mots les plus appropriés pour remplir le texte à trou suivant ?La fonction ________ est capable de remplir un arrière-plan, de redresser (ou d’incliner) l’image et de déplacer ou de redimensionner les objets apparaissant sur les photos grâce au remplissage automatique.",
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n________ képes kitölteni a hátteret a képek kiegyenesítése (dőlése) közben, és automatikus kitöltéssel mozgatni/méretezni a fényképeken lévő objektumokat.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Portrait de nuit",
+        "text": "Az Éjszakai portré",
         "answerStatus": 0
       },
       {
-        "text": "Photo Assist (assistant de photo - modification générative)",
+        "text": "A Képszerkesztő segéd (Generatív szerkesztés)",
         "answerStatus": 1
       },
       {
-        "text": "Haute résolution (200 MP)",
+        "text": "A 200 MP-es nagy felbontás",
         "answerStatus": 0
       },
       {
-        "text": "Assistant de note",
+        "text": "Jegyzet segéd",
         "answerStatus": 0
       }
     ]
@@ -319,23 +319,23 @@
     "specificFeature": "Photo Assist",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Comment activer la suggestion de modification sur la fonction Photo Assist (assistant de photo) dans la galerie de la série Galaxy S24, de manière à modifier instantanément les photos (effet portrait, remasterisation, suppression des reflets et autres) ?",
+    "text": "Hogyan lehet aktiválni a Képszerkesztő segéd funkció Szerkesztési javaslatát a Galaxy S24 sorozat Galéria alkalmazásában az azonnali képszerkesztéshez (Portré effekt, Átdolgozás, Tükröződés eltávolítása és így tovább)?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Téléchargez et ouvrez l’application de retouche photo, puis appliquez les effets un par un.",
+        "text": "Töltsd le és nyisd meg a képszerkesztő alkalmazást, és alkalmazd az effekteket egyenként.",
         "answerStatus": 0
       },
       {
-        "text": "Appuyez sur l’icône de modification, puis sur l’icône Assistant de photo.",
+        "text": "Érintsd meg a szerkesztés ikont, majd azon belül a Képszerkesztő segéd ikont.",
         "answerStatus": 0
       },
       {
-        "text": "Appuyez sur l’icône ou balayez la photo vers le haut pour consulter les suggestions de modifications.",
+        "text": "Érintsd meg a képszerkesztő ikont, vagy csak legyints felfelé egy fényképen, és láthatod a javasolt szerkesztési opciókat.",
         "answerStatus": 1
       },
       {
-        "text": "Ouvrez une application de réseau social et choisissez le filtre que vous souhaitez appliquer à la photo.",
+        "text": "Nyisd meg a közösségi alkalmazást, válaszd ki a kívánt szűrőt, és alkalmazd a fényképen.",
         "answerStatus": 0
       }
     ]
@@ -350,23 +350,23 @@
     "specificFeature": "Social Camera",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Lequel des éléments suivants est le moins lié aux fonctions de la série Galaxy S24 concernant l’appareil photo pour les applications de réseaux sociaux ?",
+    "text": "Az alábbiak közül melyik kapcsolódik a legkevésbé a Galaxy S24 sorozat kamerafunkcióihoz a közösségi médiaalkalmazások felvételein?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Photo HDR",
+        "text": "HDR fényképek",
         "answerStatus": 0
       },
       {
-        "text": "Nightography : des photos et des vidéos nocturnes plus lumineuses avec un bruit réduit",
+        "text": "Éjszakai fényképezés: fényesebb éjszakai fényképek és videók csökkentett zajjal",
         "answerStatus": 0
       },
       {
-        "text": "Zoom télescopique",
+        "text": "Space Zoom",
         "answerStatus": 1
       },
       {
-        "text": "Stabilisateur vidéo",
+        "text": "Videóstabilizálás",
         "answerStatus": 0
       }
     ]
@@ -381,23 +381,23 @@
     "specificFeature": "Gaming Performance",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Parmi les éléments suivants, lequel ne participe PAS à améliorer les performances de jeu de la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik NEM sorolható a Galaxy S24 sorozat Játékteljesítményének javításai közé?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Processeur le plus rapide jamais installé dans un appareil Galaxy",
+        "text": "A Galaxy-k közül az eddigi leggyorsabb processzor",
         "answerStatus": 0
       },
       {
-        "text": "Chambre à vapeur plus grande (x 1,9 sur le Galaxy S24 Ultra)",
+        "text": "Nagyobb gőzkamra (1,9-szeres a Galaxy S24 Ultra esetében)",
         "answerStatus": 0
       },
       {
-        "text": "Ralenti géré par l’IA",
+        "text": "AI Slow Motion",
         "answerStatus": 1
       },
       {
-        "text": "Technologie Ray Tracing améliorée",
+        "text": "Fejlett Race Tracing technológia",
         "answerStatus": 0
       }
     ]
@@ -412,23 +412,23 @@
     "specificFeature": "Immersive Display",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Parmi les éléments suivants, lequel n’est PAS une caractéristique de l’écran immersif de la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik NEM sorolható a Galaxy S24 sorozat magával ragadó kijelzőjének elemei közé?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Écran plus grand avec un cadre plus fin",
+        "text": "Nagyobb képernyő vékonyabb keretekkel",
         "answerStatus": 0
       },
       {
-        "text": "Moteur sensible aux objets",
+        "text": "Témafelismerő rendszer",
         "answerStatus": 1
       },
       {
-        "text": "Luminosité maximale HBM de 2 600 nits",
+        "text": "HBM csúcsfényerő 2600 nit",
         "answerStatus": 0
       },
       {
-        "text": "Booster de vision",
+        "text": "Láthatóság javító",
         "answerStatus": 0
       }
     ]
@@ -443,23 +443,23 @@
     "specificFeature": "Longer Battery Life",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Parmi les caractéristiques suivantes, lesquelles sont liées à l’autonomie améliorée de la batterie de la série Galaxy S24 ? (Sélectionnez deux réponses)",
+    "text": "Az alábbiak közül melyek azok a jellemzők, amelyek a Galaxy S24 sorozat hosszabb akkumulátor-élettartamával kapcsolatosak? (Kettőt válassz)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Batterie de plus grande capacité",
+        "text": "Nagyobb akkumulátor-kapacitás",
         "answerStatus": 1
       },
       {
-        "text": "Knox Vault",
+        "text": "Knox Vault",
         "answerStatus": 0
       },
       {
-        "text": "Fond d’écran génératif",
+        "text": "Generatív háttérkép",
         "answerStatus": 0
       },
       {
-        "text": "Taux de rafraîchissement adaptatif de l’écran",
+        "text": "A kijelző adaptív frissítési sebessége",
         "answerStatus": 1
       }
     ]
@@ -474,23 +474,23 @@
     "specificFeature": "Memory & Storage",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Lequel des énoncés suivants indique les caractéristiques de la mémoire de chaque modèle de la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik helyes az egyes Galaxy S24 sorozatú modellek memóriaspecifikációjára vonatkozóan?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Galaxy S24 : 6 Go, Galaxy S24+ : 8 Go, Galaxy S24 Ultra : 10 Go",
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
         "answerStatus": 0
       },
       {
-        "text": "Galaxy S24 : 8 Go, Galaxy S24+ : 8 Go, Galaxy S24 Ultra : 10 Go",
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
         "answerStatus": 0
       },
       {
-        "text": "Galaxy S24 : 8 Go, Galaxy S24+ : 8 Go, Galaxy S24 Ultra : 12 Go",
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 8 GB",
         "answerStatus": 0
       },
       {
-        "text": "Galaxy S24 : 8 Go, Galaxy S24+ : 12 Go, Galaxy S24 Ultra : 12 Go",
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
         "answerStatus": 1
       }
     ]
@@ -505,23 +505,23 @@
     "specificFeature": "One UI 6",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Parmi les caractéristiques suivantes, laquelle est la moins liée à l’interface One UI 6 de la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik kapcsolódik legkevésbé a Galaxy S24 sorozat One UI 6 rendszerfrissítéséhez?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Volet des raccourcis accrocheur",
+        "text": "Szemet gyönyörködtető Quick panel",
         "answerStatus": 0
       },
       {
-        "text": "Conception des émoticônes améliorée",
+        "text": "Továbbfejlesztett emoji kialakítás",
         "answerStatus": 0
       },
       {
-        "text": "Lien vers Windows",
+        "text": "A csatlakozás a Windows-hoz",
         "answerStatus": 1
       },
       {
-        "text": "Widget de l’appareil photo et widget météo",
+        "text": "Kamera widget és Időjárásbetekintési widget",
         "answerStatus": 0
       }
     ]
@@ -536,15 +536,15 @@
     "specificFeature": "Galaxy Ecosystem",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Quels sont les mots les plus appropriés pour remplir le texte à trou suivant ?La fonction ________ est parfaitement compatible avec tous les téléphones, tablettes et PC (Android, Windows, etc.).",
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\nA ________ tökéletesen kompatibilis az összes telefon, táblagép és számítógép (Android, Windows stb.) közötti megosztáshoz.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Partage rapide",
+        "text": "Quick Share",
         "answerStatus": 1
       },
       {
-        "text": "Bluetooth 5.3",
+        "text": "Bluetooth 5.3",
         "answerStatus": 0
       },
       {
@@ -567,23 +567,23 @@
     "specificFeature": "Samsung Account",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Parmi les propositions suivantes, laquelle correspond à un avantage du compte Samsung ?",
+    "text": "Az alábbiak közül melyik tartozik a Samsung-fiók előnyei közé?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Bénéficiez d’une expérience d’IA enrichie pour faciliter le quotidien.",
+        "text": "Gazdag AI élmény az egyszerű életért",
         "answerStatus": 0
       },
       {
-        "text": "Retrouvez votre téléphone perdu s’il est hors ligne.",
+        "text": "Elveszett telefon megkeresése még úgy is, ha az offline állapotban van",
         "answerStatus": 0
       },
       {
-        "text": "Accédez à tous vos services et appareils Samsung et synchronisez-les.",
+        "text": "Az összes Samsung szolgáltatás és készülék elérése és szinkronizálása",
         "answerStatus": 0
       },
       {
-        "text": "Toutes ces réponses",
+        "text": "Ezek közül mindegyik",
         "answerStatus": 1
       }
     ]
@@ -595,26 +595,26 @@
     "stage": 4,
     "product": "S24",
     "category": "Sales",
-    "specificFeature": "Purchase Benefit",
+    "specificFeature": "Cross Sell",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Parmi les affirmations suivantes, laquelle constitue la présentation la plus appropriée de la Galaxy Watch6 en cas de vente croisée avec la série Galaxy S24 ?",
+    "text": "Az alábbiak közül melyik a legmegfelelőbb bevezetés a Galaxy Watch6 számára a Galaxy S24 sorozattal való keresztértékesítés esetén?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Modifiez l’écran de verrouillage et le mode AOD sur la série Galaxy S24 pour exprimer votre style.",
+        "text": "Változtasd meg a Galaxy S24 sorozat zárképernyőjét és az AOD-t, hogy kifejezd a stílusod.",
         "answerStatus": 0
       },
       {
-        "text": "Capturez des photos et des vidéos directement à partir de la montre.",
+        "text": "Fényképeket és videókat felvételét indíthatod el közvetlenül a csuklódról.",
         "answerStatus": 1
       },
       {
-        "text": "Profitez d’une expérience visuelle confortable grâce à elle.",
+        "text": "Élvezd a kényelmes vizuális élményt vele.",
         "answerStatus": 0
       },
       {
-        "text": "Elle transfère automatiquement le son sur l’appareil actif.",
+        "text": "Automatikusan átvált az aktív készülék hangjára.",
         "answerStatus": 0
       }
     ]

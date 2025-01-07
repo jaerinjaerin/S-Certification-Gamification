@@ -1,8 +1,8 @@
 import {
   defaultLanguageCode,
   sumtotalUserOthersJobId,
-} from "@/app/core/config/default";
-import { ApiError } from "@/app/core/error/api_error";
+} from "@/core/config/default";
+import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";

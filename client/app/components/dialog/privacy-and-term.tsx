@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 

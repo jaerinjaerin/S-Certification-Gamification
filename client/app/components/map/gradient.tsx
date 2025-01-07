@@ -1,6 +1,6 @@
 // 색 -> 투명으로 이어지는 그라데이션
 
-import { cn, fixedClass } from "@/lib/utils";
+import { cn, fixedClass } from "@/utils/utils";
 
 // 투명 -> 색으로 이어지는 그라데이션
 type GradientType = "color-to-transparent" | "transparent-to-color";
