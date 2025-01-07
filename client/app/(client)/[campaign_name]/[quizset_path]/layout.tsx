@@ -14,7 +14,11 @@ export default async function SumtotalUserLayout({
   console.log("SumtotalUserLayout locale", locale);
   const messages = await fetch(
     `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${locale}.json`
-  ).then((res) => res.json());
+  )
+    .then((res) => res.json())
+    .catch((error) =>
+      console.error("SumtotalUserLayout get message error", error)
+    );
 
   return (
     <div lang={locale}>
