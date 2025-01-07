@@ -85,12 +85,15 @@ const LoginTitle = ({ className }: { className?: string }) => {
       <div className={cn("flex flex-col items-center", className)}>
         <div className="mb-[70px]">
           <span
-            className="block font-extrabold text-[44px] text-center mb-5 leading-normal"
+            className="block font-extrabold text-[44px] text-center mb-9 leading-normal mx-[30px] "
             style={{ wordBreak: "break-word" }}
           >
-            {translation("be_a_galaxy_ai_expert")}
+            {translation("be_a_galaxy_ai_expert").replaceAll(
+              "(Paradigm)",
+              " S24"
+            )}
           </span>
-          <span className="block text-[30px] font-medium text-center uppercase">
+          <span className="block text-[30px] font-normal text-center uppercase">
             {translation("certification")}
           </span>
         </div>

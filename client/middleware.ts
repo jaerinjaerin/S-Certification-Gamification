@@ -16,7 +16,8 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/error") ||
     pathname.includes("/logout") ||
     pathname.includes("/test") ||
-    pathname.includes("/home")
+    pathname.includes("/home") ||
+    pathname.includes("/site")
   ) {
     return NextResponse.next();
   }

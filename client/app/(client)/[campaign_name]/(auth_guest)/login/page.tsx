@@ -448,12 +448,15 @@ export default function GuestLogin({
 
           <div className="m-auto">
             <div
-              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal leading-normal"
+              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal leading-normal mx-[30px]"
               style={{
                 wordBreak: "break-word",
               }}
             >
-              {translation("be_a_galaxy_ai_expert")}
+              {translation("be_a_galaxy_ai_expert").replaceAll(
+                "Paradigm",
+                "S24"
+              )}
             </div>
             <span className="block text-[30px] font-medium text-center">
               {translation("certification")}
