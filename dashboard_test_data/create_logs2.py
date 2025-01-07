@@ -32,7 +32,7 @@ OPTION_IDS = ["option_1", "option_2", "option_3", "option_4"]
 # Separate domains, regions, and subsidiaries
 DOMAINS = grouped_domains.get('domains', [])
 REGIONS = grouped_domains.get('regions', [])
-SUBSIDIARIES = grouped_domains.get('subsidaries', [])
+SUBSIDIARIES = grouped_domains.get('subsidiaries', [])
 
 LANGUAGES = [lang['code'] for lang in languages]
 JOBS = [job['id'] for job in jobs]
@@ -87,7 +87,7 @@ user_quiz_logs = [
         'languageId': random.choice(LANGUAGES),
         'jobId': random.choice(JOBS),
         'regionId': random.choice([r['domainId'] for r in REGIONS if 'domainId' in r]) if REGIONS else None,
-        'subsidaryId': random.choice([s['domainId'] for s in SUBSIDIARIES if 'domainId' in s]) if SUBSIDIARIES else None,
+        'subsidiaryId': random.choice([s['domainId'] for s in SUBSIDIARIES if 'domainId' in s]) if SUBSIDIARIES else None,
         'storeId': random.choice(STORES),
         'storeSegmentText': f"segment_text_{random.randint(1, 5)}",
         'channelId': random.choice(CHANNELS),
@@ -123,7 +123,7 @@ for log in user_quiz_logs:
             'languageId': log['languageId'],
             'jobId': log['jobId'],
             'regionId': log['regionId'],
-            'subsidaryId': log['subsidaryId'],
+            'subsidiaryId': log['subsidiaryId'],
             'storeId': log['storeId'],
             'storeSegmentText': log['storeSegmentText'],
             'channelId': log['channelId'],
@@ -170,7 +170,7 @@ for stage in stage_logs:
             'languageId': stage['languageId'],
             'jobId': stage['jobId'],
             'regionId': stage['regionId'],
-            'subsidaryId': stage['subsidaryId'],
+            'subsidiaryId': stage['subsidiaryId'],
             'storeId': stage['storeId'],
             'storeSegmentText': stage['storeSegmentText'],
             'channelId': stage['channelId'],
@@ -205,7 +205,7 @@ badge_stage_logs = [
         'languageId': stage['languageId'],
         'jobId': stage['jobId'],
         'regionId': stage['regionId'],
-        'subsidaryId': stage['subsidaryId'],
+        'subsidiaryId': stage['subsidiaryId'],
         'storeId': stage['storeId'],
         'storeSegmentText': stage['storeSegmentText'],
         'channelId': stage['channelId'],

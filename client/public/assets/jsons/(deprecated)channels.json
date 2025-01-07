@@ -3,7 +3,7 @@
     "name": "Hungary",
     "code": "NAT_2348",
     "regionId": "3",
-    "subsidaryId": "11",
+    "subsidiaryId": "11",
     "channels": [
       {
         "name": "Telekom",
@@ -31,7 +31,7 @@
     "name": "Portugal",
     "code": "NAT_2620",
     "regionId": "3",
-    "subsidaryId": "45",
+    "subsidiaryId": "45",
     "channels": [
       {
         "name": "MEDIA MARKT",
@@ -89,7 +89,7 @@
     "name": "Spain",
     "code": "NAT_2724",
     "regionId": "3",
-    "subsidaryId": "46",
+    "subsidiaryId": "46",
     "channels": [
       {
         "name": "MEDIA MARKT",
@@ -132,7 +132,7 @@
     "name": "Cambodia",
     "code": "NAT_2116",
     "regionId": "6",
-    "subsidaryId": "47",
+    "subsidiaryId": "47",
     "channels": [
       {
         "name": "APSARA MOBILE PHONE CO.,LTD.",
@@ -165,7 +165,7 @@
     "name": "Poland",
     "code": "NAT_2616",
     "regionId": "3",
-    "subsidaryId": "6",
+    "subsidiaryId": "6",
     "channels": [
       {
         "name": "RtvEuroAgd",
@@ -238,7 +238,7 @@
     "name": "Latvia",
     "code": "NAT_2428",
     "regionId": "3",
-    "subsidaryId": "12",
+    "subsidiaryId": "12",
     "channels": [
       {
         "name": "Tele2",
@@ -256,7 +256,7 @@
     "name": "Lithuania",
     "code": "NAT_2440",
     "regionId": "3",
-    "subsidaryId": "12",
+    "subsidiaryId": "12",
     "channels": [
       {
         "name": "Telia",
@@ -269,7 +269,7 @@
     "name": "Singapore",
     "code": "NAT_2702",
     "regionId": "6",
-    "subsidaryId": "26",
+    "subsidiaryId": "26",
     "channels": [
       {
         "name": "Singtel",
@@ -327,7 +327,7 @@
     "name": "COLOMBIA",
     "code": "NAT_2702",
     "regionId": "8",
-    "subsidaryId": "31",
+    "subsidiaryId": "31",
     "channels": [
       {
         "name": "CLARO",
@@ -340,7 +340,7 @@
     "name": "ARGENTINA",
     "code": "NAT_2702",
     "regionId": "8",
-    "subsidaryId": "33",
+    "subsidiaryId": "33",
     "channels": [
       {
         "name": "Claro CAC",
@@ -383,7 +383,7 @@
     "name": "Japan",
     "code": "NAT_2392",
     "regionId": "11",
-    "subsidaryId": "44",
+    "subsidiaryId": "44",
     "channels": [
       {
         "name": "Docomo",

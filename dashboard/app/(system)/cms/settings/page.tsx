@@ -1,5 +1,6 @@
-const SettingsManagement = () => {
-  return <div>SettingsManagement</div>;
-};
+import { redirect } from "next/navigation";
 
-export default SettingsManagement;
+export default function SettingsManagement() {
+  redirect("/cms/settings/user-setting");
+  return null;
+}

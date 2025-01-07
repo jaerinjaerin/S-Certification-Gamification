@@ -3,12 +3,15 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const createNextIntlPlugin = require("next-intl/plugin");
 const withNextIntl = createNextIntlPlugin();
 
-const isProduction = process.env.NODE_ENV === "production";
-console.log("isProduction", isProduction);
+const hasBasePath =
+  process.env.NEXT_PUBLIC_BASE_PATH !== "" &&
+  process.env.NEXT_PUBLIC_BASE_PATH != null;
+
+console.log("hasBasePath", hasBasePath);
 
 const nextConfig = {
-  assetPrefix: isProduction ? "/certification" : "",
-  basePath: isProduction ? "/certification" : "",
+  assetPrefix: hasBasePath ? "/certification" : "",
+  basePath: hasBasePath ? "/certification" : "",
   images: {
     remotePatterns: [
       {
@@ -18,7 +21,7 @@ const nextConfig = {
     ],
   },
   rewrites() {
-    return isProduction
+    return hasBasePath
       ? [
           {
             source: "/certification/_next/:path*",
@@ -27,25 +30,25 @@ const nextConfig = {
         ]
       : [];
   },
-  // webpack: (config, { isServer }) => {
-  //   if (!isServer) {
-  //     const TerserPlugin = config.optimization.minimizer.find(
-  //       (plugin) => plugin.constructor.name === "TerserPlugin"
-  //     );
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      const TerserPlugin = config.optimization.minimizer.find(
+        (plugin) => plugin.constructor.name === "TerserPlugin"
+      );
 
-  //     if (TerserPlugin) {
-  //       TerserPlugin.options.terserOptions = {
-  //         ...TerserPlugin.options.terserOptions,
-  //         compress: {
-  //           ...TerserPlugin.options.terserOptions.compress,
-  //           drop_console: false, // console.log를 제거하지 않음
-  //         },
-  //       };
-  //     }
-  //   }
+      if (TerserPlugin) {
+        TerserPlugin.options.terserOptions = {
+          ...TerserPlugin.options.terserOptions,
+          compress: {
+            ...TerserPlugin.options.terserOptions.compress,
+            drop_console: false, // console.log를 제거하지 않음
+          },
+        };
+      }
+    }
 
-  //   return config;
-  // },
+    return config;
+  },
 };
 
 const sentryConfig = {

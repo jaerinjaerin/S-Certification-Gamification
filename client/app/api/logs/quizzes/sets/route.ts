@@ -169,7 +169,7 @@ export async function POST(request: NextRequest) {
         code: domainCode,
       },
       include: {
-        subsidary: {
+        subsidiary: {
           include: {
             region: true,
           },
@@ -257,8 +257,8 @@ export async function POST(request: NextRequest) {
           quizSetPath: quizsetPath,
 
           domainId: domain?.id,
-          regionId: domain?.subsidary?.region?.id ?? user?.regionId,
-          subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,
@@ -283,8 +283,8 @@ export async function POST(request: NextRequest) {
           quizSetPath: quizsetPath,
 
           domainId: domain?.id,
-          regionId: domain?.subsidary?.region?.id ?? user?.regionId,
-          subsidaryId: domain?.subsidary?.id ?? user?.subsidaryId,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,

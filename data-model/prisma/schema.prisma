@@ -79,7 +79,7 @@ model User {
   languageId              String?
 
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -171,10 +171,10 @@ model Region {
   hqId String?
   hq Hq? @relation(fields: [hqId], references: [id])
 
-  subsidaries Subsidary[]
+  subsidiaries Subsidiary[]
 }
 
-model Subsidary {
+model Subsidiary {
   id         String   @id 
   name String
   code       String   @unique // Domain name
@@ -190,9 +190,9 @@ model Domain {
   id         String   @id 
   name       String
   code       String   @unique // Domain name
-  subsidaryId  String?
+  subsidiaryId  String?
 
-  subsidary   Subsidary? @relation(fields: [subsidaryId], references: [id])
+  subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -211,7 +211,7 @@ model DomainGoal {
   // domain     Domain      @relation(fields: [domainId], references: [id])
   domainId   String
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
 }
 
 // enum TranslationStatus {
@@ -234,7 +234,7 @@ model QuizSet {
 
   campaignId String      // Foreign key to Campaign
   domainId   String?      // Foreign key to Domain
-  subsidaryId   String?      // Foreign key to Subsidary
+  subsidiaryId   String?      // Foreign key to Subsidiary
   jobCodes             String[]
   quizStages     QuizStage[]
 
@@ -246,7 +246,7 @@ model QuizSet {
 
   campaign   Campaign    @relation(fields: [campaignId], references: [id])
   domain     Domain?      @relation(fields: [domainId], references: [id])
-  subsidary   Subsidary?      @relation(fields: [subsidaryId], references: [id])
+  subsidiary   Subsidiary?      @relation(fields: [subsidiaryId], references: [id])
 
   // userQuizLogs UserQuizLog[]
 }
@@ -375,7 +375,7 @@ model UserQuizLog {
   jobId       String?
 
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -407,7 +407,7 @@ model UserQuizBadgeStageLog {
   languageId String?
   jobId       String?
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -447,7 +447,7 @@ model UserQuizStageLog {
   jobId String
   
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -488,7 +488,7 @@ model UserQuizQuestionLog {
   domainId String?
 
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -527,7 +527,7 @@ model UserQuizStatistics {
   jobId       String?
 
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -557,7 +557,7 @@ model UserQuizBadgeStageStatistics {
   languageId String?
   jobId       String?
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -597,7 +597,7 @@ model UserQuizStageStatistics {
   jobId String
   
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?
@@ -638,7 +638,7 @@ model UserQuizQuestionStatistics {
   domainId String?
 
   regionId String?
-  subsidaryId String?
+  subsidiaryId String?
   storeId String?
   storeSegmentText String?
   channelId String?

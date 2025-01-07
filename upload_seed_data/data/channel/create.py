@@ -29,7 +29,7 @@ def find_domain_ids(domain_name):
             region_id = region["domainId"]
             break
 
-    for subsidiary in grouped_domains["subsidaries"]:
+    for subsidiary in grouped_domains["subsidiaries"]:
         if subsidiary["domainName"].strip().upper() == domain_name:
             subsidiary_id = subsidiary["domainId"]
             break
@@ -39,7 +39,7 @@ def find_domain_ids(domain_name):
 # Track missing data
 missing_data = {
     "regionId": [],
-    "subsidaryId": [],
+    "subsidiaryId": [],
     "channelSegmentId": []
 }
 
@@ -48,7 +48,7 @@ transformed_data = []
 
 for entry in input_data:
     region_name = entry.get("region")
-    subsidiary_name = entry.get("subsidary")
+    subsidiary_name = entry.get("subsidiary")
 
     region_id = find_domain_ids(region_name)[0]  # regionId만 추출
     subsidiary_id = find_domain_ids(subsidiary_name)[1]  # subsidiaryId만 추출
@@ -56,13 +56,13 @@ for entry in input_data:
     if region_id is None:
         missing_data["regionId"].append(region_name)
     if subsidiary_id is None:
-        missing_data["subsidaryId"].append(subsidiary_name)
+        missing_data["subsidiaryId"].append(subsidiary_name)
 
     transformed_entry = {
         "name": entry.get("name"),
         "code": entry.get("code"),
         "regionId": str(region_id) if region_id else "",
-        "subsidaryId": str(subsidiary_id) if subsidiary_id else "",
+        "subsidiaryId": str(subsidiary_id) if subsidiary_id else "",
         "channels": []
     }
 

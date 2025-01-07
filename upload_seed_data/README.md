@@ -1,4 +1,4 @@
-# Domain, Regeion, Subsidary 데이타 만들기
+# Domain, Regeion, Subsidiary 데이타 만들기
 
 1. domain/input_data.json을 수기로 마련 (certificaiton_acitivity code.xlsx 파일 참조)
 2. 아래의 명령어를 터미널에서 실행
@@ -7,7 +7,7 @@
 $ python create.py
 ```
 
-3. seeds 폴더 안에 생성된 domains.json, regions.json subsidaries.json 확인
+3. seeds 폴더 안에 생성된 domains.json, regions.json subsidiaries.json 확인
 
 # Channels 데이타 만들기 (삼플 미사용 유저의 Channel 선택 시 사용하는 데이타)
 

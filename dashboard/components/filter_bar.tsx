@@ -76,7 +76,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         ]);
 
         setRegions(groupedDomains.data.regions);
-        setSubsidiaries(groupedDomains.data.subsidaries);
+        setSubsidiaries(groupedDomains.data.subsidiaries);
         setDomains(groupedDomains.data.domains);
         setChannelSegments(channelSegmentsData.data);
         setJobs(jobsData.data);

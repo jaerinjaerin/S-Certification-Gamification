@@ -4,13 +4,7 @@ import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
-type Props = {
-  params: {
-    user_id: string;
-  };
-};
-
-export async function GET(request: NextRequest, props: Props) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("user_id");

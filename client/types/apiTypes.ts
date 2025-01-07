@@ -6,7 +6,7 @@ import {
   QuestionOption,
   QuizSet,
   QuizStage,
-  Subsidary,
+  Subsidiary,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -14,7 +14,7 @@ import {
 
 export interface QuizSetEx extends QuizSet {
   domain: Domain;
-  subsidary: Subsidary | null;
+  subsidiary: Subsidiary | null;
   quizStages: QuizStageEx[];
 }
 

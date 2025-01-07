@@ -57,7 +57,7 @@ CREATE TABLE "users" (
     "domainId" TEXT,
     "languageId" TEXT,
     "regionId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "channelSegmentId" TEXT,
     "storeId" TEXT,
     "channelId" TEXT,
@@ -151,13 +151,13 @@ CREATE TABLE "Region" (
 );
 
 -- CreateTable
-CREATE TABLE "Subsidary" (
+CREATE TABLE "Subsidiary" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "regionId" TEXT,
 
-    CONSTRAINT "Subsidary_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Subsidiary_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -165,7 +165,7 @@ CREATE TABLE "Domain" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -189,7 +189,7 @@ CREATE TABLE "QuizSet" (
     "id" TEXT NOT NULL,
     "campaignId" TEXT NOT NULL,
     "domainId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "jobCodes" TEXT[],
     "createrId" TEXT NOT NULL,
     "updaterId" TEXT,
@@ -303,7 +303,7 @@ CREATE TABLE "UserQuizLog" (
     "languageId" TEXT,
     "jobId" TEXT,
     "regionId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "channelSegmentId" TEXT,
     "storeId" TEXT,
     "channelId" TEXT,
@@ -329,7 +329,7 @@ CREATE TABLE "UserQuizBadgeStageLog" (
     "languageId" TEXT,
     "jobId" TEXT,
     "regionId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "channelSegmentId" TEXT,
     "storeId" TEXT,
     "channelId" TEXT,
@@ -357,7 +357,7 @@ CREATE TABLE "UserQuizStageLog" (
     "languageId" TEXT,
     "jobId" TEXT NOT NULL,
     "regionId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "channelSegmentId" TEXT,
     "storeId" TEXT,
     "channelId" TEXT,
@@ -386,7 +386,7 @@ CREATE TABLE "UserQuizQuestionLog" (
     "languageId" TEXT,
     "domainId" TEXT,
     "regionId" TEXT,
-    "subsidaryId" TEXT,
+    "subsidiaryId" TEXT,
     "channelSegmentId" TEXT,
     "storeId" TEXT,
     "channelId" TEXT,
@@ -430,7 +430,7 @@ CREATE UNIQUE INDEX "Hq_code_key" ON "Hq"("code");
 CREATE UNIQUE INDEX "Region_code_key" ON "Region"("code");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Subsidary_code_key" ON "Subsidary"("code");
+CREATE UNIQUE INDEX "Subsidiary_code_key" ON "Subsidiary"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Domain_code_key" ON "Domain"("code");
@@ -460,10 +460,10 @@ ALTER TABLE "users" ADD CONSTRAINT "users_languageId_fkey" FOREIGN KEY ("languag
 ALTER TABLE "Region" ADD CONSTRAINT "Region_hqId_fkey" FOREIGN KEY ("hqId") REFERENCES "Hq"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Subsidary" ADD CONSTRAINT "Subsidary_regionId_fkey" FOREIGN KEY ("regionId") REFERENCES "Region"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Subsidiary" ADD CONSTRAINT "Subsidiary_regionId_fkey" FOREIGN KEY ("regionId") REFERENCES "Region"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Domain" ADD CONSTRAINT "Domain_subsidaryId_fkey" FOREIGN KEY ("subsidaryId") REFERENCES "Subsidary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Domain" ADD CONSTRAINT "Domain_subsidiaryId_fkey" FOREIGN KEY ("subsidiaryId") REFERENCES "Subsidiary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "DomainGoal" ADD CONSTRAINT "DomainGoal_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -478,7 +478,7 @@ ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_campaignId_fkey" FOREIGN KEY ("cam
 ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_subsidaryId_fkey" FOREIGN KEY ("subsidaryId") REFERENCES "Subsidary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_subsidiaryId_fkey" FOREIGN KEY ("subsidiaryId") REFERENCES "Subsidiary"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuizStage" ADD CONSTRAINT "QuizStage_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

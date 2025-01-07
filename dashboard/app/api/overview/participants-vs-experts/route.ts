@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
     const regions = await prisma.region.findMany({
       include: {
-        subsidaries: {
+        subsidiaries: {
           include: {
             domains: true,
           },
@@ -29,8 +29,8 @@ export async function GET(request: Request) {
 
     const data = await Promise.all(
       regions.map(async (region) => {
-        const domainIds = region.subsidaries
-          .flatMap((subsidary) => subsidary.domains)
+        const domainIds = region.subsidiaries
+          .flatMap((subsidiary) => subsidiary.domains)
           .map((domain) => domain.id);
 
         const participantsCount = await prisma.userQuizLog.count({

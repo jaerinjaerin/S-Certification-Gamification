@@ -4,7 +4,7 @@ import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 
 export default function QuizIntro() {
-  const { quizSet, language, quizLog } = useQuiz();
+  const { quizSet, quizLog } = useQuiz();
   const { routeToPage } = usePathNavigator();
 
   const routeQuizMap = async () => {
@@ -39,7 +39,7 @@ export default function QuizIntro() {
   return (
     <div>
       <h1>Intro (Sumtotal)</h1>
-      {language && <p>언어: {language.name}</p>}
+      {/* {language && <p>언어: {language.name}</p>} */}
       {quizSet && <p>퀴즈 스테이지 개수: {quizSet.quizStages.length}</p>}
       <p>다음 Stage: {(quizLog?.lastCompletedStage ?? 0) + 1}</p>
       <button onClick={routeQuizMap}>Go Quiz Map</button>

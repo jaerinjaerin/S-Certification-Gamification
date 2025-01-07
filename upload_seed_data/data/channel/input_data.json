@@ -53,7 +53,7 @@
     "name": "Hungary",
     "code": "NAT_2348",
     "region": "Europe",
-    "subsidary": "SEH"
+    "subsidiary": "SEH"
   },
   {
     "channels": [
@@ -181,7 +181,7 @@
     "name": "Portugal",
     "code": "NAT_2620",
     "region": "Europe",
-    "subsidary": "SEIB"
+    "subsidiary": "SEIB"
   },
   {
     "channels": [
@@ -273,7 +273,7 @@
     "name": "Spain",
     "code": "NAT_2724",
     "region": "Europe",
-    "subsidary": "SEIB"
+    "subsidiary": "SEIB"
   },
   {
     "channels": [
@@ -341,7 +341,7 @@
     "name": "Cambodia",
     "code": "NAT_2116",
     "region": "SEAO",
-    "subsidary": "TSE"
+    "subsidiary": "TSE"
   },
   {
     "channels": [
@@ -505,7 +505,7 @@
     "name": "Poland",
     "code": "NAT_2616",
     "region": "Europe",
-    "subsidary": "SEPOL"
+    "subsidiary": "SEPOL"
   },
   {
     "channels": [
@@ -537,7 +537,7 @@
     "name": "Latvia",
     "code": "NAT_2428",
     "region": "Europe",
-    "subsidary": "SEB"
+    "subsidiary": "SEB"
   },
   {
     "channels": [
@@ -557,7 +557,7 @@
     "name": "Lithuania",
     "code": "NAT_2440",
     "region": "Europe",
-    "subsidary": "SEB"
+    "subsidiary": "SEB"
   },
   {
     "channels": [
@@ -684,7 +684,7 @@
     "name": "Singapore",
     "code": "NAT_2702",
     "region": "SEAO",
-    "subsidary": "SESP"
+    "subsidiary": "SESP"
   },
   {
     "channels": [
@@ -704,7 +704,7 @@
     "name": "COLOMBIA",
     "code": "",
     "region": "LATAM",
-    "subsidary": "SAMCOL"
+    "subsidiary": "SAMCOL"
   },
   {
     "channels": [
@@ -796,7 +796,7 @@
     "name": "ARGENTINA",
     "code": "",
     "region": "LATAM",
-    "subsidary": "SEASA"
+    "subsidiary": "SEASA"
   },
   {
     "channels": [
@@ -840,6 +840,6 @@
     "name": "Japan",
     "code": "NAT_2392",
     "region": "JAPAN",
-    "subsidary": "SEJ"
+    "subsidiary": "SEJ"
   }
 ]

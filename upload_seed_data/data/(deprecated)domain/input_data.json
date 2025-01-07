@@ -1,565 +1,565 @@
 [
   {
     "region": "HQ",
-    "subsidary": "SEHQ",
+    "subsidiary": "SEHQ",
     "name": "HQ Retail Team",
     "code": "HQ_NAT_0001"
   },
   {
     "region": "North America",
-    "subsidary": "SECA",
+    "subsidiary": "SECA",
     "name": "Canada",
     "code": "NAT_7000"
   },
   {
     "region": "Europe",
-    "subsidary": "SEF",
+    "subsidiary": "SEF",
     "name": "France",
     "code": "NAT_2250"
   },
   {
     "region": "Europe",
-    "subsidary": "SEI",
+    "subsidiary": "SEI",
     "name": "Italy",
     "code": "NAT_2380"
   },
   {
     "region": "Europe",
-    "subsidary": "SEIB",
+    "subsidiary": "SEIB",
     "name": "Spain",
     "code": "NAT_2724"
   },
   {
     "region": "Europe",
-    "subsidary": "SEIB",
+    "subsidiary": "SEIB",
     "name": "Portugal",
     "code": "NAT_2620"
   },
   {
     "region": "Europe",
-    "subsidary": "SEPOL",
+    "subsidiary": "SEPOL",
     "name": "Poland",
     "code": "NAT_2616"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAS",
+    "subsidiary": "SEAS",
     "name": "Switzerland",
     "code": "NAT_2756"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAS",
+    "subsidiary": "SEAS",
     "name": "Austria",
     "code": "NAT_2040"
   },
   {
     "region": "Europe",
-    "subsidary": "SEROM",
+    "subsidiary": "SEROM",
     "name": "Bulgaria",
     "code": "NAT_2100"
   },
   {
     "region": "Europe",
-    "subsidary": "SEROM",
+    "subsidiary": "SEROM",
     "name": "Romania",
     "code": "NAT_2642"
   },
   {
     "region": "Europe",
-    "subsidary": "SECZ",
+    "subsidiary": "SECZ",
     "name": "Czech Republic",
     "code": "NAT_2203"
   },
   {
     "region": "Europe",
-    "subsidary": "SECZ",
+    "subsidiary": "SECZ",
     "name": "Slovakia",
     "code": "NAT_2703"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Albania",
     "code": "NAT_2008"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Bosnia and Herzegovina",
     "code": "NAT_2070"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Croatia",
     "code": "NAT_2191"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Macedonia (FYROM)",
     "code": "NAT_2807"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Serbia",
     "code": "NAT_2688"
   },
   {
     "region": "Europe",
-    "subsidary": "SEAD",
+    "subsidiary": "SEAD",
     "name": "Slovenia",
     "code": "NAT_2705"
   },
   {
     "region": "Europe",
-    "subsidary": "SEH",
+    "subsidiary": "SEH",
     "name": "Hungary",
     "code": "NAT_2348"
   },
   {
     "region": "Europe",
-    "subsidary": "SEB",
+    "subsidiary": "SEB",
     "name": "Estonia",
     "code": "NAT_2233"
   },
   {
     "region": "Europe",
-    "subsidary": "SEB",
+    "subsidiary": "SEB",
     "name": "Latvia",
     "code": "NAT_2428"
   },
   {
     "region": "Europe",
-    "subsidary": "SEB",
+    "subsidiary": "SEB",
     "name": "Lithuania",
     "code": "NAT_2440"
   },
   {
     "region": "Europe",
-    "subsidary": "SEGR",
+    "subsidiary": "SEGR",
     "name": "Greece",
     "code": "NAT_2300"
   },
   {
     "region": "Europe",
-    "subsidary": "SEGR",
+    "subsidiary": "SEGR",
     "name": "Cyprus",
     "code": "NAT_19602"
   },
   {
     "region": "Europe",
-    "subsidary": "SENA",
+    "subsidiary": "SENA",
     "name": "Sweden",
     "code": "NAT_021501"
   },
   {
     "region": "Europe",
-    "subsidary": "SENA",
+    "subsidiary": "SENA",
     "name": "Finland",
     "code": "NAT_021502"
   },
   {
     "region": "Europe",
-    "subsidary": "SENA",
+    "subsidiary": "SENA",
     "name": "Norway",
     "code": "NAT_021503"
   },
   {
     "region": "Europe",
-    "subsidary": "SENA",
+    "subsidiary": "SENA",
     "name": "Denmark",
     "code": "NAT_021504"
   },
   {
     "region": "Europe",
-    "subsidary": "SEG",
+    "subsidiary": "SEG",
     "name": "Germany",
     "code": "NAT_2276"
   },
   {
     "region": "Europe",
-    "subsidary": "SEUK",
+    "subsidiary": "SEUK",
     "name": "United Kingdom",
     "code": "NAT_021505"
   },
   {
     "region": "CIS",
-    "subsidary": "SERC",
+    "subsidiary": "SERC",
     "name": "Russia",
     "code": "NAT_2643"
   },
   {
     "region": "CIS",
-    "subsidary": "SERC",
+    "subsidiary": "SERC",
     "name": "Azerbaijan",
     "code": "NAT_2645"
   },
   {
     "region": "CIS",
-    "subsidary": "SERC",
+    "subsidiary": "SERC",
     "name": "Georgia",
     "code": "NAT_2644"
   },
   {
     "region": "CIS",
-    "subsidary": "SECE",
+    "subsidiary": "SECE",
     "name": "Kazakhstan",
     "code": "NAT_2398"
   },
   {
     "region": "CIS",
-    "subsidary": "SECE",
+    "subsidiary": "SECE",
     "name": "Kyrgyzstan",
     "code": "NAT_41702"
   },
   {
     "region": "CIS",
-    "subsidary": "SECE",
+    "subsidiary": "SECE",
     "name": "Tajikistan",
     "code": "NAT_76202"
   },
   {
     "region": "CIS",
-    "subsidary": "SEUZ",
+    "subsidiary": "SEUZ",
     "name": "Uzbekistan",
     "code": "NAT_2860"
   },
   {
     "region": "China",
-    "subsidary": "SCIC",
+    "subsidiary": "SCIC",
     "name": "China",
     "code": "NAT_2156"
   },
   {
     "region": "China",
-    "subsidary": "SEHK",
+    "subsidiary": "SEHK",
     "name": "Hongkong",
     "code": "NAT_2344"
   },
   {
     "region": "China",
-    "subsidary": "SET",
+    "subsidiary": "SET",
     "name": "Taiwan",
     "code": "NAT_2158"
   },
   {
     "region": "SEAO",
-    "subsidary": "SEIN",
+    "subsidiary": "SEIN",
     "name": "Indonesia",
     "code": "NAT_2360"
   },
   {
     "region": "SEAO",
-    "subsidary": "TSE",
+    "subsidiary": "TSE",
     "name": "Thailand",
     "code": "NAT_2764"
   },
   {
     "region": "SEAO",
-    "subsidary": "TSE",
+    "subsidiary": "TSE",
     "name": "Cambodia",
     "code": "NAT_2116"
   },
   {
     "region": "SEAO",
-    "subsidary": "TSE",
+    "subsidiary": "TSE",
     "name": "Laos",
     "code": "NAT_2418"
   },
   {
     "region": "SEAO",
-    "subsidary": "SME",
+    "subsidiary": "SME",
     "name": "Malaysia",
     "code": "NAT_2458"
   },
   {
     "region": "SEAO",
-    "subsidary": "SESP",
+    "subsidiary": "SESP",
     "name": "Singapore",
     "code": "NAT_2702"
   },
   {
     "region": "SWA",
-    "subsidary": "SIEL",
+    "subsidiary": "SIEL",
     "name": "India",
     "code": "NAT_2356"
   },
   {
     "region": "SWA",
-    "subsidary": "Sri Lanka_S",
+    "subsidiary": "Sri Lanka_S",
     "name": "Sri Lanka",
     "code": "NAT_2144"
   },
   {
     "region": "SWA",
-    "subsidary": "Nepal_S",
+    "subsidiary": "Nepal_S",
     "name": "Nepal",
     "code": "NAT_060401"
   },
   {
     "region": "SWA",
-    "subsidary": "SIEL",
+    "subsidiary": "SIEL",
     "name": "Bangladesh",
     "code": "NAT_2050"
   },
   {
     "region": "LATAM",
-    "subsidary": "SEM",
+    "subsidiary": "SEM",
     "name": "Mexico",
     "code": "NAT_2484"
   },
   {
     "region": "LATAM",
-    "subsidary": "SAMCOL",
+    "subsidiary": "SAMCOL",
     "name": "Colombia",
     "code": "NAT_2170"
   },
   {
     "region": "LATAM",
-    "subsidary": "SEDA",
+    "subsidiary": "SEDA",
     "name": "Brazil",
     "code": "NAT_2076"
   },
   {
     "region": "LATAM",
-    "subsidary": "SEASA",
+    "subsidiary": "SEASA",
     "name": "Argentina",
     "code": "NAT_2707"
   },
   {
     "region": "LATAM",
-    "subsidary": "SEASA",
+    "subsidiary": "SEASA",
     "name": "Paraguay",
     "code": "NAT_2600"
   },
   {
     "region": "LATAM",
-    "subsidary": "SEASA",
+    "subsidiary": "SEASA",
     "name": "Uruguay",
     "code": "NAT_2858"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Trinidad and tobago",
     "code": "NAT_2780"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Puerto Rico",
     "code": "NAT_2630"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Panama",
     "code": "ORG_500"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Ecuador",
     "code": "NAT_2218"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Costa Rica",
     "code": "NAT_2188"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Dominican Republic",
     "code": "NAT_2212"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Jamaica",
     "code": "NAT_2388"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Guatemala",
     "code": "NAT_2631"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Honduras",
     "code": "NAT_2633"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "Nicaragua",
     "code": "NAT_2635"
   },
   {
     "region": "LATAM",
-    "subsidary": "SELA",
+    "subsidiary": "SELA",
     "name": "El Salvador",
     "code": "NAT_2632"
   },
   {
     "region": "LATAM",
-    "subsidary": "SECH",
+    "subsidiary": "SECH",
     "name": "Chile",
     "code": "NAT_2152"
   },
   {
     "region": "LATAM",
-    "subsidary": "SECH",
+    "subsidiary": "SECH",
     "name": "Bolivia",
     "code": "NAT_2068"
   },
   {
     "region": "MENA",
-    "subsidary": "SGE",
+    "subsidiary": "SGE",
     "name": "United Arab Emirates",
     "code": "NAT_2784"
   },
   {
     "region": "MENA",
-    "subsidary": "SGE",
+    "subsidiary": "SGE",
     "name": "Bahrain",
     "code": "NAT_2048"
   },
   {
     "region": "MENA",
-    "subsidary": "SGE",
+    "subsidiary": "SGE",
     "name": "Kuwait",
     "code": "NAT_2414"
   },
   {
     "region": "MENA",
-    "subsidary": "SGE",
+    "subsidiary": "SGE",
     "name": "Oman",
     "code": "NAT_2512"
   },
   {
     "region": "MENA",
-    "subsidary": "SGE",
+    "subsidiary": "SGE",
     "name": "Qatar",
     "code": "NAT_2634"
   },
   {
     "region": "MENA",
-    "subsidary": "SEIL",
+    "subsidiary": "SEIL",
     "name": "Israel",
     "code": "NAT_37602"
   },
   {
     "region": "MENA",
-    "subsidary": "SEIL",
+    "subsidiary": "SEIL",
     "name": "Palestine",
     "code": "NAT_2275"
   },
   {
     "region": "MENA",
-    "subsidary": "SEPAK",
+    "subsidiary": "SEPAK",
     "name": "Pakistan",
     "code": "NAT_2586"
   },
   {
     "region": "MENA",
-    "subsidary": "SELV",
+    "subsidiary": "SELV",
     "name": "Jordan",
     "code": "NAT_2400"
   },
   {
     "region": "MENA",
-    "subsidary": "SELV",
+    "subsidiary": "SELV",
     "name": "Iraq",
     "code": "NAT_2368"
   },
   {
     "region": "MENA",
-    "subsidary": "SELV",
+    "subsidiary": "SELV",
     "name": "Lebanon",
     "code": "NAT_2422"
   },
   {
     "region": "MENA",
-    "subsidary": "SEEG",
+    "subsidiary": "SEEG",
     "name": "Egypt",
     "code": "NAT_2818"
   },
   {
     "region": "MENA",
-    "subsidary": "SEMAG",
+    "subsidiary": "SEMAG",
     "name": "Morocco",
     "code": "NAT_2504"
   },
   {
     "region": "MENA",
-    "subsidary": "SEMAG",
+    "subsidiary": "SEMAG",
     "name": "Tunisia",
     "code": "NAT_2788"
   },
   {
     "region": "MENA",
-    "subsidary": "SEMAG",
+    "subsidiary": "SEMAG",
     "name": "Algeria",
     "code": "NAT_2012"
   },
   {
     "region": "Africa",
-    "subsidary": "SSA",
+    "subsidiary": "SSA",
     "name": "South Africa",
     "code": "NAT_2710"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Kenya (SEEA)",
     "code": "NAT_2404"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Nigeria",
     "code": "NAT_2566"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Senegal",
     "code": "NAT_2686"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Cameroon",
     "code": "NAT_120"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Ghana",
     "code": "NAT_2288"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Mauritius",
     "code": "NAT_3701"
   },
   {
     "region": "Africa",
-    "subsidary": "SCA",
+    "subsidiary": "SCA",
     "name": "Ivory Coast",
     "code": "NAT_384"
   },
   {
     "region": "Japan",
-    "subsidary": "SEJ",
+    "subsidiary": "SEJ",
     "name": "Japan_Galaxy Harajuku",
     "code": "NAT_23961"
   }

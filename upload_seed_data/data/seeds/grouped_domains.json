@@ -165,7 +165,25 @@
       "domainHierarchy": "Samsung"
     }
   ],
-  "subsidaries": [
+  "subsidiaries": [
+    {
+      "domainId": 474928,
+      "domainName": "HQ Domain",
+      "domainCode": "HQ_NAT_0001",
+      "parentDomainName": "HQ Retail Team",
+      "parentDomainId": 29,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 288122,
+      "domainName": "HQ Retail Group",
+      "domainCode": "OrgCode-8",
+      "parentDomainName": "HQ Retail Team",
+      "parentDomainId": 29,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
     {
       "domainId": 349950,
       "domainName": "Bangladesh_S",
@@ -208,24 +226,6 @@
       "domainCode": "NAT_2156",
       "parentDomainName": "SCIC",
       "parentDomainId": 51,
-      "isParentDomain": true,
-      "domainHierarchy": "Samsung"
-    },
-    {
-      "domainId": 474928,
-      "domainName": "HQ Domain",
-      "domainCode": "HQ_NAT_0001",
-      "parentDomainName": "HQ Retail Team",
-      "parentDomainId": 29,
-      "isParentDomain": true,
-      "domainHierarchy": "Samsung"
-    },
-    {
-      "domainId": 288122,
-      "domainName": "HQ Retail Group",
-      "domainCode": "OrgCode-8",
-      "parentDomainName": "HQ Retail Team",
-      "parentDomainId": 29,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -843,6 +843,15 @@
     }
   ],
   "domains": [
+    {
+      "domainId": 474928,
+      "domainName": "HQ Domain",
+      "domainCode": "HQ_NAT_0001",
+      "parentDomainName": "HQ Retail Team",
+      "parentDomainId": 29,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
     {
       "domainId": 349987,
       "domainName": "Albania",
