@@ -6,30 +6,10 @@ import { Button } from "@/components/ui/button";
 import { cn, fixedClass } from "@/lib/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 
 export default function Login() {
   const { status } = useSession();
   const translation = useTranslations();
-  const params = useParams<{ campaign_name: string; quizset_path: string }>();
-  const pathLanguageCode = params.quizset_path.split("_").at(-1);
-  const { loading, setLoading } = useLoader();
-
-  // const videoMp4Url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`;
-  // const videoWebmUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`;
-
-  // const isValidLocale = (code: string | undefined): code is Locale =>
-  //   locales.includes(code as Locale);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   if (!pathLanguageCode) return;
-
-  //   if (isValidLocale(pathLanguageCode)) {
-  //     // setPathLocale({ path: pathLanguageCode });
-  //   }
-  //   setLoading(false);
-  // }, []);
 
   if (status === "loading") {
     return <Spinner />;
@@ -65,7 +45,6 @@ export default function Login() {
           <LoginTitle className="my-auto" />
           <PrivacyAndTerm />
         </div>
-        {loading && <Spinner />}
       </div>
     </>
   );
