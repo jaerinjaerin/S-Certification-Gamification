@@ -22,7 +22,9 @@ const ContentWithTitleSection = ({ children }: Props) => {
   // 카테고리와 세그먼트 처리
   const category = pathnames[0] as Categories;
   const rawSegment = pathnames[pathnames.length - 1] as SegmentKeys;
-  const segment = rawSegment === "overview" ? "dashboard" : rawSegment;
+  const segment = (
+    rawSegment === "overview" ? "dashboard" : rawSegment
+  ).replaceAll("-", " ");
 
   // 설명 가져오기
   const description = subtitles[category]?.[rawSegment] || null;

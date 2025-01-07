@@ -1,5 +1,6 @@
-const QuestionManagement = () => {
-  return <div>QuestionManagement</div>;
-};
+import { redirect } from "next/navigation";
 
-export default QuestionManagement;
+export default function QuestionManagement() {
+  redirect("/cms/questions/question-bank");
+  return null;
+}

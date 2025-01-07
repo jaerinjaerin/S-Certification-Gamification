@@ -39,21 +39,20 @@ const menuItems: MenuItems = [
       {
         label: "Questions",
         icon: NotebookPen,
-        // children: [
-        //   { label: "Question 1", href: "/questions/1" },
-        //   { label: "Question 2", href: "/questions/2" },
-        // ],
+        children: [
+          { label: "Question Bank", href: "/cms/questions/question-bank" },
+          { label: "Translation", href: "/cms/questions/translation" },
+        ],
       },
-      { label: "Certification", icon: Tag, href: "" },
-      { label: "Media Library", icon: Images, href: "" },
+      { label: "Certification", icon: Tag, href: "/cms/certification" },
+      { label: "Media Library", icon: Images, href: "/cms/media-library" },
       {
         label: "Settings",
         icon: Settings2,
-        // children: [
-        //   { label: "Profile", href: "/settings/profile" },
-        //   { label: "Security", href: "/settings/security" },
-        //   { label: "Notifications", href: "/settings/notifications" },
-        // ],
+        children: [
+          { label: "User Setting", href: "/cms/settings/user-setting" },
+          { label: "Question Setting", href: "/cms/settings/question-setting" },
+        ],
       },
     ],
   },
@@ -110,11 +109,15 @@ const LeftMenu = () => {
 
                     {/* 자식 메뉴 */}
                     {item?.children && openSections[item.label] && (
-                      <SidebarMenuItem className="pl-6">
+                      <SidebarMenuItem className="space-y-1">
                         {item.children.map((child, childIndex) => (
                           <SidebarMenuButton
                             key={childIndex}
-                            className="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-800"
+                            isActive={pathname === child.href}
+                            className="pl-11 py-5"
+                            onClick={() => {
+                              if (child?.href) router.push(child.href);
+                            }}
                           >
                             {child.label}
                           </SidebarMenuButton>
