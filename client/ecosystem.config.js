@@ -13,12 +13,16 @@ module.exports = {
       error_file: "./logs/squiz-error.log", // 에러 로그 파일 경로
       out_file: "./logs/squiz-output.log", // 일반 로그 파일 경로
       log_date_format: "YYYY-MM-DD HH:mm:ss", // 로그 시간 형식
+      // env: {
+      //   NODE_ENV: "production", // 환경 변수 (production 모드)
+      // },
+      // env_development: {
+      //   NODE_ENV: "development", // 개발 모드 환경 변수
+      // },
       env: {
-        NODE_ENV: "production", // 환경 변수 (production 모드)
+        PORT: 3000, // 각 프로세스가 환경 변수를 통해 포트 설정
       },
-      env_development: {
-        NODE_ENV: "development", // 개발 모드 환경 변수
-      },
+      post_exit: "node notify-sentry.js",
     },
   ],
 };
