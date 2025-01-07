@@ -307,12 +307,16 @@ export default function Home() {
           <br />
           <Link href="/s24/NAT_2792_tr">Turkey</Link>
           <br />
+          <Link href="/s24/NAT_2818_ar-AE">Egypt</Link>
+          <br />
+          <Link href="/s24/sample.NAT_3004_my">Myanmar</Link>
+          <br />
         </li>
       </ul>
       <br />
       <br />
       <h1>삼플 미사용자 테스트 주소</h1>
-      <Link href="/certification/s24">Link</Link>
+      <Link href="/s24">Link</Link>
       {/* <button
         onClick={() => {
           sendTestGetScore();

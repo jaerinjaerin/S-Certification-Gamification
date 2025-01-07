@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي لا يعدّ من التطويرات الرئيسية لسلسلة Galaxy S24 بالمقارنة مع سلسلة  S23؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ميزة وضع دائرة للبحث مع Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "Photo Assist وتكبير التصوير الليلي",
+        "answerStatus": 0
+      },
+      {
+        "text": "أداء الألعاب",
+        "answerStatus": 0
+      },
+      {
+        "text": "عدد الكاميرات",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي لا يرتبط بتصميم سلسلة  Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تصميم متميز",
+        "answerStatus": 0
+      },
+      {
+        "text": "تصميم أنيق للحافة",
+        "answerStatus": 1
+      },
+      {
+        "text": "شاشة مسطحة وإطار من التيتانيوم (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "مجموعات الألوان الدائمة المستمدة من صلابة الطبيعة الدائمة",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي تعدّ من الميزات المرتبطة بالمتانة المطورة في سلسلة Galaxy S24 ؟ (اختر اثنين)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "مقاومة الماء بتصنيف IPX8",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor(Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "\nإطار من التيتانيوم (Galaxy S24 Ultra) و إطار من درع الألمنيوم المطور  (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "مِفصلة Flex",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي لا يعدّ من حالات الاستخدام لميزة وضع دائرة للبحث مع Google؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تسجيل الاجتماعات والحصول على موجز سريع",
+        "answerStatus": 1
+      },
+      {
+        "text": "البحث عن عناصر الموضة خلال مشاهدة الفيديوهات.",
+        "answerStatus": 0
+      },
+      {
+        "text": "اكتشفاف مكان السفر الذي شاهدته في الموجز.",
+        "answerStatus": 0
+      },
+      {
+        "text": "البحث عن وصفة لطبق رأيته على YouTube.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "\"ما هي الإجابة الأنسب للفراغ التالي؟\n  بإمكان ميزة ________ترجمة الدردشات الواردة والصادرة في الوقت الفعلي على تطبيقات المراسلة المختلفة، وتخصيص لهجة لكلماتك تتناسب مع حالتك، سواء الحالات الاحترافية وغير الرسمية والاجتماعية والمهذبة و Emojify\"",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ترجمة مباشرة",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chat Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Note Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هو التفسير الصحيح لميزة الترجمة المباشرة؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "هي ترجمة صوتية في الوقت الفعلي بين كلا الطرفين.",
+        "answerStatus": 1
+      },
+      {
+        "text": "تعمل مع التطبيقات الخارجية دون التبديل إلى تطبيق ترجمة آخر.",
+        "answerStatus": 0
+      },
+      {
+        "text": "تقوم تلقائياً بمحاذاة خط يدك.",
+        "answerStatus": 0
+      },
+      {
+        "text": "تنظم الملاحظات لتكون منظمة بشكل أكبر.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي لا يرتبط بميزات Note Assist وSamsung Note المضافة حديثاً إلى سلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "محاذاة وتباعد خط اليد بقلم S Pen (القلم الذكي) تلقائياً",
+        "answerStatus": 0
+      },
+      {
+        "text": "تنظيم الملاحظات لتكون منظمة بشكل أكبر.",
+        "answerStatus": 0
+      },
+      {
+        "text": "إنشاء أغطية مع موجز بناءً على ملاحظاتك",
+        "answerStatus": 0
+      },
+      {
+        "text": "الحصول على أبرز النقاط الأكثر أهمية",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ما هي أعلى دقة متاحة للصورة مع التكبير البصري 5x في كاميرا Galaxy S24 Ultra؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 ميغابكسل",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 ميغابكسل",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 ميغابكسل",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 ميغابكسل",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ما هي الإجابة الأنسب للفراغ التالي؟\nإن ميزة ________ في هاتف Galaxy S24 Ultra هي للحصول على صور تكبير  أوضح وأثر إشراقاً حتى في الليل.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "البكسل الأكبر 1.6x",
+        "answerStatus": 1
+      },
+      {
+        "text": "تثبيت بصر ي أوسع للصورة ",
+        "answerStatus": 0
+      },
+      {
+        "text": "لقطة واحدة",
+        "answerStatus": 0
+      },
+      {
+        "text": "بكسل تكيفي جديد",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ما هي الإجابة الأنسب للفراغ التالي؟\nبإمكان ميزة ________ ملء الخلفية خلال تسوية الصور (المائلة) ونقل/تغيير حجم الأجسام في الصور من خلال ميزة الملء التلقائي",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "صور Portrait ليلية",
+        "answerStatus": 0
+      },
+      {
+        "text": "Photo Assist (تعديل مُنشئ‬)",
+        "answerStatus": 1
+      },
+      {
+        "text": "دقة عالية 200 ميغابكسل",
+        "answerStatus": 0
+      },
+      {
+        "text": "Note Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "كيف يمكنك تفعيل ميزة Edit Suggestion of Photo Assist في تطبيق الاستديو في سلسلةGalaxy S24 للقيام بالتحرير الفوري للصور (تأثير Portrait، وRemaster، وإزالة الانعكاس، والمزيد)؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تنزيل تطبيق تحرير الصور وفتحه، وتطبيق التأثيرات واحداً تلو الآخر",
+        "answerStatus": 0
+      },
+      {
+        "text": "اضغط على أيقونة التحرير، ثم اضغط على أيقونة Photo Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "انقر على الأيقونة أو قم فقط بتمرير الصورة للأعلى، ويمكنك التحقق من خيارات التعديل المقترحة.",
+        "answerStatus": 1
+      },
+      {
+        "text": "افتح تطبيق التواصل الاجتماعي، واختر الفلتر الذي تريد تطبيقه على الصورة.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هو الأقل ارتباطاً بميزات الكاميرا في سلسلة Galaxy S24 على الكاميرا الخاصة بتطبيقات الوسائط الاجتماعية؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "صور HDR",
+        "answerStatus": 0
+      },
+      {
+        "text": "التصوير الليلي: صور وفيديوهات ليلية أكثر إشراقاً مع ضوضاء أقل",
+        "answerStatus": 0
+      },
+      {
+        "text": "Space Zoom",
+        "answerStatus": 1
+      },
+      {
+        "text": "Video Stabilizer",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي لا يعدّ من تطويرات أداء الألعاب في سلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "أسرع معالج في جالكسي على الإطلاق",
+        "answerStatus": 0
+      },
+      {
+        "text": "حُجرة تبخير أكبر (1.9x for Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "الحركة البطيئة بالذكاء الاصطناعي",
+        "answerStatus": 1
+      },
+      {
+        "text": "تقنية Ray Tracing المطورة",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي ليس من أحد عناصر الشاشة الغامرة لسلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "شاشة أكبر مع حواف أنحف",
+        "answerStatus": 0
+      },
+      {
+        "text": "Object-aware Engine",
+        "answerStatus": 1
+      },
+      {
+        "text": "ذروة السطوع في وضع السطوع العالي 2,600 شمعة",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vision Booster",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هي الميزات المتعلقة بعمر البطارية الأطول في سلسلة Galaxy S24؟ (اختر اثنين)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "قدرة بطارية أكبر",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "Generative Wallpaper",
+        "answerStatus": 0
+      },
+      {
+        "text": "معدل تحديث تكيفي للشاشة",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هو الصحيح بالنسبة لمواصفات الذاكرة لكل موديل من موديلات سلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 جيغابايت، Galaxy S24+: 8 جيغابايت، Galaxy S24 Ultra: 10 جيغابايت",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 جيغابايت، Galaxy S24+: 8 جيغابايت، Galaxy S24 Ultra: 10 جيغابايت",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 جيغابايت، Galaxy S24+: 8 جيغابايت، Galaxy S24 Ultra: 12 جيغابايت",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 جيغابايت، Galaxy S24+: 12 جيغابايت، Galaxy S24 Ultra: 12 جيغابايت",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هو الأقل ارتباطاً بواجهة One UI 6 الخاصة بسلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "لوحة تحكم سريعة ملفتة للنظر",
+        "answerStatus": 0
+      },
+      {
+        "text": "تصميم مطور للـ Emoji",
+        "answerStatus": 0
+      },
+      {
+        "text": "الربط مع Windows",
+        "answerStatus": 1
+      },
+      {
+        "text": "التطبيق المصغر للكاميرا والتطبيق المصغر للطقس Weather Insight",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ما هي الإجابة الأنسب للفراغ التالي؟\n________ هي مشاركة متوافقة تماماً بين كافة الهواتف والأجهزة اللوحية وأجهزة الكمبيوتر (Android وWindows وما إلى ذلك).",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي يعدّ من فوائد حساب Samsung Account؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تجربة الذكاء الاصطناعي المدعومة لجعل الحياة سهلة",
+        "answerStatus": 0
+      },
+      {
+        "text": "البحث عن هاتفك المفقود حتى وإن كان غير متصل بالإنترنت",
+        "answerStatus": 0
+      },
+      {
+        "text": "الوصول إلى كافة خدمات وأجهزة سامسونج الخاصة بك ومزامنتها",
+        "answerStatus": 0
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "أي مما يلي هو التعريف الأنسب بساعة Galaxy Watch6 عند بيع المنتجات الإضافية مع سلسلة Galaxy S24؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تمتع بتغيير شاشة القفل وAOD في سلسلة Galaxy S24 للتعبير عن أسلوبك من خلالها.",
+        "answerStatus": 0
+      },
+      {
+        "text": "التقط صور وفيديوهات مباشرة منها.",
+        "answerStatus": 1
+      },
+      {
+        "text": "استمتع بتجربة مشاهدة مريحة من خلالها.",
+        "answerStatus": 0
+      },
+      {
+        "text": "تقوم تلقائياً بتحويل الصوت إلى الجهاز النشط.",
+        "answerStatus": 0
+      }
+    ]
+  }
+]
