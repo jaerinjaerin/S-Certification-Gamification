@@ -67,9 +67,9 @@ export const {
           }
         }
 
-        // 확인 regionId, subsidaryId
+        // 확인 regionId, subsidiaryId
         let regionId: string | null = null;
-        let subsidaryId: string | null = null;
+        let subsidiaryId: string | null = null;
         const domainCode = profile.personDomain?.find(
           (domain) => domain.isPrimary
         )?.code;
@@ -79,7 +79,7 @@ export const {
               code: domainCode,
             },
             include: {
-              subsidary: {
+              subsidiary: {
                 include: {
                   region: true,
                 },
@@ -88,8 +88,8 @@ export const {
           });
 
           if (domain) {
-            regionId = domain.subsidary?.regionId || null;
-            subsidaryId = domain.subsidaryId;
+            regionId = domain.subsidiary?.regionId || null;
+            subsidiaryId = domain.subsidiaryId;
           }
         }
 
@@ -122,7 +122,7 @@ export const {
           channelId: channelId,
           channelSegmentId: channelSegmentId,
           regionId: regionId,
-          subsidaryId: subsidaryId,
+          subsidiaryId: subsidiaryId,
         };
       },
     },

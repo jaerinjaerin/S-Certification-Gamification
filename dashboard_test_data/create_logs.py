@@ -6,8 +6,8 @@ import os
 
 # Define datasets
 domains = [
-    {"region": "HQ", "subsidary": "SEHQ", "name": "HQ Retail Team", "code": "HQ_NAT_0001"},
-    {"region": "North America", "subsidary": "SECA", "name": "Canada", "code": "NAT_7000"}
+    {"region": "HQ", "subsidiary": "SEHQ", "name": "HQ Retail Team", "code": "HQ_NAT_0001"},
+    {"region": "North America", "subsidiary": "SECA", "name": "Canada", "code": "NAT_7000"}
 ]
 
 stores = [

@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     // Extract filter parameters
     const campaignId = searchParams.get("campaignId");
     const regionId = searchParams.get("regionId");
-    const subsidaryId = searchParams.get("subsidaryId");
+    const subsidiaryId = searchParams.get("subsidiaryId");
     const domainId = searchParams.get("domainId");
     const channelSegmentId = searchParams.get("channelSegmentId");
     const languageId = searchParams.get("languageId");
@@ -35,7 +35,7 @@ export async function GET(request: Request) {
       },
       where: {
         regionId: regionId || undefined,
-        subsidaryId: subsidaryId || undefined,
+        subsidiaryId: subsidiaryId || undefined,
         domainId: domainId || undefined,
         channelSegmentId: channelSegmentId || undefined,
         languageId: languageId || undefined,
@@ -58,7 +58,7 @@ export async function GET(request: Request) {
       },
       where: {
         regionId: regionId || undefined,
-        subsidaryId: subsidaryId || undefined,
+        subsidiaryId: subsidiaryId || undefined,
         domainId: domainId || undefined,
         channelSegmentId: channelSegmentId || undefined,
         languageId: languageId || undefined,

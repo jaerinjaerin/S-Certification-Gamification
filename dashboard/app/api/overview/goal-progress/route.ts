@@ -41,7 +41,7 @@ export async function GET(request: Request) {
       select: {
         id: true,
         name: true,
-        subsidaries: {
+        subsidiaries: {
           select: {
             id: true,
             domains: {
@@ -57,8 +57,8 @@ export async function GET(request: Request) {
     const results = await Promise.all(
       regions.map(async (region) => {
         // Sum userCount from DomainGoal for domains in the region
-        const domainIds = region.subsidaries.flatMap((subsidary) =>
-          subsidary.domains.map((domain) => domain.id)
+        const domainIds = region.subsidiaries.flatMap((subsidiary) =>
+          subsidiary.domains.map((domain) => domain.id)
         );
 
         const domainGoals = await prisma.domainGoal.findMany({

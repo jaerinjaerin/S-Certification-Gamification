@@ -17,7 +17,7 @@ export async function POST(request: Request, props: Props) {
     const {
       domainId,
       // domainCode,
-      subsidaryId,
+      subsidiaryId,
       regionId,
       jobId,
       languageCode,
@@ -29,7 +29,7 @@ export async function POST(request: Request, props: Props) {
     /*
     body: {
       domainCode: selectedCountry.code,
-      subsidaryId: selectedCountry.subsidaryId,
+      subsidiaryId: selectedCountry.subsidiaryId,
       regionId: selectedCountry.regionId,
       jobId: selectedJobId,
       languageCode: languageCode,
@@ -88,7 +88,7 @@ export async function POST(request: Request, props: Props) {
         languageId: language!.id,
         jobId: job?.id,
         regionId: regionId,
-        subsidaryId: subsidaryId,
+        subsidiaryId: subsidiaryId,
         // storeId: storeId,
         // storeSegmentText: body.storeSegmentText,
         channelId: channelId,

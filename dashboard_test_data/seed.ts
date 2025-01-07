@@ -17,7 +17,7 @@ async function main() {
       ...item,
       domainId: item.domainId ? String(item.domainId) : null,
       regionId: item.regionId ? String(item.regionId) : null,
-      subsidaryId: item.subsidaryId ? String(item.subsidaryId) : null,
+      subsidiaryId: item.subsidiaryId ? String(item.subsidiaryId) : null,
       storeId: item.storeId ? String(item.storeId) : null,
       channelId: item.channelId ? String(item.channelId) : null,
       channelSegmentId: item.channelSegmentId

@@ -1,5 +1,5 @@
+import { CustomError } from "@/types/type";
 import { useState } from "react";
-import { CustomError } from "../../types/type";
 
 export default function useUpdateItem<T>() {
   const [item, setItem] = useState<T>();

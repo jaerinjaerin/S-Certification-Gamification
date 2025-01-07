@@ -1,5 +1,8 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { Slash } from "lucide-react";
+import { usePathname } from "next/navigation";
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,9 +10,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
-import { usePathname } from "next/navigation";
-import React from "react";
-import { cn } from "@/lib/utils";
 
 const CurrentBreadCrumb = () => {
   const pathname = usePathname();

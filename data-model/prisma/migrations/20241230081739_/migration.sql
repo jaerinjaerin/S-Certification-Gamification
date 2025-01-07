@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "DomainGoal" ALTER COLUMN "subsidaryId" DROP NOT NULL;
+ALTER TABLE "DomainGoal" ALTER COLUMN "subsidiaryId" DROP NOT NULL;

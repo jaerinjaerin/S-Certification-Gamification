@@ -73,7 +73,7 @@ async function createTriggers() {
                 "languageId" = COALESCE(NEW.languageId, "languageId"),
                 "jobId" = COALESCE(NEW.jobId, "jobId"),
                 "regionId" = COALESCE(NEW.regionId, "regionId"),
-                "subsidaryId" = COALESCE(NEW.subsidaryId, "subsidaryId"),
+                "subsidiaryId" = COALESCE(NEW.subsidiaryId, "subsidiaryId"),
                 "storeId" = COALESCE(NEW.storeId, "storeId"),
                 "storeSegmentText" = COALESCE(NEW.storeSegmentText, "storeSegmentText"),
                 "channelId" = COALESCE(NEW.channelId, "channelId"),
@@ -100,7 +100,7 @@ async function createTriggers() {
                 "languageId", 
                 "jobId",
                 "regionId", 
-                "subsidaryId", 
+                "subsidiaryId", 
                 "storeId", 
                 "storeSegmentText", 
                 "channelId",
@@ -125,7 +125,7 @@ async function createTriggers() {
                 NEW.languageId,
                 NEW.jobId,
                 NEW.regionId,
-                NEW.subsidaryId,
+                NEW.subsidiaryId,
                 NEW.storeId,
                 NEW.storeSegmentText,
                 NEW.channelId,
@@ -272,7 +272,7 @@ async function main() {
 
     const hqs = allDomains.hq;
     const regions = allDomains.regions;
-    const subsidaries = allDomains.subsidaries;
+    const subsidiaries = allDomains.subsidiaries;
     const domains = allDomains.domains;
 
     console.log("domains", domains);
@@ -300,8 +300,8 @@ async function main() {
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
-    await prisma.subsidary.createMany({
-      data: subsidaries.map((subsidiary: any) => ({
+    await prisma.subsidiary.createMany({
+      data: subsidiaries.map((subsidiary: any) => ({
         id: subsidiary.domainId.toString(),
         code: subsidiary.domainCode.toString(),
         name: subsidiary.domainName,
@@ -318,8 +318,8 @@ async function main() {
         id: country.domainId.toString(),
         code: country.domainCode.toString(),
         name: country.domainName,
-        subsidaryId:
-          subsidaries
+        subsidiaryId:
+          subsidiaries
             .find(
               (subsidiary) => subsidiary.domainId === country.parentDomainId
             )
@@ -332,19 +332,19 @@ async function main() {
     await prisma.domainGoal.createMany({
       data: domains.map((country: any) => {
         const domainId = country.domainId.toString();
-        const subsidaryId =
-          subsidaries
+        const subsidiaryId =
+          subsidiaries
             .find((subsidiary) => subsidiary.domainId === domainId)
             ?.domainId?.toString() ?? null;
         const regionsId =
           regions
-            .find((region) => region.domainId === subsidaryId)
+            .find((region) => region.domainId === subsidiaryId)
             ?.domainId?.toString() ?? null;
         return {
           campaignId: campaign.id,
           domainId: domainId,
           regionId: regionsId,
-          subsidaryId: subsidaryId,
+          subsidiaryId: subsidiaryId,
           userCount: 1000,
         };
       }),
@@ -446,9 +446,9 @@ async function main() {
       // 파일명 구조 파싱
       const [domainCode, languageCode] = baseFileName.split(".");
 
-      const domainOrSubsidary =
+      const domainOrSubsidiary =
         domainCode === "HQ_NAT_0001"
-          ? await prisma.subsidary.findFirst({
+          ? await prisma.subsidiary.findFirst({
               where: { code: domainCode },
             })
           : await prisma.domain.findFirst({
@@ -465,7 +465,7 @@ async function main() {
       //   });
       // }
 
-      if (!domainOrSubsidary) {
+      if (!domainOrSubsidiary) {
         console.warn(`Domain not found for file: ${fileName}`);
         continue;
       }
@@ -553,9 +553,9 @@ async function main() {
       const quizSet = await prisma.quizSet.create({
         data: {
           campaignId: campaign.id,
-          domainId: domainCode === "HQ_NAT_0001" ? null : domainOrSubsidary.id,
-          subsidaryId:
-            domainCode === "HQ_NAT_0001" ? domainOrSubsidary.id : null,
+          domainId: domainCode === "HQ_NAT_0001" ? null : domainOrSubsidiary.id,
+          subsidiaryId:
+            domainCode === "HQ_NAT_0001" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },

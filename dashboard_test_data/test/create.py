@@ -10,7 +10,7 @@ print("Star.")
 # Initialize groups
 hq = []
 regions = []
-subsidaries = []
+subsidiaries = []
 countries = []
 
 # Process the data
@@ -21,7 +21,7 @@ for item in data:
     if parent_name == "" or parent_name is None:
         hq.append(item)
     elif any(region["domainName"] == parent_name for region in regions):
-        subsidaries.append(item)
+        subsidiaries.append(item)
     elif parent_name == "Samsung Global":
         regions.append(item)
     else:
@@ -34,10 +34,10 @@ with open("hq.json", "w") as f:
 with open("regions.json", "w") as f:
     json.dump(regions, f, indent=2)
 
-with open("subsidaries.json", "w") as f:
-    json.dump(subsidaries, f, indent=2)
+with open("subsidiaries.json", "w") as f:
+    json.dump(subsidiaries, f, indent=2)
 
 with open("domains.json", "w") as f:
     json.dump(countries, f, indent=2)
 
-print("Data has been grouped and saved into 'hq.json', 'regions.json', 'subsidaries.json', and 'countries.json'.")
+print("Data has been grouped and saved into 'hq.json', 'regions.json', 'subsidiaries.json', and 'countries.json'.")

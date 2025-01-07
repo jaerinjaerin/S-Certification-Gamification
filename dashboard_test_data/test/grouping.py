@@ -8,20 +8,20 @@ with open("domain_from_sumtotalapi.json", "r") as file:
 # Create the groups
 hq = [item for item in data if not item["parentDomainName"] or item["parentDomainName"] in [None, ""]]
 regions = [item for item in data if item["parentDomainName"] == "Samsung Global"]
-subsidaries = []
+subsidiaries = []
 domains = []
 
 # Identify region names for grouping
 region_names = {region["domainName"] for region in regions}
 
-# Group subsidaries and countries
+# Group subsidiaries and countries
 subsidiary_map = defaultdict(list)
 
 for item in data:
     if item in hq or item in regions:
         continue
     if item["parentDomainName"] in region_names:
-        subsidaries.append(item)
+        subsidiaries.append(item)
         subsidiary_map[item["parentDomainName"]].append(item)
     else:
         domains.append(item)
@@ -30,7 +30,7 @@ for item in data:
 output = {
     "hq": hq,
     "regions": regions,
-    "subsidaries": subsidaries,
+    "subsidiaries": subsidiaries,
     "domains": domains,
 }
 

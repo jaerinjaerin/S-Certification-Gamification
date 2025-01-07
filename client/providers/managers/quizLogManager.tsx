@@ -22,7 +22,7 @@ export type QuizLog = {
   createdAt: string;
   domainId: string | null | undefined;
   regionId: string | null | undefined;
-  subsidaryId: string | null | undefined;
+  subsidiaryId: string | null | undefined;
   channelId: string | null | undefined;
   channelName: string | null | undefined;
   channelSegmentId: string | null | undefined;

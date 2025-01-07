@@ -54,7 +54,7 @@ interface DomainDetail {
   name: string;
   code: string;
   regionId: string;
-  subsidaryId: string;
+  subsidiaryId: string;
 }
 
 export default function GuestRegisterPage() {
@@ -217,7 +217,7 @@ export default function GuestRegisterPage() {
       body: {
         domainId: selectedCountry.id,
         domainCode: selectedCountry.code,
-        subsidaryId: selectedCountry.subsidaryId,
+        subsidiaryId: selectedCountry.subsidiaryId,
         regionId: selectedCountry.regionId,
         jobId: selectedJobId,
         languageCode: languageCode,

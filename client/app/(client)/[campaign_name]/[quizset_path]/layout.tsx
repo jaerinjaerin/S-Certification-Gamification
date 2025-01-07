@@ -8,8 +8,10 @@ export default async function SumtotalUserLayout({
   children: React.ReactNode;
   params: { quizset_path: string };
 }) {
+  console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const locale = quizset_path.split("_").at(-1);
+  console.log("SumtotalUserLayout locale", locale);
   const messages = await fetch(
     `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${locale}.json`
   ).then((res) => res.json());

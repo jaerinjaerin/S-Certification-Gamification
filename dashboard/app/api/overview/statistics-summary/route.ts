@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
     if (jobId) filters.regionId = String(jobId);
     if (regionId) filters.regionId = String(regionId);
-    if (subsidiaryId) filters.subsidaryId = String(subsidiaryId);
+    if (subsidiaryId) filters.subsidiaryId = String(subsidiaryId);
     if (domainId) filters.domainId = String(domainId);
     if (channelSegmentId) filters.channelSegmentId = String(channelSegmentId);
     if (startDate && endDate) {

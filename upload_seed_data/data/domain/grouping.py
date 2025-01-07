@@ -24,8 +24,8 @@ regions = [
 ]
 grouped_items.update(item["domainCode"] for item in regions)
 
-# Group Subsidaries
-subsidaries = []
+# Group subsidiaries
+subsidiaries = []
 subsidiary_map = defaultdict(list)
 
 for item in data:
@@ -33,7 +33,7 @@ for item in data:
         item["parentDomainName"] in {region["domainName"] for region in regions} 
         and item["domainCode"] not in grouped_items
     ):
-        subsidaries.append(item)
+        subsidiaries.append(item)
         subsidiary_map[item["parentDomainName"]].append(item)
         grouped_items.add(item["domainCode"])
 
@@ -47,7 +47,7 @@ grouped_items.update(item["domainCode"] for item in domains)
 output = {
     "hq": hq,
     "regions": regions,
-    "subsidaries": subsidaries,
+    "subsidiaries": subsidiaries,
     "domains": domains,
 }
 
