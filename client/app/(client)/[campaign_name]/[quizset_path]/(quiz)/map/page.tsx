@@ -96,9 +96,9 @@ export default function QuizMap() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <div className="flex flex-col font-extrabold space-y-3">
-          <span className="text-[24px]">{translation("total_score")}</span>
-          <span className="text-[48px]">{quizStagesTotalScore}</span>
+        <div className="flex flex-col font-bold">
+          <span className="text-2xl">{translation("total_score")}</span>
+          <span className="text-5xl">{quizStagesTotalScore}</span>
         </div>
       </div>
 
@@ -167,11 +167,7 @@ const TutorialCarousel = () => {
                       "flex flex-col"
                     )}
                   >
-                    <p
-                      className={cn(
-                        "text-right text-[12px] sm:text-[14px] w-[70%]"
-                      )}
-                    >
+                    <p className={cn("text-right w-[70%] text-sm")}>
                       {translation("attempts_deduction")}
                     </p>
 
@@ -185,13 +181,13 @@ const TutorialCarousel = () => {
                       }}
                     ></div>
 
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-[12px] sm:text-[14px] text-pretty">
+                    <p className="ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-sm text-pretty">
                       {translation("time_limit_per_quiz")}
                     </p>
                   </div>
                 )}
                 {index === 1 && (
-                  <ol className="bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-[12px] sm:text-[14px] text-[#4E4E4E] flex flex-col gap-[26px]">
+                  <ol className="bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px]">
                     <li>{translation("you_have_5_attemps")}</li>
                     <li>{translation("giveup_or_interrupt_quiz")}</li>
                     <li>{translation("answer_first_attempt")}</li>

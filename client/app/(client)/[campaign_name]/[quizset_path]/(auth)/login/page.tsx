@@ -1,8 +1,8 @@
 "use client";
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import { Button } from "@/app/components/ui/button";
 import useLoader from "@/app/components/ui/loader";
 import Spinner from "@/app/components/ui/spinner";
-import { Button } from "@/app/components/ui/button";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -39,7 +39,7 @@ export default function Login() {
         />
 
         <div className="flex flex-col items-center h-full py-[20px] relative">
-          <span className="block font-extrabold">
+          <span className="block font-bold text-lg">
             {translation("galaxy_ai_expert")}
           </span>
           <LoginTitle className="my-auto" />
@@ -52,6 +52,7 @@ export default function Login() {
 
 const LoginTitle = ({ className }: { className?: string }) => {
   const translation = useTranslations();
+
   const { loading, setLoading } = useLoader();
   const processSignIn = async () => {
     setLoading(true);
@@ -62,9 +63,9 @@ const LoginTitle = ({ className }: { className?: string }) => {
   return (
     <>
       <div className={cn("flex flex-col items-center", className)}>
-        <div className="mb-[70px]">
+        <div>
           <span
-            className="block font-extrabold text-[44px] text-center mb-9 leading-normal mx-[30px] "
+            className="block font-bold text-center mx-[30px] text-5xl/normal"
             style={{ wordBreak: "break-word" }}
           >
             {translation("be_a_galaxy_ai_expert").replaceAll(
@@ -72,17 +73,17 @@ const LoginTitle = ({ className }: { className?: string }) => {
               " S24"
             )}
           </span>
-          <span className="block text-[30px] font-normal text-center uppercase">
+          <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
             {translation("certification")}
           </span>
         </div>
         <Button
           variant={"primary"}
           onClick={() => processSignIn()}
-          className="font-extrabold text-[18px] disabled:bg-disabled"
+          className="disabled:bg-disabled"
           disabled={loading}
         >
-          S+ {translation("login")}
+          {translation("login")}
         </Button>
       </div>
     </>

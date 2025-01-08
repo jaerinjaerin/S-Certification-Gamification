@@ -1,4 +1,7 @@
-import { Button } from "@/app/components/ui/button";
+import { cn } from "@/utils/utils";
+import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -7,15 +10,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
-import { cn } from "@/utils/utils";
-import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
+} from "../ui/dialog";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const translation = useTranslations();
   return (
-    <div className={cn("", className)}>
+    <div className={cn("font-medium text-sm", className)}>
       <Dialog>
         <DialogTrigger>{translation("privacy")}</DialogTrigger>
         <DialogContent>
