@@ -242,6 +242,57 @@ async function createTriggers() {
 }
 
 async function main() {
+  const activityIdData = [
+    {
+      domainCode: "OrgCode-7",
+      activityIds: [251949, 251950],
+    },
+    {
+      domainCode: "NAT_7000",
+      activityIds: [251909, 251916],
+    },
+    {
+      domainCode: "NAT_2344",
+      activityIds: [251910, 251917],
+    },
+    {
+      domainCode: "NAT_2704",
+      activityIds: [251933, 251934],
+    },
+    {
+      domainCode: "NAT_051001",
+      activityIds: [251927, 251929],
+    },
+    {
+      domainCode: "NAT_2360",
+      activityIds: [251913, 251918],
+    },
+    {
+      domainCode: "NAT_2608",
+      activityIds: [251936, 251937],
+    },
+    {
+      domainCode: "NAT_2764",
+      activityIds: [251923, 251925],
+    },
+    {
+      domainCode: "NAT_3004",
+      activityIds: [251931, 251932],
+    },
+    {
+      domainCode: "NAT_2356",
+      activityIds: [251938, 251939],
+    },
+    {
+      domainCode: "NAT_2792",
+      activityIds: [251942, 251943],
+    },
+    {
+      domainCode: "NAT_2076",
+      activityIds: [251940, 251941],
+    },
+  ];
+
   // Create Campaign
   const createCampaign = async () => {
     await prisma.campaign.create({
@@ -327,6 +378,8 @@ async function main() {
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
+
+    console.log("resultDomains", resultDomains);
 
     const campaign = await prisma.campaign.findFirst();
     await prisma.domainGoal.createMany({
@@ -436,10 +489,10 @@ async function main() {
 
     console.log("files", files);
 
-    // 먼저 NAT_2410 도메인 데이터를 처리
+    // 먼저 OrgCode-7 도메인 데이터를 처리
     const hqNatQuestions: any[] = [];
     for (const fileName of files.sort((a, b) =>
-      a.includes("NAT_2410") ? -1 : 1
+      a.includes("OrgCode-7") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
       // const domainCode = fileName.split("|")[0];
@@ -449,14 +502,16 @@ async function main() {
       // 파일명 구조 파싱
       const [domainCode, languageCode] = baseFileName.split(".");
 
-      const domainOrSubsidiary =
-        domainCode === "NAT_2410"
-          ? await prisma.subsidiary.findFirst({
-              where: { code: domainCode },
-            })
-          : await prisma.domain.findFirst({
-              where: { code: domainCode },
-            });
+      const domainOrSubsidiary = await prisma.domain.findFirst({
+        where: { code: domainCode },
+      });
+      // domainCode === "OrgCode-7"
+      //   ? await prisma.subsidiary.findFirst({
+      //       where: { code: domainCode },
+      //     })
+      //   : await prisma.domain.findFirst({
+      //       where: { code: domainCode },
+      //     });
 
       let language = await prisma.language.findFirst({
         where: { code: languageCode },
@@ -487,7 +542,7 @@ async function main() {
         const questionId = uuid.v4();
 
         const originalQuestionId =
-          domainCode === "NAT_2410"
+          domainCode === "OrgCode-7"
             ? questionId
             : hqNatQuestions.find(
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
@@ -548,7 +603,7 @@ async function main() {
         console.log("item", item);
 
         createdQuestions.push(item);
-        if (domainCode === "NAT_2410") {
+        if (domainCode === "OrgCode-7") {
           hqNatQuestions.push(item);
         }
       }
@@ -556,9 +611,10 @@ async function main() {
       const quizSet = await prisma.quizSet.create({
         data: {
           campaignId: campaign.id,
-          domainId: domainCode === "NAT_2410" ? null : domainOrSubsidiary.id,
-          subsidiaryId:
-            domainCode === "NAT_2410" ? domainOrSubsidiary.id : null,
+          domainId: domainOrSubsidiary.id,
+          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
+          // subsidiaryId:
+          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
@@ -581,7 +637,7 @@ async function main() {
         stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
         const questionIds = stageQuestions.map((question) => {
-          if (domainCode === "NAT_2410") {
+          if (domainCode === "OrgCode-7") {
             const q: any = createdQuestions.find(
               (q: any) => q.originalIndex === question.originQuestionIndex
             );
@@ -601,8 +657,16 @@ async function main() {
         let badgeActivityId: string | null = null;
         let badgeImageUrl: string | null = null;
 
-        const stage3BadgeActivityId = "251745";
-        const stage4BadgeActivityId = "251747";
+        const activityIds = activityIdData.find(
+          (data) => data.domainCode === domainCode
+        )?.activityIds;
+
+        const stage3BadgeActivityId = activityIds
+          ? activityIds[0].toString()
+          : "251745"; //"251745";
+        const stage4BadgeActivityId = activityIds
+          ? activityIds[1].toString()
+          : "251747"; //"251747";
 
         if (i === 2) {
           isBadgeStage = true;
@@ -613,6 +677,8 @@ async function main() {
           badgeActivityId = stage4BadgeActivityId;
           badgeImageUrl = "/certification/s24/images/badge/badge_stage4.png";
         }
+
+        console.log("activityId", domainCode, activityIds);
 
         await prisma.quizStage.create({
           data: {
