@@ -311,7 +311,7 @@ export default function Home() {
           <br />
           <Link href="/s24/NAT_3004_my">Myanmar</Link>
           <br />
-          <Link href="/s24/NAT_2792_tr">Turkey</Link>
+          <Link href="/s24/NAT_2792_tr">Turkiye</Link>
           <br />
         </li>
       </ul>
