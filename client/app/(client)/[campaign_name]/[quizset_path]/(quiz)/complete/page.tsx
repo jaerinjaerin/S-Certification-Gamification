@@ -33,7 +33,7 @@ export default function QuizComplete() {
     };
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
-    // routeToMapPage();
+    routeToMapPage();
   }, [quizStageLogs]);
 
   useInterval(
