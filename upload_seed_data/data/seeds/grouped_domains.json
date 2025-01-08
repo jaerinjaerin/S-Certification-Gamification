@@ -844,11 +844,11 @@
   ],
   "domains": [
     {
-      "domainId": 474928,
-      "domainName": "HQ Domain",
-      "domainCode": "HQ_NAT_0001",
-      "parentDomainName": "HQ Retail Team",
-      "parentDomainId": 474928,
+      "domainId": 29,
+      "domainName": "HQ Retail Team",
+      "domainCode": "OrgCode-7",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 29,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },

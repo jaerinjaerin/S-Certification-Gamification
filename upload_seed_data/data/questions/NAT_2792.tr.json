@@ -9,23 +9,23 @@
     "specificFeature": "Key Improvement",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO é uma melhoria importante da linha Galaxy S24 em comparação com linha S23?",
+    "text": "S23 Serisi ile kıyaslandığında aşağıdakilerden hangisi Galaxy S24 serisinde yer alan önemli geliştirmelerden biri DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Circular para buscar com o Google",
+        "text": "Circle to Search - Google Destekli",
         "answerStatus": 0
       },
       {
-        "text": "Assistente de fotos e zoom com nightography",
+        "text": "Fotoğraf Asistanı ve Nightography Zoom",
         "answerStatus": 0
       },
       {
-        "text": "Desempenho em jogos",
+        "text": "Oyun Performansı",
         "answerStatus": 0
       },
       {
-        "text": "Número de câmeras",
+        "text": "Kamera Sayısı",
         "answerStatus": 1
       }
     ]
@@ -40,23 +40,23 @@
     "specificFeature": "-",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO está relacionada com o design a linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinin tasarımına ait bir özellik DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Design premium",
+        "text": "Premium Tasarım",
         "answerStatus": 0
       },
       {
-        "text": "Design sofisticado da borda",
+        "text": "Edge Ekranlı Tasarım",
         "answerStatus": 1
       },
       {
-        "text": "Tela plana e estrutura de titânio (Galaxy S24 Ultra)",
+        "text": "Düz Ekran ve Titanyum Çerçeve (Galaxy S24 Ultra)",
         "answerStatus": 0
       },
       {
-        "text": "Coleções de cores atemporais inspiradas na solidez permanente da natureza",
+        "text": "Doğanın daimi ve dayanıklı niteliklerinden ilhamla tasarlanan zamansız renk seçenekleri",
         "answerStatus": 0
       }
     ]
@@ -71,23 +71,23 @@
     "specificFeature": "Durability",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Quais das opções a seguir são os recursos da linha Galaxy S24 relacionados à maior durabilidade? (Selecione duas)",
+    "text": "Aşağıdakilerden hangileri Galaxy S24 Serisinde gelişmiş dayanıklılığa sahip özelliklerdir? (İki yanıt seçin)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Resistência à água com classificação IPX8",
+        "text": "IPX8 derece Suya Dayanıklılık",
         "answerStatus": 0
       },
       {
-        "text": "Revestimento Corning® Gorilla® (Galaxy S24 Ultra)",
+        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
         "answerStatus": 1
       },
       {
-        "text": "Estrutura de titânio (Galaxy S24 Ultra) e estrutura de alumínio com revestimento aprimorado (Galaxy S24+ | Galaxy S24)",
+        "text": "Titanyum Çerçeve (Galaxy S24 Ultra) ve Daha Güçlü Armor Alüminyum Çerçeve (Galaxy S24+ | Galaxy S24)",
         "answerStatus": 1
       },
       {
-        "text": "Dobradiça flexível",
+        "text": "Esnek Menteşe",
         "answerStatus": 0
       }
     ]
@@ -102,23 +102,23 @@
     "specificFeature": "Circle to Search with Google",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO é um caso de uso do recurso Circular para buscar com o Google?",
+    "text": "Aşağıdakilerden hangisi Google Destekli Circle to Search özelliğinin kullanım alanlarından biri DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Gravar reuniões e obter um resumo rápido.",
+        "text": "Toplantıları kaydetme ve hızlı özetini alma.",
         "answerStatus": 1
       },
       {
-        "text": "Encontrar artigos de moda enquanto assiste a vídeos.",
+        "text": "Video izlerken son moda ürünleri bulma.",
         "answerStatus": 0
       },
       {
-        "text": "Descobrir um ponto turístico que você viu no feed.",
+        "text": "Akışta gördüğünüz bir tatil mekanını keşfetme.",
         "answerStatus": 0
       },
       {
-        "text": "Pesquisar a receita de um prato que você viu no Youtube.",
+        "text": "YouTube'da gördüğünüz bir yemeğin tarifini arama.",
         "answerStatus": 0
       }
     ]
@@ -133,23 +133,23 @@
     "specificFeature": "Chat Assist",
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Qual é a resposta mais adequada para a lacuna a seguir?\n O ________ pode traduzir mensagens recebidas ou enviadas em tempo real em diversos apps de mensagens e também pode adequar o tom das suas palavras conforme a situação, como Profissional, Casual, Social, Educado ou Transformar em emoji.",
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n ________, birçok üçüncü parti uygulamada (Instagram, Snapchat, Whatsapp, Google Chat) gerçek zamanlı olarak gelen ve giden sohbetleri çevirebilir ve konuşmanızın tonunu duruma göre profesyonel, günlük konuşma, sosyal, nazik ve emojili yanıt seçeneklerinden birine dönüştürebilir.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Tradução ao vivo",
+        "text": "Canlı Çeviri",
         "answerStatus": 0
       },
       {
-        "text": "Assistente de conversas",
+        "text": "Chat Asistanı",
         "answerStatus": 1
       },
       {
-        "text": "Assistente de notas",
+        "text": "Not Asistanı",
         "answerStatus": 0
       },
       {
-        "text": "Assistente de transcrição",
+        "text": "Ses Kaydı Asistanı",
         "answerStatus": 0
       }
     ]
@@ -164,23 +164,23 @@
     "specificFeature": "Live Translate",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir é a explicação correta da Tradução ao vivo?",
+    "text": "Aşağıdakilerden hangisi Canlı Çeviri özelliğinin doğru açıklamasıdır?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Ele fornece traduções de voz em tempo real de forma bidirecional.",
+        "text": "Telefon görüşmesi sırasında iki tarafa da gerçek zamanlı sesli çeviri yapılması özelliğidir.",
         "answerStatus": 1
       },
       {
-        "text": "Ele funciona com apps de terceiros sem mudar para outro app de tradução.",
+        "text": "Başka bir çeviri uygulamasını kullanmanıza gerek kalmadan üçüncü taraf uygulamalarıyla çalışır.",
         "answerStatus": 0
       },
       {
-        "text": "Ele alinha automaticamente sua caligrafia.",
+        "text": "El yazınızı otomatik olarak hizalar.",
         "answerStatus": 0
       },
       {
-        "text": "Ele organiza suas anotações para ficarem melhor estruturadas.",
+        "text": "Notları daha biçimli hale getirerek düzenler.",
         "answerStatus": 0
       }
     ]
@@ -195,23 +195,23 @@
     "specificFeature": "Note Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO está relacionada com os recursos do Assistente de notas e do Samsung Note adicionadas recentemente à linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Not Asistanı ve Galaxy S24 Serisine yeni eklenen Samsung Note özellikleri arasında yer almaz?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Alinhar e espaçar automaticamente a caligrafia da S Pen",
+        "text": "S Pen ile yazılan el yazısını otomatik olarak hizalama ve boşluklarını ayarlama",
         "answerStatus": 0
       },
       {
-        "text": "Organizar suas anotações para ficarem melhor estruturadas",
+        "text": "Notları daha biçimli hale getirecek şekilde düzenleme",
         "answerStatus": 0
       },
       {
-        "text": "Gerar capas com resumos baseados em suas anotações",
+        "text": "Notlarınıza bağlı olarak özet içeren kapaklar oluşturma",
         "answerStatus": 0
       },
       {
-        "text": "Fornecer destaques dos seus pontos mais importantes",
+        "text": "Gelen ve gönderilen mesajları anında çevirir.",
         "answerStatus": 1
       }
     ]
@@ -226,7 +226,7 @@
     "specificFeature": "Space Zoom",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Qual é a resolução de foto mais alta disponível com o zoom ótico de 5x da câmera do Galaxy S24 Ultra?",
+    "text": "Galaxy S24 Ultra'nın Telefoto kamerasının 5x Optik Zoom özelliğiyle elde edilebilecek en yüksek fotoğraf çözünürlüğü nedir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -257,23 +257,23 @@
     "specificFeature": "Nightography",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Qual é a resposta mais adequada para a lacuna a seguir?\nO Galaxy S24 Ultra conta com ________ para fotos com zoom mais claras e nítidas, mesmo à noite.",
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n Galaxy S24 Ultra'nın ________ özelliği, gece karanlığında bile daha parlak ve daha net Zoom kalitesine sahip fotoğraflar sunar.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "1,6x mais pixels",
+        "text": "1,6 kat Daha Büyük Piksel",
         "answerStatus": 1
       },
       {
-        "text": "OIS maior",
+        "text": "Daha geniş OIS",
         "answerStatus": 0
       },
       {
-        "text": "Tomada Única",
+        "text": "Tek Çekim",
         "answerStatus": 0
       },
       {
-        "text": "Novo pixel adaptável",
+        "text": "Yeni Adaptif Piksel",
         "answerStatus": 0
       }
     ]
@@ -288,23 +288,23 @@
     "specificFeature": "Photo Assist",
     "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Qual é a resposta mais adequada para a lacuna a seguir?\nO ________ pode preencher o plano de fundo enquanto endireita (inclina) as imagens e move/redimensiona objetos nas fotos com o autopreenchimento.",
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________ özelliği, eğik bir fotoğrafı düz konuma getirerek arka planı doldurabilir ve otomatik doldurmayla fotoğraflardaki nesnelerin yerini/boyutunu değiştirebilir.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Retrato noturno",
+        "text": "Gece Portresi",
         "answerStatus": 0
       },
       {
-        "text": "Assistente de fotos (edição generativa)",
+        "text": "Fotoğraf Asistanı (Yaratıcı Düzenleme)",
         "answerStatus": 1
       },
       {
-        "text": "Alta resolução de 200 MP",
+        "text": "200 MP Yüksek Çözünürlük",
         "answerStatus": 0
       },
       {
-        "text": "Assistente de notas",
+        "text": "Not Asistanı",
         "answerStatus": 0
       }
     ]
@@ -319,23 +319,23 @@
     "specificFeature": "Photo Assist",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Como você pode ativar a Sugestão de edição do recurso Assistente de fotos no app da Galeria da linha Galaxy S24 para edição instantânea de fotos (efeito Retrato, Remasterização, Remover reflexo e mais)?",
+    "text": "Galaxy S24 Serisinin Galeri uygulamasında anında fotoğraf düzenlemek (Portre efekti, Çözünürlüğü artırma, Yansımayı kaldırma ve fazlası) için Fotoğraf Asistanı'nın Düzenleme Önerisi özelliği nasıl açılır?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Baixe e abra o app de edição de fotos e aplique os efeitos um por um.",
+        "text": "Fotoğraf düzenleme uygulamasını indirip açın ve efektleri tek tek uygulayın.",
         "answerStatus": 0
       },
       {
-        "text": "Toque no ícone de edição e depois toque no ícone do Assistente de fotos.",
+        "text": "Düzenleme simgesine ve sonra Fotoğraf Asistanı simgesine dokunun.",
         "answerStatus": 0
       },
       {
-        "text": "Toque no ícone ou só role a foto para cima, assim você poderá conferir as opções de edição sugeridas.",
+        "text": "Düzenleme simgesine dokunduğunuzda veya fotoğrafı basitçe yukarı kaydırdığınızda önerilen düzenleme seçeneklerine göz atabilirsiniz.",
         "answerStatus": 1
       },
       {
-        "text": "Abra o app da rede social e escolha o filtro que deseja aplicar na foto.",
+        "text": "Sosyal uygulamayı açın ve fotoğrafın üzerinde uygulamak istediğiniz filtreyi seçin.",
         "answerStatus": 0
       }
     ]
@@ -350,15 +350,15 @@
     "specificFeature": "Social Camera",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir está menos relacionada com as funcionalidades da câmera da linha Galaxy S24 em apps de rede social?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde sosyal medya uygulamalarında desteklenen kamera özelliklerinden bir tanesi DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Fotos em HDR",
+        "text": "HDR Fotoğraflar",
         "answerStatus": 0
       },
       {
-        "text": "Nightography: fotos e vídeos noturnos mais claros e com menos ruído.",
+        "text": "Nightography: Minimum titreşimle daha parlak gece fotoğrafları ve videoları",
         "answerStatus": 0
       },
       {
@@ -366,7 +366,7 @@
         "answerStatus": 1
       },
       {
-        "text": "Estabilizador de vídeo",
+        "text": "Video Görüntü Sabitleyici",
         "answerStatus": 0
       }
     ]
@@ -381,23 +381,23 @@
     "specificFeature": "Gaming Performance",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO é uma melhoria do desempenho em jogos da linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24'ün oyun performansına dair geliştirmelerden biri DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "O processador mais rápido na história da linha Galaxy",
+        "text": "Galaxy Serileri Arasında En Hızlı İşlemcilere Sahip Seri",
         "answerStatus": 0
       },
       {
-        "text": "Câmara de vapor maior (1,9x para o Galaxy S24 Ultra)",
+        "text": "Daha Geniş Buhar Haznesi  (Galaxy S24 Ultra modelinde 1,9 kat)",
         "answerStatus": 0
       },
       {
-        "text": "Câmera lenta com IA",
+        "text": "Yapay Zeka Tabanlı Ağır Çekim",
         "answerStatus": 1
       },
       {
-        "text": "Tecnologia aprimorada de ray tracing",
+        "text": "Geliştirilmiş Işın İzleme Teknolojisi",
         "answerStatus": 0
       }
     ]
@@ -412,23 +412,23 @@
     "specificFeature": "Immersive Display",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir NÃO é um elemento da Tela imersiva da linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24'ün Sürükleyici Ekran tasarımına ait özelliklerden biri DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Telas maiores com bordas mais finas",
+        "text": "Daha ince çerçeve tasarımıyla daha geniş ekran",
         "answerStatus": 0
       },
       {
-        "text": "Mecanismo de reconhecimento de objetos",
+        "text": "Obje Duyarlı Teknoloji",
         "answerStatus": 1
       },
       {
-        "text": "Limite máximo de 2 600 nits no modo de brilho",
+        "text": "HBM Peak (Manuel Ayarlanabilir) 2.600 nit",
         "answerStatus": 0
       },
       {
-        "text": "Vision Booster",
+        "text": "Vision Booster (Görüntü Güçlendirici)",
         "answerStatus": 0
       }
     ]
@@ -443,23 +443,23 @@
     "specificFeature": "Longer Battery Life",
     "importance": "C",
     "timeLimitSeconds": 30,
-    "text": "Quais das opções a seguir são recursos relacionados à durabilidade prolongada da bateria da linha Galaxy S24? (Selecione duas)",
+    "text": "Aşağıdakilerden hangileri Galaxy S24 serisinin daha uzun pil ömrüne ait özellikler arasında yer alır? (İki yanıt seçin)",
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Maior capacidade da bateria",
+        "text": "Daha Uzun Video Oynatma Süresi",
         "answerStatus": 1
       },
       {
-        "text": "Knox Vault",
+        "text": "Knox Kasası",
         "answerStatus": 0
       },
       {
-        "text": "Papel de parede generativo",
+        "text": "Yaratıcı Duvar Kağıdı",
         "answerStatus": 0
       },
       {
-        "text": "Taxa adaptável de atualização da tela",
+        "text": "Adaptif Ekran Yenileme Hızı",
         "answerStatus": 1
       }
     ]
@@ -474,7 +474,7 @@
     "specificFeature": "Memory & Storage",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir é a correta para a especificação de memória de cada modelo Galaxy S24?",
+    "text": "Aşağıdakilerden hangisinde Galaxy S24 Serisinin her bir modeli için RAM seçenekleri doğru belirtilmiştir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -505,23 +505,23 @@
     "specificFeature": "One UI 6",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir está menos relacionada com a One UI 6 da linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde ONE UI 6 arayüzüne ait özelliklerden biri DEĞİLDİR?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Painel rápido atraente",
+        "text": "Göz alıcı Quick Panel",
         "answerStatus": 0
       },
       {
-        "text": "Design aprimorado de emojis",
+        "text": "Gelişmiş Emoji Tasarımı",
         "answerStatus": 0
       },
       {
-        "text": "Link para Windows",
+        "text": "Windows Bağlantısı",
         "answerStatus": 1
       },
       {
-        "text": "Widgets de câmera e de atualizações climáticas",
+        "text": "Kamera Widget'ı ve Hava Durumu Widget'ı",
         "answerStatus": 0
       }
     ]
@@ -536,11 +536,11 @@
     "specificFeature": "Galaxy Ecosystem",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Qual é a resposta mais adequada para a lacuna a seguir?\nO ________ é uma forma perfeitamente compatível de compartilhamento entre todos os celulares, tablets e PCs (Android, Windows etc.).",
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________, tüm telefon, tablet ve bilgisayarlar (Android, Windows ve fazlası) arasında kullanabilen Galaxy'e özel daha hızlı bir dosya paylaşım uygulamasıdır.",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Compartilhamento rápido",
+        "text": "Quick Share",
         "answerStatus": 1
       },
       {
@@ -567,23 +567,23 @@
     "specificFeature": "Samsung Account",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir é um benefício da conta Samsung?",
+    "text": "Aşağıdakilerden hangisi Samsung Account'un avantajlarından bir tanesidir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Experiência aprimorada de IA para facilitar a vida",
+        "text": "Her adımda kolay bir kullanım deneyimi için zenginleştirilmiş yapay zeka teknolojisi sunar.",
         "answerStatus": 0
       },
       {
-        "text": "Encontrar seu celular perdido mesmo quando estiver offline",
+        "text": "İnternet'e bağlı olmasa bile kayıp telefonunuzu bulmanızı sağlar.",
         "answerStatus": 0
       },
       {
-        "text": "Acessar e sincronizar todos os seus serviços e dispositivos Samsung",
+        "text": "Tüm Samsung hizmetlerinize, cihazlarınıza erişmenizi ve eşitlemenizi sağlar.",
         "answerStatus": 0
       },
       {
-        "text": "Todas as anteriores",
+        "text": "Hepsi",
         "answerStatus": 1
       }
     ]
@@ -598,23 +598,23 @@
     "specificFeature": "Cross Sell",
     "importance": "D",
     "timeLimitSeconds": 30,
-    "text": "Qual das opções a seguir é a introdução mais adequada para o Galaxy Watch6 durante a venda cruzada com a linha Galaxy S24?",
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisiyle Galaxy Watch6'nın çapraz satışında vurgulanması gereken bağlantı deneyimidir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Mudar a tela de bloqueio e o Always On Display (AOD) da linha Galaxy S24 para expressar seu estilo com ele.",
+        "text": "Saatinizden Galaxy S24 Serisinin kilit ekranı ve Always On Display'i değiştirerek tarzınızla uyum yaratın.",
         "answerStatus": 0
       },
       {
-        "text": "Capturar fotos e vídeos diretamente com ele.",
+        "text": "Saatinizden doğrudan fotoğraf ve video çekin.",
         "answerStatus": 1
       },
       {
-        "text": "Desfrutar de uma experiência de visualização agradável com ele.",
+        "text": "Saatinizle rahat bir izleme deneyiminin tadını çıkarın.",
         "answerStatus": 0
       },
       {
-        "text": "Ele conecta o som automaticamente ao dispositivo em uso.",
+        "text": "Sesi otomatik olarak aktif cihaza yönlendirin.",
         "answerStatus": 0
       }
     ]

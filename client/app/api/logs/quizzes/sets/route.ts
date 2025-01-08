@@ -210,7 +210,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log("language:", language);
+    // console.log("language:", language);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -224,7 +224,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log("quizSet:", quizsetPath, quizSet);
+    // console.log("quizSet:", quizsetPath, quizSet);
 
     if (!quizSet) {
       return NextResponse.json(
@@ -240,7 +240,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("user:", user);
+    // console.log("user:", user);
 
     const result = await prisma.$transaction(async (tx) => {
       const userQuizLog = await tx.userQuizLog.create({
@@ -297,8 +297,8 @@ export async function POST(request: NextRequest) {
       return { userQuizLog, userQuizStatistics };
     });
 
-    console.log("userQuizLog:", result.userQuizLog);
-    console.log("userQuizStatistics:", result.userQuizStatistics);
+    // console.log("userQuizLog:", result.userQuizLog);
+    // console.log("userQuizStatistics:", result.userQuizStatistics);
 
     return NextResponse.json(
       {

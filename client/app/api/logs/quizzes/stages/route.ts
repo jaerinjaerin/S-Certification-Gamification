@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    console.log("body", body);
+    // console.log("body", body);
 
     const {
       userId,
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
         },
       });
 
-      console.log("userQuizStageLog", userQuizStageLog);
+      // console.log("userQuizStageLog", userQuizStageLog);
 
       if (!isBadgeStage) {
         return {
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
           },
         });
 
-      console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
+      // console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
 
       return {
         userQuizStageLog,
