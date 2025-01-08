@@ -194,7 +194,7 @@ export default function QuizPage() {
     <div className="min-h-svh bg-slate-300/20">
       <div className="sticky top-0 z-10">
         <div className=" p-5 h-[70px] flex items-center gap-[10px] bg-white">
-          <div className="justify-start flex-1 min-w-0 text-xs min-[300px]:text-sm">
+          <div className="justify-start flex-1 min-w-0 text-xs min-[300px]:text-sm text-pretty">
             {trnaslation("galaxy_ai_expert")}
           </div>
           {/* quiz 현재 상태 */}
