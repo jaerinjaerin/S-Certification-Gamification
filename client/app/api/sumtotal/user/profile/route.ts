@@ -35,7 +35,8 @@ export async function GET() {
       // `https://samsung.sumtotal.host/apis/api/v1/jobs`,
       // `https://samsung.sumtotal.host/apis/api/v2/advanced/person/${account.personId}`,
       `https://samsung.sumtotal.host/apis/api/v1/users/${decrypt(
-        account.providerAccountId
+        account.providerAccountId,
+        true
       )}`,
       // `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=506631`,
       // `https://samsung.sumtotal.host/apis/api/v1/users/summary`,

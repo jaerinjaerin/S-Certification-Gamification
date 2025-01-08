@@ -281,7 +281,7 @@ export default function Home() {
       <h1>삼플 사용자 테스트 주소</h1>
       <ul>
         <li>
-          <Link href="/s24/HQ_NAT_0001_en-US">HQ Retail Team</Link>
+          <Link href="/s24/NAT_2410_en-US">HQ Retail Team</Link>
           <br />
           <Link href="/s24/NAT_7000_fr-CA">Canada</Link>
           <br />
@@ -305,8 +305,8 @@ export default function Home() {
           <br />
           <Link href="/s24/NAT_2076_pt-BR">Brazil</Link>
           <br />
-          <Link href="/s24/NAT_2792_tr">Turkey</Link>
-          <br />
+          {/* <Link href="/s24/NAT_2792_tr">Turkey</Link>
+          <br /> */}
           <Link href="/s24/NAT_2275_ar-AE">Palestine</Link>
           <br />
           <Link href="/s24/NAT_3004_my">Myanmar</Link>
