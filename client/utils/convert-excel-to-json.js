@@ -52,13 +52,12 @@ const matchingTable = {
   Uzbek: "uz",
   Vietnamese: "vi",
   Ukrainian: "uk",
-  "en-US": "en-US",
 };
 
 const convertLangPackXlsxToJson = (data) => {
   return data.reduce((acc, el) => {
     if (el[0] && el[2]) {
-      acc[el[0]] = el[2];
+      acc[el[0].trim()] = el[2];
     }
     return acc;
   }, {});

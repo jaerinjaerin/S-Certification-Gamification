@@ -1,59 +1,9 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import Languages from "@/public/assets/seeds/languages.json";
+import Languages from "../../../../upload_seed_data/data/seeds/languages.json";
 import { cn } from "@/utils/utils";
-
-const matchingTable = {
-  Albanian: "sq",
-  Arabic: "ar-AE",
-  Azerbaijan: "az",
-  Bengali: "bn",
-  Bosnian: "bs",
-  Bulgarian: "bg",
-  Croatian: "hr-HR",
-  Czech: "cs",
-  Danish: "da",
-  Estonian: "et",
-  Finnish: "fi",
-  "French(Canada)": "fr-CA",
-  French: "fr-FR",
-  Georgian: "ka",
-  German: "de-DE",
-  Greek: "el",
-  Hebrew: "he",
-  Hongkong: "zh-TW",
-  Hungarian: "hu",
-  Indonesian: "id",
-  Italian: "it-IT",
-  Japanese: "ja",
-  Khmer: "km",
-  Lao: "lo",
-  Latvian: "lv",
-  Lithuanian: "lt",
-  Macedonian: "mk",
-  Myanmar: "my",
-  Norwegian: "nb",
-  PRC: "zh-CN",
-  Polish: "pl",
-  "Portuguese(Brazil)": "pt-BR",
-  Portuguese: "pt-PT",
-  Romanian: "ro",
-  Russian: "ru",
-  Serbian: "sr-Cyrl",
-  Slovak: "sk-SK",
-  Slovenian: "sl",
-  "Spanish(LTN)": "es-LTN",
-  Spanish: "es-ES",
-  Swedish: "sv",
-  Taiwan: "zh-TW",
-  Thai: "th",
-  Turkish: "tr",
-  Uzbek: "uz",
-  Vietnamese: "vi",
-  Ukrainian: "uk",
-  "en-US": "en-US",
-};
+import { matchingTable } from "@/utils/codeMatchingTable";
 
 export default function SitemapPage() {
   const supportedLanguagesCode = Languages.map((lang) => lang.code);
@@ -71,7 +21,7 @@ export default function SitemapPage() {
       <p className="font-light">
         Language 개수: {supportedLanguagesCode.length} / Languages.json 기준
       </p>
-      <p className="font-light text-red-600 text-sm">
+      <p className="text-sm font-light text-red-600">
         (붉은배경은 번역본이 없는 국가입니다.)
       </p>
       <div className="mt-[30px] grid grid-cols-2 gap-4">
