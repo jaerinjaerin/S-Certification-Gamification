@@ -4,7 +4,7 @@ export default function Spinner() {
     <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-screen">
       <DotLottieReact
         src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/loading.json`}
-        className="w-[400px] h-auto"
+        className="size-20 h-auto"
         autoplay
         loop
       />
