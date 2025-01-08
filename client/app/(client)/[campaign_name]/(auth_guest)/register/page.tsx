@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,7 +9,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog";
-import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -54,7 +54,7 @@ interface DomainDetail {
   name: string;
   code: string;
   regionId: string;
-  subsidiaryId: string;
+  subsidaryId: string;
 }
 
 export default function GuestRegisterPage() {
@@ -99,7 +99,7 @@ export default function GuestRegisterPage() {
     try {
       setLoading(true);
 
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20250107.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20241227.json`;
       console.log("jsonUrl", jsonUrl);
       const res = await fetch(jsonUrl, {
         method: "GET",
@@ -217,7 +217,7 @@ export default function GuestRegisterPage() {
       body: {
         domainId: selectedCountry.id,
         domainCode: selectedCountry.code,
-        subsidiaryId: selectedCountry.subsidiaryId,
+        subsidaryId: selectedCountry.subsidaryId,
         regionId: selectedCountry.regionId,
         jobId: selectedJobId,
         languageCode: languageCode,

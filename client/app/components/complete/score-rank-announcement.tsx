@@ -46,7 +46,7 @@ export default function ScoreRankAnnouncement({
 
   return (
     <div className={cn("", className)}>
-      <div className="w-full flex">
+      <div className="w-full flex mb-[76px]">
         <Dialog>
           <DialogTrigger asChild>
             <Button
@@ -62,7 +62,7 @@ export default function ScoreRankAnnouncement({
             <DialogHeader>
               <DialogTitle>{translation("score")}</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-4 text-[14px] text-[#4E4E4E] font-one font-medium">
+            <div className="flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium">
               <div>
                 <p className="font-extrabold">{translation("base_score")}</p>
                 {translation("base_score_description")}
@@ -79,7 +79,7 @@ export default function ScoreRankAnnouncement({
               </div>
             </div>
             <DialogFooter>
-              <DialogClose className="text-[18px] py-[22px] px-[34px]" asChild>
+              <DialogClose asChild>
                 <Button variant={"primary"}>{translation("ok")}</Button>
               </DialogClose>
 
@@ -93,12 +93,12 @@ export default function ScoreRankAnnouncement({
       </div>
 
       {/* content */}
-      <div>
-        <h2 className="text-[32px]">{translation("score")}</h2>
-        <h1 className="text-[60px] my-9">{quizStagesTotalScore}</h1>
+      <div className="mb-[38px]">
+        <h2 className="text-4xl">{translation("score")}</h2>
+        <h1 className="text-6xl/normal">{quizStagesTotalScore}</h1>
       </div>
       <div className="w-full">
-        <div className="flex flex-col items-center gap-[25px] mb-7">
+        <div className="flex flex-col items-center gap-[32px] mb-[40px]">
           <div
             className="w-full h-[180px]"
             style={{
@@ -109,24 +109,18 @@ export default function ScoreRankAnnouncement({
             }}
           />
 
-          <p className="text-[22px] text-balance px-5">
-            {translation("rank_notification").replace("XX", String(topRank))}
+          <p className="text-2xl font-medium text-balance px-5">
+            {generateScoreRankText(translation("rank_notification"), topRank)}
           </p>
         </div>
 
-        {user?.authType !== AuthType.SUMTOTAL && <SendEmailCard />}
+        {user?.authType === AuthType.GUEST && <SendEmailCard />}
 
-        <div className=" w-full space-x-0 sm:space-x-3">
+        <div className=" w-full flex flex-wrap justify-center gap-[10px] mt-[24px]">
           {user?.authType === AuthType.SUMTOTAL && (
-            <Button className="text-[18px] mt-7" variant={"primary"}>
-              S+
-            </Button>
+            <Button variant={"primary"}>S+</Button>
           )}
-          <Button
-            className="text-[18px] mt-7 "
-            variant={"primary"}
-            onClick={() => routeToPage("map")}
-          >
+          <Button variant={"primary"} onClick={() => routeToPage("map")}>
             {isLastStage
               ? translation("return_map")
               : translation("next_stage")}
@@ -144,10 +138,22 @@ const SendEmailCard = () => {
     <div className="pt-[10px]">
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
         <BluePaperAirplaneIcon className="shrink-0" />
-        <p className="text-[#1429A0] text-[12px] sm:text-[14px] font-normal text-left max-w-[230px]">
+        <p className="text-[#1429A0] text-sm font-medium text-left max-w-[230px] text-pretty">
           {translation("badge_deliver")}
         </p>
       </div>
     </div>
+  );
+};
+
+const generateScoreRankText = (text: string, topRank: number) => {
+  const splitText = text.split("XX %");
+
+  return (
+    <>
+      {splitText[0]}
+      <span className="font-bold text-[#2686F5]">{topRank}%</span>
+      {splitText[1]}
+    </>
   );
 };

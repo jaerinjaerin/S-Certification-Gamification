@@ -127,7 +127,7 @@ body {
     scrollbar-width: none;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-pretty;
   }
   .removeScroll::-webkit-scrollbar {
     display: none;

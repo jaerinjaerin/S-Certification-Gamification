@@ -1,5 +1,4 @@
 "use client";
-
 import GetBadgeAnnouncment from "@/app/components/complete/get-badge-announcement";
 import ScoreAnnouncement from "@/app/components/complete/score-announcement";
 import ScoreRankAnnouncement from "@/app/components/complete/score-rank-announcement";
@@ -33,7 +32,7 @@ export default function QuizComplete() {
     };
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
-    routeToMapPage();
+    // routeToMapPage();
   }, [quizStageLogs]);
 
   useInterval(
@@ -46,9 +45,9 @@ export default function QuizComplete() {
   );
 
   return (
-    <div className="min-h-svh overflow-x-hidden">
+    <div className="overflow-x-hidden min-h-svh">
       <motion.div
-        className="flex w-full h-full items-center text-center py-[21px] font-bold"
+        className="flex w-full min-h-svh text-center py-[21px] font-bold "
         animate={{
           translateX: `-${switchlIndex * 100}%`,
         }}
