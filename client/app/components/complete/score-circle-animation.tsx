@@ -14,11 +14,11 @@ export default function ScoreCircleAnimation() {
   const targetDasharray = `${CIRCLE_PERCENTAGE} ${100 - CIRCLE_PERCENTAGE}`;
 
   return (
-    <div>
+    <div className="size-[260px] max-w-[340px]">
       <div className="relative flex justify-center">
         <svg
-          width="220px"
-          height="220px"
+          width="auto"
+          height="auto"
           viewBox="0 0 400 400"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default function ScoreCircleAnimation() {
           />
         </svg>
 
-        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-[130px] break-words">
           <p className="text-xl">{translation("score")}</p>
           <Stat score={quizStagesTotalScore} />
         </div>

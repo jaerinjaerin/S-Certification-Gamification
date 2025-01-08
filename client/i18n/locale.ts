@@ -1,7 +1,7 @@
 "use server";
-import { headers } from "next/headers";
 import { defaultLocale } from "@/i18n/config";
 import Languages from "@/public/assets/seeds/languages.json";
+import { headers } from "next/headers";
 
 const supportedLanguagesCode = Languages.map((lang) => lang.code);
 
@@ -36,7 +36,7 @@ export async function getUserLocale() {
         case acceptLanguage === "es-ES":
           return lang === "es-ES";
         case acceptLanguage.startsWith("es"):
-          return lang === "es-419";
+          return lang === "es-LTN";
         default:
           return lang === languageCode;
       }

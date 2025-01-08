@@ -1,5 +1,6 @@
 "use client";
 import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
+import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -9,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog";
-import { Button } from "@/app/components/ui/button";
+
 import {
   Dialog,
   DialogClose,
@@ -442,13 +443,13 @@ export default function GuestLogin({
         />
 
         <div className="flex flex-col items-center size-full absolute top-0 z-10 py-5">
-          <span className="block font-extrabold">
+          <span className="block font-bold text-lg">
             {translation("galaxy_ai_expert")}
           </span>
 
           <div className="m-auto">
             <div
-              className="font-extrabold text-[44px] text-center mb-5 hyphens-auto break-words whitespace-normal leading-normal mx-[30px]"
+              className="font-bold text-center hyphens-auto break-words whitespace-normal mx-[30px] text-5xl/normal"
               style={{
                 wordBreak: "break-word",
               }}
@@ -458,10 +459,10 @@ export default function GuestLogin({
                 "S24"
               )}
             </div>
-            <span className="block text-[30px] font-medium text-center">
+            <span className="block text-center font-normal text-3xl/normal mt-[26px] mb-[69px]">
               {translation("certification")}
             </span>
-            <div className="text-center mt-[70px]">
+            <div className="text-center">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
@@ -495,7 +496,7 @@ export default function GuestLogin({
                       <input
                         placeholder={translation("email")}
                         inputMode="email"
-                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium"
+                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium text-base"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={loading}
@@ -595,12 +596,12 @@ export default function GuestLogin({
                 console.log("verify code");
                 e.preventDefault();
               }}
-              className="relative"
+              className="relative font-one font-medium"
             >
               <input
                 placeholder="code"
                 inputMode="numeric"
-                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium"
+                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 required

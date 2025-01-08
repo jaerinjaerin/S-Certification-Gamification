@@ -38,7 +38,7 @@ export const locales = [
   "fi",
   "et",
   "es-ES",
-  "es-419",
+  "es-LTN",
   "en-US",
   "en-GB",
   "el",

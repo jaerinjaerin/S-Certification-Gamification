@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       throw new Error("User email not found");
     }
 
-    const email = decrypt(user.emailId!);
+    const email = decrypt(user.emailId!, true);
 
     const params = {
       Destination: {

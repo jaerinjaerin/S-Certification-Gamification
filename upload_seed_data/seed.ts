@@ -345,7 +345,10 @@ async function main() {
           domainId: domainId,
           regionId: regionsId,
           subsidiaryId: subsidiaryId,
-          userCount: 1000,
+          ff: 1000,
+          fsm: 1000,
+          ffSes: 1000,
+          fsmSes: 1000,
         };
       }),
       // skipDuplicates: true, // 중복된 데이터를 무시

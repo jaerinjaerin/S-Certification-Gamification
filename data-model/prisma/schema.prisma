@@ -203,7 +203,10 @@ model Domain {
 model DomainGoal {
   id         String   @id @default(uuid())
   campaignId String
-  userCount   Int
+  ff     Int
+  fsm    Int
+  ffSes  Int
+  fsmSes Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 

@@ -94,10 +94,10 @@ export const {
         }
 
         return {
-          id: encrypt(profile.userId),
+          id: encrypt(profile.userId, true),
           emailId:
             profile.businessAddress.email1 != null
-              ? encrypt(profile.businessAddress.email1)
+              ? encrypt(profile.businessAddress.email1, true)
               : null,
           name:
             process.env.NODE_ENV !== "production"
@@ -105,9 +105,9 @@ export const {
               : null,
           image: profile.imagePath ?? null,
           authType: AuthType.SUMTOTAL,
-          providerUserId: profile.userId ? encrypt(profile.userId) : null,
+          providerUserId: profile.userId ? encrypt(profile.userId, true) : null,
           providerPersonId: profile.personId
-            ? encrypt(profile.personId.toString())
+            ? encrypt(profile.personId.toString(), true)
             : null,
           domainId:
             profile.personDomain
@@ -135,7 +135,7 @@ export const {
       },
       async authorize(credentials) {
         const { email, code } = credentials;
-        const encryptedEmail = encrypt(email as string);
+        const encryptedEmail = encrypt(email as string, true);
 
         let user = await prisma.user.findFirst({
           where: { emailId: encryptedEmail },

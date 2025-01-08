@@ -13,9 +13,11 @@ export default function ScoreAnnouncement({
   const translation = useTranslations();
 
   return (
-    <div className={cn(className)}>
+    <div className={cn(className, "flex flex-col items-center")}>
       <CompleteStage stageName={stageName}>
-        <div className="text-[38px] my-[50px]">{translation("completed")}</div>
+        <div className="text-4xl mt-[90px] mb-[60px]">
+          {translation("completed")}
+        </div>
       </CompleteStage>
       <ScoreCircleAnimation />
     </div>
