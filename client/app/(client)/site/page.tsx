@@ -42,7 +42,7 @@ const matchingTable = {
   Serbian: "sr-Cyrl",
   Slovak: "sk-SK",
   Slovenian: "sl",
-  "Spanish(LTN)": "es-419",
+  "Spanish(LTN)": "es-LTN",
   Spanish: "es-ES",
   Swedish: "sv",
   Taiwan: "zh-TW",
