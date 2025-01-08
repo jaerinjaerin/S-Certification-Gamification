@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/app/components/ui/button";
 import Languages from "@/public/assets/seeds/languages.json";
 import { cn } from "@/utils/utils";
@@ -98,8 +99,6 @@ export default function SitemapPage() {
     </div>
   );
 }
-
-// http://localhost:3000/s24/NAT_7000_en-US/map
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);

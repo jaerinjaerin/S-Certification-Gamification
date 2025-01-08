@@ -106,7 +106,6 @@ export default function QuizPage() {
         await sleep(1500);
         await next();
         setSuccess(false);
-
         return;
       }
     } else {
@@ -191,26 +190,19 @@ export default function QuizPage() {
     };
   }
 
+  //text-[10px] min-[300px]:text-[12px] min-[400px]:text-[14px]
+
   return (
     <div className="min-h-svh bg-slate-300/20">
       <div className="sticky top-0 z-10">
-        <div className="bg-white p-5 relative">
-          <div className="text-[10px] min-[300px]:text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold absolute">
+        <div className=" p-5 h-[70px] flex items-center gap-[10px] bg-white">
+          <div className="justify-start flex-1 min-w-0 text-xs min-[300px]:text-sm">
             {trnaslation("galaxy_ai_expert")}
           </div>
-          <div className="flex absolute right-5 top-1/2 -translate-y-1/2 gap-1">
-            {Array.from({ length: LIFE_COUNT }).map((_, index) => (
-              <AnimatedHeartIcon
-                key={index}
-                index={index}
-                lifeCount={lifeCount}
-              />
-            ))}
-          </div>
-
-          <div className="w-full">
+          {/* quiz 현재 상태 */}
+          <div className="flex-none">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
+              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] font-medium text-sm py-1"
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
@@ -220,6 +212,16 @@ export default function QuizPage() {
               <span>/</span>
               <span>{currentStageTotalQuestions}</span>
             </motion.div>
+          </div>
+          {/* 하트 */}
+          <div className="flex gap-1 flex-1 min-w-0 justify-end ">
+            {Array.from({ length: LIFE_COUNT }).map((_, index) => (
+              <AnimatedHeartIcon
+                key={index}
+                index={index}
+                lifeCount={lifeCount}
+              />
+            ))}
           </div>
         </div>
         <CountDownBar progress={TIME_PROGRESS} />
@@ -237,7 +239,7 @@ export default function QuizPage() {
             : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.jpg`
         }
       />
-      <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
+      <div className="pt-[32px] pb-[48px] px-5 flex flex-col gap-4 ">
         {question.options &&
           question.options.map((option: QuestionOption) => {
             return (
@@ -248,10 +250,10 @@ export default function QuizPage() {
                   handleConfirmAnswer(question, option.id);
                 }}
                 className={cn(
-                  "relative rounded-[20px] py-4 px-6  hover:cursor-pointer font-one font-semibold text-[18px] overflow-hidden",
+                  "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
                   isCorrectAnswer && "pointer-events-none"
                 )}
-                initial={{ backgroundColor: "#FFFFFF" }}
+                initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
                 animate={getAnimateState(option)}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
@@ -299,7 +301,7 @@ const AnimatedHeartIcon = ({
     <Fragment key={index}>
       {index < lifeCount ? (
         <motion.svg
-          className="size-[14px] min-[360px]:size-[20px]"
+          className="size-4"
           width="19"
           height="17"
           viewBox="0 0 19 17"
@@ -322,7 +324,7 @@ const AnimatedHeartIcon = ({
         </motion.svg>
       ) : (
         <motion.svg
-          className="size-[14px] min-[360px]:size-[20px]"
+          className="size-4"
           width="20"
           height="19"
           viewBox="0 0 20 19"

@@ -32,7 +32,7 @@ export function TypewriteTextVer({ question }: { question: string }) {
   );
 
   return (
-    <div className="font-one text-[18px] font-bold">
+    <div className="font-one text-lg font-bold">
       {QUIZ_PATH ? letter : question}
       {QUIZ_PATH && letterIndex !== question.length && (
         <motion.span className="ml-1">|</motion.span>
