@@ -50,7 +50,7 @@ export default function QuizPage() {
     undefined
   );
 
-  const animationRef = useRef<Boolean | null>(null); // 애니메이션 상태 관리
+  const animationRef = useRef<boolean | null>(null); // 애니메이션 상태 관리
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
