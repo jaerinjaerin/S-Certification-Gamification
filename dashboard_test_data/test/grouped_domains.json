@@ -709,6 +709,15 @@
   ],
   "domains": [
     {
+      "domainId": 29,
+      "domainName": "HQ Retail Team",
+      "domainCode": "OrgCode-7",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
       "domainId": 361266,
       "domainName": "South Korea",
       "domainCode": "NAT_2410",
