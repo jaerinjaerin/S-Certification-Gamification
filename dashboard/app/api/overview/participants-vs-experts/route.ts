@@ -33,7 +33,7 @@ export async function GET(request: Request) {
           .flatMap((subsidiary) => subsidiary.domains)
           .map((domain) => domain.id);
 
-        const participantsCount = await prisma.userQuizLog.count({
+        const participantsCount = await prisma.userQuizStatistics.count({
           where: {
             // campaignId,
             domainId: { in: domainIds },
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
           },
         });
 
-        const expertsCount = await prisma.userQuizLog.count({
+        const expertsCount = await prisma.userQuizStatistics.count({
           where: {
             // campaignId,
             domainId: { in: domainIds },

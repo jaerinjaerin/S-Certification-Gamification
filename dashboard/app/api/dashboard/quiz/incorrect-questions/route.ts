@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     }
 
     // Total counts for all records
-    const totalCounts = await prisma.userQuizQuestionLog.groupBy({
+    const totalCounts = await prisma.userQuizQuestionStatistics.groupBy({
       by: ["questionId"],
       _count: {
         _all: true, // Count all records
@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     // console.log("totalCounts", totalCounts);
 
     // Count "true" values for isCorrect per questionId
-    const correctCounts = await prisma.userQuizQuestionLog.groupBy({
+    const correctCounts = await prisma.userQuizQuestionStatistics.groupBy({
       by: ["questionId"],
       _count: {
         isCorrect: true, // Count occurrences of 'isCorrect'
@@ -99,7 +99,7 @@ export async function GET(request: Request) {
     // Fetch full details from the log for each questionId
     const enrichedResults = await Promise.all(
       sortedResults.map(async (item) => {
-        const logs = await prisma.userQuizQuestionLog.findFirst({
+        const logs = await prisma.userQuizQuestionStatistics.findFirst({
           where: { questionId: item.questionId },
         });
 

@@ -54,7 +54,7 @@ export async function GET(request: Request) {
     ];
 
     // Fetch all categories
-    const allCategories = await prisma.userQuizQuestionLog.findMany({
+    const allCategories = await prisma.userQuizQuestionStatistics.findMany({
       select: { category: true },
       distinct: ["category"],
     });
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
     const results = await Promise.all(
       userGroups.map(async (group) => {
         // Fetch total counts for each category
-        const totalCounts = await prisma.userQuizQuestionLog.groupBy({
+        const totalCounts = await prisma.userQuizQuestionStatistics.groupBy({
           by: ["category"],
           _count: {
             _all: true,
@@ -78,7 +78,7 @@ export async function GET(request: Request) {
         });
 
         // Fetch correct counts for each category
-        const correctCounts = await prisma.userQuizQuestionLog.groupBy({
+        const correctCounts = await prisma.userQuizQuestionStatistics.groupBy({
           by: ["category"],
           _count: {
             isCorrect: true,
