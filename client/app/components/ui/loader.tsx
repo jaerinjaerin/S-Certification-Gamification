@@ -4,10 +4,10 @@ import Spinner from "./spinner";
 export default function useLoader() {
   const [loading, setLoading] = useState(false);
 
-  const Loader = () => {
+  const renderLoader = () => {
     if (loading) {
       return <Spinner />;
     }
   };
-  return { loading, setLoading, Loader };
+  return { loading, setLoading, renderLoader };
 }

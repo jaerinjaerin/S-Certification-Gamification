@@ -6,7 +6,7 @@ import {
 } from "@/app/components/quiz/alert-dialog";
 import CountDownBar from "@/app/components/quiz/countdown-bar";
 import Qusetion from "@/app/components/quiz/question-area";
-import successNotify from "@/app/components/quiz/success-notify";
+import SuccessNotify from "@/app/components/quiz/success-notify";
 import Spinner from "@/app/components/ui/spinner";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quiz_provider";
@@ -45,7 +45,6 @@ export default function QuizPage() {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { renderSuccessLottie } = successNotify();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
@@ -212,7 +211,7 @@ export default function QuizPage() {
             </motion.div>
           </div>
           {/* 하트 */}
-          <div className="flex gap-1 flex-1 min-w-0 justify-end ">
+          <div className="flex justify-end flex-1 min-w-0 gap-1 ">
             {Array.from({ length: LIFE_COUNT }).map((_, index) => (
               <AnimatedHeartIcon
                 key={index}
@@ -280,7 +279,7 @@ export default function QuizPage() {
       </div>
       <GameOverAlertDialog gameOver={gameOver} />
       <ErrorAlertDialog error={errorMessage} />
-      {success && renderSuccessLottie()}
+      {success && <SuccessNotify />}
       {loading && <Spinner />}
     </div>
   );

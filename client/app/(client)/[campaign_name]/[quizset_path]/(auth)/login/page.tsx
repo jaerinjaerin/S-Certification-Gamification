@@ -19,7 +19,7 @@ export default function Login() {
     <>
       <div className={cn("h-svh", fixedClass)}>
         {/* <video
-          className="w-full h-svh object-fill absolute "
+          className="absolute object-fill w-full h-svh "
           autoPlay
           loop
           muted
@@ -29,7 +29,7 @@ export default function Login() {
           <source src={videoWebmUrl} type="video/webm" />
         </video> */}
         <div
-          className="w-full h-svh object-fill absolute"
+          className="absolute object-fill w-full h-svh"
           style={{
             backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
             backgroundSize: "cover",
@@ -39,7 +39,7 @@ export default function Login() {
         />
 
         <div className="flex flex-col items-center h-full py-[20px] relative">
-          <span className="block font-bold text-lg">
+          <span className="block text-lg font-bold">
             {translation("galaxy_ai_expert")}
           </span>
           <LoginTitle className="my-auto" />
@@ -53,7 +53,7 @@ export default function Login() {
 const LoginTitle = ({ className }: { className?: string }) => {
   const translation = useTranslations();
 
-  const { loading, setLoading } = useLoader();
+  const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {
     setLoading(true);
     const result = await signIn("sumtotal");
@@ -85,6 +85,7 @@ const LoginTitle = ({ className }: { className?: string }) => {
         >
           {translation("login")}
         </Button>
+        {loading && renderLoader()}
       </div>
     </>
   );
