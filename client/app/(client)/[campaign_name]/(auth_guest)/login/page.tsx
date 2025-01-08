@@ -459,7 +459,7 @@ export default function GuestLogin({
                 "S24"
               )}
             </div>
-            <span className="block text-center font-normal text-3xl/normal mt-[26px] mb-[69px]">
+            <span className="block text-center font-normal text-3xl/relaxed mt-[26px] mb-[69px] text-pretty">
               {translation("certification")}
             </span>
             <div className="text-center">
