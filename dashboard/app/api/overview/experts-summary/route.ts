@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     const sesStoreId = "4";
 
     // Fetch all relevant user quiz logs
-    const userQuizLogs = await prisma.userQuizLog.findMany({
+    const userQuizLogs = await prisma.userQuizStatistics.findMany({
       where: {
         campaignId,
         createdAt: {

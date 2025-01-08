@@ -46,15 +46,18 @@ async function main() {
 
   // Paths to directories containing JSON files
   const directories = [
-    // { path: "./results/user_quiz_logs/2025", table: "userQuizLog" },
-    // { path: "./results/user_quiz_stage_logs/2025", table: "userQuizStageLog" },
+    { path: "./results/user_quiz_logs/2025", table: "userQuizStatistics" },
+    {
+      path: "./results/user_quiz_stage_logs/2025",
+      table: "userQuizStageStatistics",
+    },
     {
       path: "./results/user_quiz_question_logs/2025",
-      table: "userQuizQuestionLog",
+      table: "userQuizQuestionStatistics",
     },
     {
       path: "./results/user_quiz_badge_stage_logs/2025",
-      table: "userQuizBadgeStageLog",
+      table: "userQuizBadgeStageStatistics",
     },
   ];
 

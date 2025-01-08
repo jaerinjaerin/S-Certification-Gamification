@@ -17,25 +17,6 @@ export async function GET(request: Request) {
       );
     }
 
-    // if (startDate && isNaN(Date.parse(startDate))) {
-    //   return NextResponse.json(
-    //     { message: "Invalid start date format" },
-    //     { status: 400 }
-    //   );
-    // }
-
-    // if (endDate && isNaN(Date.parse(endDate))) {
-    //   return NextResponse.json(
-    //     { message: "Invalid end date format" },
-    //     { status: 400 }
-    //   );
-    // }
-
-    // const parsedStartDate = startDate
-    //   ? new Date(startDate).toISOString()
-    //   : null;
-    // const parsedEndDate = endDate ? new Date(endDate).toISOString() : null;
-
     // Fetch all regions
     const regions = await prisma.region.findMany({
       select: {
@@ -67,17 +48,20 @@ export async function GET(request: Request) {
             domainId: { in: domainIds },
           },
           select: {
-            userCount: true,
+            ff: true,
+            fsm: true,
+            ffSes: true,
+            fsmSes: true,
           },
         });
 
         const totalUserCount = domainGoals.reduce(
-          (sum, goal) => sum + goal.userCount,
+          (sum, goal) => sum + (goal.ff + goal.fsm + goal.ffSes + goal.fsmSes),
           0
         );
 
         // Count completed UserQuizLogs for the region
-        const completedLogsCount = await prisma.userQuizLog.count({
+        const completedLogsCount = await prisma.userQuizStatistics.count({
           where: {
             // campaignId,
             domainId: { in: domainIds },

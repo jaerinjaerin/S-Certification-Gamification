@@ -39,12 +39,12 @@ export async function GET(request: Request) {
     }
 
     // Calculate total participants
-    const totalParticipants = await prisma.userQuizLog.count({
+    const totalParticipants = await prisma.userQuizStatistics.count({
       where: filters,
     });
 
     // Calculate total experts
-    const totalExperts = await prisma.userQuizLog.count({
+    const totalExperts = await prisma.userQuizStatistics.count({
       where: {
         ...filters,
         isCompleted: true,
@@ -59,7 +59,8 @@ export async function GET(request: Request) {
     });
 
     const totalGoal = domainGoals.reduce(
-      (acc: any, goal: any) => acc + goal.userCount,
+      (acc: any, goal: any) =>
+        acc + (goal.ff + goal.fsm + goal.ffSes + goal.fsmSes),
       0
     );
 
@@ -70,7 +71,7 @@ export async function GET(request: Request) {
     console.log("totalGoal:", totalGoal);
 
     // Calculate experts by job group
-    const expertsByGroup = await prisma.userQuizLog.groupBy({
+    const expertsByGroup = await prisma.userQuizStatistics.groupBy({
       by: ["jobId"],
       where: {
         ...filters,
