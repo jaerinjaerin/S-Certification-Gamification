@@ -11,6 +11,13 @@ export default function Login() {
   const { status } = useSession();
   const translation = useTranslations();
 
+  const { loading, setLoading, renderLoader } = useLoader();
+  const processSignIn = async () => {
+    setLoading(true);
+    const result = await signIn("sumtotal");
+    console.log("result", result);
+  };
+
   if (status === "loading") {
     return <Spinner />;
   }
@@ -42,51 +49,34 @@ export default function Login() {
           <span className="block text-lg font-bold">
             {translation("galaxy_ai_expert")}
           </span>
-          <LoginTitle className="my-auto" />
+          <div className={cn("flex flex-col items-center my-auto")}>
+            <div>
+              <span
+                className="block font-bold text-center mx-[30px] text-5xl/normal"
+                style={{ wordBreak: "break-word" }}
+              >
+                {translation("be_a_galaxy_ai_expert").replaceAll(
+                  "(Paradigm)",
+                  " S24"
+                )}
+              </span>
+              <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
+                {translation("certification")}
+              </span>
+            </div>
+            <Button
+              variant={"primary"}
+              onClick={() => processSignIn()}
+              className="disabled:bg-disabled"
+              disabled={loading}
+            >
+              {translation("login")}
+            </Button>
+          </div>
           <PrivacyAndTerm />
         </div>
       </div>
+      {loading && renderLoader()}
     </>
   );
 }
-
-const LoginTitle = ({ className }: { className?: string }) => {
-  const translation = useTranslations();
-
-  const { loading, setLoading, renderLoader } = useLoader();
-  const processSignIn = async () => {
-    setLoading(true);
-    const result = await signIn("sumtotal");
-    console.log("result", result);
-  };
-
-  return (
-    <>
-      <div className={cn("flex flex-col items-center", className)}>
-        <div>
-          <span
-            className="block font-bold text-center mx-[30px] text-5xl/normal"
-            style={{ wordBreak: "break-word" }}
-          >
-            {translation("be_a_galaxy_ai_expert").replaceAll(
-              "(Paradigm)",
-              " S24"
-            )}
-          </span>
-          <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
-            {translation("certification")}
-          </span>
-        </div>
-        <Button
-          variant={"primary"}
-          onClick={() => processSignIn()}
-          className="disabled:bg-disabled"
-          disabled={loading}
-        >
-          {translation("login")}
-        </Button>
-        {loading && renderLoader()}
-      </div>
-    </>
-  );
-};

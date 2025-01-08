@@ -88,7 +88,7 @@ export default function QuizPage() {
   const handleConfirmAnswer = async (question: any, optionId: string) => {
     const result = question.options.find((option) => option.id === optionId);
     const selectedOptIds = [...new Set([...selectedOptionIds, optionId])];
-    const elapsedSeconds = question.timeLimitSeconds - count;
+    const elapsedSeconds = (question.timeLimitSeconds - count) * 1000;
 
     if (result.isCorrect) {
       // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
