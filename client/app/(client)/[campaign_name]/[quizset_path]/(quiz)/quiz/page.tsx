@@ -190,8 +190,6 @@ export default function QuizPage() {
     };
   }
 
-  //text-[10px] min-[300px]:text-[12px] min-[400px]:text-[14px]
-
   return (
     <div className="min-h-svh bg-slate-300/20">
       <div className="sticky top-0 z-10">

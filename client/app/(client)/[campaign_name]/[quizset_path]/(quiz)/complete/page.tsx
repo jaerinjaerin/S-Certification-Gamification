@@ -33,7 +33,7 @@ export default function QuizComplete() {
     };
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
-    routeToMapPage();
+    // routeToMapPage();
   }, [quizStageLogs]);
 
   useInterval(
@@ -48,7 +48,7 @@ export default function QuizComplete() {
   return (
     <div className="min-h-svh overflow-x-hidden">
       <motion.div
-        className="flex w-full h-full items-center text-center py-[20px] font-extrabold"
+        className="flex w-full h-full items-center text-center py-[21px] font-bold"
         animate={{
           translateX: `-${switchlIndex * 100}%`,
         }}
