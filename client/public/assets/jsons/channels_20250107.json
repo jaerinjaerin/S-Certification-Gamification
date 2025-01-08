@@ -1,0 +1,51 @@
+[
+  {
+    "id": "349990",
+    "name": "Hungary",
+    "code": "NAT_2348",
+    "regionId": "508369",
+    "subsidiaryId": "349943",
+    "channels": [
+      {
+        "name": "Telekom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Yettel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Media Markt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Euronics",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  }
+]

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog";
+import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -99,7 +99,7 @@ export default function GuestRegisterPage() {
     try {
       setLoading(true);
 
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20241227.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/channels_20250107.json`;
       console.log("jsonUrl", jsonUrl);
       const res = await fetch(jsonUrl, {
         method: "GET",

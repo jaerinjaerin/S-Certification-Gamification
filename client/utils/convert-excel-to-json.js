@@ -1,9 +1,8 @@
 //@ts-nocheck
 import fs from "fs";
-import path from "path";
-import XLSX from "xlsx";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import XLSX from "xlsx";
 
 const matchingTable = {
   Albanian: "sq",
@@ -44,7 +43,7 @@ const matchingTable = {
   Serbian: "sr-Cyrl",
   Slovak: "sk-SK",
   Slovenian: "sl",
-  "Spanish(LTN)": "es-419",
+  "Spanish(LTN)": "es-LTN",
   Spanish: "es-ES",
   Swedish: "sv",
   Taiwan: "zh-TW",

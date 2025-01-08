@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function TestPage() {
@@ -10,7 +10,7 @@ export default function TestPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const { data: session } = useSession();
+  const { status: sessionStatus, data: session } = useSession();
   const [resultUser, setResultUser] = useState<any | null>(null);
   const [resultDomain, setResultDomain] = useState<any | null>(null);
   const [resultActivity, setResultActivity] = useState<any | null>(null);
@@ -619,6 +619,32 @@ export default function TestPage() {
       setLoading(false);
     }
   };
+
+  console.log("session", sessionStatus);
+
+  if (sessionStatus === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  const processSignIn = async () => {
+    const result = await signIn("sumtotal", {
+      callbackUrl: `/test`,
+    });
+    console.log("result", result);
+  };
+
+  if (sessionStatus === "unauthenticated") {
+    return (
+      <button
+        onClick={() => {
+          processSignIn();
+        }}
+        disabled={status === "loading"}
+      >
+        Sign in with Sumtotal
+      </button>
+    );
+  }
 
   return (
     <div>

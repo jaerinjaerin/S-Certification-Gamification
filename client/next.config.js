@@ -12,14 +12,14 @@ console.log("hasBasePath", hasBasePath);
 const nextConfig = {
   assetPrefix: hasBasePath ? "/certification" : "",
   basePath: hasBasePath ? "/certification" : "",
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "assets-stage.samsungplus.net",
-      },
-    ],
-  },
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: "https",
+  //       hostname: "assets-stage.samsungplus.net",
+  //     },
+  //   ],
+  // },
   rewrites() {
     return hasBasePath
       ? [

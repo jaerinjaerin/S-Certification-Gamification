@@ -36,7 +36,8 @@ export async function GET(request: Request) {
 
     const response = await fetch(
       `https://samsung.sumtotal.host/apis/api/v2/users/${decrypt(
-        account.providerAccountId
+        account.providerAccountId,
+        true
       )}/activities?limit=${limit}&offset=${offset}`,
       {
         cache: "no-store",

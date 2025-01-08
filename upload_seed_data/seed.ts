@@ -345,7 +345,10 @@ async function main() {
           domainId: domainId,
           regionId: regionsId,
           subsidiaryId: subsidiaryId,
-          userCount: 1000,
+          ff: 1000,
+          fsm: 1000,
+          ffSes: 1000,
+          fsmSes: 1000,
         };
       }),
       // skipDuplicates: true, // 중복된 데이터를 무시
@@ -433,10 +436,10 @@ async function main() {
 
     console.log("files", files);
 
-    // 먼저 HQ_NAT_0001 도메인 데이터를 처리
+    // 먼저 NAT_2410 도메인 데이터를 처리
     const hqNatQuestions: any[] = [];
     for (const fileName of files.sort((a, b) =>
-      a.includes("HQ_NAT_0001") ? -1 : 1
+      a.includes("NAT_2410") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
       // const domainCode = fileName.split("|")[0];
@@ -447,7 +450,7 @@ async function main() {
       const [domainCode, languageCode] = baseFileName.split(".");
 
       const domainOrSubsidiary =
-        domainCode === "HQ_NAT_0001"
+        domainCode === "NAT_2410"
           ? await prisma.subsidiary.findFirst({
               where: { code: domainCode },
             })
@@ -484,7 +487,7 @@ async function main() {
         const questionId = uuid.v4();
 
         const originalQuestionId =
-          domainCode === "HQ_NAT_0001"
+          domainCode === "NAT_2410"
             ? questionId
             : hqNatQuestions.find(
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
@@ -545,7 +548,7 @@ async function main() {
         console.log("item", item);
 
         createdQuestions.push(item);
-        if (domainCode === "HQ_NAT_0001") {
+        if (domainCode === "NAT_2410") {
           hqNatQuestions.push(item);
         }
       }
@@ -553,9 +556,9 @@ async function main() {
       const quizSet = await prisma.quizSet.create({
         data: {
           campaignId: campaign.id,
-          domainId: domainCode === "HQ_NAT_0001" ? null : domainOrSubsidiary.id,
+          domainId: domainCode === "NAT_2410" ? null : domainOrSubsidiary.id,
           subsidiaryId:
-            domainCode === "HQ_NAT_0001" ? domainOrSubsidiary.id : null,
+            domainCode === "NAT_2410" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
@@ -578,7 +581,7 @@ async function main() {
         stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
         const questionIds = stageQuestions.map((question) => {
-          if (domainCode === "HQ_NAT_0001") {
+          if (domainCode === "NAT_2410") {
             const q: any = createdQuestions.find(
               (q: any) => q.originalIndex === question.originQuestionIndex
             );
