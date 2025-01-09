@@ -109,7 +109,7 @@ export default function ScoreRankAnnouncement({
             }}
           />
 
-          <p className="text-2xl font-medium text-balance px-5">
+          <p className="px-5 text-2xl font-medium text-balance">
             {generateScoreRankText(translation("rank_notification"), topRank)}
           </p>
         </div>
@@ -147,12 +147,12 @@ const SendEmailCard = () => {
 };
 
 const generateScoreRankText = (text: string, topRank: number) => {
-  const splitText = text.split("XX %");
+  const splitText = text.split("XX");
 
   return (
     <>
       {splitText[0]}
-      <span className="font-bold text-[#2686F5]">{topRank}%</span>
+      <span className="font-bold text-[#2686F5]">{topRank}</span>
       {splitText[1]}
     </>
   );

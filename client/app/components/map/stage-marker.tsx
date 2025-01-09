@@ -10,12 +10,18 @@ interface StageProps {
   routeNextQuizStage: () => Promise<void>;
   stage: any;
   isCompleted: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
   (props, ref) => {
-    const { routeNextQuizStage, currentQuizStageIndex, stage, isCompleted } =
-      props;
+    const {
+      routeNextQuizStage,
+      currentQuizStageIndex,
+      stage,
+      isCompleted,
+      setLoading,
+    } = props;
     const router = useRouter();
     const stageOrder = stage.order;
     const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
@@ -56,6 +62,7 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
           <motion.button
             onClick={() => {
               if (isCompleted) {
+                setLoading(true);
                 router.push(`review?stage=${stageOrder}`);
                 return;
               }

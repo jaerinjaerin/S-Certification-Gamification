@@ -416,7 +416,7 @@ export default function GuestLogin({
     <>
       <div className="relative">
         {/* <video
-          className="w-full h-svh object-fill "
+          className="object-fill w-full h-svh "
           autoPlay
           loop
           muted
@@ -433,7 +433,7 @@ export default function GuestLogin({
         </video> */}
 
         <div
-          className="w-full h-svh object-fill"
+          className="object-fill w-full h-svh"
           style={{
             backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
             backgroundSize: "cover",
@@ -442,18 +442,13 @@ export default function GuestLogin({
           }}
         />
 
-        <div className="flex flex-col items-center size-full absolute top-0 z-10 py-5">
-          <span className="block font-bold text-lg">
+        <div className="absolute top-0 z-10 flex flex-col items-center py-5 size-full">
+          <span className="block text-lg font-bold">
             {translation("galaxy_ai_expert")}
           </span>
 
           <div className="m-auto">
-            <div
-              className="font-bold text-center hyphens-auto break-words whitespace-normal mx-[30px] text-5xl/normal"
-              style={{
-                wordBreak: "break-word",
-              }}
-            >
+            <div className="font-bold text-center hyphens-auto break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
               {translation("be_a_galaxy_ai_expert").replaceAll(
                 "Paradigm",
                 "S24"
@@ -596,7 +591,7 @@ export default function GuestLogin({
                 console.log("verify code");
                 e.preventDefault();
               }}
-              className="relative font-one font-medium"
+              className="relative font-medium font-one"
             >
               <input
                 placeholder="code"

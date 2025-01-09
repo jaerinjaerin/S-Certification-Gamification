@@ -27,6 +27,7 @@ export default function QuizPage() {
     nextQuestion,
     canNextQuestion,
     logUserAnswer,
+    isComplete,
   } = useQuiz();
   const trnaslation = useTranslations();
   const { routeToPage } = usePathNavigator();
@@ -153,6 +154,16 @@ export default function QuizPage() {
       setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
     }
   }, [currentQuizStage, currentStageQuestions]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (isComplete()) {
+      routeToPage("/map");
+      return;
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     handleRestart();

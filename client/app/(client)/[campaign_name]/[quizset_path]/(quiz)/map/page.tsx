@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import useLoader from "@/app/components/ui/loader";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
@@ -38,6 +39,7 @@ export default function QuizMap() {
 
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
+  const { loading, setLoading, renderLoader } = useLoader();
 
   // 아이템을 참조할 배열
   const itemsRef = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -54,6 +56,7 @@ export default function QuizMap() {
   }, [currentQuizStageIndex]);
 
   const routeNextQuizStage = async () => {
+    setLoading(true);
     routeToPage("/quiz");
   };
 
@@ -116,6 +119,7 @@ export default function QuizMap() {
                 isCompleted={quizStageLogs.some(
                   (log) => log.quizStageId === quizStage.id
                 )}
+                setLoading={setLoading}
               />
               {quizStage.order !== quizSet.quizStages.length && <Connection />}
             </Fragment>
@@ -123,9 +127,10 @@ export default function QuizMap() {
         })}
       </div>
 
-      <PrivacyAndTerm className="fixed bottom-7 z-30" />
+      <PrivacyAndTerm className="fixed z-30 bottom-7" />
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
+      {loading && renderLoader()}
     </div>
   );
 }
@@ -150,7 +155,7 @@ const TutorialCarousel = () => {
   const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/map_guide.png`;
 
   return (
-    <Carousel className="w-full font-one font-medium" setApi={setApi}>
+    <Carousel className="w-full font-medium font-one" setApi={setApi}>
       <CarouselContent>
         {Array.from({ length: 2 }).map((_, index) => {
           return (

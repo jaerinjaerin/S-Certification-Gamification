@@ -51,10 +51,7 @@ export default function Login() {
           </span>
           <div className={cn("flex flex-col items-center my-auto")}>
             <div>
-              <span
-                className="block font-bold text-center mx-[30px] text-5xl/normal"
-                style={{ wordBreak: "break-word" }}
-              >
+              <span className="block font-bold text-center mx-[30px] text-5xl/normal text-pretty">
                 {translation("be_a_galaxy_ai_expert").replaceAll(
                   "(Paradigm)",
                   " S24"
@@ -70,7 +67,7 @@ export default function Login() {
               className="disabled:bg-disabled"
               disabled={loading}
             >
-              {translation("login")}
+              S+ {translation("login")}
             </Button>
           </div>
           <PrivacyAndTerm />

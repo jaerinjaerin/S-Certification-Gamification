@@ -11,8 +11,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { useEffect, useState } from "react";
+import useLoader from "../ui/loader";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
+  const [term, setTerm] = useState<any>();
+  const { loading, setLoading, renderLoader } = useLoader();
+
+  const fetchTermAndCondition = async () => {
+    try {
+      setLoading(true);
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/term/OrgCode-7.json`;
+      const res = await fetch(jsonUrl, {
+        method: "GET",
+        cache: "no-cache",
+      });
+
+      const data = await res.json();
+      setTerm(data);
+    } catch (error) {
+      console.error(`Failed to fetch T&C data log: ${error}`);
+      throw new Error(
+        "해당 도메인의 term.json을 가져오는 중 문제가 발생했습니다."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTermAndCondition();
+  }, []);
+
   const translation = useTranslations();
   return (
     <div className={cn("font-medium text-sm", className)}>
@@ -70,32 +100,8 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
           </DialogHeader>
 
           <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
-            Information Collection: We collect only the necessary personal
-            information to provide our services. Purpose of Use: Your data is
-            used for service delivery, improvement, customer support, and
-            compliance with legal requirements. Retention Period: Information is
-            retained only for as long as required by applicable laws.
-            Third-Party Sharing: Your data will not be shared without your
-            consent. Security: We employ secure technologies and procedures to
-            protect your personal information. Contact: For privacy-related
-            inquiries, please contact us at [Contact Information]. Information
-            Collection: We collect only the necessary personal information to
-            provide our services. Purpose of Use: Your data is used for service
-            delivery, improvement, customer support, and compliance with legal
-            requirements. Retention Period: Information is retained only for as
-            long as required by applicable laws. Third-Party Sharing: Your data
-            will not be shared without your consent. Security: We employ secure
-            technologies and procedures to protect your personal information.
-            Contact: For privacy-related inquiries, please contact us at
-            [Contact Information]. Information Collection: We collect only the
-            necessary personal information to provide our services. Purpose of
-            Use: Your data is used for service delivery, improvement, customer
-            support, and compliance with legal requirements. Retention Period:
-            Information is retained only for as long as required by applicable
-            laws. Third-Party Sharing: Your data will not be shared without your
-            consent. Security: We employ secure technologies and procedures to
-            protect your personal information. Contact: For privacy-related
-            inquiries, please contact us at [Contact Information].
+            {loading && renderLoader()}
+            {term && <p className="whitespace-break-spaces">{term.contents}</p>}
           </div>
           <DialogFooter>
             <DialogClose asChild>
