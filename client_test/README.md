@@ -7,7 +7,11 @@ locust -f locustfile.py --headless -u 100 -r 10 --host https://stg-quiz.samsungp
 - -t 5m: 테스트 실행 시간 5분.
 
 ```
-locust -f locustfile.py --host https://stg-quiz.samsungplus.net --headless -u 1000 -r 100 -t 5m --csv=locust_report --html=locust_report.html
+스테이징 서버
+locust -f locustfile.py --host https://stg-quiz.samsungplus.net --headless -u 100 -r 10 -t 5m --csv=locust_report --html=locust_report.html
+
+운영 서버
+locust -f locustfile.py --host https://quiz.samsungplus.net --headless -u 500 -r 20 -t 5m --csv=locust_report --html=locust_report.html
 ```
 
 locust -f locustfile.py --host https://stg-quiz.samsungplus.net
