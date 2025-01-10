@@ -1,9 +1,11 @@
 "use client";
 
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 
 export default function QuizIntro() {
+  useGAPageView();
   const { quizSet, quizLog } = useQuiz();
   const { routeToPage } = usePathNavigator();
 

@@ -1,4 +1,4 @@
-import Stat from "@/app/components/complete/stat";
+import Stat from "@/components/complete/stat";
 import { useQuiz } from "@/providers/quiz_provider";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";

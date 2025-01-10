@@ -1,4 +1,9 @@
+"use client";
+
+import useGAPageView from "@/core/monitoring/ga/usePageView";
+
 export default function CampaignNotReadyPage() {
+  useGAPageView();
   return (
     <div>
       <h1>인증제 준비 중</h1>

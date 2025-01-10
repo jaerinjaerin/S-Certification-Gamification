@@ -1,6 +1,10 @@
+"use client";
+
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import Link from "next/link";
 
 export default function CampaignClosedPage() {
+  useGAPageView();
   return (
     <div>
       <h1>이 캠페인은 종료되었습니다.</h1>

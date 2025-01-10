@@ -1,16 +1,16 @@
 "use client";
-import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
-import { QuestionMark } from "@/app/components/icons/icons";
-import Connection from "@/app/components/map/connection";
-import Gradient from "@/app/components/map/gradient";
-import { StageMarker } from "@/app/components/map/stage-marker";
-import { Button } from "@/app/components/ui/button";
+import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
+import { QuestionMark } from "@/components/icons/icons";
+import Connection from "@/components/map/connection";
+import Gradient from "@/components/map/gradient";
+import { StageMarker } from "@/components/map/stage-marker";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
-} from "@/app/components/ui/carousel";
+} from "@/components/ui/carousel";
 import {
   Dialog,
   DialogClose,
@@ -19,8 +19,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
-import useLoader from "@/app/components/ui/loader";
+} from "@/components/ui/dialog";
+import useLoader from "@/components/ui/loader";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
@@ -30,6 +31,7 @@ import { useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
+  useGAPageView();
   const {
     quizSet,
     quizStagesTotalScore,

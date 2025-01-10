@@ -1,8 +1,5 @@
-import {
-  BluePaperAirplaneIcon,
-  QuestionMark,
-} from "@/app/components/icons/icons";
-import { Button } from "@/app/components/ui/button";
+import { BluePaperAirplaneIcon, QuestionMark } from "@/components/icons/icons";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -11,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
+} from "@/components/ui/dialog";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
@@ -118,7 +115,12 @@ export default function ScoreRankAnnouncement({
 
         <div className=" w-full flex flex-wrap justify-center gap-[10px] mt-[24px]">
           {user?.authType === AuthType.SUMTOTAL && (
-            <Button variant={"primary"}>S+</Button>
+            <Button
+              variant={"primary"}
+              onClick={() => window.open(samsungplusAppDeepLink, "_blank")}
+            >
+              S+
+            </Button>
           )}
           <Button variant={"primary"} onClick={() => routeToPage("map")}>
             {isLastStage

@@ -1,4 +1,9 @@
+"use client";
+
+import useGAPageView from "@/core/monitoring/ga/usePageView";
+
 export default function InvalidAccessPage() {
+  useGAPageView();
   return (
     <div>
       <h1>잘못된 접근입니다.</h1>

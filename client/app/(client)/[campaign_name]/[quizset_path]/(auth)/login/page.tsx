@@ -1,13 +1,15 @@
 "use client";
-import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
-import { Button } from "@/app/components/ui/button";
-import useLoader from "@/app/components/ui/loader";
-import Spinner from "@/app/components/ui/spinner";
+import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
+import { Button } from "@/components/ui/button";
+import useLoader from "@/components/ui/loader";
+import Spinner from "@/components/ui/spinner";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 export default function Login() {
+  useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
 

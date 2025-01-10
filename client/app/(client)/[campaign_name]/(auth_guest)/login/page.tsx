@@ -1,6 +1,5 @@
 "use client";
-import PrivacyAndTerm from "@/app/components/dialog/privacy-and-term";
-import { Button } from "@/app/components/ui/button";
+import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -9,7 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 import {
   Dialog,
@@ -20,7 +20,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
+} from "@/components/ui/dialog";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
@@ -34,6 +35,7 @@ export default function GuestLogin({
 }: {
   params: { campaign_name: string };
 }) {
+  useGAPageView();
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [step, setStep] = useState<"email" | "code" | "selection" | "init">(

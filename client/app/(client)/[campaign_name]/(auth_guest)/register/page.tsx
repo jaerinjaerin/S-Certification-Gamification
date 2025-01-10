@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/app/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,7 +7,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,14 +16,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/app/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select";
+} from "@/components/ui/select";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCreateItem from "@/hooks/useCreateItem";
 import { getUserLocale } from "@/i18n/locale";
 import { useCampaign } from "@/providers/campaignProvider";
@@ -58,6 +59,7 @@ interface DomainDetail {
 }
 
 export default function GuestRegisterPage() {
+  useGAPageView();
   const { routeToPage } = usePathNavigator();
 
   const { data: session } = useSession();

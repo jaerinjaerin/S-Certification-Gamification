@@ -31,47 +31,6 @@ export default async function QuizLayout({
     redirect(result.redirectTo);
   }
 
-  // try {
-  //   // 1. Fetch quiz set data
-  //   const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
-  //   const quizSet = quizSetResponse.item;
-
-  //   console.log("quizSet", quizSet);
-
-  //   if (!quizSet) {
-  //     redirectToCampaignNotReady();
-  //     return null;
-  //   }
-
-  //   // 2. Fetch quiz logs
-  //   const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  //   const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
-  //   const quizStageLogs: UserQuizStageLog[] | null =
-  //     quizLogResponse.item?.quizStageLogs || null;
-  //   const quizQuestionLogs: UserQuizQuestionLog[] | null =
-  //     quizLogResponse.item?.quizQuestionLogs || null;
-
-  //   console.log("quizLog", quizLog);
-
-  //   // 3. Check guest user details
-  //   if (session?.user.authType === "GUEST") {
-  //     const userResponse = await fetchUserInfo(userId);
-  //     const user = userResponse.item;
-
-  //     if (!hasSavedDetails(user)) {
-  //       redirectToRegisterPage(params.campaign_name);
-  //       return null;
-  //     }
-  //   }
-
-  //   // 4. Redirect if user is on a different quiz set
-  //   if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
-  //     // redirectToQuizSet(params.campaign_name, quizLog.quizSetPath);
-  //     redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
-  //     return null;
-  //   }
-
-  // 5. Render children with QuizProvider
   return (
     <div
       className="h-full bg-[#F0F0F0]"
@@ -93,11 +52,6 @@ export default async function QuizLayout({
       </QuizProvider>
     </div>
   );
-  // } catch (error) {
-  //   console.error("Error in QuizLayout:", error);
-  //   redirect("/error/not-found");
-  //   return null;
-  // }
 }
 
 type RedirectResult = {

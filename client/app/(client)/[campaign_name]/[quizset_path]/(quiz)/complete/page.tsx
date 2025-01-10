@@ -1,7 +1,8 @@
 "use client";
-import GetBadgeAnnouncment from "@/app/components/complete/get-badge-announcement";
-import ScoreAnnouncement from "@/app/components/complete/score-announcement";
-import ScoreRankAnnouncement from "@/app/components/complete/score-rank-announcement";
+import GetBadgeAnnouncment from "@/components/complete/get-badge-announcement";
+import ScoreAnnouncement from "@/components/complete/score-announcement";
+import ScoreRankAnnouncement from "@/components/complete/score-rank-announcement";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { sleep } from "@/utils/utils";
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 
 export default function QuizComplete() {
+  useGAPageView();
   const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
   const { routeToPage } = usePathNavigator();

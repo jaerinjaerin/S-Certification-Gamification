@@ -36,6 +36,11 @@ export async function POST(request: Request) {
       elapsedSeconds: number;
     };
 
+    const now = new Date(); // 현재 시간
+    const updatedTime = elapsedSeconds
+      ? new Date(now.getTime() - elapsedSeconds * 1000)
+      : new Date();
+
     // try {
     const response = await fetch(
       `https://samsung.sumtotal.host/apis/api/v1/learner/activities/${activityId}/progress`,
@@ -45,7 +50,7 @@ export async function POST(request: Request) {
         cache: "no-store",
         body: JSON.stringify({
           status,
-          date: new Date().toISOString(),
+          date: updatedTime.toISOString(),
           elapsedSeconds,
         }),
         headers: {

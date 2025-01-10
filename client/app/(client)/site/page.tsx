@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/app/components/ui/button";
-import Languages from "../../../../upload_seed_data/data/seeds/languages.json";
-import { cn } from "@/utils/utils";
+import { Button } from "@/components/ui/button";
 import { matchingTable } from "@/utils/codeMatchingTable";
+import { cn } from "@/utils/utils";
+import Languages from "../../../../upload_seed_data/data/seeds/languages.json";
 
 export default function SitemapPage() {
   const supportedLanguagesCode = Languages.map((lang) => lang.code);

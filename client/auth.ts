@@ -93,6 +93,12 @@ export const {
           }
         }
 
+        console.log("jobId:", jobId);
+        console.log("storeId:", storeId);
+        console.log("storeSegmentText:", storeSegmentText);
+        console.log("channelId:", channelId);
+        console.log("channelSegmentId:", channelSegmentId);
+
         return {
           id: encrypt(profile.userId, true),
           emailId:

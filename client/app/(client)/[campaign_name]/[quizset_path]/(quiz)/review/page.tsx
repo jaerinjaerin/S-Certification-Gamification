@@ -1,8 +1,9 @@
 "use client";
-import { ErrorAlertDialog } from "@/app/components/quiz/alert-dialog";
-import Qusetion from "@/app/components/quiz/question-area";
-import Spinner from "@/app/components/ui/spinner";
-import { Button } from "@/app/components/ui/button";
+import { ErrorAlertDialog } from "@/components/quiz/alert-dialog";
+import Qusetion from "@/components/quiz/question-area";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quiz_provider";
 import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
@@ -13,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
+  useGAPageView();
   const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
     useQuiz();
 

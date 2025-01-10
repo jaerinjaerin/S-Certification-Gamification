@@ -4,7 +4,7 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 
-import { ChevronDownIcon } from "@/app/components/icons/icons";
+import { ChevronDownIcon } from "@/components/icons/icons";
 import { cn } from "@/utils/utils";
 
 const Select = SelectPrimitive.Root;

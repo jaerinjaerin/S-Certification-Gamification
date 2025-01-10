@@ -1,13 +1,14 @@
 "use client";
-// import { HeartFilledIcon, HeartIcon } from "@/app/components/icons/icons";
+// import { HeartFilledIcon, HeartIcon } from "@/components/icons/icons";
 import {
   ErrorAlertDialog,
   GameOverAlertDialog,
-} from "@/app/components/quiz/alert-dialog";
-import CountDownBar from "@/app/components/quiz/countdown-bar";
-import Qusetion from "@/app/components/quiz/question-area";
-import SuccessNotify from "@/app/components/quiz/success-notify";
-import Spinner from "@/app/components/ui/spinner";
+} from "@/components/quiz/alert-dialog";
+import CountDownBar from "@/components/quiz/countdown-bar";
+import Qusetion from "@/components/quiz/question-area";
+import SuccessNotify from "@/components/quiz/success-notify";
+import Spinner from "@/components/ui/spinner";
+import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quiz_provider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -19,6 +20,7 @@ import { useTranslations } from "next-intl";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
+  useGAPageView();
   const {
     currentQuestionIndex,
     currentQuizStage,
@@ -89,7 +91,7 @@ export default function QuizPage() {
   const handleConfirmAnswer = async (question: any, optionId: string) => {
     const result = question.options.find((option) => option.id === optionId);
     const selectedOptIds = [...new Set([...selectedOptionIds, optionId])];
-    const elapsedSeconds = (question.timeLimitSeconds - count) * 1000;
+    const elapsedSeconds = question.timeLimitSeconds - count;
 
     if (result.isCorrect) {
       // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()

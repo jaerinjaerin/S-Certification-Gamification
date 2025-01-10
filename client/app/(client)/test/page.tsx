@@ -554,71 +554,72 @@ export default function TestPage() {
       setLoading(false);
     }
   };
-  const callRegisterActivityByAdmin = async (
-    userId: string,
-    activityId: string
-  ) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/register`,
-        {
-          method: "POST",
-          cache: "no-store",
-          body: JSON.stringify({
-            activityId,
-          }),
-        }
-      );
+  // const callRegisterActivityByAdmin = async (
+  //   userId: string,
+  //   activityId: string
+  // ) => {
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/register`,
+  //       {
+  //         method: "POST",
+  //         cache: "no-store",
+  //         body: JSON.stringify({
+  //           activityId,
+  //         }),
+  //       }
+  //     );
 
-      if (!response.ok) {
-        console.error(response);
-        throw new Error("Failed to fetch data");
-      }
+  //     if (!response.ok) {
+  //       console.error(response);
+  //       throw new Error("Failed to fetch data");
+  //     }
 
-      const result = await response.json();
-      console.log("data", result);
-      setApiResult(result);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const result = await response.json();
+  //     console.log("data", result);
+  //     setApiResult(result);
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const callUpdateActivityByAdmin = async (
-    userId: string,
-    activityId: string
-  ) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/end`,
-        {
-          method: "POST",
-          cache: "no-store",
-          body: JSON.stringify({
-            activityId,
-            status: "Attended",
-            elapsedSeconds: 120,
-          }),
-        }
-      );
+  // const callUpdateActivityByAdmin = async (
+  //   userId: string,
+  //   activityId: string
+  // ) => {
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/${userId}/end`,
+  //       {
+  //         method: "POST",
+  //         cache: "no-store",
+  //         body: JSON.stringify({
+  //           activityId,
+  //           status: "Attended",
+  //           // elapsedSeconds: 120,
+  //           elapsedSeconds: 3600,
+  //         }),
+  //       }
+  //     );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch data");
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Failed to fetch data");
+  //     }
 
-      const result = await response.json();
-      console.log("data", result);
-      setApiResult(result);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const result = await response.json();
+  //     console.log("data", result);
+  //     setApiResult(result);
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     setError(err.message || "An unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   console.log("session", sessionStatus);
 
@@ -958,7 +959,7 @@ export default function TestPage() {
       <br />
       <br />
 
-      <button
+      {/* <button
         onClick={() => callRegisterActivityByAdmin("2135159", "251745")}
         disabled={loading || apiPath == null}
         style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
@@ -972,7 +973,7 @@ export default function TestPage() {
         style={{ fontSize: "1.2rem", fontWeight: "bold", color: "blue" }}
       >
         {loading ? "Loading..." : "어드민 - Activity 상태변경 하기"}
-      </button>
+      </button> */}
     </div>
   );
 }
