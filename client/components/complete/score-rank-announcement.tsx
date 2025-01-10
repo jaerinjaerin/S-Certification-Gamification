@@ -118,7 +118,10 @@ export default function ScoreRankAnnouncement({
           {user?.authType === AuthType.SUMTOTAL && (
             <Button
               variant={"primary"}
-              onClick={() => window.open(samsungplusAppDeepLink, "_blank")}
+              onClick={() => {
+                console.log("samsungplusAppDeepLink", samsungplusAppDeepLink);
+                window.open(samsungplusAppDeepLink, "_blank");
+              }}
             >
               S+
             </Button>
