@@ -1,8 +1,17 @@
 export default function InvalidAccessPage() {
+  const notFoundImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/not-found-error.png`;
   return (
-    <div>
-      <h1>잘못된 접근입니다.</h1>
-      <p>올바른 URL로 접속해주세요.</p>
+    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]">
+      <div
+        className="w-full h-[208px]"
+        style={{
+          backgroundImage: `url(${notFoundImageUrl})`,
+          backgroundPosition: "center",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <h1 className="text-xl text-center text-[#2686F5]">Not-Found</h1>
     </div>
   );
 }
