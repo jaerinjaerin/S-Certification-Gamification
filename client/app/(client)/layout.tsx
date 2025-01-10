@@ -8,20 +8,22 @@ export default async function ClientLayout({
 }) {
   return (
     <div>
-      <Link
-        href="/home"
-        style={{
-          width: "24px",
-          height: "24px",
-          color: "black",
-          position: "fixed",
-          bottom: "20px",
-          right: "100px",
-          zIndex: 1000,
-        }}
-      >
-        Home
-      </Link>
+      {process.env.NODE_ENV !== "production" && (
+        <Link
+          href="/home"
+          style={{
+            width: "24px",
+            height: "24px",
+            color: "black",
+            position: "fixed",
+            bottom: "20px",
+            right: "100px",
+            zIndex: 1000,
+          }}
+        >
+          Home
+        </Link>
+      )}
       <AuthProvider>{children}</AuthProvider>
     </div>
   );
