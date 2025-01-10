@@ -31,9 +31,7 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
       setTerm(data);
     } catch (error) {
       console.error(`Failed to fetch T&C data log: ${error}`);
-      throw new Error(
-        "해당 도메인의 term.json을 가져오는 중 문제가 발생했습니다."
-      );
+      throw new Error("Term JSON 데이터를 가져오는 중 문제가 발생했습니다.");
     } finally {
       setLoading(false);
     }
