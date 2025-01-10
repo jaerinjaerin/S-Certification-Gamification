@@ -40,9 +40,17 @@ export default function ScoreRankAnnouncement({
 
   const { data: session } = useSession();
   const user = session?.user;
-  const scoreRankImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph.png`;
+
   const percentile = (quizStageLogs && quizStageLogs.at(-1)!.percentile) || 0;
   const topRank = 100 - percentile || 1;
+  const getScoreRankGraphImageUrl = (topRank: number) => {
+    if (topRank < 0 || topRank > 100) {
+      throw new Error("Value must be between 0 and 100");
+    }
+
+    const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
+    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
+  };
 
   return (
     <div className={cn("", className)}>
@@ -102,7 +110,7 @@ export default function ScoreRankAnnouncement({
           <div
             className="w-full h-[180px]"
             style={{
-              backgroundImage: `url(${scoreRankImageUrl})`,
+              backgroundImage: `url(${getScoreRankGraphImageUrl(topRank)})`,
               backgroundPosition: "center",
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
@@ -114,7 +122,13 @@ export default function ScoreRankAnnouncement({
           </p>
         </div>
 
-        {user?.authType === AuthType.GUEST && <SendEmailCard />}
+        <SendBadgeNotificationCard
+          message={
+            user?.authType === AuthType.GUEST
+              ? "이메일로 보냈습니다. 텍스트는 수정할 예정입니다."
+              : translation("badge_deliver")
+          }
+        />
 
         <div className=" w-full flex flex-wrap justify-center gap-[10px] mt-[24px]">
           {user?.authType === AuthType.SUMTOTAL && (
@@ -131,15 +145,13 @@ export default function ScoreRankAnnouncement({
   );
 }
 
-const SendEmailCard = () => {
-  const translation = useTranslations();
-
+const SendBadgeNotificationCard = ({ message }: { message: string }) => {
   return (
     <div className="pt-[10px]">
       <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
         <BluePaperAirplaneIcon className="shrink-0" />
         <p className="text-[#1429A0] text-sm font-medium text-left max-w-[230px] text-pretty">
-          {translation("badge_deliver")}
+          {message}
         </p>
       </div>
     </div>

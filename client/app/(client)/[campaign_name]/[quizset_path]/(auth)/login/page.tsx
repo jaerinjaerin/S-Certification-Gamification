@@ -53,18 +53,18 @@ export default function Login() {
             <div>
               <span className="block font-bold text-center mx-[30px] text-5xl/normal text-pretty">
                 {translation("be_a_galaxy_ai_expert").replaceAll(
-                  "(Paradigm)",
-                  " S24"
+                  "Paradigm",
+                  "S24"
                 )}
               </span>
-              <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
+              {/* <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
                 {translation("certification")}
-              </span>
+              </span> */}
             </div>
             <Button
               variant={"primary"}
               onClick={() => processSignIn()}
-              className="disabled:bg-disabled"
+              className="disabled:bg-disabled mt-[49px]"
               disabled={loading}
             >
               S+ {translation("login")}

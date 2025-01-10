@@ -10,7 +10,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog";
-
 import {
   Dialog,
   DialogClose,
@@ -26,7 +25,7 @@ import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
 export default function GuestLogin({
@@ -412,6 +411,27 @@ export default function GuestLogin({
     }
   };
 
+  const convertMessageFormat = (searchKey: string) => {
+    const searchMessage = translation.rich(searchKey, {
+      address: (children) => (
+        <>
+          <span className="text-blue-500">{children}.</span>
+          <br />
+        </>
+      ),
+      email,
+    });
+
+    const lastArray = React.Children.toArray(searchMessage).at(-1) as string;
+
+    return (
+      <>
+        {React.Children.toArray(searchMessage).slice(0, 2)}
+        <span>{lastArray.replace(".", "")}</span>
+      </>
+    );
+  };
+
   return (
     <>
       <div className="relative">
@@ -454,13 +474,12 @@ export default function GuestLogin({
                 "S24"
               )}
             </div>
-            <span className="block text-center font-normal text-3xl/relaxed mt-[26px] mb-[69px] text-pretty">
-              {translation("certification")}
-            </span>
+
             <div className="text-center">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
+                    className="mt-[49px]"
                     variant={"primary"}
                     onClick={() => {
                       setStep("email");
@@ -576,12 +595,7 @@ export default function GuestLogin({
           <DialogHeader>
             <DialogTitle>{translation("confirm_your_email")}</DialogTitle>
             <DialogDescription>
-              {translation.rich("send_magic_link", {
-                address: (children) => (
-                  <span className="text-blue-500">{children}</span>
-                ),
-                email,
-              })}
+              {convertMessageFormat("send_magic_link")}
             </DialogDescription>
           </DialogHeader>
           <div>
