@@ -1,1 +1,1 @@
-const samsungplusAppDeepLink = "https://samsung.sumtotal.host";
+export const samsungplusAppDeepLink = "https://samsung.sumtotal.host";
