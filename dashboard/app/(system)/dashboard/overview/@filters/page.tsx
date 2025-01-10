@@ -5,6 +5,8 @@ import { CalendarForm } from "@/components/system/calendar-with-title";
 import FiltersContainer from "@/components/system/filters-container";
 import { useForm } from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
+import { useEffect } from "react";
+import axios from "axios";
 
 const labels = [
   "Region",
@@ -19,6 +21,12 @@ const labels = [
 const width = "8rem";
 const OverviewFilterForm = () => {
   const form = useForm();
+
+  useEffect(() => {
+    axios.get("/api/dashboard/filter").then((res) => {
+      console.log(res.data);
+    });
+  }, []);
 
   function onSubmit(data) {
     console.log("🚀 ~ onSubmit ~ data:", data);

@@ -23,7 +23,7 @@ const getDefaultDateRange = () => {
   const oneMonthLater = new Date();
   oneMonthLater.setFullYear(today.getFullYear());
   oneMonthLater.setMonth(today.getMonth() + 1);
-  console.log(today.toISOString(), oneMonthLater.toISOString());
+  // console.log(today.toISOString(), oneMonthLater.toISOString());
 
   return {
     start: today.toISOString().split("T")[0], // "YYYY-MM-DD"

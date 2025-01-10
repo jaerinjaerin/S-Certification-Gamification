@@ -39,7 +39,7 @@ const GoalProgressChart: React.FC<{ campaignId: string }> = ({
     return <div>Loading...</div>;
   }
 
-  console.log("data:", data);
+  // console.log("data:", data);
 
   return (
     <div>
