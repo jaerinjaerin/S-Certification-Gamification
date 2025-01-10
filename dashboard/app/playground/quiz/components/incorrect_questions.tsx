@@ -44,8 +44,8 @@ const IncorrectQuestions: React.FC<{ filters: FilterState }> = ({
         //   throw new Error("Failed to fetch data");
         // }
 
-        console.log("response", response);
-        console.log("response", response.data);
+        // console.log("response", response);
+        // console.log("response", response.data);
 
         setData(response.data.data);
         // setData(result.data);

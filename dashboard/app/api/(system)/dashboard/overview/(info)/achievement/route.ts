@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 
     const user_quiz_statistics = await prisma.userQuizStatistics.findMany();
     const domain_goal = await prisma.domainGoal.findMany();
-    console.log("🚀 ~ GET ~ domain_goal:", domain_goal);
+    // console.log("🚀 ~ GET ~ domain_goal:", domain_goal);
 
     return NextResponse.json({});
   } catch (error) {
