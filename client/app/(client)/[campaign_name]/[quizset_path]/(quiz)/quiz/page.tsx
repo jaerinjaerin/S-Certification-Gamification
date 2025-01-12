@@ -10,7 +10,7 @@ import SuccessNotify from "@/components/quiz/success-notify";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useCountdown } from "@/hooks/useCountdown";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
@@ -26,6 +26,7 @@ export default function QuizPage() {
     currentQuizStage,
     currentStageQuestions,
     endStage,
+    failStage,
     nextQuestion,
     canNextQuestion,
     logUserAnswer,
@@ -136,7 +137,10 @@ export default function QuizPage() {
     routeToPage("complete");
   };
 
-  const handleGameOver = useCallback(() => {
+  const handleGameOver = useCallback(async () => {
+    setLoading(true);
+    await failStage();
+    setLoading(false);
     stopCountdown();
     setGameOver(true);
   }, [stopCountdown, setGameOver]);
@@ -239,14 +243,14 @@ export default function QuizPage() {
       <Qusetion
         question={question.text}
         bgImageUrl={
-          question.backgroundImageUrl
-            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImageUrl}`
+          question.backgroundImage?.imagePath
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImage.imagePath}`
             : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/bg_1.jpg`
         }
         charImageUrl={
-          question.characterImageUrl
-            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImageUrl}`
-            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.jpg`
+          question.characterImage?.imagePath
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImage.imagePath}`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.png`
         }
       />
       <div className="pt-[32px] pb-[48px] px-5 flex flex-col gap-4 ">

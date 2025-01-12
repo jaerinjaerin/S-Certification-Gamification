@@ -1,5 +1,5 @@
 import Stat from "@/components/complete/stat";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 

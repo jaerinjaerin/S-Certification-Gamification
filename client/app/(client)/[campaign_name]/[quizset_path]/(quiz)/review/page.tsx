@@ -4,7 +4,7 @@ import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
@@ -39,15 +39,15 @@ export default function ReviewPage() {
   const question = questions[currentQuestionIndex];
 
   useEffect(() => {
-    const currentReviewQuizQuestionLogs =
-      reviewQuizQuestionLogs.length <= currentQuestionIndex
-        ? null
-        : reviewQuizQuestionLogs[currentQuestionIndex];
+    const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
+      (log) => log.questionId === question.id
+    );
 
     if (!currentReviewQuizQuestionLogs) {
       const correctOptionIds = question.options
         .filter((option) => option.isCorrect)
         .map((option) => option.id);
+
       setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
     } else {
       setSelectedOptionIds([
@@ -128,14 +128,14 @@ export default function ReviewPage() {
       <Qusetion
         question={question.text}
         bgImageUrl={
-          question.backgroundImageUrl
-            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImageUrl}`
+          question.backgroundImage?.imagePath
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImage.imagePath}`
             : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/bg_1.jpg`
         }
         charImageUrl={
-          question.characterImageUrl
-            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImageUrl}`
-            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.jpg`
+          question.characterImage?.imagePath
+            ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImage.imagePath}`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.png`
         }
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">

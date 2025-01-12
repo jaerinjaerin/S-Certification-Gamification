@@ -1,14 +1,16 @@
 // src/app/quiz/[campaign_name]/[quizset_path]/layout.tsx
 import { auth } from "@/auth";
-import { QuizProvider } from "@/providers/quiz_provider";
+import { QuizProvider } from "@/providers/quizProvider";
 import { fetchQuizLog, fetchQuizSet } from "@/services/quizService";
 import { fetchUserInfo } from "@/services/userService";
 import { hasSavedDetails } from "@/utils/userHelper";
 import {
+  AuthType,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
 } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -45,7 +47,7 @@ export default async function QuizLayout({
         quizStageLogs={result.quizStageLogs!}
         quizQuestionLogs={result.quizQuestionLogs!}
         userId={userId}
-        authType={session?.user.authType}
+        authType={session?.user.authType || AuthType.GUEST}
         quizSetPath={params.quizset_path}
       >
         {children}
@@ -68,42 +70,47 @@ async function handleQuizSetup(
   userId: string,
   session: Session | null
 ): Promise<RedirectResult> {
-  // 1. Fetch quiz set
-  const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
-  const quizSet = quizSetResponse.item;
+  try {
+    // 1. Fetch quiz set
+    const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
+    const quizSet = quizSetResponse.item;
 
-  if (!quizSet) {
-    return { redirectTo: `/${params.campaign_name}/not-ready` };
-  }
-
-  // 2. Fetch quiz logs
-  const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
-  const quizStageLogs: UserQuizStageLog[] | null =
-    quizLogResponse.item?.quizStageLogs || null;
-  const quizQuestionLogs: UserQuizQuestionLog[] | null =
-    quizLogResponse.item?.quizQuestionLogs || null;
-
-  // 3. Check guest user details
-  if (session?.user.authType === "GUEST") {
-    const userResponse = await fetchUserInfo(userId);
-    const user = userResponse.item;
-
-    if (!hasSavedDetails(user)) {
-      return { redirectTo: `/${params.campaign_name}/register` };
+    if (!quizSet) {
+      return { redirectTo: `/${params.campaign_name}/not-ready` };
     }
-  }
 
-  // 4. Redirect if user is on a different quiz set
-  if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
-    return { redirectTo: `/${params.campaign_name}/${quizLog.quizSetPath}` };
-  }
+    // 2. Fetch quiz logs
+    const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
+    const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
+    const quizStageLogs: UserQuizStageLog[] | null =
+      quizLogResponse.item?.quizStageLogs || null;
+    const quizQuestionLogs: UserQuizQuestionLog[] | null =
+      quizLogResponse.item?.quizQuestionLogs || null;
 
-  // Return collected data if no redirection is needed
-  return {
-    quizSet,
-    quizLog,
-    quizStageLogs,
-    quizQuestionLogs,
-  };
+    // 3. Check guest user details
+    if (session?.user.authType === "GUEST") {
+      const userResponse = await fetchUserInfo(userId);
+      const user = userResponse.item;
+
+      if (!hasSavedDetails(user)) {
+        return { redirectTo: `/${params.campaign_name}/register` };
+      }
+    }
+
+    // 4. Redirect if user is on a different quiz set
+    if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
+      return { redirectTo: `/${params.campaign_name}/${quizLog.quizSetPath}` };
+    }
+
+    // Return collected data if no redirection is needed
+    return {
+      quizSet,
+      quizLog,
+      quizStageLogs,
+      quizQuestionLogs,
+    };
+  } catch (error) {
+    Sentry.captureException(error);
+    return { redirectTo: "/error" };
+  }
 }

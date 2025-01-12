@@ -30,8 +30,8 @@ export default async function RootLayout({
         <meta name="google" content="notranslate" />
       </head>
       <body className={`font-sharpSans font-bold antialiased`}>
-        {children}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
+        {children}
       </body>
     </html>
   );

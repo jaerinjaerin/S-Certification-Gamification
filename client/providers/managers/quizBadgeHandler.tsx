@@ -1,0 +1,126 @@
+import { getBadgeEmailTemplete } from "@/templete/email";
+import * as Sentry from "@sentry/nextjs";
+
+export class QuizBadgeHandler {
+  issueBadge = async (
+    activityId: string,
+    elapsedSeconds: number
+  ): Promise<boolean> => {
+    try {
+      console.log("issueBadge");
+      const registered = await this.postActivitieRegister(activityId);
+      const result = await this.postActivityEnd(activityId, elapsedSeconds);
+
+      return false;
+    } catch (error) {
+      Sentry.captureException(error);
+      return false;
+    }
+  };
+
+  sendBadgeEmail = async (userId: string, badgeImageUrl: string) => {
+    try {
+      console.log("sendBadgeEmail");
+      const subject: string = "You have earned the Galaxy AI Expert Badge.";
+      const bodyHtml: string = getBadgeEmailTemplete(badgeImageUrl);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send-badge-email`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            userId,
+            subject,
+            bodyHtml,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        // TODO: 이메일 전송 오류 저장해 놓기
+        throw new Error(errorData.message || "Failed to fetch activities");
+      }
+
+      const data = await response.json();
+      console.log("sendBadgeEmail data", data);
+
+      return true;
+    } catch (err: any) {
+      console.error(err.message || "An unexpected error occurred");
+      Sentry.captureException(err);
+      return false;
+      // TODO: 이메일 전송 오류 저장해 놓기
+      // throw new Error(err.message || "An unexpected error occurred");
+    }
+  };
+
+  postActivitieRegister = async (activityId: string): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        // TODO: 활동 등록 오류 저장해 놓기
+        throw new Error(errorData.message || "Failed to fetch activities");
+      }
+
+      const data = await response.json();
+
+      return true;
+    } catch (err: any) {
+      console.error(err.message || "An unexpected error occurred");
+      Sentry.captureException(err);
+      return false;
+      // TODO: 활동 등록 오류 저장해 놓기
+      // throw new Error(err.message || "An unexpected error occurred");
+    }
+  };
+
+  postActivityEnd = async (
+    activityId: string,
+    elapsedSeconds: number
+  ): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
+        {
+          method: "POST",
+          cache: "no-store",
+          body: JSON.stringify({
+            activityId: activityId,
+            status: "Attended",
+            // elapsedSeconds: elapsedSeconds,
+            elapsedSeconds: 120,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        // TODO: 활동 등록 오류 저장해 놓기
+        throw new Error(errorData.message || "Failed to fetch activities");
+      }
+
+      const data = await response.json();
+      console.log("data", data);
+
+      return true;
+    } catch (err: any) {
+      console.error(err.message || "An unexpected error occurred");
+      Sentry.captureException(err);
+      return false;
+      // TODO: 활동 등록 오류 저장해 놓기
+      // throw new Error(err.message || "An unexpected error occurred");
+    }
+  };
+}

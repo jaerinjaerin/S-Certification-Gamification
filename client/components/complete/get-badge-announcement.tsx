@@ -12,7 +12,7 @@ export default function GetBadgeAnnouncment({
   className?: string;
 }) {
   const translation = useTranslations();
-  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImageUrl}`;
+  const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImage?.imagePath}`;
   const congratulationMessage =
     stageName === "3"
       ? translation("congratulation 1")

@@ -38,6 +38,53 @@ export async function POST(request: Request) {
       channelName,
     } = body;
 
+    let userQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst({
+      where: {
+        userId: userId as string,
+        quizSetId: quizSetId as string,
+        quizStageId: quizStageId as string,
+        questionId: questionId as string,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const tryNumber = userQuizQuestionLog?.tryNumber
+      ? userQuizQuestionLog?.tryNumber! + 1
+      : 1;
+
+    // const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
+    //   data: {
+    //     authType,
+    //     isCorrect,
+    //     campaignId,
+    //     userId,
+    //     quizSetId,
+    //     questionId,
+    //     quizStageId,
+    //     selectedOptionIds,
+    //     correctOptionIds,
+    //     quizStageIndex,
+    //     category,
+    //     specificFeature,
+    //     product,
+    //     questionType,
+    //     elapsedSeconds,
+    //     createdAt,
+
+    //     domainId,
+    //     languageId,
+    //     jobId,
+    //     regionId,
+    //     subsidiaryId,
+    //     channelSegmentId,
+    //     storeId,
+    //     channelId,
+    //     channelName,
+    //   },
+    // });
+
     const result = await prisma.$transaction(async (tx) => {
       const userQuizQuestionLog = await tx.userQuizQuestionLog.create({
         data: {
@@ -57,7 +104,6 @@ export async function POST(request: Request) {
           questionType,
           elapsedSeconds,
           createdAt,
-
           domainId,
           languageId,
           jobId,
@@ -67,6 +113,7 @@ export async function POST(request: Request) {
           storeId,
           channelId,
           channelName,
+          tryNumber,
         },
       });
 
@@ -90,7 +137,6 @@ export async function POST(request: Request) {
             questionType,
             elapsedSeconds,
             createdAt,
-
             domainId,
             languageId,
             jobId,
@@ -100,6 +146,7 @@ export async function POST(request: Request) {
             storeId,
             channelId,
             channelName,
+            tryNumber,
           },
         });
 
@@ -120,28 +167,28 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("user_id");
-  const quizSetId = searchParams.get("quiz_set_id");
-  const quizStageId = searchParams.get("quiz_stage_id");
+// export async function GET(request: Request) {
+//   const { searchParams } = new URL(request.url);
+//   const userId = searchParams.get("user_id");
+//   const quizSetId = searchParams.get("quiz_set_id");
+//   const quizStageId = searchParams.get("quiz_stage_id");
 
-  try {
-    const quizLogs = await prisma.userQuizQuestionLog.findMany({
-      where: {
-        userId: userId as string,
-        quizSetId: quizSetId as string,
-        quizStageId: quizStageId as string,
-      },
-    });
+//   try {
+//     const quizLogs = await prisma.userQuizQuestionLog.findMany({
+//       where: {
+//         userId: userId as string,
+//         quizSetId: quizSetId as string,
+//         quizStageId: quizStageId as string,
+//       },
+//     });
 
-    return NextResponse.json({ item: quizLogs }, { status: 200 });
-  } catch (error) {
-    console.error("Error get quiz logs :", error);
-    Sentry.captureException(error);
-    return NextResponse.json(
-      { message: "An unexpected error occurred" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({ item: quizLogs }, { status: 200 });
+//   } catch (error) {
+//     console.error("Error get quiz logs :", error);
+//     Sentry.captureException(error);
+//     return NextResponse.json(
+//       { message: "An unexpected error occurred" },
+//       { status: 500 }
+//     );
+//   }
+// }

@@ -1,0 +1,82 @@
+export const getBadgeEmailTemplete = (badgeImageUrl: string) => {
+  return `
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #000000;
+        color: #333333;
+      }
+      .email-container {
+        max-width: 840px;
+        width: 100%;
+        height: 414px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg"); /* 배경 패턴 URL */
+        background-repeat: repeat;
+        background-size: 50%;
+        background-position: center;
+      }
+      .header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .badge-image {
+        margin: 20px auto;
+        width: 120px;
+        height: 120px;
+      }
+      .badge-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+      .date {
+        font-size: 14px;
+        margin: 5px 0 20px 0;
+        color: #555555;
+      }
+      .congratulations {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      .footer {
+        font-size: 12px;
+        color: #aaaaaa;
+        margin-top: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
+      <img
+        src="${badgeImageUrl}"
+        alt="Galaxy AI Expert Badge"
+        class="badge-image"
+      />
+      <div class="congratulations">
+        Congratulations!<br />
+        You have earned the Galaxy AI Expert Badge.
+      </div>
+    </div>
+    <div class="footer">
+      This message was automatically delivered by Samsung+ service. Do not reply
+      to this message.<br />
+      Copyright © 2024 SAMSUNG all rights reserved.
+    </div>
+  </body>
+</html>
+`;
+};

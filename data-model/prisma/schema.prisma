@@ -254,6 +254,35 @@ model QuizSet {
   // userQuizLogs UserQuizLog[]
 }
 
+model QuizBadge {
+  id         String   @id @default(uuid())
+  name       String?
+  description String?
+  imagePath   String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  quizStages QuizStage[]
+}
+
+model Image {
+  id         String   @id @default(uuid())
+  alt       String?
+  title     String?
+  caption String?
+  format   String
+  categories String[]
+  imagePath   String
+  thumbnailPath String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  
+  
+  questionsBackgrounds      Question[] @relation("BackgroundImage")
+  questionsCharacters  Question[] @relation("CharacterImage")
+}
+
 model QuizStage {
   id         String   @id @default(uuid())
   name       String     // Name of the stage
@@ -269,10 +298,14 @@ model QuizStage {
 
   isBadgeStage Boolean?
   badgeActivityId String?
-  badgeImageUrl String?
+  // badgeImageUrl String?
 
-  backgroundImageUrl String?
-  characterImageUrl String?
+  badgeImageId String?
+  // badgeImage Image? @relation(fields: [badgeImageId], references: [id])
+  badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id])
+
+  // backgroundImageUrl String?
+  // characterImageUrl String?
 }
 
 model Question {
@@ -290,8 +323,17 @@ model Question {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   
-  backgroundImageUrl String?
-  characterImageUrl String?
+  // backgroundImageUrl String?
+  // characterImageUrl String?
+
+  backgroundImageId String?
+  characterImageId String?
+
+  // backgroundImage Image? @relation(fields: [backgroundImageId], references: [id])
+  // characterImage Image? @relation(fields: [characterImageId], references: [id])
+  backgroundImage    Image? @relation("BackgroundImage", fields: [backgroundImageId], references: [id])
+  characterImage     Image? @relation("CharacterImage", fields: [characterImageId], references: [id])
+
 
   category    String?
   specificFeature   String?
@@ -500,6 +542,8 @@ model UserQuizQuestionLog {
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  tryNumber Int
 }
 
 model UserQuizStatistics {
@@ -625,6 +669,8 @@ model UserQuizQuestionStatistics {
 
   quizStageIndex  Int
   elapsedSeconds Int
+
+  tryNumber Int
 
   // question
   questionType    QuestionType

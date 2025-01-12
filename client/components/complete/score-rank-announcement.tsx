@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { samsungplusAppDeepLink } from "@/core/config/links";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
 import { AuthType } from "@prisma/client";

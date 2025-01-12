@@ -31,6 +31,8 @@ export async function POST(request: Request, props: Props) {
       },
       include: {
         options: true, // Include all related options for each question
+        backgroundImage: true,
+        characterImage: true,
       },
     });
 

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";

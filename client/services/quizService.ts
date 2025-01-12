@@ -32,7 +32,9 @@ export const fetchQuizLog = async (
 ): Promise<ApiResponse<QuizLogResponse>> => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${userId}&campaign_name=${campaignName}`;
-    return await apiClient.get<ApiResponse<QuizLogResponse>>(url);
+    const result = await apiClient.get<ApiResponse<QuizLogResponse>>(url);
+    console.log("Quiz log result:", result.item?.quizQuestionLogs);
+    return result;
   } catch (error) {
     console.error(`Failed to fetch quiz log: ${error}`);
     throw new Error("퀴즈 로그를 가져오는 중 문제가 발생했습니다.");

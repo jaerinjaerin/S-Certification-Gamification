@@ -54,7 +54,11 @@ export async function GET(request: NextRequest, props: Props) {
         jobCodes: { has: job?.code },
       },
       include: {
-        quizStages: true,
+        quizStages: {
+          include: {
+            badgeImage: true, // Include badgeImage relation in quizStages
+          },
+        },
       },
     });
 
@@ -91,10 +95,12 @@ export async function GET(request: NextRequest, props: Props) {
           },
           include: {
             options: true,
+            backgroundImage: true,
+            characterImage: true,
           },
         });
 
-        console.log("questions:", questions);
+        // console.log("questions:", questions);
 
         // languageId 우선, 없으면 defaultLanguage.id
         const prioritizedQuestions = questions.filter(

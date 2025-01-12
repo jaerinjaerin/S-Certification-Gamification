@@ -2,8 +2,10 @@
 
 import {
   Domain,
+  Image,
   Question,
   QuestionOption,
+  QuizBadge,
   QuizSet,
   QuizStage,
   Subsidiary,
@@ -20,10 +22,13 @@ export interface QuizSetEx extends QuizSet {
 
 export interface QuizStageEx extends QuizStage {
   questions: QuestionEx[];
+  badgeImage: QuizBadge | null;
 }
 
 export interface QuestionEx extends Question {
   options: QuestionOption[];
+  backgroundImage: Image | null;
+  characterImage: Image | null;
 }
 
 export interface QuizLogResponse {

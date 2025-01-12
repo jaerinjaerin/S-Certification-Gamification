@@ -25,7 +25,7 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
     const router = useRouter();
     const stageOrder = stage.order;
     const isActiveStage = currentQuizStageIndex + 1 === stageOrder;
-    const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImageUrl}`;
+    const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${stage.badgeImage?.imagePath}`;
 
     const renderLockIcon = () =>
       !isActiveStage &&
@@ -36,7 +36,7 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
       );
 
     const renderButtonContent = () => {
-      if (stage.isBadgeStage && stage.badgeImageUrl) {
+      if (stage.isBadgeStage && stage.badgeImage?.imagePath) {
         return (
           <div
             className={cn(

@@ -1,5 +1,6 @@
 import { CampaignProvider } from "@/providers/campaignProvider";
 import { Campaign } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
 import { redirect } from "next/navigation";
 
 export default async function CampaignLayout({
@@ -21,21 +22,18 @@ export default async function CampaignLayout({
   };
 
   if (!response.ok) {
+    console.error("Failed to fetch campaign");
+    Sentry.captureMessage(`Failed to fetch campaign: ${params.campaign_name}`);
     routeCommonError();
     return;
   }
   const data = (await response.json()) as { item: Campaign };
-
-  // console.log("QuizProvider fetchData data", data);
-
   if (data.item == null) {
+    console.error("Campaign not found");
+    Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
     routeCommonError();
     return;
   }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  // const messages = await getMessages();
 
   return (
     <div className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto text-base">

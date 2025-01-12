@@ -1,7 +1,7 @@
 "use client";
 
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 
 export default function QuizIntro() {

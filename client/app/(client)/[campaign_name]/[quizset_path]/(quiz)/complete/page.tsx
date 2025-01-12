@@ -3,7 +3,7 @@ import GetBadgeAnnouncment from "@/components/complete/get-badge-announcement";
 import ScoreAnnouncement from "@/components/complete/score-announcement";
 import ScoreRankAnnouncement from "@/components/complete/score-rank-announcement";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import { useQuiz } from "@/providers/quiz_provider";
+import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { sleep } from "@/utils/utils";
 import { motion } from "motion/react";

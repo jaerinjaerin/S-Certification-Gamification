@@ -6,6 +6,193 @@ import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function POST(request: NextRequest) {
+  try {
+    // const url = request.url;
+    // const { searchParams } = new URL(url);
+    // const quizsetPath = searchParams.get("quizset_path");
+    // console.log("quizSet post", quizsetPath);
+
+    const body = await request.json();
+    const { userId, quizSetPath } = body;
+
+    if (!quizSetPath) {
+      Sentry.captureMessage("Quiz set path is required");
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "Bad request",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Quiz set path is required",
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+
+    console.log("domainCode", domainCode);
+    console.log("languageCode", languageCode);
+
+    const domain = await prisma.domain.findFirst({
+      where: {
+        code: domainCode,
+      },
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
+    console.log("domain:", domain);
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "User not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    const job = await prisma.job.findFirst({
+      where: {
+        id: user?.jobId ?? sumtotalUserOthersJobId,
+      },
+    });
+
+    const language = await prisma.language.findFirst({
+      where: {
+        code: languageCode,
+      },
+    });
+
+    // console.log("language:", language);
+
+    const quizSet = await prisma.quizSet.findFirst({
+      where: {
+        domainId: domain?.id,
+        jobCodes: {
+          has: job?.code,
+        },
+      },
+      include: {
+        quizStages: {
+          include: {
+            badgeImage: true, // Include badgeImage relation in quizStages
+          },
+        },
+      },
+    });
+
+    // console.log("quizSet:", quizsetPath, quizSet);
+
+    if (!quizSet) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Quiz set not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    // console.log("user:", user);
+
+    const result = await prisma.$transaction(async (tx) => {
+      const userQuizLog = await tx.userQuizLog.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId: quizSet.campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: quizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+
+      const userQuizStatistics = await tx.userQuizStatistics.create({
+        data: {
+          id: userQuizLog.id,
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId: quizSet.campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: quizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+
+      return { userQuizLog, userQuizStatistics };
+    });
+
+    // console.log("userQuizLog:", result.userQuizLog);
+    // console.log("userQuizStatistics:", result.userQuizStatistics);
+
+    return NextResponse.json(
+      {
+        item: {
+          quizLog: result.userQuizLog,
+        },
+      },
+      { status: 200 }
+    );
+  } catch (e: unknown) {
+    console.error("Error creating user campaign domain log:", e);
+    Sentry.captureException(e);
+    return NextResponse.json({ error: e }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const url = request.url;
@@ -77,15 +264,33 @@ export async function GET(request: NextRequest) {
 
     // console.log("userQuizStageLogs:", userQuizStageLogs);
 
+    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+    //   where: {
+    //     userId: userId,
+    //     quizSetId: userQuizLog.quizSetId,
+    //   },
+    //   orderBy: {
+    //     createdAt: "asc",
+    //   },
+    // });
+
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
         userId: userId,
         quizSetId: userQuizLog.quizSetId,
       },
-      orderBy: {
-        createdAt: "asc",
-      },
+      orderBy: [
+        {
+          questionId: "asc", // questionId를 기준으로 정렬
+        },
+        {
+          createdAt: "desc", // 최신 항목을 우선 정렬
+        },
+      ],
+      distinct: ["questionId"], // questionId별로 중복 제거
     });
+
+    console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
 
     return NextResponse.json(
       {
@@ -131,188 +336,5 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    // const url = request.url;
-    // const { searchParams } = new URL(url);
-    // const quizsetPath = searchParams.get("quizset_path");
-    // console.log("quizSet post", quizsetPath);
-
-    const body = await request.json();
-    const { userId, quizsetPath } = body;
-
-    if (!quizsetPath) {
-      Sentry.captureMessage("Quiz set path is required");
-      return NextResponse.json(
-        {
-          status: 400,
-          message: "Bad request",
-          error: {
-            code: "BAD_REQUEST",
-            details: "Quiz set path is required",
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
-
-    console.log("domainCode", domainCode);
-    console.log("languageCode", languageCode);
-
-    const domain = await prisma.domain.findFirst({
-      where: {
-        code: domainCode,
-      },
-      include: {
-        subsidiary: {
-          include: {
-            region: true,
-          },
-        },
-      },
-    });
-
-    console.log("domain:", domain);
-    const user = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "User not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "User not found",
-          },
-        },
-        { status: 404 }
-      );
-    }
-
-    const job = await prisma.job.findFirst({
-      where: {
-        id: user?.jobId ?? sumtotalUserOthersJobId,
-      },
-    });
-
-    const language = await prisma.language.findFirst({
-      where: {
-        code: languageCode,
-      },
-    });
-
-    // console.log("language:", language);
-
-    const quizSet = await prisma.quizSet.findFirst({
-      where: {
-        domainId: domain?.id,
-        jobCodes: {
-          has: job?.code,
-        },
-      },
-      include: {
-        quizStages: true, // Include quizStages
-      },
-    });
-
-    // console.log("quizSet:", quizsetPath, quizSet);
-
-    if (!quizSet) {
-      return NextResponse.json(
-        {
-          status: 404,
-          message: "Not found",
-          error: {
-            code: "NOT_FOUND",
-            details: "Quiz set not found",
-          },
-        },
-        { status: 404 }
-      );
-    }
-
-    // console.log("user:", user);
-
-    const result = await prisma.$transaction(async (tx) => {
-      const userQuizLog = await tx.userQuizLog.create({
-        data: {
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: quizsetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      const userQuizStatistics = await tx.userQuizStatistics.create({
-        data: {
-          id: userQuizLog.id,
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: quizsetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      return { userQuizLog, userQuizStatistics };
-    });
-
-    // console.log("userQuizLog:", result.userQuizLog);
-    // console.log("userQuizStatistics:", result.userQuizStatistics);
-
-    return NextResponse.json(
-      {
-        item: {
-          quizLog: result.userQuizLog,
-        },
-      },
-      { status: 200 }
-    );
-  } catch (e: unknown) {
-    console.error("Error creating user campaign domain log:", e);
-    Sentry.captureException(e);
-    return NextResponse.json({ error: e }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

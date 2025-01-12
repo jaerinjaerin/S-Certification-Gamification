@@ -1,14 +1,34 @@
-// "use server";
+import { ScoreData } from "@/types/type";
+import * as Sentry from "@sentry/nextjs";
+import { QuizLog } from "./quizQuestionLogManager";
 
-import { QuizLog } from "@/providers/managers/quizQuestionLogManager";
-// type QuizLog = {
-//   isCorrect: boolean; // 정답 여부
-//   selectedOptionIds: string[]; // 사용자가 선택한 옵션
-//   correctOptionIds: string[]; // 정답 옵션
-//   elapsedSeconds: number; // 한 문제 풀이 시간 (초 단위)
-// };
+export class QuizScoreHandler {
+  fetchRankAndGraphData = async (
+    userId: string,
+    campaignId: string,
+    quizStageIndex: number,
+    score: number
+  ): Promise<ScoreData | null> => {
+    console.log("get score");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?userId=${userId}&quizStageIndex=${quizStageIndex}&campaignId=${campaignId}&userScore=${score}`,
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
+      const data = await response.json();
+      console.log("get score", data);
 
-class QuizScoreCalculator {
+      return data as ScoreData;
+    } catch (error) {
+      console.error("Failed to get score:", error);
+      Sentry.captureException(error);
+      return null;
+    }
+  };
+
   private baseScore = 20; // 기본 점수
   private comboBonus = 2; // 연속 정답 보너스
   private timeBonusThreshold = 60; // 문제 풀이 시간 보너스 기준 (초)
@@ -122,5 +142,3 @@ class QuizScoreCalculator {
     return 0;
   }
 }
-
-export default QuizScoreCalculator;
