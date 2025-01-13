@@ -25,10 +25,7 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
   beforeSend(event) {
-    if (
-      process.env.NODE_ENV === "development" ||
-      event.request?.url?.includes("localhost")
-    ) {
+    if (event.request?.url?.includes("localhost")) {
       return null; // 이벤트 무시
     }
     return event; // 이벤트 전송
