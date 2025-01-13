@@ -10,22 +10,22 @@ type Props = {
 };
 
 export async function POST(request: Request, props: Props) {
-  try {
-    const userId = props.params.user_id;
-    // const session = await auth();
-    const body = await request.json();
-    const {
-      domainId,
-      // domainCode,
-      subsidiaryId,
-      regionId,
-      jobId,
-      languageCode,
-      channelId,
-      channelName,
-      channelSegmentId,
-    } = body;
+  const userId = props.params.user_id;
+  // const session = await auth();
+  const body = await request.json();
+  const {
+    domainId,
+    // domainCode,
+    subsidiaryId,
+    regionId,
+    jobId,
+    languageCode,
+    channelId,
+    channelName,
+    channelSegmentId,
+  } = body;
 
+  try {
     /*
     body: {
       domainCode: selectedCountry.code,
@@ -123,7 +123,24 @@ export async function POST(request: Request, props: Props) {
     return NextResponse.json({ item: quizPath }, { status: 200 });
   } catch (error) {
     console.error("Error register user quiz log:", error);
-    Sentry.captureException(error);
+
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/users/[user_id]/register",
+        method: "POST",
+        description: "Failed to register user quiz log",
+      });
+      scope.setTag("userId", userId);
+      scope.setTag("domainId", domainId);
+      scope.setTag("regionId", regionId);
+      scope.setTag("subsidiaryId", subsidiaryId);
+      scope.setTag("jobId", jobId);
+      scope.setTag("languageCode", languageCode);
+      scope.setTag("channelId", channelId);
+      scope.setTag("channelSegmentId", channelSegmentId);
+      return scope;
+    });
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

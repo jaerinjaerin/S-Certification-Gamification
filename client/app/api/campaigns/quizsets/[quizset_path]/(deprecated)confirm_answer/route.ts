@@ -10,21 +10,21 @@ type Props = {
 };
 
 export async function POST(request: Request, props: Props) {
+  // const session = await auth();
+  const body = await request.json();
+
+  const { quizset_path } = props.params;
+  const { quizStageId, questionId, selectedOptionIds } = body;
+
+  console.log(
+    "body:",
+    quizStageId,
+    questionId,
+    selectedOptionIds,
+    quizset_path
+  );
+
   try {
-    // const session = await auth();
-    const body = await request.json();
-
-    const { quizset_path } = props.params;
-    const { quizStageId, questionId, selectedOptionIds } = body;
-
-    console.log(
-      "body:",
-      quizStageId,
-      questionId,
-      selectedOptionIds,
-      quizset_path
-    );
-
     const question = await prisma.question.findFirst({
       where: {
         id: questionId,
@@ -82,7 +82,6 @@ export async function POST(request: Request, props: Props) {
     }
   } catch (error) {
     console.error("Error register user quiz log:", error);
-    Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

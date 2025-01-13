@@ -34,10 +34,10 @@ import { NextRequest, NextResponse } from "next/server";
 // }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { email, code } = body as { email: string; code: string };
+  const body = await request.json();
+  const { email, code } = body as { email: string; code: string };
 
+  try {
     const verifyToken = await prisma.verifyToken.findFirst({
       where: { email: email },
     });
@@ -85,7 +85,19 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
-    Sentry.captureException(error);
+    // Sentry.captureException(error);
+
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/auth/send-verify-email",
+        method: "POST",
+        description: "Failed to verify email",
+      });
+      scope.setTag("email", email);
+      return scope;
+    });
+
     if (error instanceof Error) {
       console.error("Error verify code:", error.message);
       return NextResponse.json({ error: error.message }, { status: 500 });

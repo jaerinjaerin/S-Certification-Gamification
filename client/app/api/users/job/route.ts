@@ -6,14 +6,15 @@ import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  try {
-    const session = await auth();
+  const session = await auth();
 
-    // if (!session) {
-    //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    // }
-    const searchParams = new URL(request.url).searchParams;
-    const orgIdsStr = searchParams.get("org_ids");
+  // if (!session) {
+  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  // }
+  const searchParams = new URL(request.url).searchParams;
+  const orgIdsStr = searchParams.get("org_ids");
+
+  try {
     // const userId = searchParams.get("user_id");
 
     if (!orgIdsStr) {
@@ -109,7 +110,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ job, store, channelSegmentId }, { status: 200 });
   } catch (error) {
     console.error("Error in GET handler:", error);
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/users/job",
+        method: "POST",
+        description: "Failed to create quiz stage log",
+      });
+      scope.setTag("orgIdsStr", orgIdsStr);
+      return scope;
+    });
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

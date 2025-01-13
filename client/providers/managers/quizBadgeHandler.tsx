@@ -128,7 +128,16 @@ export class QuizBadgeHandler {
       return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
-      Sentry.captureException(err);
+      Sentry.captureException(err, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: "/api/sumtotal/activity/end",
+          method: "POST",
+          description: "Failed to end activity",
+        });
+        scope.setTag("activity_id", activityId);
+        return scope;
+      });
       return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");

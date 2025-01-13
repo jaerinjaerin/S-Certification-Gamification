@@ -3,41 +3,41 @@ import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  const body = await request.json();
+
+  const {
+    isCorrect,
+    campaignId,
+    userId,
+    authType,
+    quizSetId,
+    quizStageId,
+    questionId,
+    // languageId,
+    selectedOptionIds,
+    correctOptionIds,
+    // jobId,
+    // domainId,
+    quizStageIndex,
+    category,
+    specificFeature,
+    product,
+    questionType,
+    elapsedSeconds,
+    createdAt,
+    // score,
+    domainId,
+    languageId,
+    jobId,
+    regionId,
+    subsidiaryId,
+    channelSegmentId,
+    storeId,
+    channelId,
+    channelName,
+  } = body;
+
   try {
-    const body = await request.json();
-
-    const {
-      isCorrect,
-      campaignId,
-      userId,
-      authType,
-      quizSetId,
-      quizStageId,
-      questionId,
-      // languageId,
-      selectedOptionIds,
-      correctOptionIds,
-      // jobId,
-      // domainId,
-      quizStageIndex,
-      category,
-      specificFeature,
-      product,
-      questionType,
-      elapsedSeconds,
-      createdAt,
-      // score,
-      domainId,
-      languageId,
-      jobId,
-      regionId,
-      subsidiaryId,
-      channelSegmentId,
-      storeId,
-      channelId,
-      channelName,
-    } = body;
-
     const savedUserQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst(
       {
         where: {
@@ -160,7 +160,22 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("Error create quiz question log :", error);
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/logs/quizzes/questions",
+        method: "POST",
+        description: "Failed to create quiz question log",
+      });
+      scope.setTag("userId", userId);
+      scope.setTag("campaignId", campaignId);
+      scope.setTag("authType", authType);
+      scope.setTag("quizSetId", quizSetId);
+      scope.setTag("quizStageId", quizStageId);
+      scope.setTag("questionId", questionId);
+      return scope;
+    });
+
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

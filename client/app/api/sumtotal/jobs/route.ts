@@ -5,9 +5,9 @@ import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  try {
-    const session = await auth();
+  const session = await auth();
 
+  try {
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -23,7 +23,17 @@ export async function GET() {
     console.log("account", account);
 
     if (!account) {
-      Sentry.captureException(new Error("Account not found"));
+      Sentry.captureException(new Error("Account not found"), (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/users/job",
+          method: "POST",
+          description: "Account not found",
+        });
+        scope.setTag("userId", session.user.id);
+        return scope;
+      });
+
       return NextResponse.json(
         { message: "Account not found" },
         { status: 404 }
@@ -56,8 +66,16 @@ export async function GET() {
     console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error: unknown) {
-    console.error("Error fetching jobs:", error);
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/users/job",
+        method: "POST",
+        description: "Failed to fetch job data",
+      });
+      scope.setTag("userId", session?.user.id);
+      return scope;
+    });
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

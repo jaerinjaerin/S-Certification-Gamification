@@ -18,15 +18,15 @@ const sesClient =
       });
 
 export async function POST(request: NextRequest) {
-  try {
-    console.log("POST send badge email handler called");
-    const body = await request.json();
-    const { userId, subject, bodyHtml } = body as {
-      userId: string;
-      subject: string;
-      bodyHtml: string;
-    };
+  console.log("POST send badge email handler called");
+  const body = await request.json();
+  const { userId, subject, bodyHtml } = body as {
+    userId: string;
+    subject: string;
+    bodyHtml: string;
+  };
 
+  try {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -89,7 +89,16 @@ export async function POST(request: NextRequest) {
     throw new Error("Email not sent");
   } catch (error: unknown) {
     console.error("Error send badge email: ", error);
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/activity/send-badge-email",
+        method: "POST",
+        description: "Failed to send badge email",
+      });
+      scope.setTag("userId", userId);
+      return scope;
+    });
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     await prisma.$disconnect();
