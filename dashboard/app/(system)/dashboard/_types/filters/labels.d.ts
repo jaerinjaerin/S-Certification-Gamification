@@ -3,13 +3,8 @@ type FilterLabelItem = {
   type: "select" | "date";
 };
 
-type FilterLabelGroup = {
-  primary: FilterLabelItem[];
-  secondary: FilterLabelItem[];
-};
-
 type FilterLabels = {
-  overview: FilterLabelGroup;
-  user: FilterLabelGroup;
-  quiz: FilterLabelGroup;
+  overview: FilterLabelItem[];
+  user: FilterLabelItem[];
+  quiz: FilterLabelItem[];
 };

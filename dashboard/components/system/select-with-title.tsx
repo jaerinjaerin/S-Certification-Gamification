@@ -12,18 +12,20 @@ import { ControllerRenderProps, FieldValues } from "react-hook-form";
 const SelectForm = ({
   label,
   placeholder = "Select",
-  width = "20rem",
+  width = "auto",
   field,
+  items,
 }: {
-  label: string;
+  label?: string | undefined;
   placeholder?: string;
   width?: number | string;
   field: ControllerRenderProps<FieldValues, string>;
+  items: { label: string; value: string | number }[];
 }) => {
   return (
     <div className="flex items-center space-x-4">
-      <div className="flex-shrink-0">{label}</div>
-      <Select onValueChange={field.onChange}>
+      {label && <div className="flex-shrink-0">{label}</div>}
+      <Select onValueChange={field.onChange} defaultValue={field.value}>
         <SelectTrigger
           className={cn(
             "bg-white hover:bg-zinc-100",
@@ -34,9 +36,11 @@ const SelectForm = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light">Light</SelectItem>
-          <SelectItem value="dark">Dark</SelectItem>
-          <SelectItem value="system">System</SelectItem>
+          {items.map((item) => (
+            <SelectItem key={item.value} value={item.value.toString()}>
+              {item.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

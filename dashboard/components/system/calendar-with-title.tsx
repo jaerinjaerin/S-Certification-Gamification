@@ -20,11 +20,11 @@ const dateOptions = {
 };
 
 export function CalendarForm({
-  label = "Date",
+  label,
   width = "20rem",
   field,
 }: {
-  label?: string;
+  label?: string | undefined;
   width?: number | string;
   field: ControllerRenderProps<FieldValues, string>;
 }) {
@@ -48,7 +48,7 @@ export function CalendarForm({
 
   return (
     <div className="flex items-center space-x-4">
-      <div>{label}</div>
+      {label && <div>{label}</div>}
       <Popover>
         <PopoverTrigger asChild>
           <Button

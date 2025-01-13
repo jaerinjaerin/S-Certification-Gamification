@@ -1,4 +1,7 @@
 // Prisma 기반 타입 정의
+type Campaign = Prisma.CampaignGetPayload<{
+  select: { id: true; name: true };
+}>;
 type Region = Prisma.RegionGetPayload<{
   select: { id: true; name: true };
 }>;
@@ -19,15 +22,27 @@ type Store = Prisma.StoreGetPayload<{
 }>;
 
 interface FilterData {
-  regions: Region[]; // 전체 리스트
-  subsidiaries: Subsidiary[]; // 전체 리스트
-  domains: Domain[]; // 전체 리스트
-  channelSegments: ChannelSegment[]; // 전체 리스트
-  jobGroups: JobGroup[]; // 전체 리스트
-  salesFormat: Store[]; // 전체 리스트
-  selected: {
-    region: Region | null; // 선택된 region
-    subsidiary: Subsidiary | null; // 선택된 subsidiary
-    domain: Domain | null; // 선택된 domain
-  };
+  regions: Region[];
+  subsidiary: Subsidiary[];
+  domain: Domain[];
+  channelSegment: ChannelSegment[];
+  jobGroup: JobGroup[];
+  salesFormat: Store[];
+}
+
+interface UserType {
+  name: string;
+  id: string;
+}
+
+interface UserGroup {
+  all: UserType;
+  plus: UserType;
+  none: UserType;
+}
+
+interface AllFilterData {
+  campaign: Campaign[];
+  userGroup: UserGroup;
+  filters: FilterData;
 }
