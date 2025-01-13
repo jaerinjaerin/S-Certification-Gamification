@@ -38,21 +38,22 @@ export async function POST(request: Request) {
       channelName,
     } = body;
 
-    let userQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst({
-      where: {
-        userId: userId as string,
-        quizSetId: quizSetId as string,
-        quizStageId: quizStageId as string,
-        questionId: questionId as string,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const savedUserQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst(
+      {
+        where: {
+          userId: userId as string,
+          quizSetId: quizSetId as string,
+          quizStageId: quizStageId as string,
+          questionId: questionId as string,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      }
+    );
 
-    const tryNumber = userQuizQuestionLog?.tryNumber
-      ? userQuizQuestionLog?.tryNumber! + 1
-      : 1;
+    let tryNumber = savedUserQuizQuestionLog?.tryNumber ?? 0;
+    tryNumber += 1;
 
     // const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
     //   data: {
