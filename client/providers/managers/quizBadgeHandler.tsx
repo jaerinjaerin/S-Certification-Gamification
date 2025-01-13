@@ -18,11 +18,21 @@ export class QuizBadgeHandler {
     }
   };
 
-  sendBadgeEmail = async (userId: string, badgeImageUrl: string) => {
+  sendBadgeEmail = async (
+    userId: string,
+    badgeImageUrl: string,
+    translationMessage: { [key: string]: string },
+    currentQuizStageIndex: number
+  ) => {
     try {
       console.log("sendBadgeEmail");
       const subject: string = "You have earned the Galaxy AI Expert Badge.";
-      const bodyHtml: string = getBadgeEmailTemplete(badgeImageUrl);
+      const bodyHtml: string = getBadgeEmailTemplete(
+        badgeImageUrl,
+        translationMessage,
+        currentQuizStageIndex
+      );
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send-badge-email`,
         {

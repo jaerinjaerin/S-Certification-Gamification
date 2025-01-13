@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/types/apiTypes";
 import { EndStageResult, ScoreData } from "@/types/type";
@@ -21,6 +20,7 @@ import { QuizLogHandler } from "./managers/quizLogHandler";
 import QuizQuestionLogManager from "./managers/quizQuestionLogManager";
 import { QuizScoreHandler } from "./managers/quizScoreHandler";
 import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
+import { useTranslations } from "next-intl";
 
 interface QuizContextType {
   quizSet: QuizSetEx;
@@ -75,6 +75,7 @@ export const QuizProvider = ({
   quizQuestionLogs: UserQuizQuestionLog[] | null;
 }) => {
   const { routeToPage } = usePathNavigator();
+  const translation = useTranslations();
   const pathname = usePathname();
 
   const { campaign } = useCampaign();
@@ -344,6 +345,15 @@ export const QuizProvider = ({
 
     // 이메일 뱃지 발급
     const badgeImageUrl = getCurrentStageBadgeImageUrl();
+    const translationMessage = {
+      galaxy_ai_expert: translation("galaxy_ai_expert"),
+      email_badge_date: translation("email_badge_date"),
+      email_badge_description_1: translation("email_badge_description_1"),
+      email_badge_description_2: translation("email_badge_description_2"),
+      email_badge_description_3: translation("email_badge_description_3"),
+      email_badge_description_4: translation("email_badge_description_4"),
+    };
+
     if (!badgeImageUrl) {
       Sentry.captureMessage(
         `[processBadgeAcquisition] Badge Image URL is not found : ${quizLog?.quizSetPath}`
@@ -353,7 +363,9 @@ export const QuizProvider = ({
 
     const result = await new QuizBadgeHandler().sendBadgeEmail(
       userId,
-      badgeImageUrl
+      badgeImageUrl,
+      translationMessage,
+      currentQuizStageIndex
     );
 
     return result;

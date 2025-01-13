@@ -1,68 +1,258 @@
-export const getBadgeEmailTemplete = (badgeImageUrl: string) => {
-  return `
-<!DOCTYPE html>
-<html>
-  <head>
+export const getBadgeEmailTemplete = (
+  badgeImageUrl: string,
+  translationMessage: { [key: string]: string },
+  currentQuestionIndex: number
+) => {
+  return `<!DOCTYPE html>
+<html style="font-weight: 400">
+  <head style="font-weight: 400">
+    <meta charset="utf-8" style="font-weight: 400" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      style="font-weight: 400"
+    />
+
+    <style type="text/css" style="font-weight: 400">
+      @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+    </style>
+
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #000000;
-        color: #333333;
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212 !important; /* 다크 모드 배경 */
+          color: #ffffff !important; /* 다크 모드 텍스트 */
+        }
       }
-      .email-container {
-        max-width: 840px;
-        width: 100%;
-        height: 414px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 10px;
-        text-align: center;
-        background-image: url("https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg"); /* 배경 패턴 URL */
-        background-repeat: repeat;
-        background-size: 50%;
-        background-position: center;
-      }
-      .header {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-      .badge-image {
-        margin: 20px auto;
-        width: 120px;
-        height: 120px;
-      }
-      .badge-title {
-        font-size: 16px;
-        font-weight: bold;
-        margin: 10px 0;
-      }
-      .date {
-        font-size: 14px;
-        margin: 5px 0 20px 0;
-        color: #555555;
-      }
-      .congratulations {
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 20px;
-      }
-      .footer {
-        font-size: 12px;
-        color: #aaaaaa;
-        margin-top: 30px;
-        text-align: center;
+
+      @media (prefers-color-scheme: light) {
+        body {
+          background-color: #ffffff !important; /* 라이트 모드 배경 */
+          color: #000000 !important; /* 라이트 모드 텍스트 */
+        }
       }
     </style>
   </head>
-  <body>
-    <div class="email-container">
+  <body
+    style="
+      font-weight: 400;
+      width: 100%;
+      font-size: 16px;
+      font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+      background-color: #000000 !important;
+    "
+  >
+    <table
+      class="main"
+      style="
+        font-weight: 400;
+        width: 100%;
+        border-collapse: separate;
+        font-size: 16px;
+        font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
+        -webkit-font-smoothing: antialiased;
+        max-width: 800px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        border: 1px solid #c7d0d4;
+        border-spacing: 0;
+        margin: 15px auto;
+        padding: 0;
+      "
+    >
+      <tr style="font-weight: 400">
+        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
+          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+            <div
+              style="
+                font-weight: 400;
+                max-width: 600px;
+                text-align: left;
+                margin: 0 auto;
+                padding: 0 20px;
+              "
+            >
+              <div
+                style="
+                  font-weight: 600;
+                  display: inline-block;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <h1
+                  style="
+                    font-weight: 700;
+                    float: left;
+                    font-size: 38px;
+                    line-height: 42px;
+                    letter-spacing: -1px;
+                    margin: 0;
+                    padding: 0;
+                  "
+                >
+                  
+                  S+ ${translationMessage["galaxy_ai_expert"]}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr style="font-weight: 400">
+        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
+          <div
+            class="container"
+            style="
+              font-weight: 400;
+              max-width: 600px;
+              text-align: left;
+              margin: 0 auto;
+              padding: 0 20px;
+            "
+          >
+            <div class="inner" style="font-weight: 400; padding: 30px 0 20px">
+              <div style="width: 100%">
+                <div
+                  style="
+                    margin: 70px auto;
+                    text-align: center;
+                    background-image: url(${badgeImageUrl});
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    width: 148px;
+                    height: 148px;
+                  "
+                ></div>
+                <h3 style="text-align: center">
+                  S+ ${translationMessage["galaxy_ai_expert"]}
+                </h3>
+                <h5 style="text-align: center">
+                ${translationMessage["email_badge_date"]}
+                </h5>
+              </div>
+
+              <div
+                class="interface"
+                style="font-weight: 400; margin-bottom: 30px"
+              >
+                <h3
+                  class="title"
+                  style="font-weight: 700; font-size: 18px; margin: 0 0 15px"
+                ></h3>
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                    padding: 15px;
+                  "
+                >
+${translationMessage["email_badge_description_1"]}</pre
+                >
+                <pre
+                  style="
+                  font-weight: normal;
+                  font-family: Menlo, Monaco, 'Courier New', monospace;
+                  font-size: 14px;
+                  white-space: pre-wrap;
+                  color:black
+                  border-radius: 4px;
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                  margin: 0 0 15px;
+                  padding: 15px;
+                "
+                >
+${
+  currentQuestionIndex === 2
+    ? translationMessage["email_badge_description_2"]
+    : translationMessage["email_badge_description_3"]
+}</pre
+                >
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr style="font-weight: 400">
+        <td
+          style="
+            font-weight: 400;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #121212 !important;
+            color: #ffffff !important;
+          "
+        >
+          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+            <div
+              style="
+                font-weight: 400;
+                max-width: 600px;
+                text-align: left;
+                margin: 0 auto;
+                padding: 0 20px;
+              "
+            >
+              <div
+                class="header-with-buttons"
+                style="
+                  font-weight: 400;
+                  display: inline-block;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                  "
+                >
+${translationMessage["email_badge_description_4"]}</pre
+                >
+                <pre
+                  style="
+                    font-weight: normal;
+                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                    border-radius: 4px;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    margin: 0 0 15px;
+                  "
+                >
+Copyright ⓒ 2024 SAMSUNG all rights reserved.</pre
+                >
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <!-- <div class="email-container">
       <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
       <img
-        src="${badgeImageUrl}"
+        src="https://assets-stage.samsungplus.net/certification/s24/images/badge/badge_stage4.png"
         alt="Galaxy AI Expert Badge"
         class="badge-image"
       />
@@ -75,7 +265,7 @@ export const getBadgeEmailTemplete = (badgeImageUrl: string) => {
       This message was automatically delivered by Samsung+ service. Do not reply
       to this message.<br />
       Copyright © 2024 SAMSUNG all rights reserved.
-    </div>
+    </div> -->
   </body>
 </html>
 `;
