@@ -115,7 +115,17 @@ export class QuizStageLogHandler {
       return data.item as UserQuizStageLog;
     } catch (error) {
       console.error("Error createQuizStageLog:", error);
-      Sentry.captureException(error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: "/api/logs/quizzes/stages",
+          method: "POST",
+          description: "Failed to create quiz stage log",
+        });
+        scope.setTag("quizStageIndex", quizStageIndex);
+        scope.setTag("isBadgeAcquired", isBadgeAcquired);
+        return scope;
+      });
       throw new Error(
         "An unexpected error occurred while registering quiz log"
       );

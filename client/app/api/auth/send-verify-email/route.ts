@@ -17,14 +17,14 @@ const sesClient =
       });
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { toAddress, subject, bodyHtml } = body as {
-      toAddress: string;
-      subject: string;
-      bodyHtml: string;
-    };
+  const body = await request.json();
+  const { toAddress, subject, bodyHtml } = body as {
+    toAddress: string;
+    subject: string;
+    bodyHtml: string;
+  };
 
+  try {
     let verifyToken = await prisma.verifyToken.findFirst({
       where: { email: toAddress },
     });
@@ -143,7 +143,19 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: unknown) {
     console.error("Error send email verify error: ", error);
-    Sentry.captureException(error);
+    // Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/auth/send-verify-email",
+        method: "POST",
+        description: "Failed to send email verify",
+      });
+      scope.setTag("toAddress", toAddress);
+      scope.setTag("subject", subject);
+      return scope;
+    });
+
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     await prisma.$disconnect();

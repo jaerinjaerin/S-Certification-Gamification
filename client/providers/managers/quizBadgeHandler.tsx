@@ -14,6 +14,7 @@ export class QuizBadgeHandler {
       return false;
     } catch (error) {
       Sentry.captureException(error);
+      await Sentry.flush(2000); // 최대 2초 대기
       return false;
     }
   };
@@ -58,7 +59,14 @@ export class QuizBadgeHandler {
       return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
+      Sentry.captureMessage(
+        `Failed to send badge email: ${err.message}, ${userId}`
+      );
       Sentry.captureException(err);
+
+      // Sentry 전송을 명시적으로 대기
+      await Sentry.flush(2000); // 최대 2초 대기
+
       return false;
       // TODO: 이메일 전송 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");
@@ -89,6 +97,9 @@ export class QuizBadgeHandler {
       return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
+      Sentry.captureMessage(
+        `Failed to register activity: ${err.message}, ${activityId}`
+      );
       Sentry.captureException(err);
       return false;
       // TODO: 활동 등록 오류 저장해 놓기
@@ -127,7 +138,16 @@ export class QuizBadgeHandler {
       return true;
     } catch (err: any) {
       console.error(err.message || "An unexpected error occurred");
-      Sentry.captureException(err);
+      Sentry.captureException(err, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: "/api/sumtotal/activity/end",
+          method: "POST",
+          description: "Failed to end activity",
+        });
+        scope.setTag("activity_id", activityId);
+        return scope;
+      });
       return false;
       // TODO: 활동 등록 오류 저장해 놓기
       // throw new Error(err.message || "An unexpected error occurred");

@@ -15,11 +15,11 @@ type Props = {
 };
 
 export async function GET(request: NextRequest, props: Props) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("user_id");
-    const quizsetPath = props.params.quizset_path;
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("user_id");
+  const quizsetPath = props.params.quizset_path;
 
+  try {
     if (!quizsetPath || !userId) {
       throw new ApiError(
         400,
@@ -136,7 +136,17 @@ export async function GET(request: NextRequest, props: Props) {
   } catch (error) {
     console.error("Error fetching question data:", error);
 
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/campaigns/quizsets/[quizset_path]",
+        method: "POST",
+        description: "Failed to fetch question data",
+      });
+      scope.setTag("user_id", userId);
+      scope.setTag("quizset_path", quizsetPath);
+      return scope;
+    });
 
     // ApiError 처리
     if (error instanceof ApiError) {

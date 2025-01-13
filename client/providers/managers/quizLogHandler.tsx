@@ -43,7 +43,17 @@ export class QuizLogHandler {
       return newQuizLog;
     } catch (error) {
       console.error("Failed to initialize quiz history:", error);
-      Sentry.captureException(error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: "/api/logs/quizzes/sets",
+          method: "POST",
+          description: "Failed to initialize quiz history",
+        });
+        scope.setTag("userId", userId);
+        scope.setTag("quizSetPath", quizSetPath);
+        return scope;
+      });
       return null;
     }
   };
@@ -85,7 +95,17 @@ export class QuizLogHandler {
       return data.item as UserQuizLog;
     } catch (error) {
       console.error("Error updateQuizSummaryLog:", error);
-      Sentry.captureException(error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: "/api/logs/quizzes/sets/[quizLogId]",
+          method: "POST",
+          description: "Failed to update quiz summary log",
+        });
+        scope.setTag("quizStageIndex", quizStageIndex);
+        scope.setTag("isBadgeAcquired", isBadgeAcquired);
+        return scope;
+      });
       throw new Error(
         "An unexpected error occurred while registering quiz log"
       );

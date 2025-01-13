@@ -19,10 +19,10 @@ export async function GET() {
   //   return redirect(authUrl);
   // }
 
+  const session = await auth();
+
   // 2. 인증 코드가 있는 경우 액세스 토큰 요청
   try {
-    const session = await auth();
-
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -82,7 +82,17 @@ export async function GET() {
     return NextResponse.json(tokens, { status: 200 });
   } catch (error) {
     console.error("Error refresh token:", error);
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/sumtotal/auth/refresh_token",
+        method: "POST",
+        description: "Failed to refresh token",
+      });
+      scope.setTag("userId", session?.user.id);
+      return scope;
+    });
+
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 500 }

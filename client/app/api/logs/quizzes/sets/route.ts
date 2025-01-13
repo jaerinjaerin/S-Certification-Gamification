@@ -7,14 +7,14 @@ import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const body = await request.json();
+  const { userId, quizSetPath } = body;
+
   try {
     // const url = request.url;
     // const { searchParams } = new URL(url);
     // const quizsetPath = searchParams.get("quizset_path");
     // console.log("quizSet post", quizsetPath);
-
-    const body = await request.json();
-    const { userId, quizSetPath } = body;
 
     if (!quizSetPath) {
       Sentry.captureMessage("Quiz set path is required");
@@ -184,22 +184,33 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (e: unknown) {
-    console.error("Error creating user campaign domain log:", e);
-    Sentry.captureException(e);
-    return NextResponse.json({ error: e }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Error creating user campaign domain log:", error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/logs/quizzes/sets",
+        method: "POST",
+        description: "Failed to create user campaign domain log",
+      });
+      scope.setTag("userId", userId);
+      scope.setTag("quizSetPath", quizSetPath);
+      return scope;
+    });
+
+    return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
 }
 
 export async function GET(request: NextRequest) {
-  try {
-    const url = request.url;
-    const { searchParams } = new URL(url);
-    const userId = searchParams.get("user_id");
-    const campaignName = searchParams.get("campaign_name");
+  const url = request.url;
+  const { searchParams } = new URL(url);
+  const userId = searchParams.get("user_id");
+  const campaignName = searchParams.get("campaign_name");
 
+  try {
     if (!userId || !campaignName) {
       throw new ApiError(
         400,
@@ -305,7 +316,17 @@ export async function GET(request: NextRequest) {
   } catch (error: unknown) {
     console.error("API Get - QuizSet :", error);
 
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/logs/quizzes/sets",
+        method: "POST",
+        description: "Failed to fetch quiz set data",
+      });
+      scope.setTag("userId", userId);
+      scope.setTag("campaignName", campaignName);
+      return scope;
+    });
 
     // ApiError에 대한 특수 처리
     if (error instanceof ApiError) {
