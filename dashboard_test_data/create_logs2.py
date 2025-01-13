@@ -167,6 +167,7 @@ for stage in stage_logs:
             'product': f"product_{random.randint(1, 5)}",
             'elapsedSeconds': random.randint(5, 30),
             'domainId': stage['domainId'],
+            'tryNumber': random.randint(1, 3),
             'languageId': stage['languageId'],
             'jobId': stage['jobId'],
             'regionId': stage['regionId'],
