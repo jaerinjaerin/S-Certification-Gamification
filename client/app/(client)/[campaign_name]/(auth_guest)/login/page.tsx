@@ -31,18 +31,12 @@ import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
-export default function GuestLogin({
-  params,
-}: {
-  params: { campaign_name: string };
-}) {
+export default function GuestLogin({ params }: { params: { campaign_name: string } }) {
   useGAPageView();
 
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
-  const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
-    "init"
-  );
+  const [step, setStep] = useState<"email" | "code" | "selection" | "init">("init");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,10 +55,7 @@ export default function GuestLogin({
   useEffect(() => {
     if (expiresAt) {
       const now = new Date();
-      const diffInSeconds = Math.max(
-        0,
-        Math.floor((expiresAt.getTime() - now.getTime()) / 1000)
-      );
+      const diffInSeconds = Math.max(0, Math.floor((expiresAt.getTime() - now.getTime()) / 1000));
 
       setCountStart(diffInSeconds);
       resetCountdown();
@@ -84,245 +75,227 @@ export default function GuestLogin({
     }
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            toAddress: email,
-            subject: `${translation("email_title")}`,
-            bodyHtml: `
-<!DOCTYPE html>
-<html style="font-weight: 400">
-  <head style="font-weight: 400">
-    <meta charset="utf-8" style="font-weight: 400" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-      style="font-weight: 400"
-    />
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`, {
+        method: "POST",
+        body: JSON.stringify({
+          toAddress: email,
+          subject: `${translation("email_title")}`,
+          bodyHtml: `
+            <!DOCTYPE html>
+            <html style="font-weight: 400">
+              <head style="font-weight: 400">
+                <meta charset="utf-8" style="font-weight: 400" />
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                  style="font-weight: 400"
+                />
 
-    <style type="text/css" style="font-weight: 400">
-      @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-    </style>
+                <style type="text/css" style="font-weight: 400">
+                  @import url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
-  
-    <style>
-     @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #121212 !important; /* 다크 모드 배경 */
-          color: #ffffff !important;           /* 다크 모드 텍스트 */
-        }
-      }
-
-      @media (prefers-color-scheme: light) {
-        body {
-          background-color: #ffffff !important; /* 라이트 모드 배경 */
-          color: #000000 !important;           /* 라이트 모드 텍스트 */
-        }
-      }
-  </style>
-  </head>
-  <body
-    style="
-      font-weight: 400;
-      width: 100%;
-      font-size: 16px;
-      font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-      padding: 0;
-      background-color: #000000 !important;
-    "
-  >
-    <table
-      class="main"
-      style="
-        font-weight: 400;
-        width: 100%;
-        border-collapse: separate;
-        font-size: 16px;
-        font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
-        -webkit-font-smoothing: antialiased;
-        max-width: 800px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        border: 1px solid #c7d0d4;
-        border-spacing: 0;
-        margin: 15px auto;
-        padding: 0;
-      "
-    >
-      <tr style="font-weight: 400">
-        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
-            <div
-              style="
-                font-weight: 400;
-                max-width: 600px;
-                text-align: left;
-                margin: 0 auto;
-                padding: 0 20px;
-              "
-            >
-              <div
-                style="
-                  font-weight: 600;
-                  display: inline-block;
-                  width: 100%;
-                  align-items: center;
-                "
-              >
-                <h1
-                  style="
-                    font-weight: 700;
-                    float: left;
-                    font-size: 38px;
-                    line-height: 42px;
-                    letter-spacing: -1px;
-                    margin: 0;
-                    padding: 0;
-                  "
-                >S+ ${translation("galaxy_ai_expert")}</h1>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr style="font-weight: 400">
-        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-          <div
-            class="container"
-            style="
-              font-weight: 400;
-              max-width: 600px;
-              text-align: left;
-              margin: 0 auto;
-              padding: 0 20px;
-            "
-          >
-            <div class="inner" style="font-weight: 400; padding: 30px 0 20px">
-              <h2
-                style="
-                  font-weight: 700;
-                  font-size: 54px;
-                  margin: 70px 0;
-                  text-align: center;
-                "
-              >
-                $CODE$
-              </h2>
-
-              <div
-                class="interface"
-                style="font-weight: 400; margin-bottom: 30px; "
-              >
-                <h3
-                  class="title"
-                  style="
-                    font-weight: 700;
-                    font-size: 18px;
-                    margin: 0 0 15px;
-                  "
-                ></h3>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                    padding: 15px;
-                  "
-                >${translation("email_verify_code_description_1")}</pre>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    color:black
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                    padding: 15px;
-                  "
-                >${translation("email_verify_code_description_2")}</pre>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr style="font-weight: 400">
-        <td
-          style="
-            font-weight: 400;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #121212 !important;
-            color: #ffffff !important;
-          "
-        >
-          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
-            <div
-              style="
-                font-weight: 400;
-                max-width: 600px;
-                text-align: left;
-                margin: 0 auto;
-                padding: 0 20px;
-              "
-            >
-              <div
-                class="header-with-buttons"
+                  .colored-black {
+                    color:#ffffff;
+                    mix-blend-mode:difference;
+                  }
+                </style>
+              </head>
+              <body
                 style="
                   font-weight: 400;
-                  display: inline-block;
                   width: 100%;
-                  align-items: center;
+                  font-size: 16px;
+                  font-family: 'SamsungSharpSans', sans-serif;
+                  -webkit-font-smoothing: antialiased;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #000000;
+                  box-sizing: border-box;
                 "
               >
-                <pre
+                <table
                   style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
+                    font-weight: 400;
+                    width: 100%;
+                    border-collapse: separate;
+                    font-size: 16px;
+                    font-family: 'SamsungSharpSans' sans-serif;
+                    background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
+                    -webkit-font-smoothing: antialiased;
+                    max-width: 800px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                     border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
+                    border: 1px solid #c7d0d4;
+                    border-spacing: 0;
+                    margin: 15px auto;
+                    padding: 0;
                   "
-                >${translation("email_badge_description_4")}</pre>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                  "
-                >Copyright ⓒ 2024 SAMSUNG all rights reserved.</pre>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>`,
-          }),
-        }
-      );
+                >
+                  <tr style="font-weight: 400">
+                    <td style="font-weight: 400; text-align: center; margin: 0; padding: 0;">
+                      <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+                        <div
+                          style="
+                            font-weight: 400;
+                            max-width: 600px;
+                            text-align: left;
+                            margin: 0 auto;
+                            padding: 0 20px;
+                          "
+                        >
+                          <div
+                            style="
+                              font-weight: 600;
+                              display: inline-block;
+                              width: 100%;
+                              align-items: center;
+                            "
+                          >
+                            <h1
+                              class="colored-black"
+                              style="
+                                font-weight: 700;
+                                float: left;
+                                font-size: 16px;
+                                line-height: 42px;
+                                letter-spacing: -1px;
+                                margin: 0;
+                                padding: 0;
+                              "
+                            >S+ ${translation("galaxy_ai_expert")}</h1>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="font-weight: 400">
+                    <td style="font-weight: 400; text-align: center; margin: 0; padding: 0;">
+                      <div
+                        style="
+                          font-weight: 400;
+                          max-width: 600px;
+                          text-align: left;
+                          margin: 0 auto;
+                          padding: 0 20px;
+                        "
+                      >
+                        <div style="font-weight: 400; padding: 30px 0 20px">
+                          <h2
+                            class="colored-black"
+                            style="
+                              font-weight: 700;
+                              font-size: 54px;
+                              margin: 70px 0;
+                              text-align: center;
+                            "
+                          >
+                            $CODE$
+                          </h2>
+
+                          <div
+                            style="font-weight: 400; margin-bottom: 30px; "
+                          >
+                            <h3
+                              class="title"
+                              style="
+                                font-weight: 700;
+                                font-size: 18px;
+                                margin: 0 0 15px;
+                              "
+                            ></h3>
+                            <p
+                              class="colored-black"
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                padding-bottom:5px;
+                              "
+                            >${translation("email_verify_code_description_1")}</p>
+                            <p
+                              class="colored-black"
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                              "
+                            >${translation("email_verify_code_description_2")}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="font-weight: 400">
+                    <td
+                      style="
+                        font-weight: 400;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #121212;
+                        color: #ffffff;
+                      "
+                    >
+                      <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+                        <div
+                          style="
+                            font-weight: 400;
+                            max-width: 600px;
+                            text-align: left;
+                            margin: 0 auto;
+                            padding: 0 20px;
+                          "
+                        >
+                          <div
+                            style="
+                              font-weight: 400;
+                              display: inline-block;
+                              width: 100%;
+                              align-items: center;
+                            "
+                          >
+                            <p
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                margin: 0 0 15px;
+                              "
+                            >${translation("email_badge_description_4")}</p>
+                            <p
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                margin: 0 0 15px;
+                              "
+                            >Copyright ⓒ 2024 SAMSUNG all rights reserved.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </body>
+            </html>`,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -372,13 +345,10 @@ export default function GuestLogin({
     }
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/verify-code`,
-        {
-          method: "POST",
-          body: JSON.stringify({ email, code }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/verify-code`, {
+        method: "POST",
+        body: JSON.stringify({ email, code }),
+      });
       if (!response.ok) {
         const data = await response.json();
         const { code } = data;
@@ -469,16 +439,11 @@ export default function GuestLogin({
         />
 
         <div className="absolute top-0 z-10 flex flex-col items-center py-5 size-full">
-          <span className="block text-lg font-bold">
-            {translation("galaxy_ai_expert")}
-          </span>
+          <span className="block text-lg font-bold">{translation("galaxy_ai_expert")}</span>
 
           <div className="m-auto">
             <div className="font-bold text-center break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
-              {translation("be_a_galaxy_ai_expert").replaceAll(
-                "Paradigm",
-                "S24"
-              )}
+              {translation("be_a_galaxy_ai_expert").replaceAll("Paradigm", "S24")}
             </div>
 
             <div className="text-center">
@@ -502,9 +467,7 @@ export default function GuestLogin({
                 >
                   <DialogHeader>
                     <DialogTitle>{translation("login")}</DialogTitle>
-                    <DialogDescription>
-                      {translation("login_by_send_code")}
-                    </DialogDescription>
+                    <DialogDescription>{translation("login_by_send_code")}</DialogDescription>
                   </DialogHeader>
                   <div>
                     <form
@@ -519,7 +482,7 @@ export default function GuestLogin({
                         inputMode="email"
                         className={cn(
                           "w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium text-base",
-                          isArabic && "text-right"
+                          isArabic && "text-right",
                         )}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -604,9 +567,7 @@ export default function GuestLogin({
         >
           <DialogHeader>
             <DialogTitle>{translation("confirm_your_email")}</DialogTitle>
-            <DialogDescription>
-              {convertMessageFormat("send_magic_link")}
-            </DialogDescription>
+            <DialogDescription>{convertMessageFormat("send_magic_link")}</DialogDescription>
           </DialogHeader>
           <div>
             <form
@@ -620,20 +581,12 @@ export default function GuestLogin({
               <input
                 placeholder="code"
                 inputMode="numeric"
-                className={cn(
-                  "w-full bg-[#E5E5E5] p-3 rounded-[10px]",
-                  isArabic && "text-right"
-                )}
+                className={cn("w-full bg-[#E5E5E5] p-3 rounded-[10px]", isArabic && "text-right")}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 required
               />
-              <div
-                className={cn(
-                  "absolute top-1/2 -translate-y-1/2",
-                  isArabic ? "left-[10px]" : "right-[10px]"
-                )}
-              >
+              <div className={cn("absolute top-1/2 -translate-y-1/2", isArabic ? "left-[10px]" : "right-[10px]")}>
                 {formatToMMSS(count)}
               </div>
             </form>
@@ -665,10 +618,7 @@ export default function GuestLogin({
                 {translation("resend_code")}
               </button>
             </div>
-            <DialogClose
-              className="absolute top-5 right-5"
-              onClick={() => setStep("email")}
-            >
+            <DialogClose className="absolute top-5 right-5" onClick={() => setStep("email")}>
               <X />
               <span className="sr-only">Close</span>
             </DialogClose>
