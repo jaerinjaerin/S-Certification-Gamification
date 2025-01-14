@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import FiltersContainer from "@/components/system/filters-container";
 import { ControllerRenderProps, FieldValues, useForm } from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { formatCamelCaseToTitleCase } from "@/lib/text";
 import { CalendarForm } from "@/components/system/calendar-with-title";
@@ -22,12 +22,95 @@ import { Download } from "lucide-react";
 const OverviewFilterForm = () => {
   const form = useForm();
   const [filterData, setFilterData] = useState<AllFilterData | null>(null);
+  const [filteredSubsidiaries, setFilteredSubsidiaries] = useState<
+    Subsidiary[]
+  >([]);
+  const [filteredDomains, setFilteredDomains] = useState<Domain[]>([]);
+  const defaultValues = useRef<FieldValues | null>(null);
 
   useEffect(() => {
     axios.get("/api/dashboard/filter").then((res) => {
       setFilterData(res.data);
+      // Initialize dependencies
+      setFilteredSubsidiaries(res.data.filters.subsidiary);
+      setFilteredDomains(res.data.filters.domain);
+      //
+      Object.entries(res.data.filters).map(([key]) => {
+        form.setValue(key, "all");
+      });
+      //
+      defaultValues.current = form.getValues();
     });
-  }, []);
+  }, [form]);
+
+  const updateFilters = (key: string, id: string | number) => {
+    if (!filterData) return;
+    const { filters } = filterData;
+
+    const isRegion = key === "region";
+    const isSubsidiary = key === "subsidiary";
+    const isDomain = key === "domain";
+
+    if (isRegion) {
+      const found = filters.region.find((region) => region.id === id);
+      if (found) {
+        form.setValue("subsidiary", "all");
+        form.setValue("domain", "all");
+        setFilteredSubsidiaries(found.subsidiaries);
+        setFilteredDomains(found.domains);
+      }
+    } else if (isSubsidiary) {
+      if (id === "all") {
+        const found = filters.region.find(
+          (region) => region.id === form.getValues().region
+        );
+        //
+        if (found) {
+          form.setValue("region", found.id);
+          form.setValue("domain", "all");
+          setFilteredSubsidiaries(found.subsidiaries);
+          setFilteredDomains(found.domains);
+        }
+      } else {
+        const found = filters.region.find((region) =>
+          region.subsidiaries.some(
+            (subsidiary: Subsidiary) => subsidiary.id === id
+          )
+        );
+
+        const subsidiary = filters.subsidiary.find(
+          (subsidiary: Subsidiary) => subsidiary.id === id
+        );
+
+        if (found) {
+          form.setValue("region", found.id);
+          form.setValue("domain", "all");
+          setFilteredSubsidiaries(found.subsidiaries);
+          setFilteredDomains(subsidiary.domains);
+        }
+      }
+    } else if (isDomain) {
+      if (id === "all") {
+      } else {
+        const found = filters.region.find((region) =>
+          region.domains.some((domain: Domain) => domain.id === id)
+        );
+
+        const domain = filters.domain.find((domain) => domain.id === id);
+
+        const subsidiary = filters.subsidiary.find(
+          (subsidiary: Subsidiary) => subsidiary.id === domain.subsidiaryId
+        );
+
+        if (found && subsidiary && domain) {
+          form.setValue("region", found.id);
+          form.setValue("subsidiary", domain.subsidiary.id);
+          setFilteredSubsidiaries(found.subsidiaries);
+          setFilteredDomains(subsidiary.domains);
+        }
+      }
+    }
+  };
 
   function onSubmit(data: FieldValues) {
     console.log("🚀 ~ onSubmit ~ data:", data);
@@ -91,25 +174,50 @@ const OverviewFilterForm = () => {
           </div>
           <div className="flex flex-wrap gap-x-10 gap-y-7">
             {Object.entries(filterData.filters).map(([key, value]) => {
-              const items = [
-                { value: "all", label: "All" },
+              const firstElement = { value: "all", label: "All" };
+
+              let items = [
+                firstElement,
                 ...value.map((item: { name: string; id: string | number }) => ({
                   label: item.name,
                   value: item.id,
                 })),
               ];
+
+              if (key === "subsidiary") {
+                items = [
+                  firstElement,
+                  ...filteredSubsidiaries.map((subsidiary) => ({
+                    label: subsidiary.name,
+                    value: subsidiary.id,
+                  })),
+                ];
+              }
+
+              if (key === "domain") {
+                items = [
+                  firstElement,
+                  ...filteredDomains.map((domain) => ({
+                    label: domain.name,
+                    value: domain.id,
+                  })),
+                ];
+              }
+
               return (
                 <FormField
                   key={key}
                   control={form.control}
                   name={key}
-                  defaultValue="all"
                   render={({ field }) => (
                     <SelectForm
                       label={formatCamelCaseToTitleCase(key)}
                       width="auto"
                       field={field}
                       items={items}
+                      onChange={(id: string | number) => {
+                        updateFilters(key, id);
+                      }}
                     />
                   )}
                 />

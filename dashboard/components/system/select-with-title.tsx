@@ -15,17 +15,25 @@ const SelectForm = ({
   width = "auto",
   field,
   items,
+  onChange,
 }: {
   label?: string | undefined;
   placeholder?: string;
   width?: number | string;
   field: ControllerRenderProps<FieldValues, string>;
   items: { label: string; value: string | number }[];
+  onChange?: (value: string | number) => void;
 }) => {
   return (
     <div className="flex items-center space-x-4">
       {label && <div className="flex-shrink-0">{label}</div>}
-      <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <Select
+        onValueChange={(value) => {
+          field.onChange(value);
+          onChange?.(value);
+        }}
+        value={field.value}
+      >
         <SelectTrigger
           className={cn(
             "bg-white hover:bg-zinc-100",

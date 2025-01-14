@@ -22,7 +22,7 @@ type Store = Prisma.StoreGetPayload<{
 }>;
 
 interface FilterData {
-  regions: Region[];
+  region: Region[];
   subsidiary: Subsidiary[];
   domain: Domain[];
   channelSegment: ChannelSegment[];

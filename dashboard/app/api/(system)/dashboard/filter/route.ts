@@ -1,6 +1,73 @@
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
+async function fetchDependentFilters() {
+  // Step 1: Fetch all regions
+  const regions = await prisma.region.findMany();
+
+  // Step 2: Fetch all subsidiaries
+  const subsidiaries = await prisma.subsidiary.findMany();
+
+  // Step 3: Fetch all domains
+  const domains = await prisma.domain.findMany();
+
+  // Step 4: Map dependencies
+  const regionWithDependencies = regions.map((region) => {
+    // Find subsidiaries and domains related to this region
+    const relatedSubsidiaries = subsidiaries.filter(
+      (subsidiary) => subsidiary.regionId === region.id
+    );
+
+    const relatedDomains = relatedSubsidiaries.flatMap((subsidiary) =>
+      domains.filter((domain) => domain.subsidiaryId === subsidiary.id)
+    );
+
+    return {
+      ...region,
+      subsidiaries: relatedSubsidiaries,
+      domains: relatedDomains,
+    };
+  });
+
+  const subsidiaryWithDependencies = subsidiaries.map((subsidiary) => {
+    // Find related region and domains
+    const relatedRegion = regions.find(
+      (region) => region.id === subsidiary.regionId
+    );
+    const relatedDomains = domains.filter(
+      (domain) => domain.subsidiaryId === subsidiary.id
+    );
+
+    return {
+      ...subsidiary,
+      region: relatedRegion,
+      domains: relatedDomains,
+    };
+  });
+
+  const domainWithDependencies = domains.map((domain) => {
+    // Find related subsidiary and region
+    const relatedSubsidiary = subsidiaries.find(
+      (subsidiary) => subsidiary.id === domain.subsidiaryId
+    );
+    const relatedRegion = relatedSubsidiary
+      ? regions.find((region) => region.id === relatedSubsidiary.regionId)
+      : null;
+
+    return {
+      ...domain,
+      subsidiary: relatedSubsidiary,
+      region: relatedRegion,
+    };
+  });
+
+  return {
+    region: regionWithDependencies,
+    subsidiary: subsidiaryWithDependencies,
+    domain: domainWithDependencies,
+  };
+}
+
 export async function GET(request: NextRequest) {
   try {
     await prisma.$connect();
@@ -21,7 +88,7 @@ export async function GET(request: NextRequest) {
         },
       },
       filters: {
-        regions: [],
+        region: [],
         subsidiary: [],
         domain: [],
         channelSegment: [],
@@ -30,11 +97,10 @@ export async function GET(request: NextRequest) {
       },
     };
 
-    data.campaign = await prisma.campaign.findMany({});
+    data.campaign = await prisma.campaign.findMany();
     // Fetch regions (always fetch all regions)
-    data.filters.regions = await prisma.region.findMany({});
-    data.filters.subsidiary = await prisma.subsidiary.findMany({});
-    data.filters.domain = await prisma.domain.findMany({});
+    const regions = await fetchDependentFilters();
+    data.filters = { ...data.filters, ...regions };
     // Fetch other data
     data.filters.channelSegment = await prisma.channelSegment.findMany({});
     data.filters.jobGroup = await prisma.job.findMany({});
