@@ -1,6 +1,9 @@
 "use server";
+
+import { defaultLanguages } from "@/core/config/default";
 import { defaultLocale } from "@/i18n/config";
 import Languages from "@/public/assets/seeds/languages.json";
+import * as Sentry from "@sentry/nextjs";
 import { headers } from "next/headers";
 
 const supportedLanguagesCode = Languages.map((lang) => lang.code);
@@ -12,6 +15,27 @@ export async function getUserLocale() {
   if (!acceptLanguage) {
     return defaultLocale;
   }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
+    {
+      method: "GET",
+      cache: "force-cache",
+    }
+  );
+
+  let languages = defaultLanguages;
+  if (!response.ok) {
+    console.error("Failed to get languages");
+    Sentry.captureMessage(`Failed to get languages`);
+  } else {
+    const data = await response.json();
+    if (data.items) {
+      languages = data.items;
+    }
+  }
+
+  console.log("getUserLocale", response);
 
   const hasLanguagecode = supportedLanguagesCode.find((lang) =>
     lang.includes(acceptLanguage)
