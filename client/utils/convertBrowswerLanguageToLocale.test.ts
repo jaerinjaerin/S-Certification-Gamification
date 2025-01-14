@@ -1,10 +1,5 @@
 import { mapBrowserLanguageToLocale } from "./convertBrowswerLanguageToLocale";
 
-// Mock defaultLocale if necessary
-jest.mock("@/i18n/config", () => ({
-  defaultLocale: "en-US",
-}));
-
 describe("mapBrowserLanguageToLocale", () => {
   it("should return 'es-ES' for languageCode 'es'", () => {
     const result = mapBrowserLanguageToLocale("es");

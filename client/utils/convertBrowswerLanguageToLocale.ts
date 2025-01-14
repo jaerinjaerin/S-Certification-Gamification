@@ -1,4 +1,5 @@
-import { defaultLocale } from "@/i18n/config";
+// import { defaultLocale } from "@/i18n/config";
+const defaultLocale = "en-US";
 
 const usedLTNLanguages = [
   "MX",
