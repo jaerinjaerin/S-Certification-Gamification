@@ -78,7 +78,10 @@ async function fetchSupportedLanguages() {
   }
 }
 
-function mapBrowserLanguageToLocale(languageCode: string, countryCode: string) {
+function mapBrowserLanguageToLocale(
+  languageCode: string,
+  countryCode?: string
+) {
   if (languageCode === "en") {
     if (countryCode === "GB") return "en-GB";
     return "en-US";
@@ -90,7 +93,10 @@ function mapBrowserLanguageToLocale(languageCode: string, countryCode: string) {
   }
 
   if (languageCode === "es") {
-    if (countryCode === "419" || usedLTNLanguages.includes(countryCode)) {
+    if (
+      countryCode === "419" ||
+      (countryCode && usedLTNLanguages.includes(countryCode))
+    ) {
       return "es-LTN";
     }
     return "es-ES";
