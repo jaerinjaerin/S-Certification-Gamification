@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { useInterval } from "usehooks-ts";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
+import { cn } from "@/utils/utils";
 
 export function TypewriteTextVer({ question }: { question: string }) {
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
   const [letterIndex, setLetterIndex] = useState(0);
   const [letter, setLetter] = useState("");
   const SWAP_DELAY_IN_MS = 20;
@@ -32,7 +36,7 @@ export function TypewriteTextVer({ question }: { question: string }) {
   );
 
   return (
-    <div className="font-one text-lg font-bold">
+    <div className={cn("text-lg font-bold font-one", isArabic && "text-right")}>
       {QUIZ_PATH ? letter : question}
       {QUIZ_PATH && letterIndex !== question.length && (
         <motion.span className="ml-1">|</motion.span>

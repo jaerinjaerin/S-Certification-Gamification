@@ -22,11 +22,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import { cn } from "@/utils/utils";
 import { formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
@@ -36,6 +37,7 @@ export default function GuestLogin({
   params: { campaign_name: string };
 }) {
   useGAPageView();
+
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [step, setStep] = useState<"email" | "code" | "selection" | "init">(
@@ -54,6 +56,8 @@ export default function GuestLogin({
   });
 
   const translation = useTranslations();
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   useEffect(() => {
     if (expiresAt) {
@@ -418,7 +422,7 @@ export default function GuestLogin({
     const searchMessage = translation.rich(searchKey, {
       address: (children) => (
         <>
-          <span className="text-blue-500">{children}.</span>
+          <span className="text-blue-500">{children}</span>
           <br />
         </>
       ),
@@ -471,7 +475,7 @@ export default function GuestLogin({
           </span>
 
           <div className="m-auto">
-            <div className="font-bold text-center hyphens-auto break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
+            <div className="font-bold text-center break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
               {translation("be_a_galaxy_ai_expert").replaceAll(
                 "Paradigm",
                 "S24"
@@ -482,13 +486,14 @@ export default function GuestLogin({
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
-                    className="mt-[49px]"
+                    className={cn("mt-[49px]", isArabic && "flex-row-reverse")}
                     variant={"primary"}
                     onClick={() => {
                       setStep("email");
                     }}
                   >
-                    {translation("login")}
+                    <span>S+</span>
+                    <span>{translation("login")}</span>
                   </Button>
                 </DialogTrigger>
                 <DialogContent
@@ -513,7 +518,10 @@ export default function GuestLogin({
                       <input
                         placeholder={translation("email")}
                         inputMode="email"
-                        className="w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium text-base"
+                        className={cn(
+                          "w-full sm:min-w-[280px] bg-[#E5E5E5] p-3 rounded-[10px] font-one font-medium text-base",
+                          isArabic && "text-right"
+                        )}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={loading}
@@ -613,12 +621,20 @@ export default function GuestLogin({
               <input
                 placeholder="code"
                 inputMode="numeric"
-                className="w-full  bg-[#E5E5E5] p-3 rounded-[10px]"
+                className={cn(
+                  "w-full bg-[#E5E5E5] p-3 rounded-[10px]",
+                  isArabic && "text-right"
+                )}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 required
               />
-              <div className="absolute right-[10px] top-1/2 -translate-y-1/2">
+              <div
+                className={cn(
+                  "absolute top-1/2 -translate-y-1/2",
+                  isArabic ? "left-[10px]" : "right-[10px]"
+                )}
+              >
                 {formatToMMSS(count)}
               </div>
             </form>

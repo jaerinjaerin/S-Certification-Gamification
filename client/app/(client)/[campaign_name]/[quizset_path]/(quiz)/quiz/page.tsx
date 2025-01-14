@@ -16,7 +16,7 @@ import { QuestionEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
@@ -32,7 +32,7 @@ export default function QuizPage() {
     logUserAnswer,
     isComplete,
   } = useQuiz();
-  const trnaslation = useTranslations();
+  const translation = useTranslations();
   const { routeToPage } = usePathNavigator();
 
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
@@ -60,6 +60,9 @@ export default function QuizPage() {
 
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
+
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   // 애니메이션 트리거
   const triggerAnimation = () => {
@@ -211,7 +214,7 @@ export default function QuizPage() {
       <div className="sticky top-0 z-10">
         <div className=" p-5 h-[70px] flex items-center gap-[10px] bg-white">
           <div className="justify-start flex-1 min-w-0 text-xs min-[300px]:text-sm text-pretty">
-            {trnaslation("galaxy_ai_expert")}
+            {translation("galaxy_ai_expert")}
           </div>
           {/* quiz 현재 상태 */}
           <div className="flex-none">
@@ -265,13 +268,17 @@ export default function QuizPage() {
                 }}
                 className={cn(
                   "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
-                  isCorrectAnswer && "pointer-events-none"
+                  isCorrectAnswer && "pointer-events-none",
+                  isArabic && "text-right"
                 )}
                 initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
                 animate={getAnimateState(option)}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                {option.text}({option.isCorrect ? "o" : "x"})
+                {option.text}
+                {process.env.NODE_ENV !== "production" && (
+                  <span>({option.isCorrect ? "o" : "x"})</span>
+                )}
                 <input
                   type="checkbox"
                   checked={selectedOptionIds.includes(option.id)}

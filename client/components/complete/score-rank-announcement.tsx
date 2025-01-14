@@ -16,7 +16,7 @@ import { cn } from "@/utils/utils";
 import { AuthType } from "@prisma/client";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ScoreRankAnnouncement({
   className,
@@ -49,6 +49,8 @@ export default function ScoreRankAnnouncement({
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
     return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   return (
     <div className={cn("", className)}>
@@ -68,7 +70,12 @@ export default function ScoreRankAnnouncement({
             <DialogHeader>
               <DialogTitle>{translation("score")}</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium">
+            <div
+              className={cn(
+                "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium",
+                isArabic && "text-right"
+              )}
+            >
               <div>
                 <p className="font-extrabold">{translation("base_score")}</p>
                 {translation("base_score_description")}
@@ -152,11 +159,23 @@ export default function ScoreRankAnnouncement({
 }
 
 const SendBadgeNotificationCard = ({ message }: { message: string }) => {
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
   return (
     <div className="pt-[10px]">
-      <div className="flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center">
+      <div
+        className={cn(
+          "flex rounded-[14px] gap-6 bg-[#CCECFF] py-4 px-[14px] items-center justify-center",
+          isArabic && "flex-row-reverse"
+        )}
+      >
         <BluePaperAirplaneIcon className="shrink-0" />
-        <p className="text-[#1429A0] text-sm font-medium text-left max-w-[230px] text-pretty">
+        <p
+          className={cn(
+            "text-[#1429A0] text-sm font-medium text-left max-w-[230px] text-pretty",
+            isArabic && "text-right"
+          )}
+        >
           {message}
         </p>
       </div>
