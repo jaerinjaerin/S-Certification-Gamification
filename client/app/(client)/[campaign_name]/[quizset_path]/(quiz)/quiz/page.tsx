@@ -9,6 +9,7 @@ import Qusetion from "@/components/quiz/question-area";
 import SuccessNotify from "@/components/quiz/success-notify";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useArabic from "@/hooks/useArabic";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -16,7 +17,7 @@ import { QuestionEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
@@ -60,9 +61,7 @@ export default function QuizPage() {
 
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
-
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   // 애니메이션 트리거
   const triggerAnimation = () => {

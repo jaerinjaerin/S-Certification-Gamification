@@ -1,48 +1,106 @@
 "use server";
 import { defaultLocale } from "@/i18n/config";
-import Languages from "@/public/assets/seeds/languages.json";
+import { defaultLanguages } from "@/core/config/default";
 import { headers } from "next/headers";
+import * as Sentry from "@sentry/nextjs";
 
-const supportedLanguagesCode = Languages.map((lang) => lang.code);
+// ltn을 사용하는 국가
+const usedLTNLanguages = [
+  "MX",
+  "CO",
+  "AR",
+  "PY",
+  "UY",
+  "PA",
+  "EC",
+  "CR",
+  "DR",
+  "GT",
+  "HN",
+  "NI",
+  "SV",
+  "CL",
+  "BO",
+  "PE",
+];
 
-export async function getUserLocale() {
-  const headersList = await headers();
-  const acceptLanguage = headersList.get("accept-language")?.split(",")[0];
+export async function getBrowserLocale() {
+  const browserLocale = await getBrowserLanguage();
 
-  if (!acceptLanguage) {
+  return browserLocale;
+}
+
+export async function getServiceLangCode() {
+  const browswerLanguage = await getBrowserLanguage();
+  if (!browswerLanguage) {
     return defaultLocale;
   }
 
-  const hasLanguagecode = supportedLanguagesCode.find((lang) =>
-    lang.includes(acceptLanguage)
+  const supportedLanguagesCode = await fetchSupportedLanguages();
+  const matchingLanguageCode = supportedLanguagesCode.find((lang) =>
+    lang.includes(browswerLanguage)
   );
 
-  if (hasLanguagecode) {
-    return hasLanguagecode;
-  } else {
-    const [languageCode] = acceptLanguage.split("-");
-    const hasLanguagecode = supportedLanguagesCode.find((lang) => {
-      if (!lang.includes(languageCode)) return false;
-
-      switch (true) {
-        case acceptLanguage === "en-GB":
-          return lang === "en-GB";
-        case acceptLanguage.startsWith("en"):
-          return lang === "en-US";
-        case acceptLanguage === "fr-CA":
-          return lang === "fr-CA";
-        case acceptLanguage.startsWith("fr"):
-          return lang === "fr-FR";
-        case acceptLanguage === "es-ES":
-          return lang === "es-ES";
-        case acceptLanguage.startsWith("es"):
-          return lang === "es-LTN";
-        default:
-          return lang === languageCode;
-      }
-    });
-
-    if (hasLanguagecode) return hasLanguagecode;
-    return defaultLocale;
+  if (matchingLanguageCode) {
+    return matchingLanguageCode;
   }
+
+  const [languageCode, countryCode] = browswerLanguage.split("-");
+  return mapBrowserLanguageToLocale(languageCode, countryCode);
+}
+
+async function getBrowserLanguage() {
+  const headersList = await headers();
+  const acceptLanguage = headersList.get("accept-language");
+
+  if (!acceptLanguage) return defaultLocale;
+  return acceptLanguage.split(",")[0];
+}
+
+async function fetchSupportedLanguages() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error. status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (!result) {
+      return defaultLanguages.map((code) => code.code);
+    }
+
+    return result.items.map((item) => item.code);
+  } catch (error) {
+    console.error("Failed to fetch supported languages:", error);
+    Sentry.captureException(error);
+  }
+}
+
+function mapBrowserLanguageToLocale(
+  languageCode: string,
+  countryCode?: string
+) {
+  if (languageCode === "en") {
+    if (countryCode === "GB") return "en-GB";
+    return "en-US";
+  }
+
+  if (languageCode === "fr") {
+    if (countryCode === "CA") return "fr-CA";
+    return "fr-FR";
+  }
+
+  if (languageCode === "es") {
+    if (
+      countryCode === "419" ||
+      (countryCode && usedLTNLanguages.includes(countryCode))
+    ) {
+      return "es-LTN";
+    }
+    return "es-ES";
+  }
+
+  return defaultLocale;
 }

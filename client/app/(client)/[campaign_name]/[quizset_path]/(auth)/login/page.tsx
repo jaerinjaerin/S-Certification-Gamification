@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import useLoader from "@/components/ui/loader";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useArabic from "@/hooks/useArabic";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function Login() {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {

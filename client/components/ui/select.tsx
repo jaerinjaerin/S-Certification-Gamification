@@ -1,12 +1,10 @@
 "use client";
-
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
-
 import { ChevronDownIcon } from "@/components/icons/icons";
 import { cn } from "@/utils/utils";
-import { useLocale } from "next-intl";
+import useArabic from "@/hooks/useArabic";
 
 const Select = SelectPrimitive.Root;
 
@@ -18,8 +16,7 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
   return (
     <SelectPrimitive.Trigger
       ref={ref}
@@ -125,8 +122,7 @@ const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, ref) => {
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
   return (
     <SelectPrimitive.Item
       ref={ref}
