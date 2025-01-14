@@ -3,7 +3,7 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import * as React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/utils";
-import { useIntl } from "@/providers/intlProvider";
+import { useLocale } from "next-intl";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -88,7 +88,9 @@ const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
 >(({ className, ...props }, ref) => {
-  const { isArabic } = useIntl();
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
+
   return (
     <AlertDialogPrimitive.Description
       ref={ref}
