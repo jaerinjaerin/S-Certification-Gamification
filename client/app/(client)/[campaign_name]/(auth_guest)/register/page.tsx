@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCreateItem from "@/hooks/useCreateItem";
-import { getUserLocale } from "@/i18n/locale";
+import { getServiceLangCode } from "@/i18n/locale";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { fetchQuizLog } from "@/services/quizService";
@@ -120,7 +120,7 @@ export default function GuestRegisterPage() {
   };
 
   const fetchLanguage = async () => {
-    const locale = await getUserLocale();
+    const locale = await getServiceLangCode();
     console.log("locale", locale);
     setLanguageCode(locale);
   };
