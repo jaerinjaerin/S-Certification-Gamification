@@ -4,14 +4,13 @@ import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useArabic from "@/hooks/useArabic";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { motion } from "motion/react";
-import { useLocale } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
@@ -34,8 +33,7 @@ export default function ReviewPage() {
     (log) => log.quizStageIndex + 1 === searchStage
   );
 
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage

@@ -22,12 +22,13 @@ import {
 } from "@/components/ui/dialog";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useArabic from "@/hooks/useArabic";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
 import { X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
@@ -141,8 +142,7 @@ const TutorialCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const translation = useTranslations();
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   React.useEffect(() => {
     if (!api) {

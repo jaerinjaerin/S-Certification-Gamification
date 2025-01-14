@@ -1,11 +1,12 @@
-import { getUserLocale } from "@/i18n/locale";
+import { getUserLangCode, getUserLocale } from "@/i18n/locale";
 import { getRequestConfig } from "next-intl/server";
 
 export default getRequestConfig(async () => {
   const locale = await getUserLocale();
+  const lang = await getUserLangCode();
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${locale}.json`
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${lang}.json`
   );
 
   if (response.ok) {

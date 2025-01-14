@@ -10,13 +10,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { samsungplusAppDeepLink } from "@/core/config/links";
+import useArabic from "@/hooks/useArabic";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
 import { AuthType } from "@prisma/client";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function ScoreRankAnnouncement({
   className,
@@ -49,8 +50,7 @@ export default function ScoreRankAnnouncement({
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
     return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   return (
     <div className={cn("", className)}>
@@ -159,8 +159,7 @@ export default function ScoreRankAnnouncement({
 }
 
 const SendBadgeNotificationCard = ({ message }: { message: string }) => {
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
   return (
     <div className="pt-[10px]">
       <div

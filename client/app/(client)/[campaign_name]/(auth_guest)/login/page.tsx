@@ -10,7 +10,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-
 import {
   Dialog,
   DialogClose,
@@ -22,12 +21,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useArabic from "@/hooks/useArabic";
 import { cn } from "@/utils/utils";
 import { formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
@@ -56,8 +56,7 @@ export default function GuestLogin({
   });
 
   const translation = useTranslations();
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
+  const { isArabic } = useArabic();
 
   useEffect(() => {
     if (expiresAt) {

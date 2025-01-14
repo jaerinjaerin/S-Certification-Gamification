@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import { useInterval } from "usehooks-ts";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
 import { cn } from "@/utils/utils";
+import useArabic from "@/hooks/useArabic";
 
 export function TypewriteTextVer({ question }: { question: string }) {
-  const locale = useLocale();
-  const isArabic = locale === "ar-AE";
   const [letterIndex, setLetterIndex] = useState(0);
   const [letter, setLetter] = useState("");
   const SWAP_DELAY_IN_MS = 20;
   const path = usePathname();
   const QUIZ_PATH = path.includes("quiz");
+  const { isArabic } = useArabic();
 
   const init = () => {
     setLetter("");
