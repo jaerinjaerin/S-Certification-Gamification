@@ -346,7 +346,7 @@ export default function GuestRegisterPage() {
               >
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
-              <SelectContent className="font-one font-medium">
+              <SelectContent className="font-medium font-one">
                 {jobs.map((job) => (
                   <SelectItem key={job.id} value={job.id}>
                     {job.name}

@@ -9,6 +9,7 @@ import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { motion } from "motion/react";
+import { useLocale } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
@@ -32,6 +33,9 @@ export default function ReviewPage() {
   const reviewQuizQuestionLogs = quizQuestionLogs.filter(
     (log) => log.quizStageIndex + 1 === searchStage
   );
+
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage
@@ -82,7 +86,7 @@ export default function ReviewPage() {
   return (
     <div className="min-h-svh bg-slate-200/20">
       <div className="sticky top-0 z-10">
-        <div className="bg-white p-5 relative">
+        <div className="relative p-5 bg-white">
           {/* 양쪽  */}
           <div className="text-[12px] min-[400px]:text-[14px] text-nowrap font-extrabold absolute top-4">
             <Button
@@ -112,7 +116,9 @@ export default function ReviewPage() {
           {/* 문항수 */}
           <div className="w-full">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
+              className={cn(
+                "bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] mx-auto"
+              )}
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
@@ -147,6 +153,7 @@ export default function ReviewPage() {
                 key={option.id}
                 className={cn(
                   "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
+                  isArabic && "text-right",
                   selectedOptionIds.includes(option.id) &&
                     !option.isCorrect &&
                     "bg-[#EE3434] text-white pointer-events-none",

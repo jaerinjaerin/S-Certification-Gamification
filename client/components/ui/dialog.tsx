@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/utils/utils";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { useLocale } from "next-intl";
 import * as React from "react";
 
 const Dialog = DialogPrimitive.Root;
@@ -42,7 +43,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       {/* <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-        <X className="h-4 w-4" />
+        <X className="w-4 h-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close> */}
     </DialogPrimitive.Content>
@@ -87,16 +88,21 @@ DialogTitle.displayName = DialogPrimitive.Title.displayName;
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
-    ref={ref}
-    className={cn(
-      "text-muted-foreground font-one font-medium text-base text-start block",
-      className
-    )}
-    {...props}
-  />
-));
+>(({ className, ...props }, ref) => {
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
+  return (
+    <DialogPrimitive.Description
+      ref={ref}
+      className={cn(
+        "text-muted-foreground font-one font-medium text-base text-start block",
+        isArabic && "text-right",
+        className
+      )}
+      {...props}
+    />
+  );
+});
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {

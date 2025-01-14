@@ -6,12 +6,14 @@ import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Login() {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {
@@ -66,10 +68,14 @@ export default function Login() {
             <Button
               variant={"primary"}
               onClick={() => processSignIn()}
-              className="disabled:bg-disabled mt-[49px]"
+              className={cn(
+                "disabled:bg-disabled mt-[49px]",
+                isArabic && "flex-row-reverse"
+              )}
               disabled={loading}
             >
-              S+ {translation("login")}
+              <span>S+</span>
+              <span>{translation("login")}</span>
             </Button>
           </div>
           <PrivacyAndTerm />

@@ -27,7 +27,7 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
@@ -141,6 +141,8 @@ const TutorialCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const translation = useTranslations();
+  const locale = useLocale();
+  const isArabic = locale === "ar-AE";
 
   React.useEffect(() => {
     if (!api) {
@@ -194,7 +196,12 @@ const TutorialCarousel = () => {
                   </div>
                 )}
                 {index === 1 && (
-                  <ol className="bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px]">
+                  <ol
+                    className={cn(
+                      "bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px] rtl:pl-4 rtl:pr-8"
+                    )}
+                    dir={isArabic ? "rtl" : "ltr"}
+                  >
                     <li>{translation("you_have_5_attemps")}</li>
                     <li>{translation("giveup_or_interrupt_quiz")}</li>
                     <li>{translation("answer_first_attempt")}</li>
