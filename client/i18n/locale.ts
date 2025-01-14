@@ -1,6 +1,8 @@
 "use server";
 import { defaultLocale } from "@/i18n/config";
+import { defaultLanguages } from "@/core/config/default";
 import { headers } from "next/headers";
+import * as Sentry from "@sentry/nextjs";
 
 // ltn을 사용하는 국가
 const usedLTNLanguages = [
@@ -22,75 +24,76 @@ const usedLTNLanguages = [
   "PE",
 ];
 
-export async function getUserLocale() {
-  const headersList = await headers();
-  const acceptLanguage = headersList.get("accept-language")?.split(",")[0];
-  console.log(headersList.get("accept-language"));
+export async function getBrowserLocale() {
+  const browserLocale = await getBrowserLanguage();
 
-  return acceptLanguage;
+  return browserLocale;
 }
 
-export async function getUserLangCode() {
-  const headersList = await headers();
-  const acceptLanguage = headersList.get("accept-language")?.split(",")[0];
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
-  ); // ㅇ{외처리
-
-  const result = await response.json();
-  const supportedLanguagesCode = result.items.map((item) => item.code);
-
-  // acceptLanguage가 없으면 default return
-  if (!acceptLanguage) {
+export async function getServiceLangCode() {
+  const browswerLanguage = await getBrowserLanguage();
+  if (!browswerLanguage) {
     return defaultLocale;
   }
 
-  // 브라우저 언어코드와 우리 언어코드가 1:1 매핑이 되면 바로 사용
-  const hasLanguagecode = supportedLanguagesCode.find((lang) =>
-    lang.includes(acceptLanguage)
+  const supportedLanguagesCode = await fetchSupportedLanguages();
+  const matchingLanguageCode = supportedLanguagesCode.find((lang) =>
+    lang.includes(browswerLanguage)
   );
 
-  if (hasLanguagecode) {
-    return hasLanguagecode;
+  if (matchingLanguageCode) {
+    return matchingLanguageCode;
   }
 
-  // [언어코드, 국가코드]
-  const [languageCode, countryCode] = acceptLanguage.split("-"); // es-ES
+  const [languageCode, countryCode] = browswerLanguage.split("-");
+  return mapBrowserLanguageToLocale(languageCode, countryCode);
+}
 
-  switch (languageCode) {
-    case "en":
-      // 언어코드가 "en"이면
-      if (acceptLanguage === "en-GB") {
-        return "en-GB";
-      } else if (acceptLanguage.startsWith("en")) {
-        return "en-US";
-      }
-      break;
+async function getBrowserLanguage() {
+  const headersList = await headers();
+  const acceptLanguage = headersList.get("accept-language");
 
-    case "fr":
-      // 언어코드가 "fr"이면
-      if (acceptLanguage === "fr-CA") {
-        return "fr-CA";
-      } else if (acceptLanguage.startsWith("fr")) {
-        return "fr-FR";
-      }
-      break;
+  if (!acceptLanguage) return defaultLocale;
+  return acceptLanguage.split(",")[0];
+}
 
-    case "es":
-      // 언어코드가 "es"이면
-      // accpetLanguage가 "es-419"이거나 국가코드가 LTN에 속해있으면 es-LTN es-419
-      if (
-        usedLTNLanguages.includes(countryCode) ||
-        acceptLanguage === "es-419"
-      ) {
-        return "es-LTN";
-      } else {
-        return "es-ES";
-      }
+async function fetchSupportedLanguages() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error. status: ${response.status}`);
+    }
 
-    default:
-      return defaultLocale;
+    const result = await response.json();
+    if (!result) {
+      return defaultLanguages.map((code) => code.code);
+    }
+
+    return result.items.map((item) => item.code);
+  } catch (error) {
+    console.error("Failed to fetch supported languages:", error);
+    Sentry.captureException(error);
+  }
+}
+
+function mapBrowserLanguageToLocale(languageCode: string, countryCode: string) {
+  if (languageCode === "en") {
+    if (countryCode === "GB") return "en-GB";
+    return "en-US";
+  }
+
+  if (languageCode === "fr") {
+    if (countryCode === "CA") return "fr-CA";
+    return "fr-FR";
+  }
+
+  if (languageCode === "es") {
+    if (countryCode === "419" || usedLTNLanguages.includes(countryCode)) {
+      return "es-LTN";
+    }
+    return "es-ES";
   }
 
   return defaultLocale;

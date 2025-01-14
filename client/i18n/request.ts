@@ -1,9 +1,9 @@
-import { getUserLangCode, getUserLocale } from "@/i18n/locale";
+import { getBrowserLocale, getServiceLangCode } from "@/i18n/locale";
 import { getRequestConfig } from "next-intl/server";
 
 export default getRequestConfig(async () => {
-  const locale = await getUserLocale();
-  const lang = await getUserLangCode();
+  const locale = await getBrowserLocale();
+  const lang = await getServiceLangCode();
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${lang}.json`
