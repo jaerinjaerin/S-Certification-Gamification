@@ -484,6 +484,7 @@ model UserQuizStageLog {
   elapsedSeconds Int
 
   score       Int?
+  totalScore       Int?
   percentile  Int?
   scoreRange  String?
 
@@ -636,6 +637,7 @@ model UserQuizStageStatistics {
   elapsedSeconds Int
 
   score       Int?
+  totalScore       Int?
   percentile  Int?
   scoreRange  String?
 

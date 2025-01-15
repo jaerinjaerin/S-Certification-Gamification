@@ -14,6 +14,7 @@ export default function Login() {
   const { status } = useSession();
   const translation = useTranslations();
   const { isArabic } = useArabic();
+  // const locale = useLocale();
 
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {

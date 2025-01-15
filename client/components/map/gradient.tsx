@@ -8,7 +8,7 @@ export default function Gradient({ type }: { type: GradientType }) {
   return (
     <div
       className={cn(
-        "h-[220px] z-10 from-white/0 to-white",
+        "h-[220px] z-10 from-white/0 to-white pointer-events-none",
         fixedClass,
         type === "color-to-transparent"
           ? "bg-gradient-to-t top-0 "

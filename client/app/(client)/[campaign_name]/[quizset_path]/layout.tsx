@@ -20,8 +20,12 @@ export default async function SumtotalUserLayout({
     );
 
   return (
-    <div lang={locale}>
-      <NextIntlClientProvider timeZone={timeZone} messages={messages}>
+    <div>
+      <NextIntlClientProvider
+        timeZone={timeZone}
+        messages={messages}
+        locale={locale}
+      >
         <AuthProvider>{children}</AuthProvider>
       </NextIntlClientProvider>
     </div>

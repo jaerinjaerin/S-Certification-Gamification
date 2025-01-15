@@ -30,6 +30,7 @@ export async function GET(request: Request) {
       },
       select: {
         score: true,
+        totalScore: true,
       },
       take: sampleSize, // 샘플링 크기만큼 데이터 가져오기
       orderBy: {
@@ -38,7 +39,7 @@ export async function GET(request: Request) {
     });
 
     // 샘플 점수에서 null 값을 0으로 처리
-    const scores = sampledScores.map((record) => record.score || 0);
+    const scores = sampledScores.map((record) => record.totalScore || 0);
 
     // 점수를 10 단위로 그룹화
     const bins = Array(10).fill(0);

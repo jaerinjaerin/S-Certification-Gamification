@@ -50,7 +50,7 @@ export class QuizBadgeHandler {
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 이메일 전송 오류 저장해 놓기
-        throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to fetch sendBadgeEmail");
       }
 
       const data = await response.json();
@@ -89,7 +89,7 @@ export class QuizBadgeHandler {
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
-        throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to register activities");
       }
 
       const data = await response.json();
@@ -129,7 +129,7 @@ export class QuizBadgeHandler {
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
-        throw new Error(errorData.message || "Failed to fetch activities");
+        throw new Error(errorData.message || "Failed to update activity");
       }
 
       const data = await response.json();
