@@ -1,7 +1,7 @@
 export const getBadgeEmailTemplete = (
   badgeImageUrl: string,
   translationMessage: { [key: string]: string },
-  currentQuestionIndex: number
+  currentQuestionIndex: number,
 ) => {
   return `<!DOCTYPE html>
 <html style="font-weight: 400">
@@ -14,22 +14,11 @@ export const getBadgeEmailTemplete = (
     />
 
     <style type="text/css" style="font-weight: 400">
-      @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-    </style>
+      @import url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
-    <style>
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #121212 !important; /* 다크 모드 배경 */
-          color: #ffffff !important; /* 다크 모드 텍스트 */
-        }
-      }
-
-      @media (prefers-color-scheme: light) {
-        body {
-          background-color: #ffffff !important; /* 라이트 모드 배경 */
-          color: #000000 !important; /* 라이트 모드 텍스트 */
-        }
+      .colored-black {
+        color:#ffffff;
+        mix-blend-mode:difference;
       }
     </style>
   </head>
@@ -38,7 +27,7 @@ export const getBadgeEmailTemplete = (
       font-weight: 400;
       width: 100%;
       font-size: 16px;
-      font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+      font-family: 'SamsungSharpSans', sans-serif;
       -webkit-font-smoothing: antialiased;
       margin: 0;
       padding: 0;
@@ -52,7 +41,7 @@ export const getBadgeEmailTemplete = (
         width: 100%;
         border-collapse: separate;
         font-size: 16px;
-        font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
+        font-family: 'SamsungSharpSans', sans-serif;
         background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
         -webkit-font-smoothing: antialiased;
         max-width: 800px;
@@ -85,6 +74,7 @@ export const getBadgeEmailTemplete = (
                 "
               >
                 <h1
+                  class="colored-black"
                   style="
                     font-weight: 700;
                     float: left;
@@ -129,10 +119,10 @@ export const getBadgeEmailTemplete = (
                     height: 148px;
                   "
                 ></div>
-                <h3 style="text-align: center">
+                <h3 class="colored-black" style="text-align: center">
                   S+ ${translationMessage["galaxy_ai_expert"]}
                 </h3>
-                <h5 style="text-align: center">
+                <h5 class="colored-black" style="text-align: center">
                 ${translationMessage["email_badge_date"]}
                 </h5>
               </div>
@@ -141,45 +131,40 @@ export const getBadgeEmailTemplete = (
                 class="interface"
                 style="font-weight: 400; margin-bottom: 30px"
               >
-                <h3
-                  class="title"
-                  style="font-weight: 700; font-size: 18px; margin: 0 0 15px"
-                ></h3>
-                <pre
+                <p
+                  class="colored-black"
                   style="
                     font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-family: 'SamsungSharpSans', sans-serif;
                     font-size: 14px;
                     white-space: pre-wrap;
                     border-radius: 4px;
                     overflow-wrap: break-word;
                     word-wrap: break-word;
-                    margin: 0 0 15px;
-                    padding: 15px;
+                    padding-bottom:5px;
                   "
                 >
-${translationMessage["email_badge_description_1"]}</pre
-                >
-                <pre
+                  ${translationMessage["email_badge_description_1"]}
+                </p>
+                <p
+                  class="colored-black"
                   style="
                   font-weight: normal;
-                  font-family: Menlo, Monaco, 'Courier New', monospace;
+                  font-family: 'SamsungSharpSans', sans-serif;
                   font-size: 14px;
                   white-space: pre-wrap;
                   color:black
                   border-radius: 4px;
                   overflow-wrap: break-word;
                   word-wrap: break-word;
-                  margin: 0 0 15px;
-                  padding: 15px;
                 "
                 >
-${
-  currentQuestionIndex === 2
-    ? translationMessage["email_badge_description_2"]
-    : translationMessage["email_badge_description_3"]
-}</pre
-                >
+                  ${
+                    currentQuestionIndex === 2
+                      ? translationMessage["email_badge_description_2"]
+                      : translationMessage["email_badge_description_3"]
+                  }
+                </p>
               </div>
             </div>
           </div>
@@ -218,7 +203,7 @@ ${
                 <pre
                   style="
                     font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-family: 'SamsungSharpSans', sans-serif;
                     font-size: 14px;
                     white-space: pre-wrap;
                     border-radius: 4px;
@@ -232,7 +217,7 @@ ${translationMessage["email_badge_description_4"]}</pre
                 <pre
                   style="
                     font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
+                    font-family: 'SamsungSharpSans', sans-serif;
                     font-size: 14px;
                     white-space: pre-wrap;
                     border-radius: 4px;

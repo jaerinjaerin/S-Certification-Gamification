@@ -90,234 +90,223 @@ export default function GuestLogin({
             toAddress: email,
             subject: `${translation("email_title")}`,
             bodyHtml: `
-<!DOCTYPE html>
-<html style="font-weight: 400">
-  <head style="font-weight: 400">
-    <meta charset="utf-8" style="font-weight: 400" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-      style="font-weight: 400"
-    />
+            <!DOCTYPE html>
+            <html style="font-weight: 400">
+              <head style="font-weight: 400">
+                <meta charset="utf-8" style="font-weight: 400" />
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                  style="font-weight: 400"
+                />
 
-    <style type="text/css" style="font-weight: 400">
-      @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-    </style>
+                <style type="text/css" style="font-weight: 400">
+                  @import url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
-  
-    <style>
-     @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #121212 !important; /* 다크 모드 배경 */
-          color: #ffffff !important;           /* 다크 모드 텍스트 */
-        }
-      }
-
-      @media (prefers-color-scheme: light) {
-        body {
-          background-color: #ffffff !important; /* 라이트 모드 배경 */
-          color: #000000 !important;           /* 라이트 모드 텍스트 */
-        }
-      }
-  </style>
-  </head>
-  <body
-    style="
-      font-weight: 400;
-      width: 100%;
-      font-size: 16px;
-      font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-      padding: 0;
-      background-color: #000000 !important;
-    "
-  >
-    <table
-      class="main"
-      style="
-        font-weight: 400;
-        width: 100%;
-        border-collapse: separate;
-        font-size: 16px;
-        font-family: 'Lato', 'Helvetica Neue', helvetica, sans-serif;
-        background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
-        -webkit-font-smoothing: antialiased;
-        max-width: 800px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        border: 1px solid #c7d0d4;
-        border-spacing: 0;
-        margin: 15px auto;
-        padding: 0;
-      "
-    >
-      <tr style="font-weight: 400">
-        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
-            <div
-              style="
-                font-weight: 400;
-                max-width: 600px;
-                text-align: left;
-                margin: 0 auto;
-                padding: 0 20px;
-              "
-            >
-              <div
-                style="
-                  font-weight: 600;
-                  display: inline-block;
-                  width: 100%;
-                  align-items: center;
-                "
-              >
-                <h1
-                  style="
-                    font-weight: 700;
-                    float: left;
-                    font-size: 38px;
-                    line-height: 42px;
-                    letter-spacing: -1px;
-                    margin: 0;
-                    padding: 0;
-                  "
-                >S+ ${translation("galaxy_ai_expert")}</h1>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr style="font-weight: 400">
-        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-          <div
-            class="container"
-            style="
-              font-weight: 400;
-              max-width: 600px;
-              text-align: left;
-              margin: 0 auto;
-              padding: 0 20px;
-            "
-          >
-            <div class="inner" style="font-weight: 400; padding: 30px 0 20px">
-              <h2
-                style="
-                  font-weight: 700;
-                  font-size: 54px;
-                  margin: 70px 0;
-                  text-align: center;
-                "
-              >
-                $CODE$
-              </h2>
-
-              <div
-                class="interface"
-                style="font-weight: 400; margin-bottom: 30px; "
-              >
-                <h3
-                  class="title"
-                  style="
-                    font-weight: 700;
-                    font-size: 18px;
-                    margin: 0 0 15px;
-                  "
-                ></h3>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                    padding: 15px;
-                  "
-                >${translation("email_verify_code_description_1")}</pre>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    color:black
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                    padding: 15px;
-                  "
-                >${translation("email_verify_code_description_2")}</pre>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr style="font-weight: 400">
-        <td
-          style="
-            font-weight: 400;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #121212 !important;
-            color: #ffffff !important;
-          "
-        >
-          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
-            <div
-              style="
-                font-weight: 400;
-                max-width: 600px;
-                text-align: left;
-                margin: 0 auto;
-                padding: 0 20px;
-              "
-            >
-              <div
-                class="header-with-buttons"
+                  .colored-black {
+                    color:#ffffff;
+                    mix-blend-mode:difference;
+                  }
+                </style>
+              </head>
+              <body
                 style="
                   font-weight: 400;
-                  display: inline-block;
                   width: 100%;
-                  align-items: center;
+                  font-size: 16px;
+                  font-family: 'SamsungSharpSans', sans-serif;
+                  -webkit-font-smoothing: antialiased;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #000000;
+                  box-sizing: border-box;
                 "
               >
-                <pre
+                <table
                   style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
+                    font-weight: 400;
+                    width: 100%;
+                    border-collapse: separate;
+                    font-size: 16px;
+                    font-family: 'SamsungSharpSans' sans-serif;
+                    background-image: url(https://assets-stage.samsungplus.net/certification/common/images/bg_pattern_01.jpg);
+                    -webkit-font-smoothing: antialiased;
+                    max-width: 800px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                     border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
+                    border: 1px solid #c7d0d4;
+                    border-spacing: 0;
+                    margin: 15px auto;
+                    padding: 0;
                   "
-                >${translation("email_badge_description_4")}</pre>
-                <pre
-                  style="
-                    font-weight: normal;
-                    font-family: Menlo, Monaco, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    margin: 0 0 15px;
-                  "
-                >Copyright ⓒ 2024 SAMSUNG all rights reserved.</pre>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>`,
+                >
+                  <tr style="font-weight: 400">
+                    <td style="font-weight: 400; text-align: center; margin: 0; padding: 0;">
+                      <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+                        <div
+                          style="
+                            font-weight: 400;
+                            max-width: 600px;
+                            text-align: left;
+                            margin: 0 auto;
+                            padding: 0 20px;
+                          "
+                        >
+                          <div
+                            style="
+                              font-weight: 600;
+                              display: inline-block;
+                              width: 100%;
+                              align-items: center;
+                            "
+                          >
+                            <h1
+                              class="colored-black"
+                              style="
+                                font-weight: 700;
+                                float: left;
+                                font-size: 16px;
+                                line-height: 42px;
+                                letter-spacing: -1px;
+                                margin: 0;
+                                padding: 0;
+                              "
+                            >S+ ${translation("galaxy_ai_expert")}</h1>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="font-weight: 400">
+                    <td style="font-weight: 400; text-align: center; margin: 0; padding: 0;">
+                      <div
+                        style="
+                          font-weight: 400;
+                          max-width: 600px;
+                          text-align: left;
+                          margin: 0 auto;
+                          padding: 0 20px;
+                        "
+                      >
+                        <div style="font-weight: 400; padding: 30px 0 20px">
+                          <h2
+                            class="colored-black"
+                            style="
+                              font-weight: 700;
+                              font-size: 54px;
+                              margin: 70px 0;
+                              text-align: center;
+                            "
+                          >
+                            $CODE$
+                          </h2>
+
+                          <div
+                            style="font-weight: 400; margin-bottom: 30px; "
+                          >
+                            <h3
+                              class="title"
+                              style="
+                                font-weight: 700;
+                                font-size: 18px;
+                                margin: 0 0 15px;
+                              "
+                            ></h3>
+                            <p
+                              class="colored-black"
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                padding-bottom:5px;
+                              "
+                            >${translation(
+                              "email_verify_code_description_1"
+                            )}</p>
+                            <p
+                              class="colored-black"
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                              "
+                            >${translation(
+                              "email_verify_code_description_2"
+                            )}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="font-weight: 400">
+                    <td
+                      style="
+                        font-weight: 400;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #121212;
+                        color: #ffffff;
+                      "
+                    >
+                      <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
+                        <div
+                          style="
+                            font-weight: 400;
+                            max-width: 600px;
+                            text-align: left;
+                            margin: 0 auto;
+                            padding: 0 20px;
+                          "
+                        >
+                          <div
+                            style="
+                              font-weight: 400;
+                              display: inline-block;
+                              width: 100%;
+                              align-items: center;
+                            "
+                          >
+                            <p
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                margin: 0 0 15px;
+                              "
+                            >${translation("email_badge_description_4")}</p>
+                            <p
+                              style="
+                                font-weight: normal;
+                                font-family: 'SamsungSharpSans' sans-serif;
+                                font-size: 14px;
+                                white-space: pre-wrap;
+                                border-radius: 4px;
+                                overflow-wrap: break-word;
+                                word-wrap: break-word;
+                                margin: 0 0 15px;
+                              "
+                            >Copyright ⓒ 2024 SAMSUNG all rights reserved.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </body>
+            </html>`,
           }),
         }
       );
