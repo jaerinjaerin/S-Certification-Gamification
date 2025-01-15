@@ -19,6 +19,7 @@ export async function POST(request: Request, props: Props) {
     subsidiaryId,
     regionId,
     jobId,
+    storeId,
     languageCode,
     channelId,
     channelName,
@@ -89,7 +90,7 @@ export async function POST(request: Request, props: Props) {
         jobId: job?.id,
         regionId: regionId,
         subsidiaryId: subsidiaryId,
-        // storeId: storeId,
+        storeId: storeId,
         // storeSegmentText: body.storeSegmentText,
         channelId: channelId,
         channelName: channelName,
@@ -136,6 +137,7 @@ export async function POST(request: Request, props: Props) {
       scope.setTag("regionId", regionId);
       scope.setTag("subsidiaryId", subsidiaryId);
       scope.setTag("jobId", jobId);
+      scope.setTag("storeId", storeId);
       scope.setTag("languageCode", languageCode);
       scope.setTag("channelId", channelId);
       scope.setTag("channelSegmentId", channelSegmentId);
