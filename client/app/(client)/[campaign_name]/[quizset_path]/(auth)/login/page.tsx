@@ -7,13 +7,14 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useArabic from "@/hooks/useArabic";
 import { cn, fixedClass } from "@/utils/utils";
 import { signIn, useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Login() {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
   const { isArabic } = useArabic();
+  const locale = useLocale();
 
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {

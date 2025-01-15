@@ -161,7 +161,10 @@ export default function ReviewPage() {
                   "pointer-events-none"
                 )}
               >
-                {option.text}({option.isCorrect ? "o" : "x"})
+                {option.text}
+                {process.env.NODE_ENV !== "production" && (
+                  <span>({option.isCorrect ? "o" : "x"})</span>
+                )}
                 <input
                   type="checkbox"
                   checked={selectedOptionIds.includes(option.id)}

@@ -268,6 +268,8 @@ export default function QuizPage() {
                 className={cn(
                   "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
                   isCorrectAnswer && "pointer-events-none",
+                  selectedOptionIds.includes(option.id) &&
+                    "pointer-events-none",
                   isArabic && "text-right"
                 )}
                 initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}

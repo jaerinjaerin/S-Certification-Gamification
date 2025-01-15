@@ -58,6 +58,11 @@ export default function GuestLogin({
   const translation = useTranslations();
   const { isArabic } = useArabic();
 
+  const isValidEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email) ? true : false;
+  };
+
   useEffect(() => {
     if (expiresAt) {
       const now = new Date();
@@ -75,13 +80,6 @@ export default function GuestLogin({
   const sendEmail = async () => {
     setLoading(true);
     setError(null);
-
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(email)) {
-      setError(translation("email_failed"));
-      setLoading(false);
-      return;
-    }
 
     try {
       const response = await fetch(
@@ -476,8 +474,8 @@ export default function GuestLogin({
           <div className="m-auto">
             <div className="font-bold text-center break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
               {translation("be_a_galaxy_ai_expert").replaceAll(
-                "Paradigm",
-                "S24"
+                "(Paradigm)",
+                " (Paradigm)"
               )}
             </div>
 
@@ -491,7 +489,6 @@ export default function GuestLogin({
                       setStep("email");
                     }}
                   >
-                    <span>S+</span>
                     <span>{translation("login")}</span>
                   </Button>
                 </DialogTrigger>
@@ -534,7 +531,7 @@ export default function GuestLogin({
                       className="text-[18px] disabled:bg-disabled"
                       type="submit"
                       form="verify-email"
-                      disabled={!email || loading}
+                      disabled={!email || loading || !isValidEmail(email)}
                     >
                       {translation("send_code")}
                     </Button>
@@ -615,13 +612,13 @@ export default function GuestLogin({
                 console.log("verify code");
                 e.preventDefault();
               }}
-              className="relative font-medium font-one"
+              className="relative font-medium font-one w-full bg-[#E5E5E5] rounded-[10px] p-1"
             >
               <input
                 placeholder="code"
                 inputMode="numeric"
                 className={cn(
-                  "w-full bg-[#E5E5E5] p-3 rounded-[10px]",
+                  "bg-[#E5E5E5] rounded-[10px] w-[70%] sm:w-[80%] p-2",
                   isArabic && "text-right"
                 )}
                 value={code}
@@ -660,7 +657,7 @@ export default function GuestLogin({
               <button
                 className="inline-flex text-[#4E4E4E] border-b border-b-[#4E4E4E] disabled:text-disabled disabled:border-disabled"
                 onClick={sendEmail}
-                disabled={count > 0}
+                disabled={count > 480}
               >
                 {translation("resend_code")}
               </button>
