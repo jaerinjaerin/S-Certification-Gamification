@@ -522,15 +522,12 @@ async function main() {
           (data) => data.domainCode === domainCode
         )?.activityIds;
 
-        // const stage3BadgeActivityId = activityIds
-        //   ? activityIds[0].toString()
-        //   : "251745"; //"251745";
-        // const stage4BadgeActivityId = activityIds
-        //   ? activityIds[1].toString()
-        //   : "251747"; //"251747";
-
-        const stage3BadgeActivityId = "251745"; //"251745";
-        const stage4BadgeActivityId = "251747"; //"251747";
+        const stage3BadgeActivityId = activityIds
+          ? activityIds[0].toString()
+          : "251745"; //"251745";
+        const stage4BadgeActivityId = activityIds
+          ? activityIds[1].toString()
+          : "251747"; //"251747";
 
         if (i === 2) {
           isBadgeStage = true;

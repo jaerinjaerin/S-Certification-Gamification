@@ -40,6 +40,7 @@ import { useEffect, useState } from "react";
 interface Job {
   name: string;
   id: string;
+  storeId?: string;
 }
 
 interface Channel {
@@ -87,7 +88,8 @@ export default function GuestRegisterPage() {
   const [jobs] = useState<Job[]>([
     { name: "FSM", id: "8" },
     { name: "FF", id: "9" },
-    // { name: "Customer Services", id: "10" },
+    { name: "FSM(SES)", id: "8", storeId: "4" },
+    { name: "FF(SES)", id: "9", storeId: "4" },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
@@ -222,6 +224,7 @@ export default function GuestRegisterPage() {
         subsidaryId: selectedCountry.subsidaryId,
         regionId: selectedCountry.regionId,
         jobId: selectedJobId,
+        storeId: jobs.find((j) => j.id === selectedJobId)?.storeId,
         languageCode: languageCode,
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
