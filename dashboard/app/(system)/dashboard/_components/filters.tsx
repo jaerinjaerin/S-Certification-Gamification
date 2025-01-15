@@ -2,9 +2,15 @@
 import SelectForm from "@/components/system/select-with-title";
 import { Button } from "@/components/ui/button";
 import FiltersContainer from "@/components/system/filters-container";
-import { ControllerRenderProps, FieldValues, useForm } from "react-hook-form";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  useForm,
+  UseFormReturn,
+  useWatch,
+} from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { formatCamelCaseToTitleCase } from "@/lib/text";
 import { CalendarForm } from "@/components/system/calendar-with-title";
@@ -19,6 +25,32 @@ import {
 import { cn } from "@/lib/utils";
 import { Download } from "lucide-react";
 
+// 데이터 초기화 인터페이스
+type InitializeFiltersPros = (
+  filters: FilterData,
+  form: UseFormReturn,
+  setFilteredSubsidiaries: Dispatch<SetStateAction<Subsidiary[]>>,
+  setFilteredDomains: Dispatch<SetStateAction<Subsidiary[]>>
+) => void;
+
+// 데이터 초기화 함수
+const initializeFilters: InitializeFiltersPros = (
+  filters,
+  form,
+  setFilteredSubsidiaries,
+  setFilteredDomains
+) => {
+  // 모든 필터를 "all"로 설정
+  Object.entries(filters).forEach(([key]) => {
+    form.setValue(key, "all");
+  });
+
+  // 종속 데이터 업데이트
+  setFilteredSubsidiaries(filters.subsidiary);
+  setFilteredDomains(filters.domain);
+};
+
+// 렌더 데이터 시작
 const Filters = ({
   hasDownloadButton = false,
   onSubmit,
@@ -27,7 +59,7 @@ const Filters = ({
   onSubmit: (data: FieldValues) => void;
 }) => {
   const form = useForm();
-  const formValues = form.watch();
+  const formValues = useWatch({ control: form.control });
   const [filterData, setFilterData] = useState<AllFilterData | null>(null);
   const [filteredSubsidiaries, setFilteredSubsidiaries] = useState<
     Subsidiary[]
@@ -40,17 +72,39 @@ const Filters = ({
   useEffect(() => {
     axios.get("/api/dashboard/filter").then((res) => {
       setFilterData(res.data);
-      // Initialize dependencies
-      setFilteredSubsidiaries(res.data.filters.subsidiary);
-      setFilteredDomains(res.data.filters.domain);
-      //
-      Object.entries(res.data.filters).map(([key]) => {
-        form.setValue(key, "all");
-      });
-      //
-      defaultValues.current = form.getValues();
     });
-  }, [form]);
+  }, []);
+
+  useEffect(() => {
+    if (filterData && !defaultValues.current) {
+      // 필터 초기화 호출
+      initializeFilters(
+        filterData.filters,
+        form,
+        setFilteredSubsidiaries,
+        setFilteredDomains
+      );
+
+      // 캠페인 초기화
+      if (filterData.campaign.length > 0) {
+        const campaign = filterData.campaign[0];
+        form.setValue("campaign", campaign.id);
+        form.setValue("date", {
+          from: new Date(campaign.startedAt),
+          to: new Date(campaign.endedAt),
+        });
+      }
+      //
+      // 유저 선택 초기화
+      form.setValue("userGroup", "all");
+      //
+      // 적용버튼 활성화 기능을 위한 기준정보 저장
+      defaultValues.current = form.getValues();
+
+      // reducer에 알림
+      onSubmit(form.getValues());
+    }
+  }, [form, filterData, onSubmit]);
 
   // 폼 데이터 상태 확인 후 현재 기준 값과 비교 (Apply버튼 활성여부)
   useEffect(() => {
@@ -138,12 +192,41 @@ const Filters = ({
     }
   };
 
-  const onDownload = () => {
-    // Simulate download
-    console.log("Downloading report...");
+  const selectCampaign = (id: string | number) => {
+    if (!filterData) return;
+
+    const found = filterData.campaign.find((campaign) => campaign.id === id);
+
+    const date = {
+      from: new Date(found.startedAt),
+      to: new Date(found.endedAt),
+    };
+    form.setValue("date", date);
+    form.setValue("userGroup", "all");
+
+    // 필터 초기화 호출
+    initializeFilters(
+      filterData.filters,
+      form,
+      setFilteredSubsidiaries,
+      setFilteredDomains
+    );
+
+    defaultValues.current = form.getValues();
+    onSubmit(form.getValues());
   };
 
-  if (!filterData) return;
+  const onDownload = () => {
+    // Simulate download
+    console.log("Downloading report...", formValues.campaign);
+  };
+
+  if (
+    !filterData ||
+    filteredSubsidiaries.length <= 0 ||
+    filteredDomains.length <= 0
+  )
+    return;
 
   return (
     <Form {...form}>
@@ -168,11 +251,12 @@ const Filters = ({
                   label: item.name,
                   value: item.id,
                 }))}
+                onChange={selectCampaign}
               />
             )}
           />
           {hasDownloadButton && (
-            <Button variant="outline" onClick={onDownload}>
+            <Button variant="outline" type="button" onClick={onDownload}>
               <div className="flex items-center space-x-2 text-zinc-950">
                 <Download />
                 <span>Download Report</span>
@@ -281,12 +365,20 @@ export default Filters;
 const CampaignSelectForm = ({
   field,
   items,
+  onChange,
 }: {
   field: ControllerRenderProps<FieldValues, string>;
   items: { label: string; value: string | number }[];
+  onChange?: (value: string | number) => void;
 }) => {
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <Select
+      onValueChange={(value) => {
+        field.onChange(value);
+        onChange?.(value);
+      }}
+      defaultValue={field.value}
+    >
       <SelectTrigger
         className={cn(
           "w-auto space-x-3 shadow-none bg-white hover:bg-zinc-100 border-0 hover:bg-transparent focus:bg-transparent focus:ring-0 focus:outline-none !text-size-20px font-bold",

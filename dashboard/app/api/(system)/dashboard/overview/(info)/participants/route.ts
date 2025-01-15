@@ -1,11 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { parseDateFromQuery } from "../../../_lib/query";
+import { buildWhereCondition } from "../../../_lib/where";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = request.nextUrl;
+    const params = Object.fromEntries(searchParams.entries());
+    const period = parseDateFromQuery(params);
+    const where = buildWhereCondition(params, period);
+
     await prisma.$connect();
 
-    const count = await prisma.userQuizStatistics.count();
+    const count = await prisma.userQuizStatistics.count({
+      where,
+    });
     return NextResponse.json({ result: { count } });
   } catch (error) {
     console.error("Error fetching data:", error);
