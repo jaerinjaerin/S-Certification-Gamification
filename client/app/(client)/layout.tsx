@@ -8,7 +8,7 @@ export default async function ClientLayout({
 }) {
   return (
     <div>
-      {process.env.NODE_ENV !== "production" && (
+      {process.env.ENV !== "production" && (
         <Link
           href="/home"
           style={{
