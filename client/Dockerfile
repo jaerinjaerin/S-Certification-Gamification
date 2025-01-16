@@ -57,8 +57,8 @@ WORKDIR /app/client
 RUN npm install
 
 # 1-5. client 앱 빌드
-RUN npm prisma:generate
-RUN npm build
+RUN npm run prisma:generate
+RUN npm run build
 
 #
 # 2) Run Stage
