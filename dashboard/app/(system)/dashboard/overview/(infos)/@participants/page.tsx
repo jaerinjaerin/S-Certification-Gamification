@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import InfoCardStyleContent from "../_components/card-content";
 import InfoCardStyleContainer from "../_components/card-with-title";
-import { useOverviewContext } from "../../_lib/provider";
-import { serializeJsonToQuery } from "../../_lib/search-params";
-import axios from "axios";
+import { useOverviewContext } from "../../_provider/provider";
+import { fetchData } from "../../../_lib/fetch";
 
 const OverviewParticipantsInfo = () => {
   const { state } = useOverviewContext();
@@ -12,16 +11,9 @@ const OverviewParticipantsInfo = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      const searchParams = serializeJsonToQuery(state.fieldValues);
-      const url = `/api/dashboard/overview/participants?${searchParams.toString()}`;
-      //
-      axios
-        .get(url)
-        .then((res) => {
-          const data = res.data;
-          setCount(data.result.count);
-        })
-        .catch((err) => console.error(err));
+      fetchData(state.fieldValues, "overview/info/participants", (data) => {
+        setCount(data.result.count ?? 0);
+      });
     }
   }, [state.fieldValues]);
 

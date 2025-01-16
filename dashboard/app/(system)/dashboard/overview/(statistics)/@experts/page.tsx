@@ -1,171 +1,190 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
-import * as React from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Label,
+  Cell,
+  LabelList,
+  Legend,
   Pie,
   PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-
-import { Card, CardContent } from "@/components/ui/card";
+import CardCustomHeader from "../../../_components/charts/chart-header";
+import { useOverviewContext } from "../../_provider/provider";
+import { useEffect, useState } from "react";
+import { fetchData } from "../../../_lib/fetch";
+import ChartContainer from "../../../_components/charts/chart-container";
+import { chartHeight } from "../../../_lib/chart-variable";
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import CardCustomHeader from "../_components/card-header";
+  chartColorHoverBackground,
+  chartColorPrimary,
+  chartColorSecondary,
+} from "../../../_lib/chart-colors";
 
-const chartDataBar = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfigBar = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
-
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig;
+const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExperts = () => {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  const { state } = useOverviewContext();
+  const [data, setData] = useState({ pie: [], bar: [] });
+  const [count, setCount] = useState([]);
+
+  useEffect(() => {
+    if (state.fieldValues) {
+      fetchData(state.fieldValues, "overview/statistics/experts", (data) => {
+        setData(data.result);
+      });
+      //
+      fetchData(state.fieldValues, "overview/info/experts", (data) => {
+        setCount(data.result.count);
+      });
+    }
+  }, [state.fieldValues]);
 
   return (
-    <Card>
-      <CardCustomHeader
-        title="Experts"
-        numbers={(1200).toLocaleString()}
-        description="Number of people completed"
-      />
-      <div className="flex flex-row">
-        <CardContent className="flex-1 pb-0">
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[12rem]"
-          >
-            <PieChart>
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+    <ResponsiveContainer width="100%" height="100%">
+      <ChartContainer>
+        {({ width }) => {
+          return (
+            <>
+              <CardCustomHeader
+                title="Experts"
+                numbers={count.toLocaleString()}
+                description="Number of people completed"
               />
-              <Pie
-                data={chartData}
-                dataKey="visitors"
-                nameKey="browser"
-                innerRadius={30}
-                strokeWidth={5}
-              >
-                <Label
-                  content={({ viewBox }) => {
-                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                      return (
-                        <text
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                          className="text-size-20px font-semibold"
-                        >
-                          {totalVisitors.toLocaleString()}
-                        </text>
-                      );
-                    }
-                  }}
-                />
-              </Pie>
-            </PieChart>
-          </ChartContainer>
-        </CardContent>
-        <CardContent className="flex-1 pb-0">
-          <ChartContainer config={chartConfigBar}>
-            <BarChart accessibilityLayer data={chartDataBar} layout="vertical">
-              <CartesianGrid vertical={false} />
-
-              <XAxis
-                type="number" // 수치 데이터
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                dataKey="month" // 카테고리 데이터 (month)
-                type="category" // 카테고리 데이터로 설정
-                tickLine={false}
-                axisLine={false}
-                tickMargin={10}
-              />
-
-              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-              <ChartLegend content={<ChartLegendContent />} />
-              <Bar
-                dataKey="desktop"
-                stackId="a"
-                fill="var(--color-desktop)"
-                radius={[0, 0, 4, 4]}
-              />
-              <Bar
-                dataKey="mobile"
-                stackId="a"
-                fill="var(--color-mobile)"
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </div>
-    </Card>
+              <div className="flex" style={{ width }}>
+                <PieChart width={width / 2} height={chartHeight}>
+                  <Pie
+                    data={data.pie}
+                    innerRadius={50}
+                    outerRadius={120}
+                    fill={chartColorPrimary}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value}`} // 각 영역에 Label 추가
+                  >
+                    {data.pie.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <>
+                    <text
+                      x="50%"
+                      y="47%"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      className="font-bold text-size-20px opacity-90"
+                    >
+                      {count}
+                    </text>
+                    <text
+                      x="50%"
+                      y="51%"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      className="text-size-12px"
+                    >
+                      total
+                    </text>
+                  </>
+                  <Tooltip />
+                  <Legend iconType="circle" iconSize={8} />
+                </PieChart>
+                <div className="flex items-center flex-col">
+                  <div className="text-size-14px text-zinc-950 font-semibold">
+                    Experts distribution
+                  </div>
+                  <BarChart
+                    title="Experts distribution"
+                    width={width / 2}
+                    height={chartHeight}
+                    data={data.bar}
+                    barSize={40}
+                    margin={{
+                      top: 20,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                    layout="vertical"
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      type="number"
+                      orientation="top"
+                      // domain={[200, 1000]}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      tick={renderCustomTick}
+                    />
+                    <Tooltip cursor={{ fill: chartColorHoverBackground }} />
+                    <Legend />
+                    <Bar dataKey="Expert" stackId="a" fill={chartColorPrimary}>
+                      <LabelList
+                        dataKey="Expert"
+                        content={renderLabelContent}
+                      />
+                    </Bar>
+                    <Bar
+                      dataKey="Expert + Advanced"
+                      stackId="a"
+                      fill={chartColorSecondary}
+                    >
+                      <LabelList
+                        dataKey="Expert + Advanced"
+                        content={renderLabelContent}
+                      />
+                    </Bar>
+                  </BarChart>
+                </div>
+              </div>
+            </>
+          );
+        }}
+      </ChartContainer>
+    </ResponsiveContainer>
   );
 };
 
 export default OverviewExperts;
+
+const renderLabelContent = (props: any) => {
+  if (props.value === 0) return;
+  //
+  const { x, y, width, value } = props;
+  const padding = 12;
+  return (
+    <text
+      x={x + width - padding}
+      y={y + padding}
+      textAnchor="middle"
+      dominantBaseline="middle"
+    >
+      {value}
+    </text>
+  );
+};
+
+const renderCustomTick = (props: any) => {
+  const { x, y, payload } = props;
+  return (
+    <text
+      x={x}
+      y={y}
+      dy={4}
+      textAnchor="end"
+      fill="rgba(0, 0, 0, 0.7)"
+      className="text-size-12px"
+    >
+      {payload.value}
+    </text>
+  );
+};

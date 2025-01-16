@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import InfoCardStyleContainer from "../_components/card-with-title";
-import { useOverviewContext } from "../../_lib/provider";
-import { serializeJsonToQuery } from "../../_lib/search-params";
-import axios from "axios";
+import { useOverviewContext } from "../../_provider/provider";
 import { initialExpertsData } from "./_lib/state";
+import { fetchData } from "../../../_lib/fetch";
 
 const OverviewExpertsByGroupInfo = () => {
   const { state } = useOverviewContext();
@@ -13,17 +12,9 @@ const OverviewExpertsByGroupInfo = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      const searchParams = serializeJsonToQuery(state.fieldValues);
-      const url = `/api/dashboard/overview/experts-by-group?${searchParams.toString()}`;
-      //
-      axios
-        .get(url)
-        .then((res) => {
-          const data = res.data;
-          console.log("🚀 ~ .then ~ data:", data);
-          setExpertData(data.result);
-        })
-        .catch((err) => console.error(err));
+      fetchData(state.fieldValues, "overview/info/experts-by-group", (data) => {
+        setExpertData(data.result ?? initialExpertsData);
+      });
     }
   }, [state.fieldValues]);
 

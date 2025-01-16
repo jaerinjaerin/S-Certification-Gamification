@@ -6,7 +6,7 @@ import OverviewAchievementRate from "./(statistics)/@achievement-rate/page";
 import OverviewExperts from "./(statistics)/@experts/page";
 import OverviewGoalAchievement from "./(statistics)/@progress-of-goal-achievement/page";
 import OverviewFilterForm from "./@filters/page";
-import { OverviewProvider } from "./_lib/provider";
+import { OverviewProvider } from "./_provider/provider";
 
 const OverviewTemplete = () => {
   return (
