@@ -211,7 +211,7 @@ deploy_stg_client:
   script:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST \
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
@@ -239,7 +239,7 @@ deploy_stg_admin:
   script:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST \
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $ADMIN_IMAGE && \
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
@@ -267,7 +267,7 @@ deploy_prd_client:
   script:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST \
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
@@ -302,7 +302,7 @@ deploy_prd_admin:
   script:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST \
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $ADMIN_IMAGE && \
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
