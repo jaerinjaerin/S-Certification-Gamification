@@ -40,6 +40,7 @@ import { useEffect, useState } from "react";
 interface Job {
   name: string;
   id: string;
+  value: string;
   storeId?: string;
 }
 
@@ -86,10 +87,10 @@ export default function GuestRegisterPage() {
   const [countries, setCountries] = useState<DomainDetail[]>([]);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [jobs] = useState<Job[]>([
-    { name: "FSM", id: "8" },
-    { name: "FF", id: "9" },
-    { name: "FSM(SES)", id: "8", storeId: "4" },
-    { name: "FF(SES)", id: "9", storeId: "4" },
+    { name: "FSM", value: "8", id: "8" },
+    { name: "FF", value: "9", id: "9" },
+    { name: "FSM(SES)", value: "10", id: "8", storeId: "4" },
+    { name: "FF(SES)", value: "11", id: "9", storeId: "4" },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
@@ -186,7 +187,7 @@ export default function GuestRegisterPage() {
       setChannelInput(true);
       setSelectedChannel(null);
 
-      setSelectedJobId(jobs[0].id);
+      setSelectedJobId(jobs[0].value);
 
       return;
     }
@@ -223,8 +224,8 @@ export default function GuestRegisterPage() {
         domainCode: selectedCountry.code,
         subsidaryId: selectedCountry.subsidaryId,
         regionId: selectedCountry.regionId,
-        jobId: selectedJobId,
-        storeId: jobs.find((j) => j.id === selectedJobId)?.storeId,
+        jobId: jobs.find((j) => j.value === selectedJobId)?.id,
+        storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
         languageCode: languageCode,
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
@@ -351,7 +352,7 @@ export default function GuestRegisterPage() {
               </SelectTrigger>
               <SelectContent className="font-medium font-one">
                 {jobs.map((job) => (
-                  <SelectItem key={job.id} value={job.id}>
+                  <SelectItem key={job.value} value={job.value}>
                     {job.name}
                   </SelectItem>
                 ))}

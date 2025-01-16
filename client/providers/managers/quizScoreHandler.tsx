@@ -1,10 +1,11 @@
 import { ScoreData } from "@/types/type";
+import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { QuizLog } from "./quizQuestionLogManager";
 
 export class QuizScoreHandler {
   fetchRankAndGraphData = async (
-    userId: string,
+    authType: AuthType,
     campaignId: string,
     quizStageIndex: number,
     score: number
@@ -12,7 +13,7 @@ export class QuizScoreHandler {
     console.log("get score");
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?userId=${userId}&quizStageIndex=${quizStageIndex}&campaignId=${campaignId}&userScore=${score}`,
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?authType=${authType}&quizStageIndex=${quizStageIndex}&campaignId=${campaignId}&userScore=${score}`,
         {
           method: "GET",
           cache: "no-store",

@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma-client";
+import { AuthType } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // 동적 렌더링 강제
@@ -12,14 +13,27 @@ export async function GET(request: Request) {
     const campaignId = searchParams.get("campaignId");
     const quizStageIndex = parseInt(searchParams.get("quizStageIndex") || "0");
     const userScore = parseInt(searchParams.get("userScore") || "0");
+    const authString = searchParams.get("authType"); // string | null
+
     const sampleSize = 1000; // 샘플링 크기
 
     // Validate required fields
-    if (!campaignId || isNaN(quizStageIndex)) {
+    if (!campaignId || isNaN(quizStageIndex) || !authString) {
       return NextResponse.json(
         { message: "Campaign ID and quizStageIndex are required" },
         { status: 400 }
       );
+    }
+
+    // Prisma에서 사용하는 enum 타입으로 변환 (문자열 기반)
+    const authType = (authString ?? "SUMTOTAL") as AuthType;
+
+    // or, 안전하게 체크:
+    let typedAuth: AuthType = "SUMTOTAL";
+    if (authString === "GUEST") {
+      typedAuth = "GUEST";
+    } else if (authString === "UNKNOWN") {
+      typedAuth = "UNKNOWN";
     }
 
     // 샘플링된 점수 가져오기
@@ -27,6 +41,7 @@ export async function GET(request: Request) {
       where: {
         campaignId,
         quizStageIndex,
+        authType,
       },
       select: {
         score: true,

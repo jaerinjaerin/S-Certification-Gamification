@@ -86,6 +86,7 @@ export async function POST(request: Request, props: Props) {
       },
       data: {
         domainId,
+        domainCode: domain.code,
         languageId: language!.id,
         jobId: job?.id,
         regionId: regionId,

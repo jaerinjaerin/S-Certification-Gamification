@@ -12,6 +12,7 @@ import {
 } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import assert from "assert";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
@@ -20,7 +21,6 @@ import { QuizLogHandler } from "./managers/quizLogHandler";
 import QuizQuestionLogManager from "./managers/quizQuestionLogManager";
 import { QuizScoreHandler } from "./managers/quizScoreHandler";
 import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
-import { useTranslations } from "next-intl";
 
 interface QuizContextType {
   quizSet: QuizSetEx;
@@ -182,7 +182,7 @@ export const QuizProvider = ({
     let scoreData: ScoreData | null = null;
     if (isBadgeStage() || isLastStage()) {
       scoreData = await quizScoreHandler.fetchRankAndGraphData(
-        userId,
+        authType,
         campaign.id,
         currentQuizStageIndex,
         totalQuizScore
