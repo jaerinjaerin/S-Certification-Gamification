@@ -44,7 +44,7 @@ build_stg_client:
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
       --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
-      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       -f client/Dockerfile \
       -t $CLIENT_IMAGE \
       .
@@ -89,7 +89,7 @@ build_stg_admin:
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
       --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
-      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       -f dashboard/Dockerfile \
       -t $ADMIN_IMAGE \
       .
@@ -134,7 +134,7 @@ build_prd_client:
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
       --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
-      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       --build-arg TZ=$TZ \
       -f apps/client/Dockerfile \
       -t $CLIENT_IMAGE \
@@ -180,7 +180,7 @@ build_prd_admin:
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
       --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
-      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       --build-arg TZ=$TZ \
       -f dashboard/Dockerfile \
       -t $ADMIN_IMAGE \
