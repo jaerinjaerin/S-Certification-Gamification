@@ -46,6 +46,11 @@ ENV PRISMA_CLIENT_OUTPUT=${PRISMA_CLIENT_OUTPUT}
 
 WORKDIR /app
 
+# 1-1. 루트에 있는 pnpm 관련 파일 복사
+COPY package.json package-lock.json ./
+
+RUN npm install
+
 # 1-2. schema 파일 복사
 COPY data-model/prisma/schema.prisma data-model/prisma/
 
