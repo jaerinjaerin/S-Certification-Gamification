@@ -1,30 +1,34 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import InfoCardStyleContent from "../_components/card-content";
 import InfoCardStyleContainer from "../_components/card-with-title";
 import axios from "axios";
-
-const getdata = axios
-  .get("/api/dashboard/overview/achievement")
-  .then((res) => res.data)
-  .catch((err) => console.error(err));
+import { serializeJsonToQuery } from "../../_lib/search-params";
+import { useOverviewContext } from "../../_lib/provider";
 
 const OverviewAchievementInfo = () => {
-  const data = use(getdata);
-  const [infoNum, setInfoNum] = useState<number>(0);
+  const { state } = useOverviewContext();
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
-    console.log(`data`, data);
-
-    if (data) {
-      // setInfoNum(data.result.percent);
+    if (state.fieldValues) {
+      const searchParams = serializeJsonToQuery(state.fieldValues);
+      const url = `/api/dashboard/overview/achievement?${searchParams.toString()}`;
+      //
+      axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          setCount(data.result.count);
+        })
+        .catch((err) => console.error(err));
     }
-  }, [data]);
+  }, [state.fieldValues]);
 
   return (
     <InfoCardStyleContainer title="Achievement" iconName="badgeCheck">
       <InfoCardStyleContent
-        info={`${infoNum.toLocaleString()}%`}
+        info={`${count.toLocaleString()}%`}
         caption="Achievement of a goal"
       />
     </InfoCardStyleContainer>

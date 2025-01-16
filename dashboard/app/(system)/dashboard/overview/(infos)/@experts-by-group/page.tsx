@@ -1,40 +1,35 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoCardStyleContainer from "../_components/card-with-title";
-
-type GroupedData = {
-  group: string;
-  items: {
-    title: string;
-    value: number;
-  }[];
-};
-
-type ImprovedDataStructure = GroupedData[];
-
-const expertsData: ImprovedDataStructure = [
-  {
-    group: "plus",
-    items: [
-      { title: "ff", value: 100 },
-      { title: "fsm", value: 400 },
-    ],
-  },
-  {
-    group: "ses",
-    items: [
-      { title: "ff", value: 100 },
-      { title: "fsm", value: 400 },
-    ],
-  },
-];
+import { useOverviewContext } from "../../_lib/provider";
+import { serializeJsonToQuery } from "../../_lib/search-params";
+import axios from "axios";
+import { initialExpertsData } from "./_lib/state";
 
 const OverviewExpertsByGroupInfo = () => {
-  const [infoNum, setInfoNum] = useState(expertsData);
+  const { state } = useOverviewContext();
+  const [expertData, setExpertData] =
+    useState<ImprovedDataStructure>(initialExpertsData);
+
+  useEffect(() => {
+    if (state.fieldValues) {
+      const searchParams = serializeJsonToQuery(state.fieldValues);
+      const url = `/api/dashboard/overview/experts-by-group?${searchParams.toString()}`;
+      //
+      axios
+        .get(url)
+        .then((res) => {
+          const data = res.data;
+          console.log("🚀 ~ .then ~ data:", data);
+          setExpertData(data.result);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [state.fieldValues]);
 
   return (
     <InfoCardStyleContainer title="Experts by group" iconName="users">
-      {infoNum.map((groupData) => {
+      {expertData.map((groupData) => {
         const groupSuffix =
           groupData.group === "plus" ? "" : `(${groupData.group})`;
         return (

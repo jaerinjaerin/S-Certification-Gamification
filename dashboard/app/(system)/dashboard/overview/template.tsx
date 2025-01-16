@@ -6,21 +6,24 @@ import OverviewAchievementRate from "./(statistics)/@achievement-rate/page";
 import OverviewExperts from "./(statistics)/@experts/page";
 import OverviewGoalAchievement from "./(statistics)/@progress-of-goal-achievement/page";
 import OverviewFilterForm from "./@filters/page";
+import { OverviewProvider } from "./_lib/provider";
 
 const OverviewTemplete = () => {
   return (
-    <div className="space-y-3">
-      <OverviewFilterForm />
-      <div className="flex space-x-2">
-        <OverviewParticipantsInfo />
-        <OverviewExpertsInfo />
-        <OverviewAchievementInfo />
-        <OverviewExpertsByGroupInfo />
+    <OverviewProvider>
+      <div className="space-y-3">
+        <OverviewFilterForm />
+        <div className="flex space-x-2">
+          <OverviewParticipantsInfo />
+          <OverviewExpertsInfo />
+          <OverviewAchievementInfo />
+          <OverviewExpertsByGroupInfo />
+        </div>
+        <OverviewAchievementRate />
+        <OverviewExperts />
+        <OverviewGoalAchievement />
       </div>
-      <OverviewAchievementRate />
-      <OverviewExperts />
-      <OverviewGoalAchievement />
-    </div>
+    </OverviewProvider>
   );
 };
 

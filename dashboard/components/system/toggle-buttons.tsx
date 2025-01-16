@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ControllerRenderProps, FieldValues } from "react-hook-form";
 
 export function ToggleButtons({
@@ -49,7 +49,11 @@ export function ToggleUserButtons({
   data: { label: string; value: string }[];
   field: ControllerRenderProps<FieldValues, string>;
 }) {
-  const [selected, setSelected] = useState(data[0]?.value);
+  const [selected, setSelected] = useState(field.value);
+
+  useEffect(() => {
+    setSelected(field.value);
+  }, [field]);
 
   return (
     <ToggleGroup
@@ -58,15 +62,15 @@ export function ToggleUserButtons({
         setSelected(e);
         field.onChange(e);
       }}
-      className="bg-zinc-100 px-1 rounded-lg space-x-2"
-      defaultValue={field.value}
+      className="bg-zinc-100 text-zinc-600 px-1 rounded-lg space-x-2"
+      value={selected}
     >
       {data.map((item) => {
         return (
           <ToggleGroupItem
             className={cn(
-              "text-zinc-600",
-              selected === item.value && "!bg-white size-auto !px-2 !py-1"
+              selected === item.value &&
+                "text-zinc-950 !bg-white size-auto !px-2 !py-1"
             )}
             key={item.label}
             value={item.value}
