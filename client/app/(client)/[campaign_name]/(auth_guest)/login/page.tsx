@@ -612,6 +612,7 @@ export default function GuestLogin({
                 )}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                disabled={loading}
                 required
               />
               <div

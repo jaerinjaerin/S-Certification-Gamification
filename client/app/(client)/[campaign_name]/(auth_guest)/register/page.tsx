@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/select";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCreateItem from "@/hooks/useCreateItem";
-import { getServiceLangCode } from "@/i18n/locale";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { fetchQuizLog } from "@/services/quizService";
@@ -34,7 +33,7 @@ import { cn } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 interface Job {
@@ -94,6 +93,8 @@ export default function GuestRegisterPage() {
   ]);
   const [loading, setLoading] = useState<boolean>(false);
   const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
+  const locale = useLocale();
+  console.log(locale);
 
   console.log("checkingRegisterd", checkingRegisterd);
 
@@ -123,9 +124,9 @@ export default function GuestRegisterPage() {
   };
 
   const fetchLanguage = async () => {
-    const locale = await getServiceLangCode();
-    console.log("locale", locale);
-    setLanguageCode(locale);
+    const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
+    console.log("matchedLocale", matchedLocale);
+    setLanguageCode(matchedLocale);
   };
 
   useEffect(() => {
