@@ -29,12 +29,12 @@ export async function GET(request: Request) {
     const authType = (authString ?? "SUMTOTAL") as AuthType;
 
     // or, 안전하게 체크:
-    let typedAuth: AuthType = "SUMTOTAL";
-    if (authString === "GUEST") {
-      typedAuth = "GUEST";
-    } else if (authString === "UNKNOWN") {
-      typedAuth = "UNKNOWN";
-    }
+    // let typedAuth: AuthType = "SUMTOTAL";
+    // if (authString === "GUEST") {
+    //   typedAuth = "GUEST";
+    // } else if (authString === "UNKNOWN") {
+    //   typedAuth = "UNKNOWN";
+    // }
 
     // 샘플링된 점수 가져오기
     const sampledScores = await prisma.userQuizStageLog.findMany({
