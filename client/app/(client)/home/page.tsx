@@ -344,7 +344,7 @@ export default function Home() {
       <br />
       <br />
       <h1>삼플 미사용자 테스트 주소</h1>
-      <Link href="/s24">Link</Link>
+      <Link href="/s25">Link</Link>
       {/* <button
         onClick={() => {
           sendTestGetScore();
