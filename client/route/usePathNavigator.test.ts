@@ -13,7 +13,7 @@ describe("routeToPage in /s24", () => {
     // Mock the initial URL for /s24
     delete (window as any).location;
     window.location = {
-      pathname: "/s24/login",
+      pathname: "/s25/login",
       search: "",
       href: "",
     } as Location;
@@ -25,7 +25,7 @@ describe("routeToPage in /s24", () => {
     routeToPage("register");
 
     // 예상 경로 확인
-    expect(window.location.href).toBe("/s24/register");
+    expect(window.location.href).toBe("/s25/register");
   });
 });
 
@@ -34,7 +34,7 @@ describe("routeToPage in /quiz", () => {
     // Mock the initial URL for /admin
     delete (window as any).location;
     window.location = {
-      pathname: "/s24/ORG_502_ff_ko",
+      pathname: "/s25/ORG_502_ff_ko",
       search: "",
       href: "",
     } as Location;
@@ -46,6 +46,6 @@ describe("routeToPage in /quiz", () => {
     routeToPage("quiz");
 
     // 예상 경로 확인
-    expect(window.location.href).toBe("/s24/ORG_502_ff_ko/quiz");
+    expect(window.location.href).toBe("/s25/ORG_502_ff_ko/quiz");
   });
 });

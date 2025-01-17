@@ -13,7 +13,7 @@ export default async function SumtotalUserLayout({
   const locale = quizset_path.split("_").at(-1);
 
   const messages = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${locale}.json`
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`
   )
     .then((res) => res.json())
     .catch((error) =>

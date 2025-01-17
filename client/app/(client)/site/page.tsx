@@ -77,7 +77,7 @@ export default function SitemapPage() {
         {supportedLanguagesCode.map((code) => {
           return (
             <a
-              href={`${HOST_URL}/s24/NAT_7000_${code}/login`}
+              href={`${HOST_URL}/s25/NAT_7000_${code}/login`}
               target="_blank"
               key={code}
             >

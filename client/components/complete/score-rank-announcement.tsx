@@ -48,7 +48,7 @@ export default function ScoreRankAnnouncement({
     }
 
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
-    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
+    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
   const { isArabic } = useArabic();
 
