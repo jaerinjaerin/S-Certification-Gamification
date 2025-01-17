@@ -1,6 +1,7 @@
 import { defaultLanguageCode } from "@/core/config/default";
 import AuthProvider from "@/providers/authProvider";
-import { validateAndCorrectQuizSetPath } from "@/services/quizService";
+import { extractCodesFromPath } from "@/utils/pathUtils";
+import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
 import { redirect } from "next/navigation";
 
@@ -48,3 +49,110 @@ export default async function SumtotalUserLayout({
     </div>
   );
 }
+
+interface ValidationResult {
+  validatedPath: string; // 수정된 또는 원래의 `quizSetPath`
+  isValid: boolean; // 검증이 성공했는지 여부
+  wasCorrected: boolean; // 수정이 이루어졌는지 여부
+}
+
+const validateAndCorrectQuizSetPath = async (
+  quizSetPath,
+  defaultLanguageCode
+) => {
+  let wasCorrected = false;
+
+  try {
+    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+
+    // 도메인 검증
+    const domainsResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
+      {
+        method: "GET",
+        cache: "force-cache",
+      }
+    );
+
+    if (!domainsResponse.ok) {
+      throw new Error(`Failed to fetch domains: ${domainsResponse.status}`);
+    }
+
+    const domainsData = await domainsResponse.json();
+    console.log("Domains response:", domainsData);
+
+    const isDomainValid = domainsData.items?.some(
+      (domain) => domain.code === domainCode
+    );
+
+    if (!isDomainValid) {
+      console.error(`Invalid domain code: ${domainCode}`);
+      return {
+        validatedPath: quizSetPath,
+        isValid: false,
+        wasCorrected: false,
+      };
+    }
+
+    // 언어 검증
+    const languagesResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
+      {
+        method: "GET",
+        cache: "force-cache",
+      }
+    );
+
+    if (!languagesResponse.ok) {
+      throw new Error(`Failed to fetch languages: ${languagesResponse.status}`);
+    }
+
+    const languagesData = await languagesResponse.json();
+    console.log("Languages response:", languagesData);
+
+    const isLanguageValid = languagesData.items?.some(
+      (language) => language.code === languageCode
+    );
+
+    if (!isLanguageValid) {
+      // languageCode를 기본값으로 수정
+      console.warn(
+        `Invalid language code: ${languageCode}. Defaulting to ${defaultLanguageCode}`
+      );
+      const updatedPath = quizSetPath.replace(
+        `${languageCode}`,
+        `${defaultLanguageCode}`
+      );
+      wasCorrected = true;
+
+      return {
+        validatedPath: updatedPath,
+        isValid: true,
+        wasCorrected: true,
+      };
+    }
+
+    // 모든 검증 통과
+    return {
+      validatedPath: quizSetPath,
+      isValid: true,
+      wasCorrected: false,
+    };
+  } catch (error) {
+    console.error(`Failed to validate quizSetPath: ${error}`);
+    Sentry.captureMessage("Quiz path validation error", (scope) => {
+      scope.setContext("operation", {
+        type: "validation",
+        description: "Validation error",
+      });
+      scope.setTag("quizSetPath", quizSetPath);
+      return scope;
+    });
+
+    return {
+      validatedPath: quizSetPath,
+      isValid: false,
+      wasCorrected: false,
+    };
+  }
+};
