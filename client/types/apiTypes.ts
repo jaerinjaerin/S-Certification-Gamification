@@ -53,7 +53,7 @@ export interface ApiResponse<T> {
 }
 
 export interface ApiListResponse<T> {
-  items: T | null;
+  items: T[] | null;
   success: boolean;
   message?: string;
 }
