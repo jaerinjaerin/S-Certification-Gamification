@@ -55,9 +55,9 @@ build_stg_client:
       .
     - docker push $CLIENT_IMAGE
   environment:
-    name: production-client
+    name: staging-client
   rules:
-    - if: '$ENV == "production" && $SERVICE =~ /client/'
+    - if: '$ENV == "staging" && $SERVICE =~ /client/'
       when: always
     - when: never
   tags:
@@ -105,9 +105,9 @@ build_stg_admin:
       .
     - docker push $ADMIN_IMAGE
   environment:
-    name: production-admin
+    name: staging-admin
   rules:
-    - if: '$ENV == "production" && $SERVICE =~ /admin/'
+    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
       when: always
     - when: never
   tags:
@@ -237,20 +237,12 @@ deploy_stg_client:
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
-    - |
-      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker pull $CLIENT_IMAGE && \
-        sudo docker stop $CLIENT_NAME || true && \
-        sudo docker rm $CLIENT_NAME || true && \
-        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
-      "
   rules:
-    - if: '$ENV == "production" && $SERVICE =~ /client/'
+    - if: '$ENV == "staging" && $SERVICE =~ /client/'
       when: always
     - when: never
   environment:
-    name: production-client
+    name: staging-client
   tags:
     - deploy
 
@@ -274,11 +266,11 @@ deploy_stg_admin:
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
   rules:
-    - if: '$ENV == "production" && $SERVICE =~ /admin/'
+    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
       when: always
     - when: never
   environment:
-    name: production-admin
+    name: staging-admin
   tags:
     - deploy
 
@@ -303,19 +295,11 @@ deploy_prd_client:
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
-  #    - |
-  #      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
-  #        sudo docker pull $CLIENT_IMAGE && \
-  #        sudo docker stop $CLIENT_NAME || true && \
-  #        sudo docker rm $CLIENT_NAME || true && \
-  #        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
-  #      "
   rules:
     - if: '$ENV == "production" && $SERVICE =~ /client/'
       when: always
