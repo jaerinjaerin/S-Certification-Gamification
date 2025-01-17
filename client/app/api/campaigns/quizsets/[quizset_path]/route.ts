@@ -72,7 +72,7 @@ export async function GET(request: NextRequest, props: Props) {
 
     if (!language) {
       language = await prisma.language.findFirst({
-        where: { code: "en" },
+        where: { code: defaultLanguageCode },
       });
     }
 
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: defaultLanguageCode },
     });
 
-    console.log("language:", language, defaultLanguage);
+    // console.log("language:", language, defaultLanguage);
 
     const languageId = language?.id;
 

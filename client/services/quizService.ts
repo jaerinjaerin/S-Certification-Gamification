@@ -40,3 +40,27 @@ export const fetchQuizLog = async (
     throw new Error("퀴즈 로그를 가져오는 중 문제가 발생했습니다.");
   }
 };
+
+// export const validateQuizSetPath = async (quizSetPath: string): boolean => {
+//   try {
+//     const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+
+//     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/domains`;
+//     const domainsResponse = await apiClient.get<ApiResponse<DomainsResponse>>(
+//       url,
+//       "force-cache"
+//     );
+
+//     if (domainsResponse.item.?.find((domain) => domain.code === domainCode)) {
+
+//     }
+
+//     const languages = await apiClient.get<ApiResponse<LanguagesResponse>>(
+//       url,
+//       "force-cache"
+//     );
+//   } catch (error) {
+//     console.error(`Failed to fetch quiz log: ${error}`);
+//     throw new Error("퀴즈 로그를 가져오는 중 문제가 발생했습니다.");
+//   }
+// };

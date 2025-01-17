@@ -1,4 +1,7 @@
-import { sumtotalUserOthersJobId } from "@/core/config/default";
+import {
+  defaultLanguageCode,
+  sumtotalUserOthersJobId,
+} from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -49,6 +52,32 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    if (!domain) {
+      Sentry.captureException(new Error("Domain not found"), (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/logs/quizzes/sets",
+          method: "POST",
+          description: "Domain not found",
+        });
+        scope.setTag("userId", userId);
+        scope.setTag("quizSetPath", quizSetPath);
+        return scope;
+      });
+
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Domain not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
     console.log("domain:", domain);
     const user = await prisma.user.findFirst({
       where: {
@@ -57,6 +86,18 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
+      Sentry.captureException(new Error("User not found"), (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/logs/quizzes/sets",
+          method: "POST",
+          description: "User not found",
+        });
+        scope.setTag("userId", userId);
+        scope.setTag("quizSetPath", quizSetPath);
+        return scope;
+      });
+
       return NextResponse.json(
         {
           status: 404,
@@ -76,11 +117,36 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const language = await prisma.language.findFirst({
+    let language = await prisma.language.findFirst({
       where: {
         code: languageCode,
       },
     });
+
+    if (!language) {
+      Sentry.captureMessage("Language not found", (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/logs/quizzes/sets",
+          method: "POST",
+          description: "Language not found",
+        });
+        scope.setTag("userId", userId);
+        scope.setTag("quizSetPath", quizSetPath);
+        return scope;
+      });
+
+      language = await prisma.language.findFirst({
+        where: {
+          code: defaultLanguageCode,
+        },
+      });
+    }
+
+    let confirmedQuizSetPath = quizSetPath;
+    if (language != null && language.code !== languageCode) {
+      confirmedQuizSetPath = `${domainCode}_${language.code}`;
+    }
 
     // console.log("language:", language);
 
@@ -130,7 +196,7 @@ export async function POST(request: NextRequest) {
           jobId: job?.id,
           quizSetId: quizSet.id,
           languageId: language?.id,
-          quizSetPath: quizSetPath,
+          quizSetPath: confirmedQuizSetPath,
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
@@ -156,7 +222,7 @@ export async function POST(request: NextRequest) {
           jobId: job?.id,
           quizSetId: quizSet.id,
           languageId: language?.id,
-          quizSetPath: quizSetPath,
+          quizSetPath: confirmedQuizSetPath,
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
