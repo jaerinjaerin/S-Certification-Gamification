@@ -5,51 +5,51 @@ const path = require("path");
 
 const prisma = new PrismaClient();
 
-// 실제 url: https://quiz.samsungplus.net/s24/{domainCode}_{job}_{languageCode}
-// test url: http://localhost:3000/s24/{domain_code}/{job_name}/{lagnuage_code}
-// test url: http://localhost:3000/s24/ORG_502_ff_ko
+// 실제 url: https://quiz.samsungplus.net/s25/{domainCode}_{job}_{languageCode}
+// test url: http://localhost:3000/s25/{domain_code}/{job_name}/{lagnuage_code}
+// test url: http://localhost:3000/s25/ORG_502_ff_ko
 
 const charImagePaths = [
   [
-    "/certification/s24/images/character/stage1_1.png",
-    "/certification/s24/images/character/stage1_2.png",
-    "/certification/s24/images/character/stage1_3.png",
-    "/certification/s24/images/character/stage1_4.png",
-    "/certification/s24/images/character/stage1_5.png",
+    "/certification/s25/images/character/stage1_1.png",
+    "/certification/s25/images/character/stage1_2.png",
+    "/certification/s25/images/character/stage1_3.png",
+    "/certification/s25/images/character/stage1_4.png",
+    "/certification/s25/images/character/stage1_5.png",
   ],
   [
-    "/certification/s24/images/character/stage2_1.png",
-    "/certification/s24/images/character/stage2_2.png",
-    "/certification/s24/images/character/stage2_3.png",
-    "/certification/s24/images/character/stage2_4.png",
-    "/certification/s24/images/character/stage2_5.png",
+    "/certification/s25/images/character/stage2_1.png",
+    "/certification/s25/images/character/stage2_2.png",
+    "/certification/s25/images/character/stage2_3.png",
+    "/certification/s25/images/character/stage2_4.png",
+    "/certification/s25/images/character/stage2_5.png",
   ],
   [
-    "/certification/s24/images/character/stage3_1.png",
-    "/certification/s24/images/character/stage3_2.png",
-    "/certification/s24/images/character/stage3_3.png",
-    "/certification/s24/images/character/stage3_4.png",
-    "/certification/s24/images/character/stage3_5.png",
+    "/certification/s25/images/character/stage3_1.png",
+    "/certification/s25/images/character/stage3_2.png",
+    "/certification/s25/images/character/stage3_3.png",
+    "/certification/s25/images/character/stage3_4.png",
+    "/certification/s25/images/character/stage3_5.png",
   ],
   [
-    "/certification/s24/images/character/stage4_1.png",
-    "/certification/s24/images/character/stage4_2.png",
-    "/certification/s24/images/character/stage4_3.png",
-    "/certification/s24/images/character/stage4_4.png",
-    "/certification/s24/images/character/stage4_5.png",
+    "/certification/s25/images/character/stage4_1.png",
+    "/certification/s25/images/character/stage4_2.png",
+    "/certification/s25/images/character/stage4_3.png",
+    "/certification/s25/images/character/stage4_4.png",
+    "/certification/s25/images/character/stage4_5.png",
   ],
 ];
 
 const bgImagePaths = [
-  "/certification/s24/images/background/bg_1.jpg",
-  "/certification/s24/images/background/bg_2.jpg",
-  "/certification/s24/images/background/bg_3.jpg",
-  "/certification/s24/images/background/bg_4.jpg",
+  "/certification/s25/images/background/bg_1.jpg",
+  "/certification/s25/images/background/bg_2.jpg",
+  "/certification/s25/images/background/bg_3.jpg",
+  "/certification/s25/images/background/bg_4.jpg",
 ];
 
 const badgeImagePaths = [
-  "/certification/s24/images/badge/badge_stage3.png",
-  "/certification/s24/images/badge/badge_stage4.png",
+  "/certification/s25/images/badge/badge_stage3.png",
+  "/certification/s25/images/badge/badge_stage4.png",
 ];
 
 async function main() {
@@ -108,7 +108,7 @@ async function main() {
   const createCampaign = async () => {
     await prisma.campaign.create({
       data: {
-        name: "S24",
+        name: "S25",
         description: "A campaign spanning multiple languages",
         startedAt: new Date(),
         endedAt: new Date(new Date().setMonth(new Date().getMonth() + 1)),
@@ -533,12 +533,12 @@ async function main() {
           isBadgeStage = true;
           badgeActivityId = stage3BadgeActivityId;
           badgeImageId = badgeImages[0].id;
-          // badgeImageUrl = "/certification/s24/images/badge/badge_stage3.png";
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage3.png";
         } else if (i === 3) {
           isBadgeStage = true;
           badgeActivityId = stage4BadgeActivityId;
           badgeImageId = badgeImages[1].id;
-          // badgeImageUrl = "/certification/s24/images/badge/badge_stage4.png";
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage4.png";
         }
 
         console.log("activityId", domainCode, activityIds);
