@@ -153,7 +153,7 @@ build_prd_client:
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
       --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
-      -f apps/client/Dockerfile \
+      -f client/Dockerfile \
       -t $CLIENT_IMAGE \
       .
     - docker push $CLIENT_IMAGE
