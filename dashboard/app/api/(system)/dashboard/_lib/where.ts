@@ -50,3 +50,15 @@ export const buildWhereCondition = (
 
   return where;
 };
+
+export const buildWhereWithValidKeys = (
+  where: Record<string, any>,
+  keys: string[]
+) => {
+  return keys.reduce((acc, key) => {
+    if (where?.[key] !== undefined) {
+      acc[key] = where[key];
+    }
+    return acc;
+  }, {} as Record<string, any>);
+};

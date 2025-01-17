@@ -1,64 +1,104 @@
 "use client";
-
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-import { Card, CardContent } from "@/components/ui/card";
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import CardCustomHeader from "../_components/card-header";
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
+  Bar,
+  BarChart,
+  Brush,
+  CartesianGrid,
+  Legend,
+  Rectangle,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import CardCustomHeader from "../../../_components/charts/chart-header";
+import ChartContainer from "../../../_components/charts/chart-container";
+import {
+  chartColorHoverBackground,
+  chartColorPrimary,
+  chartColorSecondary,
+} from "../../../_lib/chart-colors";
+import { useEffect, useState } from "react";
+import { fetchData } from "../../../_lib/fetch";
+import { useOverviewContext } from "../../_provider/provider";
+import { legendFormatter } from "../../../_lib/text";
+import { chartHeight } from "../../../_lib/chart-variable";
 
 function OverviewAchievementRate() {
+  const { state } = useOverviewContext();
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (state.fieldValues) {
+      fetchData(
+        state.fieldValues,
+        "overview/statistics/achievement",
+        (data) => {
+          setData(data.result);
+        }
+      );
+      //
+      fetchData(state.fieldValues, "overview/info/achievement", (data) => {
+        setCount(data.result.count);
+      });
+    }
+  }, [state.fieldValues]);
+
   return (
-    <Card>
-      <CardCustomHeader
-        title="Achievement Rate"
-        numbers="77%"
-        description="Displays goal achievement progress"
-      />
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <ResponsiveContainer width="100%" height="100%">
+      <ChartContainer>
+        {({ width }) => {
+          return (
+            <>
+              <CardCustomHeader
+                title="Achievement Rate"
+                numbers={`${count.toLocaleString()}%`}
+                description="Displays goal achievement progress"
+              />
+              {/* <div className="overflow-x-auto" style={{ width }}> */}
+              <BarChart
+                width={width}
+                height={chartHeight}
+                data={data}
+                margin={{
+                  top: 30,
+                  bottom: 30,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip cursor={{ fill: chartColorHoverBackground }} />
+                <Legend formatter={legendFormatter} />
+                <Brush dataKey="name" height={20} stroke={chartColorPrimary} />
+                <Bar
+                  dataKey="goal"
+                  fill={chartColorPrimary}
+                  activeBar={
+                    <Rectangle
+                      fill={chartColorPrimary}
+                      stroke={chartColorPrimary}
+                    />
+                  }
+                />
+                <Bar
+                  dataKey="expert"
+                  fill={chartColorSecondary}
+                  activeBar={
+                    <Rectangle
+                      fill={chartColorSecondary}
+                      stroke={chartColorSecondary}
+                    />
+                  }
+                />
+              </BarChart>
+              {/* </div> */}
+            </>
+          );
+        }}
+      </ChartContainer>
+    </ResponsiveContainer>
   );
 }
 

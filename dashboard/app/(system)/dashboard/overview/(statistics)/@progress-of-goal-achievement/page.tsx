@@ -8,7 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import CardCustomHeader from "../_components/card-header";
+import CardCustomHeader from "../../../_components/charts/chart-header";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },

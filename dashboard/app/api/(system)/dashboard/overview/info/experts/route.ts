@@ -1,20 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { parseDateFromQuery } from "../../../_lib/query";
-import { buildWhereCondition } from "../../../_lib/where";
+import { querySearchParams } from "../../../_lib/query";
+
+// UserQuizStatistics 중 isCompleted 기 true 인 유저
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const params = Object.fromEntries(searchParams.entries());
-    const period = parseDateFromQuery(params);
-    const where = buildWhereCondition(params, period);
+    const { where } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
     const count = await prisma.userQuizStatistics.count({
-      where,
+      where: { ...where, isCompleted: true },
     });
     return NextResponse.json({ result: { count } });
   } catch (error) {
