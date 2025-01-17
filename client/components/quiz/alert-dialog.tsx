@@ -8,21 +8,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { usePathNavigator } from "@/route/usePathNavigator";
+import { cn } from "@/utils/utils";
+import { useTranslations } from "next-intl";
 
 export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
   const { routeToPage } = usePathNavigator();
+  const translation = useTranslations();
+  const { isMyanmar } = useCheckLocale();
   return (
     <AlertDialog open={gameOver}>
       <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Game Over</AlertDialogTitle>
-          <AlertDialogDescription>
-            Attempts exhausted. <br />
+          <AlertDialogTitle aria-hidden className="hidden">
+            Game Over
+          </AlertDialogTitle>
+          <AlertDialogDescription
+            className={cn("text-base", isMyanmar && "leading-9")}
+          >
+            {/* Attempts exhausted. <br />
             Retry? <br />
-            Selecting “No” will return to stage selection
+            Selecting “No” will return to stage selection */}
+            {translation("alert_notification")}
           </AlertDialogDescription>
         </AlertDialogHeader>
+
         <AlertDialogFooter className="sm:justify-center">
           <AlertDialogCancel onClick={() => routeToPage("map")}>
             No

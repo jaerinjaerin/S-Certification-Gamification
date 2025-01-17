@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/dialog";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
@@ -104,7 +104,7 @@ export default function QuizMap() {
         </Dialog>
         <div className="flex flex-col font-bold">
           <span className="text-2xl">{translation("total_score")}</span>
-          <span className="text-5xl">{quizStagesTotalScore}</span>
+          <span className="text-5xl/normal">{quizStagesTotalScore}</span>
         </div>
       </div>
 
@@ -130,7 +130,7 @@ export default function QuizMap() {
         })}
       </div>
 
-      <PrivacyAndTerm className="fixed z-30 bottom-7" />
+      <PrivacyAndTerm className="fixed z-30 bottom-7 flex justify-center items-start" />
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
       {loading && renderLoader()}
@@ -142,7 +142,8 @@ const TutorialCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const translation = useTranslations();
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
+  const locale = useLocale();
 
   React.useEffect(() => {
     if (!api) {
@@ -176,7 +177,12 @@ const TutorialCarousel = () => {
                       "flex flex-col"
                     )}
                   >
-                    <p className={cn("text-right w-[70%] text-sm")}>
+                    <p
+                      className={cn(
+                        "text-right w-[70%] ",
+                        locale === "my" && "text-sm/loose"
+                      )}
+                    >
                       {translation("attempts_deduction")}
                     </p>
 
@@ -190,7 +196,12 @@ const TutorialCarousel = () => {
                       }}
                     ></div>
 
-                    <p className="ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-sm text-pretty">
+                    <p
+                      className={cn(
+                        "ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-sm text-pretty",
+                        locale === "my" && "text-sm/loose"
+                      )}
+                    >
                       {translation("time_limit_per_quiz")}
                     </p>
                   </div>
@@ -198,8 +209,11 @@ const TutorialCarousel = () => {
                 {index === 1 && (
                   <ol
                     className={cn(
-                      "bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px] rtl:pl-4 rtl:pr-8"
+                      "bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px] rtl:pl-4 rtl:pr-8 text-balance",
+                      "text-sm",
+                      locale === "my" && "text-sm/loose"
                     )}
+                    style={{ wordBreak: "break-word" }}
                     dir={isArabic ? "rtl" : "ltr"}
                   >
                     <li>{translation("you_have_5_attemps")}</li>

@@ -56,7 +56,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
         <DialogTrigger>{translation("privacy")}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{translation("privacy")}</DialogTitle>
+            <DialogTitle style={{ wordBreak: "break-word" }}>
+              {translation("privacy")}
+            </DialogTitle>
           </DialogHeader>
           <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
             Information Collection: We collect only the necessary personal
@@ -102,7 +104,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
         <DialogTrigger>{translation("term")}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{translation("term")}</DialogTitle>
+            <DialogTitle style={{ wordBreak: "break-word" }}>
+              {translation("term")}
+            </DialogTitle>
           </DialogHeader>
 
           <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">

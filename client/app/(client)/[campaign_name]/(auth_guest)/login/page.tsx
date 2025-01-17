@@ -21,7 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn, formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
@@ -29,6 +29,7 @@ import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
+import { AutoTextSize } from "auto-text-size";
 
 export default function GuestLogin({
   params,
@@ -55,7 +56,7 @@ export default function GuestLogin({
   });
 
   const translation = useTranslations();
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
 
   const isValidEmail = (email) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -460,11 +461,10 @@ export default function GuestLogin({
           </span>
 
           <div className="m-auto">
-            <div className="font-bold text-center break-words whitespace-normal mx-[30px] text-5xl/normal text-pretty">
-              {translation("be_a_galaxy_ai_expert").replaceAll(
-                "(Paradigm)",
-                " (Paradigm)"
-              )}
+            <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] ">
+              <AutoTextSize mode="box">
+                {translation("be_a_galaxy_ai_expert")}
+              </AutoTextSize>
             </div>
 
             <div className="text-center">

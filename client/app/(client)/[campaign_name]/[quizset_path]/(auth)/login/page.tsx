@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import useLoader from "@/components/ui/loader";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
+import { AutoTextSize } from "auto-text-size";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
@@ -13,8 +14,7 @@ export default function Login() {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
-  const { isArabic } = useArabic();
-  // const locale = useLocale();
+  const { isArabic } = useCheckLocale();
 
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {
@@ -53,10 +53,12 @@ export default function Login() {
             <span className="block text-lg font-bold">
               {translation("galaxy_ai_expert")}
             </span>
-            <div className={cn("flex flex-col items-center my-auto px-[30px]")}>
-              <span className="block font-bold text-center text-4xl/normal sm:text-5xl/normal text-pretty">
-                {translation("be_a_galaxy_ai_expert")}
-              </span>
+            <div className={cn("flex flex-col items-center my-auto")}>
+              <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] ">
+                <AutoTextSize mode="box">
+                  {translation("be_a_galaxy_ai_expert")}
+                </AutoTextSize>
+              </div>
               {/* <span className="block text-center uppercase font-normal text-3xl/normal mt-[26px] mb-[69px]">
                 {translation("certification")}
               </span> */}

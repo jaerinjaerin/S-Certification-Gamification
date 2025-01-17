@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+
 import { cn } from "@/utils/utils";
 import { defaultLanguages } from "@/core/config/default";
 
@@ -60,7 +61,7 @@ export default function SitemapPage() {
   //   process.env.NODE_ENV !== "production"
   //     ? "http://localhost:3000"
   //     : process.env.AUTH_URL;
-  const HOST_URL = process.env.AUTH_URL;
+  // const HOST_URL = process.env.AUTH_URL;
 
   return (
     <div className="min-w-[280px] max-w-screen-md w-full min-h-svh mx-auto text-base">
@@ -77,7 +78,7 @@ export default function SitemapPage() {
         {supportedLanguagesCode.map((code) => {
           return (
             <a
-              href={`${HOST_URL}/s25/NAT_7000_${code}/login`}
+              href={`http://localhost:3000/s25/NAT_7000_${code}/login`}
               target="_blank"
               key={code}
             >
