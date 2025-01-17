@@ -1,5 +1,5 @@
 "use client";
-import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -533,8 +533,6 @@ export default function GuestLogin({
               </Dialog>
             </div>
           </div>
-
-          <PrivacyAndTerm />
         </div>
       </div>
 

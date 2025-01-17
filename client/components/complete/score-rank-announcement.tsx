@@ -130,7 +130,7 @@ export default function ScoreRankAnnouncement({
         <SendBadgeNotificationCard
           message={
             user?.authType === AuthType.GUEST
-              ? "이메일로 보냈습니다. 텍스트는 수정할 예정입니다."
+              ? translation("badge_deliver2")
               : translation("badge_deliver")
           }
         />
