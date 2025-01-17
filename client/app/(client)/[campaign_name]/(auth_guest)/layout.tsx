@@ -16,7 +16,7 @@ export default async function GuestLayout({
   console.log("GuestLayout locale", locale);
 
   const messages = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/messages/${serviceLangCode}.json`
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${serviceLangCode}.json`
   )
     .then((res) => res.json())
     .catch((error) => console.error("get message error", error));

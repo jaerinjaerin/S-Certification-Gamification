@@ -134,12 +134,12 @@ export default function ReviewPage() {
         bgImageUrl={
           question.backgroundImage?.imagePath
             ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImage.imagePath}`
-            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/bg_1.jpg`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/bg_1.jpg`
         }
         charImageUrl={
           question.characterImage?.imagePath
             ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImage.imagePath}`
-            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/character/stage1_1.png`
+            : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/character/stage1_1.png`
         }
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">

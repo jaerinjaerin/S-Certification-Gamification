@@ -3,6 +3,7 @@
 import {
   Domain,
   Image,
+  Language,
   Question,
   QuestionOption,
   QuizBadge,
@@ -37,8 +38,22 @@ export interface QuizLogResponse {
   quizQuestionLogs: UserQuizQuestionLog[] | null;
 }
 
+export interface DomainsResponse {
+  items: Domain[];
+}
+
+export interface LanguagesResponse {
+  items: Language[];
+}
+
 export interface ApiResponse<T> {
   item: T | null;
+  success: boolean;
+  message?: string;
+}
+
+export interface ApiListResponse<T> {
+  items: T[] | null;
   success: boolean;
   message?: string;
 }

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     console.log("GET handler called");
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/test_channels.json`
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/test_channels.json`
     );
     console.log("response", response);
     const data = await response.json();

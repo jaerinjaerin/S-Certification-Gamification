@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 const LOOP_DURATION = 3;
 
 export const ActivePointer = () => {
-  const pointerImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/pointer.png`;
+  const pointerImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/pointer.png`;
   return (
     <motion.span
       initial={{

@@ -22,7 +22,18 @@ const usedLTNLanguages = [
   "CL",
   "BO",
   "PE",
+  "VE",
+  "KE",
 ];
+const supportedLanguagesCode = await fetchSupportedLanguages();
+
+const searchLangCodeInSupportedLanguagesCode = (
+  searchLangCode: string
+): string | undefined => {
+  return supportedLanguagesCode.find((lang: string) =>
+    lang.includes(searchLangCode)
+  );
+};
 
 // langCode를 매칭하는 함수
 function mapBrowserLanguageToLocale(browswerLanguage: string) {
@@ -48,6 +59,10 @@ function mapBrowserLanguageToLocale(browswerLanguage: string) {
     return "es-ES";
   }
 
+  const matchingLanguageCode =
+    searchLangCodeInSupportedLanguagesCode(languageCode);
+  if (matchingLanguageCode) return matchingLanguageCode;
+
   return defaultLocale;
 }
 
@@ -59,11 +74,8 @@ export async function getServiceLangCode() {
     return defaultLocale;
   }
 
-  const supportedLanguagesCode = await fetchSupportedLanguages();
-
-  const matchingLanguageCode = supportedLanguagesCode.find((lang) =>
-    lang.includes(browswerLanguage)
-  );
+  const matchingLanguageCode =
+    searchLangCodeInSupportedLanguagesCode(browswerLanguage);
 
   if (matchingLanguageCode) {
     return matchingLanguageCode;
@@ -88,7 +100,7 @@ async function getBrowserLanguage() {
 }
 
 // /api/languages의 데이터를 리턴하는 함수
-async function fetchSupportedLanguages() {
+export async function fetchSupportedLanguages() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/languages`

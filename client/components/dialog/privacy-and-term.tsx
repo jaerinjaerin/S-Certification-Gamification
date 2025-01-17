@@ -1,6 +1,10 @@
+import { extractCodesFromPath } from "@/utils/pathUtils";
 import { cn } from "@/utils/utils";
+import * as Sentry from "@sentry/nextjs";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -11,17 +15,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { useEffect, useState } from "react";
 import useLoader from "../ui/loader";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const [term, setTerm] = useState<any>();
   const { loading, setLoading, renderLoader } = useLoader();
+  const params = useParams();
+  const quizPathParams = params.quizset_path;
+  const { domainCode } = extractCodesFromPath(String(quizPathParams));
 
   const fetchTermAndCondition = async () => {
     try {
       setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/term/OrgCode-7.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`;
+      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/OrgCode-7.json`;
       const res = await fetch(jsonUrl, {
         method: "GET",
         cache: "no-cache",
@@ -30,8 +37,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
       const data = await res.json();
       setTerm(data);
     } catch (error) {
+      setTerm({ contents: "Not Found" });
       console.error(`Failed to fetch T&C data log: ${error}`);
-      throw new Error("Term JSON 데이터를 가져오는 중 문제가 발생했습니다.");
+      Sentry.captureException(error);
     } finally {
       setLoading(false);
     }

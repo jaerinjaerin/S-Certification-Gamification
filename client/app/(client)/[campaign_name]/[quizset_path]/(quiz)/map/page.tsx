@@ -67,7 +67,7 @@ export default function QuizMap() {
     <div
       className="flex flex-col items-center h-full min-h-svh"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/bg_main2.jpg')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/bg_main2.jpg')`,
       }}
     >
       <div
@@ -156,7 +156,7 @@ const TutorialCarousel = () => {
     });
   }, [api]);
 
-  const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/map_guide.png`;
+  const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/map_guide.png`;
 
   return (
     <Carousel className="w-full font-medium font-one" setApi={setApi}>

@@ -48,7 +48,7 @@ export default function ScoreRankAnnouncement({
     }
 
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
-    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
+    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
   const { isArabic } = useArabic();
 
@@ -130,7 +130,7 @@ export default function ScoreRankAnnouncement({
         <SendBadgeNotificationCard
           message={
             user?.authType === AuthType.GUEST
-              ? "이메일로 보냈습니다. 텍스트는 수정할 예정입니다."
+              ? translation("badge_deliver2")
               : translation("badge_deliver")
           }
         />

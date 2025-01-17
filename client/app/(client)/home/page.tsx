@@ -107,7 +107,7 @@ export default function Home() {
 
   // const sendTestBadgeEmail = async () => {
   //   const badgeImageUrl =
-  //     "https://assets-stage.samsungplus.net/certification/s24/images/badge/badge_stage3.png";
+  //     "https://assets-stage.samsungplus.net/certification/s25/images/badge/badge_stage3.png";
   //   await fetch(
   //     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/send-verify-email`,
   //     {
@@ -230,7 +230,7 @@ export default function Home() {
     return (
       <div
         style={{
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -278,7 +278,7 @@ export default function Home() {
   return (
     <div
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -307,44 +307,44 @@ export default function Home() {
       <h1>삼플 사용자 테스트 주소</h1>
       <ul>
         <li>
-          <Link href="/s24/OrgCode-7_en-US">HQ Retail Team</Link>
+          <Link href="/s25/OrgCode-7_en-US">HQ Retail Team</Link>
           <br />
-          <Link href="/s24/NAT_7000_fr-CA">Canada</Link>
+          <Link href="/s25/NAT_7000_fr-CA">Canada</Link>
           <br />
-          <Link href="/s24/NAT_2348_hu">Hungary</Link>
+          <Link href="/s25/NAT_2348_hu">Hungary</Link>
           <br />
-          <Link href="/s24/NAT_2344_zh-TW">Hongkong</Link>
+          <Link href="/s25/NAT_2344_zh-TW">Hongkong</Link>
           <br />
-          <Link href="/s24/NAT_2360_id">Indonesia</Link>
+          <Link href="/s25/NAT_2360_id">Indonesia</Link>
           <br />
-          <Link href="/s24/NAT_2764_th">Thailand</Link>
+          <Link href="/s25/NAT_2764_th">Thailand</Link>
           <br />
-          <Link href="/s24/NAT_051001_en-US">Australia</Link>
+          <Link href="/s25/NAT_051001_en-US">Australia</Link>
           <br />
-          {/* <Link href="/s24/NAT_2458_en-US">Malaysia</Link> */}
+          {/* <Link href="/s25/NAT_2458_en-US">Malaysia</Link> */}
           {/* <br /> */}
-          <Link href="/s24/NAT_2704_vi">Vietnam</Link>
+          <Link href="/s25/NAT_2704_vi">Vietnam</Link>
           <br />
-          {/* <Link href="/s24/NAT_2608_en-US">Philippines</Link>
+          {/* <Link href="/s25/NAT_2608_en-US">Philippines</Link>
           <br /> */}
-          <Link href="/s24/NAT_2356_en-US">India</Link>
+          <Link href="/s25/NAT_2356_en-US">India</Link>
           <br />
-          <Link href="/s24/NAT_2076_pt-BR">Brazil</Link>
+          <Link href="/s25/NAT_2076_pt-BR">Brazil</Link>
           <br />
-          {/* <Link href="/s24/NAT_2792_tr">Turkey</Link>
+          {/* <Link href="/s25/NAT_2792_tr">Turkey</Link>
           <br /> */}
-          <Link href="/s24/NAT_2275_ar-AE">Palestine</Link>
+          <Link href="/s25/NAT_2275_ar-AE">Palestine</Link>
           <br />
-          <Link href="/s24/NAT_3004_my">Myanmar</Link>
+          <Link href="/s25/NAT_3004_my">Myanmar</Link>
           <br />
-          <Link href="/s24/NAT_2792_tr">Turkiye</Link>
+          <Link href="/s25/NAT_2792_tr">Turkiye</Link>
           <br />
         </li>
       </ul>
       <br />
       <br />
       <h1>삼플 미사용자 테스트 주소</h1>
-      <Link href="/s24">Link</Link>
+      <Link href="/s25">Link</Link>
       {/* <button
         onClick={() => {
           sendTestGetScore();

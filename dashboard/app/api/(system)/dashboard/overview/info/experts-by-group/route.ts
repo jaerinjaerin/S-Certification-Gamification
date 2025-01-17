@@ -1,15 +1,18 @@
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { buildWhereCondition } from "../../../_lib/where";
-import { parseDateFromQuery } from "../../../_lib/query";
 import { initialExpertsData } from "@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state";
+import { querySearchParams } from "../../../_lib/query";
+
+// UserQuizStatistics 사용
+// isCompleted 이면 퀴즈 완료
+// jodId와 storeId 정보를 가지고 그룹핑 해야함
+// jobId로 Job 정보 참조. job의 group을 사용
+// storeId가 4인 경우 SES 유저. 아니면 SES 유저 아님
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const params = Object.fromEntries(searchParams.entries());
-    const period = parseDateFromQuery(params);
-    const where = buildWhereCondition(params, period);
+    const { where } = querySearchParams(searchParams);
 
     await prisma.$connect();
 

@@ -1,0 +1,1373 @@
+[
+  {
+    "id": "349990",
+    "name": "Hungary",
+    "code": "NAT_2348",
+    "regionId": "508369",
+    "subsidiaryId": "349943",
+    "channels": [
+      {
+        "name": "Telekom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Yettel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Media Markt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Euronics",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "349991",
+    "name": "Portugal",
+    "code": "NAT_2620",
+    "regionId": "508369",
+    "subsidiaryId": "349939",
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "FNAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "WORTEN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "RADIO POPULAR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "ECI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "AUCHAN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "MEO",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "NOS",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "VODAFONE",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "BPI (Bank)",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "id": "349980",
+    "name": "Spain",
+    "code": "NAT_2724",
+    "regionId": "508369",
+    "subsidiaryId": "349939",
+    "channels": [
+      {
+        "name": "MEDIA MARKT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "ECI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "FNAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "CARREFOUR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "WORTEN",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "MOVISTAR",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "ORANGE",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "id": "349973",
+    "name": "Cambodia",
+    "code": "NAT_2116",
+    "regionId": "508371",
+    "subsidiaryId": "30",
+    "channels": [
+      {
+        "name": "APSARA MOBILE PHONE CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "SMART AXIATA CO.,LTD",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "KEON LEADER CO.,LTD",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "RSNK ELECTRONIC CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "3"
+      },
+      {
+        "name": "UNIQUE IMPORT EXPORT CO.,LTD.",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "3"
+      }
+    ]
+  },
+  {
+    "id": "349981",
+    "name": "Poland",
+    "code": "NAT_2616",
+    "regionId": "508369",
+    "subsidiaryId": "349940",
+    "channels": [
+      {
+        "name": "RtvEuroAgd",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "X-kom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Media Markt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Media Expert",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Komputronik",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Orange",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Play",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Plus",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "T-Mobile",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "AGD Galicja",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Auchan",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "NeoNet",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Tele Magic",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "335245",
+    "name": "Latvia",
+    "code": "NAT_2428",
+    "regionId": "508369",
+    "subsidiaryId": "335243",
+    "channels": [
+      {
+        "name": "Tele2",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "LMT",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "id": "335246",
+    "name": "Lithuania",
+    "code": "NAT_2440",
+    "regionId": "508369",
+    "subsidiaryId": "335243",
+    "channels": [
+      {
+        "name": "Telia",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "id": "349976",
+    "name": "Singapore",
+    "code": "NAT_2702",
+    "regionId": "508371",
+    "subsidiaryId": "349935",
+    "channels": [
+      {
+        "name": "Singtel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "M1",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Starhub",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Best Denki",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Courts",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Challenger",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Harvey Norman",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Gain City",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "e-Promoter",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Customer Service",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "id": "349961",
+    "name": "COLOMBIA",
+    "code": "NAT_2170",
+    "regionId": "508373",
+    "subsidiaryId": "349954",
+    "channels": [
+      {
+        "name": "CLARO",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      }
+    ]
+  },
+  {
+    "id": "496135",
+    "name": "ARGENTINA",
+    "code": "NAT_2707",
+    "regionId": "508373",
+    "subsidiaryId": "333971",
+    "channels": [
+      {
+        "name": "Claro CAC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Diggit",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Fravega",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Movistar Agentes",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Personal OC",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Musimundo",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Claro Agentes",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "42",
+    "name": "Turkey",
+    "code": "NAT_2792",
+    "regionId": "508374",
+    "subsidiaryId": "41",
+    "channels": [
+      {
+        "name": "Turkcell",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Turk Telekom",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Vodafone",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Teknosa",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Mediamarkt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Vatan Bilgisayar",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Samsung Brand Stores",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Akıllı Servis - Smart Service",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Çağrı Merkezi - Call Center",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Diğer - Other",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "id": "333986",
+    "name": "Mexico",
+    "code": "NAT_2484",
+    "regionId": "508373",
+    "subsidiaryId": "333985",
+    "channels": [
+      {
+        "name": "Telcel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "AT&T",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Movistar",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Liverpool",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Coppel",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Elektra",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Palacio de Hierro",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Sanborns",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Sears",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "534646",
+    "name": "Australia (Mobile)",
+    "code": "NAT_051001",
+    "regionId": "508371",
+    "subsidiaryId": "534645",
+    "channels": [
+      {
+        "name": "Telstra",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Optus",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Vodafone",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "JB HIFI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Harvey Norman",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Bing Lee",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Office Works",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Good Guys",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "361206",
+    "name": "Uzbekistan",
+    "code": "NAT_2860",
+    "regionId": "508370",
+    "subsidiaryId": "665823",
+    "channels": [
+      {
+        "name": "Credit Asia",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Mediapark",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Texnomart",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Radius",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Elmakon",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Ishonch",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Imkon",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "SBI",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "BM Electronics",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Amir Group",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "ABMS",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "id": "349978",
+    "name": "South Africa",
+    "code": "NAT_2710",
+    "regionId": "508375",
+    "subsidiaryId": "349937",
+    "channels": [
+      {
+        "name": "Game",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      },
+      {
+        "name": "Makro",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "506426",
+    "name": "Georgia",
+    "code": "NAT_2644",
+    "regionId": "43",
+    "subsidiaryId": "508370",
+    "channels": [
+      {
+        "name": "Alta",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Elite",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Megatechnica",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Kontakt",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Carrefour",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Icity",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      }
+    ]
+  },
+  {
+    "id": "349964",
+    "name": "Jordan",
+    "code": "NAT_2400",
+    "regionId": "508374",
+    "subsidiaryId": "349956",
+    "channels": [
+      {
+        "name": "Galaxy Master",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Field force",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "OR",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Call Center",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "BMS Team",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "Aci",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "IR Shops",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "349965",
+    "name": "Iraq",
+    "code": "NAT_2368",
+    "regionId": "508374",
+    "subsidiaryId": "349956",
+    "channels": [
+      {
+        "name": "Galaxy Master",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Field force",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "1",
+        "channelSegmentId": "1"
+      },
+      {
+        "name": "Call Center",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "3",
+        "channelSegmentId": "5"
+      },
+      {
+        "name": "IR Shops",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  },
+  {
+    "id": "349963",
+    "name": "Lebanon",
+    "code": "NAT_2422",
+    "regionId": "508374",
+    "subsidiaryId": "349956",
+    "channels": [
+      {
+        "name": "Galaxy Master",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Field force",
+        "job": {
+          "id": "9",
+          "name": "FF",
+          "group": "ff"
+        },
+        "channelId": "2",
+        "channelSegmentId": "4"
+      },
+      {
+        "name": "Omega",
+        "job": {
+          "id": "8",
+          "name": "FSM",
+          "group": "FSM"
+        },
+        "channelId": "2",
+        "channelSegmentId": "2"
+      }
+    ]
+  }
+]

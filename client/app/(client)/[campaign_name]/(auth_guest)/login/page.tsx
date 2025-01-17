@@ -1,5 +1,5 @@
 "use client";
-import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -22,8 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useArabic from "@/hooks/useArabic";
-import { cn } from "@/utils/utils";
-import { formatToMMSS } from "@/utils/utils";
+import { cn, formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
@@ -101,7 +100,7 @@ export default function GuestLogin({
                 />
 
                 <style type="text/css" style="font-weight: 400">
-                  @import url(https://assets-stage.samsungplus.net/certification/s24/fonts/sharpSans/SamsungSharpSans-Regular.woff);
+                  @import url(https://assets-stage.samsungplus.net/certification/s25/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
                   .colored-black {
                     color:#ffffff;
@@ -436,11 +435,11 @@ export default function GuestLogin({
           playsInline
         >
           <source
-            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.mp4`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/videos/bg.mp4`}
             type="video/mp4"
           />
           <source
-            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/videos/bg.webm`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/videos/bg.webm`}
             type="video/webm"
           />
         </video> */}
@@ -448,7 +447,7 @@ export default function GuestLogin({
         <div
           className="object-fill w-full h-svh"
           style={{
-            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg')`,
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
@@ -533,8 +532,6 @@ export default function GuestLogin({
               </Dialog>
             </div>
           </div>
-
-          <PrivacyAndTerm />
         </div>
       </div>
 
@@ -612,6 +609,7 @@ export default function GuestLogin({
                 )}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                disabled={loading}
                 required
               />
               <div

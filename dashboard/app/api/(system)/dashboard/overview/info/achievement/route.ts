@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { parseDateFromQuery } from "../../../_lib/query";
-import { buildWhereCondition } from "../../../_lib/where";
+import { querySearchParams } from "../../../_lib/query";
+import { buildWhereWithValidKeys } from "../../../_lib/where";
+
+// UserQuizStatistics, DomainGoal사용
+// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const params = Object.fromEntries(searchParams.entries());
-    const period = parseDateFromQuery(params);
-    const where = buildWhereCondition(params, period);
+    const { where } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
@@ -17,17 +18,12 @@ export async function GET(request: NextRequest) {
       where: { ...where, isCompleted: true },
     });
 
-    const goal_where = ["campaignId", "domainId", "createdAt"].reduce(
-      (acc, key) => {
-        if (where?.[key] !== undefined) {
-          acc[key] = where[key];
-        }
-        return acc;
-      },
-      {} as Record<string, any>
-    );
     const domain_goal = await prisma.domainGoal.findMany({
-      where: goal_where,
+      where: buildWhereWithValidKeys(where, [
+        "campaignId",
+        "domainId",
+        "createdAt",
+      ]),
     });
     //
     const total = domain_goal.reduce((sum, item) => {

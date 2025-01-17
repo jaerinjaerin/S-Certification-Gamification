@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --chart-primary:#8979FF;
+  --chart-secondary:#FF928A;
+  --chart-tertiary:#3CC3DF;
+  --chart-quaternary:#FFAE4C;
+}
+
 body {
   font-family: sans-serif;
   font-weight: 400;
