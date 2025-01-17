@@ -20,11 +20,16 @@ build_stg_client:
   services:
     - name: docker:dind
       alias: docker
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375", "--storage-driver=overlay2"]
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""  # TLS 사용 안함 설정
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
   script:
     - |
       docker build \
@@ -50,9 +55,9 @@ build_stg_client:
       .
     - docker push $CLIENT_IMAGE
   environment:
-    name: staging-client
+    name: production-client
   rules:
-    - if: '$ENV == "staging" && $SERVICE =~ /client/'
+    - if: '$ENV == "production" && $SERVICE =~ /client/'
       when: always
     - when: never
   tags:
@@ -65,11 +70,16 @@ build_stg_admin:
   services:
     - name: docker:dind
       alias: docker
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375", "--storage-driver=overlay2"]
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""  # TLS 사용 안함 설정
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
   script:
     - |
       docker build \
@@ -95,9 +105,9 @@ build_stg_admin:
       .
     - docker push $ADMIN_IMAGE
   environment:
-    name: staging-admin
+    name: production-admin
   rules:
-    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
+    - if: '$ENV == "production" && $SERVICE =~ /admin/'
       when: always
     - when: never
   tags:
@@ -110,11 +120,16 @@ build_prd_client:
   services:
     - name: docker:dind
       alias: docker
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375", "--storage-driver=overlay2"]
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""  # TLS 사용 안함 설정
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
   script:
     - |
       docker build \
@@ -156,11 +171,16 @@ build_prd_admin:
   services:
     - name: docker:dind
       alias: docker
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375", "--storage-driver=overlay2"]
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""  # TLS 사용 안함 설정
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
   script:
     - |
       docker build \
@@ -217,12 +237,20 @@ deploy_stg_client:
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
   rules:
-    - if: '$ENV == "staging" && $SERVICE =~ /client/'
+    - if: '$ENV == "production" && $SERVICE =~ /client/'
       when: always
     - when: never
   environment:
-    name: staging-client
+    name: production-client
   tags:
     - deploy
 
@@ -246,11 +274,11 @@ deploy_stg_admin:
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
   rules:
-    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
+    - if: '$ENV == "production" && $SERVICE =~ /admin/'
       when: always
     - when: never
   environment:
-    name: staging-admin
+    name: production-admin
   tags:
     - deploy
 
@@ -267,6 +295,14 @@ deploy_prd_client:
   script:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
