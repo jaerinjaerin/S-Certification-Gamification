@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/badgeStage3.png`,
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg`,
     ],
   },
 };
