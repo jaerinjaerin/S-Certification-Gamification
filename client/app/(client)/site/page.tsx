@@ -1,12 +1,61 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { matchingTable } from "@/utils/codeMatchingTable";
 import { cn } from "@/utils/utils";
-import Languages from "../../../../upload_seed_data/data/seeds/languages.json";
+import { defaultLanguages } from "@/core/config/default";
+
+const matchingTable = {
+  Albanian: "sq",
+  "Arabic(MENA)": "ar-AE",
+  Azerbaijan: "az",
+  Bengali: "bn",
+  Bosnian: "bs",
+  Bulgarian: "bg",
+  Croatian: "hr-HR",
+  Czech: "cs",
+  Danish: "da",
+  English: "en-US",
+  Estonian: "et",
+  Finnish: "fi",
+  "French(Canada)": "fr-CA",
+  "French(SEF)": "fr-FR",
+  Georgian: "ka",
+  "German(SEAS)": "de-DE",
+  Greek: "el",
+  Hebrew: "he",
+  Hongkong: "zh-TW",
+  Hungarian: "hu",
+  Indonesian: "id",
+  Italian: "it-IT",
+  Japanese: "ja",
+  Khmer: "km",
+  Lao: "lo",
+  Latvian: "lv",
+  Lithuanian: "lt",
+  Macedonian: "mk",
+  Myanmar: "my",
+  Norwegian: "nb",
+  // PRC: "zh-CN",
+  Polish: "pl",
+  "Portuguese(Brazil)": "pt-BR",
+  Portuguese: "pt-PT",
+  Romanian: "ro",
+  "Russian(SECE)": "ru",
+  Serbian: "sr-Cyrl",
+  Slovak: "sk-SK",
+  Slovenian: "sl",
+  "Spanish(LTN_SECH-Chile))": "es-LTN",
+  Spanish: "es-ES",
+  Swedish: "sv",
+  Thai: "th",
+  Turkish: "tr",
+  Ukrainian: "uk",
+  Uzbek: "uz",
+  Vietnamese: "vi",
+};
 
 export default function SitemapPage() {
-  const supportedLanguagesCode = Languages.map((lang) => lang.code);
+  const supportedLanguagesCode = defaultLanguages.map((lang) => lang.code);
   // const HOST_URL =
   //   process.env.NODE_ENV !== "production"
   //     ? "http://localhost:3000"
