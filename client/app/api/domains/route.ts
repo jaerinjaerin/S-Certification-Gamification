@@ -41,7 +41,7 @@ export async function GET() {
       })
     );
 
-    Sentry.captureMessage("Domain Data fetched successfully");
+    // Sentry.captureMessage("Domain Data fetched successfully");
 
     const response = NextResponse.json(
       { items: enrichedDomains },
