@@ -59,9 +59,7 @@ interface ValidationResult {
 const validateAndCorrectQuizSetPath = async (
   quizSetPath,
   defaultLanguageCode
-) => {
-  let wasCorrected = false;
-
+): Promise<ValidationResult> => {
   try {
     const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
 
@@ -123,7 +121,6 @@ const validateAndCorrectQuizSetPath = async (
         `${languageCode}`,
         `${defaultLanguageCode}`
       );
-      wasCorrected = true;
 
       return {
         validatedPath: updatedPath,
