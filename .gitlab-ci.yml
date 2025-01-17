@@ -134,6 +134,7 @@ build_prd_client:
     DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
   script:
     - |
+      # Docker 이미지 빌드
       docker build \
       --build-arg ENV=$ENV \
       --build-arg DATABASE_URL=$DATABASE_URL \
@@ -156,11 +157,20 @@ build_prd_client:
       -f client/Dockerfile \
       -t $CLIENT_IMAGE \
       .
-    - docker push $CLIENT_IMAGE
+
+      # Docker 이미지 푸시
+      docker push $CLIENT_IMAGE
+
+      # Git 태그 생성
+      TAG_NAME="release-client-$(date +'%Y%m%d%H%M%S')"
+      git config --global user.email "ci-bot@bien.ltd"
+      git config --global user.name "CI Bot"
+      git tag -a $TAG_NAME -m "Release for client image"
+      git push origin $TAG_NAME
   environment:
     name: production-client
   rules:
-    - if: '$ENV == "production" && $SERVICE =~ /client/'
+    - if: '$CI_COMMIT_BRANCH == "release/client"'
       when: always
     - when: never
   tags:
@@ -211,6 +221,8 @@ build_prd_admin:
   environment:
     name: production-admin
   rules:
+    - if: '$CI_COMMIT_BRANCH == "release/client"'
+      when: always
     - if: '$ENV == "production" && $SERVICE =~ /admin/'
       when: always
     - when: never
