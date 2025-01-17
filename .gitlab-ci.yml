@@ -58,6 +58,8 @@ build_stg_client:
   environment:
     name: staging-client
   rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/client"'
+      when: always
     - if: '$ENV == "staging" && $SERVICE =~ /client/'
       when: always
     - when: never
@@ -109,6 +111,8 @@ build_stg_admin:
   environment:
     name: staging-admin
   rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/admin"'
+      when: always
     - if: '$ENV == "staging" && $SERVICE =~ /admin/'
       when: always
     - when: never
@@ -245,6 +249,8 @@ deploy_stg_client:
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
   rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/client"'
+      when: always
     - if: '$ENV == "staging" && $SERVICE =~ /client/'
       when: always
     - when: never
