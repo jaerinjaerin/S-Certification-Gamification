@@ -1,6 +1,10 @@
+import { extractCodesFromPath } from "@/utils/pathUtils";
 import { cn } from "@/utils/utils";
+import * as Sentry from "@sentry/nextjs";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -11,11 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { useEffect, useState } from "react";
 import useLoader from "../ui/loader";
-import { extractCodesFromPath } from "@/utils/pathUtils";
-import { useParams } from "next/navigation";
-import * as Sentry from "@sentry/nextjs";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const [term, setTerm] = useState<any>();
@@ -27,8 +27,8 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
   const fetchTermAndCondition = async () => {
     try {
       setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/term/${domainCode}.json`;
-      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/jsons/term/OrgCode-7.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`;
+      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/OrgCode-7.json`;
       const res = await fetch(jsonUrl, {
         method: "GET",
         cache: "no-cache",

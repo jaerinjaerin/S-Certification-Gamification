@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   title: "Samsung+ Certification Gamification",
   description: "Samsung+ Certification Gamification",
   icons: {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/splus_logo.png`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/splus_logo.png`,
   },
   openGraph: {
     images: [
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s24/images/background/main_bg2.jpg`,
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`,
     ],
   },
 };
