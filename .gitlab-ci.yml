@@ -297,6 +297,7 @@ deploy_prd_client:
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
