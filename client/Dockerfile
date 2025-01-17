@@ -66,7 +66,7 @@ RUN npm install
 
 # 1-5. client 앱 빌드
 RUN npm run prisma:generate
-RUN npm run build:prd
+RUN npm run build
 
 #
 # 2) Run Stage
