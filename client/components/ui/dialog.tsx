@@ -1,5 +1,5 @@
 "use client";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
@@ -89,7 +89,7 @@ const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => {
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
   return (
     <DialogPrimitive.Description
       ref={ref}

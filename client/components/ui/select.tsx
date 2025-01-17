@@ -4,7 +4,7 @@ import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import { ChevronDownIcon } from "@/components/icons/icons";
 import { cn } from "@/utils/utils";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 
 const Select = SelectPrimitive.Root;
 
@@ -16,7 +16,7 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
   return (
     <SelectPrimitive.Trigger
       ref={ref}
@@ -122,7 +122,7 @@ const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, ref) => {
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
   return (
     <SelectPrimitive.Item
       ref={ref}

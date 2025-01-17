@@ -9,7 +9,7 @@ import Qusetion from "@/components/quiz/question-area";
 import SuccessNotify from "@/components/quiz/success-notify";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -61,7 +61,7 @@ export default function QuizPage() {
 
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
-  const { isArabic } = useArabic();
+  const { isArabic, isMyanmar } = useCheckLocale();
 
   // 애니메이션 트리거
   const triggerAnimation = () => {
@@ -270,7 +270,8 @@ export default function QuizPage() {
                   isCorrectAnswer && "pointer-events-none",
                   selectedOptionIds.includes(option.id) &&
                     "pointer-events-none",
-                  isArabic && "text-right"
+                  isArabic && "text-right",
+                  isMyanmar && "leading-loose"
                 )}
                 initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
                 animate={getAnimateState(option)}

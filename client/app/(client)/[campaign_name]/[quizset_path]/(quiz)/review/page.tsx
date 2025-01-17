@@ -4,7 +4,7 @@ import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
@@ -33,7 +33,7 @@ export default function ReviewPage() {
     (log) => log.quizStageIndex + 1 === searchStage
   );
 
-  const { isArabic } = useArabic();
+  const { isArabic } = useCheckLocale();
 
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage

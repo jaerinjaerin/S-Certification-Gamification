@@ -1,5 +1,5 @@
 import { cn } from "@/utils/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import CompleteStage from "./stage-complete";
 
 export default function GetBadgeAnnouncment({
@@ -11,6 +11,7 @@ export default function GetBadgeAnnouncment({
   badgeStage: any;
   className?: string;
 }) {
+  const locale = useLocale();
   const translation = useTranslations();
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImage?.imagePath}`;
   const congratulationMessage =
@@ -22,7 +23,12 @@ export default function GetBadgeAnnouncment({
     <div className={cn("w-full shrink-0", className)}>
       <div className="flex flex-col gap-[10px] justify-center">
         <CompleteStage stageName={stageName}>
-          <div className="text-2xl text-pretty mt-[66px] mb-[40px] text-center">
+          <div
+            className={cn(
+              "text-2xl text-pretty mt-[66px] mb-[40px] text-center",
+              locale === "my" && "leading-loose"
+            )}
+          >
             <span className="block whitespace-break-spaces">
               {congratulationMessage.replaceAll("!", "! \n")}
             </span>

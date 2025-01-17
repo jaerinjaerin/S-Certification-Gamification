@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { samsungplusAppDeepLink } from "@/core/config/links";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
@@ -25,7 +25,6 @@ export default function ScoreRankAnnouncement({
   className?: string;
 }) {
   const translation = useTranslations();
-
   const { routeToPage } = usePathNavigator();
   const {
     quizStagesTotalScore,
@@ -50,7 +49,7 @@ export default function ScoreRankAnnouncement({
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
     return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
-  const { isArabic } = useArabic();
+  const { isArabic, isMyanmar } = useCheckLocale();
 
   return (
     <div className={cn("", className)}>
@@ -73,7 +72,9 @@ export default function ScoreRankAnnouncement({
             <div
               className={cn(
                 "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium",
-                isArabic && "text-right"
+                isArabic && "text-right",
+                isMyanmar && "leading-9"
+                // TODO: DialogContent 스크롤로 변경
               )}
             >
               <div>
@@ -122,7 +123,12 @@ export default function ScoreRankAnnouncement({
             }}
           />
 
-          <p className="px-5 text-2xl font-medium text-balance">
+          <p
+            className={cn(
+              "px-5 text-2xl font-medium text-balance",
+              isMyanmar && "leading-10"
+            )}
+          >
             {generateScoreRankText(translation("rank_notification"), topRank)}
           </p>
         </div>
@@ -159,7 +165,8 @@ export default function ScoreRankAnnouncement({
 }
 
 const SendBadgeNotificationCard = ({ message }: { message: string }) => {
-  const { isArabic } = useArabic();
+  const { isArabic, isMyanmar } = useCheckLocale();
+  console.log(isMyanmar);
   return (
     <div className="pt-[10px]">
       <div
@@ -172,7 +179,8 @@ const SendBadgeNotificationCard = ({ message }: { message: string }) => {
         <p
           className={cn(
             "text-[#1429A0] text-sm font-medium text-left max-w-[230px] text-pretty",
-            isArabic && "text-right"
+            isArabic && "text-right",
+            isMyanmar && "leading-9"
           )}
         >
           {message}

@@ -3,7 +3,7 @@ import { useInterval } from "usehooks-ts";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/utils";
-import useArabic from "@/hooks/useArabic";
+import useCheckLocale from "@/hooks/useCheckLocale";
 
 export function TypewriteTextVer({ question }: { question: string }) {
   const [letterIndex, setLetterIndex] = useState(0);
@@ -11,7 +11,7 @@ export function TypewriteTextVer({ question }: { question: string }) {
   const SWAP_DELAY_IN_MS = 20;
   const path = usePathname();
   const QUIZ_PATH = path.includes("quiz");
-  const { isArabic } = useArabic();
+  const { isArabic, isMyanmar } = useCheckLocale();
 
   const init = () => {
     setLetter("");
@@ -35,7 +35,13 @@ export function TypewriteTextVer({ question }: { question: string }) {
   );
 
   return (
-    <div className={cn("text-lg font-bold font-one", isArabic && "text-right")}>
+    <div
+      className={cn(
+        "text-lg font-bold font-one",
+        isArabic && "text-right",
+        isMyanmar && "leading-loose"
+      )}
+    >
       {QUIZ_PATH ? letter : question}
       {QUIZ_PATH && letterIndex !== question.length && (
         <motion.span className="ml-1">|</motion.span>
