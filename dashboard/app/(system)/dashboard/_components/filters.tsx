@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { Download } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
@@ -226,7 +226,11 @@ const Filters = ({
     filteredSubsidiaries.length <= 0 ||
     filteredDomains.length <= 0
   )
-    return;
+    return (
+      <FiltersContainer>
+        <Loader2 className="animate-spin text-zinc-600 place-self-center" />
+      </FiltersContainer>
+    );
 
   return (
     <Form {...form}>
@@ -274,7 +278,13 @@ const Filters = ({
                 to: new Date(filterData.campaign[0].endedAt),
               }}
               render={({ field }) => {
-                return <CalendarForm field={field} />;
+                return (
+                  <CalendarForm
+                    field={field}
+                    minDate={new Date(filterData.campaign[0].startedAt)}
+                    maxDate={new Date(filterData.campaign[0].endedAt)}
+                  />
+                );
               }}
             />
             <FormField

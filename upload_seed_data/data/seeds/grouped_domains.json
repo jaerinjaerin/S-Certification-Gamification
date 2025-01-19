@@ -190,6 +190,24 @@
       "parentDomainId": 48,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 548582,
+      "domainName": "CE",
+      "domainCode": "SEAO_CE",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 51,
+      "domainName": "SCIC",
+      "domainCode": "ORG_17",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
     }
   ],
   "subsidiaries": [
@@ -629,8 +647,8 @@
       "domainId": 569235,
       "domainName": "SEROM",
       "domainCode": "ORG_73_1",
-      "parentDomainName": "CE",
-      "parentDomainId": 569234,
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -881,8 +899,8 @@
       "domainId": 582613,
       "domainName": "SEPR",
       "domainCode": "ORG_72_1",
-      "parentDomainName": "CE",
-      "parentDomainId": 582612,
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -1189,8 +1207,8 @@
       "domainId": 506654,
       "domainName": "El Salvador",
       "domainCode": "NAT_2632",
-      "parentDomainName": "Guatemala_S",
-      "parentDomainId": 506652,
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -1297,8 +1315,8 @@
       "domainId": 506653,
       "domainName": "Guatemala",
       "domainCode": "NAT_2631",
-      "parentDomainName": "Guatemala_S",
-      "parentDomainId": 506652,
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -1306,8 +1324,8 @@
       "domainId": 506655,
       "domainName": "Honduras",
       "domainCode": "NAT_2633",
-      "parentDomainName": "Guatemala_S",
-      "parentDomainId": 506652,
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
@@ -1621,8 +1639,8 @@
       "domainId": 506657,
       "domainName": "Nicaragua",
       "domainCode": "NAT_2635",
-      "parentDomainName": "Guatemala_S",
-      "parentDomainId": 506652,
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },

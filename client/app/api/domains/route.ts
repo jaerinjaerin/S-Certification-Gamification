@@ -1,52 +1,13 @@
 import { prisma } from "@/prisma-client";
-import { Domain } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import { withCors } from "@/lib/cors";
 import * as Sentry from "@sentry/nextjs";
 
-export async function GET() {
+async function getHandler() {
   try {
     const domains = await prisma.domain.findMany();
-
-    // console.log("domains:", domains);
-
-    // Map over domains to include parsed channelSegmentIds
-    const enrichedDomains = await Promise.all(
-      domains.map(async (domain: Domain) => {
-        // Parse channelSegmentIds (assuming it's stored as a JSON string)
-        // const channelSegmentIds = domain.channelSegmentIds
-        //   ? domain.channelSegmentIds.split(",")
-        //   : [];
-
-        // Fetch ChannelSegment and SalesFormat for each channelSegmentId
-        // const channelSegments = await prisma.channelSegment.findMany({
-        //   where: {
-        //     id: {
-        //       in: channelSegmentIds,
-        //     },
-        //   },
-        //   include: {
-        //     salesFormats: {
-        //       include: {
-        //         job: true, // `job` 관계를 포함
-        //       },
-        //     },
-        //   },
-        // });
-
-        return {
-          ...domain,
-          // channelSegments, // Attach the fetched channelSegments
-        };
-      })
-    );
-
-    // Sentry.captureMessage("Domain Data fetched successfully");
-
-    const response = NextResponse.json(
-      { items: enrichedDomains },
-      { status: 200 }
-    );
+    const response = NextResponse.json({ items: domains }, { status: 200 });
     response.headers.set("Cache-Control", "public, max-age=3600");
     return response;
   } catch (error) {
@@ -69,3 +30,5 @@ export async function GET() {
     );
   }
 }
+
+export const GET = withCors(getHandler);

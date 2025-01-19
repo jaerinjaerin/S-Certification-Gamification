@@ -97,7 +97,8 @@ export const {
         console.log("storeId:", storeId);
         console.log("storeSegmentText:", storeSegmentText);
         console.log("channelId:", channelId);
-        console.log("channelSegmentId:", channelSegmentId);
+        console.log("regionId:", regionId);
+        console.log("subsidiaryId:", subsidiaryId);
 
         return {
           id: encrypt(profile.userId, true),

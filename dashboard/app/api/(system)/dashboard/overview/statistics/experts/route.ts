@@ -15,19 +15,20 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     // pie chart
-    const expertCount = await prisma.userQuizStatistics.count({
+    const expertCount = await prisma.userQuizBadgeStageStatistics.count({
       where: {
         ...where,
-        isCompleted: true,
+        isBadgeAcquired: true,
+        quizStageId: "stage_2",
       },
     });
 
-    const advancedCount = await prisma.userQuizStatistics.count({
-      where: { ...where, AND: { isCompleted: true, lastCompletedStage: 4 } },
+    const advancedCount = await prisma.userQuizBadgeStageStatistics.count({
+      where: { ...where, isBadgeAcquired: true, quizStageId: "stage_3" },
     });
 
     const pie = [
-      { name: names.expert, value: expertCount - advancedCount },
+      { name: names.expert, value: expertCount },
       { name: names.advanced, value: advancedCount },
     ];
 
@@ -43,8 +44,8 @@ export async function GET(request: NextRequest) {
       select: { id: true, group: true },
     });
 
-    const plus = await prisma.userQuizStatistics.findMany({
-      where: { ...where, isCompleted: true, storeId: { not: "4" } },
+    const plus = await prisma.userQuizBadgeStageStatistics.findMany({
+      where: { ...where, isBadgeAcquired: true, storeId: { not: "4" } },
     });
 
     plus.forEach((user) => {
@@ -62,8 +63,8 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    const ses = await prisma.userQuizStatistics.findMany({
-      where: { ...where, isCompleted: true, storeId: "4" },
+    const ses = await prisma.userQuizBadgeStageStatistics.findMany({
+      where: { ...where, isBadgeAcquired: true, storeId: "4" },
     });
 
     ses.forEach((user) => {
@@ -72,7 +73,7 @@ export async function GET(request: NextRequest) {
         const jobNamewithSes = `${jobName} (SES)`;
         jobData.forEach((item) => {
           if (item.name === jobNamewithSes.toUpperCase()) {
-            if (user.lastCompletedStage === 4) {
+            if (user.quizStageId === "stage_3") {
               item[names.advanced] = (item[names.advanced] as number) + 1;
             } else {
               item[names.expert] = (item[names.expert] as number) + 1;

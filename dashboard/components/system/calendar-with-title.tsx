@@ -22,10 +22,14 @@ const dateOptions = {
 export function CalendarForm({
   label,
   width = "20rem",
+  minDate,
+  maxDate,
   field,
 }: {
   label?: string | undefined;
   width?: number | string;
+  minDate?: Date;
+  maxDate?: Date;
   field: ControllerRenderProps<FieldValues, string>;
 }) {
   // 날짜 범위를 문자열로 표시
@@ -70,9 +74,18 @@ export function CalendarForm({
             mode="range" // 날짜 범위 선택 모드
             selected={field.value}
             onSelect={field.onChange}
-            disabled={
-              (date) => date > new Date() || date < new Date("1900-01-01") // 제한된 날짜
-            }
+            disabled={(date) => {
+              if (minDate && maxDate) {
+                return date < minDate || date > maxDate;
+              }
+              if (minDate) {
+                return date < minDate;
+              }
+              if (maxDate) {
+                return date > maxDate;
+              }
+              return false;
+            }}
             initialFocus
           />
         </PopoverContent>
