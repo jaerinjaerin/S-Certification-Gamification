@@ -64,14 +64,28 @@ const OverviewExperts = () => {
                     outerRadius={120}
                     fill={chartColorPrimary}
                     dataKey="value"
-                    label={({ name, value }) => `${name}: ${value}`} // 각 영역에 Label 추가
+                    label={({ name, value }) =>
+                      `${
+                        name === "expert" ? "Expert" : "Expert + Advanced"
+                      }: ${value}`
+                    } // 각 영역에 Label 추가
                   >
-                    {data.pie.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
+                    {data.pie.map(
+                      (
+                        entry: { name: string; value: number },
+                        index: number
+                      ) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          name={
+                            entry.name === "expert"
+                              ? "Expert"
+                              : "Expert + Advanced"
+                          }
+                        />
+                      )
+                    )}
                   </Pie>
                   <>
                     <text
@@ -127,19 +141,27 @@ const OverviewExperts = () => {
                     />
                     <Tooltip cursor={{ fill: chartColorHoverBackground }} />
                     <Legend />
-                    <Bar dataKey="Expert" stackId="a" fill={chartColorPrimary}>
+                    <Bar
+                      dataKey="expert"
+                      name="Expert"
+                      stackId="a"
+                      fill={chartColorPrimary}
+                    >
                       <LabelList
-                        dataKey="Expert"
+                        dataKey="expert"
+                        name="Expert"
                         content={renderLabelContent}
                       />
                     </Bar>
                     <Bar
-                      dataKey="Expert + Advanced"
+                      dataKey="advanced"
+                      name="Expert + Advanced"
                       stackId="a"
                       fill={chartColorSecondary}
                     >
                       <LabelList
-                        dataKey="Expert + Advanced"
+                        dataKey="advanced"
+                        name="Expert + Advanced"
                         content={renderLabelContent}
                       />
                     </Bar>

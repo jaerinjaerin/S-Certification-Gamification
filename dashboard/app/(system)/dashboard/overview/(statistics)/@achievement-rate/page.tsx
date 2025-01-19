@@ -21,7 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import { fetchData } from "../../../_lib/fetch";
 import { useOverviewContext } from "../../_provider/provider";
-import { legendFormatter } from "../../../_lib/text";
+import { legendCapitalizeFormatter } from "../../../_lib/text";
 import { chartHeight } from "../../../_lib/chart-variable";
 
 function OverviewAchievementRate() {
@@ -70,8 +70,14 @@ function OverviewAchievementRate() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip cursor={{ fill: chartColorHoverBackground }} />
-                <Legend formatter={legendFormatter} />
-                <Brush dataKey="name" height={20} stroke={chartColorPrimary} />
+                <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
+                <Brush
+                  dataKey="name"
+                  height={20}
+                  stroke={chartColorPrimary}
+                  startIndex={0}
+                  endIndex={9}
+                />
                 <Bar
                   dataKey="goal"
                   fill={chartColorPrimary}

@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where } = querySearchParams(searchParams);
-    const names = { expert: "Expert", advanced: "Expert + Advanced" };
+    const names = { expert: "expert", advanced: "advanced" };
 
     await prisma.$connect();
 
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       if (jobName) {
         jobData.forEach((item) => {
           if (item.name === jobName.toUpperCase()) {
-            if (user.lastCompletedStage === 4) {
+            if (user.quizStageId === "stage_3") {
               item[names.advanced] = (item[names.advanced] as number) + 1;
             } else {
               item[names.expert] = (item[names.expert] as number) + 1;

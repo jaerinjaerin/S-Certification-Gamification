@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const count = await prisma.userQuizStatistics.count({
-      where: { ...where, isCompleted: true },
+    const count = await prisma.userQuizBadgeStageStatistics.count({
+      where: { ...where, isBadgeAcquired: true },
     });
     return NextResponse.json({ result: { count } });
   } catch (error) {
