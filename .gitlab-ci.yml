@@ -33,6 +33,27 @@ send_discord_notification:
           }" \
       "$DISCORD_WEBHOOK_URL"
 
+notify_start_deployment:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - |
+      curl -X POST -H "Content-Type: application/json" \
+      -d "{
+            \"username\": \"GitLab CI/CD\",
+            \"avatar_url\": \"https://gitlab.com/favicon.ico\",
+            \"embeds\": [
+              {
+                \"title\": \"$SERVICE Deployment Notification\",
+                \"description\": \"🚀 Deployment to $ENV for $SERVICE has started.\",
+                \"color\": 3447003
+              }
+            ]
+          }" \
+      "$DISCORD_WEBHOOK_URL"
+  rules:
+    - if: "$ENV && $SERVICE"
+
 notify_success:
   extends: send_discord_notification
   rules:
