@@ -12,12 +12,12 @@ export function withCors(handler: Handler): Handler {
     // 프로토콜 + 호스트 조합
     const fullHost = `${protocol}://${host}`;
 
-    console.log("origin: ", origin, fullHost, allowedOrigins, req.headers);
+    console.log("origin: ", origin, fullHost, allowedOrigins);
 
     // 요청의 origin 또는 fullHost가 허용되지 않은 경우 처리
     if (
-      origin &&
-      !allowedOrigins.includes(origin) &&
+      // origin &&
+      // !allowedOrigins.includes(origin) &&
       !allowedOrigins.includes(fullHost)
     ) {
       return NextResponse.json({ message: "Forbidden" }, { status: 403 });
