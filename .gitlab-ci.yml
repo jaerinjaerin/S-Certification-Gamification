@@ -12,6 +12,41 @@ before_script:
   - apk add --no-cache openssh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REPOSITORY_HOST"
 
+# Notify
+# Discord 알림 전송 함수
+send_discord_notification:
+  stage: notify
+  image: curlimages/curl:latest
+  script:
+    - |
+      curl -X POST -H "Content-Type: application/json" \
+      -d "{
+            \"username\": \"GitLab CI/CD\",
+            \"avatar_url\": \"https://gitlab.com/favicon.ico\",
+            \"embeds\": [
+              {
+                \"title\": \"$SERVICE Deployment Notification\",
+                \"description\": \"$MESSAGE\",
+                \"color\": 3066993
+              }
+            ]
+          }" \
+      "$DISCORD_WEBHOOK_URL"
+
+notify_success:
+  extends: send_discord_notification
+  rules:
+    - if: '$CI_JOB_STATUS == "success"'
+  variables:
+    MESSAGE: "🎉 Deployment to $ENV for $SERVICE succeeded!"
+
+notify_failure:
+  extends: send_discord_notification
+  rules:
+    - if: '$CI_JOB_STATUS == "failed"'
+  variables:
+    MESSAGE: "❌ Deployment to $ENV for $SERVICE failed. Please check the logs."
+
 # Build
 
 build_stg_client:
