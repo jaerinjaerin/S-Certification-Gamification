@@ -46,7 +46,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: domainCode },
     });
 
-    console.log("domain:", domain, "job:", job);
+    // console.log("domain:", domain, "job:", job);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest, props: Props) {
 
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
-        console.log("quizStage:", quizStage.questionIds, languageId);
+        // console.log("quizStage:", quizStage.questionIds, languageId);
         const questions = await prisma.question.findMany({
           where: {
             originalQuestionId: { in: quizStage.questionIds },

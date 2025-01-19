@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("domain:", domain);
+    // console.log("domain:", domain);
     const user = await prisma.user.findFirst({
       where: {
         id: userId,

@@ -77,7 +77,7 @@ const validateAndCorrectQuizSetPath = async (
     }
 
     const domainsData = await domainsResponse.json();
-    console.log("Domains response:", domainsData);
+    // console.log("Domains response:", domainsData);
 
     const isDomainValid = domainsData.items?.some(
       (domain) => domain.code === domainCode
@@ -106,7 +106,7 @@ const validateAndCorrectQuizSetPath = async (
     }
 
     const languagesData = await languagesResponse.json();
-    console.log("Languages response:", languagesData);
+    // console.log("Languages response:", languagesData);
 
     const isLanguageValid = languagesData.items?.some(
       (language) => language.code === languageCode

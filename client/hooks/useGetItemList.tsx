@@ -22,8 +22,6 @@ function useGetItemList<T>(props: useGetItemListProps) {
         cache: "no-store",
       });
 
-      console.info("useGetItemList call", props.url, response);
-
       const data = await response.json();
       const { items /* count */ } = data as {
         items: T[];

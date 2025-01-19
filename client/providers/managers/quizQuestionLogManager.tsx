@@ -61,7 +61,7 @@ class QuizQuestionLogManager {
   }
 
   add(log: QuizLog): void {
-    console.info("[QuizLogManager] log", this.stageIndex, log.quizStageIndex);
+    console.log("[QuizLogManager] log", this.stageIndex, log.quizStageIndex);
     if (this.stageIndex === null) {
       assert(
         this.stageIndex !== null,
@@ -83,9 +83,7 @@ class QuizQuestionLogManager {
 
     this.logs.push(log);
     this.logQueue.enqueue(log);
-    console.info(
-      `[QuizLogManager] Log added for questionId: ${log.questionId}`
-    );
+    console.log(`[QuizLogManager] Log added for questionId: ${log.questionId}`);
 
     if (!this.isProcessingQueue) {
       this.processLogQueue();
@@ -134,7 +132,7 @@ class QuizQuestionLogManager {
         );
 
         if (result.ok) {
-          console.info("[QuizLogManager] Log successfully sent:", log);
+          console.log("[QuizLogManager] Log successfully sent:", log);
           return;
         }
 
@@ -148,16 +146,16 @@ class QuizQuestionLogManager {
   }
 
   isQueueProcessing(): boolean {
-    console.info("[QuizLogManager] isQueueProcessing", this.isProcessingQueue);
+    console.log("[QuizLogManager] isQueueProcessing", this.isProcessingQueue);
     return this.isProcessingQueue;
   }
 
   async waitForQueueToComplete(): Promise<void> {
-    console.info("[QuizLogManager] waitForQueueToComplete waiting");
+    console.log("[QuizLogManager] waitForQueueToComplete waiting");
     while (this.isProcessingQueue) {
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    console.info("[QuizLogManager] waitForQueueToComplete done");
+    console.log("[QuizLogManager] waitForQueueToComplete done");
   }
 
   getLogs(): QuizLog[] {
