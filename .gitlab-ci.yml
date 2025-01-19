@@ -1,6 +1,7 @@
 stages:
   - build
   - deploy
+  - notify
 
 variables:
   ENV: "${ENV}"
@@ -12,7 +13,6 @@ before_script:
   - apk add --no-cache openssh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REPOSITORY_HOST"
 
-# Notify
 # Discord 알림 전송 함수
 send_discord_notification:
   stage: notify
@@ -46,7 +46,6 @@ notify_failure:
     - if: '$CI_JOB_STATUS == "failed"'
   variables:
     MESSAGE: "❌ Deployment to $ENV for $SERVICE failed. Please check the logs."
-
 # Build
 
 build_stg_client:
