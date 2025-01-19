@@ -42,10 +42,10 @@ class QuizQuestionLogManager {
   constructor(initialStageIndex: number | null = null) {
     this.stageIndex = initialStageIndex;
     // console.log(
-      initialStageIndex !== null
-        ? `[QuizLogManager] initialized with stageIndex: ${initialStageIndex}`
-        : "[QuizLogManager] initialized without a stageIndex."
-    );
+    //   initialStageIndex !== null
+    //     ? `[QuizLogManager] initialized with stageIndex: ${initialStageIndex}`
+    //     : "[QuizLogManager] initialized without a stageIndex."
+    // );
   }
 
   init(stageIndex: number): void {

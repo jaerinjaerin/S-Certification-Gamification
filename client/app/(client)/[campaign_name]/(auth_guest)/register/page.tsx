@@ -92,7 +92,7 @@ export default function GuestRegisterPage() {
     { name: "FF(SES)", value: "11", id: "9", storeId: "4" },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
+  // const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
   const locale = useLocale();
   // console.log(locale);
 
@@ -155,7 +155,7 @@ export default function GuestRegisterPage() {
 
   const checkRegistered = async (userId: string) => {
     try {
-      setCheckingRegisterd(true);
+      // setCheckingRegisterd(true);
       const quizLogResponse = await fetchQuizLog(userId, campaign.name);
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
@@ -165,7 +165,7 @@ export default function GuestRegisterPage() {
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
-      setCheckingRegisterd(false);
+      // setCheckingRegisterd(false);
     }
   };
 

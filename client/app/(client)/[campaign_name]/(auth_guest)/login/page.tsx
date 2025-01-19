@@ -313,7 +313,7 @@ export default function GuestLogin({
 
       if (response.ok) {
         const data = await response.json();
-        const { code, expiresAt, verifyToken } = data;
+        const { code, expiresAt } = data;
         // console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
 
         if (code === "EMAIL_SENT") {
@@ -389,7 +389,7 @@ export default function GuestLogin({
       }
 
       await response.json();
-      const result = await signIn("credentials", {
+      await signIn("credentials", {
         email,
         code,
         callbackUrl: `/${params.campaign_name}/register`,

@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
     });
 
     // console.log(
-      "verifyToken:",
-      new Date(),
-      verifyToken
-      // Date() < verifyToken.expiresAt
-    );
+    //   "verifyToken:",
+    //   new Date(),
+    //   verifyToken
+    //   // Date() < verifyToken.expiresAt
+    // );
 
     if (verifyToken) {
       const now = new Date();
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     };
 
     const data = await sesClient.send(new SendEmailCommand(params));
-    // console.log(
+    console.log(
       "Email sent successfully:",
       data,
       data?.$metadata?.httpStatusCode,

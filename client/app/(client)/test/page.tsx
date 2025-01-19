@@ -114,7 +114,7 @@ export default function TestPage() {
         throw new Error(errorData.message || "Failed to fetch user profile");
       }
 
-      const data = await response.json();
+      await response.json();
       // console.log("data", data);
       setMessage("토큰 갱신 완료");
     } catch (err: any) {
@@ -392,7 +392,7 @@ export default function TestPage() {
         throw new Error(errorData.message || "Failed to fetch activities");
       }
 
-      const data = await response.json();
+      await response.json();
       // console.log("data", data);
       setLoading(false);
 
@@ -628,7 +628,7 @@ export default function TestPage() {
   }
 
   const processSignIn = async () => {
-    const result = await signIn("sumtotal", {
+    await signIn("sumtotal", {
       callbackUrl: `/test`,
     });
     // console.log("result", result);
