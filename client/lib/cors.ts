@@ -6,8 +6,9 @@ export function withCors(handler: Handler): Handler {
   return async (req: Request): Promise<NextResponse> => {
     const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL];
     const origin = req.headers.get("origin");
+    const host = req.headers.get("host");
 
-    console.log("origin: ", origin, allowedOrigins);
+    console.log("origin: ", origin, host, allowedOrigins, req.headers);
 
     // Origin이 없거나 허용되지 않은 경우 처리
     if (origin && !allowedOrigins.includes(origin)) {
