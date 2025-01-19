@@ -68,7 +68,7 @@ const validateAndCorrectQuizSetPath = async (
       `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
       {
         method: "GET",
-        cache: "force-cache",
+        // cache: "force-cache",
       }
     );
 
