@@ -1,30 +1,32 @@
-export function withCors(handler) {
-  return async (req, res) => {
-    const allowedOrigin = process.env.NEXT_PUBLIC_API_URL;
-    const origin = req.headers.origin;
+import { NextResponse } from "next/server";
 
-    if (origin !== allowedOrigin) {
-      res.status(403).json({ message: "Forbidden" });
-      return;
+type Handler = (req: Request) => Promise<NextResponse>;
+
+export function withCors(handler: Handler): Handler {
+  return async (req: Request): Promise<NextResponse> => {
+    const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL];
+    const origin = req.headers.get("origin");
+
+    // Origin이 없거나 허용되지 않은 경우 처리
+    if (origin && !allowedOrigins.includes(origin)) {
+      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     }
 
-    res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-    res.setHeader(
+    // 실제 핸들러 실행
+    const response = await handler(req);
+
+    // CORS 헤더 추가
+    response.headers.set("Access-Control-Allow-Origin", origin || "*"); // Origin이 없으면 '*' 허용
+    response.headers.set(
       "Access-Control-Allow-Methods",
-      "GET,POST,PUT,DELETE,OPTIONS"
+      "GET, POST, PUT, DELETE, OPTIONS"
     );
-    res.setHeader(
+    response.headers.set(
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization"
     );
-    res.setHeader("Access-Control-Allow-Credentials", "true");
+    response.headers.set("Access-Control-Allow-Credentials", "true");
 
-    // OPTIONS 요청에 대한 응답
-    if (req.method === "OPTIONS") {
-      res.status(200).end();
-      return;
-    }
-
-    return handler(req, res);
+    return response;
   };
 }
