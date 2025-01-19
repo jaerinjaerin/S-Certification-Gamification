@@ -1,7 +1,6 @@
 stages:
   - build
   - deploy
-  - notification
 
 variables:
   ENV: "${ENV}"
@@ -13,29 +12,7 @@ before_script:
   - apk add --no-cache openssh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REPOSITORY_HOST"
 
-success_notification:
-  image: alpine:latest
-  stage: notification
-  script:
-    - apk add --update git curl
-    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
-    - chmod +x send.sh
-    - /bin/ash ./send.sh success $DISCORD_WEBHOOK_URL
-  when: on_success
-  dependencies:
-    - build-job
-
-failure_notification:
-  image: alpine:latest
-  stage: notification
-  script:
-    - apk add --update git curl
-    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
-    - chmod +x send.sh
-    - /bin/ash ./send.sh failure $DISCORD_WEBHOOK_URL
-  when: on_failure
-  dependencies:
-    - build-job
+# Build
 
 build_stg_client:
   stage: build
