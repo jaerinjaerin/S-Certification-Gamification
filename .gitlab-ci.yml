@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy
-  - notify
+  - notification
 
 variables:
   ENV: "${ENV}"
@@ -13,61 +13,29 @@ before_script:
   - apk add --no-cache openssh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REPOSITORY_HOST"
 
-# Discord 알림 전송 함수
-send_discord_notification:
-  stage: notify
-  image: curlimages/curl:latest
+success_notification:
+  image: alpine:latest
+  stage: notification
   script:
-    - |
-      curl -X POST -H "Content-Type: application/json" \
-      -d "{
-            \"username\": \"GitLab CI/CD\",
-            \"avatar_url\": \"https://gitlab.com/favicon.ico\",
-            \"embeds\": [
-              {
-                \"title\": \"$SERVICE Deployment Notification\",
-                \"description\": \"$MESSAGE\",
-                \"color\": 3066993
-              }
-            ]
-          }" \
-      "$DISCORD_WEBHOOK_URL"
+    - apk add --update git curl
+    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - chmod +x send.sh
+    - /bin/ash ./send.sh success $DISCORD_WEBHOOK_URL
+  when: on_success
+  dependencies:
+    - build-job
 
-notify_start_deployment:
-  stage: deploy
-  image: curlimages/curl:latest
+failure_notification:
+  image: alpine:latest
+  stage: notification
   script:
-    - |
-      curl -X POST -H "Content-Type: application/json" \
-      -d "{
-            \"username\": \"GitLab CI/CD\",
-            \"avatar_url\": \"https://gitlab.com/favicon.ico\",
-            \"embeds\": [
-              {
-                \"title\": \"$SERVICE Deployment Notification\",
-                \"description\": \"🚀 Deployment to $ENV for $SERVICE has started.\",
-                \"color\": 3447003
-              }
-            ]
-          }" \
-      "$DISCORD_WEBHOOK_URL"
-  rules:
-    - if: "$ENV && $SERVICE"
-
-notify_success:
-  extends: send_discord_notification
-  rules:
-    - if: '$CI_JOB_STATUS == "success"'
-  variables:
-    MESSAGE: "🎉 Deployment to $ENV for $SERVICE succeeded!"
-
-notify_failure:
-  extends: send_discord_notification
-  rules:
-    - if: '$CI_JOB_STATUS == "failed"'
-  variables:
-    MESSAGE: "❌ Deployment to $ENV for $SERVICE failed. Please check the logs."
-# Build
+    - apk add --update git curl
+    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - chmod +x send.sh
+    - /bin/ash ./send.sh failure $DISCORD_WEBHOOK_URL
+  when: on_failure
+  dependencies:
+    - build-job
 
 build_stg_client:
   stage: build
