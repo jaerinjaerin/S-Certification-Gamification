@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, props: Props) {
     }
 
     const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
-    console.log("domainCode:", domainCode, "languageCode:", languageCode);
+    // console.log("domainCode:", domainCode, "languageCode:", languageCode);
 
     const user = await prisma.user.findFirst({
       where: { id: userId },
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: domainCode },
     });
 
-    // console.log("domain:", domain, "job:", job);
+    // // console.log("domain:", domain, "job:", job);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -80,13 +80,13 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: defaultLanguageCode },
     });
 
-    // console.log("language:", language, defaultLanguage);
+    // // console.log("language:", language, defaultLanguage);
 
     const languageId = language?.id;
 
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
-        // console.log("quizStage:", quizStage.questionIds, languageId);
+        // // console.log("quizStage:", quizStage.questionIds, languageId);
         const questions = await prisma.question.findMany({
           where: {
             originalQuestionId: { in: quizStage.questionIds },
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest, props: Props) {
           },
         });
 
-        // console.log("questions:", questions);
+        // // console.log("questions:", questions);
 
         // languageId 우선, 없으면 defaultLanguage.id
         const prioritizedQuestions = questions.filter(

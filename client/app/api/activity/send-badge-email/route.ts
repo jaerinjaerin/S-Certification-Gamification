@@ -18,7 +18,7 @@ const sesClient =
       });
 
 export async function POST(request: NextRequest) {
-  console.log("POST send badge email handler called");
+  // console.log("POST send badge email handler called");
   const body = await request.json();
   const { userId, subject, bodyHtml } = body as {
     userId: string;
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     };
 
     const data = await sesClient.send(new SendEmailCommand(params));
-    console.log(
+    // console.log(
       "Email sent successfully:",
       data,
       data?.$metadata?.httpStatusCode,

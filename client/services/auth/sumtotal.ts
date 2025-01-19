@@ -296,7 +296,7 @@ export default function SumTotal<SumtotalProfile>(
   callbackUrl: string,
   options: OAuthUserConfig<SumtotalProfile>
 ): ExtendedOAuth2Config<SumtotalProfile> {
-  console.log("SumTotal callbackUrl:", callbackUrl);
+  // console.log("SumTotal callbackUrl:", callbackUrl);
   return {
     id: "sumtotal",
     name: "SumTotal",
@@ -361,7 +361,7 @@ export default function SumTotalProvider<SumtotalProfile>(
     token: "https://samsung.sumtotal.host/apisecurity/connect/token",
     userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
     profile: (profile: SumtotalProfile) => {
-      console.log("profile:", profile);
+      // console.log("profile:", profile);
       return {
         id: profile.userId,
         name: profile.fullName,

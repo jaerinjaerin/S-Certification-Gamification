@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       where: { email: toAddress },
     });
 
-    console.log(
+    // console.log(
       "verifyToken:",
       new Date(),
       verifyToken
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     };
 
     const data = await sesClient.send(new SendEmailCommand(params));
-    console.log(
+    // console.log(
       "Email sent successfully:",
       data,
       data?.$metadata?.httpStatusCode,

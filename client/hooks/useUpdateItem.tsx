@@ -23,7 +23,7 @@ export default function useUpdateItem<T>() {
     setIsLoading(true);
 
     initialize();
-    // console.log("body", body);
+    // // console.log("body", body);
 
     fetch(url, {
       method: "PUT",
@@ -43,7 +43,7 @@ export default function useUpdateItem<T>() {
           item: T;
         };
 
-        // console.log("updateItem item", item);
+        // // console.log("updateItem item", item);
 
         setItem(item);
         setSuccess(true);

@@ -19,13 +19,13 @@ export default async function SumtotalUserLayout({
     console.error("Path validation failed.");
     redirect("/error");
   } else if (wasCorrected) {
-    console.log(`Path was corrected to: ${validatedPath}`);
+    // console.log(`Path was corrected to: ${validatedPath}`);
     redirect(`/${campaign_name}/${validatedPath}`);
   } else {
-    console.log("Path is valid.");
+    // console.log("Path is valid.");
   }
 
-  console.log("SumtotalUserLayout quizset_path", quizset_path);
+  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const locale = quizset_path.split("_").at(-1);
 
@@ -77,7 +77,7 @@ const validateAndCorrectQuizSetPath = async (
     }
 
     const domainsData = await domainsResponse.json();
-    // console.log("Domains response:", domainsData);
+    // // console.log("Domains response:", domainsData);
 
     const isDomainValid = domainsData.items?.some(
       (domain) => domain.code === domainCode
@@ -106,7 +106,7 @@ const validateAndCorrectQuizSetPath = async (
     }
 
     const languagesData = await languagesResponse.json();
-    // console.log("Languages response:", languagesData);
+    // // console.log("Languages response:", languagesData);
 
     const isLanguageValid = languagesData.items?.some(
       (language) => language.code === languageCode

@@ -70,7 +70,7 @@ const convertLangPackFolerToJson = async () => {
 
   try {
     const files = await fs.promises.readdir(directoryPath);
-    console.log(files.length);
+    // console.log(files.length);
 
     files.forEach((file) => {
       const filePath = path.join(directoryPath, file);
@@ -84,7 +84,7 @@ const convertLangPackFolerToJson = async () => {
 
       const matchingValue = file.split("_")[0].trim();
       const key = matchingTable[matchingValue];
-      console.log(file, key, matchingValue);
+      // console.log(file, key, matchingValue);
       const strings = convertLangPackXlsxToJson(jsonData);
 
       fs.writeFileSync(

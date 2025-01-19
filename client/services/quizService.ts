@@ -41,7 +41,7 @@ export const fetchQuizLog = async (
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${userId}&campaign_name=${campaignName}`;
     const result = await apiClient.get<ApiResponse<QuizLogResponse>>(url);
-    console.log("Quiz log result:", result.item?.quizQuestionLogs);
+    // console.log("Quiz log result:", result.item?.quizQuestionLogs);
     return result;
   } catch (error) {
     console.error(`Failed to fetch quiz log: ${error}`);

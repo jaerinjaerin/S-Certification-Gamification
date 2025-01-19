@@ -11,7 +11,7 @@ type Props = {
 
 export async function GET(request: NextRequest, props: Props) {
   try {
-    console.log("props:", props.params);
+    // console.log("props:", props.params);
     const userId = props.params.user_id;
     const campaignId = props.params.campaign_id;
     const log = await prisma.userQuizLog.findFirst({
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, props: Props) {
       // },
     });
 
-    console.log("log:", log);
+    // console.log("log:", log);
     const response = NextResponse.json({ item: log }, { status: 200 });
     response.headers.set("Cache-Control", "public, max-age=3600");
     return response;

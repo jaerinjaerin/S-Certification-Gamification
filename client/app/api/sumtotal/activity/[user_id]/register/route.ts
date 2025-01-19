@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
         }
 
         const data = await response.json();
-        console.log("api/register data", data);
+        // console.log("api/register data", data);
         Sentry.captureMessage("response", data);
         return NextResponse.json(data, { status: 200 });
       } catch (error) {
