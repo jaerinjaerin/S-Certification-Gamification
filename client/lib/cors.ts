@@ -18,7 +18,10 @@ export function withCors(handler: Handler): Handler {
     const response = await handler(req);
 
     // CORS 헤더 추가
-    response.headers.set("Access-Control-Allow-Origin", origin || "*"); // Origin이 없으면 '*' 허용
+    response.headers.set(
+      "Access-Control-Allow-Origin",
+      process.env.NEXT_PUBLIC_API_URL!
+    ); // Origin이 없으면 '*' 허용
     response.headers.set(
       "Access-Control-Allow-Methods",
       "GET, POST, PUT, DELETE, OPTIONS"
