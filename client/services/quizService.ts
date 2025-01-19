@@ -69,7 +69,6 @@ export const validateAndCorrectQuizSetPath = async (
       `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
       "force-cache"
     );
-    console.log("domainsResponse response:", domainsResponse);
 
     const isDomainValid = domainsResponse.items?.some(
       (domain: Domain) => domain.code === domainCode
@@ -89,7 +88,7 @@ export const validateAndCorrectQuizSetPath = async (
       `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
       "force-cache"
     );
-    console.log("Languages response:", languagesResponse);
+
     const isLanguageValid = languagesResponse.items?.some(
       (language: Language) => language.code === languageCode
     );
