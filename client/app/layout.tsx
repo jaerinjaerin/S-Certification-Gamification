@@ -1,3 +1,4 @@
+import { Version } from "@/components/version";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -32,6 +33,7 @@ export default async function RootLayout({
       <body className={`font-sharpSans font-bold antialiased`}>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
         {children}
+        <Version />
       </body>
     </html>
   );

@@ -1,7 +1,0 @@
-[
-  { "id": "1", "name": "offline-store" },
-  { "id": "2", "name": "online-store" },
-  { "id": "3", "name": "contact-center" },
-  { "id": "4", "name": "SES" },
-  { "id": "5", "name": "others" }
-]
