@@ -137,7 +137,7 @@ async function main() {
     const subsidiaries = allDomains.subsidiaries;
     const domains = allDomains.domains;
 
-    console.log("domains", domains);
+    // console.log("domains", domains);
 
     // 데이터 삽입
     await prisma.hq.createMany({
@@ -194,7 +194,7 @@ async function main() {
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
-    console.log("resultDomains", resultDomains);
+    // console.log("resultDomains", resultDomains);
 
     const campaign = await prisma.campaign.findFirst();
     await prisma.domainGoal.createMany({
@@ -222,7 +222,7 @@ async function main() {
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
-    console.log("resultDomains", resultDomains);
+    // console.log("resultDomains", resultDomains);
 
     // Create Jobs
     filePath = path.join(process.cwd(), "data", "seeds", "jobs.json");
@@ -328,8 +328,8 @@ async function main() {
       })
     );
 
-    console.log("charImages", charImages);
-    console.log("bgImages", bgImages);
+    // console.log("charImages", charImages);
+    // console.log("bgImages", bgImages);
 
     const badgeImages = await Promise.all(
       badgeImagePaths.map(async (imagePath: string) => {
@@ -342,13 +342,13 @@ async function main() {
       })
     );
 
-    console.log("badgeImages", badgeImages);
+    // console.log("badgeImages", badgeImages);
 
     const campaign = await prisma.campaign.findFirst();
     const folderPath = path.join(process.cwd(), "data", "questions");
     const files = fs.readdirSync(folderPath);
 
-    console.log("files", files);
+    // console.log("files", files);
 
     // 먼저 OrgCode-7 도메인 데이터를 처리
     const hqNatQuestions: any[] = [];
@@ -464,7 +464,7 @@ async function main() {
           }
         }
 
-        console.log("item", item);
+        // console.log("item", item);
 
         createdQuestions.push(item);
         if (domainCode === "OrgCode-7") {
@@ -484,7 +484,7 @@ async function main() {
         },
       });
 
-      console.log("quizSet", quizSet);
+      // console.log("quizSet", quizSet);
 
       const stages = [
         ...new Set(questions.map((question) => question.stage)),
@@ -514,7 +514,7 @@ async function main() {
           }
         });
 
-        console.log("questionIds", questionIds);
+        // console.log("questionIds", questionIds);
 
         // const isLastStage = i === stages.length - 1;
         let isBadgeStage = false;
@@ -545,7 +545,7 @@ async function main() {
           // badgeImageUrl = "/certification/s25/images/badge/badge_stage4.png";
         }
 
-        console.log("activityId", domainCode, activityIds);
+        // console.log("activityId", domainCode, activityIds);
 
         await prisma.quizStage.create({
           data: {
@@ -571,7 +571,7 @@ async function main() {
   await createOriginQuizSet();
   // await createTriggers();
 
-  console.log("Seeding completed!");
+  // console.log("Seeding completed!");
 }
 
 main()

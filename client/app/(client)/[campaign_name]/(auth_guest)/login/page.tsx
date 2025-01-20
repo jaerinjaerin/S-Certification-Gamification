@@ -24,12 +24,12 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn, formatToMMSS } from "@/utils/utils";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import { AutoTextSize } from "auto-text-size";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
-import { AutoTextSize } from "auto-text-size";
 
 export default function GuestLogin({
   params,
@@ -313,8 +313,8 @@ export default function GuestLogin({
 
       if (response.ok) {
         const data = await response.json();
-        const { code, expiresAt, verifyToken } = data;
-        console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
+        const { code, expiresAt } = data;
+        // console.log("처음 코드 받았을때 verifyToken", verifyToken, data);
 
         if (code === "EMAIL_SENT") {
           setSuccessSendEmail(translation("email_success"));
@@ -326,7 +326,7 @@ export default function GuestLogin({
         }
       } else {
         const data = await response.json();
-        console.log("data", data);
+        // console.log("data", data);
         const { code, expiresAt } = data;
         if (code === "EMAIL_ALREADY_SENT") {
           setSuccessSendEmail(translation("email_already_sent"));
@@ -389,13 +389,13 @@ export default function GuestLogin({
       }
 
       await response.json();
-      const result = await signIn("credentials", {
+      await signIn("credentials", {
         email,
         code,
         callbackUrl: `/${params.campaign_name}/register`,
       });
 
-      console.log("result", result);
+      // console.log("result", result);
     } catch (err) {
       console.error(err);
       alert(translation("unexpected_error"));
@@ -595,7 +595,7 @@ export default function GuestLogin({
             <form
               id="verify-code"
               onSubmit={(e) => {
-                console.log("verify code");
+                // console.log("verify code");
                 e.preventDefault();
               }}
               className="relative font-medium font-one w-full bg-[#E5E5E5] rounded-[10px] p-1"

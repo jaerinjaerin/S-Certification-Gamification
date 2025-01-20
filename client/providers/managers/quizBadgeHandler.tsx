@@ -7,7 +7,7 @@ export class QuizBadgeHandler {
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      console.log("issueBadge");
+      // console.log("issueBadge");
       const registered = await this.postActivitieRegister(activityId);
       const result = await this.postActivityEnd(activityId, elapsedSeconds);
 
@@ -26,7 +26,7 @@ export class QuizBadgeHandler {
     currentQuizStageIndex: number
   ) => {
     try {
-      console.log("sendBadgeEmail");
+      // console.log("sendBadgeEmail");
       const subject: string = "You have earned the Galaxy AI Expert Badge.";
       const bodyHtml: string = getBadgeEmailTemplete(
         badgeImageUrl,
@@ -54,7 +54,7 @@ export class QuizBadgeHandler {
       }
 
       const data = await response.json();
-      console.log("sendBadgeEmail data", data);
+      // console.log("sendBadgeEmail data", data);
 
       return true;
     } catch (err: any) {
@@ -133,7 +133,7 @@ export class QuizBadgeHandler {
       }
 
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
 
       return true;
     } catch (err: any) {

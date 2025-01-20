@@ -13,7 +13,7 @@ export default async function GuestLayout({
   const locale = await getBrowserLocale();
   const serviceLangCode = await getServiceLangCode();
 
-  console.log("GuestLayout locale", locale);
+  // console.log("GuestLayout locale", locale);
 
   const messages = await fetch(
     `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${serviceLangCode}.json`

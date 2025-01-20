@@ -7,7 +7,7 @@ export default async function CampaignPage({
 }: {
   params: { campaign_name: string };
 }) {
-  console.info("CampaignPage page", params);
+  // // console.log("CampaignPage page", params);
   // export default async function CampaignPage() {
   // 유저가 삼플 유저인지. 삼플 미사용 유저인지 확인
   // 삼플 유저라면 유저 정보에 퀴즈 셋 정보가 등록되어 있는지 확인
@@ -20,7 +20,7 @@ export default async function CampaignPage({
   // const { data: session } = useSession();
   // // const { routeToPage } = usePathNavigator();
 
-  // console.info("CampaignPage session", session);
+  // // console.log("CampaignPage session", session);
 
   // if (!session) {
   //   routeToPage("/login");
@@ -46,7 +46,7 @@ export default async function CampaignPage({
   //   redirect("error-notfound");
   // }
 
-  // console.info("CampaignPage campaign", data);
+  // // console.log("CampaignPage campaign", data);
 
   const historyResponse = await fetch(
     // `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
@@ -66,7 +66,7 @@ export default async function CampaignPage({
     userQuizLog = historyData?.item?.quizLog;
   }
 
-  console.info("CampaignPage quizHistory", userQuizLog, session?.user);
+  // // console.log("CampaignPage quizHistory", userQuizLog, session?.user);
 
   // 퀴즈로그가 있으면 해당 퀴즈셋으로 이동
   if (userQuizLog?.quizSetPath) {
@@ -75,7 +75,7 @@ export default async function CampaignPage({
 
   // 퀴즈로그가 없고 게스트 유저라면 회원가입 페이지로 이동
   if (!userQuizLog && session?.user.authType === AuthType.GUEST) {
-    console.log("gogo register");
+    // console.log("gogo register");
     redirect(`${params.campaign_name}/register`);
   }
 

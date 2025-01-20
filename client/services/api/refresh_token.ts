@@ -29,7 +29,7 @@ export async function refreshToken(accountId: string, refreshToken: string) {
 
     const tokens = await response.json();
 
-    console.log("Refreshed tokens:", tokens);
+    // console.log("Refreshed tokens:", tokens);
 
     // 업데이트된 토큰을 DB에 저장
     await prisma.account.update({

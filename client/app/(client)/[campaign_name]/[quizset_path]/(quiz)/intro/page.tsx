@@ -32,7 +32,7 @@ export default function QuizIntro() {
 
     const data = await response.json();
     if (response.ok) {
-      console.log("Email sent successfully:", data.messageId);
+      // console.log("Email sent successfully:", data.messageId);
     } else {
       console.error("Error sending email:", data.error);
     }

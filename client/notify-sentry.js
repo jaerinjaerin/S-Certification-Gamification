@@ -9,4 +9,4 @@ const errorMessage = "PM2 process crashed or exited abnormally";
 
 // Sentry로 알림 전송
 Sentry.captureMessage(errorMessage, "fatal");
-console.log("Error reported to Sentry");
+// console.log("Error reported to Sentry");

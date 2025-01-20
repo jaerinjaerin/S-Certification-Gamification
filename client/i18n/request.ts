@@ -18,7 +18,7 @@ export default getRequestConfig(async () => {
     };
   } else {
     const data = await response.json();
-    console.log("DATA", data);
+    // console.log("DATA", data);
     throw new Error(
       `${locale}에 해당하는 JSON 데이터를 가져오는데 문제가 발생했습니다.`
     );

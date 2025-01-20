@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    console.log("GET handler called");
+    // console.log("GET handler called");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/test_channels.json`
     );
-    console.log("response", response);
+    // console.log("response", response);
     const data = await response.json();
-    console.log("channels.json", data);
+    // console.log("channels.json", data);
 
     // request.setHeader("Access-Control-Allow-Origin", "*");
     // request.status(200).json(data);

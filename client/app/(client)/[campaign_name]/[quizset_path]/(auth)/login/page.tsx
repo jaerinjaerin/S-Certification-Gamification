@@ -19,8 +19,8 @@ export default function Login() {
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {
     setLoading(true);
-    const result = await signIn("sumtotal");
-    console.log("result", result);
+    await signIn("sumtotal");
+    // console.log("result", result);
   };
 
   if (status === "loading") {
