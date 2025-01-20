@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-type Handler = (req: Request) => Promise<NextResponse>;
+type Handler = (req: NextRequest) => Promise<NextResponse>;
 
 export function withCors(handler: Handler): Handler {
-  return async (req: Request): Promise<NextResponse> => {
+  return async (req: NextRequest): Promise<NextResponse> => {
     const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL!];
     const origin = req.headers.get("origin");
     const protocol = req.headers.get("x-forwarded-proto") || "http";
@@ -12,7 +12,7 @@ export function withCors(handler: Handler): Handler {
     // 프로토콜 + 호스트 조합
     const fullHost = `${protocol}://${host}`;
 
-    console.log("origin: ", origin, fullHost, allowedOrigins);
+    console.log("origin: ", origin, fullHost, allowedOrigins, req.headers);
 
     // 요청의 origin 또는 fullHost가 허용되지 않은 경우 처리
     if (
