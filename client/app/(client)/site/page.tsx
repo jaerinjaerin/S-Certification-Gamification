@@ -562,7 +562,6 @@ const notParticipateCountries = [
 
 export default function SitemapPage() {
   const supportedLanguagesCode = defaultLanguages.map((lang) => lang.code);
-  const HOST_URL = process.env.AUTH_URL;
 
   return (
     <div className="min-w-[280px] max-w-screen-md w-full min-h-svh mx-auto text-base px-10 pt-10 py-20">

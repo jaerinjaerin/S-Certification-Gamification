@@ -1,4 +1,3 @@
-import { extractCodesFromPath } from "@/utils/pathUtils";
 import { cn } from "@/utils/utils";
 import * as Sentry from "@sentry/nextjs";
 import { X } from "lucide-react";

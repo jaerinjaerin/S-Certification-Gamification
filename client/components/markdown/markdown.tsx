@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 
 const NonMemoizedMarkdown = ({ children }: { children: string }) => {
   const components = {
-    code: ({ node, inline, className, children, ...props }: any) => {
+    code: ({ inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || "");
       return !inline && match ? (
         <pre
@@ -23,35 +23,35 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         </code>
       );
     },
-    ol: ({ node, children, ...props }: any) => {
+    ol: ({ children, ...props }: any) => {
       return (
         <ol className="list-decimal list-outside ml-4" {...props}>
           {children}
         </ol>
       );
     },
-    li: ({ node, children, ...props }: any) => {
+    li: ({ children, ...props }: any) => {
       return (
         <li className="py-1" {...props}>
           {children}
         </li>
       );
     },
-    ul: ({ node, children, ...props }: any) => {
+    ul: ({ children, ...props }: any) => {
       return (
         <ul className="list-decimal list-outside ml-4" {...props}>
           {children}
         </ul>
       );
     },
-    strong: ({ node, children, ...props }: any) => {
+    strong: ({ children, ...props }: any) => {
       return (
         <span className="font-semibold" {...props}>
           {children}
         </span>
       );
     },
-    a: ({ node, children, ...props }: any) => {
+    a: ({ children, ...props }: any) => {
       return (
         <Link
           className="text-blue-500 hover:underline"
@@ -63,14 +63,14 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         </Link>
       );
     },
-    p: ({ node, children, ...props }: any) => {
+    p: ({ children, ...props }: any) => {
       return (
         <p className="whitespace-break-spaces my-3" {...props}>
           {children}
         </p>
       );
     },
-    table: ({ node, children, ...props }: any) => {
+    table: ({ children, ...props }: any) => {
       return (
         <div className="my-4">
           <table
@@ -82,16 +82,16 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         </div>
       );
     },
-    thead: ({ node, children, ...props }: any) => {
+    thead: ({ children }: any) => {
       return <thead className="bg-gray-100">{children}</thead>;
     },
-    tbody: ({ node, children, ...props }: any) => {
+    tbody: ({ children }: any) => {
       return <tbody>{children}</tbody>;
     },
-    tr: ({ node, children, ...props }: any) => {
+    tr: ({ children }: any) => {
       return <tr className="border-b border-gray-200">{children}</tr>;
     },
-    th: ({ node, children, ...props }: any) => {
+    th: ({ children, ...props }: any) => {
       return (
         <th
           className="px-4 py-2 text-left font-medium text-gray-700 border border-gray-300"
@@ -101,7 +101,7 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         </th>
       );
     },
-    td: ({ node, children, ...props }: any) => {
+    td: ({ children, ...props }: any) => {
       return (
         <td
           className="px-4 py-2 text-gray-600 border border-gray-300 "
