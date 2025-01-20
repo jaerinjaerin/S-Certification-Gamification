@@ -14,10 +14,10 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const userQuizes = await prisma.userQuizStatistics.findMany({
+    const userQuizeBadges = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
-        isCompleted: true,
+        isBadgeAcquired: true,
       },
       select: { regionId: true, domainId: true },
     });
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         const currentDomain = domains.find((domain) => domain.id === domainId);
         if (!currentDomain) return null;
 
-        const expert = userQuizes.reduce((acc, user) => {
+        const expert = userQuizeBadges.reduce((acc, user) => {
           return acc + (user.domainId === domainId ? 1 : 0);
         }, 0);
 
