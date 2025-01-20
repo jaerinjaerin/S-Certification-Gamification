@@ -141,16 +141,17 @@ async function main() {
 
     // 데이터 삽입
     await prisma.hq.createMany({
-      data: hqs.map((region: any) => ({
+      data: hqs.map((region: any, index: number) => ({
         id: region.domainId.toString(),
         code: region.domainCode.toString(),
         name: region.domainName,
+        order: index + 1,
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     await prisma.region.createMany({
-      data: regions.map((region: any) => ({
+      data: regions.map((region: any, index: number) => ({
         id: region.domainId.toString(),
         code: region.domainCode.toString(),
         name: region.domainName,
@@ -158,12 +159,13 @@ async function main() {
           hqs
             .find((hq) => hq.domainId === region.parentDomainId)
             ?.domainId?.toString() ?? null,
+        order: index + 1,
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     await prisma.subsidiary.createMany({
-      data: subsidiaries.map((subsidiary: any) => ({
+      data: subsidiaries.map((subsidiary: any, index: number) => ({
         id: subsidiary.domainId.toString(),
         code: subsidiary.domainCode.toString(),
         name: subsidiary.domainName,
@@ -171,12 +173,13 @@ async function main() {
           regions
             .find((region) => region.domainId === subsidiary.parentDomainId)
             ?.domainId?.toString() ?? null,
+        order: index + 1,
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
     const resultDomains = await prisma.domain.createMany({
-      data: domains.map((country: any) => ({
+      data: domains.map((country: any, index: number) => ({
         id: country.domainId.toString(),
         code: country.domainCode.toString(),
         name: country.domainName,
@@ -186,6 +189,7 @@ async function main() {
               (subsidiary) => subsidiary.domainId === country.parentDomainId
             )
             ?.domainId?.toString() ?? null,
+        order: index + 1,
       })),
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
