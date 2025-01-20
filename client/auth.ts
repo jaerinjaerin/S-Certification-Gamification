@@ -168,7 +168,7 @@ export const {
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, //30일
+    maxAge: 365 * 24 * 60 * 60, //365일
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {

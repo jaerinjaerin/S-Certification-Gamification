@@ -162,6 +162,7 @@ model Hq {
   id         String   @id 
   name       String
   code       String   @unique // Domain name
+  order Int?
 
   regions Region[] 
 }
@@ -170,6 +171,7 @@ model Region {
   id         String   @id 
   name String
   code       String   @unique // Domain name
+  order Int?
 
   hqId String?
   hq Hq? @relation(fields: [hqId], references: [id])
@@ -181,6 +183,7 @@ model Subsidiary {
   id         String   @id 
   name String
   code       String   @unique // Domain name
+  order Int?
 
   regionId String?
   region Region? @relation(fields: [regionId], references: [id])
@@ -194,6 +197,7 @@ model Domain {
   name       String
   code       String   @unique // Domain name
   subsidiaryId  String?
+  order Int?
 
   subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
 
