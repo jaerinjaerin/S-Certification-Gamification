@@ -576,7 +576,6 @@ export default function SitemapPage() {
       </p>
       <div className="mt-[30px] grid grid-cols-1 lg:grid-cols-2 gap-4">
         {domainUrlMapping.map(({ domain, url, langCode }) => {
-          console.log(`${process.env.NEXT_PUBLIC_API_URL}/s25/${url}`);
           return (
             <a
               href={
