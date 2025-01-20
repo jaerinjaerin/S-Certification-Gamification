@@ -1490,6 +1490,15 @@
       "domainHierarchy": "Samsung"
     },
     {
+      "domainId": 361271,
+      "domainName": "Tanzania",
+      "domainCode": "NAT_2834",
+      "parentDomainName": "SEEA",
+      "parentDomainId": 670566,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
       "domainId": 361268,
       "domainName": "Nigeria",
       "domainCode": "NAT_2566",
