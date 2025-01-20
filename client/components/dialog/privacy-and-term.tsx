@@ -22,13 +22,11 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
   const { loading, setLoading, renderLoader } = useLoader();
   const params = useParams();
   const quizPathParams = params.quizset_path;
-  const { domainCode } = extractCodesFromPath(String(quizPathParams));
 
   const fetchTermAndCondition = async () => {
     try {
       setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`;
-      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/OrgCode-7.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${quizPathParams}.json`;
       const res = await fetch(jsonUrl, {
         method: "GET",
         cache: "no-cache",
