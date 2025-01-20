@@ -23,11 +23,13 @@ import { fetchData } from "../../../_lib/fetch";
 import { useOverviewContext } from "../../_provider/provider";
 import { legendCapitalizeFormatter } from "../../../_lib/text";
 import { chartHeight } from "../../../_lib/chart-variable";
+import { LoaderWithBackground } from "@/components/loader";
 
 function OverviewAchievementRate() {
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (state.fieldValues) {
@@ -36,6 +38,7 @@ function OverviewAchievementRate() {
         "overview/statistics/achievement",
         (data) => {
           setData(data.result);
+          setLoading(false);
         }
       );
       //
@@ -51,6 +54,7 @@ function OverviewAchievementRate() {
         {({ width }) => {
           return (
             <>
+              {loading && <LoaderWithBackground />}
               <CardCustomHeader
                 title="Achievement Rate"
                 numbers={`${count.toLocaleString()}%`}

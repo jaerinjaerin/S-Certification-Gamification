@@ -1,17 +1,20 @@
-import UserDomain from "./(statics)/@domain/page";
-import UserExperts from "./(statics)/@experts/page";
 import UserFilterForm from "./@filters/page";
 import UserOutcome from "./(statics)/@outcome/page";
+import { UserProvider } from "../user/_provider/provider";
+import UserDomain from "./(info)/@domain/page";
+import UserProgressExperts from "./(statics)/@progress-of-experts/page";
 
-const QuizTemplete = () => {
+const UserTemplete = () => {
   return (
-    <div className="space-y-3">
-      <UserFilterForm />
-      <UserDomain />
-      <UserExperts />
-      <UserOutcome />
-    </div>
+    <UserProvider>
+      <div className="space-y-3">
+        <UserFilterForm />
+        <UserDomain />
+        <UserProgressExperts />
+        <UserOutcome />
+      </div>
+    </UserProvider>
   );
 };
 
-export default QuizTemplete;
+export default UserTemplete;

@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
+import { addWeeks, endOfWeek, isBefore, startOfWeek } from "date-fns";
 import { querySearchParams } from "../../../_lib/query";
-import { addWeeks, endOfWeek, startOfWeek } from "date-fns";
 import { buildWhereWithValidKeys } from "../../../_lib/where";
 
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where } = querySearchParams(searchParams);
-    console.log("🚀 ~ GET ~ where:", where);
 
     await prisma.$connect();
 
+    // 캠페인 데이터 가져오기
     const campaign = await prisma.campaign.findUnique({
       where: { id: where.campaignId },
     });
@@ -27,112 +26,127 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const domain_goal = await prisma.domainGoal.findMany({
+      where: buildWhereWithValidKeys(where, ["campaignId", "createdAt"]),
+    });
+
+    const goalTotalScore = Array.isArray(domain_goal)
+      ? domain_goal.reduce(
+          (sum, { ff = 0, ffSes = 0, fsm = 0, fsmSes = 0 }) =>
+            sum + ff + fsm + ffSes + fsmSes,
+          0
+        )
+      : 0;
+
+    let today = new Date();
+    today = addWeeks(today, 2);
     const startDate = startOfWeek(campaign.startedAt); // 캠페인 시작 주
-    const endDate = endOfWeek(campaign.endedAt); // 캠페인 종료 주const weeklyJobData = [];
-    //
-    let weekIndex = 1;
-    let cumulativeGoalScore = 0; // 이전 주 누적 점수를 저장할 변수
+    let weekIndex = 0;
     const weeklyJobData = [];
-    const jobData = {
+    const defaultJobData = {
       ff: 0,
       fsm: 0,
       "ff(ses)": 0,
       "fsm(ses)": 0,
     };
+    let jobData = JSON.parse(JSON.stringify(defaultJobData));
 
     const jobGroup = await prisma.job.findMany({
       select: { id: true, group: true },
     });
 
-    for (
-      let currentWeekStart = startDate;
-      currentWeekStart <= endDate;
-      currentWeekStart = addWeeks(currentWeekStart, 1)
-    ) {
+    // 8주 데이터 생성
+    for (let i = 0; i < 8; i++) {
+      const currentWeekStart = addWeeks(startDate, i);
       const weekEnd = endOfWeek(currentWeekStart);
 
-      // 주간 조건: updatedAt이 주간 범위에 있거나, updatedAt이 null이고 createdAt이 주간 범위에 있는 경우
-      const weeklyWhere = {
-        ...where,
-        OR: [
-          {
-            updatedAt: {
-              gte: currentWeekStart,
-              lt: weekEnd,
+      // 캠페인 기간 내에만 데이터를 계산
+      const isCurrentWeekValid = isBefore(currentWeekStart, today);
+      const isWithinCampaign = currentWeekStart <= campaign.endedAt;
+
+      if (isCurrentWeekValid && isWithinCampaign) {
+        const weeklyWhere = {
+          ...where,
+          OR: [
+            {
+              updatedAt: {
+                gte: currentWeekStart,
+                lt: weekEnd,
+              },
             },
+            {
+              createdAt: {
+                gte: currentWeekStart,
+                lt: weekEnd,
+              },
+            },
+          ],
+        };
+
+        const plus = await prisma.userQuizBadgeStageStatistics.findMany({
+          where: {
+            ...weeklyWhere,
+            isBadgeAcquired: true,
+            storeId: { not: "4" },
           },
-          {
-            createdAt: {
-              gte: currentWeekStart,
-              lt: weekEnd,
-            },
-          },
-        ],
-      };
+        });
 
-      const domain_goal = await prisma.domainGoal.findMany({
-        where: {
-          ...weeklyWhere,
-          ...buildWhereWithValidKeys(where, ["campaignId", "createdAt"]),
-        },
-      });
-
-      //
-      const weeklyGoalScore = Array.isArray(domain_goal)
-        ? domain_goal.reduce(
-            (sum, { ff = 0, ffSes = 0, fsm = 0, fsmSes = 0 }) => {
-              return sum + ff + fsm + ffSes + fsmSes;
-            },
-            0
-          )
-        : 0;
-
-      // 이전 주 점수와 합산
-      cumulativeGoalScore += weeklyGoalScore;
-
-      const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-        where: { ...weeklyWhere, isBadgeAcquired: true, storeId: { not: "4" } },
-      });
-
-      plus.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          const lowJobName = jobName.toLowerCase() as keyof typeof jobData; // 키 타입 제한
-          if (lowJobName in jobData) {
-            jobData[lowJobName] = jobData[lowJobName] + 1;
+        plus.forEach((user) => {
+          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
+          if (jobName) {
+            const lowJobName = jobName.toLowerCase() as keyof typeof jobData;
+            if (lowJobName in jobData) {
+              jobData[lowJobName] += 1;
+            }
           }
-        }
-      });
+        });
 
-      const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-        where: { ...weeklyWhere, isBadgeAcquired: true, storeId: "4" },
-      });
+        const ses = await prisma.userQuizBadgeStageStatistics.findMany({
+          where: { ...weeklyWhere, isBadgeAcquired: true, storeId: "4" },
+        });
 
-      ses.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          const lowJobName = jobName.toLowerCase();
-          const jobNamewithSes = `${lowJobName}(ses)` as keyof typeof jobData; // 키 타입 제한;
-          if (jobNamewithSes in jobData) {
-            jobData[jobNamewithSes] = jobData[jobNamewithSes] + 1;
+        ses.forEach((user) => {
+          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
+          if (jobName) {
+            const lowJobName =
+              `${jobName.toLowerCase()}(ses)` as keyof typeof jobData;
+            if (lowJobName in jobData) {
+              jobData[lowJobName] += 1;
+            }
           }
-        }
-      });
+        });
+      } else {
+        jobData = defaultJobData;
+      }
 
-      //
       // 결과 저장
       weeklyJobData.push({
         date: `${currentWeekStart.toISOString()} - ${weekEnd.toISOString()}`,
-        name: `W${weekIndex}`,
+        name: `W${weekIndex + 1}`,
         job: JSON.parse(JSON.stringify(jobData)),
-        target: calculateTotalRatio(jobData, cumulativeGoalScore),
+        target: weeklyGoalRate[weekIndex] || 0,
       });
 
       weekIndex++;
     }
 
-    console.log("🚀 ~ GET ~ weeklyJobData:", weeklyJobData);
-    return NextResponse.json({ result: weeklyJobData });
+    //
+    const foundJobElement = weeklyJobData.findLast(
+      ({ job }: { job: Record<string, number> }) =>
+        Object.values(job).reduce((sum, value) => sum + value, 0) > 0
+    );
+
+    let cumulativeRate = 0;
+    if (foundJobElement) {
+      const expertTotal = Object.values(
+        foundJobElement.job as Record<string, number>
+      ).reduce((sum, value) => sum + value, 0);
+      cumulativeRate = expertTotal / goalTotalScore;
+    }
+
+    return NextResponse.json({
+      result: { jobData: weeklyJobData, goalTotalScore, cumulativeRate },
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(
@@ -143,17 +157,3 @@ export async function GET(request: NextRequest) {
     prisma.$disconnect();
   }
 }
-
-const calculateTotalRatio = (
-  jobData: Record<string, number>,
-  cumulativeGoalScore: number
-) => {
-  const total = Object.values(jobData).reduce((sum, value) => sum + value, 0); // jobData의 모든 값 합산
-
-  // 비율 계산 (퍼센트로 변환)
-  const percentage = cumulativeGoalScore
-    ? (total / cumulativeGoalScore) * 100
-    : 0; // cumulativeGoalScore가 0일 경우 대비
-
-  return percentage;
-};

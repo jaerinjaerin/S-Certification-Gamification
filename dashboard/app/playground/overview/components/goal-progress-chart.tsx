@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -38,8 +39,6 @@ const GoalProgressChart: React.FC<{ campaignId: string }> = ({
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  // console.log("data:", data);
 
   return (
     <div>

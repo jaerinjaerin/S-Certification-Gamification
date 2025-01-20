@@ -18,7 +18,7 @@ type Props = {
 const InfoCardStyleContainer = ({ title, iconName, children }: Props) => {
   const Icon = icons[iconName];
   return (
-    <div className="border rounded-md p-4 flex-1 space-y-1">
+    <div className="relative border rounded-md p-4 flex-1">
       <div className="flex items-center justify-between text-zinc-900 font-bold">
         <div>{title}</div>
         <Icon className="size-4 text-zinc-500" />
