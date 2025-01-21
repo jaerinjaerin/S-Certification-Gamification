@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה הן התכונות העיקריות של אס 25? (יש לבחור שלוש אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "עוזר בינה חכם אמיתי",
+        "answerStatus": 1
+      },
+      {
+        "text": "הביצועים המתקדמים ביותר",
+        "answerStatus": 1
+      },
+      {
+        "text": "חווית מצלמה מושלמת",
+        "answerStatus": 1
+      },
+      {
+        "text": "שותף הבריאות שלך",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "באיזה צבע אפשר להשיג את אס 25 אולטרה? (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "כחול כסף טיטניום",
+        "answerStatus": 1
+      },
+      {
+        "text": "אפור טיטניום",
+        "answerStatus": 1
+      },
+      {
+        "text": "כסף לבן טיטניום",
+        "answerStatus": 1
+      },
+      {
+        "text": "שחור טיטניום",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "שמעתי שיש תכונה שמאפשרת למצוא מסעדה ולשלוח הודעה בו-זמנית. איך קוראים לה?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "סרגל מבזקים ותקציר",
+        "answerStatus": 0
+      },
+      {
+        "text": "ביצוע פעולות בתוך יישומים ע\"י פקודה קולית",
+        "answerStatus": 1
+      },
+      {
+        "text": "הקפה בעיגול לחיפוש",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "מה מהבאים היא תכונה עיקרית של הוואץ' החדש, שאותה צריך להדגיש ללקוחות המתעניינים ברכישת שעון ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "צליל נקי ועוצמתי",
+        "answerStatus": 0
+      },
+      {
+        "text": "כרטיס ציון האנרגיה שלכם ",
+        "answerStatus": 0
+      },
+      {
+        "text": "מצב מרוץ",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "מה הוא ההסבר הנכון לצילום הלילה בוידאו.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "אפשר לצלם סרטוני וידאו בהירים עוד יותר בלילה, עם פחות רעש.",
+        "answerStatus": 1
+      },
+      {
+        "text": "עכשיו אפשר לסנן צלילים לא רצויים ולשמור את אלה שרוצים.",
+        "answerStatus": 0
+      },
+      {
+        "text": "אפשר לבצע משימות באמצעות יישומים שונים בו-זמנית, על-ידי דיבור טבעי אל מכשירים מסדרת אס 25",
+        "answerStatus": 0
+      },
+      {
+        "text": "אפשר לצלם חופשי גוונים מדויקים ואת המרקם הטבעי של העור",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה מהבאים היא תכונה עיקרית של הוואץ' החדש, שאותה צריך להדגיש ללקוחות המתעניינים ברכישת שעון ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "צליל נקי ועוצמתי",
+        "answerStatus": 0
+      },
+      {
+        "text": "כרטיס ציון האנרגיה שלכם ",
+        "answerStatus": 0
+      },
+      {
+        "text": "מצב מרוץ",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה מהבאים היא תכונה עיקרית של באדס 3 ובאדס 3 פרו, שאותה צריך להדגיש ללקוחות",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ממשק/חוויית משתמש אינטואיטיביים",
+        "answerStatus": 0
+      },
+      {
+        "text": "מיטוב צליל\n(צליל ממוטב)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "מבצע בקנייה של כמה פריטים",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "מה התכונה שאינה נתמכת בפתקים של סמסונג?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "הוספת תרגום לקבצי PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "תמלול ותרגום",
+        "answerStatus": 0
+      },
+      {
+        "text": "תרגום חי בזמן הקלטה קולית",
+        "answerStatus": 1
+      },
+      {
+        "text": "סיכום ועיצוב אוטומטי",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "לאן צריך להתחבר כדי להשתמש בבבינה המלאכותית של גלקסי?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "צריך להיכנס לחשבון סמסונג שלך",
+        "answerStatus": 1
+      },
+      {
+        "text": "צריך לשלם סכום מסוים של דמי מינוי",
+        "answerStatus": 0
+      },
+      {
+        "text": "צריך להוריד יישום ייעודי של בינה חכמה לגלקסי",
+        "answerStatus": 0
+      },
+      {
+        "text": "כלום",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "למה כדאי לי לשדרג את הגלקסי שלך לממשק 7 החדש?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "לא הרבה השתנה בהשוואה לממשק 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "עם ממשק 7 החדש, תהיה לך חוויה עשירה יותר של טלפון עם בינה מלאכותית בהשוואה לתוכנות קודמות.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "אילו גורמים אפשר למחוק באמצעות 'מוחק שמע'? (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "מוזיקה",
+        "answerStatus": 0
+      },
+      {
+        "text": "רוח",
+        "answerStatus": 0
+      },
+      {
+        "text": "רעש",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה הן התכונות העיקריות בחוויה של אס 25? (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "מסייע צ'אט",
+        "answerStatus": 0
+      },
+      {
+        "text": "פעולה חוצת יישומים",
+        "answerStatus": 1
+      },
+      {
+        "text": "'דיוקן' ו'המסנן שלי'",
+        "answerStatus": 1
+      },
+      {
+        "text": "מוחק שמע",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה הם השיפורים העיקריים בסדרת אס 25? (יש לבחור שלוש אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "פעולה חוצת יישומים",
+        "answerStatus": 1
+      },
+      {
+        "text": "רב-שימושיות",
+        "answerStatus": 1
+      },
+      {
+        "text": "סוללה",
+        "answerStatus": 0
+      },
+      {
+        "text": "מעבד יישומים 3 ננומטר",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "כמה ננומטר יש למעבדים של המכשירים בסדרת אס 25",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "מעבד יישומים 6 ננומטר",
+        "answerStatus": 0
+      },
+      {
+        "text": "מעבד יישומים 5 ננומטר",
+        "answerStatus": 0
+      },
+      {
+        "text": "מעבד יישומים 4 ננומטר",
+        "answerStatus": 0
+      },
+      {
+        "text": "מעבד יישומים 3 ננומטר",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה הם השיפורים ב-25 אולטרה (יש לבחור שלוש אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "מצלמת 50 מגה פיקסל רחבה במיוחד",
+        "answerStatus": 1
+      },
+      {
+        "text": "משקל",
+        "answerStatus": 0
+      },
+      {
+        "text": "זכוכית הגנה משופרת‎ (למסך)",
+        "answerStatus": 1
+      },
+      {
+        "text": "מעבד",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה מהבאים אינה חוויית לקוח עיקרית של הוואץ' החדש ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "תכונות חיוניות משודרגות\n(ביצועים)",
+        "answerStatus": 0
+      },
+      {
+        "text": "שינה בעזרת בינה מלאכותית",
+        "answerStatus": 0
+      },
+      {
+        "text": "גודל המסך",
+        "answerStatus": 1
+      },
+      {
+        "text": "תוכנית תרגול בהתאמה אישית",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה מהבאים היא תכונה עיקרית שצריך להדגיש בעת ההדגמה של באדס 3  ובאדס 3 פרו ללקוחות הרוכשים אוזניות בפעם הראשונה",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "צליל נקי ועוצמתי",
+        "answerStatus": 0
+      },
+      {
+        "text": "ביטול רעשים פעיל אדפטיבי",
+        "answerStatus": 0
+      },
+      {
+        "text": "התאמה נוחה לאוזן",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "איזו תכונה חדשה בסדרת טאב אס 10 תומכת בתצוגה ברורה בכל תנאי התאורה?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "מניעת השתקפות",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+‎",
+        "answerStatus": 0
+      },
+      {
+        "text": "מסך גדול",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "האם יש תכונה שמאפשרת לשתף בקלות ובמהירות תמונות/סרטונים עם חברים?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "שיתוף מהיר",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "תרגום חי",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "האם צריך להישאר קרוב בזמן השימוש ב'שיתוף מהיר'?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "לא, התכונה תפעל דרך הענן",
+        "answerStatus": 1
+      },
+      {
+        "text": "כן, לצערי צריך להישאר עד הסוף",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "נא להמליץ על תכונות עיקריות שאוכל לחוות. (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "פעולה חוצת יישומים",
+        "answerStatus": 0
+      },
+      {
+        "text": "'דיוקן' ו'המסנן שלי'",
+        "answerStatus": 0
+      },
+      {
+        "text": "מוחק שמע",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה צריך לומר כדי לתת פקודה בתוך יישום במכשירים מסדרת אס 25? (לדוגמה)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "חפש מסעדה סינית קרובה, ושלח אותה לטוני",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "תן מידע על מזג האוויר היום",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "איך להחיל מסנן בעת צילום תמונה? (יש לבחור שתי אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "באמצעות מסנן מוגדר מראש ביישום המצלמה",
+        "answerStatus": 1
+      },
+      {
+        "text": "באמצעות 'מצב לילה' ביישום המצלמה",
+        "answerStatus": 0
+      },
+      {
+        "text": "באמצעות 'המסנן שלי' ביישום המצלמה",
+        "answerStatus": 1
+      },
+      {
+        "text": "באמצעות 'הילוך איטי' ביישום המצלמה",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "אני מאוד אוהב את העט של גלקסי איזה דגם מכשיר יתאים לי?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "איזה מידע/תובנות אפשר לקבל עם בבר היומי החדש? (יש לבחור שלוש אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ציון אנרגיה",
+        "answerStatus": 1
+      },
+      {
+        "text": "לוח זמנים",
+        "answerStatus": 1
+      },
+      {
+        "text": "שעון מעורר",
+        "answerStatus": 1
+      },
+      {
+        "text": "כתובת בבית",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "נא לבחור תכונה הקשורה לבריאות/לשינה בוואץ' החדש",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ציון אנרגיה",
+        "answerStatus": 0
+      },
+      {
+        "text": "אימון בהתאמה אישית",
+        "answerStatus": 0
+      },
+      {
+        "text": "מוטיבציה ושיפור עצמיים",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "מה היא התכונה הכי מתאימה של באדס 3 שבה אפשר להיעזר בפגישה עם מי שדובר שפה אחרת",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "מתורגמן",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "התאמה נוחה לאוזן",
+        "answerStatus": 0
+      },
+      {
+        "text": "צליל נקי ועוצמתי",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "מה חדש במקלדת החדשה של בסדרת טאב אס 10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "תאורת רקע ",
+        "answerStatus": 0
+      },
+      {
+        "text": "מקש AI ייעודי",
+        "answerStatus": 1
+      },
+      {
+        "text": "הפעלה מהירה של הפתקים",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "אילו קריטריונים קובעים ציון אנרגיה? (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "שינה",
+        "answerStatus": 0
+      },
+      {
+        "text": "פעילות",
+        "answerStatus": 0
+      },
+      {
+        "text": "דופק",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "מהו היתרון העיקרי של מסירת מכשיר ישן בטרייד-אין? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "אפשר לקבל תוכנית מימון חודשית",
+        "answerStatus": 0
+      },
+      {
+        "text": "אפשר להוזיל מיד את העלות לרכישת מכשיר חדש",
+        "answerStatus": 1
+      },
+      {
+        "text": "אפשר לקבל פי 2 יותר שטח אחסון באותו המחיר",
+        "answerStatus": 0
+      },
+      {
+        "text": "אם קונים אחד, אפשר לקבל אחד בחינם",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "יש לי אס 22 מה הם השיפורים העיקריים ב-אס 25 (יש לבחור שתי אפשרויות)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "מעבד יישומים 3 ננומטר",
+        "answerStatus": 1
+      },
+      {
+        "text": "איכות התמונה",
+        "answerStatus": 1
+      },
+      {
+        "text": "מספר המצלמות",
+        "answerStatus": 0
+      },
+      {
+        "text": "המידות",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "אפשר לספר לי על התכונות הבלעדיות ל-25 אולטרה (יש לבחור בכל האפשרויות הנכונות)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "עט מובנה",
+        "answerStatus": 0
+      },
+      {
+        "text": " זום עצום ומצלמה ברזולוציה של 200 מגה פיקסל",
+        "answerStatus": 0
+      },
+      {
+        "text": "מסך/סוללה מוגדלים",
+        "answerStatus": 0
+      },
+      {
+        "text": "כל התשובות נכונות",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "יש דרך לשתף את הקבצים שלי במכשירים שאינם מכשירי אנדרואיד?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "שיתוף מהיר",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "איזו תכונה מאפשרת להציג בהילוך איטי את הסרטון שהוקלט?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "צילום לילה של וידאו",
+        "answerStatus": 0
+      },
+      {
+        "text": "מוחק שמע",
+        "answerStatus": 0
+      },
+      {
+        "text": "הילוך איטי מיידי",
+        "answerStatus": 1
+      },
+      {
+        "text": "חיתוך אוטומטי",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "אני עושה הרבה שיחות ביום-יום, אבל הרבה פעמים אני שוכח על מה דיברנו. יש תכונה טובה שתוכל להמליץ עליה למצב כזה?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "מסייע התמלול",
+        "answerStatus": 1
+      },
+      {
+        "text": "תרגום חי",
+        "answerStatus": 0
+      },
+      {
+        "text": "תקציר מבזקים",
+        "answerStatus": 0
+      },
+      {
+        "text": "חיפוש רב-שימושי",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "אני הרבה פעמים מאבד או מפיל את הטלפון שלי. אני חושש לקנות משהו יקר, כי הוא יישבר.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "אני ממליץ על תוכנית הביטוח שלנו",
+        "answerStatus": 1
+      },
+      {
+        "text": "אני ממליץ עלארנק גוגל",
+        "answerStatus": 0
+      },
+      {
+        "text": "אני ממליץ על 'שיתוף מהיר'",
+        "answerStatus": 0
+      },
+      {
+        "text": "אני ממליץ על 'דגם זול יותר'",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "מה לא מכוסה במסגרת הביטוח שלנו",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "טלפון חכם",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "מחשב שולחני",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "מה עלי לעשות אם הטבעת נתקעה על האצבע שלי?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Immerse your finger in cold water to constrict blood vessels temporarily and shrink the finger. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce swelling by elevating your hand for more than 5 minutes.",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is Key CXP of Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Wear 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

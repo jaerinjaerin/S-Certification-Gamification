@@ -1,4 +1,3 @@
-import { extractCodesFromPath } from "@/utils/pathUtils";
 import { cn } from "@/utils/utils";
 import * as Sentry from "@sentry/nextjs";
 import { X } from "lucide-react";
@@ -16,19 +15,18 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import useLoader from "../ui/loader";
+import { Markdown } from "../markdown/markdown";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const [term, setTerm] = useState<any>();
+  const [privacy, setPrivacy] = useState<any>();
   const { loading, setLoading, renderLoader } = useLoader();
   const params = useParams();
   const quizPathParams = params.quizset_path;
-  const { domainCode } = extractCodesFromPath(String(quizPathParams));
-
-  const fetchTermAndCondition = async () => {
+  const fetchTerm = async () => {
     try {
       setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`;
-      // const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/OrgCode-7.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${quizPathParams}.json`;
       const res = await fetch(jsonUrl, {
         method: "GET",
         cache: "no-cache",
@@ -45,8 +43,29 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
     }
   };
 
+  const fetchPrivacy = async () => {
+    try {
+      setLoading(true);
+      const jsonUrl = `https://assets-stage.samsungplus.net/certification/s25/jsons/privacy/eu-privacy.json`;
+
+      const res = await fetch(jsonUrl, {
+        method: "GET",
+        cache: "no-cache",
+      });
+
+      const data = await res.json();
+      setPrivacy(data);
+    } catch (error) {
+      console.error(`Failed to fetch privacy data log: ${error}`);
+      Sentry.captureException(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchTermAndCondition();
+    fetchTerm();
+    fetchPrivacy();
   }, []);
 
   const translation = useTranslations();
@@ -54,39 +73,15 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
     <div className={cn("font-medium text-sm", className)}>
       <Dialog>
         <DialogTrigger>{translation("privacy")}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="!px-[10px] text-xs">
           <DialogHeader>
             <DialogTitle style={{ wordBreak: "break-word" }}>
               {translation("privacy")}
             </DialogTitle>
           </DialogHeader>
           <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
-            Information Collection: We collect only the necessary personal
-            information to provide our services. Purpose of Use: Your data is
-            used for service delivery, improvement, customer support, and
-            compliance with legal requirements. Retention Period: Information is
-            retained only for as long as required by applicable laws.
-            Third-Party Sharing: Your data will not be shared without your
-            consent. Security: We employ secure technologies and procedures to
-            protect your personal information. Contact: For privacy-related
-            inquiries, please contact us at [Contact Information]. Information
-            Collection: We collect only the necessary personal information to
-            provide our services. Purpose of Use: Your data is used for service
-            delivery, improvement, customer support, and compliance with legal
-            requirements. Retention Period: Information is retained only for as
-            long as required by applicable laws. Third-Party Sharing: Your data
-            will not be shared without your consent. Security: We employ secure
-            technologies and procedures to protect your personal information.
-            Contact: For privacy-related inquiries, please contact us at
-            [Contact Information]. Information Collection: We collect only the
-            necessary personal information to provide our services. Purpose of
-            Use: Your data is used for service delivery, improvement, customer
-            support, and compliance with legal requirements. Retention Period:
-            Information is retained only for as long as required by applicable
-            laws. Third-Party Sharing: Your data will not be shared without your
-            consent. Security: We employ secure technologies and procedures to
-            protect your personal information. Contact: For privacy-related
-            inquiries, please contact us at [Contact Information].
+            {loading && renderLoader()}
+            {privacy && <Markdown>{privacy.contents as string}</Markdown>}
           </div>
           <DialogFooter>
             <DialogClose asChild>

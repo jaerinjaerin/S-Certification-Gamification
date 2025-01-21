@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 smartfoni qanday asosiy jihatlarga ega? (uchtasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Haqiqiy AI hamroh",
+        "answerStatus": 1
+      },
+      {
+        "text": "Eng takomillashgan ilg‘or samaradorlik",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tengsiz kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sizning sog‘liq uchun hamrohingiz",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra qaysi ranglarda mavjud? (hammasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Eshitishimcha, restoranni qidirish va xabarni bir zumda yuborish funksiyasi bor ekan. U qanday nomlanadi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Eni panel va qisqa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ilovalararo amal",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Yordamida portret suratga olganda qanday asosiy afzalliklar mavjud?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kamroq shovqin bilan yanada yorqinroq tasvirga olishingiz mumkin.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Endi keraksiz tovushlarni filtrlashingiz hamda istasangiz, ayrimlarini qoldirishingiz mumkin.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 seriyasiga shuchaki gapirish orqali bir zumda bir nechta ilovadan foydalanib vazifalarni bajarishingiz mumkin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tabiiy teri teksturasini bemalol rasmga olishingiz mumkin",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tungi video olgandagi natijani izohlay olasizmi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kamroq shovqin bilan yanada yorqinroq tasvirga olishingiz mumkin.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Endi keraksiz tovushlarni filtrlashingiz hamda istasangiz, ayrimlarini qoldirishingiz mumkin.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 seriyasiga shuchaki gapirish orqali bir zumda bir nechta ilovadan foydalanib vazifalarni bajarishingiz mumkin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aniq rang va tabiiy teri teksturasini bemalol rasmga olishingiz mumkin",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidagilardan qaysi biri hayot tarzida foydalanish holatini tanishtirishda ulanganlik tajribasi sifatida eslanuvchi Yangi Soatning asosiy funksiyasi hisoblanadi? (barcha mos javoblarni tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Juda tiniq tovush",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quvvat koʻrsatkichlari",
+        "answerStatus": 0
+      },
+      {
+        "text": "Poyga",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidagilardan qaysi biri hayot tarzida foydalanish holatini tanishtirishda ulanganlik tajribasi sifatida eslanuvchi Buds3 Pro va Buds3 asosiy funksiyasi hisoblanadi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tushunarli UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tovush optimizatsiyasi\n(Optimallashgan tovush)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Koʻp xaridli taklif",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Qaysi funksiya Samsung Notes ilovasida dastaklanmaydi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Umumiy PDF tarjimasi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkripsiya va tarjima",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ovoz yozish paytida real vaqtdagi tarjimalar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Umumlashtirish va avtoformatlash",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI ishlatish uchun nimani tayyorlab qoʻyishim kerak?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Samsung hisob qaydnomangizga kirgan boʻlishingiz kerak",
+        "answerStatus": 1
+      },
+      {
+        "text": "Muayyan summadagi obuna toʻlovini toʻlashingiz kerak",
+        "answerStatus": 0
+      },
+      {
+        "text": "Maxsus Galaxy AI ilovasini yuklab olishingiz kerak",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hech narsa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy qurilmamni One UI 7.0 versiyaga yangilash uchun nima qilish kerak?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1 bilan solishtirganda koʻp narsa oʻzgarmagan",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0 bilan avvalgi dasturiy taʼminotga qaraganda yanada bot AI telefon tajribasiga ega boʻlasiz",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Audio Eraser funksiyasi yordamida qaysi omillarni oʻchirishim mumkin? (hammasini tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musiqa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Shamol",
+        "answerStatus": 0
+      },
+      {
+        "text": "Shovqin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 boʻyicha tajriba qilinadigan qanday asosiy jihatlar mavjud? (hammasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat yordami",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ilovalararo amal",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portret va Mening filtrim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 qanday asosiy takomillashuvlarga ega? (uchtasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ilovalararo amal",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodallik",
+        "answerStatus": 1
+      },
+      {
+        "text": "Batareya",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 seriyasi qaysi AP bilan jihozlangan",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra qanday takomillashuvlarga ega? (Uchtasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra keng linzali 50 MP kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ogʻirligi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (old displey uchun)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Protsessor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidaggilardan qaysi biri Yangi Soatning asosiy CXP koʻrsatkichlari EMAS? (bittasini tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Keyingi daraja Muhimlilik\n(unumdorlik)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-asosidagi uyqu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Displey hajmi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Muvofiqlashtirilgan mashgʻulot tajribasi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidagilardan qaysi biri (1-marta) quloqlik olayotgan yangi mijozlarga Buds3 Pro va Buds3 quloqliklarini tanishtirishda eslanadigan asosiy funksiyalari hisoblanadi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Juda tiniq tovush",
+        "answerStatus": 0
+      },
+      {
+        "text": "Moslashuvchan ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qulay joylashuv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 qurilmasida ochiq havoda jonli tomosha uchun qanday yangi funksiya mavjud?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nur qaytishi",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Katta displey",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Doʻstlarimga suratlar/videolarni oson va tezkor ulashish uchun biror funksiya bormi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tezkor ulashish",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Jonli tarjima",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tezkor ulashish ishlatayotganda yonma-yon turishim kerakmi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muammosiz, u bulut orqali ishlaydi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ha, afsuski oxirigacha turishingiz kerak",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Menga tajribadan oʻtkazish uchun asosiy jihatlarni tavsiya qila olasizmi? (hammasini tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ilovalararo amal",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portret va Mening filtrim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 seriyasida Ilovalararo amalni sinab koʻrishda nima deyishim kerak? (namuna sifatida)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yaqindagi xitoy restoranini qidir va uni Tonyga yubor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Menga bugungi ob-havo maʼlumotini yubor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Suratga olayotganda qaysi filtrni tatbiq qilishim mumkin? (ikkita tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "kamera ilovasining dastlabki sozlangan filtri yordamida",
+        "answerStatus": 1
+      },
+      {
+        "text": "kamera ilovasining Tungi rejimi yordamida",
+        "answerStatus": 0
+      },
+      {
+        "text": "galereyadagi suratning Mening filtrim funksiyasi yordamida",
+        "answerStatus": 1
+      },
+      {
+        "text": "kamera ilovasining Sekin harakat yordamida",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Menga S pen qurilmasi juda yoqadi. Men uchun biror tavsiya bormi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Endi qisqa yordamida qaysi turdagi axborot/statistikalarni olish mumkin? (uchtasini tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Quvvat koʻrsatkichlari",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jadval",
+        "answerStatus": 1
+      },
+      {
+        "text": "Budilnik",
+        "answerStatus": 1
+      },
+      {
+        "text": "uy manzili",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Yangi Soatda Salomatlik/Uyquga tegishli funksiya tanlang (barcha mos javoblarni tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quvvat koʻrsatkichlari",
+        "answerStatus": 0
+      },
+      {
+        "text": "Muvofiqlashtirilgan murabbiylik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Oʻzini ragʻbatlantirish va takomillashuv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Buds3 quloqligining boshqa tilda gapiruvchi chet ellik bilan majlisda foydalanish mumkin boʻlgan foydali funksiyasini tanlang.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tarjimon",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qulay joylashuv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Juda tiniq tovush",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 uchun yangi Kitob muqovasi koʻrinishidagi klaviatura haqida qanday yangilik mavjud?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Fon chirogʻi ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Maxsus AI tugmasi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note start tugmasi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google yordami",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Quvvat koʻrsatkichlari uchun mezonlar qaysilar? (hammasini tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Uyqu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Faollik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yurak urishi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Treyd-in variantining asosiy afzalligi nimada? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Oylik moliyaviy reja asosida olishingiz mumkin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yangi smartfon sotib olish uchun yukni/narxni darhol tushirishingiz mumkin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ayni narx evaziga 2X kattaroq xotiraga ega boʻlishingiz mumkin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bittasini sotib olsangiz, bittasi bepul beriladi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Men S22 foydalanuvchisiman. Galaxy S25 qanday asosiy takomillashuvlarga ega? (ikkita tanlang)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Rasm sifati",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kameralar soni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Oʻlcham",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra smartfonining ekskluziv jihatlarini ayta olasizmi? (hammasini tanlang)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Oʻrnatilgan S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x kattalashtirish va 200 MP kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kattaroq ekran / Batareya",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Android boʻlmagan qurilmalarga fayllarimni ulashishning biror usuli bormi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tezkor ulashish",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Yozib olingan videoni sekinlashtirilgan harakatda koʻrsatish funksiyasi qaysi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tungi video",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tezkor sekinlashtirilgan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Avtomatik kesish",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kundalik hayotda juda koʻp chaqiruvlarni amalga oshiraman, lekin koʻpincha nima haqida gaplashganimni unutib qoʻyaman. Bu vaziyat uchun tavsiya qila oladigan biror yaxshi funksiya bormi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transkript yordami",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jonli tarjima",
+        "answerStatus": 0
+      },
+      {
+        "text": "Endi qisqa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodal qidiruv",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Telefonim koʻpincha yoʻqolib qoladi yoki tushib ketadi. U sinib qolsa, qimmat narsa sotib olish meni tashvishga soladi.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sizga “Samsung Care+” tavsiya qilinadi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sizga “Samsung Wallet” tavsiya qilinadi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sizga “Tezkor ulashish” tavsiya qilinadi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sizga “Arzonroq model” tavsiya qilinadi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+ nimalarni qoplab BERMAYDI",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartfon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Soat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kompyuter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Planshet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Agar Uzuk barmogʻimga tiqilib qolsa, nima qilishim kerak?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Barmoqni qirib yuborishni kamaytirish uchun qoʻl kremi, tozalash moyi yoki sovun kabi moylash vositasini surting, bu uni olib tashlashni osonlashtiradi.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qon tomirlarini vaqtinchalik toraytirish va barmoqni kichraytirish uchun barmogʻingizni sovuq suvga soling. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qoʻlingizni 5 daqiqadan koʻproq koʻtarib, uning shishishini kamaytiring.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidagi boʻsh joyga eng mos javob qanday?\nGalaxy Ring yangi taqiluvchi qurilma. Ayniqsa, AI-asosidagi salomatlikni kuzatish va ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quvvat koʻrsatkichlari",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster-karta",
+        "answerStatus": 0
+      },
+      {
+        "text": "Uyqu murabbiyi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ikki marta juftlash",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Quyidaggilardan qaysi biri Galaxy Ring asosiy CXP xususiyatlari?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muvofiqlashtirilgan murabbiylik",
+        "answerStatus": 0
+      },
+      {
+        "text": "24/7 qulay taqib yurish",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ikki marta juftlash  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuqoridagilarning barchasi",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

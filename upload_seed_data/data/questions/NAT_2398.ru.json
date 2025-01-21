@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Каковы основные особенности Galaxy S25? (выберите три варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Полноценные функции AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Высочайшая производительность",
+        "answerStatus": 1
+      },
+      {
+        "text": "Идеальная камера",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ваш компаньон в здоровом образе жизни",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "В каком из перечисленных цветов доступен Galaxy S25 Ultra? (выберите все)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Синий титан",
+        "answerStatus": 1
+      },
+      {
+        "text": "Серый титан",
+        "answerStatus": 1
+      },
+      {
+        "text": "Серебряный титан",
+        "answerStatus": 1
+      },
+      {
+        "text": "Черный титан",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Какая возможность позволяет одновременно искать ресторан и отправлять сообщения?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Статус-виджет и Мой день",
+        "answerStatus": 0
+      },
+      {
+        "text": "Кросс-ап взаимодействие",
+        "answerStatus": 1
+      },
+      {
+        "text": "Обвести и найти",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Каковы основные преимущества портретной съемки?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Можно записывать еще более яркие ночные видеоролики с низким уровнем шума.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Теперь можно отфильтровать лишние звуки и оставить только нужные.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можно выполнять задачи в нескольких приложениях одновременно",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можно легко запечатлеть естественную текстуру кожи",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Не могли бы вы рассказать о результате съемки ночного видео?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Можно записывать еще более яркие ночные видеоролики с низким уровнем шума.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Теперь можно отфильтровать лишние звуки и оставить только нужные.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можно выполнять задачи в нескольких приложениях одновременно",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можно легко запечатлеть точный тон и естественную текстуру кожи",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Что из перечисленного является основной особенностью нового устройства Galaxy Watch, о которой следует рассказывать в примерах возможностей подключения? (выберите все правильные ответы)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Высококачественный звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Оценка жизненных сил",
+        "answerStatus": 0
+      },
+      {
+        "text": "Гонка",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все вышеперечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Что из перечисленного является основной особенностью Buds3 Pro и Buds3, о которой следует рассказывать в примерах возможностей подключения?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Интуитивный пользовательский интерфейс/взаимодействие",
+        "answerStatus": 0
+      },
+      {
+        "text": "Оптимизация звука\n(Оптимизированный звук)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Покупка нескольких устройств",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Какая функция не поддерживается в Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Наложение перевода в PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "Расшифровка аудио и перевод",
+        "answerStatus": 0
+      },
+      {
+        "text": "Перевод в реальном времени во время записи голоса",
+        "answerStatus": 1
+      },
+      {
+        "text": "Конспект и автоформат",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Что нужно сделать перед использованием Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Нужно выполнить вход в учетную запись Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Нужно оплатить абонентскую плату",
+        "answerStatus": 0
+      },
+      {
+        "text": "Нужно загрузить специальное приложение Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ничего не нужно делать",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Зачем Galaxy нужно обновлять до One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "По сравнению с One UI 6.1.1 ничего не изменилось",
+        "answerStatus": 0
+      },
+      {
+        "text": "С One UI 7.0 вы получите более богатый опыт использования AI - смартфона по сравнению с предыдущим ПО",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Какие звуки можно удалить с помощью функции Удаление шумов? (выберите все)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Музыка",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ветер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Шум",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все перечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Каковы основные функциональные особенности Galaxy S25? (выберите все)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Чат-ассистент",
+        "answerStatus": 0
+      },
+      {
+        "text": "Кросс-ап взаимодействие",
+        "answerStatus": 1
+      },
+      {
+        "text": "Портрет и Мой фильтр",
+        "answerStatus": 1
+      },
+      {
+        "text": "Удаление шумов",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Каковы ключевые улучшения Galaxy S25? (выберите три варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Кросс-ап взаимодействие",
+        "answerStatus": 1
+      },
+      {
+        "text": "Мультимодальность",
+        "answerStatus": 1
+      },
+      {
+        "text": "Аккумулятор",
+        "answerStatus": 0
+      },
+      {
+        "text": "3-нм процессор",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Какой процессор установлен в смартфонах серии Galaxy S25?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6-нм процессор",
+        "answerStatus": 0
+      },
+      {
+        "text": "5-нм процессор",
+        "answerStatus": 0
+      },
+      {
+        "text": "4-нм процессор",
+        "answerStatus": 0
+      },
+      {
+        "text": "3-нм процессор",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Каковы улучшения Galaxy S25 Ultra? (Выберите три варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ультраширокоугольная камера 50 Мп",
+        "answerStatus": 1
+      },
+      {
+        "text": "Вес",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (для переднего дисплея)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Процессор",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Что из перечисленного НЕ является ключевой особенностью новых часов Galaxy Watch? (Выберите один)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Новый уровень\n(производительности)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Отслеживание сна на основе ИИ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Размер экрана",
+        "answerStatus": 1
+      },
+      {
+        "text": "Персонализированные упражнения",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Что из перечисленного является основной особенностью, о которой следует рассказывать при представлении Buds3 Pro и Buds3 покупателям, которые раньше никогда не покупали эти наушники (первая покупка)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Высококачественный звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Адаптивное активное шумоподавление",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удобство при ношении",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все вышеперечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Какая новая особенность Tab S10 обеспечивает лучший обзор на улице?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Антиблик",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Большой экран",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Какая функция позволяет легко и быстро делиться фотографиями / видео с друзьями?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Быстрая отправка",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Синхронный перевод",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Нужно ли находиться рядом с другом во время использования функции «Быстрая отправка»?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Не стоит беспокоиться, все работает через облако",
+        "answerStatus": 1
+      },
+      {
+        "text": "Да, к сожалению, вы должны находиться рядом",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Порекомендуйте, пожалуйста, ключевые функции, с которыми я должен ознакомиться? (выберите все)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Кросс-ап взаимодействие",
+        "answerStatus": 0
+      },
+      {
+        "text": "Портрет и Мой фильтр",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удаление шумов",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все перечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Как продемонстрировать Кросс-ап взаимодействие на Galaxy S25? (примеры)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Найди китайский ресторан поблизости и отправь его Тони",
+        "answerStatus": 1
+      },
+      {
+        "text": "Привет, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Расскажи о погоде на сегодня",
+        "answerStatus": 0
+      },
+      {
+        "text": "Привет, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Как применить фильтр при съемке фото? (выберите два варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "С помощью встроенного фильтра в приложении камеры",
+        "answerStatus": 1
+      },
+      {
+        "text": "С помощью ночного режима в приложении камеры",
+        "answerStatus": 0
+      },
+      {
+        "text": "С помощью функции «Мой фильтр» на фото в Галерее",
+        "answerStatus": 1
+      },
+      {
+        "text": "С помощью режима замедленной съемки в приложении камеры",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Мне очень нравится пользоваться S Pen. Что вы порекомендуете мне?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Какую информацию/сведения я могу получить с помощью функции «Статус-виджет»? (выберите три варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Оценка жизненных сил",
+        "answerStatus": 1
+      },
+      {
+        "text": "Расписание",
+        "answerStatus": 1
+      },
+      {
+        "text": "Будильник",
+        "answerStatus": 1
+      },
+      {
+        "text": "Домашний адрес",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Выберите функцию, относящуюся к здоровью/сну в новых часах Galaxy Watch (выберите все правильные ответы)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Оценка жизненных сил",
+        "answerStatus": 0
+      },
+      {
+        "text": "Персонализированный тренер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Самомотивация и улучшение",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все вышеперечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Выберите наиболее подходящую особенность Buds3, которую можно использовать при встрече с иностранцем, который говорит на другом языке.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Переводчик",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удобство при ношении",
+        "answerStatus": 0
+      },
+      {
+        "text": "Высококачественный звук",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "В чем заключается новая особенность клавиатуры типа «чехол-книжка» для Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Подсветка ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Специальная клавиша AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Кнопка запуска Samsung Notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Ассистент",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Каковы критерии для работы функции Оценка жизненных сил? (выберите все)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Сон",
+        "answerStatus": 0
+      },
+      {
+        "text": "Активность",
+        "answerStatus": 0
+      },
+      {
+        "text": "Пульс",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все перечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "В чем заключается основное преимущество Trade-in? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Вы можете воспользоваться ежемесячной рассрочкой",
+        "answerStatus": 0
+      },
+      {
+        "text": "Вы можете мгновенно получить снижение затрат/стоимости при покупке новейшего телефона",
+        "answerStatus": 1
+      },
+      {
+        "text": "Вы можете получить в 2 раза больше встроенной памяти по той же цене",
+        "answerStatus": 0
+      },
+      {
+        "text": "Вы покупаете один товар и получаете второй бесплатно",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Я — пользователь S22. Каковы ключевые улучшения Galaxy S25? (выберите два варианта)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3-нм процессор",
+        "answerStatus": 1
+      },
+      {
+        "text": "Качество изображения",
+        "answerStatus": 1
+      },
+      {
+        "text": "Число камер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Размеры",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Не могли бы вы рассказать мне об эксклюзивных возможностях Galaxy S25 Ultra? (выберите все)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Встроенное перо S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Камера с 100x зумом и разрешением 200 Мп",
+        "answerStatus": 0
+      },
+      {
+        "text": "Большой экран / емкий аккумулятор",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все перечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Какие есть способы поделиться своими файлами с устройствами не на базе Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Быстрая отправка",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Как называется функция для просмотра записанного видео в замедленном режиме?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ночное видео",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удаление шумов",
+        "answerStatus": 0
+      },
+      {
+        "text": "Мгновенная замедленная съемка",
+        "answerStatus": 1
+      },
+      {
+        "text": "Быстрый монтаж",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "В своей повседневной жизни я делаю много звонков, но часто забываю, о чем мы говорили. Можете ли вы порекомендовать какую-нибудь подходящую функцию для этой ситуации?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Запись и транскрибирование",
+        "answerStatus": 1
+      },
+      {
+        "text": "Синхронный перевод",
+        "answerStatus": 0
+      },
+      {
+        "text": "Актуальная информация",
+        "answerStatus": 0
+      },
+      {
+        "text": "Мультимодальный поиск",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Я часто роняю свой телефон. Поэтому я боюсь покупать дорогое устройство.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Порекомендуйте Samsung Care+",
+        "answerStatus": 1
+      },
+      {
+        "text": "Порекомендуйте Samsung Wallet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Порекомендуйте Быструю отправку",
+        "answerStatus": 0
+      },
+      {
+        "text": "Порекомендуйте более бюджетную модель",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "На какие устройства НЕ распространяется действие Samsung Care+?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Смартфоны",
+        "answerStatus": 0
+      },
+      {
+        "text": "Часы",
+        "answerStatus": 0
+      },
+      {
+        "text": "Настольный компьютер",
+        "answerStatus": 1
+      },
+      {
+        "text": "Планшет",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Если кольцо не снимается с пальца, что мне делать?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Нанесите средство для смазки, например, крем для рук, очищающее масло или мыло, чтобы уменьшить трение и облегчить снятие.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Погрузите палец в холодную воду, чтобы временно сузить кровеносные сосуды и уменьшить объем пальца. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Чтобы уменьшить отек, приподнимите руку более чем на 5 минут.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все вышеперечисленное",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Какой вариант ответа лучше всего подходит в следующем предложении?\nGalaxy Ring — это новое носимое устройство. В частности, он обладает возможностями отслеживания состояния здоровья на основе ИИ, а также поддерживает следующую функцию: ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Оценка жизненных сил",
+        "answerStatus": 0
+      },
+      {
+        "text": "Карточка Booster",
+        "answerStatus": 0
+      },
+      {
+        "text": "Улучшение сна",
+        "answerStatus": 1
+      },
+      {
+        "text": "Двойное сжатие",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Что из перечисленного является ключевой особенностью Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Персонализированный тренер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Комфортное ношение 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Двойное сжатие  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Все вышеперечисленное",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

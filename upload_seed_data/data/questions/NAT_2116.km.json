@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើអ្វីខ្លះជាមុខងារសំខាន់ៗរបស់ Galaxy S25? (ជ្រើសរើសបី)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ដៃគូ AI ពិតប្រាកដ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ប្រតិបត្តិការទំនើបបំផុត",
+        "answerStatus": 1
+      },
+      {
+        "text": "បទពិសោធប្រើប្រាស់កាមេរ៉ាដ៏ល្អឥតខ្ចោះ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ដៃគូសុខភាពរបស់អ្នក",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើ Galaxy S25 Ultra មានពណ៌អ្វី? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ខៀវលាយប្រាក់ទីតានីញ៉ូម",
+        "answerStatus": 1
+      },
+      {
+        "text": "ប្រផេះទីតានីញ៉ូម",
+        "answerStatus": 1
+      },
+      {
+        "text": "ប្រាក់លាយសទីតានីញ៉ូម",
+        "answerStatus": 1
+      },
+      {
+        "text": "ខ្មៅទីតានីញ៉ូម",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ខ្ញុំឮថា មានមុខងារសម្រាប់ស្វែងរកភោជនីយដ្ឋាន និងផ្ញើសារក្នុងពេលតែមួយបាន។ តើមុខងារនោះឈ្មោះអ្វី?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "សកម្មភាពឆ្លងកម្មវិធី",
+        "answerStatus": 1
+      },
+      {
+        "text": "គូររង្វង់ដើម្បីស្វែងរក",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើមានអត្ថប្រយោជន៍សំខាន់ៗអ្វីខ្លះ នៅពេលថតរូបព្រាលផ្ទៃខាងក្រោយ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "អ្នកអាចថតទាំងវីដេអូពេលយប់ដែលភ្លឺជាងមុន និង គ្រាប់ Noise រំខានតិចជាងមុនទៀតផង។",
+        "answerStatus": 0
+      },
+      {
+        "text": "ឥឡូវនេះ អ្នកអាចច្រោះចេញនូវសំឡេងដែលមិនចង់បាន និងរក្សាសំឡេងដែលអ្នកចង់បាន។",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកអាចបំពេញកិច្ចការដោយប្រើកម្មវិធីច្រើនក្នុងពេលតែមួយដោយនិយាយតាមលក្ខណៈធម្មជាតិដាក់ស៊េរី Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកអាចថតសណ្ឋានស្បែកធម្មជាតិបានដោយសេរី",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើអ្នកអាចពន្យល់បានទេអំពីលទ្ធផល នៅពេលថតវីដេអូពេលយប់?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "អ្នកអាចថតទាំងវីដេអូពេលយប់ដែលភ្លឺជាងមុន និងគ្រាប់ Noise​ រំខានតិចជាងមុនទៀតផង។",
+        "answerStatus": 1
+      },
+      {
+        "text": "ឥឡូវនេះ អ្នកអាចត្រងចេញនូវសំឡេងដែលមិនចង់បាន និងរក្សាសំឡេងដែលអ្នកចង់បាន។",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកអាចបំពេញកិច្ចការដោយប្រើកម្មវិធីច្រើនក្នុងពេលតែមួយដោយនិយាយតាមលក្ខណៈតុងធម្មជាតិដាក់ស៊េរី Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកអាចថតពណ៌ និងសណ្ឋានស្បែកធម្មជាតិដោយសេរីបានត្រឹមត្រូវ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចខាងក្រោមមួយណាគឺជាមុខងារសំខាន់របស់ Watch ថ្មីដែលត្រូវបានរំលេចជាបទពិសោធប្រើប្រាស់ដែលបានភ្ជាប់ នៅពេលផ្ដល់ការបង្ហាញអំពីករណីប្រើប្រាស់ក្នុងបែបផែនជីវិត? (ជ្រើសរើសចម្លើយត្រឹមត្រូវទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "សំឡេងច្បាស់ល្អ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ពិន្ទុថាមពល",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការប្រកួតប្រជែង",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចខាងក្រោមមួយណាគឺជាមុខងារសំខាន់របស់ Buds3 Pro និង Buds3 ដែលត្រូវបានរំលេចជាបទពិសោធប្រើប្រាស់ដែលបានភ្ជាប់ នៅពេលផ្ដល់ការបង្ហាញអំពីករណីប្រើប្រាស់ក្នុងបែបផែនជីវិត?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX ដូចចិត្ត",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការបង្កើនប្រសិទ្ធភាពសំឡេង\n(សំឡេងដែលបានបង្កើនប្រសិទ្ធភាព)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការផ្ដល់ជូនសម្រាប់ការទិញច្រើន",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើមុខងារអ្វីដែលមិនអាចប្រើបាននៅក្នុង Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ត្រួតពីលើការបកប្រែ PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "ធ្វើប្រតិចារឹក និងបកប្រែ",
+        "answerStatus": 0
+      },
+      {
+        "text": "បកប្រែក្នុងពេលខលជាក់ស្ដែង នៅពេលកំពុងថតសំឡេង",
+        "answerStatus": 1
+      },
+      {
+        "text": "សង្ខេប និងកំណត់ទម្រង់ដោយស្វ័យប្រវត្តិ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើខ្ញុំគួរត្រៀមអ្វីខ្លះ ដើម្បីប្រើ Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "អ្នកត្រូវចូលគណនី Samsung របស់អ្នក",
+        "answerStatus": 1
+      },
+      {
+        "text": "អ្នកត្រូវបង់ថ្លៃជាវក្នុងចំនួនទឹកប្រាក់ជាក់លាក់",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកត្រូវទាញយកកម្មវិធី Galaxy AI ដាច់ដោយឡែក",
+        "answerStatus": 0
+      },
+      {
+        "text": "គ្មានអ្វីទេ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ហេតុអ្វីខ្ញុំគួរអាប់គ្រេត Galaxy របស់ខ្ញុំទៅ One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "គ្មានអ្វីផ្លាស់ប្ដូរច្រើនទេ បើធៀបនឹង One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "ដោយមាន One UI 7.0 អ្នកនឹងមានបទពិសោធជាមួយទូរសព្ទ AI កាន់តែសម្បូរបែប ធៀបនឹងកម្មវិធីមុនៗ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើកត្តាអ្វីខ្លះដែលខ្ញុំអាចលុបដោយប្រើមុខងារលុបសំឡេងបាន? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "តន្រ្តី",
+        "answerStatus": 0
+      },
+      {
+        "text": "ខ្យល់",
+        "answerStatus": 0
+      },
+      {
+        "text": "សំឡេងរំខាន",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើមុខងារចម្បងអ្វីខ្លះដែលគួរសាកប្រើសម្រាប់ Galaxy S25? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ជំនួយការជជែក \"Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "សកម្មភាពឆ្លងកម្មវិធី \"Cross App\"",
+        "answerStatus": 1
+      },
+      {
+        "text": "រូបព្រាលផ្ទៃខាងក្រោយ និង​ ដាក់ Filter ផ្ទាល់ខ្លួន",
+        "answerStatus": 1
+      },
+      {
+        "text": "មុខងារលុបសំឡេង",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើ Galaxy S25 មានចំណុចកែលម្អសំខាន់ៗអ្វីខ្លះ? (ជ្រើសរើសបី)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "សកម្មភាពឆ្លងកម្មវិធី",
+        "answerStatus": 1
+      },
+      {
+        "text": "ពហុមុខងារ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ថ្ម",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើស៊េរី Galaxy S25 បំពាក់ជាមួយ AP ទំហំប៉ុន្មាន?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើអ្វីខ្លះជាចំណុចកែលម្អរបស់ Galaxy S25 Ultra? (ជ្រើសរើសបី)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "កាមេរ៉ាមានទិដ្ឋភាពធំបំផុត 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "ទម្ងន់",
+        "answerStatus": 0
+      },
+      {
+        "text": "កញ្ចក់ Corning Gorilla Armor2 (សម្រាប់អេក្រង់ខាងមុខ)",
+        "answerStatus": 1
+      },
+      {
+        "text": "អង្គដំណើរការ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចខាងក្រោមមួយណាមិនមែនជា CXP សំខាន់របស់ Watch ថ្មី? (ជ្រើសរើសមួយ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ចាំបាច់នៅកម្រិតបន្ទាប់\n(ប្រតិបត្តិការ)",
+        "answerStatus": 0
+      },
+      {
+        "text": "មុខងារគេងដែលដំណើរការដោយ AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "ទំហំអេក្រង់",
+        "answerStatus": 1
+      },
+      {
+        "text": "បទពិសោធអនុវត្តដែលមានលក្ខណៈផ្ទាល់ខ្លួន",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចខាងក្រោមមួយណាគឺជាមុខងារសំខាន់ ដែលគួរតែត្រូវបានរំលេច នៅពេលណែនាំ Buds3 Pro និង Buds3 ដល់អតិថិជនដែលមិនធ្លាប់ប្រើកាស (អ្នកទិញលើកទី 1)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "សំឡេងច្បាស់ល្អ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC បត់បែន",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការពាក់ស៊ប់ស្រួល",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើអ្វីជាមុខងារថ្មីនៅលើ Tab S10 ដែលអាចជួយឱ្យខាងក្រៅបានច្បាស់?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការទប់ស្កាត់ចំណាំងផ្លាត",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "អេក្រង់ធំ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើមានមុខងារសម្រាប់ចែករំលែករូបថត/វីដេអូយ៉ាងងាយស្រួល និងរហ័សជាមួយមិត្តភក្តិដែរទេ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "វត្ថុឆ្លាតវៃ",
+        "answerStatus": 0
+      },
+      {
+        "text": "មុខងារចែករំលែករហ័ស",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "មុខងារបកប្រែបន្តផ្ទាល់",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើខ្ញុំត្រូវនៅជិតវា ខណៈពេលប្រើ “មុខងារចែករំលែករហ័ស” ដែរទេ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "គ្មានបញ្ហាទេ វានឹងដំណើរការតាមរយៈក្លោដ",
+        "answerStatus": 1
+      },
+      {
+        "text": "បាទ/ចាស គួរឱ្យសោកស្ដាយ អ្នកត្រូវនៅរហូតដល់ចប់",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើអ្នកអាចណែនាំមុខងារសំខាន់ៗឱ្យខ្ញុំទទួលបទពិសោធបានទេ? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "សកម្មភាពឆ្លងកម្មវិធី",
+        "answerStatus": 0
+      },
+      {
+        "text": "រូបព្រាលផ្ទៃខាងក្រោយ និងដាក់ Filter ផ្ទាល់ខ្លួន",
+        "answerStatus": 0
+      },
+      {
+        "text": "មុខងារលុបសំឡេង",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើខ្ញុំគួរនិយាយដូចម្ដេចសម្រាប់សកម្មភាពទទួលបទពិសោធប្រើប្រាស់ឆ្លងកម្មវិធីក្នុងស៊េរី Galaxy S25? (ជាឧទាហរណ៍)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ស្វែងរកភោជនីយដ្ឋានចិនដែលនៅជិត និងផ្ញើទៅឱ្យ Tony",
+        "answerStatus": 1
+      },
+      {
+        "text": "សួស្ដី Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "ផ្ដល់ព័ត៌មានអាកាសធាតុថ្ងៃនេះដល់ខ្ញុំ",
+        "answerStatus": 0
+      },
+      {
+        "text": "សួស្ដី Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើធ្វើដូចម្ដេចខ្ញុំអាចប្រើតម្រងបាន នៅពេលថតរូប? (ជ្រើសរើសពីរ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ដោយប្រើតម្រងកំណត់ជាមុនរបស់កម្មវិធីកាមេរ៉ា",
+        "answerStatus": 1
+      },
+      {
+        "text": "ដោយប្រើមុខងារពេលយប់របស់កម្មវិធីកាមេរ៉ា",
+        "answerStatus": 0
+      },
+      {
+        "text": "ដោយប្រើមុខងារតម្រងរបស់ខ្ញុំសម្រាប់រូបថតក្នុងសាលរូបភាព",
+        "answerStatus": 1
+      },
+      {
+        "text": "ដោយប្រើមុខងារចលនាយឺតរបស់កម្មវិធីកាមេរ៉ា",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ខ្ញុំជាអ្នកគាំទ្រដ៏ធំលើ S Pen។ តើអ្នកមានការណែនាំសម្រាប់ខ្ញុំដែរទេ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើព័ត៌មាន/ស្ថិតិអ្វីខ្លះដែលខ្ញុំអាចទទួលបានដោយប្រើមុខងារ Now Brief? (ជ្រើសរើសបី)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ពិន្ទុថាមពល",
+        "answerStatus": 1
+      },
+      {
+        "text": "កាលវិភាគ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ម៉ោងរោទ៍",
+        "answerStatus": 1
+      },
+      {
+        "text": "អាសយដ្ឋានផ្ទះ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ជ្រើសរើសមុខងារដែលពាក់ព័ន្ធនឹងមុខងារសុខភាព/គេងនៅក្នុង Watch ថ្មី (ជ្រើសរើសចម្លើយត្រឹមត្រូវទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ពិន្ទុថាមពល",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការបង្ហាត់ដែលមានលក្ខណៈផ្ទាល់ខ្លួន",
+        "answerStatus": 0
+      },
+      {
+        "text": "ស្វ័យជំរុញទឹកចិត្ត និងការកែលម្អ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ជ្រើសរើសមុខងារដែលស័ក្ដិសមបំផុតរបស់ Buds3 ដែលអាចត្រូវបានប្រើនៅក្នុងការប្រជុំជាមួយជនបរទេសដែលនិយាយភាសាផ្សេង។",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "មុខងារបកប្រែ",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការពាក់ស៊ប់ស្រួល",
+        "answerStatus": 0
+      },
+      {
+        "text": "សំឡេងច្បាស់ល្អ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើមានអ្វីថ្មីពាក់ព័ន្ធនឹងក្ដារចុចក្របសៀវភៅថ្មីរបស់ Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ពន្លឺខាងក្រោយ ",
+        "answerStatus": 0
+      },
+      {
+        "text": "គ្រាប់ចុច AI ដាច់ដោយឡែក",
+        "answerStatus": 1
+      },
+      {
+        "text": "កម្មវិធីចាប់ផ្ដើម Samsung Note",
+        "answerStatus": 0
+      },
+      {
+        "text": "ជំនួយការ Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើមានលក្ខខណ្ឌអ្វីខ្លះសម្រាប់ពិន្ទុថាមពលសុខភាព? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ដំណេក",
+        "answerStatus": 0
+      },
+      {
+        "text": "សកម្មភាព",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចង្វាក់បេះដូង",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើអ្វីជាអត្ថប្រយោជន៍ចម្បងនៃការដោះដូរ? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "អ្នកអាចទទួលបានគម្រោងហិរញ្ញប្បទានប្រចាំខែ",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកអាចកាត់បន្ថយភ្លាមៗនូវបន្ទុក/ការចំណាយនៃការទិញទូរសព្ទឆ្លាតវៃថ្មីបំផុត",
+        "answerStatus": 1
+      },
+      {
+        "text": "អ្នកអាចទទួលបានទំហំផ្ទុកធំជាងមុន 2 ដងក្នុងតម្លៃដដែល",
+        "answerStatus": 0
+      },
+      {
+        "text": "អ្នកទិញមួយ ថែមមួយដោយឥតគិតថ្លៃ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ខ្ញុំជាអ្នកប្រើប្រាស់ S22។ តើ Galaxy S25 មានចំណុចកែលម្អសំខាន់ៗអ្វីខ្លះ? (ជ្រើសរើសពីរ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "គុណភាពរូបភាព",
+        "answerStatus": 1
+      },
+      {
+        "text": "ចំនួនកាមេរ៉ា",
+        "answerStatus": 0
+      },
+      {
+        "text": "ទំហំ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើអ្នកអាចប្រាប់ខ្ញុំអំពីមុខងារដែលមានតែនៅលើ Galaxy S25 Ultra បានទេ? (ជ្រើសរើសទាំងអស់)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "បំពាក់ជាមួយ S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "កាមេរ៉ាទំហំ 200 MP និងអាចពង្រីកបង្រួមបាន 100 ដង",
+        "answerStatus": 0
+      },
+      {
+        "text": "អេក្រង់ធំ / ថ្មធំ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "តើមានវិធីចែករំលែកឯកសាររបស់ខ្ញុំទៅឧបករណ៍មិនមែន Android ដែរទេ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "មុខងារចែករំលែករហ័ស",
+        "answerStatus": 1
+      },
+      {
+        "text": "វត្ថុឆ្លាតវៃ",
+        "answerStatus": 0
+      },
+      {
+        "text": "កម្មវិធីសាកល្បងប្រើ Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "កាបូប",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើមុខងារអ្វីបង្ហាញវីដេអូដែលបានថតជាចលនាយឺតៗ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "វីដេអូពេលយប់",
+        "answerStatus": 0
+      },
+      {
+        "text": "មុខងារលុបសំឡេង",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចលនាយឺតភ្លាមៗ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ការតម្រឹមស្វ័យប្រវត្តិ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ខ្ញុំធ្វើការហៅទូរសព្ទជាច្រើនក្នុងជីវិតប្រចាំថ្ងៃ ប៉ុន្តែខ្ញុំឧស្សាហ៍ភ្លេចថាបានជជែកពីអ្វីខ្លះ។ តើមានមុខងារល្អណាមួយដែលអ្នកអាចណែនាំសម្រាប់ស្ថានភាពនេះបានទេ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ជំនួយប្រតិចារឹក​",
+        "answerStatus": 1
+      },
+      {
+        "text": "មុខងារបកប្រែបន្តផ្ទាល់",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការស្វែងរកពហុមុខងារ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ខ្ញុំបាត់ ឬធ្លាក់ទូរសព្ទរបស់ខ្ញុំជាញឹកញាប់។ ខ្ញុំបារម្ភអំពីការទិញអ្វីដែលថ្លៃ ព្រោះថាវាបានបែកហើយ។",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ណែនាំ “Samsung Care+” ដល់អ្នក",
+        "answerStatus": 1
+      },
+      {
+        "text": "ណែនាំ “Samsung Wallet” ដល់អ្នក",
+        "answerStatus": 0
+      },
+      {
+        "text": "ណែនាំ “មុខងារចែករំលែករហ័ស” ដល់អ្នក",
+        "answerStatus": 0
+      },
+      {
+        "text": "ណែនាំ “ម៉ូដែលធូរថ្លៃជាង” ដល់អ្នក",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "តើអ្វីដែលមិនធានាដោយ Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ស្មាតហ្វូន",
+        "answerStatus": 0
+      },
+      {
+        "text": "នាឡិកា",
+        "answerStatus": 0
+      },
+      {
+        "text": "កុំព្យូទ័រលើតុ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ថេប្លេត",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ប្រសិនបើ Ring តឹងណែនជាប់ម្រាមដៃរបស់ខ្ញុំ តើខ្ញុំគួរធ្វើបែបណា?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ប្រើសារធាតុរំអិលដូចជា ក្រេមលាបដៃ ប្រេងសម្អាត ឬសាប៊ូ ដើម្បីកាត់បន្ថយការកកិត ដែលធ្វើឱ្យវាកាន់តែងាយស្រួលដោះចេញ។",
+        "answerStatus": 0
+      },
+      {
+        "text": "ដាក់ម្រាមដៃរបស់អ្នកនៅក្នុងទឹកត្រជាក់ ដើម្បីបង្រួមសរសៃឈាមជាបណ្ដោះអាសន្ន និងធ្វើឱ្យម្រាមដៃស្វិត។ ",
+        "answerStatus": 0
+      },
+      {
+        "text": "កាត់បន្ថយការហើមដោយលើកដៃរបស់អ្នកយូរជាង 5 នាទី។",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចណាដែលជាចម្លើយសមស្របបំផុតចំពោះចន្លោះខាងក្រោម?\nGalaxy Ring គឺជាឧបករណ៍ពាក់ជាប់ខ្លួនថ្មី។ ជាពិសេស ការតាមដានសុខភាពដែលដំណើរការដោយ AI និង ________។",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ពិន្ទុថាមពល",
+        "answerStatus": 0
+      },
+      {
+        "text": "កាតមុខងារបង្កើនល្បឿន",
+        "answerStatus": 0
+      },
+      {
+        "text": "ការបង្ហាត់អំពីការគេង",
+        "answerStatus": 1
+      },
+      {
+        "text": "ច្បិចពីរដង",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "តើចំណុចខាងក្រោមមួយណាគឺជា CXP សំខាន់របស់ចិញ្ចៀន Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ការបង្ហាត់ដែលមានលក្ខណៈផ្ទាល់ខ្លួន",
+        "answerStatus": 0
+      },
+      {
+        "text": "ពាក់ស្រួល 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "ច្បិចពីរដង  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ចំណុចទាំងអស់ខាងលើ",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

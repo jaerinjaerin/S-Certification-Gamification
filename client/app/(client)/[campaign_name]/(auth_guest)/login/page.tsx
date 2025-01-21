@@ -460,8 +460,8 @@ export default function GuestLogin({
             {translation("galaxy_ai_expert")}
           </span>
 
-          <div className="m-auto">
-            <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] ">
+          <div className="m-auto flex flex-col gap-[49px]">
+            <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] !items-center">
               <AutoTextSize mode="box">
                 {translation("be_a_galaxy_ai_expert")}
               </AutoTextSize>
@@ -471,7 +471,7 @@ export default function GuestLogin({
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
-                    className={cn("mt-[49px]", isArabic && "flex-row-reverse")}
+                    className={cn(isArabic && "flex-row-reverse")}
                     variant={"primary"}
                     onClick={() => {
                       setStep("email");

@@ -5,6 +5,7 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import { Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -98,6 +99,10 @@ export async function GET(request: NextRequest, props: Props) {
             backgroundImage: true,
             characterImage: true,
           },
+        });
+
+        questions.sort((a: Question, b: Question) => {
+          return a.order - b.order;
         });
 
         // console.log("questions:", questions);

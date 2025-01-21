@@ -44,5 +44,7 @@
   { "code": "uz", "name": "Language for UZ" },
   { "code": "vi", "name": "Language for VI" },
   { "code": "zh-CN", "name": "Language for ZH CN" },
-  { "code": "zh-TW", "name": "Language for ZH TW" }
+  { "code": "zh-TW", "name": "Language for ZH TW" },
+  { "code": "zh-HK", "name": "Language for ZH HK" },
+  { "code": "lv", "name": "Language for Latvia lv" }
 ]

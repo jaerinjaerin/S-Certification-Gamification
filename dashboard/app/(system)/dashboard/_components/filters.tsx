@@ -23,7 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { Download, Loader2 } from "lucide-react";
+import { Download } from "lucide-react";
+import Loader from "@/components/loader";
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
@@ -228,7 +229,7 @@ const Filters = ({
   )
     return (
       <FiltersContainer>
-        <Loader2 className="animate-spin text-zinc-600 place-self-center" />
+        <Loader className="w-full flex items-center justify-center" />
       </FiltersContainer>
     );
 
