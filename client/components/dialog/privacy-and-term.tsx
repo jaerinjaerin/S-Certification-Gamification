@@ -16,6 +16,7 @@ import {
 } from "../ui/dialog";
 import useLoader from "../ui/loader";
 import { Markdown } from "../markdown/markdown";
+import useCheckLocale from "@/hooks/useCheckLocale";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const [term, setTerm] = useState<any>();
@@ -23,6 +24,8 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
   const { loading, setLoading, renderLoader } = useLoader();
   const params = useParams();
   const quizPathParams = params.quizset_path;
+  const { isArabic } = useCheckLocale();
+
   const fetchTerm = async () => {
     try {
       setLoading(true);
@@ -106,7 +109,16 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
 
           <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
             {loading && renderLoader()}
-            {term && <p className="whitespace-break-spaces">{term.contents}</p>}
+            {term && (
+              <p
+                className={cn(
+                  "whitespace-break-spaces",
+                  isArabic && "text-right"
+                )}
+              >
+                {term.contents}
+              </p>
+            )}
           </div>
           <DialogFooter>
             <DialogClose asChild>

@@ -28,7 +28,7 @@ import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
 import { X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import React, { Fragment, useEffect, useState } from "react";
 
 export default function QuizMap() {
@@ -142,8 +142,7 @@ const TutorialCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const translation = useTranslations();
-  const { isArabic } = useCheckLocale();
-  const locale = useLocale();
+  const { isArabic, isMyanmar } = useCheckLocale();
 
   React.useEffect(() => {
     if (!api) {
@@ -180,7 +179,7 @@ const TutorialCarousel = () => {
                     <p
                       className={cn(
                         "text-right w-[70%] ",
-                        locale === "my" && "text-sm/loose"
+                        isMyanmar && "text-sm/loose"
                       )}
                     >
                       {translation("attempts_deduction")}
@@ -199,7 +198,7 @@ const TutorialCarousel = () => {
                     <p
                       className={cn(
                         "ml-[42px] sm:ml-[62px] -mt-[40px] sm:-mt-[15px] text-sm text-pretty",
-                        locale === "my" && "text-sm/loose"
+                        isMyanmar && "text-sm/loose"
                       )}
                     >
                       {translation("time_limit_per_quiz")}
@@ -210,8 +209,8 @@ const TutorialCarousel = () => {
                   <ol
                     className={cn(
                       "bg-[#EDEDED] max-h-[320px] overflow-y-scroll h-full rounded-[20px] pl-8 pr-4 py-5 list-disc text-sm text-[#4E4E4E] flex flex-col gap-[26px] rtl:pl-4 rtl:pr-8 text-balance",
-                      "text-sm",
-                      locale === "my" && "text-sm/loose"
+                      "text-sm carousel-content",
+                      isMyanmar && "text-sm/loose"
                     )}
                     style={{ wordBreak: "break-word" }}
                     dir={isArabic ? "rtl" : "ltr"}
@@ -221,7 +220,6 @@ const TutorialCarousel = () => {
                     <li>{translation("answer_first_attempt")}</li>
                   </ol>
                 )}
-                <div className="rounded-b-[20px] bottom-0 right-0 left-0 absolute bg-[#EDEDED] h-[18px]" />
               </div>
             </CarouselItem>
           );

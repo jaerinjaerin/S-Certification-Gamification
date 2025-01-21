@@ -1,6 +1,7 @@
 import { cn } from "@/utils/utils";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import CompleteStage from "./stage-complete";
+import useCheckLocale from "@/hooks/useCheckLocale";
 
 export default function GetBadgeAnnouncment({
   stageName,
@@ -11,8 +12,8 @@ export default function GetBadgeAnnouncment({
   badgeStage: any;
   className?: string;
 }) {
-  const locale = useLocale();
   const translation = useTranslations();
+  const { isMyanmar } = useCheckLocale();
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImage?.imagePath}`;
   const congratulationMessage =
     stageName === "3"
@@ -26,7 +27,7 @@ export default function GetBadgeAnnouncment({
           <div
             className={cn(
               "text-2xl text-pretty mt-[66px] mb-[40px] text-center",
-              locale === "my" && "leading-loose"
+              isMyanmar && "leading-loose"
             )}
           >
             <span className="block whitespace-break-spaces">

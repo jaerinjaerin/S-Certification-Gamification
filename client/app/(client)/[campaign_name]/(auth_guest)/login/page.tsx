@@ -605,7 +605,7 @@ export default function GuestLogin({
                 inputMode="numeric"
                 className={cn(
                   "bg-[#E5E5E5] rounded-[10px] w-[70%] sm:w-[80%] p-2",
-                  isArabic && "text-right"
+                  isArabic && "text-right translate-x-[57px]"
                 )}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
