@@ -3,10 +3,10 @@ import { NextIntlClientProvider } from "next-intl";
 
 export default async function SumtotalUserLayout({
   children,
-  params: { campaign_name, quizset_path },
+  params: { quizset_path },
 }: {
   children: React.ReactNode;
-  params: { campaign_name: string; quizset_path: string };
+  params: { quizset_path: string };
 }) {
   // const { validatedPath, isValid, wasCorrected } =
   //   await validateAndCorrectQuizSetPath(quizset_path, defaultLanguageCode);
