@@ -2,7 +2,6 @@ import os
 import json
 import re
 from markitdown import MarkItDown
-
 def convert_bullets_to_html(cell_content):
     """
     Converts inline Markdown-style bullets in a table cell to HTML list items.
@@ -16,6 +15,7 @@ def convert_bullets_to_html(cell_content):
         html_list = "".join([f"<li>{match[1].strip()}</li>" for match in matches])
         return f"<ul>{html_list}</ul>"
     return cell_content  # Return unchanged if no bullets found
+
 
 def convert_markdown_table(markdown_content):
     """
@@ -31,6 +31,7 @@ def convert_markdown_table(markdown_content):
         else:
             processed_lines.append(line)
     return "\n".join(processed_lines)
+
 
 def convert_doc_to_md_and_json(doc_filepath, markdown_dir, json_dir):
     """
@@ -57,26 +58,19 @@ def convert_doc_to_md_and_json(doc_filepath, markdown_dir, json_dir):
     # Convert to JSON
     json_content = json.dumps({"contents": markdown_content}, indent=4)
 
-    # Custom JSON filename logic
-    original_name = os.path.basename(doc_filepath)
-    match = re.match(r"\{([^}]+)\}\.(\{[^}]+\})\.(\{[^}]+\})\.(.+)$", original_name)
-    if match:
-        lang_code = match.group(3).strip("{}")
-        json_filename = f"{lang_code}_T&C.json"
-    else:
-        json_filename = os.path.splitext(original_name)[0] + ".json"
-
     # Save JSON content
+    json_filename = os.path.splitext(os.path.basename(doc_filepath))[0] + ".json"
     json_filepath = os.path.join(json_dir, json_filename)
     with open(json_filepath, "w", encoding="utf8") as json_file:
         json_file.write(json_content)
 
+
 # Input directory
-input_dir = "data/term-and-privacy/term/origins"
+input_dir = "origins"
 
 # Output directories
-markdown_dir = "data/term-and-privacy/term/markdowns"
-json_dir = "data/term-and-privacy/term/jsons"
+markdown_dir = "markdowns"
+json_dir = "jsons"
 os.makedirs(markdown_dir, exist_ok=True)
 os.makedirs(json_dir, exist_ok=True)
 
