@@ -22,14 +22,17 @@ import {
 } from "../../../_lib/chart-colors";
 import { chartHeight } from "../../../_lib/chart-variable";
 import { useOverviewContext } from "../../_provider/provider";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchData } from "../../../_lib/fetch";
 import ChartContainer from "../../../_components/charts/chart-container";
+import { LoaderWithBackground } from "@/components/loader";
 
 export function OverviewGoalAchievement() {
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
+  const count = useRef(0);
+  const expertRange = useRef(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (state.fieldValues) {
@@ -37,9 +40,11 @@ export function OverviewGoalAchievement() {
         state.fieldValues,
         "overview/statistics/progress-of-goal-achievement",
         (data) => {
-          const { result } = data;
-          setData(result);
-          setCount(result[result.length - 1].target);
+          const { jobData, goalTotalScore, cumulativeRate } = data.result;
+          count.current = cumulativeRate;
+          expertRange.current = goalTotalScore;
+          setData(jobData);
+          setLoading(false);
         }
       );
       //
@@ -52,9 +57,10 @@ export function OverviewGoalAchievement() {
         {({ width }) => {
           return (
             <>
+              {loading && <LoaderWithBackground />}
               <CardCustomHeader
                 title="Progress of goal achievement"
-                numbers={`${count.toLocaleString()}%`}
+                numbers={`${count.current.toLocaleString()}%`}
                 description="Cumulative number of experts over time"
               />
               <div className="flex" style={{ width }}>
@@ -73,7 +79,12 @@ export function OverviewGoalAchievement() {
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis type="category" dataKey="name" />
-                  <YAxis type="number" />
+                  <YAxis
+                    yAxisId="percentage"
+                    orientation="right"
+                    tickFormatter={(value) => `${value}%`}
+                  />
+                  <YAxis type="number" domain={[0, expertRange.current]} />
                   <Tooltip cursor={{ fill: chartColorHoverBackground }} />
                   <Legend iconSize={8} />
                   {/* Job 데이터의 모든 Bar를 생성 */}
@@ -102,6 +113,7 @@ export function OverviewGoalAchievement() {
                     fill={chartColorQuaternary}
                   />
                   <Line
+                    yAxisId="percentage"
                     name="Target(%)"
                     type="monotone"
                     dataKey="target"

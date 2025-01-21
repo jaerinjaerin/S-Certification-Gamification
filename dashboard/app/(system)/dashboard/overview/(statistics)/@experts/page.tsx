@@ -25,6 +25,7 @@ import {
   chartColorPrimary,
   chartColorSecondary,
 } from "../../../_lib/chart-colors";
+import { LoaderWithBackground } from "@/components/loader";
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -32,11 +33,13 @@ const OverviewExperts = () => {
   const { state } = useOverviewContext();
   const [data, setData] = useState({ pie: [], bar: [] });
   const [count, setCount] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (state.fieldValues) {
       fetchData(state.fieldValues, "overview/statistics/experts", (data) => {
         setData(data.result);
+        setLoading(false);
       });
       //
       fetchData(state.fieldValues, "overview/info/experts", (data) => {
@@ -51,6 +54,7 @@ const OverviewExperts = () => {
         {({ width }) => {
           return (
             <>
+              {loading && <LoaderWithBackground />}
               <CardCustomHeader
                 title="Experts"
                 numbers={count.toLocaleString()}
