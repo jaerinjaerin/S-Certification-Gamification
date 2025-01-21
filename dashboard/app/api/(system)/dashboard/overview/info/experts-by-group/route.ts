@@ -24,8 +24,8 @@ export async function GET(request: NextRequest) {
       select: { id: true, group: true },
     });
 
-    const plus = await prisma.userQuizStatistics.findMany({
-      where: { ...where, isCompleted: true, storeId: { not: "4" } },
+    const plus = await prisma.userQuizBadgeStageStatistics.findMany({
+      where: { ...where, isBadgeAcquired: true, storeId: { not: "4" } },
     });
 
     plus.forEach((user) => {
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    const ses = await prisma.userQuizStatistics.findMany({
-      where: { ...where, isCompleted: true, storeId: "4" },
+    const ses = await prisma.userQuizBadgeStageStatistics.findMany({
+      where: { ...where, isBadgeAcquired: true, storeId: "4" },
     });
 
     ses.forEach((user) => {

@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat Galaxy S25:n tärkeimmät ominaisuudet? (valitse kolme)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Aito AI-kumppani",
+        "answerStatus": 1
+      },
+      {
+        "text": "Suorituskykyisin laitteemme tähän asti",
+        "answerStatus": 1
+      },
+      {
+        "text": "Täydellinen kamerakokemus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Päivittäinen terveyskumppanisi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat Galaxy S25 Ultran värivaihtoehdot? (valitse kaikki)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuulin, että jollakin toiminnolla voi etsiä ravintolan ja lähettää viestin heti. Mikä sen nimi on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat potrettitilan hyödyt?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Voit kuvata tavallistakin kirkkaampia yövideoita vähäisemmällä kohinalla.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nyt voit suodattaa tarpeettomat äänet pois ja säilyttää haluamasi äänet.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Voit suorittaa tehtäviä käyttämällä useita sovelluksia samanaikaisesti puhumalla luonnollisesti Galaxy S25 -sarjan puhelimeen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Luonnolliset ihon yksityiskohdat",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millä tavalla videokuvausta yöllä on parannettu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yöllä kuvatut videot ovat kirkkaampia ja niissä on vähemmän kohinaa.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Voit suodattaa tarpeettomat äänet pois ja säilyttää haluamasi äänet.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Voit suorittaa tehtäviä käyttämällä useita sovelluksia samanaikaisesti puhumalla Galaxy S25 -sarjan puhelimeen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Voit vapaasti tallentaa tarkat sävyt ja ihon luonnollisen pintarakenteen",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista on uuden Watch-kellon tärkeä ominaisuus, jota kannattaa korostaa, kun esitellään oikean elämän käyttötapauksia? (valitse kaikki oikeat vastaukset)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallinkirkas kaiuttimen ääni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kilpailu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista on uuden Buds3 Pro- ja Buds3-nappikuulokkeiden tärkeä ominaisuus, jota kannattaa korostaa, kun halutaan puhua tekoälyn tuomista uusista ominaisuuksista?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitiivinen käyttöliittymä/käyttökokemus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Äänen optimointi tilanteen mukaan",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Moniostotarjous",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mitä ominaisuuksia Samsung Notes EI tue?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF-päällekkäiskäännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Litterointi ja käännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös puhemuistion tallennuksen aikana",
+        "answerStatus": 1
+      },
+      {
+        "text": "Yhteenveto ja automaattinen muotoilu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Miten minun pitäisi valmistautua Galaxy AI:n käyttöön?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sinun on oltava kirjautuneena Samsung-tilillesi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sinun on maksettava tilausmaksu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sinun on ladattava Galaxy AI -erikoissovellus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ei mitään",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Miksi minun pitäisi päivittää One UI 7.0 Galaxy-puhelimeeni?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muutoksia ei ole paljon verrattuna One UI 6.1.1:een",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0:n ansiosta voit nauttia monipuolisemmasta AI-puhelinkokemuksesta kuin edellisellä ohjelmistolla",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mitä tekijöitä voit poistaa Äänen poisto (Audio Eraser) -toiminnolla? (valitse kaikki)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musiikki",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tuuli",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kohina",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat Galaxy S25:n tärkeimmät kokeiltavat toiminnot? (valitse kaikki)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Keskusteluavustaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Muotokuva ja oma suodatin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Äänen poisto (Audio Eraser)",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat Galaxy S25:n tärkeimmät parannukset? (valitse kolme)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodaalisuus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Akku",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm:n suoritin",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millainen suoritin Galaxy S25 -sarjassa on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm:n suoritin",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm:n suoritin",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm:n suoritin",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm:n suoritin",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ovat S25 Ultran parannuksia? (Valitse kolme)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "50 MP:n ultralaajakulmakamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Paino",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (näyttö)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Suoritin",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista EI ole uuden Watch-kellon tärkeä asiakaskokemus? (valitse yksi)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Entistä parempi suorituskyky",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-pohjainen unenseuranta",
+        "answerStatus": 0
+      },
+      {
+        "text": "Näytön koko",
+        "answerStatus": 1
+      },
+      {
+        "text": "Henkilökohtainen valmennus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista on tärkeä ominaisuus, jota on korostettava, kun Buds3 Pro- ja Buds3-nappikuulokkeita esitellään asiakkaille, joille nappikuulokkeet ovat uusi tuote (ensiostaja)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallinkirkas ääni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mukautuva vastamelu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Parannettu mukavuus ja istuvuus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mikä on Tab S10:n uusi ominaisuus, joka tukee laitteen katselua kirkkaassa valaistuksessa?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Heijastusta estävä näyttö",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suuri näyttö",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Onko käytettävissä toimintoa, jolla voi helposti ja nopeasti jakaa valokuvia/videoita ystävien kanssa?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Pitääkö minun pysyä laitteen vieressä Quick Share -toiminnon käytön aikana?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ei! Se toimii pilven kautta",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kyllä, valitettavasti sinun on pysyttävä vieressä loppuun asti",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Voisitko suositella tärkeimpiä toimintoja, joita minun pitäisi kokeilla?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action",
+        "answerStatus": 0
+      },
+      {
+        "text": "Muotokuva ja oma suodatin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Äänen poisto (Audio Eraser)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mitä minun pitäisi sanoa kokeillessani Cross-app action -toimintoa Galaxy S25 -sarjan puhelimessa? (esimerkkinä)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Etsi lähellä oleva kiinalainen ravintola ja lähetä se Tonille",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kerro tämän päivän säätiedot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Miten voin käyttää suodatinta, kun otan valokuvan? (valitse kaksi)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "käyttämällä kamerasovelluksen esimääritettyä suodatinta",
+        "answerStatus": 1
+      },
+      {
+        "text": "käyttämällä kamerasovelluksen Yö-tilaa",
+        "answerStatus": 0
+      },
+      {
+        "text": "käyttämällä valokuvaan Oma suodatin -toimintoa Galleriassa",
+        "answerStatus": 1
+      },
+      {
+        "text": "käyttämällä kamerasovelluksen Hidastus-tilaa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Pidän S Pen -kynän käytöstä. Mitä laitetta suosittelisit?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mitä tietoja voin saada Now Brief -toiminnolla? (valitse kolme)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 1
+      },
+      {
+        "text": "Aikataulu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hälytys",
+        "answerStatus": 1
+      },
+      {
+        "text": "kotiosoite",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Valitse terveyteen/uneen liittyvä ominaisuus uudessa Watch-kellossa (valitse kaikki oikeat vastaukset)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Henkilökohtainen valmennus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Itsensä motivointi ja kehittäminen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Valitse Buds3.nappikuulokkeiden sopivin ominaisuus, jota voidaan hyödyntää tapaamisessa vierasta kieltä puhuvan ulkomaalaisen kanssa.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tulkki",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Parannettu mukavuus ja istuvuus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristallinkirkas ääni",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mitä uutta uudessa Tab S10:n Book Cover Keyboard- näppäimistökotelossa on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Taustavalo ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Erillinen AI-näppäin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Notesin käynnistys",
+        "answerStatus": 0
+      },
+      {
+        "text": "﻿Google Assistant",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mitä tietoja tarvitaan energiapisteitä varten? (valitse kaikki)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Uni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktiviteetti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Syke",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mikä on laitevaihdon tärkein etu? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Saat kuukausittaisen rahoitussuunnitelman",
+        "answerStatus": 0
+      },
+      {
+        "text": "Voit heti vähentää uusimman älypuhelimen hankintakustannuksia",
+        "answerStatus": 1
+      },
+      {
+        "text": "Saat kaksi kertaa enemmän tallennustilaa samalla hinnalla",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ostat yhden ja saat toisen ilmaiseksi.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Olen S22-käyttäjä. Mitkä ovat Galaxy S25:n tärkeimmät parannukset? (valitse kaksi)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm:n suoritin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kuvien laatu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kameroiden määrä",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mitat",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mitkä ominaisuudet ovat vain Galaxy S25 Ultrassa? (valitse kaikki)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sisäinen S Pen -kynä",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x zoom & 200mp kamera  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suuri näyttö/akku",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millä toiminnolla voin jakaa tiedostojani muille kuin Android-laitteille?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä on toiminto, jolla näytetään kuvattu video hidastettuna?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yökuvausvideot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Äänen poisto",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pikahidastus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automaattinen leikkaus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Soitan paljon puheluja päivittäin, mutta unohdan usein, mistä olen puhunut. Voitko suositella hyvää toimintoa tähän tilanteeseen?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Litterointiavustaja",
+        "answerStatus": 1
+      },
+      {
+        "text": "Reaaliaikainen käännös",
+        "answerStatus": 0
+      },
+      {
+        "text": "Välitön ohje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodaalinen haku",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kadotan tai pudotan puhelimeni usein. Epäröin ostaa mitään kallista rikkoutumisriskin takia.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "”Samsung Care+” on sinulle suositeltava",
+        "answerStatus": 1
+      },
+      {
+        "text": "”Samsung Wallet” on sinulle suositeltava",
+        "answerStatus": 0
+      },
+      {
+        "text": "”Quick Share” on sinulle suositeltava",
+        "answerStatus": 0
+      },
+      {
+        "text": "”Halvempi malli” on sinulle suositeltava",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mitä Samsung Care+ EI kata",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Älypuhelin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch-kello",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pöytätietokone",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab-laite",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista on oikea tapa irrottaa sormus, kun asiakas kysyy: ”Jos sormus juuttuu sormeeni, mitä minun pitäisi tehdä?”",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Käytä kitkaa poistavaa ja sormuksen irrottamista helpottavaa voitelevaa ainetta, kuten käsivoidetta, puhdistusöljyä tai saippuaa.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Upota sormesi kylmään veteen, jotta verisuonet supistuvat tilapäisesti ja sormi ohenee. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vähennä turvotusta pitämällä kättäsi ylhäällä yli viisi minuuttia.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä on sopivin vastaus seuraavaan tyhjään kohtaan?\nGalaxy-sormus on uusi päälle puettava laite. Erityisesti AI-pohjainen terveyden seuranta ja ________ on sen avulla entistä mukavampaa.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiapisteet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tehostuskortti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Univalmennus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kaksoisnipistys",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mikä seuraavista on Galaxy-sormuksen tärkeä myyntiargumentti?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Henkilökohtainen valmennus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mukava käyttö vuorokauden ympäri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaksoisnipistys  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kaikki edellä mainitut",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

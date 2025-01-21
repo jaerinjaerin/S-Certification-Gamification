@@ -21,13 +21,15 @@ import {
 import { useEffect, useState } from "react";
 import { fetchData } from "../../../_lib/fetch";
 import { useOverviewContext } from "../../_provider/provider";
-import { legendFormatter } from "../../../_lib/text";
+import { legendCapitalizeFormatter } from "../../../_lib/text";
 import { chartHeight } from "../../../_lib/chart-variable";
+import { LoaderWithBackground } from "@/components/loader";
 
 function OverviewAchievementRate() {
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (state.fieldValues) {
@@ -36,6 +38,7 @@ function OverviewAchievementRate() {
         "overview/statistics/achievement",
         (data) => {
           setData(data.result);
+          setLoading(false);
         }
       );
       //
@@ -51,6 +54,7 @@ function OverviewAchievementRate() {
         {({ width }) => {
           return (
             <>
+              {loading && <LoaderWithBackground />}
               <CardCustomHeader
                 title="Achievement Rate"
                 numbers={`${count.toLocaleString()}%`}
@@ -70,8 +74,14 @@ function OverviewAchievementRate() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip cursor={{ fill: chartColorHoverBackground }} />
-                <Legend formatter={legendFormatter} />
-                <Brush dataKey="name" height={20} stroke={chartColorPrimary} />
+                <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
+                <Brush
+                  dataKey="name"
+                  height={20}
+                  stroke={chartColorPrimary}
+                  startIndex={0}
+                  endIndex={9}
+                />
                 <Bar
                   dataKey="goal"
                   fill={chartColorPrimary}

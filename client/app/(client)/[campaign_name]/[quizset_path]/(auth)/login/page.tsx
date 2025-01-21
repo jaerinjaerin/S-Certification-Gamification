@@ -53,7 +53,9 @@ export default function Login() {
             <span className="block text-lg font-bold">
               {translation("galaxy_ai_expert")}
             </span>
-            <div className={cn("flex flex-col items-center my-auto")}>
+            <div
+              className={cn("flex flex-col items-center my-auto gap-[49px]")}
+            >
               <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] ">
                 <AutoTextSize mode="box">
                   {translation("be_a_galaxy_ai_expert")}
@@ -67,7 +69,7 @@ export default function Login() {
                 variant={"primary"}
                 onClick={() => processSignIn()}
                 className={cn(
-                  "disabled:bg-disabled mt-[49px]",
+                  "disabled:bg-disabled ",
                   isArabic && "flex-row-reverse"
                 )}
                 disabled={loading}

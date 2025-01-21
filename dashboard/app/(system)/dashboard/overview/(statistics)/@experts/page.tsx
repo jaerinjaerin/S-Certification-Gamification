@@ -25,6 +25,7 @@ import {
   chartColorPrimary,
   chartColorSecondary,
 } from "../../../_lib/chart-colors";
+import { LoaderWithBackground } from "@/components/loader";
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -32,11 +33,13 @@ const OverviewExperts = () => {
   const { state } = useOverviewContext();
   const [data, setData] = useState({ pie: [], bar: [] });
   const [count, setCount] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (state.fieldValues) {
       fetchData(state.fieldValues, "overview/statistics/experts", (data) => {
         setData(data.result);
+        setLoading(false);
       });
       //
       fetchData(state.fieldValues, "overview/info/experts", (data) => {
@@ -51,6 +54,7 @@ const OverviewExperts = () => {
         {({ width }) => {
           return (
             <>
+              {loading && <LoaderWithBackground />}
               <CardCustomHeader
                 title="Experts"
                 numbers={count.toLocaleString()}
@@ -64,14 +68,28 @@ const OverviewExperts = () => {
                     outerRadius={120}
                     fill={chartColorPrimary}
                     dataKey="value"
-                    label={({ name, value }) => `${name}: ${value}`} // 각 영역에 Label 추가
+                    label={({ name, value }) =>
+                      `${
+                        name === "expert" ? "Expert" : "Expert + Advanced"
+                      }: ${value}`
+                    } // 각 영역에 Label 추가
                   >
-                    {data.pie.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
+                    {data.pie.map(
+                      (
+                        entry: { name: string; value: number },
+                        index: number
+                      ) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          name={
+                            entry.name === "expert"
+                              ? "Expert"
+                              : "Expert + Advanced"
+                          }
+                        />
+                      )
+                    )}
                   </Pie>
                   <>
                     <text
@@ -127,19 +145,27 @@ const OverviewExperts = () => {
                     />
                     <Tooltip cursor={{ fill: chartColorHoverBackground }} />
                     <Legend />
-                    <Bar dataKey="Expert" stackId="a" fill={chartColorPrimary}>
+                    <Bar
+                      dataKey="expert"
+                      name="Expert"
+                      stackId="a"
+                      fill={chartColorPrimary}
+                    >
                       <LabelList
-                        dataKey="Expert"
+                        dataKey="expert"
+                        name="Expert"
                         content={renderLabelContent}
                       />
                     </Bar>
                     <Bar
-                      dataKey="Expert + Advanced"
+                      dataKey="advanced"
+                      name="Expert + Advanced"
                       stackId="a"
                       fill={chartColorSecondary}
                     >
                       <LabelList
-                        dataKey="Expert + Advanced"
+                        dataKey="advanced"
+                        name="Expert + Advanced"
                         content={renderLabelContent}
                       />
                     </Bar>

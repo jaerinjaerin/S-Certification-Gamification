@@ -5,6 +5,7 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import { Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -86,7 +87,7 @@ export async function GET(request: NextRequest, props: Props) {
 
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
-        // // console.log("quizStage:", quizStage.questionIds, languageId);
+        // console.log("quizStage:", quizStage.questionIds, languageId);
         const questions = await prisma.question.findMany({
           where: {
             originalQuestionId: { in: quizStage.questionIds },
@@ -100,7 +101,11 @@ export async function GET(request: NextRequest, props: Props) {
           },
         });
 
-        // // console.log("questions:", questions);
+        questions.sort((a: Question, b: Question) => {
+          return a.order - b.order;
+        });
+
+        // console.log("questions:", questions);
 
         // languageId 우선, 없으면 defaultLanguage.id
         const prioritizedQuestions = questions.filter(

@@ -66,8 +66,8 @@ export const validateAndCorrectQuizSetPath = async (
 
     // 도메인 검증
     const domainsResponse = await apiClient.get<ApiListResponse<Domain>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
-      "force-cache"
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`
+      // "force-cache"
     );
 
     const isDomainValid = domainsResponse.items?.some(
@@ -85,9 +85,11 @@ export const validateAndCorrectQuizSetPath = async (
 
     // 언어 검증
     const languagesResponse = await apiClient.get<ApiListResponse<Language>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
-      "force-cache"
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
+      // "force-cache"
     );
+
+    // console.log("Languages response:", languagesResponse);
 
     const isLanguageValid = languagesResponse.items?.some(
       (language: Language) => language.code === languageCode

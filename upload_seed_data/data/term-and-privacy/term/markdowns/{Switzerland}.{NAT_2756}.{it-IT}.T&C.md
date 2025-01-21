@@ -1,0 +1,84 @@
+Termini di utilizzo Certificazione Galaxy AI Expert 2025
+
+
+
+Questi Termini di utilizzo, unitamente alla nostra Informativa sulla privacy indicata di seguito (i “Termini”) sono sottoscritti da Samsung Electronics Co., Ltd., multinazionale coreana con sede a 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Repubblica di Corea (comprese le proprie consociate, “Samsung”, “noi”, oppure “a noi”) e dall'utente e disciplinano il vostro accesso e l'utilizzo del Sito web, dell'Applicazione mobile, dei Materiali e dei Servizi (come di seguito definiti). Si prega di leggere con attenzione i Termini prima di accedere o di utilizzare SamsungPlus (“Sito web” o “Applicazione mobile”). Qualora l'utente non accetti uno dei Termini, non accedere e non utilizzare altrimenti il Sito Web o l'Applicazione mobile. L'uso da parte dell'utente del Sito web e dell'Applicazione mobile costituisce l'accettazione dei Termini.
+
+Uso generale e limitazioni
+
+Tutti i contenuti forniti da Samsung sul Sito web e sull'Applicazione mobile (compresi, ma non solo, dati, informazioni, documenti, testi, design, marchi commerciali, loghi, elementi grafici, immagini, icone, suoni, video, codici e software) (i “Materiali”) sono di esclusiva proprietà di Samsung, dei suoi licenziatari o dei suoi fornitori di contenuti e sono protetti da copyright, marchio di fabbrica e altre normative applicabili in materia. L'utente può accedere ai Materiali contenuti nel Sito web o nell'Applicazione mobile esclusivamente ai fini formativi del supporto SamsungPlus e previa espressa autorizzazione di Samsung, purché lo stesso non modifichi o elimini nessuno dei copyright, marchi di fabbrica o altri avvisi di proprietà contenuti nei Materiali copiati, scaricati, stampati o a cui abbia accesso.
+
+
+
+L'utente accetta di non utilizzare, mostrare, riprodurre, inviare, modificare, distribuire, divulgare, vendere, pubblicare, creare opere derivate, trasmettere, mettere in circolazione o sfruttare in altro modo nessuno dei Materiali, in tutto o in parte, né via e-mail né con altri mezzi, per nessuna finalità diversa da quelle qui stabilite e previa espressa autorizzazione da parte di Samsung. Eventuali usi non autorizzati del Sito web, dell'Applicazione mobile, dei Materiali o dei Servizi può costituire la violazione di copyright, marchio di fabbrica e altre leggi applicabili in materia.
+
+Uso proibito
+
+L'utente non può utilizzare il Sito web o l'Applicazione mobile, nessun Materiale e nessun Servizio fornito tramite Sito web o Applicazione mobile (i “Servizi”): (a) in modi che violino normative locali, statali, nazionali, estere o di diritto internazionale; (b) per molestare o danneggiare persone; (c) impersonare qualsiasi altro individuo o ente o comunque presentare in modo fuorviante i rapporti con altre persone o enti; e (d) per interferire con il Sito web, l'Applicazione mobile o i Servizi o danneggiare gli stessi.
+
+L'utente accetta di non utilizzare tecniche di “frame” o “mirror” per il Sito web o per l'Applicazione mobile o per qualsiasi porzione dei Materiali o Servizi su qualsiasi altro server o dispositivo operante tramite Internet senza il previo consenso scritto di Samsung. Inoltre, l'utente non può utilizzare nessuna parte dei Materiali o dei Servizi in nessun meta tag o qualsiasi altro “testo nascosto” senza il previo consenso scritto da parte di Samsung.
+
+
+
+Come partecipare alla Certificazione Galaxy AI Expert 
+
+
+
+Utenti Samsung+
+
+Dopo aver effettuato l'accesso all'app Samsung+, è possibile accedere ai moduli di formazione. La partecipazione al quiz è consentita solo dopo aver completato la formazione. Una volta superati tutti i livelli del quiz, l'utente riceverà il badge di Galaxy AI Expert.
+
+
+
+Utenti non Samsung+
+
+Se l'utente non utilizza l'app Samsung+, è necessario prima completare la formazione online o in presenza fornita dalla nostra divisione locale. Dopo aver completato la formazione, l'utente può partecipare al quiz tramite il link fornito da Samsung presso la divisione di riferimento dell'utente. Una volta superati tutti i livelli del quiz, l'utente riceverà il badge di Galaxy AI Expert.
+
+
+
+È possibile ripetere e superare il quiz diverse volte, ma viene riconosciuto solo un badge.
+
+Ogni livello del quiz ha un limite di cinque risposte non corrette. Se il limite viene raggiunto prima del completamento di un livello, bisognerà ripartire dalla prima domanda del livello. Il quiz di certificazione deve essere completato individualmente. Qualunque tentativo di imbroglio determina la squalifica e invalida i risultati del quiz. La Certificazione Galaxy AI Expert è a titolo gratuito.
+
+
+
+Contenuti di terze parti e collegamenti ad altri siti web
+
+Il Sito web o l'Applicazione mobile potrebbero includere contenuti di terze parti o collegamenti ad altri siti web o applicazioni mobili. Poiché non abbiamo il controllo dei siti web o delle applicazioni mobili di terze parti, l'utente prende atto e accetta che non siamo responsabili della disponibilità di tali siti web o applicazioni mobili e non avalliamo né siamo responsabili di nessun contenuto, pubblicità, servizio, prodotto o altro materiale disponibile su tali siti web o applicazioni mobili e accessibili tramite gli stessi. Altresì, l'utente prende atto e accetta che Samsung non sarà responsabile, direttamente o indirettamente, di alcun danno o perdita causati o che si presume siano stati causati da o in connessione con l'utilizzo di o l'affidamento su qualsiasi contenuto, pubblicità, servizio, prodotto o altro materiale disponibile su tali siti web o applicazioni mobili e accessibili tramite gli stessi. Tutti i siti web e le applicazioni mobili di cui sopra saranno soggetti a termini di utilizzo separati.
+
+
+
+In aggiunta, la presenza di collegamenti a un sito web di terze parti non implica che Samsung accetti responsabilità sui contenuti o sull'utilizzo di tale sito web. Spetta all'utente adottare le dovute precauzioni per far sì che quanto scelga di utilizzare sia privo di elementi quali virus, worm, trojan e altri elementi di natura distruttiva.
+
+ESONERO DI RESPONSABILITÀ GENERALE
+
+L'UTENTE PRENDE ATTO E ACCETTA ESPRESSAMENTE DI UTILIZZARE IL SITO WEB, L'APPLICAZIONE MOBILE O EVENTUALI ALTRI MATERIALI O SERVIZI A VOSTRO RISCHIO ESCLUSIVO E, NEL LIMITE MASSIMO CONSENTITO DALLA LEGGE, IL RISCHIO IN MERITO A QUALITÀ SODDISFACENTE, PRESTAZIONI E ACCURATEZZA RICADE INTERAMENTE SOTTO LA PROPRIA RESPONSABILITÀ. NEL LIMITE MASSIMO CONSENTITO DALLA LEGGE, IL SITO WEB E L'APPLICAZIONE MOBILE, I MATERIALI E I SERVIZI SONO FORNITI “COSÌ COME SONO” E “COME DISPONIBILI” SENZA GARANZIE, CONDIZIONI, TERMINI, DICHIARAZIONI O IMPEGNI DI ALCUNA NATURA, ESPRESSI O IMPLICITI. NEL LIMITE MASSIMO CONSENTITO DALLA LEGGE, SAMSUNG ESCLUDE ESPRESSAMENTE QUALSIASI GARANZIA, CONDIZIONE, TERMINE, DICHIARAZIONE E IMPEGNO RISPETTO AL SITO WEB, ALL'APPLICAZIONE MOBILE, AI MATERIALI E AI SERVIZI, ESPRESSI O IMPLICITI, COMPRESE, MA NON SOLO, GARANZIE DI COMMERCIABILITÀ, QUALITÀ SODDISFACENTE, IDONEITÀ A FINI PARTICOLARI, DI ACCURATEZZA, DI PACIFICO GODIMENTO E NON VIOLAZIONE DEI DIRITTI DI TERZE PARTI. NEL LIMITE MASSIMO CONSENTITO DALLA LEGGE, SAMSUNG NON GARANTISCE L'ACCURATEZZA, VALIDITÀ, TEMPESTIVITÀ, LEGITTIMITÀ O COMPLETEZZA DI NESSUNO DEI MATERIALI O SERVIZI RESI DISPONIBILI ATTRAVERSO IL SITO WEB O L'APPLICAZIONE MOBILE, E NON GARANTISCE CHE IL SITO WEB, L'APPLICAZIONE MOBILE, I MATERIALI O I SERVIZI SODDISFERANNO I REQUISITI DELL'UTENTE, O CHE IL FUNZIONAMENTO DEL SITO WEB, DELL'APPLICAZIONE MOBILE O DEI SERVIZI SARÀ ININTERROTTO O PRIVO DI ERRORI. NESSUNA INFORMAZIONE O CONSIGLIO, IN FORMA SCRITTA O VERBALE, OTTENUTO DALL'UTENTE ATTRAVERSO IL SITO WEB O L'APPLICAZIONE MOBILE, OPPURE DA SAMSUNG O QUALSIASI SOCIETÀ DEL GRUPPO SAMSUNG, O DAI RISPETTIVI RESPONSABILI, DIPENDENTI, DIRETTORI O AGENTI DI UNA QUALSIASI DI TALI ENTI (COLLETTIVAMENTE LE “PARTI SAMSUNG”) COSTITUIRÀ GARANZIA.
+
+LIMITAZIONE DI RESPONSABILITÀ
+
+NEL LIMITE MASSIMO CONSENTITO DALLA LEGGE, IN NESSUN CASO, COMPRESA NEGLIGENZA, SAMSUNG SARÀ RITENUTA RESPONSABILE, IN CONTRATTO O IN TORTO, PER EVENTUALI DANNI DIRETTI, INDIRETTI, ACCIDENTALI, SPECIALI O CONSEQUENZIALI, PERDITE DI PROFITTO, RICAVI, INTERESSI, ATTIVITÀ O CORRUZIONE DI DATI, SPESE LEGALI E SPESE DI ALTRA NATURA, NÉ DI EVENTUALI DANNI DERIVANTI DA O IN CONNESSIONE CON EVENTUALI INFORMAZIONI CONTENUTE ALL'INTERNO O DERIVANTI DALL'UTILIZZO DEL SITO WEB E DELL'APPLICAZIONE MOBILE, DI QUALSIASI MATERIALE O SERVIZIO A CUI ACCEDANO L'UTENTE O EVENTUALI TERZE PARTI SUL SITO WEB E SULL'APPLICAZIONE MOBILE, ANCHE SE INFORMATI DELLA POSSIBILITÀ DI TALI DANNI.
+
+
+
+
+
+Manleva
+
+L'utente accetta di manlevare e tenere indenni le Parti Samsung da qualsiasi pretesa, responsabilità, danno, perdita, costo o spesa (ivi incluse ragionevoli spese legali) che le Parti Samsung possano sostenere a seguito di o derivanti dal suo (o di chiunque utilizzi il suo account) utilizzo del Sito web, dell'Applicazione mobile, dei Materiali e dei Servizi o dalla violazione dei presenti Termini. Samsung si riserva il diritto, a proprie spese, di assumere la difesa e il controllo esclusivi di tutte le questioni altrimenti soggette a indennizzo da parte dell'utente e, in tal caso, l'utente accetta di collaborare con Samsung nella difesa di tali questioni.
+
+Modifica dei Termini
+
+Ci riserviamo il diritto di modificare, aggiungere o rimuovere qualsiasi porzione dei Termini, in tutto o in parte, in qualsiasi momento, pubblicando i Termini aggiornati sul Sito web o sull'Applicazione mobile. Qualunque modifica sarà efficace solo dopo che l'utente avrà accettato i Termini aggiornati. In caso di mancata accettazione dei Termini aggiornati, non sarà più possibile utilizzare il sito Web o l'Applicazione mobile.
+
+Legge applicabile e foro competente
+
+Questi Termini sono disciplinati dalle leggi in vigore nel paese di residenza dell'utente, indipendentemente dalle disposizioni in materia di conflitto di leggi. Se l'utilizzo da parte dell'utente del Sito web, dell'Applicazione mobile, dei Materiali o dei Servizi viola le leggi del suo luogo di residenza, chiediamo all'utente di NON UTILIZZARE il Sito web, l'Applicazione mobile o nessuna parte dei Materiali o dei Servizi. L'utente è responsabile del rispetto delle leggi nella sua giurisdizione (ivi comprese eventuali leggi sul controllo delle esportazioni).
+
+Generale
+
+La mancata applicazione da parte di Samsung di qualunque diritto o disposizione contenuti nei Termini non costituirà rinuncia a tale diritto o disposizione, salvo riconoscimento e accettazione da parte di Samsung per iscritto. I Termini (ivi comprese, modifiche, aggiornamenti e integrazioni) costituiscono l'intero accordo tra l'utente e Samsung e sostituisce qualunque altro precedente o contemporaneo accordo, pattuizione o intesa tra l'utente e Samsung rispetto alla materia qui trattata. L'utente accetta che i presenti Termini possono essere assegnati da noi a terze parti a nostra esclusiva discrezione. I titoli delle sezioni hanno solo scopo di riferimento e in nessun modo definiscono, limitano, costruiscono o descrivono la portata di tale sezione. Qualora uno qualsiasi dei Termini o la sua applicazione nei confronti di terzi o di circostanze siano dichiarati, oppure considerati da qualunque tribunale o autorità quasi-giudiziaria competente per giurisdizione nulli, illegittimi o non applicabili in qualsiasi modo (la “Disposizione illecita”), (i) tale Disposizione illecita sarà considerata modificata in modo tale da raggiungere, il più fedelmente possibile, la stessa finalità prevista dalla Disposizione illegittima, nei limiti di legge; (ii) la validità, legittimità e applicabilità delle disposizioni rimanenti o di parti delle disposizioni qui contenute, non saranno in alcun modo influenzate o invalidate; e (iii) le parti rimanenti dei Termini resteranno validi e applicabili nei limiti di legge. Qualora una qualsiasi delle disposizioni dei Termini sia ritenuta non valida da un tribunale competente per giurisdizione, le rimanenti disposizioni resteranno in vigore e pienamente valide.
+
+
+
+Data [22.01.2025]
+
