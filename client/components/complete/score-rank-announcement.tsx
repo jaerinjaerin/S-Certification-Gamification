@@ -71,10 +71,9 @@ export default function ScoreRankAnnouncement({
             </DialogHeader>
             <div
               className={cn(
-                "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium",
+                "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium max-h-[50svh] overflow-hidden overflow-y-scroll",
                 isArabic && "text-right",
                 isMyanmar && "leading-9"
-                // TODO: DialogContent 스크롤로 변경
               )}
             >
               <div>
