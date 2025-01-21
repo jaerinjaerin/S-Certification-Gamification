@@ -7,7 +7,7 @@ import { fetchData } from "../../../_lib/fetch";
 
 const OverviewParticipantsInfo = () => {
   const { state } = useOverviewContext();
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
     if (state.fieldValues) {
@@ -19,10 +19,7 @@ const OverviewParticipantsInfo = () => {
 
   return (
     <InfoCardStyleContainer title="Participants" iconName="user">
-      <InfoCardStyleContent
-        info={count.toLocaleString()}
-        caption="Total paricipants"
-      />
+      <InfoCardStyleContent info={count} caption="Total paricipants" />
     </InfoCardStyleContainer>
   );
 };

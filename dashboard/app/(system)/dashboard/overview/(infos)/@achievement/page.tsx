@@ -7,7 +7,7 @@ import { fetchData } from "../../../_lib/fetch";
 
 const OverviewAchievementInfo = () => {
   const { state } = useOverviewContext();
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
     if (state.fieldValues) {
@@ -20,7 +20,8 @@ const OverviewAchievementInfo = () => {
   return (
     <InfoCardStyleContainer title="Achievement" iconName="badgeCheck">
       <InfoCardStyleContent
-        info={`${count.toLocaleString()}%`}
+        info={count}
+        unit="%"
         caption="Achievement of a goal"
       />
     </InfoCardStyleContainer>

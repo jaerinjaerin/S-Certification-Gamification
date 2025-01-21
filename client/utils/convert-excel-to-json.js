@@ -5,7 +5,7 @@ import XLSX from "xlsx";
 
 const matchingTable = {
   Albanian: "sq",
-  Arabic: "ar-AE",
+  "Arabic(MENA)": "ar-AE",
   Azerbaijan: "az",
   Bengali: "bn",
   Bosnian: "bs",
@@ -13,12 +13,13 @@ const matchingTable = {
   Croatian: "hr-HR",
   Czech: "cs",
   Danish: "da",
+  English: "en-US",
   Estonian: "et",
   Finnish: "fi",
-  "French(Canada)": "fr-CA",
-  French: "fr-FR",
+  // "French(Canada)": "fr-CA",
+  "French(SEF)": "fr-FR",
   Georgian: "ka",
-  German: "de-DE",
+  "German(SEAS)": "de-DE",
   Greek: "el",
   Hebrew: "he",
   Hongkong: "zh-TW",
@@ -33,30 +34,29 @@ const matchingTable = {
   Macedonian: "mk",
   Myanmar: "my",
   Norwegian: "nb",
-  PRC: "zh-CN",
+  // PRC: "zh-CN",
   Polish: "pl",
   "Portuguese(Brazil)": "pt-BR",
   Portuguese: "pt-PT",
   Romanian: "ro",
-  Russian: "ru",
+  "Russian(SECE)": "ru",
   Serbian: "sr-Cyrl",
   Slovak: "sk-SK",
   Slovenian: "sl",
-  "Spanish(LTN)": "es-LTN",
+  "Spanish(LTN_SECH-Chile))": "es-LTN",
   Spanish: "es-ES",
   Swedish: "sv",
-  Taiwan: "zh-TW",
   Thai: "th",
   Turkish: "tr",
+  Ukrainian: "uk",
   Uzbek: "uz",
   Vietnamese: "vi",
-  Ukrainian: "uk",
 };
 
 const convertLangPackXlsxToJson = (data) => {
   return data.reduce((acc, el) => {
-    if (el[0] && el[2]) {
-      acc[el[0].trim()] = el[2];
+    if (el[0] && el[1]) {
+      acc[el[0].trim()] = el[1];
     }
     return acc;
   }, {});
@@ -82,13 +82,20 @@ const convertLangPackFolerToJson = async () => {
         range: 2,
       });
 
-      const matchingValue = file.split("_")[0].trim();
-      const key = matchingTable[matchingValue];
+      const matchingValue = file.split("_Paradigm")[0].trim();
+
+      let key;
+      if (matchingTable[matchingValue]) {
+        key = matchingTable[matchingValue];
+      } else {
+        key = matchingTable[file.split("_")[0].trim()];
+      }
+
       console.log(file, key, matchingValue);
       const strings = convertLangPackXlsxToJson(jsonData);
 
       fs.writeFileSync(
-        `../messages/${key}.json`,
+        `../messages/json/${key}.json`,
         JSON.stringify(strings, null, 2)
       );
     });
