@@ -378,7 +378,7 @@ export default function GuestRegisterPage() {
               onClick={routeQuizPage}
               className="disabled:bg-disabled"
             >
-              {translation("save")}
+              <span>{translation("save")}</span>
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -397,7 +397,7 @@ export default function GuestRegisterPage() {
           <AlertDialogFooter>
             <AlertDialogAction asChild>
               <Button variant={"primary"} onClick={() => {}}>
-                OK
+                <span>{translation("ok")}</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

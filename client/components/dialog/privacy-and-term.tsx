@@ -17,6 +17,7 @@ import {
 import useLoader from "../ui/loader";
 import { Markdown } from "../markdown/markdown";
 import useCheckLocale from "@/hooks/useCheckLocale";
+import { extractCodesFromPath } from "@/utils/pathUtils";
 
 export default function PrivacyAndTerm({ className }: { className?: string }) {
   const [term, setTerm] = useState<any>();
@@ -24,12 +25,13 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
   const { loading, setLoading, renderLoader } = useLoader();
   const params = useParams();
   const quizPathParams = params.quizset_path;
-  const { isArabic } = useCheckLocale();
+  const { languageCode } = extractCodesFromPath(String(quizPathParams));
+  const { isArabic, isMyanmar } = useCheckLocale();
 
   const fetchTerm = async () => {
     try {
       setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${quizPathParams}.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${languageCode}_T&C.json`;
       const res = await fetch(jsonUrl, {
         method: "GET",
         cache: "no-cache",
@@ -88,7 +90,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant={"primary"}>{translation("accept")}</Button>
+              <Button variant={"primary"}>
+                <span>{translation("accept")}</span>
+              </Button>
             </DialogClose>
             <DialogClose className="absolute top-5 right-5">
               <X />
@@ -112,8 +116,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
             {term && (
               <p
                 className={cn(
-                  "whitespace-break-spaces",
-                  isArabic && "text-right"
+                  "whitespace-break-spaces text-xs",
+                  isArabic && "text-right",
+                  isMyanmar && "leading-loose"
                 )}
               >
                 {term.contents}
@@ -122,7 +127,9 @@ export default function PrivacyAndTerm({ className }: { className?: string }) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant={"primary"}>{translation("ok")}</Button>
+              <Button variant={"primary"}>
+                <span>{translation("ok")}</span>
+              </Button>
             </DialogClose>
             <DialogClose className="absolute top-5 right-5">
               <X />

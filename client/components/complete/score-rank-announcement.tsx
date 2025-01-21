@@ -93,7 +93,9 @@ export default function ScoreRankAnnouncement({
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant={"primary"}>{translation("ok")}</Button>
+                <Button variant={"primary"}>
+                  <span>{translation("ok")}</span>
+                </Button>
               </DialogClose>
 
               <DialogClose className="absolute top-5 right-5">
@@ -149,13 +151,15 @@ export default function ScoreRankAnnouncement({
                 window.open(samsungplusAppDeepLink, "_blank");
               }}
             >
-              S+
+              <span>S+</span>
             </Button>
           )}
           <Button variant={"primary"} onClick={() => routeToPage("map")}>
-            {isLastStage
-              ? translation("return_map")
-              : translation("next_stage")}
+            <span>
+              {isLastStage
+                ? translation("return_map")
+                : translation("next_stage")}
+            </span>
           </Button>
         </div>
       </div>

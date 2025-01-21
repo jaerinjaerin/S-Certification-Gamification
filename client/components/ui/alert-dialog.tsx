@@ -4,6 +4,7 @@ import * as React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils/utils";
 import useCheckLocale from "@/hooks/useCheckLocale";
+import { useCheckOS } from "@/hooks/useCheckOS";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -120,17 +121,21 @@ AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Cancel
-    ref={ref}
-    className={cn(
-      buttonVariants({ variant: "primary" }),
-      "mt-2 sm:mt-0",
-      className
-    )}
-    {...props}
-  />
-));
+>(({ className, ...props }, ref) => {
+  const { isWindows, isAndroid } = useCheckOS();
+  return (
+    <AlertDialogPrimitive.Cancel
+      ref={ref}
+      className={cn(
+        buttonVariants({ variant: "primary" }),
+        "mt-2 sm:mt-0",
+        (isAndroid || isWindows) && `*:translate-y-[1px]`,
+        className
+      )}
+      {...props}
+    />
+  );
+});
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
 export {

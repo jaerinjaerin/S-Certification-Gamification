@@ -93,7 +93,9 @@ export default function QuizMap() {
             <TutorialCarousel />
             <DialogFooter>
               <DialogClose className="text-[18px] py-[22px] px-[34px]" asChild>
-                <Button variant={"primary"}>{translation("ok")}</Button>
+                <Button variant={"primary"}>
+                  <span>{translation("ok")}</span>
+                </Button>
               </DialogClose>
               <DialogClose className="absolute top-5 right-5">
                 <X />
