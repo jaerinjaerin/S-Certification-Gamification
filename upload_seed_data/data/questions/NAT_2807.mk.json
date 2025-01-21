@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кои се клучните одлики на Galaxy S25? (изберете три)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Вистински AI придружник",
+        "answerStatus": 1
+      },
+      {
+        "text": "Најунапредени Перформанси",
+        "answerStatus": 1
+      },
+      {
+        "text": "Перфектно Камера Искуство",
+        "answerStatus": 1
+      },
+      {
+        "text": "Твојот здравствен сопатник",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Која боја ја има Galaxy S25 Ultra? (изберете ги сите)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Титаниумска сребрено сива",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титаниумска сива",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титаниумска бела сребрена",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титаниумска црна",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Слушнав дека постои одлика веднаш да најдеш ресторан и да пратиш порака. Кое е нејзиното име?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar и Брифирање",
+        "answerStatus": 0
+      },
+      {
+        "text": "Дејство попреку апликација",
+        "answerStatus": 1
+      },
+      {
+        "text": "Заокружете за пребарување",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Кои се главните бенефити кога сликате портрет?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Можете да снимате уште посветли ноќни видеозаписи со помалку бучаба.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сега можете да ги исфилтрирате несаканите звуци и да ги задржите оние што ги сакате.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можете да завршувате задачи користејќи повеќе апликации одеднаш со природно зборување во Серијата Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можете да ја доловите природната текстура на кожата",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Можете ли да го објасните резултатот кога сликате видеозапис со Ноќна фотографија?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Можете да снимате уште посветли ноќни видеозаписи со помалку бука.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Сега можете да ги исфилтрирате несаканите звуци и да ги задржите оние што ги сакате.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можете да завршувате задачи користејќи повеќе апликации одеднаш со природно зборување во Серијата Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можете слободно да го доловите точниот тон и природната текстура на кожа",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Која од следниве е клучна одлика на новиот часовник што треба да се нагласи како поврзано искуство кога вршиме презентација на животен стил како случај на користење? (изберете ги сите точни одговори)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Кристално јасен звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Енергетски резултат",
+        "answerStatus": 0
+      },
+      {
+        "text": "Трка",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Која од следниве е клучна одлика на Buds3 Pro и Buds3 што треба да се нагласи како поврзано искуство кога вршиме презентација на животен стил како случај на користење?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Интуитивен UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Оптимизација на звук\n(Оптимизиран звук)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Понуда за повеќекратно купување",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Која одлика НЕ СЕ поддржува во Samsung Белешки?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Превод на PDF во слој",
+        "answerStatus": 0
+      },
+      {
+        "text": "Транскрипција и превод",
+        "answerStatus": 0
+      },
+      {
+        "text": "Превод во реално време додека се врши говорно снимање",
+        "answerStatus": 1
+      },
+      {
+        "text": "Резимирање и Автоматско форматирање",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Што треба да подготвам за да користам Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Треба да се најавите на Вашата сметка Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Треба да платите одреден износ за претплата",
+        "answerStatus": 0
+      },
+      {
+        "text": "Треба да преземете специјална апликација Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ништо",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Зошто треба да извршам надградба на мојот Galaxy на One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Нема многу промени во споредба со One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Со One UI 7.0 ќе имате многу побогато AI телефонско искуство во споредба со претходниот софтвер",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Кои фактори можам да ги избришам користејќи го Аудио бришачот? (изберете ги сите)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Музика",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ветар",
+        "answerStatus": 0
+      },
+      {
+        "text": "Бука",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кои се главните одлики за да го доживеете Galaxy S25? (изберете ги сите)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Помош за разговор",
+        "answerStatus": 0
+      },
+      {
+        "text": "Дејство попреку апликација",
+        "answerStatus": 1
+      },
+      {
+        "text": "Портрет и Мојот филтер",
+        "answerStatus": 1
+      },
+      {
+        "text": "Аудио бришач",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кои се клучните подобрувања на Galaxy S25? (изберете три)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Дејство попреку апликација",
+        "answerStatus": 1
+      },
+      {
+        "text": "Мултимодалност",
+        "answerStatus": 1
+      },
+      {
+        "text": "Батерија",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор на апликации со 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Со колкав процесор на апликации е опремена Серијата Galaxy S25?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Процесор на апликации со 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор на апликации со 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор на апликации со 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор на апликации со 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кои унапредувања ги имаме кај S25 Ultra? (Избери три)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ултраширока камера со 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Тежина",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (на преден дисплеј)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Процесор",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кое од следниве НЕ Е клучен CXP на новиот часовник? (изберете еден)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Основни одлики од повисоко ниво\n(перформанси)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Спиење потпомогнато од AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Големина на екран",
+        "answerStatus": 1
+      },
+      {
+        "text": "Персонализирано искуство за вежбање",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кое од следните е клучна одлика што треба да се нагласи кога и ги претставувате Buds3 Pro и Buds3 на клиентите на кои слушалките има се новина (првпат купувач)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Кристално јасен звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Адаптибилно ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удобно користење",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Која нова одлика кај Tab S10 поддржува живо гледање надвор?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Динамичен AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Нерефлектирачки",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Голем екран",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Дали постои одлика за лесно и брзо споделување на фотографии/видеозаписи со пријателите?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Паметни нешта",
+        "answerStatus": 0
+      },
+      {
+        "text": "Брзо споделување",
+        "answerStatus": 1
+      },
+      {
+        "text": "Паметно префрлање",
+        "answerStatus": 0
+      },
+      {
+        "text": "Превод во живо",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Дали треба да бидам до него додека ја користам Брзо споделување?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Нема проблем, таа функционира преку облакот",
+        "answerStatus": 1
+      },
+      {
+        "text": "Да, за жал мора да останете до крајот",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Би можеле ли да ми ги препорачате клучните одлики за да го пробам? (изберете ги сите)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Дејство попреку апликација",
+        "answerStatus": 0
+      },
+      {
+        "text": "Портрет и Мојот филтер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Аудио бришач",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Што треба да кажам за да ја пробам Дејство попреку апликација во Серијата Galaxy S25? (како пример)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Пребарајте кинески ресторан во близина и пратете му го на Тони",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Дај ми ги денешните информации за времето",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Како можам да применам филтер кога сликам фотографија? (изберете две)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "користејќи претходно поставен филтер на апликацијата Камера",
+        "answerStatus": 1
+      },
+      {
+        "text": "користејќи го Ноќниот режим на апликацијата Камера",
+        "answerStatus": 0
+      },
+      {
+        "text": "користејќи ја Мојот филтер на фотографија во Галерија",
+        "answerStatus": 1
+      },
+      {
+        "text": "користејќи го Бавното движење на апликацијата Камера",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Голем сум љубител на S pen. Имате ли нешто да ми препорачате?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Кои информации/увиди можам да ги добијам со Брифирање сега? (изберете три)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Енергетски резултат",
+        "answerStatus": 1
+      },
+      {
+        "text": "Распоред",
+        "answerStatus": 1
+      },
+      {
+        "text": "Аларм",
+        "answerStatus": 1
+      },
+      {
+        "text": "домашна адреса",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Изберете одлика поврзана со Здравје/Спиење во новиот часовник (изберете ги сите точни одговори)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Енергетски резултат",
+        "answerStatus": 0
+      },
+      {
+        "text": "Персонализирано подучување",
+        "answerStatus": 0
+      },
+      {
+        "text": "Самомотивација и подобрување",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Изберете ја најсоодветната одлика на Buds3 што може да се употребува при средба со странец која зборува друг јазик.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Толкувач",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удобно користење",
+        "answerStatus": 0
+      },
+      {
+        "text": "Кристално јасен звук",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Што е ново во новата тастатура на Book Cover на Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Заднинско светло ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Специјално наменет AI клуч",
+        "answerStatus": 1
+      },
+      {
+        "text": "Стартувач на Белешки Samsung",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Кои се критериумите за Енергетски резултат? (изберете ги сите)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Спиење",
+        "answerStatus": 0
+      },
+      {
+        "text": "Активност",
+        "answerStatus": 0
+      },
+      {
+        "text": "Срцев ритам",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Која се главната предност на Замената? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Можете да добиете месечен план за финансирање",
+        "answerStatus": 0
+      },
+      {
+        "text": "Можете веднаш да ја намалите обврската/трошокот за купување на еден најнов паметен телефон",
+        "answerStatus": 1
+      },
+      {
+        "text": "Можете да добиете 2Х повеќе склад по иста цена",
+        "answerStatus": 0
+      },
+      {
+        "text": "Купувате еден, а можете да добиете еден бесплатно",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ја сум корисник на S22. Кои се клучните подобрувања на Galaxy S25? (изберете две)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Процесор на апликации со 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Квалитет на слика",
+        "answerStatus": 1
+      },
+      {
+        "text": "Број на камери",
+        "answerStatus": 0
+      },
+      {
+        "text": "Димензии",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Би можеле ли да ми кажете да ексклузивните одлики на Galaxy S25 Ultra? (изберете ги сите)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Вградено S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x зум & 200mp камера",
+        "answerStatus": 0
+      },
+      {
+        "text": "Поголем екран/батерија",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Дали постојат начини да ги споделам моите датотеки со уреди што не работаат на Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Брзо споделување",
+        "answerStatus": 1
+      },
+      {
+        "text": "Паметни нешта",
+        "answerStatus": 0
+      },
+      {
+        "text": "Пробајте ја Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Паричник",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Која е одликата што прикажува снимен видеозапис во бавно движење?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Видеозаписи со Ноќна фотографија",
+        "answerStatus": 0
+      },
+      {
+        "text": "Аудио бришач",
+        "answerStatus": 0
+      },
+      {
+        "text": "Директно бавно движење",
+        "answerStatus": 1
+      },
+      {
+        "text": "Автоматско потсекување",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Во мојот секојдневен живот вршам голем број повици, но често заборавам за што зборував. Дали постои некоја добра одлика што можете да ми ја препорачате за ваква ситуација?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Помош за препис",
+        "answerStatus": 1
+      },
+      {
+        "text": "Превод во живо",
+        "answerStatus": 0
+      },
+      {
+        "text": "Брифинг сега",
+        "answerStatus": 0
+      },
+      {
+        "text": "Мултимодално пребарување",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Често го губам телефонот или ми паѓа. Загрижен сум да купам нешто скапо, бидејќи може да се расипе.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ви ја препорачувам „Samsung Care+“",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ви ја препорачувам „Samsung Паричник“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви ја препорачувам „Брзо споделување“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви препорачувам „Поевтин модел“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Што НЕ Е опфатено со Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Паметен телефон",
+        "answerStatus": 0
+      },
+      {
+        "text": "Часовник",
+        "answerStatus": 0
+      },
+      {
+        "text": "Десктоп компјутер",
+        "answerStatus": 1
+      },
+      {
+        "text": "Таблет",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ако прстенот се заглави на мојот прст, што треба да правам?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Применете средство за подмачкување, на пример, крем за раце, масло за чистење или сапун, за да го намалите триењето а тоа прави прстенот да се отстрани полесно.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ставете го прстот во студена вода за привремено да ги стегнете крвните садови и да го намалите прстот. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Намалете ја потеченоста на прстите држејќи ја раката дигната подолго од 5 минути.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кој е најсоодветниот одговор за следното празно место?\nGalaxy Ring е најновиот уред што се носи. Особено, следење на здравјето потпомогнато од AI и ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Енергетски резултат",
+        "answerStatus": 0
+      },
+      {
+        "text": "Бустер-картичка",
+        "answerStatus": 0
+      },
+      {
+        "text": "Подучување за спиење",
+        "answerStatus": 1
+      },
+      {
+        "text": "Двојно штипнување",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Кое од следниве е клучен CXP на Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Персонализирано подучување",
+        "answerStatus": 0
+      },
+      {
+        "text": "Удобно носење 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Двојно штипнување  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сите горенаведени",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

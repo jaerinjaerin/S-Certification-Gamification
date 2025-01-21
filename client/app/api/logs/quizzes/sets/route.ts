@@ -367,7 +367,7 @@ export async function GET(request: NextRequest) {
       distinct: ["questionId"], // questionId별로 중복 제거
     });
 
-    console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
+    // console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
 
     return NextResponse.json(
       {

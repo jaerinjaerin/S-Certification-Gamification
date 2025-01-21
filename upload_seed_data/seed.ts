@@ -55,7 +55,7 @@ const badgeImagePaths = [
 async function main() {
   const activityIdData = [
     {
-      domainCode: "OrgCode-7",
+      domainCode: "NAT_2410",
       activityIds: [251949, 251950],
     },
     {
@@ -350,23 +350,25 @@ async function main() {
 
     console.log("files", files);
 
-    // 먼저 OrgCode-7 도메인 데이터를 처리
+    // 먼저 NAT_2410 도메인 데이터를 처리
     const hqNatQuestions: any[] = [];
+    let quizSetCount = 0;
     for (const fileName of files.sort((a, b) =>
-      a.includes("OrgCode-7") ? -1 : 1
+      a.includes("NAT_2410") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
       // const domainCode = fileName.split("|")[0];
       // const languageCode = fileName.split("|")[1].split(".")[0];
       // 확장자 제거
       const baseFileName = path.basename(fileName, path.extname(fileName));
+      console.log("start quizSet", baseFileName);
       // 파일명 구조 파싱
       const [domainCode, languageCode] = baseFileName.split(".");
 
       const domainOrSubsidiary = await prisma.domain.findFirst({
         where: { code: domainCode },
       });
-      // domainCode === "OrgCode-7"
+      // domainCode === "NAT_2410"
       //   ? await prisma.subsidiary.findFirst({
       //       where: { code: domainCode },
       //     })
@@ -402,12 +404,30 @@ async function main() {
         const question = questions[i];
         const questionId = uuid.v4();
 
-        const originalQuestionId =
-          domainCode === "OrgCode-7"
+        if (question.text == null) {
+          continue;
+        }
+
+        let originalQuestionId =
+          domainCode === "NAT_2410"
             ? questionId
             : hqNatQuestions.find(
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
               )?.id || null;
+
+        // console.log(
+        //   "originalQuestionId",
+        //   question.originQuestionIndexi,
+        //   originalQuestionId
+        // );
+
+        // 국가별로 추가된 문제는 추가된 문제 자체가 베이스 퀴즈가 됨.
+        if (originalQuestionId == null) {
+          console.warn(
+            `Original question not found for file: ${fileName}, ${question.originQuestionIndexi}`
+          );
+          originalQuestionId = questionId;
+        }
 
         const stageIndex = question.stage - 1;
         const imageIndex = i % charImages[stageIndex].length;
@@ -431,10 +451,13 @@ async function main() {
               category: question.category,
               specificFeature: question.specificFeature ?? "",
               importance: question.importance,
-              enabled: question.enabled === 1 || question.enabled === "1",
+              enabled:
+                question.enabled === 1 || question.enabled === "1"
+                  ? true
+                  : false,
               product: question.product,
               questionType: question.questionType,
-              order: question.orderInStage ?? 0,
+              order: question.orderInStage ?? question.originQuestionIndex,
               backgroundImageId: bgImages[stageIndex].id,
               characterImageId: charImages[stageIndex][imageIndex].id,
               // backgroundImageUrl: bgImages[stageIndex],
@@ -464,27 +487,36 @@ async function main() {
           }
         }
 
-        console.log("item", item);
+        // console.log("item", item);
 
         createdQuestions.push(item);
-        if (domainCode === "OrgCode-7") {
+        if (domainCode === "NAT_2410") {
           hqNatQuestions.push(item);
         }
+      }
+      const savedQuizSet = await prisma.quizSet.findFirst({
+        where: {
+          campaignId: campaign.id,
+          domainId: domainOrSubsidiary.id,
+        },
+      });
+      if (savedQuizSet) {
+        continue;
       }
 
       const quizSet = await prisma.quizSet.create({
         data: {
           campaignId: campaign.id,
           domainId: domainOrSubsidiary.id,
-          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
+          // domainId: domainCode === "NAT_2410" ? null : domainOrSubsidiary.id,
           // subsidiaryId:
-          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
+          //   domainCode === "NAT_2410" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
       });
 
-      console.log("quizSet", quizSet);
+      // console.log("quizSet", quizSet);
 
       const stages = [
         ...new Set(questions.map((question) => question.stage)),
@@ -500,8 +532,8 @@ async function main() {
 
         stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
-        const questionIds = stageQuestions.map((question) => {
-          if (domainCode === "OrgCode-7") {
+        let questionIds = stageQuestions.map((question) => {
+          if (domainCode === "NAT_2410") {
             const q: any = createdQuestions.find(
               (q: any) => q.originalIndex === question.originQuestionIndex
             );
@@ -510,11 +542,22 @@ async function main() {
             const hqQuestion: any = hqNatQuestions.find(
               (hqQ: any) => hqQ.originalIndex === question.originQuestionIndex
             );
-            return hqQuestion?.id;
+
+            if (hqQuestion) {
+              return hqQuestion.id;
+            }
+
+            const q: any = createdQuestions.find(
+              (q: any) => q.originalIndex === question.originQuestionIndex
+            );
+
+            return q?.id;
           }
         });
 
-        console.log("questionIds", questionIds);
+        // questionIds = questionIds.filter((id) => id !== undefined);
+
+        console.log("questionIds", domainCode, stage, questionIds.length);
 
         // const isLastStage = i === stages.length - 1;
         let isBadgeStage = false;
@@ -545,7 +588,7 @@ async function main() {
           // badgeImageUrl = "/certification/s25/images/badge/badge_stage4.png";
         }
 
-        console.log("activityId", domainCode, activityIds);
+        // console.log("activityId", domainCode, activityIds);
 
         await prisma.quizStage.create({
           data: {
@@ -563,6 +606,9 @@ async function main() {
           },
         });
       }
+
+      console.log("complete quizSet", quizSetCount, baseFileName);
+      quizSetCount++;
     }
   };
 
