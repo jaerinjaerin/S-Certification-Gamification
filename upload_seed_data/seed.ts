@@ -354,7 +354,7 @@ async function main() {
     const hqNatQuestions: any[] = [];
     let quizSetCount = 0;
     for (const fileName of files.sort((a, b) =>
-      a.includes("NAT_2410") ? -1 : 1
+      a.includes("OrgCode-7") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
       // const domainCode = fileName.split("|")[0];
@@ -368,7 +368,7 @@ async function main() {
       const domainOrSubsidiary = await prisma.domain.findFirst({
         where: { code: domainCode },
       });
-      // domainCode === "NAT_2410"
+      // domainCode === "OrgCode-7"
       //   ? await prisma.subsidiary.findFirst({
       //       where: { code: domainCode },
       //     })
@@ -409,7 +409,7 @@ async function main() {
         }
 
         let originalQuestionId =
-          domainCode === "NAT_2410"
+          domainCode === "OrgCode-7"
             ? questionId
             : hqNatQuestions.find(
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
@@ -490,7 +490,7 @@ async function main() {
         // console.log("item", item);
 
         createdQuestions.push(item);
-        if (domainCode === "NAT_2410") {
+        if (domainCode === "OrgCode-7") {
           hqNatQuestions.push(item);
         }
       }
@@ -508,9 +508,9 @@ async function main() {
         data: {
           campaignId: campaign.id,
           domainId: domainOrSubsidiary.id,
-          // domainId: domainCode === "NAT_2410" ? null : domainOrSubsidiary.id,
+          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
           // subsidiaryId:
-          //   domainCode === "NAT_2410" ? domainOrSubsidiary.id : null,
+          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
@@ -533,7 +533,7 @@ async function main() {
         stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
         let questionIds = stageQuestions.map((question) => {
-          if (domainCode === "NAT_2410") {
+          if (domainCode === "OrgCode-7") {
             const q: any = createdQuestions.find(
               (q: any) => q.originalIndex === question.originQuestionIndex
             );
