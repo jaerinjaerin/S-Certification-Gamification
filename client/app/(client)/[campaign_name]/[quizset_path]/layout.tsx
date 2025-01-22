@@ -71,7 +71,7 @@ export default async function SumtotalUserLayout({
 // }
 
 async function fetchPrivacyContent(domainCode: string) {
-  const url = `https://assets-stage.samsungplus.net/certification/s25/jsons/privacy/eu-privacy.json`;
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/privacy/${domainCode}.json`;
   return await fetchContent(url);
 }
 
