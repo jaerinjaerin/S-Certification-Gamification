@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT a key improvement of the Galaxy S24 Series compared to the S23 Series?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to Search with Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "Photo Assist & Nightography Zoom",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gaming Performance",
+        "answerStatus": 0
+      },
+      {
+        "text": "Number of Cameras",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT related to the Galaxy S24 Series' design?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Premium Design",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleek Edge Design",
+        "answerStatus": 1
+      },
+      {
+        "text": "Flat Display & Titanium Frame(Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Timeless color collections derived from nature’s enduring solidity",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following are the Galaxy S24 Series' features related to enhanced durability? (Select two)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "IPX8-rated Water Resistance",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor(Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Frame(Galaxy S24 Ultra) & Enhanced Armor Aluminum Frame(Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Flex Hinge",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT a use case of Circle to Search with Google?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Record meetings and get a quick summary.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Find fashion items while watching videos.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Discover a travel spot you saw on the feed.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Look up a recipe for a dish you saw on YouTube.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\n ________ can translate incoming and outgoing chats in real time on various messaging apps, and tailor the tone of your words to your situation as Professional, Casual, Social, Polite and Emojify.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chat Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Note Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is the correct explanation of Live Translate?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "It is a real-time voice translation both ways.",
+        "answerStatus": 1
+      },
+      {
+        "text": "It works with 3rd party apps without switching to another translation app.",
+        "answerStatus": 0
+      },
+      {
+        "text": "It automatically aligns your handwriting.",
+        "answerStatus": 0
+      },
+      {
+        "text": "It organizes notes to be more structured.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT related to Note Assist and Samsung Note features newly added to Galaxy S24 Series?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Automatically aligning & spacing S Pen handwriting",
+        "answerStatus": 0
+      },
+      {
+        "text": "Organizing notes to be more structured",
+        "answerStatus": 0
+      },
+      {
+        "text": "Generating covers with summary based on your notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Getting highlights of the most important points",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "What is the highest available resolution of photo with optical 5x zoom from Galaxy S24 Ultra camera?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\n________ of Galaxy S24 Ultra for brighter, clearer zoom photos even at night",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1.6x Larger Pixel",
+        "answerStatus": 1
+      },
+      {
+        "text": "Wider OIS",
+        "answerStatus": 0
+      },
+      {
+        "text": "Single Take",
+        "answerStatus": 0
+      },
+      {
+        "text": "New Adaptive Pixel",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\n________ can fill the background while straightening(tilting) images and move/resize objects in photos with auto-fill.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Night Portrait",
+        "answerStatus": 0
+      },
+      {
+        "text": "Photo Assist(Generative Edit)",
+        "answerStatus": 1
+      },
+      {
+        "text": "200 MP High-resolution",
+        "answerStatus": 0
+      },
+      {
+        "text": "Note Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "How can you activate Edit Suggestion of Photo Assist feature on Galaxy S24 Series' Gallery app for instant photo editing(Portrait effect, Remaster, Remove reflection and more)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Download and open the photo edit app, and apply the effects one by one.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tap the edit icon, and tap the Photo Assist icon.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tap the icon or just swipe up the photo, and you can check the suggested edit options.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Open the social app, and choose the filter you want to apply on the photo.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is the least related to Galaxy S24 Series' camera features on social media apps' camera?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "HDR Photos",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nightography: Brighter night photos and videos with reduced noise",
+        "answerStatus": 0
+      },
+      {
+        "text": "Space Zoom",
+        "answerStatus": 1
+      },
+      {
+        "text": "Video Stabilizer",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT an improvement of the Galaxy S24 Series' Gaming Performance?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Fastest Processor Ever in Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Larger Vapor Chamber(1.9x for Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI Slow Motion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Enhanced Ray Tracing Technology",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT an element of the Galaxy S24 Series' Immersive Display?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Larger Screen with Slimmer Bezels",
+        "answerStatus": 0
+      },
+      {
+        "text": "Object-aware Engine",
+        "answerStatus": 1
+      },
+      {
+        "text": "HBM Peak 2600 nits",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vision Booster",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following are the features related to the Longer Battery Life of the Galaxy S24 Series? (Select two)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Larger Battery Capacity",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "Generative Wallpaper",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptive Refresh Rate of Display",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is correct for memory specification by each Galaxy S24 Series model?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is the least related to the Galaxy S24 Series' One UI 6?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Eye-catching Quick Panel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Improved Emoji Design",
+        "answerStatus": 0
+      },
+      {
+        "text": "Link to Windows",
+        "answerStatus": 1
+      },
+      {
+        "text": "Camera Widget & Weather Insight Widget",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\n________ is perfectly compatible sharing between all phones, tablets and PCs(Android, Windows, etc.).",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a benefit of Samsung Account?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enriched AI experience to make life effortless",
+        "answerStatus": 0
+      },
+      {
+        "text": "Find your lost phone even if it's offline",
+        "answerStatus": 0
+      },
+      {
+        "text": "Access & sync all your Samsung services and devices",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is the most appropriate introduction of the Galaxy Watch6 when cross-selling with the Galaxy S24 Series?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Change Galaxy S24 Series' the lock screen & AOD to express your style by it.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Capture photos and videos directly from it.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Enjoy a comfortable viewing experience with it.",
+        "answerStatus": 0
+      },
+      {
+        "text": "It automatically switches the sound to the active device.",
+        "answerStatus": 0
+      }
+    ]
+  }
+]

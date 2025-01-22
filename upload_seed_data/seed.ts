@@ -345,7 +345,7 @@ async function main() {
     console.log("badgeImages", badgeImages);
 
     const campaign = await prisma.campaign.findFirst();
-    const folderPath = path.join(process.cwd(), "data", "questions");
+    const folderPath = path.join(process.cwd(), "data", "questions", "s24");
     const files = fs.readdirSync(folderPath);
 
     console.log("files", files);
