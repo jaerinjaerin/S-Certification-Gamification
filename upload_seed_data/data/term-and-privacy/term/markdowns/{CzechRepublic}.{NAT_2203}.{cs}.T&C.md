@@ -1,14 +1,12 @@
+
+
 25 Podmínky použití certifikace Galaxy AI Expert
-
-
 
 Níže uvedené Podmínky použití a naše Zásady ochrany osobních údajů (dále jen „podmínky“) platí mezi společností Samsung Electronics Co., Ltd., což je korejská společnost se sídlem na adrese 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Korejská republika (včetně jejích poboček, dále jen „Samsung“, „my“ nebo „nás“) a vámi a reguluje váš přístup nebo používání webové stránky, mobilní aplikace, materiálů a služeb (definovaných níže). Před přístupem nebo používáním SamsungPlus (dále jen „webová stránka“ nebo „mobilní zařízení“) si prosím pozorně přečtěte tyto podmínky. Pokud s kteroukoli podmínkou nesouhlasíte, nepoužívejte webovou stránku ani mobilní aplikaci. Použitím webové stránky a mobilní aplikace vyjadřujete váš souhlas se všemi podmínkami.
 
 Obecné použití a omezení
 
 Veškerý obsah poskytovaný společností Samsung na webové stránce nebo v mobilní aplikaci (mimo jiné včetně dat, informací, dokumentů, textů, designu, ochranných známek, log, grafiky, obrázků, ikon, zvuků, videí, kódu a softwaru) („materiály“) je výhradním vlastnictvím společnosti Samsung, jejích poskytovatelů licencí a je chráněn autorskými právy, ochrannými známkami a dalšími příslušnými zákony. K materiálům na webové stránce nebo v mobilní aplikaci smíte přistupovat výhradně pro účely školení o podpoře služby SamsungPlus a v souladu s výslovným oprávněním společnosti Samsung, a to za předpokladu, že nezměníte ani neodstraníte žádná autorská práva, ochranné známky ani jiná prohlášení o vlastnictví uvedená v materiálech, které používáte, kopírujete, stahujete nebo tisknete.
-
-
 
 Souhlasíte s tím, že nebudete používat, zobrazovat, reprodukovat, přenášet, upravovat, distribuovat, rozšiřovat, prodávat, publikovat, vytvářet odvozená díla, vysílat, šířit ani žádným způsobem zneužívat žádné materiály, a to jako celek nebo jejich část, e-mailem nebo jinými prostředky, pro účely jiné než zde uvedené, a na základě výslovného oprávnění společnosti Samsung. Jakékoli neoprávněné použití webové stránky, mobilní aplikace, materiálů nebo služeb může porušovat autorská práva, ochranné známky nebo jakékoli jiné příslušné zákony.
 
@@ -18,35 +16,23 @@ Webovou stránku ani mobilní aplikaci, žádné materiály ani služby poskytov
 
 Souhlasíte s tím, že bez předchozího písemného souhlasu společnosti Samsung nebudete „rámovat“ ani „zrcadlit“ webovou stránku, mobilní aplikaci ani žádnou část materiálů nebo služeb na jakémkoli jiném serveru nebo na internetovém zařízení. Kromě toho nesmíte žádnou část materiálů nebo služeb používat v žádných meta tazích ani v jiném „skrytém textu“ bez předchozího písemného souhlasu společnosti Samsung.
 
-
-
-Jak se zúčastnit certifikace Galaxy AI Expert 
-
-
+Jak se zúčastnit certifikace Galaxy AI Expert
 
 Uživatelé Samsung+
 
 Po přihlášení do aplikace Samsung+ máte přístup k modulům školení. Účast v kvízu je povolena až po absolvování tohoto školení. Jakmile projdete všemi fázemi kvízu, získáte online odznak Galaxy AI Expert.
 
-
-
 Uživatelé, kteří nejsou uživateli Samsung+
 
 Pokud nepoužíváte aplikaci Samsung+, musíte nejprve absolvovat online nebo offline školení poskytované vaší místní pobočkou. Po dokončení školení se můžete zúčastnit kvízu prostřednictvím odkazu, který společnost Samsung poskytne vaší pobočce. Jakmile projdete všemi fázemi kvízu, získáte online odznak Galaxy AI Expert.
-
-
 
 Opakovat a dokončit kvíz můžete vícekrát, ale bude vám udělen pouze jeden odznak.
 
 Na každé úrovni můžete mít maximálně pět nesprávných odpovědí. Pokud tohoto limitu dosáhnete před dokončením fáze, musíte tuto fázi znovu zahájit první otázkou. Certifikační kvíz je třeba vyplnit individuálně. Jakékoli podvádění bude mít za následek diskvalifikaci a neplatnost výsledků kvízu. Certifikace Galaxy AI Expert je bezplatná.
 
-
-
 Obsah třetích stran a odkazy na jiné webové stránky
 
 Webová stránka nebo mobilní aplikace může obsahovat obsah třetích stran nebo odkazy na jiné webové stránky nebo mobilní aplikace. Vzhledem k tomu, že nad webovými stránkami ani mobilními aplikacemi třetích stran nemáme žádnou kontrolu, potvrzujete a souhlasíte s tím, že neneseme odpovědnost za dostupnost takových webových stránek a mobilních aplikací a že nepropagujeme ani nejsme odpovědní za žádný obsah, reklamy, služby, produkty nebo jiné materiály poskytované na takových webových stránkách nebo v mobilních aplikacích nebo dostupné jejich prostřednictvím. Dále potvrzujete a souhlasíte s tím, že společnost Samsung nenese odpovědnost, přímo ani nepřímo, za žádné škody nebo ztráty způsobené nebo údajně způsobené z důvodu nebo v souvislosti s použitím nebo spoléháním se na jakýkoli obsah, reklamu, služby, produkty nebo jiné materiály poskytované na takových webových stránkách a v mobilních aplikacích nebo dostupné jejich prostřednictvím. Na veškeré takové webové stránky a mobilní aplikace se vztahují samostatné podmínky použití.
-
-
 
 Kromě toho platí, že odkaz na webovou stránku třetí strany neznamená, že společnost Samsung přijímá jakoukoli odpovědnost za obsah nebo použití takové webové stránky. Je třeba, abyste sami přijali opatření, která zajistí, že nic z toho, co se rozhodnete používat, nebude obsahovat žádné položky, jako například viry, červy, trojské koně a další škodlivé položky.
 
@@ -57,10 +43,6 @@ VÝSLOVNĚ POTVRZUJETE A SOUHLASÍTE S TÍM, ŽE POUŽITÍ WEBOVÉ STRÁNKY, MO
 OMEZENÍ ODPOVĚDNOSTI
 
 DO MAXIMÁLNÍ MÍRY POVOLENÉ ZÁKONEM A ZA ŽÁDNÝCH OKOLNOSTÍ, VČETNĚ NEDBALOSTI, SPOLEČNOST SAMSUNG NEPONESE ODPOVĚDNOST, NA ZÁKLADĚ SMLOUVY NEBO PŘEČINU, ZA ŽÁDNÉ PŘÍMÉ, NEPŘÍMÉ, NÁHODNÉ, ZVLÁŠTNÍ NEBO NÁSLEDNÉ ZMĚNY, ZTRÁTU ZISKU, PŘÍJMŮ, ÚROKŮ, ZAKÁZEK NEBO POŠKOZENÍ DAT, POPLATKY PRO PRÁVNÍ ZÁSTUPCE, VÝDAJE ANI JAKÉKOLI JINÉ ŠKODY VYPLÝVAJÍCÍ NEBO SOUVISEJÍCÍ S INFORMACEMI UVEDENÝMI NA WEBOVÉ STRÁNCE NEBO V MOBILNÍ APLIKACI, MATERIÁLECH NEBO SLUŽBÁCH NEBO VYPLÝVAJÍCÍ Z JEJICH POUŽITÍ, KTERÉ VY NEBO JAKÁKOLI TŘETÍ STRANA POUŽÍVÁTE NA WEBOVÉ STRÁNCE NEBO V MOBILNÍ APLIKACI, A TO I V PŘÍPADĚ, ŽE SPOLEČNOST SAMSUNG O MOŽNOSTI TAKOVÝCH ŠKOD BYLA INFORMOVÁNA.
-
-
-
-
 
 Odškodnění
 
@@ -77,8 +59,6 @@ Tyto podmínky se řídí zákony jurisdikce, ve které jste rezidentem, bez ohl
 Obecné
 
 Pokud se společnosti Samsung nepodaří uplatnit jakákoli práva nebo ustanovení podmínek, nezříká se tím těchto práv nebo ustanovení, pokud společnost Samsung písemně nepotvrdí a neodsouhlasí opak. Podmínky (včetně jakýchkoli úprav, aktualizací a dodatků) ustanovují celou smlouvu mezi vámi a společností Samsung a nahrazují všechna předchozí a současná ujednání, diskuze nebo dohody, pokud proběhly, mezi vámi a společností Samsung v souvislosti s touto záležitostí. Souhlasíte, že tyto podmínky můžeme uložit třetí straně na základě našeho výhradního rozhodnutí. Názvy oddílů slouží pouze pro referenci a žádným způsobem nedefinují, neomezují, neustanovují ani nepopisují rozsah jednotlivých oddílů. Pokud budou jakákoli ustanovení v těchto podmínkách nebo jejich uplatnění jakoukoli stranou nebo za jakýchkoli okolností kterýmkoli soudem nebo úřadem soudního typu kompetentní jurisdikce prohlášeny nebo považovány za neplatné, nezákonné nebo v každém ohledu nevymahatelné (dále jen „problematické ustanovení“), (i) je třeba takové problematické ustanovení opravit, aby bylo možné v co největší míře dosáhnout stejného účelu zamýšleného problematickým ustanovením, do maximální míry povolené zákonem; (ii) platnost, zákonnost a vymahatelnost zbývajících ustanovení nebo částí ustanovení zde uvedených nebude žádným způsobem ovlivněna ani poškozena a (iii) ostatní podmínky zůstanou platné a vymahatelné do maximální míry povolené příslušným zákonem. Pokud soud kompetentní jurisdikce shledá jakékoli ustanovení podmínek neplatným, zůstanou zbývající ustanovení v plné platnosti a účinnosti.
-
-
 
 Datum: [22. 1. 2025]
 

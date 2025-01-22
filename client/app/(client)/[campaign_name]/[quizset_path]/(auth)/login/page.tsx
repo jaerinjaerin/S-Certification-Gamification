@@ -1,5 +1,6 @@
 "use client";
 
+import PolicyFooter from "@/components/dialog/privacy-and-term";
 import { Button } from "@/components/ui/button";
 import useLoader from "@/components/ui/loader";
 import Spinner from "@/components/ui/spinner";
@@ -19,8 +20,8 @@ export default function Login() {
   const { loading, setLoading, renderLoader } = useLoader();
   const processSignIn = async () => {
     setLoading(true);
-    const result = await signIn("sumtotal");
-    console.log("result", result);
+    await signIn("sumtotal");
+    // console.log("result", result);
   };
 
   if (status === "loading") {
@@ -78,6 +79,7 @@ export default function Login() {
                 <span>{translation("login")}</span>
               </Button>
             </div>
+            <PolicyFooter />
           </div>
         </div>
       </div>

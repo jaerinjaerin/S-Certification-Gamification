@@ -1,14 +1,12 @@
+
+
 Términos de uso de la Certificación como experto en Galaxy AI de 2025
-
-
 
 Samsung Electronics Co., Ltd., corporación de Corea del Sur con sede en 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Corea del Sur (lo que incluye sus filiales, “Samsung”, “nosotros” o “nos”), y usted suscriben los Términos de uso y la Política de privacidad expuestos a continuación (los “Términos”), que rigen su acceso al Sitio web, a la Aplicación para dispositivos móviles, a los Materiales y a los Servicios (como se define más adelante) y su uso de ese Sitio web, esa Aplicación, esos Materiales y esos Servicios. Lea los Términos detenidamente antes de acceder a SamsungPlus (“Sitio web” o “Materiales para dispositivos móviles”) o usarlo. Si no acepta alguno de los Términos, no acceda al Sitio web ni a los Materiales para dispositivos móviles ni los utilice de otras formas. Su uso del Sitio web y los Materiales para dispositivos móviles constituye su aceptación de los Términos.
 
 Uso general y restricciones
 
 Todo el contenido facilitado por Samsung en el Sitio web o en los Materiales para dispositivos móviles (lo que incluye, por ejemplo, datos, información, documentos, textos, diseño, marcas, logotipos, gráficos, imágenes, iconos, sonido, vídeo, código y software) (los “Materiales”) es propiedad exclusiva de Samsung, sus licenciantes o sus proveedores de contenido y está protegido por leyes sobre derechos de autor y marcas y por otras leyes aplicables. Puede acceder a los Materiales que contienen el Sitio web o los Materiales para dispositivos móviles únicamente para los fines de formación relacionados con la asistencia de SamsungPlus y previa autorización expresa de Samsung, siempre que no modifique ni elimine ningún aviso de derechos de autor o marca ni otros avisos de propiedad que aparezcan en los Materiales a los que acceda o que copie, descargue o imprima.
-
-
 
 Se compromete a no utilizar, mostrar, reproducir, transmitir, modificar, distribuir, difundir, vender, publicar, emitir ni poner en circulación el Material, a no crear obras derivadas de él y a no aprovecharlo de ninguna manera, ni total ni parcialmente, ni por correo electrónico ni por otros medios, con ningún otro fin que los aquí expuestos y previa autorización expresa de Samsung. Cualquier uso no autorizado del Sitio web, los Materiales para dispositivos móviles, los Materiales o los Servicios puede infringir leyes sobre derechos de autor y marcas y otras leyes aplicables.
 
@@ -18,35 +16,23 @@ No puede utilizar el Sitio web, los Materiales para dispositivos móviles ni los
 
 Se compromete a no “enmarcar” ni “reflejar” el Sitio web ni los Materiales para dispositivos móviles ni ninguna parte de los Materiales o los Servicios en servidores o dispositivos conectados a Internet sin el consentimiento previo por escrito de Samsung. Tampoco puede utilizar ninguna parte de los Materiales o los Servicios en etiquetas meta ni en otros “textos ocultos” sin el consentimiento previo por escrito de Samsung.
 
-
-
-Cómo participar en la Certificación como experto en Galaxy AI 
-
-
+Cómo participar en la Certificación como experto en Galaxy AI
 
 Usuarios de Samsung+
 
 Tras iniciar sesión en la aplicación Samsung+, puede acceder a los módulos de formación. La participación en el examen solo se permite tras completar la formación. Una vez que haya superado todas las fases del examen, recibirá el distintivo de Experto en Galaxy AI online.
 
-
-
 No usuarios de Samsung+
 
 Si no es usuario de la aplicación Samsung+, primero debe completar la formación en línea o presencial impartida por la filial local. Una vez completada la formación, podrá participar en el examen a través del enlace que Samsung facilita a su filial. Una vez que haya superado todas las fases del examen, recibirá el distintivo de Experto en Galaxy AI online.
-
-
 
 Puede repetir y aprobar el examen varias veces, pero solo se concederá un distintivo.
 
 Cada fase del examen tiene un límite de cinco respuestas incorrectas. Si se alcanza el límite antes de finalizar una fase, se debe comenzar dicha fase de nuevo desde la primera pregunta. El examen de certificación se debe completar de forma individual. Cualquier tipo de trampa supondrá la descalificación y la anulación de los resultados del examen. La Certificación como experto en Galaxy AI es gratuita.
 
-
-
 Contenido de terceros y vínculos a otros sitios web
 
 El Sitio web y los Materiales para dispositivos móviles pueden contener contenido de terceros o vínculos a otros sitios web o a otras aplicaciones para dispositivos móviles. Dado que no tenemos control sobre sitios web o aplicaciones para dispositivos móviles de terceros, reconoce y acepta que no somos responsables de la disponibilidad de dichos sitios web y aplicaciones para dispositivos móviles y que no respaldamos el contenido, la publicidad, los servicios, los productos ni otros materiales que estén en los mencionados sitios web y aplicaciones para dispositivos móviles o que estén disponibles en estos sitios web o estas aplicaciones ni somos responsables de ese contenido, esa publicidad, esos servicios, esos productos ni esos materiales. También reconoce o acepta que Samsung no será responsable, ni de forma directa ni de forma indirecta, de daños o pérdidas causados o supuestamente causados por el uso de contenido, publicidad, servicios, productos u otros materiales que estén en los mencionados sitios web y aplicaciones para dispositivos móviles o que estén disponibles en estos sitios web o estas aplicaciones o por la confianza en ese contenido, esa publicidad, esos servicios, esos productos o esos materiales ni de daños o pérdidas relacionados o supuestamente relacionados con ese uso o esa confianza. Todos estos sitios web y aplicaciones para dispositivos móviles se rigen por sus propios términos de uso.
-
-
 
 Además, un vínculo a un sitio web de terceros no significa que Samsung acepte responsabilidad alguna por el contenido o el uso de dicho sitio web. Le corresponde a usted adoptar precauciones para garantizar que en lo que utilice no haya virus, gusanos, troyanos ni otros elementos de naturaleza destructiva.
 
@@ -57,10 +43,6 @@ RECONOCE Y ACEPTA EXPRESAMENTE QUE USA EL SITIO WEB, LOS MATERIALES PARA DISPOSI
 LIMITACIÓN DE RESPONSABILIDADES
 
 EN LA MEDIDA EN QUE LA LEY LO PERMITA, SAMSUNG NO SERÁ RESPONSABLE BAJO NINGUNA CIRCUNSTANCIA (LO QUE INCLUYE LA NEGLIGENCIA), YA SEA EN VIRTUD DE UN CONTRATO O DE UN ACUERDO EXTRACONTRACTUAL, POR DAÑOS DIRECTOS, INDIRECTOS, INCIDENTALES, ESPECIALES O CONSECUENTES, LUCRO CESANTE, PÉRDIDA DE INGRESOS O INTERÉS, PÉRDIDA COMERCIAL, CORRUPCIÓN DE DATOS, HONORARIOS DE ABOGADO, GASTOS U OTROS DAÑOS DERIVADOS DE LA INFORMACIÓN CONTENIDA EN EL SITIO WEB O LOS MATERIALES PARA DISPOSITIVOS MÓVILES O EN LOS MATERIALES O LOS SERVICIOS A LOS QUE ACCEDAN USTED O UN TERCERO EN DICHO SITIO WEB O EN LAS APLICACIONES PARA DISPOSITIVOS MÓVILES, RELACIONADOS CON DICHA INFORMACIÓN O RESULTANTES DEL USO DEL SITIO WEB, LOS MATERIALES PARA DISPOSITIVOS MÓVILES O LOS MATERIALES O LOS SERVICIOS A LOS QUE ACCEDAN USTED O UN TERCERO EN DICHO SITIO WEB O EN LAS APLICACIONES PARA DISPOSITIVOS MÓVILES, AUNQUE SAMSUNG CONOCIERA LA POSIBILIDAD DE QUE SE PRODUJERAN LOS DAÑOS MENCIONADOS.
-
-
-
-
 
 Exención de responsabilidad
 
@@ -77,8 +59,6 @@ Estos Términos se rigen por la jurisdicción de la región en la que usted resi
 Generalidades
 
 El hecho de que Samsung no ejerza un derecho o no haga cumplir una disposición de los Términos no constituye renuncia a dicho derecho o a dicha disposición a menos que Samsung reconozca y acepte esa renuncia por escrito. Los Términos (lo que incluye sus modificaciones, sus actualizaciones y sus complementos) constituyen la totalidad del acuerdo entre usted y Samsung y sustituyen a las negociaciones, las conversaciones y los acuerdos anteriores o contemporáneos, en caso de que existan, que haya entre usted y Samsung sobre la materia de estos Términos. Acepta que podemos ceder estos Términos a un tercero a nuestra entera discreción. Los títulos de las secciones solo sirven para facilitar la consulta y no definen, limitan, interpretan ni describen en modo alguno el alcance de dichas secciones. Si un tribunal o una autoridad cuasi judicial de la jurisdicción competente declaran o consideran que alguna disposición de los Términos o la aplicación de alguna disposición de los Términos a alguna parte o en alguna circunstancia son nulas, ilegales o inaplicables en algún sentido (la “Disposición ilícita”), (i) dicha Disposición ilícita se considerará modificada para conseguir, hasta donde sea posible, el mismo fin previsto por la Disposición ilícita, en la medida en que la ley lo permita; (ii) la validez, la legalidad y la aplicabilidad de las restantes disposiciones o de las partes de las disposiciones de estos Términos no se verán afectadas ni perjudicadas en modo alguno por dicha Disposición ilícita; y (iii) el resto de los Términos será válido y aplicable en la medida en que la ley lo permita. Si un tribunal de la jurisdicción competente estima que alguna disposición de los Términos no es válida, las restantes disposiciones conservarán toda su validez.
-
-
 
 Fecha [22/01/2025]
 

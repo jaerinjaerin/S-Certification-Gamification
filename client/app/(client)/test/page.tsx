@@ -58,7 +58,7 @@ export default function TestPage() {
         return;
       }
 
-      console.log("data", data);
+      // console.log("data", data);
       fetchUserPrimaryOrganization(foundPrimaryOrganization);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
@@ -88,7 +88,7 @@ export default function TestPage() {
   //     }
 
   //     const data = await response.json();
-  //     console.log("data", data);
+  //     // console.log("data", data);
   //   } catch (err: any) {
   //     setError(err.message || "An unexpected error occurred");
   //   } finally {
@@ -114,8 +114,8 @@ export default function TestPage() {
         throw new Error(errorData.message || "Failed to fetch user profile");
       }
 
-      const data = await response.json();
-      console.log("data", data);
+      await response.json();
+      // console.log("data", data);
       setMessage("토큰 갱신 완료");
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
@@ -151,7 +151,7 @@ export default function TestPage() {
         return;
       }
 
-      console.log("data", data);
+      // console.log("data", data);
 
       const text9 = data.data[0]?.optionalInfo.text9;
       if (text9 === "4" || text9 === "5" || text9 === "6") {
@@ -185,7 +185,7 @@ export default function TestPage() {
   //     }
 
   //     const data = await response.json();
-  //     console.log("fetchActivities data", data);
+  //     // console.log("fetchActivities data", data);
   //     setActivities(data.data); // Extract and store activities array
   //   } catch (err: any) {
   //     setError(err.message || "An unexpected error occurred");
@@ -218,7 +218,7 @@ export default function TestPage() {
         }
 
         const data = await response.json();
-        console.log(`Fetched activities: page=${offset}`, data);
+        // console.log(`Fetched activities: page=${offset}`, data);
 
         // Combine fetched activities with accumulated activities
         allActivities = [...allActivities, ...data.data];
@@ -230,7 +230,7 @@ export default function TestPage() {
         });
         allActivities = Array.from(activityMap.values());
 
-        console.log("allActivities", allActivities.length);
+        // console.log("allActivities", allActivities.length);
 
         // Check if we've fetched all pages
         if (allActivities.length >= data.pagination.total) {
@@ -292,7 +292,7 @@ export default function TestPage() {
   //       });
   //       allDomains = Array.from(domainMap.values());
 
-  //       console.log("allDomains", allDomains.length);
+  //       // console.log("allDomains", allDomains.length);
 
   //       // Check if we've fetched all pages
   //       if (allDomains.length >= data.pagination.total) {
@@ -303,7 +303,7 @@ export default function TestPage() {
   //       offset += 1;
   //     }
 
-  //     console.log(`Fetched allDomains`, allDomains);
+  //     // console.log(`Fetched allDomains`, allDomains);
   //     saveAsJson(allDomains, "allDomains.json");
 
   //     setDomains(allDomains); // Store all domains
@@ -358,7 +358,7 @@ export default function TestPage() {
   //     }
 
   //     const data = await response.json();
-  //     console.log("fetchJobs data", data);
+  //     // console.log("fetchJobs data", data);
   //     setDomains(data.data); // Extract and store activities array
   //   } catch (err: any) {
   //     setError(err.message || "An unexpected error occurred");
@@ -392,8 +392,8 @@ export default function TestPage() {
         throw new Error(errorData.message || "Failed to fetch activities");
       }
 
-      const data = await response.json();
-      console.log("data", data);
+      await response.json();
+      // console.log("data", data);
       setLoading(false);
 
       fetchAllActivities();
@@ -428,7 +428,7 @@ export default function TestPage() {
       }
 
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
       if (data.status === "attended") {
         setResultActivity("Activity의 메달을 획득하였습니다.");
       }
@@ -469,7 +469,7 @@ export default function TestPage() {
       }
 
       const result = await response.json();
-      console.log("data", result);
+      // console.log("data", result);
       setApiResult(result);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
@@ -502,7 +502,7 @@ export default function TestPage() {
       }
 
       const result = await response.json();
-      console.log("data", result);
+      // console.log("data", result);
       setApiResult(result);
     } catch (err: any) {
       console.error(err);
@@ -545,7 +545,7 @@ export default function TestPage() {
       }
 
       const result = await response.json();
-      console.log("data", result);
+      // console.log("data", result);
       setApiResult(result);
     } catch (err: any) {
       console.error(err);
@@ -576,7 +576,7 @@ export default function TestPage() {
   //     }
 
   //     const result = await response.json();
-  //     console.log("data", result);
+  //     // console.log("data", result);
   //     setApiResult(result);
   //   } catch (err: any) {
   //     console.error(err);
@@ -611,7 +611,7 @@ export default function TestPage() {
   //     }
 
   //     const result = await response.json();
-  //     console.log("data", result);
+  //     // console.log("data", result);
   //     setApiResult(result);
   //   } catch (err: any) {
   //     console.error(err);
@@ -621,17 +621,17 @@ export default function TestPage() {
   //   }
   // };
 
-  console.log("session", sessionStatus);
+  // console.log("session", sessionStatus);
 
   if (sessionStatus === "loading") {
     return <p>Loading...</p>;
   }
 
   const processSignIn = async () => {
-    const result = await signIn("sumtotal", {
+    await signIn("sumtotal", {
       callbackUrl: `/test`,
     });
-    console.log("result", result);
+    // console.log("result", result);
   };
 
   if (sessionStatus === "unauthenticated") {

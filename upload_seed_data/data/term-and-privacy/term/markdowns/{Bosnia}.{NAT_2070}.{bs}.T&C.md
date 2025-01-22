@@ -1,6 +1,6 @@
+
+
 Uslovi korištenja za Galaxy AI Ekspert Sertifikaciju 2025
-
-
 
 Ovi Uslovi korištenja zajedno sa našim propisima o privatnosti koji su navedeni u nastavku (Uslovi) zaključuju se između kompanije Samsung Electronics Co., Ltd., korejske korporacije sa sjedištem na adresi 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republika Koreja (uključujući njene podružnice, Samsung, mi ili nas) i vas, i uređuje vaš pristup ili korištenje web-lokacije, aplikacije Mobile, materijala i usluga (kao što je definisano u nastavku). Molimo vas da pažljivo pročitate Uslove prije nego pristupite ili koristite SamsungPlus (web-lokacija ili Mobile). Ako se ne slažete sa bilo kojim od ovih uslova, nemojte pristupati ili na drugi način koristiti web-lokaciju i Mobile. Vaša upotreba web-lokacije i Mobile-a predstavlja vašu saglasnost sa uslovima.
 
@@ -16,35 +16,23 @@ Ne smijete da koristite web-lokaciju ili Mobile, bilo koji materijal ili bilo ko
 
 Slažete se da nećete „frejmovati“ ili „preslikavati“ web-lokaciju ili Mobile ili bilo koji dio materijala ili usluga na bilo kom drugom serveru ili uređaju zasnovanom na internetu bez prethodne pismene saglasnosti kompanije Samsung. Dalje, ne smete da koristite bilo koji dio materijala ili usluga u bilo kojoj meta oznaci ili bilo kojem drugom skrivenom tekstu bez prethodne pismene saglasnosti kompanije Samsung.
 
-
-
-Kako učestvovati u Galaxy AI Ekspert Sertifikaciji 
-
-
+Kako učestvovati u Galaxy AI Ekspert Sertifikaciji
 
 Samsung+ korisnici
 
 Nakon prijave u aplikaciju Samsung+, možete pristupiti modulima za obuku. Učešće u kvizu dozvoljeno je samo nakon završene obuke. Kada uspješno završite sve faze kviza, dobit ćete Galaxy AI Ekspert online značku.
 
-
-
 Samsung+ nekorisnici
 
 Ako ne koristite aplikaciju Samsung+, prvo morate završiti online ili offline obuku koju pruža vaša lokalna podružnica. Nakon završene obuke, možete učestvovati u kvizu putem linka koji Samsung dostavlja vašoj podružnici. Kada uspješno završite sve faze kviza, dobit ćete Galaxy AI Ekspert online značku.
-
-
 
 Kviz možete ponavljati i prolaziti više puta, ali će biti dodijeljen samo jedan bedž.
 
 Svaka faza kviza ima ograničenje od pet netačnih odgovora. Ako dosegnete ovo ograničenje prije završetka određene faze, ta faza mora biti ponovo započeta od prvog pitanja. Kviz za sertifikaciju mora se završiti individualno. Svaka prevara rezultirat će diskvalifikacijom i poništavanjem rezultata kviza. Galaxy AI Ekspert Sertifikacija je besplatna.
 
-
-
 Sadržaj trećih strana i veze do drugih web-lokacija
 
 Web-lokacija ili Mobile mogu sadržavati sadržaj trećih strana ili linkove na druge web-lokacije ili mobilne aplikacije. Pošto nemamo kontrolu nad web-lokacijama trećih strana ili aplikacijama za mobilne uređaje, prihvaćate i slažete se da nismo odgovorni za dostupnost takvih web-lokacija ili aplikacija za mobilne uređaje i ne podržavamo i ne odgovaramo za bilo koji sadržaj, oglašavanje, usluge, proizvode ili druge materijale na ili dostupne sa takvih web-lokacija ili aplikacija za mobilne uređaje. Takođe prihvaćate ili se slažete da kompanija Samsung neće biti odgovorna, direktno ili indirektno, za štetu ili gubitak koji je prouzrokovan ili navodno izazvan od ili u vezi sa korištenjem ili oslanjanjem na bilo koji sadržaj, oglašavanje, usluge, proizvode ili druge materijale na ili dostupne sa takvih web-lokacija ili aplikacija za mobilne uređaje. Sve takve web-lokacije i aplikacije za mobilne uređaje podliježu posebnim uslovima korištenja.
-
-
 
 Osim toga, veza sa web-lokacijom treće strane ne znači da kompanija Samsung prihvata bilo kakvu odgovornost za sadržaj ili upotrebu takve web-lokacije. Na vama je da preduzmete mjere predostrožnosti kako biste bili sigurni da ono što izaberete za vašu upotrebu nema stvari kao što su virusi, crvi, trojanci i druge stvari destruktivne prirode.
 
@@ -55,10 +43,6 @@ IZRIČITO POTVRĐUJETE I SLAŽETE SE DA JE KORIŠTENJE WEB-LOKACIJE, MOBILE-A IL
 OGRANIČENJA OBAVEZA
 
 U NAJVEĆOJ MOGUĆOJ MJERI DOZVOLJENOJ ZAKONOM, NI POD KAKVIM OKOLNOSTIMA, UKLJUČUJUĆI I NEMAR, KOMPANIJA SAMSUNG NEĆE BITI ODGOVORNA, BILO UGOVORNO ILI DELIKTNO, ZA SVAKU DIREKTNU, INDIREKTNU, SLUČAJNU, POSEBNU ILI POSLJEDIČNU ŠTETU, GUBITAK DOBITI, PRIHODA, KAMATA, POSLOVANJA ILI OŠTEĆENJE PODATAKA, ADVOKATSKE NAKNADE, TROŠKOVE ILI BILO KOJE DRUGE ŠTETE KOJE PROISTIČU IZ ILI SU U VEZI SA BILO KOJOM INFORMACIJOM SADRŽANOM U ILI KAO REZULTAT UPOTREBE WEB-LOKACIJE I MOBILE-A, BILO KOJEM MATERIJALU ILI USLUZI KOJOJ PRISTUPITE VI ILI BILO KOJA TREĆOJ STRANI NA WEB-LOKACIJI I MOBILE-U, ČAK I AKO SU UPOZNATI SA MOGUĆNOŠĆU TAKVE ŠTETE.
-
-
-
-
 
 Obeštećenje
 
@@ -76,9 +60,5 @@ Opšte
 
 Neuspjeh kompanije Samsung da iskoristi bilo koje pravo ili odredbu u uslovima ne predstavlja odricanje od takvog prava ili odredbe, osim ukoliko to kompanija Samsung ne prizna i ne složi se sa tim u pisanoj formi. Uslovi (uključujući bilo koju izmjenu, ažuriranje i dopunu) čine cjelokupni ugovor između vas i kompanije Samsung i zamjenjuju sve prethodne ili istovremene pregovore, diskusije ili ugovore, ako ih ima, između vas i kompanije Samsung u vezi sa predmetom ovog dokumenta. Slažete se da se ovi uslovi mogu dodijeliti trećoj strani po našem isključivom izboru. Naslovi poglavlja su samo u referentne svrhe i ni na koji način ne definišu, ograničavaju, tumače ili opisuju obim tog odjeljka. Ako bilo koja odredba Ugovora ili njegova primjena na bilo koju stranu ili okolnosti bude proglašena ili presuđeno od strane bilo kog suda ili kvazi-sudskog organa nadležne nadležnosti da je, nevažeća, nezakonita ili neizvršiva u bilo kojem smislu (Prekršajna odredba), (i) takva prekršajna odredba će se smatrati izmjenjenom kako bi se, što je moguće više, ostvarila ista svrha predviđena prekršajnom odredbom, u meri u kojoj to dozvoljava zakon; (ii) valjanost, zakonitost i izvršivost preostalih odredbi ili dijela odredaba sadržanih u ovom tekstu neće na bilo koji način biti pogođeni ili oslabljeni; i (iii) ostatak uslova će biti važeći i izvršiv u mjeri u kojoj to dozvoljava važeći zakon. Ako nadležni sud smatra da je bilo koja odredba ovih uslova nevažeća, preostale odredbe ostaće na punoj snazi i učinku.
 
-
-
 Datum [22.01.2025]
-
-
 

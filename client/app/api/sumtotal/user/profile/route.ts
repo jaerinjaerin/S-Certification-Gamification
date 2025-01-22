@@ -13,7 +13,7 @@ export async function GET() {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("session", session);
+    // console.log("session", session);
 
     const account = await prisma.account.findFirst({
       where: {
@@ -21,7 +21,7 @@ export async function GET() {
       },
     });
 
-    console.log("account", account);
+    // console.log("account", account);
 
     if (!account) {
       return NextResponse.json(
@@ -58,7 +58,7 @@ export async function GET() {
       }
     );
 
-    console.log("response", response);
+    // console.log("response", response);
 
     if (!response.ok) {
       // const errorData = await response.json();
@@ -69,7 +69,7 @@ export async function GET() {
     }
 
     const data = await response.json();
-    console.log("data", data);
+    // console.log("data", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error: unknown) {
     console.error("Error fetching user profile:", error);

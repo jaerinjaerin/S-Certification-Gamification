@@ -71,10 +71,9 @@ export default function ScoreRankAnnouncement({
             </DialogHeader>
             <div
               className={cn(
-                "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium",
+                "flex flex-col gap-4 text-sm text-[#4E4E4E] font-one font-medium max-h-[50svh] overflow-hidden overflow-y-scroll",
                 isArabic && "text-right",
                 isMyanmar && "leading-9"
-                // TODO: DialogContent 스크롤로 변경
               )}
             >
               <div>
@@ -94,7 +93,9 @@ export default function ScoreRankAnnouncement({
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant={"primary"}>{translation("ok")}</Button>
+                <Button variant={"primary"}>
+                  <span>{translation("ok")}</span>
+                </Button>
               </DialogClose>
 
               <DialogClose className="absolute top-5 right-5">
@@ -146,17 +147,19 @@ export default function ScoreRankAnnouncement({
             <Button
               variant={"primary"}
               onClick={() => {
-                console.log("samsungplusAppDeepLink", samsungplusAppDeepLink);
+                // console.log("samsungplusAppDeepLink", samsungplusAppDeepLink);
                 window.open(samsungplusAppDeepLink, "_blank");
               }}
             >
-              S+
+              <span>S+</span>
             </Button>
           )}
           <Button variant={"primary"} onClick={() => routeToPage("map")}>
-            {isLastStage
-              ? translation("return_map")
-              : translation("next_stage")}
+            <span>
+              {isLastStage
+                ? translation("return_map")
+                : translation("next_stage")}
+            </span>
           </Button>
         </div>
       </div>
@@ -166,7 +169,7 @@ export default function ScoreRankAnnouncement({
 
 const SendBadgeNotificationCard = ({ message }: { message: string }) => {
   const { isArabic, isMyanmar } = useCheckLocale();
-  console.log(isMyanmar);
+  // console.log(isMyanmar);
   return (
     <div className="pt-[10px]">
       <div

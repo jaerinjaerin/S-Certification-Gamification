@@ -30,9 +30,10 @@ const supportedLanguagesCode = await fetchSupportedLanguages();
 const searchLangCodeInSupportedLanguagesCode = (
   searchLangCode: string
 ): string | undefined => {
-  return supportedLanguagesCode.find((lang: string) =>
-    lang.includes(searchLangCode)
-  );
+  return supportedLanguagesCode.find((lang: string) => {
+    if (searchLangCode === "es") return lang === "es-ES";
+    return lang.includes(searchLangCode);
+  });
 };
 
 // langCode를 매칭하는 함수
@@ -61,6 +62,7 @@ function mapBrowserLanguageToLocale(browswerLanguage: string) {
 
   const matchingLanguageCode =
     searchLangCodeInSupportedLanguagesCode(languageCode);
+
   if (matchingLanguageCode) return matchingLanguageCode;
 
   return defaultLocale;

@@ -245,3 +245,24 @@ export const StarIcon = React.forwardRef<SVGSVGElement, IconProps>(
 );
 
 StarIcon.displayName = "StarIcon";
+
+export const PlushIcon = React.forwardRef<SVGSVGElement, IconProps>(
+  ({ ...props }, forwardRef) => {
+    return (
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        ref={forwardRef}
+      >
+        <line y1="10.5" x2="22" y2="10.5" stroke="black" />
+        <line x1="11.5" y1="2.18557e-08" x2="11.5" y2="22" stroke="black" />
+      </svg>
+    );
+  }
+);
+
+PlushIcon.displayName = "PlushIcon";

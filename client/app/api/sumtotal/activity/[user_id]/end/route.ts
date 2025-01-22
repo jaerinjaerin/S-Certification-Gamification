@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("session", session);
+    // console.log("session", session);
 
     const account = await prisma.account.findFirst({
       where: {
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    console.log("account", account);
+    // console.log("account", account);
 
     if (!account) {
       return NextResponse.json(
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       }
     );
 
-    console.log("activity/progress response", response);
+    // console.log("activity/progress response", response);
 
     if (!response.ok) {
       // const errorData = await response.json();
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json();
-    console.log("data", data);
+    // console.log("data", data);
     Sentry.captureMessage("response", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {

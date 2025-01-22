@@ -32,8 +32,8 @@ export const usePathNavigator = () => {
       }
     }
 
-    console.log("segments:", segments);
-    console.log("campaignQuizSetId:", campaignQuizSetId);
+    // console.log("segments:", segments);
+    // console.log("campaignQuizSetId:", campaignQuizSetId);
 
     return campaignQuizSetId
       ? `${basePath}/${campaignName}/${campaignQuizSetId}/${page}${search}`

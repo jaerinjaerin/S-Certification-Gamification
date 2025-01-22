@@ -10,7 +10,7 @@ export class QuizScoreHandler {
     quizStageIndex: number,
     score: number
   ): Promise<ScoreData | null> => {
-    console.log("get score");
+    // console.log("get score");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/campaigns/score?authType=${authType}&quizStageIndex=${quizStageIndex}&campaignId=${campaignId}&userScore=${score}`,
@@ -20,7 +20,7 @@ export class QuizScoreHandler {
         }
       );
       const data = await response.json();
-      console.log("get score", data);
+      // console.log("get score", data);
 
       return data as ScoreData;
     } catch (error) {

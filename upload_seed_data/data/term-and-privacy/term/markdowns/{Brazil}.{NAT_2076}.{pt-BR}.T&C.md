@@ -1,14 +1,12 @@
+
+
 Termos de Uso do Certificado de Especialista em Galaxy AI 2025
-
-
 
 Estes Termos de Uso, juntamente com a nossa Política de Privacidade estabelecida abaixo (os "Termos"), são celebrados entre a Samsung Electronics Co., Ltd., uma Corporação coreana com escritório no endereço 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, República da Coreia (incluindo as suas afiliadas, "Samsung", "nós" ou "nos") e você, e governam o seu acesso ou uso do Site, Aplicativo Móvel, Materiais e Serviços (conforme definido abaixo). Leia os Termos atentamente antes de acessar ou usar o SamsungPlus ("Site" ou "Aplicativo Móvel"). Se você não concordar com algum dos Termos, não acesse ou use o Site e o Aplicativo Móvel. Ao usar o Site e o Aplicativo Móvel, você concorda com os Termos.
 
 Uso e Restrições Gerais
 
 Todo o conteúdo fornecido pela Samsung no Site ou no Aplicativo Móvel (incluindo, entre outros, dados, informações, documentos, textos, design, marcas registradas, logotipos, gráficos, imagens, ícones, som, vídeo, código e software) (os "Materiais") é propriedade exclusiva da Samsung, dos seus licenciadores ou dos seus provedores de conteúdo e é protegido por direitos autorais, marcas comerciais e outras leis aplicáveis. Você tem permissão para acessar os Materiais contidos no Site ou no Aplicativo Móvel exclusivamente para fins de treinamento para o suporte do SamsungPlus e sujeitos a expressa autorização da Samsung, desde que não modifique nem exclua qualquer aviso de direito autoral, marca registrada ou outro aviso de propriedade que apareça nos Materiais que você acessar, copiar, baixar ou imprimir.
-
-
 
 Você concorda em não usar, exibir, reproduzir, transmitir, modificar, distribuir, divulgar, vender, publicar, criar trabalhos derivados, transmitir, circular ou de qualquer forma explorar qualquer Material, integral ou parcialmente, seja por e-mail, seja por quaisquer outros meios, para qualquer fim que não seja para os fins aqui estabelecidos e sujeitos a autorização expressa da Samsung. Qualquer uso não autorizado do Site, Aplicativo Móvel, Materiais ou Serviços pode violar direitos autorais, marcas registradas e quaisquer outras leis aplicáveis.
 
@@ -18,35 +16,23 @@ Você não tem permissão para usar o Site ou o Aplicativo Móvel, qualquer Mate
 
 Você concorda em não "enquadrar" ou "espelhar" o Site ou Aplicativo Móvel ou qualquer parte dos Materiais ou Serviços em qualquer outro servidor ou dispositivo baseado na Internet sem o consentimento prévio por escrito da Samsung. Além disso, você não pode usar qualquer parte dos Materiais ou Serviços em nenhuma meta tag ou qualquer outro "texto oculto" sem o consentimento prévio por escrito da Samsung.
 
-
-
-Como obter o Certificado de Especialista em Galaxy AI 
-
-
+Como obter o Certificado de Especialista em Galaxy AI
 
 Usuários do Samsung+
 
 Após fazer login no aplicativo Samsung+, você poderá acessar os módulos de treinamento. A participação no quiz é liberada somente após a conclusão do treinamento. Assim que concluir todas as fases do quiz, você receberá o selo online de Especialista em Galaxy AI.
 
-
-
 Não Usuários do Samsung+
 
 Se você não estiver usando o aplicativo Samsung+, deverá primeiro concluir o treinamento online ou offline fornecido pela sua subsidiária local. Após a conclusão do treinamento, você pode participar do quiz acessando o link que a Samsung fornece à sua subsidiária. Assim que concluir todas as fases do quiz, você receberá o selo online de Especialista em Galaxy AI.
-
-
 
 É possível refazer e concluir o quiz várias vezes, mas somente um selo é concedido.
 
 Cada fase do quiz tem um limite de cinco respostas incorretas. Se esse limite for atingido antes da conclusão de uma fase, essa fase deverá ser reiniciada na primeira pergunta. O quiz de certificado deve ser concluído de forma individual. Qualquer tentativa de fraude resultará em desqualificação e invalidação dos resultados do quiz. O Certificado de Especialista em Galaxy AI não tem custos.
 
-
-
 Conteúdo de Terceiros e Links para Outros Sites
 
 O Site e o Aplicativo Móvel podem ter conteúdo de terceiros ou links para outros sites ou aplicativos móveis. Como não temos controle sobre aplicativos móveis ou sites de terceiros, você reconhece e concorda que não somos responsáveis pela disponibilidade de tais sites ou aplicativos móveis e não endossamos e não somos responsáveis por nenhum conteúdo, publicidade, serviços, produtos ou outros materiais presentes ou disponíveis em tais sites e aplicativos móveis. Você também reconhece ou concorda que a Samsung não será responsável, direta ou indiretamente, por qualquer dano ou perda causado ou supostamente causado por ou em conexão com o uso de ou a confiança em qualquer conteúdo, publicidade, serviços, produtos ou outros materiais presentes ou disponíveis em tais sites ou aplicativos móveis. Todos esses sites e aplicativos móveis estarão sujeitos a termos de uso separados.
-
-
 
 Além disso, um link para um site de terceiros não significa que a Samsung aceite qualquer responsabilidade pelo conteúdo ou pelo uso desse site. Cabe a você ter o cuidado para garantir que o conteúdo que você decidir usar não contenha itens como vírus, worms, trojans e outros itens de natureza destrutiva.
 
@@ -57,10 +43,6 @@ VOCÊ RECONHECE EXPRESSAMENTE E CONCORDA QUE USA O SITE, O APLICATIVO MÓVEL OU 
 LIMITAÇÃO DE RESPONSABILIDADES
 
 ATÉ O LIMITE MÁXIMO PERMITIDO POR LEI, EM NENHUMA CIRCUNSTÂNCIA, INCLUINDO NEGLIGÊNCIA, A SAMSUNG SERÁ RESPONSÁVEL, SEJA EM CONTRATO, SEJA EM ATO ILÍCITO, POR QUAISQUER DANOS DIRETOS, INDIRETOS, INCIDENTAIS, ESPECIAIS OU CONSEQUENCIAIS, PERDA DE LUCRO, RECEITA, JUROS, NEGÓCIOS OU CORROMPIMENTO DE DADOS, HONORÁRIOS ADVOCATÍCIOS, DESPESAS OU QUAISQUER OUTROS DANOS DECORRENTES OU RELACIONADOS A QUALQUER INFORMAÇÃO CONTIDA EM OU COMO RESULTADO DA UTILIZAÇÃO DO SITE E APLICATIVO MÓVEL, QUALQUER MATERIAL OU SERVIÇO ACESSADO POR VOCÊ OU POR TERCEIROS NO SITE E APLICATIVO MÓVEL, MESMO SE AVISADO DA POSSIBILIDADE DE TAIS DANOS.
-
-
-
-
 
 Indenização
 
@@ -77,8 +59,6 @@ Estes Termos são regidos pelas leis da jurisdição onde você reside, independ
 Geral
 
 A falha da Samsung em aplicar qualquer direito ou disposição nos Termos não constituirá uma renúncia de tal direito ou disposição, a menos que seja reconhecida e acordada pela Samsung por escrito. Os Termos (incluindo quaisquer modificações, atualizações e anexos) constituem o acordo integral entre você e a Samsung e substituem todas as negociações, discussões ou acordos anteriores ou contemporâneos, se houver, entre você e a Samsung com relação ao assunto aqui tratado. Você concorda que estes Termos podem ser atribuídos por nós a terceiros, a nosso exclusivo critério. Os cabeçalhos das seções servem apenas como referência e não definem, limitam, interpretam ou descrevem o escopo de tal seção. Se qualquer disposição dos Termos ou a sua aplicação a qualquer parte ou circunstância for declarada ou considerada por qualquer tribunal ou autoridade parajudicial de jurisdição competente como sendo nula, ilegal ou inexequível em qualquer aspecto (a "Disposição Ilícita"), (i) tal Disposição Ilícita será considerada corrigida para alcançar, tanto quanto possível, o mesmo propósito pretendido na Disposição Ilícita, na medida permitida pela lei; (ii) a validade, legalidade e exequibilidade das demais disposições, ou partes das disposições contidas neste documento, não serão, de forma alguma, afetadas ou prejudicadas; e (iii) o restante dos Termos será válido e exequível na medida permitida pela legislação aplicável. Se qualquer disposição dos Termos for considerada inválida por um tribunal de jurisdição competente, as demais disposições permanecerão em pleno vigor e efeito.
-
-
 
 Data [22.01.2025]
 

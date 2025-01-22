@@ -22,7 +22,8 @@ const matchingTable = {
   "German(SEAS)": "de-DE",
   Greek: "el",
   Hebrew: "he",
-  Hongkong: "zh-TW",
+  Hongkong: "zh-HK",
+  Taiwan: "zh-TW",
   Hungarian: "hu",
   Indonesian: "id",
   Italian: "it-IT",
@@ -70,7 +71,7 @@ const convertLangPackFolerToJson = async () => {
 
   try {
     const files = await fs.promises.readdir(directoryPath);
-    console.log(files.length);
+    // console.log(files.length);
 
     files.forEach((file) => {
       const filePath = path.join(directoryPath, file);

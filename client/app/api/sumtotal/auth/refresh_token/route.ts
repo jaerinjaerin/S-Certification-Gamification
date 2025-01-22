@@ -27,7 +27,7 @@ export async function GET() {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("session", session);
+    // console.log("session", session);
 
     const account = await prisma.account.findFirst({
       where: {
@@ -35,7 +35,7 @@ export async function GET() {
       },
     });
 
-    console.log("account", account);
+    // console.log("account", account);
 
     if (!account) {
       return NextResponse.json(
