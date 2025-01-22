@@ -33,12 +33,12 @@ export async function POST(request: NextRequest) {
       where: { email: toAddress },
     });
 
-    console.log(
-      "verifyToken:",
-      new Date(),
-      verifyToken
-      // Date() < verifyToken.expiresAt
-    );
+    // console.log(
+    //   "verifyToken:",
+    //   new Date(),
+    //   verifyToken
+    //   // Date() < verifyToken.expiresAt
+    // );
 
     if (verifyToken) {
       const now = new Date();

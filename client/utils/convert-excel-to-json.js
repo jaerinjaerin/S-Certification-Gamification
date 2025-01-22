@@ -70,7 +70,7 @@ const convertLangPackFolerToJson = async () => {
 
   try {
     const files = await fs.promises.readdir(directoryPath);
-    console.log(files.length);
+    // console.log(files.length);
 
     files.forEach((file) => {
       const filePath = path.join(directoryPath, file);

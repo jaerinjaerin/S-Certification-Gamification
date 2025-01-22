@@ -30,7 +30,7 @@ export async function GET(request: NextRequest, props: Props) {
     }
 
     const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
-    console.log("domainCode:", domainCode, "languageCode:", languageCode);
+    // console.log("domainCode:", domainCode, "languageCode:", languageCode);
 
     const user = await prisma.user.findFirst({
       where: { id: userId },
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: domainCode },
     });
 
-    // console.log("domain:", domain, "job:", job);
+    // // console.log("domain:", domain, "job:", job);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: defaultLanguageCode },
     });
 
-    // console.log("language:", language, defaultLanguage);
+    // // console.log("language:", language, defaultLanguage);
 
     const languageId = language?.id;
 

@@ -146,7 +146,7 @@ export default function ScoreRankAnnouncement({
             <Button
               variant={"primary"}
               onClick={() => {
-                console.log("samsungplusAppDeepLink", samsungplusAppDeepLink);
+                // console.log("samsungplusAppDeepLink", samsungplusAppDeepLink);
                 window.open(samsungplusAppDeepLink, "_blank");
               }}
             >
@@ -166,7 +166,7 @@ export default function ScoreRankAnnouncement({
 
 const SendBadgeNotificationCard = ({ message }: { message: string }) => {
   const { isArabic, isMyanmar } = useCheckLocale();
-  console.log(isMyanmar);
+  // console.log(isMyanmar);
   return (
     <div className="pt-[10px]">
       <div

@@ -1,11 +1,12 @@
+import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+async function postHandler(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // console.log("body", body);
+    // // console.log("body", body);
 
     const {
       userId,
@@ -94,7 +95,7 @@ export async function POST(request: Request) {
         },
       });
 
-      // console.log("userQuizStageLog", userQuizStageLog);
+      // // console.log("userQuizStageLog", userQuizStageLog);
 
       if (!isBadgeStage) {
         return {
@@ -153,7 +154,7 @@ export async function POST(request: Request) {
           },
         });
 
-      // console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
+      // // console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
 
       return {
         userQuizStageLog,
@@ -175,3 +176,5 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export const POST = withCors(postHandler);

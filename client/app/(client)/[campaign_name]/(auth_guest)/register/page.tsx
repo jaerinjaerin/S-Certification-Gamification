@@ -92,16 +92,16 @@ export default function GuestRegisterPage() {
     { name: "FF(SES)", value: "11", id: "9", storeId: "4" },
   ]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
+  // const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
   const locale = useLocale();
-  console.log(locale);
+  // console.log(locale);
 
-  console.log("checkingRegisterd", checkingRegisterd);
+  // console.log("checkingRegisterd", checkingRegisterd);
 
   const { campaign } = useCampaign();
 
   const fetchConutries = async () => {
-    console.log("fetchConutries");
+    // console.log("fetchConutries");
     try {
       setLoading(true);
 
@@ -128,7 +128,7 @@ export default function GuestRegisterPage() {
 
   const fetchLanguage = async () => {
     const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
-    console.log("matchedLocale", matchedLocale);
+    // console.log("matchedLocale", matchedLocale);
     setLanguageCode(matchedLocale);
   };
 
@@ -158,7 +158,7 @@ export default function GuestRegisterPage() {
 
   const checkRegistered = async (userId: string) => {
     try {
-      setCheckingRegisterd(true);
+      // setCheckingRegisterd(true);
       const quizLogResponse = await fetchQuizLog(userId, campaign.name);
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
@@ -168,7 +168,7 @@ export default function GuestRegisterPage() {
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
-      setCheckingRegisterd(false);
+      // setCheckingRegisterd(false);
     }
   };
 
@@ -188,7 +188,7 @@ export default function GuestRegisterPage() {
   };
 
   const selectChannel = (channelName: string) => {
-    console.log("🚧", channelName);
+    // console.log("🚧", channelName);
     if (channelName === "input_directly") {
       setChannelInput(true);
       setSelectedChannel(null);
@@ -209,9 +209,9 @@ export default function GuestRegisterPage() {
     setSelectedChannelSegmentId(channel.channelSegmentId);
     setSelectedJobId(channel.job.id);
 
-    console.log("selectedChannel", channel);
-    console.log("selectedChannelSegment", channel.channelSegmentId);
-    console.log("selectedJob", channel.job.id);
+    // console.log("selectedChannel", channel);
+    // console.log("selectedChannelSegment", channel.channelSegmentId);
+    // console.log("selectedJob", channel.job.id);
   };
 
   const selectJob = (jobId: string) => {

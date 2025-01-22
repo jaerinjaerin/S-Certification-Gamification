@@ -3,13 +3,16 @@ import {
   sumtotalUserOthersJobId,
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
+import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+// export async function POST(request: NextRequest) {
+async function postHandler(request: NextRequest) {
+  console.log("POST - QuizSet Log");
   const body = await request.json();
   const { userId, quizSetPath } = body;
 
@@ -17,7 +20,7 @@ export async function POST(request: NextRequest) {
     // const url = request.url;
     // const { searchParams } = new URL(url);
     // const quizsetPath = searchParams.get("quizset_path");
-    // console.log("quizSet post", quizsetPath);
+    // // console.log("quizSet post", quizsetPath);
 
     if (!quizSetPath) {
       Sentry.captureMessage("Quiz set path is required");
@@ -36,8 +39,8 @@ export async function POST(request: NextRequest) {
 
     const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
 
-    console.log("domainCode", domainCode);
-    console.log("languageCode", languageCode);
+    // console.log("domainCode", domainCode);
+    // console.log("languageCode", languageCode);
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -78,7 +81,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // console.log("domain:", domain);
+    // // console.log("domain:", domain);
     const user = await prisma.user.findFirst({
       where: {
         id: userId,
@@ -148,7 +151,7 @@ export async function POST(request: NextRequest) {
       confirmedQuizSetPath = `${domainCode}_${language.code}`;
     }
 
-    // console.log("language:", language);
+    // // console.log("language:", language);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
@@ -166,7 +169,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // console.log("quizSet:", quizsetPath, quizSet);
+    // // console.log("quizSet:", quizsetPath, quizSet);
 
     if (!quizSet) {
       return NextResponse.json(
@@ -182,7 +185,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // console.log("user:", user);
+    // // console.log("user:", user);
 
     const result = await prisma.$transaction(async (tx) => {
       const userQuizLog = await tx.userQuizLog.create({
@@ -239,8 +242,8 @@ export async function POST(request: NextRequest) {
       return { userQuizLog, userQuizStatistics };
     });
 
-    // console.log("userQuizLog:", result.userQuizLog);
-    // console.log("userQuizStatistics:", result.userQuizStatistics);
+    // // console.log("userQuizLog:", result.userQuizLog);
+    // // console.log("userQuizStatistics:", result.userQuizStatistics);
 
     return NextResponse.json(
       {
@@ -270,7 +273,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+async function getHandler(request: NextRequest) {
+  // export async function GET(request: NextRequest) {
+  console.log("GET - QuizSet Log");
   const url = request.url;
   const { searchParams } = new URL(url);
   const userId = searchParams.get("user_id");
@@ -294,7 +299,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // console.log("campaign:", campaign);
+    // // console.log("campaign:", campaign);
 
     if (!campaign) {
       throw new ApiError(
@@ -311,7 +316,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // console.log("userQuizLog:", userQuizLog);
+    // // console.log("userQuizLog:", userQuizLog);
 
     if (!userQuizLog) {
       // throw new ApiError(
@@ -339,7 +344,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // console.log("userQuizStageLogs:", userQuizStageLogs);
+    // // console.log("userQuizStageLogs:", userQuizStageLogs);
 
     // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
     //   where: {
@@ -380,7 +385,7 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("API Get - QuizSet :", error);
+    console.error("API Get - QuizSet :", campaignName, error);
 
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
@@ -425,3 +430,6 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+export const GET = withCors(getHandler);
+export const POST = withCors(postHandler);

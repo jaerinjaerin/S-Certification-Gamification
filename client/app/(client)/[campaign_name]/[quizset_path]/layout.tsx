@@ -21,7 +21,7 @@ export default async function SumtotalUserLayout({
   //   console.log("Path is valid.");
   // }
 
-  console.log("SumtotalUserLayout quizset_path", quizset_path);
+  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const locale = quizset_path.split("_").at(-1);
 

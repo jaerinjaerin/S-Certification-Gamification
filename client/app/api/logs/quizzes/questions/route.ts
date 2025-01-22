@@ -1,8 +1,9 @@
+import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+async function postHandler(request: NextRequest) {
   const body = await request.json();
 
   const {
@@ -182,6 +183,8 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export const POST = withCors(postHandler);
 
 // export async function GET(request: Request) {
 //   const { searchParams } = new URL(request.url);

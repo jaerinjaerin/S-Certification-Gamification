@@ -19,7 +19,7 @@ export class QuizLogHandler {
   create = async (params: CreateQuizLogParams): Promise<UserQuizLog | null> => {
     const { userId, quizSetPath } = params;
     try {
-      console.log("createQuizLog started", userId);
+      // console.log("createQuizLog started", userId);
       const initHistoryResponse = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/logs/quizzes/sets`,
         {

@@ -18,7 +18,7 @@ export default function Home() {
       // 삼플 유저 로그아웃
 
       signOutUrl = `${process.env.NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT}${callbackUrl}`;
-      console.log("sumtotal signout", signOutUrl);
+      // console.log("sumtotal signout", signOutUrl);
       await signOut({
         redirect: false, // NextAuth의 기본 리디렉션을 방지
       });
@@ -26,7 +26,7 @@ export default function Home() {
       return;
     }
 
-    console.log("signout");
+    // console.log("signout");
 
     // 패스워드 유저 로그아웃
     await signOut();

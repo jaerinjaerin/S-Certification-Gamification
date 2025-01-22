@@ -132,7 +132,7 @@ export const QuizProvider = ({
   // console.log("QuizProvider", quizSet);
 
   useEffect(() => {
-    console.log("QuizProvider useEffect", userId, _quizLog?.id);
+    // console.log("QuizProvider useEffect", userId, _quizLog?.id);
     if (!_quizLog) {
       createQuizLog();
     }
@@ -140,7 +140,7 @@ export const QuizProvider = ({
 
   const createQuizLog = async () => {
     if (isCreatingQuizLogRef.current) {
-      console.log("createQuizLog is already running");
+      // console.log("createQuizLog is already running");
       return; // 이미 실행 중인 경우 종료
     }
 
@@ -189,7 +189,7 @@ export const QuizProvider = ({
         currentQuizStageIndex,
         totalQuizScore
       );
-      console.log("scoreData", scoreData);
+      // console.log("scoreData", scoreData);
     }
 
     // 퀴즈 답변 로그 전송 중인지 확인
@@ -287,7 +287,7 @@ export const QuizProvider = ({
   };
 
   const nextQuestion = (): boolean => {
-    console.log("nextQuestion", currentQuestionIndex);
+    // console.log("nextQuestion", currentQuestionIndex);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     return true;
   };
@@ -397,7 +397,7 @@ export const QuizProvider = ({
       .filter((option: QuestionOption) => option.isCorrect)
       .map((option: QuestionOption) => option.id);
 
-    console.log("logUserAnswer", authType);
+    // console.log("logUserAnswer", authType);
 
     quizQuestionLogManager.add({
       authType: authType,
@@ -453,7 +453,7 @@ export const QuizProvider = ({
       0
     );
 
-    console.log("getAllStageMaxScore", maxScore);
+    // console.log("getAllStageMaxScore", maxScore);
     return maxScore;
   };
 

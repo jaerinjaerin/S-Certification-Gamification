@@ -16,6 +16,6 @@ export const redirectToQuizSet = (
   campaignName: string,
   quizSetPath: string
 ) => {
-  console.log("redirectToQuizSet:", campaignName, quizSetPath);
+  // console.log("redirectToQuizSet:", campaignName, quizSetPath);
   redirect(`/${campaignName}/${quizSetPath}`);
 };
