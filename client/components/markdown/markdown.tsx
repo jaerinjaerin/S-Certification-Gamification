@@ -1,9 +1,16 @@
+import { cn } from "@/utils/utils";
 import Link from "next/link";
 import React, { memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const NonMemoizedMarkdown = ({ children }: { children: string }) => {
+const NonMemoizedMarkdown = ({
+  children,
+  className,
+}: {
+  children: string;
+  className?: string;
+}) => {
   const components = {
     code: ({ inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || "");
@@ -32,7 +39,7 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     },
     li: ({ children, ...props }: any) => {
       return (
-        <li className="py-1" {...props}>
+        <li className={`${className} py-1`} {...props}>
           {children}
         </li>
       );
@@ -65,7 +72,7 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     },
     p: ({ children, ...props }: any) => {
       return (
-        <p className="whitespace-break-spaces my-3" {...props}>
+        <p className={`${className} whitespace-break-spaces my-3`} {...props}>
           {children}
         </p>
       );
@@ -74,7 +81,10 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
       return (
         <div className="my-4">
           <table
-            className="table-auto border-collapse border border-gray-300 w-full"
+            className={cn(
+              "table-auto border-collapse border border-gray-300 w-full",
+              className
+            )}
             {...props}
           >
             {children}
@@ -104,7 +114,10 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     td: ({ children, ...props }: any) => {
       return (
         <td
-          className="px-4 py-2 text-gray-600 border border-gray-300 "
+          className={cn(
+            "px-4 py-2 text-gray-600 border border-gray-300 ",
+            className
+          )}
           style={{
             wordWrap: "break-word", // 긴 단어를 줄 바꿈
             wordBreak: "break-word", // 강제로 줄 바꿈
@@ -131,3 +144,7 @@ export const Markdown = memo(
   NonMemoizedMarkdown,
   (prevProps, nextProps) => prevProps.children === nextProps.children
 );
+
+// "whitespace-break-spaces text-xs",
+// isArabic && "text-right",
+// isMyanmar && "leading-loose"
