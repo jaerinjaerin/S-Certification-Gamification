@@ -5,6 +5,7 @@ import { withCors } from "@/lib/cors";
 import * as Sentry from "@sentry/nextjs";
 
 async function getHandler(request: NextRequest) {
+  console.log("GET - Domain");
   const { searchParams } = new URL(request.url);
   const domainCode = searchParams.get("domain_code");
 

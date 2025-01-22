@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // export async function POST(request: NextRequest) {
 async function postHandler(request: NextRequest) {
+  console.log("POST - QuizSet");
   const body = await request.json();
   const { userId, quizSetPath } = body;
 
@@ -274,6 +275,7 @@ async function postHandler(request: NextRequest) {
 
 async function getHandler(request: NextRequest) {
   // export async function GET(request: NextRequest) {
+  console.log("GET - QuizSet");
   const url = request.url;
   const { searchParams } = new URL(url);
   const userId = searchParams.get("user_id");
