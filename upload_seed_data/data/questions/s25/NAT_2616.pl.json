@@ -79,7 +79,7 @@
         "answerStatus": 0
       },
       {
-        "text": "Akcje między aplikacjami",
+        "text": "Spójne akcje między aplikacjami",
         "answerStatus": 1
       },
       {
@@ -350,7 +350,7 @@
         "answerStatus": 0
       },
       {
-        "text": "Akcje między aplikacjami",
+        "text": "Spójne akcje między aplikacjami",
         "answerStatus": 1
       },
       {
@@ -377,7 +377,7 @@
     "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Akcje między aplikacjami",
+        "text": "Spójne akcje między aplikacjami",
         "answerStatus": 1
       },
       {
@@ -617,7 +617,7 @@
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Akcje między aplikacjami",
+        "text": "Spójne akcje między aplikacjami",
         "answerStatus": 0
       },
       {

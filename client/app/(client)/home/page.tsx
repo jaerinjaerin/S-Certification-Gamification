@@ -120,7 +120,7 @@ export default function Home() {
           <br />
           <Link href="/s25/NAT_2348_hu">Hungary</Link>
           <br />
-          <Link href="/s25/NAT_2344_zh-TW">Hongkong</Link>
+          <Link href="/s25/NAT_2344_zh-HK">Hongkong</Link>
           <br />
           <Link href="/s25/NAT_2360_id">Indonesia</Link>
           <br />
