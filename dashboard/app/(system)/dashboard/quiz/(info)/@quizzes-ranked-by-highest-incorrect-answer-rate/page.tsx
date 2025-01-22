@@ -2,7 +2,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { useUserContext } from "../../_provider/provider";
 import { fetchData } from "../../../_lib/fetch";
 import ChartContainer from "../../../_components/charts/chart-container";
 import {
@@ -24,16 +23,10 @@ import { LoaderWithBackground } from "@/components/loader";
 import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
 import { ResponsiveContainer } from "recharts";
 import Pagination from "../../../_components/pagenation";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useQuizContext } from "../../_provider/provider";
+import { formatSnakeToTitleCase } from "@/lib/text";
 
-const columns: ColumnDef<DomainProps>[] = [
+const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
   {
     id: "no",
     header: "No",
@@ -43,96 +36,32 @@ const columns: ColumnDef<DomainProps>[] = [
     },
   },
   {
-    accessorKey: "region",
-    header: "Region",
+    accessorKey: "question",
+    header: "Question",
+  },
+  {
+    accessorKey: "product",
+    header: "Target Product",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
+    accessorKey: "questionType",
+    header: "Question Type",
     cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
+      const value = getValue<string>();
+      return formatSnakeToTitleCase(value);
     },
   },
   {
-    accessorKey: "subsidiary",
-    header: "Subsidiary",
-    cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
-    },
+    accessorKey: "importance",
+    header: "Importance",
   },
   {
-    accessorKey: "domain",
-    header: "Domain",
-    cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
-    },
-  },
-  {
-    accessorKey: "goal",
-    header: "Goal",
-  },
-  {
-    accessorKey: "expert",
-    header: "Expert(Advanced)",
-    cell: ({ row }) => {
-      const expert = row.original.expert;
-      const { date, country, ...expertDetail } = row.original.expertDetail;
-
-      return (
-        <TooltipProvider delayDuration={0}>
-          <div className="flex items-center place-self-center">
-            <span>{expert}</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="link" className="w-0">
-                  <Info className="w-4 h-4 text-gray-600" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                className="w-[17.125rem] text-sm bg-background shadow-sm p-5 border"
-                side="right"
-                align="center"
-                style={{ marginLeft: "1rem" }}
-              >
-                <div className="flex flex-col space-y-3 text-zinc-500 bg-background">
-                  <div className="flex space-x-3">
-                    <div>
-                      {new Date(date).toLocaleString("ko-KR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                      })}
-                    </div>
-                    <div> {country}</div>
-                  </div>
-                  {Object.entries(expertDetail).map(([key, value]) => {
-                    let keyName = key.toUpperCase();
-                    if (key.toLowerCase() === "plus") keyName = "S+";
-                    else if (key.toLowerCase() === "none") keyName = "Non S+";
-                    return (
-                      <div
-                        key={key}
-                        className="flex items-center justify-between"
-                      >
-                        <strong className="text-zinc-950 font-bold">
-                          {keyName}
-                        </strong>
-                        <strong className="text-zinc-950 font-bold">
-                          {value}
-                        </strong>
-                      </div>
-                    );
-                  })}
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </TooltipProvider>
-      );
-    },
-  },
-  {
-    accessorKey: "achievement",
-    header: "Achievement rate",
+    accessorKey: "errorRate",
+    header: "Error Rate",
     cell: ({ getValue }) => {
       const value = getValue<number>();
       return `${value.toLocaleString()}%`;
@@ -140,9 +69,9 @@ const columns: ColumnDef<DomainProps>[] = [
   },
 ];
 
-const UserDomain = () => {
-  const { state } = useUserContext();
-  const [data, setData] = useState<DomainProps[]>([]);
+const QuizQuizzesRanked = () => {
+  const { state } = useQuizContext();
+  const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
   const [loading, setLoading] = useState(true);
   const total = useRef<number>(0);
 
@@ -169,7 +98,7 @@ const UserDomain = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        "user/info/domain",
+        "quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate",
         (data) => {
           total.current = data.total;
           setData(data.result);
@@ -196,19 +125,26 @@ const UserDomain = () => {
                   <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                       <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-                        {headerGroup.headers.map((header) => (
-                          <TableHead
-                            key={header.id}
-                            className="font-medium text-center text-size-14px text-zinc-500"
-                          >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </TableHead>
-                        ))}
+                        {headerGroup.headers.map((header) => {
+                          return (
+                            <TableHead
+                              key={header.id}
+                              className="text-nowrap font-medium text-center text-size-14px text-zinc-500"
+                              onClick={header.column.getToggleSortingHandler()} // 헤더 클릭 시 정렬 변경
+                              style={{
+                                width:
+                                  header.id === "question" ? "50%" : "auto",
+                              }}
+                            >
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          );
+                        })}
                       </TableRow>
                     ))}
                   </TableHeader>
@@ -269,4 +205,4 @@ const UserDomain = () => {
   );
 };
 
-export default UserDomain;
+export default QuizQuizzesRanked;

@@ -4,3 +4,10 @@ export function formatCamelCaseToTitleCase(camelCase: string): string {
     .replace(/^./, (str) => str.toUpperCase()) // 첫 문자를 대문자로 변경
     .trim(); // 앞뒤 공백 제거
 }
+
+export const formatSnakeToTitleCase = (value: string) => {
+  return value
+    .toLowerCase() // 모든 문자를 소문자로 변환
+    .replace(/_/g, " ") // 언더스코어를 공백으로 대체
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // 각 단어의 첫 글자를 대문자로 변환
+};

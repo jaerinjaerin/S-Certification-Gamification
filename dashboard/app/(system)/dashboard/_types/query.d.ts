@@ -9,6 +9,6 @@ interface QueryParams {
 }
 
 interface ParsedDateRange {
-  from: Date | null;
-  to: Date | null;
+  from: Date;
+  to: Date;
 }

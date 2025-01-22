@@ -24,6 +24,7 @@ import { useOverviewContext } from "../../_provider/provider";
 import { legendCapitalizeFormatter } from "../../../_lib/text";
 import { chartHeight } from "../../../_lib/chart-variable";
 import { LoaderWithBackground } from "@/components/loader";
+import CustomTooltip from "../../../_components/charts/chart-tooltip";
 
 function OverviewAchievementRate() {
   const { state } = useOverviewContext();
@@ -73,7 +74,10 @@ function OverviewAchievementRate() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip cursor={{ fill: chartColorHoverBackground }} />
+                <Tooltip
+                  cursor={{ fill: chartColorHoverBackground }}
+                  content={<CustomTooltip />}
+                />
                 <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
                 <Brush
                   dataKey="name"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,7 +11,7 @@ import { AuthType } from "@prisma/client";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where, take, skip } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
@@ -19,14 +20,24 @@ export async function GET(request: NextRequest) {
       fsm: 0,
       "ff(ses)": 0,
       "fsm(ses)": 0,
+      ff_advanced: 0,
+      fsm_advanced: 0,
+      "ff(ses)_advanced": 0,
+      "fsm(ses)_advanced": 0,
     };
 
     const jobGroup = await prisma.job.findMany({
       select: { id: true, group: true },
     });
 
+    const count = await prisma.domainGoal.count({
+      where,
+    });
+
     const domainsGoals = await prisma.domainGoal.findMany({
       where,
+      take,
+      skip,
     });
 
     const experts = await prisma.userQuizBadgeStageStatistics.findMany({
@@ -102,8 +113,12 @@ export async function GET(request: NextRequest) {
       plus.forEach((user) => {
         const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
         if (jobName) {
-          const lowJobName = jobName.toLowerCase() as keyof typeof jobData;
+          const lowJobName =
+            jobName.toLowerCase() as keyof typeof jobData as string;
           if (lowJobName in jobData) {
+            if (user.quizStageId === "stage_3") {
+              jobData[`${lowJobName}_advanced`] += 1;
+            }
             jobData[lowJobName] += 1;
           }
         }
@@ -117,21 +132,32 @@ export async function GET(request: NextRequest) {
         const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
         if (jobName) {
           const lowJobName =
-            `${jobName.toLowerCase()}(ses)` as keyof typeof jobData;
+            `${jobName.toLowerCase()}(ses)` as keyof typeof jobData as string;
           if (lowJobName in jobData) {
+            if (user.quizStageId === "stage_3") {
+              jobData[`${lowJobName}_advanced`] += 1;
+            }
             jobData[lowJobName] += 1;
           }
         }
       });
 
-      const plusUsers = experts.filter(
+      const plusExperts = experts.filter(
         (exp) =>
           exp.authType === AuthType.SUMTOTAL && exp.domainId === domain.id
       );
 
-      const noneUsers = experts.filter(
+      const plusExpertsAdvanced = plusExperts.filter(
+        (exp) => exp.quizStageId === "stage_3"
+      );
+
+      const noneExperts = experts.filter(
         (exp) =>
           exp.authType !== AuthType.SUMTOTAL && exp.domainId === domain.id
+      );
+
+      const noneExpertsAdvanced = noneExperts.filter(
+        (exp) => exp.quizStageId === "stage_3"
       );
 
       return {
@@ -142,18 +168,21 @@ export async function GET(request: NextRequest) {
         region: region ? { id: region.id, name: region.name } : null,
         goal: goalTotal,
         expert: `${expertByDomain.length}(${advancedByDomain.length})`,
-        achievement: expertByDomain.length / goalTotal,
+        achievement: (expertByDomain.length / goalTotal) * 100,
         expertDetail: {
-          date: domain.updatedAt || domain.createdAt,
+          date: domain.updatedAt,
           country: domain.name,
-          plus: plusUsers.length,
-          none: noneUsers.length,
-          ...jobData,
+          plus: `${plusExperts.length} (${plusExpertsAdvanced.length})`,
+          none: `${noneExperts.length} (${noneExpertsAdvanced.length})`,
+          ff: `${jobData.ff} (${jobData.ff_advanced})`,
+          fsm: `${jobData.fsm} (${jobData.fsm_advanced})`,
+          "ff(ses)": `${jobData["ff(ses)"]} (${jobData["ff(ses)_advanced"]})`,
+          "fsm(ses)": `${jobData["fsm(ses)"]} (${jobData["fsm(ses)_advanced"]})`,
         },
       };
     });
 
-    return NextResponse.json({ result });
+    return NextResponse.json({ result, total: count });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

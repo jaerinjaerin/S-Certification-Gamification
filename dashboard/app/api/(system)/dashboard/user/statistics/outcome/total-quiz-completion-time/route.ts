@@ -3,46 +3,69 @@ import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 import { querySearchParams } from "../../../../_lib/query";
 import { addDays, endOfDay, startOfDay } from "date-fns";
-import { defaultDateFormat } from "@/lib/time";
 
-type ResultProps = { date: string; seconds: number };
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where, period } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
     // 오늘과 6일 전 설정
-    const today = new Date();
-    const beforeWeek = startOfDay(addDays(today, -6)); // 7일 전 시작
-    const todayEnd = endOfDay(today); // 오늘 끝
+    const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
+    const beforeWeek = new Date(
+      Math.max(
+        addDays(today, -6).getTime(), // today에서 6일 전
+        new Date(period.from).getTime() // period.from
+      )
+    );
 
-    const users = await prisma.userQuizBadgeStageStatistics.findMany({
+    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
+      by: ["elapsedSeconds", "createdAt"], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
-        updatedAt: { gte: beforeWeek, lte: todayEnd },
+        isBadgeAcquired: true,
+        createdAt: {
+          gte: startOfDay(beforeWeek), // 6일 전부터
+          lte: endOfDay(today), // 오늘까지
+        },
       },
+      orderBy: { createdAt: "asc" }, // 날짜 순 정렬
     });
 
-    // 7일 동안 데이터를 처리하는 for문
-    const result = users.reduce((acc: ResultProps[], user) => {
-      const date = defaultDateFormat(user.updatedAt); // yyyy-mm-dd 형식의 날짜 추출
-      if (!date) return acc;
-
-      // 기존에 날짜가 있는지 확인
-      const existingEntry = acc.find((entry) => entry.date === date);
-
-      if (existingEntry) {
-        // 날짜가 이미 있다면 score를 합산
-        existingEntry.seconds += user.elapsedSeconds || 0;
-      } else {
-        // 날짜가 없다면 새로 추가
-        acc.push({ date, seconds: user.elapsedSeconds || 0 });
+    // 날짜 범위를 생성
+    const getDateRange = (start: Date, end: Date) => {
+      const dates = [];
+      const current = new Date(start);
+      while (current <= end) {
+        dates.push(current.toISOString().split("T")[0]);
+        current.setDate(current.getDate() + 1);
       }
+      return dates;
+    };
 
-      return acc;
-    }, []);
+    // 날짜별 초기 데이터 생성
+    const initialData = getDateRange(beforeWeek, today).map((date) => ({
+      date: date.replace(/-/g, "."), // YYYY-MM-DD -> YYYY.MM.DD
+      time: 0,
+    }));
+
+    // 데이터 그룹화 및 합산
+    const result = experts
+      .reduce((acc, item) => {
+        const dateKey = item.createdAt.toISOString().split("T")[0]; // 날짜 추출
+        const match = acc.find(
+          (entry) => entry.date === dateKey.replace(/-/g, ".")
+        ); // 날짜 일치 항목 찾기
+        if (match) {
+          const time = item?.elapsedSeconds || 0;
+          match.time += time; // stage_2는 expert
+        }
+        return acc;
+      }, initialData)
+      .map((r) => {
+        return { ...r, time: Math.round(r.time / 360) };
+      });
 
     return NextResponse.json({ result });
   } catch (error) {

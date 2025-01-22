@@ -26,6 +26,7 @@ import {
   chartColorSecondary,
 } from "../../../_lib/chart-colors";
 import { LoaderWithBackground } from "@/components/loader";
+import CustomTooltip from "../../../_components/charts/chart-tooltip";
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -111,7 +112,7 @@ const OverviewExperts = () => {
                       total
                     </text>
                   </>
-                  <Tooltip />
+                  <Tooltip content={<CustomTooltip />} />
                   <Legend iconType="circle" iconSize={8} />
                 </PieChart>
                 <div className="flex items-center flex-col">
@@ -143,7 +144,10 @@ const OverviewExperts = () => {
                       dataKey="name"
                       tick={renderCustomTick}
                     />
-                    <Tooltip cursor={{ fill: chartColorHoverBackground }} />
+                    <Tooltip
+                      cursor={{ fill: chartColorHoverBackground }}
+                      content={<CustomTooltip />}
+                    />
                     <Legend />
                     <Bar
                       dataKey="expert"

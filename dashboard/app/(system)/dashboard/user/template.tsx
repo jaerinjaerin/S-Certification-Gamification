@@ -1,8 +1,8 @@
 import UserFilterForm from "./@filters/page";
-import UserOutcome from "./(statics)/@outcome/page";
+import UserOutcome from "./(statistics)/@outcome/page";
 import { UserProvider } from "../user/_provider/provider";
 import UserDomain from "./(info)/@domain/page";
-import UserProgressExperts from "./(statics)/@progress-of-experts/page";
+import UserProgressExperts from "./(statistics)/@progress-of-experts/page";
 
 const UserTemplete = () => {
   return (

@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react";
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
 const Loader = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -11,8 +11,11 @@ const Loader = (props: React.HTMLAttributes<HTMLDivElement>) => {
 
 export default Loader;
 
-export const LoaderWithBackground = () => {
+export const LoaderWithBackground = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Loader className="inset-0 absolute flex items-center justify-center bg-white/80" />
+    <Loader
+      className="inset-0 z-10 absolute flex items-center justify-center bg-white/80"
+      {...props}
+    />
   );
 };

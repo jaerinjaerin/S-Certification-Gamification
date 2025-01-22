@@ -67,20 +67,10 @@ export async function GET(request: NextRequest) {
       if (isCurrentWeekValid && isWithinCampaign) {
         const weeklyWhere = {
           ...where,
-          OR: [
-            {
-              updatedAt: {
-                gte: currentWeekStart,
-                lt: weekEnd,
-              },
-            },
-            {
-              createdAt: {
-                gte: currentWeekStart,
-                lt: weekEnd,
-              },
-            },
-          ],
+          updatedAt: {
+            gte: currentWeekStart,
+            lt: weekEnd,
+          },
         };
 
         const plus = await prisma.userQuizBadgeStageStatistics.findMany({
