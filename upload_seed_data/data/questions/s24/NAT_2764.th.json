@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่ใช่การพัฒนาที่สำคัญของ Galaxy S24 Series เมื่อเทียบกับ S23 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "วงกลมเพื่อค้นหาด้วย Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "ตัวช่วยรูปภาพและการซูมแบบ Nightography",
+        "answerStatus": 0
+      },
+      {
+        "text": "ประสิทธิภาพการเล่นเกม",
+        "answerStatus": 0
+      },
+      {
+        "text": "จำนวนกล้อง",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่เกี่ยวข้องกับดีไซน์ของ Galaxy S24 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ดีไซน์พรีเมียม",
+        "answerStatus": 0
+      },
+      {
+        "text": "ดีไซน์ขอบทันสมัย",
+        "answerStatus": 1
+      },
+      {
+        "text": "หน้าจอแบนราบและกรอบไทเทเนียม (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "คอลเลกชันสีเหนือกาลเวลาที่ได้จากความแข็งแกร่งยืนยงของธรรมชาติ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้เป็นฟีเจอร์ของ Galaxy S24 Series ที่เกี่ยวข้องกับความทนทานที่เพิ่มขึ้น (เลือก 2 ข้อ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "มาตรฐานกันน้ำระดับ IPX8",
+        "answerStatus": 0
+      },
+      {
+        "text": "กระจก Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "กรอบไทเทเนียม (Galaxy S24 Ultra) และกรอบอลูมิเนียมแบบเสริมพิเศษ (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "บานพับ Flex",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่ใช่กรณีการใช้งานฟีเจอร์วงกลมเพื่อค้นหาด้วย Google",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "บันทึกการประชุมและสร้างสรุปอย่างรวดเร็ว",
+        "answerStatus": 1
+      },
+      {
+        "text": "ค้นพบสินค้าแฟชันระหว่างรับชมวิดีโอ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ค้นพบจุดท่องเที่ยวที่คุณเห็นในฟีด",
+        "answerStatus": 0
+      },
+      {
+        "text": "ค้นหาสูตรอาหารสำหรับเมนูที่คุณเห็นใน YouTube",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดคือคำตอบที่เหมาะสมที่สุดของช่องว่างต่อไปนี้\n ________ สามารถแปลแชทที่เข้ามาและส่งไปได้แบบเรียลไทม์ในแอปส่งข้อความต่างๆ รวมถึงปรับโทนข้อความของคุณให้เหมาะกับสถานการณ์ต่างๆ ได้แก่ มืออาชีพ ไม่เป็นทางการ สังคม สุภาพ และใช้อิโมจิ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ฟีเจอร์แปลสด",
+        "answerStatus": 0
+      },
+      {
+        "text": "ตัวช่วยแชท",
+        "answerStatus": 1
+      },
+      {
+        "text": "ตัวช่วยบันทึก",
+        "answerStatus": 0
+      },
+      {
+        "text": "ตัวช่วยถอดเสียง",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้คือคำอธิบายที่ถูกต้องของฟีเจอร์แปลสด",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "เป็นการแปลเสียงแบบเรียลไทม์ให้กับทั้งสองฝั่ง",
+        "answerStatus": 1
+      },
+      {
+        "text": "ทำงานกับแอปบุคคลที่สามโดยไม่ต้องสลับไปใช้แอปการแปลแอปอื่น",
+        "answerStatus": 0
+      },
+      {
+        "text": "จัดตำแหน่งลายมือของคุณอัตโนมัติ",
+        "answerStatus": 0
+      },
+      {
+        "text": "จัดระเบียบโน้ตของคุณให้มีโครงสร้างมากขึ้น",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่เกี่ยวข้องกับฟีเจอร์ตัวช่วยบันทึกและ Samsung Note ซึ่งเพิ่มเข้ามาใหม่ใน Galaxy S24 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "การจัดตำแหน่งและเว้นวรรคลายมือ S Pen อัตโนมัติ",
+        "answerStatus": 0
+      },
+      {
+        "text": "การจัดระเบียบโน้ตให้มีโครงสร้างมากขึ้น",
+        "answerStatus": 0
+      },
+      {
+        "text": "การสร้างหน้าปกด้วยสรุปจากโน้ตของคุณ",
+        "answerStatus": 0
+      },
+      {
+        "text": "การได้รับส่วนที่เน้นเป็นพิเศษของประเด็นสำคัญที่สุด",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "กล้อง Galaxy S24 Ultra เมื่อซูม 5 เท่าจะมีความละเอียดรูปภาพสูงสุดเท่าใด",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดคือคำตอบที่เหมาะสมที่สุดของช่องว่างต่อไปนี้\n________ ของ Galaxy S24 Ultra เพื่อรูปภาพที่สว่างและชัดเจนขึ้นแม้ในเวลากลางคืน",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "พิกเซลที่ใหญ่ขึ้น 1.6 เท่า",
+        "answerStatus": 1
+      },
+      {
+        "text": "OIS ที่กว้างขึ้น",
+        "answerStatus": 0
+      },
+      {
+        "text": "Single Take",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptive Pixel แบบใหม่",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดคือคำตอบที่เหมาะสมที่สุดของช่องว่างต่อไปนี้\n________ สามารถเติมพื้นหลังขณะปรับรูปภาพให้ตรง (เอียง) และย้าย/ปรับขนาดสิ่งต่างๆ ในรูปภาพได้ด้วยการเติมอัตโนมัติ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "การถ่ายภาพบุคคลตอนกลางคืน",
+        "answerStatus": 0
+      },
+      {
+        "text": "ตัวช่วยรูปภาพ (การแก้ไขโดย AI)",
+        "answerStatus": 1
+      },
+      {
+        "text": "ความละเอียดสูง 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "ตัวช่วยบันทึก",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "คุณจะเปิดใช้คำแนะนำการแก้ไขของฟีเจอร์ตัวช่วยรูปภาพในแอปแกลเลอรี่ของ Galaxy S24 Series เพื่อใช้แก้ไขรูปภาพได้แบบทันที (เอฟเฟกต์ภาพถ่ายบุคคล รีมาสเตอร์ ลบการสะท้อน และอื่นๆ) ได้อย่างไร",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ดาวน์โหลดและเปิดแอปแก้ไขรูปภาพ แล้วใช้เอฟเฟกต์ทีละรูป",
+        "answerStatus": 0
+      },
+      {
+        "text": "แตะไอคอนแก้ไข แล้วแตะไอคอนตัวช่วยรูปภาพ",
+        "answerStatus": 0
+      },
+      {
+        "text": "แตะไอคอนหรือเพียงปัดขึ้นที่รูปภาพ คุณก็จะสามารถดูตัวเลือกการแก้ไขที่แนะนำได้",
+        "answerStatus": 1
+      },
+      {
+        "text": "เปิดแอปโซเชียลแล้วเลือกฟิลเตอร์ที่คุณต้องการใช้กับรูปภาพ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้เกี่ยวข้องกับฟีเจอร์กล้องของ Galaxy S24 Series ในกล้องของแอปโซเชียลมีเดียน้อยที่สุด",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "รูปภาพ HDR",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nightography: รูปภาพและวิดีโอเวลากลางคืนที่สว่างชัดขึ้นและเสียงรบกวนน้อยลง",
+        "answerStatus": 0
+      },
+      {
+        "text": "Space Zoom",
+        "answerStatus": 1
+      },
+      {
+        "text": "ตัวลดการสั่นไหวของวิดีโอ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่ใช่การพัฒนาที่เกิดขึ้นกับประสิทธิภาพการเล่นเกมของ Galaxy S24 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ตัวประมวลผลที่เร็วที่สุดเท่าที่เคยมีมาใน Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vapor Chamber ที่ใหญ่ขึ้น (1.9 เท่าสำหรับ Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "สโลว์โมชั่นด้วย AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "เทคโนโลยี Ray Tracing ที่ดีขึ้น",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้ไม่ใช่องค์ประกอบของการแสดงผลชวนดื่มด่ำของ Galaxy S24 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "หน้าจอขนาดใหญ่ขึ้นพร้อมกรอบที่บางลง",
+        "answerStatus": 0
+      },
+      {
+        "text": "โปรแกรมรับรู้วัตถุ",
+        "answerStatus": 1
+      },
+      {
+        "text": "HBM สูงสุด 2,600 nits",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vision Booster",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้เป็นฟีเจอร์ที่เกี่ยวข้องกับแบตเตอรี่ที่ใช้งานได้นานขึ้นของ Galaxy S24 Series (เลือก 2 ข้อ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ความจุแบตเตอรี่ที่มากขึ้น",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "วอลล์เปเปอร์แบบสร้างสรรค์",
+        "answerStatus": 0
+      },
+      {
+        "text": "อัตรารีเฟรชหน้าจอที่ปรับได้",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้คือข้อมูลจำเพาะด้านความจำที่ถูกต้องสำหรับ Galaxy S24 Series แต่ละรุ่น",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้เกี่ยวข้องกับฟีเจอร์ One UI 6 ของ Galaxy S24 Series น้อยที่สุด",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Panel ที่สะดุดตา",
+        "answerStatus": 0
+      },
+      {
+        "text": "ดีไซน์อิโมจิที่ดียิ่งขึ้น",
+        "answerStatus": 0
+      },
+      {
+        "text": "Link to Windows",
+        "answerStatus": 1
+      },
+      {
+        "text": "วิดเจ็ตกล้องและวิดเจ็ตข้อมูลเชิงลึกด้านสภาพอากาศ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดคือคำตอบที่เหมาะสมที่สุดของช่องว่างต่อไปนี้\n________ คือการแชร์ที่รองรับอย่างสมบูรณ์ระหว่างโทรศัพท์ แท็บเล็ต และพีซีทั้งหมด (Android, Windows และอื่นๆ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้คือประโยชน์ของบัญชี Samsung",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ประสบการณ์ใช้งาน AI ที่ครบถ้วนให้ชีวิตง่ายดาย",
+        "answerStatus": 0
+      },
+      {
+        "text": "ค้นหาโทรศัพท์ของคุณพบแม้จะออฟไลน์",
+        "answerStatus": 0
+      },
+      {
+        "text": "เข้าถึงและซิงค์บริการและอุปกรณ์ Samsung ทั้งหมดของคุณ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ถูกทุกข้อ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "ข้อใดต่อไปนี้เป็นการแนะนำ Galaxy Watch6 ที่เหมาะสมที่สุดเมื่อขายพ่วงกับ Galaxy S24 Series",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "เปลี่ยนหน้าจอล็อกและ AOD ของ Galaxy S24 Series ให้เป็นสไตล์ของคุณโดยใช้อุปกรณ์ดังกล่าว",
+        "answerStatus": 0
+      },
+      {
+        "text": "ถ่ายภาพและวิดีโอจากอุปกรณ์ดังกล่าวโดยตรง",
+        "answerStatus": 1
+      },
+      {
+        "text": "ดูสิ่งต่างๆ อย่างสะดวกสบายด้วยอุปกรณ์ดังกล่าว",
+        "answerStatus": 0
+      },
+      {
+        "text": "อุปกรณ์เปลี่ยนเสียงไปเป็นอุปกรณ์ที่ใช้งานอยู่โดยอัตโนมัติ",
+        "answerStatus": 0
+      }
+    ]
+  }
+]

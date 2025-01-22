@@ -72,7 +72,7 @@ model User {
   providerUserId        String?
   providerPersonId      String?
   jobId             String?
-  job               Job? @relation(fields: [jobId], references: [id])
+  // job               Job? @relation(fields: [jobId], references: [id])
   
   domainId              String?
   domainCode              String?
@@ -189,7 +189,7 @@ model Subsidiary {
   region Region? @relation(fields: [regionId], references: [id])
 
   domains Domain[]
-  quizSets  QuizSet[]
+  // quizSets  QuizSet[]
 }
 
 model Domain {
@@ -204,7 +204,7 @@ model Domain {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  quizSets  QuizSet[]
+  // quizSets  QuizSet[]
 }
 
 model DomainGoal {
@@ -255,8 +255,8 @@ model QuizSet {
   updatedAt   DateTime    @updatedAt
 
   campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  domain     Domain?      @relation(fields: [domainId], references: [id])
-  subsidiary   Subsidiary?      @relation(fields: [subsidiaryId], references: [id])
+  // domain     Domain?      @relation(fields: [domainId], references: [id])
+  // subsidiary   Subsidiary?      @relation(fields: [subsidiaryId], references: [id])
 
   // userQuizLogs UserQuizLog[]
 }
@@ -296,7 +296,7 @@ model Image {
 
 model QuizStage {
   id         String   @id @default(uuid())
-  name       String     // Name of the stage
+  name       String     // Name of the stage]
   order      Int        // Order of the stage within the quiz set
   
   questionIds       String[]
@@ -389,7 +389,7 @@ model Job {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  users User[]
+  // users User[]
 }
 
 model Store {
