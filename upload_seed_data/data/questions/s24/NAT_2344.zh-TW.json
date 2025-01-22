@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "相比 S23 系列，下列何者並非 Galaxy S24 系列的重點改善項目？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "搜尋圈",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI照片編輯建議和遠距超明亮夜幕攝影",
+        "answerStatus": 0
+      },
+      {
+        "text": "強大遊戲表現",
+        "answerStatus": 0
+      },
+      {
+        "text": "相機數量",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下何者與 Galaxy S24 系列設計無關？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "頂級設計",
+        "answerStatus": 0
+      },
+      {
+        "text": "俐落曲面螢幕設計",
+        "answerStatus": 1
+      },
+      {
+        "text": "平面螢幕和鈦金屬邊框 (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "色彩靈感取自大地的不朽礦石",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下哪項 Galaxy S24 系列特色與強化耐用性相關？（請選出兩項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "IPX8 等級防水",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "鈦金屬邊框 (Galaxy S24 Ultra) 與強化航太鋁合金邊框 (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Flex 轉軸",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下何者並非 搜尋圈選搜尋使用案例？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "錄製會議紀錄並快速整理摘要。",
+        "answerStatus": 1
+      },
+      {
+        "text": "可在觀看影片時尋找時尚商品。",
+        "answerStatus": 0
+      },
+      {
+        "text": "探索在動態消息中看到的旅遊景點。",
+        "answerStatus": 0
+      },
+      {
+        "text": "查詢在 YouTube 上看到的料理食譜。",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "何者為最適合填入以下空格的答案？\n ________ 可在各種訊息應用程式中即時翻譯所收發的聊天內容，並根據情況將文字的語調自訂為專業、休閒、社交、禮貌和表情符號化等風格。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "通話即時翻譯",
+        "answerStatus": 0
+      },
+      {
+        "text": "訊息即時翻譯智慧助理",
+        "answerStatus": 1
+      },
+      {
+        "text": "筆記智慧助理",
+        "answerStatus": 0
+      },
+      {
+        "text": "語音轉文字智慧助理",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "以下何者為通話即時翻譯功能的正確說明？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "雙向即時語音翻譯。",
+        "answerStatus": 1
+      },
+      {
+        "text": "與第三方應用程式相容，無需切換到其他翻譯應用程式。",
+        "answerStatus": 0
+      },
+      {
+        "text": "可自動拉直手寫文字。",
+        "answerStatus": 0
+      },
+      {
+        "text": "將筆記整理得更有條理架構。",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "以下何者與 Galaxy S24 系列新增的筆記智慧助理和 Samsung Note 功能無關？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "自動對齊與調整 S Pen 手寫內容間距",
+        "answerStatus": 0
+      },
+      {
+        "text": "將筆記整理得更有條理架構",
+        "answerStatus": 0
+      },
+      {
+        "text": "根據筆記內容生成包含摘要的封面",
+        "answerStatus": 0
+      },
+      {
+        "text": "生成摘要",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S24 Ultra 相機的 5 倍光學變焦最高可拍出多高解析度的相片？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "800 萬畫素",
+        "answerStatus": 0
+      },
+      {
+        "text": "1000 萬畫素",
+        "answerStatus": 0
+      },
+      {
+        "text": "1200 萬畫素",
+        "answerStatus": 0
+      },
+      {
+        "text": "5000 萬畫素",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "何者為最適合填入以下空格的答案？\nGalaxy S24 Ultra 的 ________ 即使在夜間也能拍出更清晰明亮變焦相片",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "感光面積增加 1.6 倍",
+        "answerStatus": 1
+      },
+      {
+        "text": "廣角 OIS 光學防手震",
+        "answerStatus": 0
+      },
+      {
+        "text": "一鍵拍錄",
+        "answerStatus": 0
+      },
+      {
+        "text": "全新最佳化畫素",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "何者為最適合填入以下空格的答案？\n________ 可在拉直（傾斜）圖片時填補背景，並以自動填補功能移動相片中的物體或重新調整其大小。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "夜間人像",
+        "answerStatus": 0
+      },
+      {
+        "text": "生成式照片編輯",
+        "answerStatus": 1
+      },
+      {
+        "text": "2 億畫素高解析度",
+        "answerStatus": 0
+      },
+      {
+        "text": "筆記智慧助理",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "如何啟動 Galaxy S24 系列媒體瀏覽器應用程式相片助理功能的編輯建議，以進行即時相片編輯（人像特效、重製、移除反光等）？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "下載並開啟相片編輯應用程式，然後逐一套用特效。",
+        "answerStatus": 0
+      },
+      {
+        "text": "輕觸編輯圖示，再輕觸相片助理圖示。",
+        "answerStatus": 0
+      },
+      {
+        "text": "點擊圖示或直接將相片往上滑，就能查看建議編輯選項。",
+        "answerStatus": 1
+      },
+      {
+        "text": "開啟社群應用程式，選擇欲套用的相片濾鏡。",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "以下何者與社群媒體應用程式相機所使用的 Galaxy S24 系列相機功能最不相關？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "HDR 相片",
+        "answerStatus": 0
+      },
+      {
+        "text": "超明亮暗夜攝影：有效降低雜訊，相片、影片更明亮清晰",
+        "answerStatus": 0
+      },
+      {
+        "text": "超高倍變焦",
+        "answerStatus": 1
+      },
+      {
+        "text": "影片防震",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "以下何者並非 Galaxy S24 系列遊戲效能的改善項目？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy 系列史上最快的處理器",
+        "answerStatus": 0
+      },
+      {
+        "text": "加大熱導板（Galaxy S24 Ultra 達 1.9 倍）",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI 慢動作",
+        "answerStatus": 1
+      },
+      {
+        "text": "進階光線追蹤技術",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "以下何者並非 Galaxy S24 系列沉浸式螢幕的元素？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "縮小邊框，放大螢幕",
+        "answerStatus": 0
+      },
+      {
+        "text": "物件感知引擎",
+        "answerStatus": 1
+      },
+      {
+        "text": "峰值亮度 2600 nits",
+        "answerStatus": 0
+      },
+      {
+        "text": "卓越智能調節螢幕",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "以下哪些功能與 Galaxy S24 系列更持久的續航力相關？（請選出兩項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "加大電池容量",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "生成式桌布",
+        "answerStatus": 0
+      },
+      {
+        "text": "螢幕最佳化更新頻率",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "以下何者為各款 Galaxy S24 系列機型的正確記憶體(Ram)規格？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24：6 GB、Galaxy S24+：8 GB，Galaxy S24 Ultra：10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24：8 GB、Galaxy S24+：8 GB、Galaxy S24 Ultra：10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24：8 GB、Galaxy S24+：8 GB、Galaxy S24 Ultra：12 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24：8 GB、Galaxy S24+：12 GB、Galaxy S24 Ultra：12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "以下何者與 Galaxy S24 系列的 One UI 6 最不相關？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "吸睛的快速面板",
+        "answerStatus": 0
+      },
+      {
+        "text": "改良的表情符號設計",
+        "answerStatus": 0
+      },
+      {
+        "text": "連結至 Windows",
+        "answerStatus": 1
+      },
+      {
+        "text": "相機小工具和天氣分析 Widget",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "何者為最適合填入以下空格的答案？\n________ 是與所有手機、平板和電腦（Android、Windows 等）都可完美相容的分享功能。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "快速分享",
+        "answerStatus": 1
+      },
+      {
+        "text": "藍牙 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "下列何者為三星帳號的優勢？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "透過豐富 AI 體驗讓生活更輕鬆",
+        "answerStatus": 0
+      },
+      {
+        "text": "手機離線時，也能定位遺失的手機",
+        "answerStatus": 0
+      },
+      {
+        "text": "可存取與同步所有三星服務和裝置",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "針對 Galaxy S24 系列進行交叉銷售時，以下哪種說法最適合用來介紹 Galaxy Watch6？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "變換 Galaxy S24 系列的鎖定螢幕和 AOD，隨興表達自我風格。",
+        "answerStatus": 0
+      },
+      {
+        "text": "直接以手錶拍攝相片和影片。",
+        "answerStatus": 1
+      },
+      {
+        "text": "透過手錶享受舒適的觀看體驗。",
+        "answerStatus": 0
+      },
+      {
+        "text": "自動將聲音切換到使用中的裝置。",
+        "answerStatus": 0
+      }
+    ]
+  }
+]
