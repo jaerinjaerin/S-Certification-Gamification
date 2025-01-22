@@ -24,7 +24,7 @@ export default function PrivacyOrTermPopup({
     domainName: string;
   };
 }) {
-  const { isArabic, isMyanmar } = useCheckLocale();
+  const { isArabic } = useCheckLocale();
   const {
     contents,
     popupTitle,
