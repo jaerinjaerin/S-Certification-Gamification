@@ -1,8 +1,7 @@
-import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
-async function postHandler(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
@@ -176,5 +175,3 @@ async function postHandler(request: NextRequest) {
     );
   }
 }
-
-export const POST = withCors(postHandler);

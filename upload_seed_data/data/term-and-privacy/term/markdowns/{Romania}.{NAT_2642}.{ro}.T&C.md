@@ -1,14 +1,12 @@
+
+
 Condiții de utilizare Certificare Expert Galaxy AI 2025
-
-
 
 Prezentele condiții de utilizare, împreună cu Politica de confidențialitate prevăzută mai jos („Condițiile”) se încheie între Samsung Electronics Co., Ltd., o corporație coreeană, având sediul în 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republica Coreea (inclusiv entitățile sale afiliate, „Samsung”, „noi” sau „nouă”) și dvs. și guvernează accesarea sau utilizarea de către dvs. a Site-ului web, a Aplicației pentru mobil, a Materialelor și a Serviciilor (astfel cum sunt acestea definite mai jos). Vă rugăm să citiți cu atenție Condițiile înainte de a accesa sau utiliza SamsungPlus („Site web” sau „Aplicația pentru mobil”). Dacă nu sunteți de acord cu oricare dintre condiții, nu accesați sau nu utilizați în alt mod Site-ul web și Aplicația pentru mobil. Utilizarea de către dvs. a Site-lui web și a Aplicației pentru mobil reprezintă acordul dvs. privind Condițiile.
 
 Utilizare generală și restricții
 
 Întreg conținutul furnizat de Samsung pe Site-ul web și Aplicația pentru mobil (incluzând, dar fără a se limita la, date, informații, documente, texte, design, mărci comerciale, sigle, grafice, imagini, pictograme, sunete, videoclipuri, coduri și software) („Materialele”) reprezintă proprietatea exclusivă a Samsung, a licențiatorilor sau furnizorilor săi de conținut și este protejat prin drepturi de autor, drepturi de marcă comercială și alte legi aplicabile. Puteți accesa Materialele conținute pe Site-ul web sau Aplicația pentru mobil exclusiv pentru scopuri de instruire pentru sprijinirea SamsungPlus și sub rezerva autorizării exprese a Samsung, cu condiția să nu modificați sau ștergeți drepturi de autor, drepturi de marcă comercială sau alte notificări de drepturi de proprietate care apar pe Materialele pe care le accesați, copiați, descărcați sau tipăriți.
-
-
 
 Sunteți de acord să nu utilizați, afișați, reproduceți, transmiteți, modificați, distribuiți, diseminați, vindeți, publicați, creați lucrări derivate, difuzați, puneți în circulație sau exploatați în orice mod Materialele, total sau parțial, fie prin e-mail sau prin alte mijloace, pentru alt scop decât cele stipulate în prezentul și sub rezerva obținerii autorizării exprese a Samsung. Orice utilizare neautorizată a Site-ului web, a Aplicației pentru mobil, a Materialelor sau a Serviciilor poate încălca drepturi de autor, de marcă comercială înregistrată și orice alte legi aplicabile.
 
@@ -18,35 +16,23 @@ Nu aveți permisiunea de a utiliza Site-ul web sau Aplicația pentru mobil, oric
 
 Sunteți de acord să nu „adaptați” sau „oglindiți” Site-ul web sau Aplicația pentru mobil sau orice porțiune a Materialelor sau a Serviciilor pe orice alt server sau dispozitiv pe bază de internet fără aprobarea prealabilă scrisă a Samsung. În plus, nu puteți utiliza nicio parte a Materialelor sau a Serviciilor din orice meta tag-uri sau alt tip de „texte ascunse” fără aprobarea prealabilă scrisă a Samsung.
 
-
-
-Cum să participați la Certificarea Expert Galaxy AI 
-
-
+Cum să participați la Certificarea Expert Galaxy AI
 
 Utilizatorii Samsung+
 
 După conectarea în aplicația Samsung+, puteți accesa modulele de instruire. Participarea la test este permisă doar după finalizarea instruirii. După ce ați promovat toate etapele testului, veți primi insigna Expert Galaxy AI.
 
-
-
 Utilizatorii non-Samsung+
 
 Dacă nu utilizați aplicația Samsung+, trebuie mai întâi să finalizați online sau offline instruirea furnizată de subsidiara dvs. locală. După finalizarea instruirii, puteți participa la test prin intermediul linkului pe care Samsung îl furnizează subsidiarei dvs. După ce ați promovat toate etapele testului, veți primi insigna Expert Galaxy AI.
-
-
 
 Puteți reefectua și promova testul de mai multe ori, dar va fi acordată o singură insignă.
 
 Fiecare etapă a testului are o limită de cinci răspunsuri incorecte. Dacă această limită este atinsă înainte de finalizarea unei etape, etapa respectivă trebuie reîncepută de la prima întrebare. Testul de certificare trebuie realizat în mod individual. Orice încercare de înșelăciune va conduce la descalificare și la invalidarea rezultatelor la test. Certificarea Expert Galaxy AI este gratuită.
 
-
-
 Conținut al terților și link-uri către alte site-uri web
 
 Site-ul web și Aplicația pentru mobil pot conține conținut al terților sau linkuri către alte site-uri web sau aplicații pentru mobil. Întrucât nu deținem controlul asupra site-urilor web sau aplicațiilor pentru mobil ale terților, admiteți și sunteți de acord că nu suntem responsabili pentru disponibilitatea respectivelor site-uri web/aplicații pentru mobil și nu promovăm și nu suntem responsabili pentru niciun tip de conținut, reclamă, serviciu, produse sau alte materiale de pe sau disponibile din astfel de site-uri web și aplicații pentru mobil. De asemenea, admiteți și sunteți de acord că Samsung nu va fi responsabilă, în mod direct sau indirect, pentru daune sau pierderi cauzate sau presupuse a fi cauzate de sau în legătură cu utilizarea sau bazarea pe orice conținut, reclamă, serviciu, produse sau alte materiale de pe sau disponibile din astfel de site-uri web și aplicații pentru mobil. Toate aceste site-uri web și aplicații pentru mobil vor face obiectul unor condiții de utilizare separate.
-
-
 
 În plus, un link către un site web al terților nu înseamnă că Samsung își asumă responsabilitatea pentru conținutul sau utilizarea respectivului site web. Sunteți singurul responsabil să luați măsuri de precauție pentru a vă asigura că orice conținut veți utiliza nu conține viruși, viermi, troieni și alte articole de natură distructivă.
 
@@ -57,10 +43,6 @@ ADMITEȚI ȘI SUNTEȚI DE ACORD ÎN MOD EXPRES CĂ UTILIZAREA SITE-ULUI WEB, A A
 LIMITAREA RĂSPUNDERII
 
 ÎN MĂSURA MAXIMĂ PERMISĂ DE LEGE, ÎN NICIO CIRCUMSTANȚĂ, INCLUZÂND NEGLIJENȚA, SAMSUNG NU VA FI RĂSPUNZĂTOARE, ÎN TEMEIUL CONTRACTULUI SAU AL UNEI INFRACȚIUNI, PENTRU DAUNE DIRECTE, INDIRECTE, ACCIDENTALE, SPECIALE SAU PE CALE DE CONSECINȚĂ, PIERDEREA PROFITULUI, A VENITURILOR, A INTERESELOR, A AFACERII SAU CORUPEREA DATELOR, TAXE AVOCĂȚEȘTI, CHELTUIELI SAU ORICE ALTE DAUNE CARE REZULTĂ DIN SAU ÎN LEGĂTURĂ CU ORICE INFORMAȚII CUPRINSE DE SITE-UL WEB ȘI APLICAȚIA PENTRU MOBIL SAU CA URMARE A UTILIZĂRII SITE-ULUI WEB ȘI A APLICAȚIEI PENTRU MOBIL, A ORICĂRUI MATERIAL SAU SERVICIU ACCESAT DE DVS. SAU ORICE TERȚĂ PARTE PE SITE-UL WEB ȘI APLICAȚIILE PENTRU MOBIL, CHIAR DACĂ AȚI FOST AVERTIZAT DESPRE POSIBILITATEA SURVENIRII UNOR ASTFEL DE DAUNE.
-
-
-
-
 
 Despăgubiri
 
@@ -77,8 +59,6 @@ Prezentele Condiții sunt guvernate de legile din jurisdicția statului în care
 Dispoziții generale
 
 Neexercitarea de către Samsung a oricărui drept sau a oricărei dispoziții a Condițiilor nu va reprezenta o renunțare la respectivul drept sau respectiva dispoziție decât dacă acest lucru este acceptat și agreat în scris de Samsung. Condițiile (inclusiv orice modificări, actualizări și completări) reprezintă acordul complet dintre dvs. și compania Samsung și înlocuiesc toate negocierile, discuțiile sau acordurile anterioare sau curente, dacă există, dintre dvs. și compania Samsung cu privire la obiectul acestora. Sunteți de acord că aceste Condiții pot fi alocate nouă de o terță parte, conform alegerii noastre discreționare. Titlurile secțiunilor sunt inserate numai ca referință și în niciun caz nu definesc, limitează, interpretează sau descriu sfera de acoperire a respectivei secțiuni. Dacă orice dispoziție a Condițiilor sau aplicarea acestora pentru orice parte sau în orice circumstanță va fi declarată sau considerată de orice instanță sau autoritate cvasi-judiciară de jurisdicție competentă ca fiind nulă, ilegală sau neexecutorie în orice privință („Dispoziția contrarie”), (i) respectiva Dispoziție contrarie va fi considerată modificată pentru a servi atingerii, pe cât posibil, aceluiași scop avut în vedere de Dispoziția contrarie, în măsura permisă de lege; (ii) valabilitatea, legalitatea și caracterul executoriu al celorlalte dispoziții sau părți ale dispozițiilor din prezentele nu vor fi afectate sau prejudiciate în niciun fel; și (iii) restul Condițiilor vor fi valabile și executorii în măsura permisă de legea aplicabilă. Dacă orice dispoziție a Condițiilor este declarată de o instanță de jurisdicție competentă ca fiind nevalabilă, restul dispozițiilor vor rămâne în vigoare și vor continua să producă efecte.
-
-
 
 Data [22.01.2025]
 

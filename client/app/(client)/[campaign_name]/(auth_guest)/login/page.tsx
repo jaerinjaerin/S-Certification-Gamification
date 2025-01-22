@@ -521,7 +521,7 @@ export default function GuestLogin({
                       form="verify-email"
                       disabled={!email || loading || !isValidEmail(email)}
                     >
-                      {translation("send_code")}
+                      <span>{translation("send_code")}</span>
                     </Button>
                     <DialogClose className="absolute top-5 right-5">
                       <X />
@@ -548,7 +548,7 @@ export default function GuestLogin({
                 setError(null);
               }}
             >
-              {translation("ok")}
+              <span>{translation("ok")}</span>
             </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -572,7 +572,7 @@ export default function GuestLogin({
                   setStep("code");
                 }}
               >
-                {translation("ok")}
+                <span>{translation("ok")}</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -605,7 +605,7 @@ export default function GuestLogin({
                 inputMode="numeric"
                 className={cn(
                   "bg-[#E5E5E5] rounded-[10px] w-[70%] sm:w-[80%] p-2",
-                  isArabic && "text-right"
+                  isArabic && "text-right translate-x-[57px]"
                 )}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
@@ -638,7 +638,7 @@ export default function GuestLogin({
                 verifyCode();
               }}
             >
-              {translation("submit")}
+              <span>{translation("submit")}</span>
             </Button>
             <div className="mx-auto">
               <button

@@ -7,7 +7,7 @@ import { isValidCampaignQuizSetId } from "./utils/validationUtils";
 export async function middleware(request: NextRequest) {
   const session = await auth();
 
-  const origin = request.headers.get("origin") ?? "";
+  // const origin = request.headers.get("origin") ?? "";
   // console.log("middleware: origin:", origin);
 
   const { pathname, search } = request.nextUrl;

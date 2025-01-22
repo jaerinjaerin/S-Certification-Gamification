@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useCheckLocale from "@/hooks/useCheckLocale";
 import useCreateItem from "@/hooks/useCreateItem";
 import { useCampaign } from "@/providers/campaignProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -94,7 +95,7 @@ export default function GuestRegisterPage() {
   const [loading, setLoading] = useState<boolean>(false);
   // const [checkingRegisterd, setCheckingRegisterd] = useState<boolean>(true);
   const locale = useLocale();
-  // console.log(locale);
+  const { isArabic } = useCheckLocale();
 
   // console.log("checkingRegisterd", checkingRegisterd);
 
@@ -188,7 +189,6 @@ export default function GuestRegisterPage() {
   };
 
   const selectChannel = (channelName: string) => {
-    // console.log("🚧", channelName);
     if (channelName === "input_directly") {
       setChannelInput(true);
       setSelectedChannel(null);
@@ -332,7 +332,10 @@ export default function GuestRegisterPage() {
               {channelInput && (
                 <input
                   type="text"
-                  className="relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]"
+                  className={cn(
+                    "relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]",
+                    isArabic && "text-right"
+                  )}
                   placeholder={translation("input_directly")}
                   onChange={(e) => {
                     const value = e.target.value.trim();
@@ -372,7 +375,7 @@ export default function GuestRegisterPage() {
                 loadingCreate ||
                 !selectedCountry ||
                 (!selectedChannel &&
-                  (!channelName || channelName.trim().length < 3)) ||
+                  (!channelName || channelName.trim().length < 2)) ||
                 !selectedJobId ||
                 !languageCode ||
                 (!loadingCreate && !!campaignPath)
@@ -380,7 +383,7 @@ export default function GuestRegisterPage() {
               onClick={routeQuizPage}
               className="disabled:bg-disabled"
             >
-              {translation("save")}
+              <span>{translation("save")}</span>
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -399,7 +402,7 @@ export default function GuestRegisterPage() {
           <AlertDialogFooter>
             <AlertDialogAction asChild>
               <Button variant={"primary"} onClick={() => {}}>
-                OK
+                <span>{translation("ok")}</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -3,15 +3,13 @@ import {
   sumtotalUserOthersJobId,
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
-import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
-// export async function POST(request: NextRequest) {
-async function postHandler(request: NextRequest) {
+export async function POST(request: NextRequest) {
   console.log("POST - QuizSet Log");
   const body = await request.json();
   const { userId, quizSetPath } = body;
@@ -273,7 +271,7 @@ async function postHandler(request: NextRequest) {
   }
 }
 
-async function getHandler(request: NextRequest) {
+export async function GET(request: NextRequest) {
   // export async function GET(request: NextRequest) {
   console.log("GET - QuizSet Log");
   const url = request.url;
@@ -430,6 +428,3 @@ async function getHandler(request: NextRequest) {
     );
   }
 }
-
-export const GET = withCors(getHandler);
-export const POST = withCors(postHandler);

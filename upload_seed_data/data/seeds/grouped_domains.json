@@ -40,7 +40,7 @@
   "regions": [
     {
       "domainId": 361266,
-      "domainName": "KOREA",
+      "domainName": "Korea",
       "domainCode": "NAT_2410",
       "parentDomainName": "KOREA",
       "parentDomainId": 361266,
@@ -141,7 +141,7 @@
   "subsidiaries": [
     {
       "domainId": 361266,
-      "domainName": "KOREA",
+      "domainName": "Korea",
       "domainCode": "NAT_2410",
       "parentDomainName": "KOREA",
       "parentDomainId": 361266,
@@ -638,7 +638,7 @@
   "domains": [
     {
       "domainId": 29,
-      "domainName": "HQ",
+      "domainName": "HQ Retail Team",
       "domainCode": "OrgCode-7",
       "parentDomainName": "Samsung Global",
       "parentDomainId": 28,
@@ -647,7 +647,7 @@
     },
     {
       "domainId": 361266,
-      "domainName": "KOREA",
+      "domainName": "Korea",
       "domainCode": "NAT_2410",
       "parentDomainName": "KOREA",
       "parentDomainId": 361266,

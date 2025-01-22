@@ -1,0 +1,168 @@
+
+
+**Samsung Plus Privacy Policy**
+
+Effective: January 1st, 2025
+
+Samsung Electronics Co., Ltd. (Data Controller) (“**Samsung**”) knows how important privacy is to its customers and their employees and partners, and we strive to be clear about how we collect, use, disclose, transfer and store your information. This Privacy Policy provides an overview of our information practices with respect to personal information collected through **Samsung Plus** (the "**Business Services**").
+
+This Privacy Policy may be updated periodically to reflect changes in our personal information practices with respect to the Business Services or changes in the applicable law. We will indicate at the top of this Privacy Policy when it was most recently updated. If we update the Privacy Policy, we will let you know in advance about changes we consider to be material by placing a notice on the Business Services or by emailing you, where appropriate.
+
+**What information do we collect?**
+
+We will collect various types of personal information in connection with the Business Services.
+
+For example:
+
+* We will collect personal information that you provide through your interactions with the business Services, such as your name, address, e-mail address and contact details, job title and position, company, language, registration details, touch interactions and other inputs and any communications you send or deliver to us or share with our customers;
+* We will collect data about your use of the Business Services, including the time and duration of your use; information stored in cookies that we have set on your device; and information about your device settings;
+* We also may receive personal information about you from your employer or service provider or from publicly and commercially available sources (as permitted by law), which we may combine with other information we receive from or about you (as permitted by law, or otherwise with your separate consent).
+* We also may obtain other information related to your use of Business Services, including the information (such as information related to the apps you use, pictures, calendar entries, and content and data from other Samsung and third-party apps, websites and services) we receive from Samsung and third-party apps and services that are accessed or used by Business Services to provide you with the Services.
+* We collect information through automated means about your Business Services -enabled devices, such as device models, OS versions, device configurations and settings, IP addresses, and device identifiers and other unique identifiers. In addition, we may obtain information about how, when and for how long you use your Business Services -enabled devices, including your usage of Business Services and Samsung and third-party apps and services on the devices (such as a listing of apps on your devices, music played on your devices, the websites you visit and the searches you make)
+
+Through the Business Services, we collect personal information about your online activities on websites and connected devices over time and across third-party websites, devices, apps and other online features and services. We may use third-party analytics services on the Business Services, such as those of Google Analytics. The service providers that administer these analytics services help us to analyze your use of the Business Services and improve the Business Services. The information we obtain may be disclosed to or collected directly by these providers and other relevant third parties who use the information, for example, to evaluate use of the Business Services, help administer the Business Services and diagnose technical issues. To learn more about Google Analytics, please visit <http://www.google.com/analytics/learn/privacy.html> and <https://www.google.com/policies/privacy/partners/>.
+
+You can choose not to provide us with certain types of information, such as user name and email address. In some cases, this may limit your ability to use the Business Services. We’ll do our best to explain these limitations when we’re asking for your information so you can make an informed decision.
+
+**How do we use your information?**
+
+We may use information we collect for the following purposes:
+
+* + to provide products and services that you (or your employer) requested and to register or authenticate you or your device;
+  + to respond to your questions or requests for information;
+  + to offer better and more customized products and services that take into account your company’s purchasing history and service record and other relevant information;
+  + subject to your separate consent where required by applicable law, to inform you about new products and services;
+  + for assessment and analysis of our market, customers, products, and services (including asking you for your opinions on our products and services and carrying out customer surveys);
+  + to understand the way companies use the Business Services so that we can improve them and develop new products and services;
+  + to provide maintenance services and to maintain a sufficient level of security on the Business Services;
+  + to protect the rights, property, or safety of Samsung, or any of our respective affiliates, business partners, employees or customers, for example, in legal proceedings, internal investigations and investigations by competent authorities;
+  + otherwise with your separate consent where required by applicable law or as described to at the time your information is collected;
+  + to communicate with you regarding Business Services certification and provide notifications, content, alerts, offers, promotions, marketing materials, and other communications.
+
+We use and combine the information we collect about you from our Business Services, devices, or other sources to provide you with a better experience. For example, you can use your Samsung Account details not only on the Business Service you registered with, but other services which use Samsung accounts. We also use the information you provide directly or through other sources as described above to provide content you may like or that you’ve personalized.
+
+Samsung processes personal information for the purposes described above. Samsung’s legal basis to process personal information includes processing:
+
+(i) So that we can keep our promises to you, such as providing you with the Business Service
+
+(performance of a contract (GDPR Article 6(1)(b));
+
+(ii) To promote our business interests (for example, to manage our relationship with you) (legitimate interest (GDPR Article 6(1)(f));
+
+(iii) To comply with the law, regulatory obligations and legal processes (GDPR Article 6(1)(c)); and
+
+(iv) With your consent (GDPR Article 6(1)(a)).
+
+**To whom do we disclose your information?**
+
+We will disclose your information internally within our business and the following entities, but only for the above purposes.
+
+• Affiliates: Other Samsung Electronics Group companies which we control or own.
+
+• Service Providers: Carefully selected companies that provide services for or on behalf of us. These providers are also committed to protecting your information.
+
+• Other parties when required by law or as necessary to protect our business: For example, it may be necessary by law, legal process, or court order from governmental authorities to disclose your information. They may also seek your information from us for the purposes of law enforcement, national security, anti-terrorism, or other issues that are related to public security.
+
+• Other parties in connection with corporate transactions: We may disclose your information to a third party as part of a merger or transfer, acquisition or sale, or in the event of a bankruptcy.
+
+• Other parties with your consent or at your direction: In addition to the disclosures described in this Privacy Policy, we may share information about you with third parties when you separately consent to or request such sharing.
+
+Submissions that you make to public areas of a website, mobile application, or other online service, such as bulletin boards may be viewable to other users of the Business Services. We do not control, and are not responsible for, how other users of the Business Services may use this information. For example, personal information that you submit in public areas could be collected and used by others to send you unsolicited messages or for other purposes.
+
+**How do we keep your information secure?**
+
+We take data protection seriously. We’ve put in place physical and technical safeguards to keep the information we collect secure. However, please note that although we take reasonable steps to protect your information, no website, Internet transmission, computer system, or wireless connection is completely secure.
+
+**Where do we send your data?**
+
+Your use or participation in the Business Services may involve transfer, storage and processing of your information outside of your country of residence, consistent with this policy. Such countries include, without limitation, the Republic of Korea, the United States of America. Please note that the data protection and other laws of countries to which your information may be transferred might not be as comprehensive as those in your country. We will take appropriate measures, in compliance with applicable law, to ensure that your personal information remains protected. Such measures include the use of Standard Contractual Clauses to safeguard the transfer of data outside of the EEA or UK. For more information on the safeguards we take to ensure the lawful transfer of your data to countries outside of the EU or UK, or to obtain a copy of the contractual agreements in place, please contact us by the methods outlined in the **Contact** **Us** section of this Privacy Policy.
+
+**What are your rights?**
+
+Your personal information belongs to you. You can ask us to provide details about what we’ve collected, and you can ask us to delete it or correct any inaccuracies. You can also ask us to restrict or limit processing, sharing, or transfer of your personal information, as well as to provide to you your personal information that we’ve collected so you can use it for your own purposes. To exercise your rights, please contact us by the methods outlined in the Contact Us section of this Privacy Policy.
+
+However, requesting the deletion of your personal information may also result in a loss of access to the Business Services.
+
+If you request deletion of personal information, you acknowledge that you may not be able to access or use the Business Services and that residual personal information may continue to reside in Samsung's records and archives for some time in compliance with applicable law, but Samsung will not use that information for commercial purposes. You understand that, despite your request for deletion, Samsung reserves the right to keep your personal information, or a relevant part of it, in line with our data retention policy and applicable laws, if Samsung has suspended, limited, or terminated your access to the website for violating the Samsung Terms of Use or any other applicable Samsung policy or applicable law, when necessary to protect the rights, property, or safety of Samsung, or any of our respective affiliates, business partners, employees or customers.
+
+**How long do we keep your information?**
+
+We won’t keep your personal information for longer than is necessary for the purpose for which it was collected. This means that information will be destroyed or erased from our systems when it’s no longer required.
+
+We take appropriate steps to ensure that we process and retain information about you based on the following logic:
+
+1. At least the duration for which the information is used to provide you with a service;
+
+2. As required under law, regulatory obligation, a contract, or with regard to our statutory obligations;
+
+3. Only for as long as is necessary for the purpose for which it was collected, is processed, or longer if required under any contract, by applicable law, or for statistical purposes, subject to appropriate safeguards.
+
+**What third-party services do we use?**
+
+Our Business Services may link to third-party websites and services that are outside our control. We are not responsible for the security or privacy of any information collected by websites or other services. You should exercise caution, and review the privacy statements applicable to the third-party websites and services you use.
+
+**Cookies**
+
+Our website uses cookies to distinguish you from other users of our website. This helps us to provide you with a good experience when you browse our website and allows us to improve our site.
+
+A cookie is a small file of letters and numbers that we store on your browser or the hard drive of your computer if you agree. Cookies contain information that is transferred to your computer’s hard drive.
+
+We use the following cookies:
+
+1. **Strictly necessary cookies.** These cookies are required for the operation of our website. They include, for example, cookies that enable you to log into secure areas of our website.
+2. **Analytical or performance cookies.** These allow us to recognize and count the number of visitors and to see how visitors move around our website when they are using it. This helps us to improve the way our website works, for example, by ensuring that users are finding what they are looking for easily.
+3. **Functionality cookies.** These are used to recognize you when you return to our website. This enables us to personalize our content for you, greet you by name and remember your preferences (for example, your choice of language or region).
+4. **Targeting cookies.** These cookies record your visit to our website, the pages you have visited and the links you have followed. We will use this information to make our website and the advertising displayed on it more relevant to your interests.
+
+You can find more information about the individual cookies we use and the purposes for which we use them in the table below:
+
+ | Cookie Title | Purpose | More information | 
+ | --- | --- | --- | 
+ | **AspenUser** | Preferences of user in Learning application.  Cookie type : Persistent(24 hours) | Currency=U.S.+Dollar  FromUTC=-5.00  Lang=en-us  LangPK=1  null  SessionIgnoreDCSFontMEssage=false  Timezone=America%2fNew+York  TimeZonePK=50  UXEnabled-=1 | 
+ | **olsUserPreferences** | Skin and course player preferences for the user.  Cookie type : session | ApplySharedSA=1  CourseSA=1  CourseTOC=0  HomeCourseStatus=1  HomeLastTopics=1  HomeNextMilestone=1  HomeSchedule=1  null  Orgid=org-default  SkinAdm=default\_st900  SkinAut=default\_st900  SkinCMgr=default\_st900  SkinCRwr=default\_st900  SkinDsh=default\_st900  SkinLrn=default\_st900  SkinMgr=default\_st900 | 
+ | <ul><li>(sumtauth</li></ul> | Used to authorize requests. Payload contains the following claims. The token is hashed with HMAC-SHA256 algorithm and below is what is looks like during transport (text highlighted in yellow is description that I added for representation).  Cookie type : session | Payload Details :  Issuer (SumTotal Application which issued the token. Ex: http://www.sumtotalsystems.com/coreui)  Subject (Username of the user for whom the token is being requested)  Audience (Who the token is intended for. Ex: Tenant Key)  Expiry (Expiration time)  Not Valid Before (NA)  Issued At (Token Issue Time)  SSO Broker Session ID  UserId of the user emulating the subject (Applicable only in emulation mode)  UserName of the user emulating the subject (Applicable only in emulation mode)  Culture of the subject  UserId of the subject  Guest Account Flag for the subject  PersonId of the subject  external indicator of the subject  Relying-Party Key (Ex: EIXHRUI) | 
+
+We do not share the information collected by the cookies with any third parties.
+
+You can block cookies by activating the setting on your browser that allows you to refuse the setting of all or some cookies. However, if you use your browser settings to block all cookies (including essential cookies) you may not be able to access all or parts of our website.
+
+Except for essential cookies, all cookies will expire after the purpose of collection has been achieved.
+
+**Your Choices**
+
+We offer you certain choices in connection with the personal information we obtain about you.
+
+The Business Services may offer choices related to the collection, deletion and sharing of certain information related to the Business Services. If you decline to allow the Business Services to collect, store or share certain information, you may not be able to use all of the features available through the Business Services.
+
+To exercise your choices, please contact us as indicated in the **Contact Us** section of this Privacy Policy.
+
+**Contact Us**
+
+You can contact us to update your preferences, exercise your rights, submit a request, or ask us questions.
+
+You can contact us at:
+
+dataprotection@samsung.com
+
+Data Controller
+
+Samsung Electronics Co., Ltd.
+
+129, Samsung-ro, Yeongtong-gu,
+
+Suwon-si, Gyeonggi-do 16677, Republic of Korea
+
+Samsung Electronics has offices across Europe, so we can ensure that your request or query will be handled by the data protection team based in your region.
+
+The easiest way to contact us is through our Privacy Support Page at https://www.samsung.com/request-desk.
+
+You can also contact us at:
+
+European Data Protection Officer
+
+Samsung Electronics (UK) Limited
+
+Samsung House, 2000 Hillswood Drive, Chertsey, Surrey KT16 0RS, UK
+
+You can lodge a complaint with the relevant supervisory authority if you consider that our processing of your personal information infringes applicable law. Contact details for all EU supervisory authorities can be found at <https://ec.europa.eu/newsroom/article29/item-detail.cfm?item_id=612080>.
+

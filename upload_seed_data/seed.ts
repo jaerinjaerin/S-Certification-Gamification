@@ -397,7 +397,7 @@ async function main() {
     // console.log("badgeImages", badgeImages);
 
     const campaign = await prisma.campaign.findFirst();
-    const folderPath = path.join(process.cwd(), "data", "questions", "s24");
+    const folderPath = path.join(process.cwd(), "data", "questions", "s25");
     const files = fs.readdirSync(folderPath);
 
     // console.log("files", files);
@@ -608,8 +608,9 @@ async function main() {
         });
 
         // questionIds = questionIds.filter((id) => id !== undefined);
-
-        console.log("questionIds", domainCode, stage, questionIds.length);
+        if (domainCode === "OrgCode-7") {
+          console.log("questionIds", domainCode, stage, questionIds);
+        }
 
         // const isLastStage = i === stages.length - 1;
         let isBadgeStage = false;

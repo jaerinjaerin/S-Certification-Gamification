@@ -1,9 +1,8 @@
-import { withCors } from "@/lib/cors";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
-async function postHandler(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const {
@@ -183,31 +182,3 @@ async function postHandler(request: NextRequest) {
     );
   }
 }
-
-export const POST = withCors(postHandler);
-
-// export async function GET(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const userId = searchParams.get("user_id");
-//   const quizSetId = searchParams.get("quiz_set_id");
-//   const quizStageId = searchParams.get("quiz_stage_id");
-
-//   try {
-//     const quizLogs = await prisma.userQuizQuestionLog.findMany({
-//       where: {
-//         userId: userId as string,
-//         quizSetId: quizSetId as string,
-//         quizStageId: quizStageId as string,
-//       },
-//     });
-
-//     return NextResponse.json({ item: quizLogs }, { status: 200 });
-//   } catch (error) {
-//     console.error("Error get quiz logs :", error);
-//     Sentry.captureException(error);
-//     return NextResponse.json(
-//       { message: "An unexpected error occurred" },
-//       { status: 500 }
-//     );
-//   }
-// }

@@ -10,6 +10,7 @@ import SuccessNotify from "@/components/quiz/success-notify";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
+import { useCheckOS } from "@/hooks/useCheckOS";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quizProvider";
 import { usePathNavigator } from "@/route/usePathNavigator";
@@ -53,6 +54,7 @@ export default function QuizPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const { isAndroid, isWindows } = useCheckOS();
 
   const animationRef = useRef<boolean | null>(null); // 애니메이션 상태 관리
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -218,7 +220,10 @@ export default function QuizPage() {
           {/* quiz 현재 상태 */}
           <div className="flex-none">
             <motion.div
-              className="bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] font-medium text-sm py-1"
+              className={cn(
+                "bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] font-medium text-sm py-1",
+                (isWindows || isAndroid) && "*:translate-y-[1px]"
+              )}
               key={currentQuestionIndex}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
