@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilka är de viktigaste funktionerna i Galaxy S25? (Välj tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Verklighetstrogen AI-assistent",
+        "answerStatus": 1
+      },
+      {
+        "text": "Den mest avancerade prestandan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Perfekt kameraupplevelse",
+        "answerStatus": 1
+      },
+      {
+        "text": "Din hälsokompanjon",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilken färg har Galaxy S25 Ultra? (Flervalsfråga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jag har hört att det finns en funktion som kan hitta en restaurang och skicka ett meddelande på en och samma gång. Vad heter den?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilka är de viktigaste fördelarna när du tar ett porträtt?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Du kan spela in klarare videor på natten med mindre brus.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan nu filtrera bort oönskade ljud och behålla dem du vill ha kvar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan slutföra uppgifter medans du använder flera appar samtidigt genom att prata i naturlig ton med Galaxy S25-serien",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan enkelt fånga en naturlig hudstruktur",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kan du förklara hur resultatet blev när du spelade in Nightography-videon?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Du kan spela in klarare videor på natten med mindre brus.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Du kan nu filtrera bort oönskade ljud och behålla dem du vill ha kvar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan slutföra uppgifter medans du använder flera appar samtidigt genom att prata i naturlig ton med Galaxy S25-serien",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan enkelt fånga en perfekt hudton och en naturlig hudstruktur",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken av följande är en huvudsaklig funktion i nya Watch som bör betonas som den uppkopplade upplevelsen vid uppvisning av livsstilsanvändning? (välj alla korrekta svar)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallklart ljud",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energipoäng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tävling",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken av följande är en huvudsaklig funktion i Buds3 Pro och Buds3 som bör betonas som den uppkopplade upplevelsen vid uppvisning av livsstilsanvändning?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitiv användarupplevelse",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ljudoptimering\n(optimerat ljud)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Erbjudande vid flera köp",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vilken funktion stöds INTE i Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Överlagrad PDF-översättning",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkribera och översätta",
+        "answerStatus": 0
+      },
+      {
+        "text": "Översättning i realtid under röstinspelning",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sammanfattning och autoformatera",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vad bör jag göra för förberedelser för att kunna använda Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Du måste vara inloggad på ditt Samsung account",
+        "answerStatus": 1
+      },
+      {
+        "text": "Du måste betala en viss abonnemangsavgift",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du måste ladda ner Galaxy AI avsedd app",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ingenting",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Varför ska jag uppgradera min Galaxy till One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Det är inte mycket som har ändrats jämfört med One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Med One UI 7.0 får du en bättre AI-telefonupplevelse jämfört med tidigare programvara",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilka faktorer kan jag radera med hjälp av Audio Eraser?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vind",
+        "answerStatus": 0
+      },
+      {
+        "text": "Brus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilka är de viktigaste funktionerna att uppleva med Galaxy S25? (Flervalsfråga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodal Search",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilka är de viktigaste förbättringarna i Galaxy S25? (Välj 3 alternativ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Intelligent Multimodal Search",
+        "answerStatus": 1
+      },
+      {
+        "text": "Batteri",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm Processor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilken AP är Galaxy S25-serien utrustad med",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm Processor",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm Processor",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm Processor",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm Processor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilka är de viktigaste förbättringarna i Galaxy S25 Ultra? (Välj tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultravidvinkel 50 MP kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Vikt",
+        "answerStatus": 0
+      },
+      {
+        "text": "Förbättrat Corning® Gorilla® Armor2 (för displayen på framsidan)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Processor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken av följande är INTE en huvudsaklig kundupplevelse i nya Watch? (Välj ett alternativ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nästa nivås nödvändiga funktioner\n(prestanda)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-driven sömn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Skärmstorlek",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personanpassad träningsupplevelse",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken av följande är en huvudsaklig funktion som skulle kunna betonas när Buds3 Pro och Buds3 presenteras för kunder som är nya för trådlösa hörlurar?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallklart ljud",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptiv ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bekväm passform",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vilken är den nya funktionen på Tab S10 serien som har stöd för intensiv utomhusvisning?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Antireflex",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Stor display",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Finns det en funktion för att enkelt och snabbt dela foton / videor med vänner?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Måste jag stå bredvid personen jag vill dela till när jag använder Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nej det behöver du inte, funkar via molnet",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ja, tyvärr måste du stanna kvar till slutet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Skulle du kunna rekommendera vilka som är de viktiga funktioner för mig att prova på?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action",
+        "answerStatus": 0
+      },
+      {
+        "text": "Porträtt och Mitt filter",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken fråga kan jag ställa för att demonstrera Cross App Action?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sök efter en kinesisk restaurang i närheten och skicka den till Tony",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hej Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ge mig dagens väderleksrapport",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hej Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Hur kan jag använda filter när jag tar ett foto? (Välj två)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "med hjälp av förinställt filter i kameraappen",
+        "answerStatus": 1
+      },
+      {
+        "text": "med hjälp av nattläge i kameraappen",
+        "answerStatus": 0
+      },
+      {
+        "text": "med hjälp av Mitt filter av foto i galleriet",
+        "answerStatus": 1
+      },
+      {
+        "text": "med hjälp av Slow Motion i kameraappen",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jag är ett stort fan av S pen. Har du någon rekommendation till mig?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilken information/insikter kan jag få med Now Brief? (Välj tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 1
+      },
+      {
+        "text": "Schema händelser",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarm",
+        "answerStatus": 1
+      },
+      {
+        "text": "hemadress",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Välj en funktion med anknytning till hälsa/sömn i nya Watch (välj alla korrekta svar)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energipoäng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personanpassad coachning",
+        "answerStatus": 0
+      },
+      {
+        "text": "Självmotivering och -förbättring",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Välj den mest lämpliga funktionen i Buds3 som kan användas vid ett möte med en person från ett annat land som talar ett annat språk.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tolk",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bekväm passform",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristallklart ljud",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vad är nytt med tangentbordsfodralet på Tab S10 serien?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bakgrundsljus ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Särskild AI-tangent",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note-startare",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assistant",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vilka är kriterierna för Energy Score?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sömn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktivitet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hjärtfrekvens",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vilken är den främsta fördelen med inbyte? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Du kan få en månadsvis finaniseringsplan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Du kan omedelbart minska bördan/kostnaden för att köpa en ny smartphone",
+        "answerStatus": 1
+      },
+      {
+        "text": "Du kan få 2 gånger mer lagringsutrymme till samma pris",
+        "answerStatus": 0
+      },
+      {
+        "text": "Om du köper en, kan du få en gratis",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jag är en S22-användare. Vilka är de viktigaste förbättringarna i Galaxy S25? (Välj två)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm processor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bildkvalitet ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Antal kameror",
+        "answerStatus": 0
+      },
+      {
+        "text": "Snabbladdning",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kan du berätta för mig vilka exklusiva funktioner som finns i Galaxy S25 Ultra kontra resterande Galaxy S25 modeller?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Inbyggd S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x zoom och 200 MP-kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Större skärm / batteri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Finns det några sätt att dela mina filer till icke-Android-enheter?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Med vilken funktion kan man visa den inspelade videon i slow motion?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nattläge",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Omedelbar slowmotion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Autotrim",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jag ringer många samtal i mitt dagliga liv, men jag glömmer ofta vad vi pratade om. Finns det någon bra funktion som du kan rekommendera för denna situation?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Intelligent Multimodal Search",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Jag tappar ofta bort eller tappar min telefon. Jag är orolig för att köpa något dyrt för att det är trasigt.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rekommendera dig ”Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Rekommenderar dig ”Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rekommenderar dig ”Quick Share”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rekommenderar dig ”Billigare modell”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vad täcks INTE av Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartphone",
+        "answerStatus": 0
+      },
+      {
+        "text": "Klocka",
+        "answerStatus": 0
+      },
+      {
+        "text": "Stationär dator",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vilket av följande är ett korrekt sätt att avlägsna ringen på när kunder frågar vad de ska göra om ringen fastnar på deras finger?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Använd ett smörjmedel, t.ex. handkräm, hudolja eller tvål för att minska friktionen, vilket gör den lättare att ta av.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sänk ner fingret i kallt vatten för att tillfälligt göra blodkärlen smalare och få fingret att krympa. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Minska svullnaden genom att ha handen i upphöjt läge i mer än fem minuter.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilket är det lämpligaste svaret för följande fras som saknas?\nGalaxy Ring är en ny bärbar enhet. I synnerhet AI-driven hälsospårning och ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energipoäng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Boosterkort",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sömncoachning",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dubbelnyp",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vilken av följande är en huvudsaklig kundupplevelse med Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personanpassad coachning",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sitter bekvämt dygnet runt",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dubbelnyp  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alla ovanstående",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

@@ -12,7 +12,7 @@ const QuizQuizzesRanked = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        "quiz/statistics/quizzes-ranked-by-highest-incorrect-answer-rate",
+        "quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate",
         (data) => {
           console.log("🚀 ~ fetchData ~ data:", data);
           setData(data.result);

@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir Galaxy S25 svarīgākie uzlabojumi? (izvēlieties 3 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Īsts AI palīgs",
+        "answerStatus": 1
+      },
+      {
+        "text": "Progresīvākā veiktspēja",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ideāla kameras lietošanas pieredze",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jūsu veselības palīgs",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kādās krāsās ir Galaxy S25 Ultra? (izvēlieties 4 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titāna sudrabzila",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titāna pelēka",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titāna balta",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titāna melna",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Es dzirdēju, ka ir funkcija, kas ļauj vienlaicīgi atrast restorānu un nosūtīt tā adresi citā lietotnē. Kā to sauc?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action (Lietotņu sadarbība)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir galvenie ieguvumi, uzņemot portreta fotoattēlu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Variet ierakstīt vēl gaišākus nakts videoklipus ar mazāk trokšņiem.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tagad variet noņemt nevēlamās skaņas.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veiciet uzdevumus, izmantojot vairākas lietotnes vienlaikus ar dabiskām balss komandām.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Variet brīvi uzņemt dabisku ādas faktūru.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir galvenie vizuālie uzlabojumi, uzņemot Nakts video?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Variet ierakstīt vēl gaišākus nakts videoklipus ar mazāk trokšņiem.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tagad variet noņemt nevēlamās skaņas.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veiciet uzdevumus, izmantojot vairākas lietotnes vienlaikus ar dabiskām balss komandām.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Variet uzņemt fotoattēlu ar precīzu toni un dabisku ādas faktūru",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuru no šīm jaunā pulskteņa funkcijām ir svarīgi izcelt klientam kā ikdienas lietošanas piemērus?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Īpaši skaidra balss uztveršana (2 mikrofoni)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Enerģijas līmenis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Race funkcija",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visas iepriekš minētās",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuru no šīm Buds3 Pro un Buds3  funkcijām ir svarīgi izcelt klientam kā ikdienas lietošanas piemērus?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitīva vadība",
+        "answerStatus": 0
+      },
+      {
+        "text": "Skaņas optimizācija",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Īpašs iedāvājums, iegādājoties vairākus eksemplārus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kādu funkciju NEATBALSTA Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tukošanu PDF failos",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkribēšanu un tulkošanu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reāllaika tulkošana un balss ierakstīšana VIENLAICĪGI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Apkopošanu un automātisko formatēšanu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kas jādara, lai sagatavotos Galaxy AI lietošanai?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Jāpiesakās savā Samsung kontā",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jāmaksā abonēšanas maksa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Jālejupielādē īpaša Galaxy AI lietotne",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nekas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kāpēc atjaunināt Galaxy programmatūru uz One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nekas daudz nav mainījies, salīdzinot ar One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0 piedāvā bagātīgākas mākslīgā intelekta tālruņa iespējas, salīdzinot ar iepriekšējo programmatūru",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kādas skaņas es varu izdzēst, izmantojot Audio dzēsēju? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mūzika",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vējš",
+        "answerStatus": 0
+      },
+      {
+        "text": "Troksnis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Viss iepriekš minētais",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kādas ir galvenās jaunās funkcijas, ko piedāvā Galaxy S25? (izvēlieties 3 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Tērzēšanas palīgs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action (Lietotņu sadarbība)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrets un Mans filtrs",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio dzēsējs",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir Galaxy S25 nozīmīgākie uzlabojumi? (izvēlieties 3 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action (Lietotņu sadarbība)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodalitāte",
+        "answerStatus": 1
+      },
+      {
+        "text": "Akumulators",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm procesors",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kāds ir Galaxy S25 sērijas ierīces Procesors?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm procesors",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm procesors",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm procesors",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm procesors",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir Galaxy S25 Ultra uzlabojumi? (Izvēlieties trīs atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Īpaši plata leņķa 50 MP kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Svars",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (priekšējam displejam)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Procesors",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuri no nosauktajiem NAV  jaunā pulksteņa galvenie ieguvumi? (Izvēlieties vienu)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nākamā līmeņa veiktspēja",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI atbalstīta miega analīze",
+        "answerStatus": 0
+      },
+      {
+        "text": "Displeja lielums",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalizētu treniņu iespējas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kurus no šiem Buds3 Pro un Buds3  ieguvumiem ir svarīgi izcelt klientiem kuri iepriekš nav lietojuši ausīs ieliekamas austiņas?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Īpaši skaidra skaņa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptīvā trokšņu slāpēšana",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ērta valkāšana",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visas iepriekš minētās",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kāda ir Tab S10 jaunā tehnoloģija, kas nodrošina ērtu ekrāna skatīšanos ārtelpās?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pretatspīduma pārklājums",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Liels displejs",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kāda funkcija ļauj ātri un ērti kopīgot fotoattēlus/videoklipus ar draugiem?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tiešā tulkošana",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Vai man obligāti ir jābūt blakus otrai ierīcei, kamēr izmantoju Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nē, jo tā darbojas arī izmantojot mākoni",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jā",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vai variet ieteikt svarīgākās funkcijas, kuras man izmēģināt? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action (Lietotņu sadarbība)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portrets un Mans filtrs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio dzēsējs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Viss iepriekš minētais",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kādu frāzi izmantot, lai demonstrētu lietotņu sadarbību Galaxy S25 sērijas ierīcē?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Meklē tuvāko ķīniešu restorānu un nosūti to Andrim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sveiki, Bixby!",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kādi šodien būs laikapstākļi?",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sveiki, Gemini!",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kā var lietot filtru, uzņemot fotoattēlu? (izvēlieties 2 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "izmantojot kameras lietotnes iepriekš iestatīto filtru",
+        "answerStatus": 1
+      },
+      {
+        "text": "izmantojot funkciju Nakts režīms",
+        "answerStatus": 0
+      },
+      {
+        "text": "izmantojot funkciju “Mans filtrs” fotoattēlam galerijā",
+        "answerStatus": 1
+      },
+      {
+        "text": "izmantojot funkciju Palēninājums",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Man ļoti patīk S Pen. Ko jūs varētu man ieteikt?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kādu informāciju/ieskatu var saņemt, izmantojot Now Brief? (izvēlieties 3 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Enerģijas rādītājs",
+        "answerStatus": 1
+      },
+      {
+        "text": "Grafiks",
+        "answerStatus": 1
+      },
+      {
+        "text": "Modinātājs",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mājas adrese",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Izvēlieties jaunā pulksteņa funkciju, kura ir saistīta ar veselību/miegu ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enerģijas līmenis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personalizēti treniņi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Self Motivation un Improvement",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visas iepriekš minētās",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Izvēlieties vispiemērotāko Buds3 funkciju, ko izmantot, tiekoties ar citā valodā runājošu cilvēku?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter (tulks)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ērta valkāšana",
+        "answerStatus": 0
+      },
+      {
+        "text": "Īpaši skaidra skaņa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kāda jauna iespēja ir pieejama Tab S10 jaunajā Book Cover tastatūrā?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Taustiņu apgaismojums ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Īpašs AI taustiņš",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note palaidējs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google palīgs",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kādi ir enerģijas rādītāja kritēriji?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Miegs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fiziskās aktivitātes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sirdsdarbības ātrums",
+        "answerStatus": 0
+      },
+      {
+        "text": "Viss iepriekš minētais",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kāds ir galvenais ieguvums, izmantojot atpirkumu? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Variet saņemt ikmēneša finanšu plānu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Variet uzreiz samazināt maksu par jaunākā viedtālruņa iegādi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Varat saņemt 2X lielāku krātuvi par to pašu cenu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Iegādājoties vienu, varat saņemt otru bez maksas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Es lietoju S22. Ar ko Galaxy S25 ir labāks? (izvēlieties 2 atbildes)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm procesors",
+        "answerStatus": 1
+      },
+      {
+        "text": "Attēla kvalitāte",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kameru skaits",
+        "answerStatus": 0
+      },
+      {
+        "text": "Telefona izmērs",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vai variet pastāstīt ar ko S25 Ultra ir ekskluzīvs salīdzinot ar pārējiem S25 sērijas tālruņiem? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Iebūvēts S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x tālummaiņa un 200 MP kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Lielāks ekrāns/akumulators",
+        "answerStatus": 0
+      },
+      {
+        "text": "Viss iepriekš minētais",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ar kādu funkciju var kopīgot failus ar ierīcēm, kas nav Android ierīces?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kura funkcija parāda ierakstīto video palēlinājumā?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nakts video",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio dzēsējs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tūlītējs palēninājums",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automātiskā apgriešana",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ikdienā veicu daudz zvanu, taču bieži aizmirstu, par ko tajos runāju. Vai varat ieteikt kādu labu funkciju šādai situācijai?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transkribēšanas palīgs",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tiešā tulkošana",
+        "answerStatus": 0
+      },
+      {
+        "text": "Norādes acumirklī",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodālā meklēšana",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Es bieži nozaudēju vai nometu savu tālruni. Mani satrauc, ka jāiegādājas kaut kas dārgs, jo tas ir salūzis.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Iesaku jums “Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Iesaku jums “Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Iesaku jums “Ātrā kopīgošana”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Iesaku jums “Lētāks modelis”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ko NESEDZ pakalpojums Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Viedtālrunis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "PC dators",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kā rīkoties, ja pirksts iesprūst gredzenā?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Jāuzklāj kāda smērviela, piemēram, roku krēms, attīroša eļļa vai ziepes, lai samazinātu berzi un tādējādi atvieglotu gredzena noņemšanu.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Jāiegremdē pirksts aukstā ūdenī, lai asinsvadi uz brīdi sašaurinātos un pirksts kļūtu nedaudz tievāks. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Plauksta jātur pacelta gaisā ilgāk nekā 5 minūtes, lai mazinātu pietūkumu.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi iepriekš minētie",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kura no atbildēm ir piemērotākā tukšās vietas aizpildīšanai teikumā?\nGalaxy Ring gredzens ir jauna valkājama ierīce. Tas īpaši paredzēts AI nodrošinātai veselības uzraudzībai un piedāvā šādu funkciju: ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enerģijas vērtējums",
+        "answerStatus": 0
+      },
+      {
+        "text": "Uzlabojumu karte",
+        "answerStatus": 0
+      },
+      {
+        "text": "Miega konsultants",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pirkstu saspiešana divas reizes",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kurš no nosauktajiem ir Galaxy Ring gredzena galvenais KPA?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalizēti treniņi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ērta valkāšana visu diennakti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pirkstu saspiešana divas reizes  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi iepriekš minētie",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

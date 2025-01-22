@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles son las principales características de Galaxy S25? (selecciona tres)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Una nueva forma de usar tu Galaxy",
+        "answerStatus": 1
+      },
+      {
+        "text": "El rendimiento más avanzado",
+        "answerStatus": 1
+      },
+      {
+        "text": "Experiencia de cámara perfecta",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tu asesor de salud",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿En qué colores está disponible Galaxy S25 Ultra? (selecciona los cuatro)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanio Azul",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanio Gris",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanio Plata",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanio Negro",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "He oído que tiene una función que te permite encontrar un restaurante y enviarlo en un mensaje al mismo tiempo. ¿Cómo se llama?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar y Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Acción entre apps",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles son las principales ventajas de hacer una foto en modo retrato?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Puedes grabar vídeos nocturnos aún más luminosos y con menos ruido.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puedes filtrar los sonidos no deseados y conservar solo los que quieras.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Con Galaxy S25 Series, puedes realizar tareas utilizando varias aplicaciones a la vez con un lenguaje natural",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puedes capturar de forma fácil la textura natural de la piel",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Podrías explicar el resultado de grabar un vídeo con Nightography?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Puedes grabar vídeos nocturnos aún más luminosos y con menos ruido.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Puedes filtrar los sonidos no deseados y conservar solo los que quieras.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Con Galaxy S25 Series, puedes realizar tareas utilizando varias aplicaciones a la vez hablando con un lenguaje natural",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puedes capturar de forma fácil y precisa la tonalidad y la textura natural de la piel",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles de las siguientes son características clave del nuevo Watch que deben destacarse como la experiencia de conexión al hacer la demostración de uso en el día a día? (Selecciona todas las respuestas correctas)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tecnología Crystal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Carrera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál de las siguientes es una característica clave de los Buds3 Pro y Buds3 que debe destacarse como la experiencia de conexión al hacer la demostración de uso en el día a día?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interfaz y experiencia de usuario intuitivas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Optimización del sonido\n(Sonido optimizado)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Oferta de compra múltiple",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Qué función NO es compatible con Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Traducción superpuesta de PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcribir y traducir",
+        "answerStatus": 0
+      },
+      {
+        "text": "Traducir en tiempo real mientras se graba la voz",
+        "answerStatus": 1
+      },
+      {
+        "text": "Resumir y autoformatear",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Qué tengo que hacer para poder utilizar Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Iniciar sesión en tu Samsung Account",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pagar una cuota de suscripción",
+        "answerStatus": 0
+      },
+      {
+        "text": "Descargar la aplicación dedicada de Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nada",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Por qué debería actualizar mi Galaxy a One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "No hay muchos cambios respecto a One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Con One UI 7.0, tendrás una mejor experiencia AI comparado con la versión anterior.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué me permite poder eliminar el borrador de audio? (selecciona todos)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Música",
+        "answerStatus": 0
+      },
+      {
+        "text": "Viento",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ruido",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles son las principales funciones del Galaxy S25 que debería probar? (selecciona todos)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Acción entre apps",
+        "answerStatus": 1
+      },
+      {
+        "text": "Retrato y Mi filtro",
+        "answerStatus": 1
+      },
+      {
+        "text": "Borrador de audio",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles son las principales mejoras de Galaxy S25? (selecciona tres)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Acción entre apps",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multiples formas de hacer las cosas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Más Batería",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesador de 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué tipo de procesador integra Galaxy S25 Series?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Procesador de 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesador de 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesador de 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesador de 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué mejoras incluye el Galaxy S25 Ultra? (Selecciona tres)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Una cámara con ultra gran angular de 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Su peso",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (en la pantalla frontal)",
+        "answerStatus": 1
+      },
+      {
+        "text": "El procesador",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál de las siguientes NO es una CXP clave del nuevo Watch? (Selecciona uno)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rendimiento",
+        "answerStatus": 0
+      },
+      {
+        "text": "Control del sueño con IA",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tamaño de la pantalla",
+        "answerStatus": 1
+      },
+      {
+        "text": "Experiencia de ejercicio personalizada",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál de las siguientes es una característica clave que debe destacarse al presentar los Buds3 Pro y Buds3 a clientes que nunca han usado auriculares (primer comprador)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sonido nítido",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC adaptativo",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ajuste cómodo",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál es la nueva función de la Tab S10 que permite ver imágenes nítidas en exteriores?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pantalla Antirreflejos",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pantalla grande",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Hay una herramienta para compartir fotos o vídeos de forma rápida y sencilla con los amigos?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Tengo que permanecer junto a la persona  mientras uso Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "No hace falta, funcionará a través de la nube",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sí, lamentablemente tienes que quedarte junto a él hasta que termine",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Podrías recomendarme algunas de las principales funciones para probarlas? (selecciona todos)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Acción entre apps",
+        "answerStatus": 0
+      },
+      {
+        "text": "Retrato y Mi filtro",
+        "answerStatus": 0
+      },
+      {
+        "text": "Borrador de audio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué puedo decir para probar la acción entre apps en Galaxy S25 Series? (como ejemplo)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Busca un restaurante chino cercano y envíaselo a Tony",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hola, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dime qué tiempo va a hacer hoy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hola, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cómo puedo aplicar un filtro al hacer una foto? (selecciona dos opciones)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Utilizando el filtro predefinido de la aplicación de la cámara",
+        "answerStatus": 1
+      },
+      {
+        "text": "Utilizando el modo nocturno de la aplicación de la cámara",
+        "answerStatus": 0
+      },
+      {
+        "text": "Utilizando Mi filtro en la foto desde la galería",
+        "answerStatus": 1
+      },
+      {
+        "text": "Utilizando el modo Cámara lenta de la aplicación de la cámara",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Me encanta el S Pen. ¿Qué me recomendarías?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué información puedo obtener con Now Brief? (selecciona tres)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Puntuación de energía",
+        "answerStatus": 1
+      },
+      {
+        "text": "Eventos del calendario del día",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarma",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dirección de casa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Selecciona una función del nuevo Watch relacionada con la salud o el sueño (selecciona todas las respuestas correctas).",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Entrenamiento personalizado",
+        "answerStatus": 0
+      },
+      {
+        "text": "Automotivación y mejora",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Selecciona la característica más adecuada de los Buds3 que puedas utilizar en una reunión con una persona que hable otro idioma.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ajuste cómodo",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sonido nítido",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál es la novedad del nuevo teclado Book Cover Keyboard de la Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Retroiluminación ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tecla de IA específica",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lanzador de Samsung Note",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asistente de Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Cuáles son los criterios para la Puntuación de energía? (selecciona todos)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sueño",
+        "answerStatus": 0
+      },
+      {
+        "text": "Actividad",
+        "answerStatus": 0
+      },
+      {
+        "text": "Frecuencia cardiaca",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál es la principal ventaja de Trade-In? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Puedes obtener un plan de financiación mensual",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puedes reducir el coste de comprar un smartphone de última generación",
+        "answerStatus": 1
+      },
+      {
+        "text": "Puedes obtener el doble de almacenamiento por el mismo precio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Si compras uno, te llevas otro de regalo",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tengo un S22. ¿Cuáles son las principales mejoras de Galaxy S25? (selecciona dos opciones)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Procesador de 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "La calidad de la imagen",
+        "answerStatus": 1
+      },
+      {
+        "text": "El número de cámaras",
+        "answerStatus": 0
+      },
+      {
+        "text": "Las dimensiones",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Podrías indicarme las características exclusivas de Galaxy S25 Ultra? (selecciona todos)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S Pen integrado",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zoom de 100x y cámara de 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Una pantalla y una batería más grandes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Hay alguna forma de compartir mis archivos con dispositivos que no sean Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué función permite ver el vídeo grabado a cámara lenta?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Vídeos con Nightography",
+        "answerStatus": 0
+      },
+      {
+        "text": "Borrador de audio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instant Slow-mo",
+        "answerStatus": 1
+      },
+      {
+        "text": "Recorte automático",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Hago muchas llamadas en mi día a día, pero suelo olvidarme de lo que hemos hablado. ¿Hay alguna herramienta que sea buena y me puedas recomendar para esta situación?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcripción de llamadas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Resumen Ahora",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multiples formas de buscar",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "A menudo pierdo el teléfono o se me suele caer. Me preocupa comprar algo caro y que se me rompa.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Te recomiendo “Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Te recomiendo “Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Te recomiendo “Quick Share”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Te recomiendo un “Modelo más barato”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "¿Qué NO está cubierto por Samsung Care+?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartphone",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ordenador de sobremesa",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "¿Qué tengo que hacer si se me queda el Ring atascado?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Aplica un producto lubricante, como crema de manos, aceite limpiador o jabón, para reducir la fricción y poder quitártelo más fácilmente.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sumerge el dedo en agua fría para contraer temporalmente los vasos sanguíneos y que el dedo encoja. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce la hinchazón levantando la mano durante más de 5 minutos.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál es la opción más adecuada para el siguiente espacio?\nEl Galaxy Ring es un nuevo dispositivo ponible. Sus funciones más destacadas son: seguimiento de la salud con IA y ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "tarjeta de mejora",
+        "answerStatus": 0
+      },
+      {
+        "text": "control del sueño",
+        "answerStatus": 1
+      },
+      {
+        "text": "doble pellizco",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "¿Cuál de las siguientes es una CXP clave del Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Entrenamiento personalizado",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cómodo de llevar durante todo el día",
+        "answerStatus": 0
+      },
+      {
+        "text": "Doble pellizco  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Todas las respuestas anteriores son correctas",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

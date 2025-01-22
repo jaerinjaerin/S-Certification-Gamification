@@ -4,7 +4,7 @@ type Handler = (req: NextRequest) => Promise<NextResponse>;
 
 export function withCors(handler: Handler): Handler {
   return async (req: NextRequest): Promise<NextResponse> => {
-    const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL!];
+    const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL];
     const origin = req.headers.get("origin");
     const protocol = req.headers.get("x-forwarded-proto") || "http";
     const host = req.headers.get("host");

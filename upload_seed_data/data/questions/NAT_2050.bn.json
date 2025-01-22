@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25-এর কি-ফিচার গুলো কী কী? (তিনটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ট্রু AI কম্প্যানিয়ন",
+        "answerStatus": 1
+      },
+      {
+        "text": "সবচেয়ে উন্নত পারফরম্যান্স",
+        "answerStatus": 1
+      },
+      {
+        "text": "পারফেক্ট ক্যামেরার এক্সপেরিয়েন্স",
+        "answerStatus": 1
+      },
+      {
+        "text": "আপনার স্বাস্থ্য সঙ্গী",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 আল্ট্রা এর কী কী রঙ আছে? (সবগুলো নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "টাইটানিয়াম সিলভার ব্লু",
+        "answerStatus": 1
+      },
+      {
+        "text": "টাইটানিয়াম গ্রে",
+        "answerStatus": 1
+      },
+      {
+        "text": "লাইল্যাক",
+        "answerStatus": 0
+      },
+      {
+        "text": "ল্যাভেন্ডার",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "জানা গেছে যে একটি রেস্টুরেন্ট খুঁজে বের করে ইন্সট্যান্ট একটি বার্তা পাঠানোর ফিচার আছে। এর নাম কি?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "নাউ বার অ্যান্ড ব্রিফ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ক্রস-অ্যাপ অ্যাকশন",
+        "answerStatus": 1
+      },
+      {
+        "text": "সার্কেল টু সার্চ",
+        "answerStatus": 0
+      },
+      {
+        "text": "জেমিনি লাইভ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "পোর্ট্রেট নেওয়ার মূল সুবিধাগুলি কী কী?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "নাইট ভিডিও আরও ব্রাইট ও কম নয়েজে তোলা যাবে",
+        "answerStatus": 0
+      },
+      {
+        "text": "এখন পছন্দসই সাউন্ড গুলো রেখে বাকি সব ফিল্টার করা সম্ভব",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 সিরিজের সঙ্গে স্বাভাবিকভাবে কথা বলে একসঙ্গে মাল্টিপল অ্যাপ ব্যবহার করে কাজ করা যাবে",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনি অবাধে প্রাকৃতিক ত্বকের টেক্সচার ক্যাপচার করতে পারেন",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "নাইটোগ্রাফি ভিডিও-এর শুটিংয়ের আসল উপকার কি?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "নাইট ভিডিও আরও ব্রাইট ও কম নয়েজে তোলা যাবে",
+        "answerStatus": 1
+      },
+      {
+        "text": "আপনি এখন অযাচিত শব্দগুলি ফিল্টার করতে এবং আপনার পছন্দসই রাখতে সক্ষম।",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 সিরিজের সঙ্গে স্বাভাবিকভাবে কথা বলে একসঙ্গে মাল্টিপল অ্যাপ ব্যবহার করে কাজ করা যাবে",
+        "answerStatus": 0
+      },
+      {
+        "text": "একখন বাঁধাহীন ভাবে এক্যুরেট টোন আর ন্যাচারাল স্কিন টেক্সচার ক্যাপচার করতে পারে",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature of New Watch that should be highlighted as the connected experience when providing lifestyle use case demo? (select all correcct answers)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Race",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature of Buds3 Pro and Buds3 that should be highlighted as the connected experience when providing lifestyle use case demo?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitive UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sound Optimization (Optimized Sound)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multi-buy Offer",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Notes-এ কোন ফিচারটি সাপোর্টেড নয়?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ওভারঅল PDF ট্রান্সলেশন",
+        "answerStatus": 0
+      },
+      {
+        "text": "ট্রান্সক্রাইব & ট্রান্সলেট",
+        "answerStatus": 0
+      },
+      {
+        "text": "ভয়েস রেকর্ডিংয়ের সময় রিয়েল টাইম ট্রান্সলেট",
+        "answerStatus": 1
+      },
+      {
+        "text": "সামারাইজ এন্ড অটো ফর্মেট",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI ব্যবহার করার জন্য আমার কী প্রস্তুত করা উচিত?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "আপনাকে আপনার Samsung account-এ লগ ইন করতে হবে",
+        "answerStatus": 1
+      },
+      {
+        "text": "আপনাকে নির্দিষ্ট পরিমাণ সাবস্ক্রিপশন ফি দিতে হবে",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনাকে Galaxy AI এর ডেডিকেটেড অ্যাপ ডাউনলোড করতে হবে",
+        "answerStatus": 0
+      },
+      {
+        "text": "কোনো টিই করতে হবে না",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "আমি কেন আমার Galaxy ফোন টি কে One UI 7.0-এ আপগ্রেড করব?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1-এর তুলনায় খুব বেশি পরিবর্তন করা হয়নি",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0 দিয়ে আপনি আগের ভার্সনের তুলনায় আরও বেশি AI ফিচার উপভোগ করতে পারবেন",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "অডিও ইরেজার ব্যবহার করে আমি কি কি রিমুভ করতে পারি? (সবগুলো নির্বাচন করুন)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "মিউজিক",
+        "answerStatus": 0
+      },
+      {
+        "text": "উইন্ড",
+        "answerStatus": 0
+      },
+      {
+        "text": "নয়েজ",
+        "answerStatus": 0
+      },
+      {
+        "text": "উপরের সবগুলি",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25-এর মধ্যে মূল ফিচার গুলো কী কী? (সবগুলো নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "চ্যাট অ্যাসিস্ট",
+        "answerStatus": 0
+      },
+      {
+        "text": "ক্রস-অ্যাপ অ্যাকশন",
+        "answerStatus": 1
+      },
+      {
+        "text": "পোর্ট্রেট ও মাই ফিল্টার",
+        "answerStatus": 1
+      },
+      {
+        "text": "অডিও ইরেজার",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25-এর কি-ইম্প্রুভমেন্ট গুলি কী কী? (তিনটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ক্রস-অ্যাপ অ্যাকশন",
+        "answerStatus": 1
+      },
+      {
+        "text": "মাল্টিমোড্যালিটি",
+        "answerStatus": 1
+      },
+      {
+        "text": "ব্যাটারি",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 সিরিজ কোন AP দিয়ে গঠিত",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 আল্ট্রার উন্নতিগুলি কী কী? (তিনটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "আল্ট্রা ওয়াইড 50 MP ক্যামেরা",
+        "answerStatus": 1
+      },
+      {
+        "text": "ওজন",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (সামনের প্রদর্শনের জন্য)",
+        "answerStatus": 1
+      },
+      {
+        "text": "প্রসেসর",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT a Key CXP of New Watch? (select one)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Next-level Essential (performance)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-powered Sleep",
+        "answerStatus": 0
+      },
+      {
+        "text": "Display Size",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalized Exercise Experience",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature that should be highlighed when introducing Buds3 Pro and Buds3 to customers who are new to earbuds(1st buyer)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptive ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Fit",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10-এ সাপোর্টিং ভিভড আউটডোর ভিউয়িং নিউ ফিচারটি কী?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ডায়নামিক অ্যামোলেড 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "এন্টি-রিফ্লেকশন",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "লার্জ ডিসপ্লে",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "সহজে এবং দ্রুত বন্ধুদের সাথে ফটো/ভিডিও ভাগ করার জন্য কোনো ফিচার আছে?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "স্মার্ট থিংস",
+        "answerStatus": 0
+      },
+      {
+        "text": "ক্যুইক শেয়ার",
+        "answerStatus": 1
+      },
+      {
+        "text": "স্মার্ট স্যুইচ",
+        "answerStatus": 0
+      },
+      {
+        "text": "লাইভ ট্রান্সলেট",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "কুইক শেয়ার ব্যবহার করার সময় আমার কি এর পাশে থাকা দরকার?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "প্রয়োজন নেই, ক্লাউডের মাধ্যমে এর কাজ হবে",
+        "answerStatus": 1
+      },
+      {
+        "text": "হ্যাঁ, দুর্ভাগ্যবশত আপনাকে শেষ পর্যন্ত থাকতে হবে",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "আপনি আমার জন্য কোন ফিচার টি রিকমেন্ড করতে চান?  (সবগুলো নির্বাচন করুন)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ক্রস-অ্যাপ অ্যাকশন",
+        "answerStatus": 0
+      },
+      {
+        "text": "পোর্ট্রেট ও মাই ফিল্টার",
+        "answerStatus": 0
+      },
+      {
+        "text": "অডিও ইরেজার",
+        "answerStatus": 0
+      },
+      {
+        "text": "উপরের সবগুলি",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 সিরিজের ক্ষেত্রে ক্রস-অ্যাপ অ্যাকশনে্র জন্য আমি কীভাবে  আপ্রচ করবো? (উদাহরণ হিসেবে)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "কাছাকাছি কোনো চাইনিজ রেস্টুরেন্ট খুঁজে Tony কে সেন্ড করুন",
+        "answerStatus": 1
+      },
+      {
+        "text": "হাই Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "আমাকে আজকের আবহাওয়ার তথ্য দিন",
+        "answerStatus": 0
+      },
+      {
+        "text": "হাই জেমিনি",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ছবি তোলার সময় আমি কীভাবে ফিল্টার এপ্লাই করতে পারি? (দুটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ক্যামেরার প্রিসেট ফিল্টার ব্যবহার করে",
+        "answerStatus": 1
+      },
+      {
+        "text": "ক্যামেরার নাইট মোড ব্যবহার করে",
+        "answerStatus": 0
+      },
+      {
+        "text": "গ্যালারীতে ছবির মাই ফিল্টার ব্যবহার করে",
+        "answerStatus": 1
+      },
+      {
+        "text": "ক্যামেরার স্লো মোশন ব্যবহার করে",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "আমি S pen-এর বড় ভক্ত। আপনার কি আমার জন্য কোনও সাজেশন আছে?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "নাউ ব্রিফ দিয়ে আমি কোন ধরণের তথ্য পেতে পারি? (তিনটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "এনার্জি স্কোর",
+        "answerStatus": 1
+      },
+      {
+        "text": "শিডিউল",
+        "answerStatus": 1
+      },
+      {
+        "text": "এলার্ম",
+        "answerStatus": 1
+      },
+      {
+        "text": "বাড়ির ঠিকানা",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Select a feature related to Health/Sleep in New Watch (select all correcct answers)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personazlied Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Self Motivatio & Improvement",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Select the most suitable feature of Buds3 that can be utilized in a meeting with a foreigner who speaks other language.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Fit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10-এর নিউ বুক কভার কীবোর্ডে নতুন কী রয়েছে?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ব্যাক লাইট ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ডেডিকেটেড AI Key",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note লঞ্চার",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google অ্যাসিস্ট",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "এনার্জি স্কোর-এর ফিচার গুলো কী? (সবগুলো নির্বাচন করুন)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "স্লিপ",
+        "answerStatus": 0
+      },
+      {
+        "text": "এক্টিভিটি",
+        "answerStatus": 0
+      },
+      {
+        "text": "হার্ট রেট",
+        "answerStatus": 0
+      },
+      {
+        "text": "উপরের সবগুলি",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ট্রেড-ইন এর প্রধান সুবিধা কি? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "আপনি একটি মাসিক অর্থায়ন পরিকল্পনা পেতে পারেন",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনি তাত্ক্ষণিকভাবে একটি সর্বশেষ স্মার্টফোন কেনার বোঝা/খরচ হ্রাস করতে পারেন",
+        "answerStatus": 1
+      },
+      {
+        "text": "একই দামে আরও 2X স্টোরেজ পেতে পারেন",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনি একটি কিনুন, আপনি একটি বিনামূল্যে পেতে পারেন",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "আমি S22 ব্যবহারকারী। Galaxy S25-এর মধ্যে কি-ফিচার গুলো কী কী? (দুটি নির্বাচন করুন)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "ছবির কোয়ালিটি",
+        "answerStatus": 1
+      },
+      {
+        "text": "ক্যামেরার সংখ্যা",
+        "answerStatus": 0
+      },
+      {
+        "text": "ডাইমেনশন",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "আপনি কি আমাকে Galaxy S25 আল্ট্রা- এর ইউনিক ফিচার গুলো বলতে পারেন? (সবগুলো নির্বাচন করুন)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "বিল্ট-ইন S pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x জুম এবং 200 MP ক্যামেরা",
+        "answerStatus": 0
+      },
+      {
+        "text": "লার্জ স্ক্রিন / ব্যাটারি",
+        "answerStatus": 0
+      },
+      {
+        "text": "উপরের সবগুলি",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "নন-অ্যান্ড্রয়েড ডিভাইসে আমার ফাইলগুলি শেয়ার করার কোনও উপায় আছে কি?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ক্যুইক শেয়ার",
+        "answerStatus": 1
+      },
+      {
+        "text": "স্মার্ট থিংস",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "ওয়ালেট",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "রেকর্ড করা একটি ভিডিও স্লো-মোশোনে দেখানোর ফিচারটি কী?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "নাইটোগ্রাফি ভিডিও",
+        "answerStatus": 0
+      },
+      {
+        "text": "অডিও ইরেজার",
+        "answerStatus": 0
+      },
+      {
+        "text": "ইনস্ট্যান্ট স্লো-মো",
+        "answerStatus": 1
+      },
+      {
+        "text": "অটো ট্রিম",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "আমি প্রায় প্রতিদিন ই অনেক কল করি, কিন্তু আমি প্রায়ই ভুলে যাই যে আমরা কী সম্পর্কে কথা বলেছি। এই পরিস্থিতির জন্য আপনার কাছে কি কোনও ভাল ফিচার আছে ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ট্রান্সক্রিপ্ট অ্যাসিস্ট",
+        "answerStatus": 1
+      },
+      {
+        "text": "লাইভ ট্রান্সলেট",
+        "answerStatus": 0
+      },
+      {
+        "text": "নাউ ব্রিফ",
+        "answerStatus": 0
+      },
+      {
+        "text": "মাল্টিমোডাল সার্চ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "আমি প্রায়ই আমার ফোন হারিয়ে ফেলি বা ফেলে দেই। আমি ব্যয়বহুল কিছু কেনার বিষয়ে চিন্তিত কারণ এটি নষ্ট হয়ে গেছে।",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "আপনাকে “Samsung Care+” সুপারিশ করুন",
+        "answerStatus": 1
+      },
+      {
+        "text": "আপনাকে “Samsung Wallet” সুপারিশ করুন",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনাকে “দ্রুত শেয়ার” সুপারিশ করুন",
+        "answerStatus": 0
+      },
+      {
+        "text": "আপনাকে “সস্তা মডেল” সুপারিশ করুন",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+ দ্বারা কী কভার করা নেই",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "স্মার্টফোন",
+        "answerStatus": 0
+      },
+      {
+        "text": "ঘড়ি",
+        "answerStatus": 0
+      },
+      {
+        "text": "ডেস্কটপ PC",
+        "answerStatus": 1
+      },
+      {
+        "text": "ট্যাব",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "If the Ring gets stuck on my finger, what should I do?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Immerse your finger in cold water to constrict blood vessels temporarily and shrink the finger. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce swelling by elevating your hand for more than 5 minutes.",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is Key CXP of Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Wear 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

@@ -131,6 +131,15 @@
   ],
   "subsidiaries": [
     {
+      "domainId": 361265,
+      "domainName": "KOREA",
+      "domainCode": "ORG_502",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 29,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
       "domainId": 349949,
       "domainName": "SEA",
       "domainCode": "ORG_36",
@@ -607,7 +616,6 @@
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },
-
     {
       "domainId": 336303,
       "domainName": "SEJ",
@@ -620,11 +628,11 @@
   ],
   "domains": [
     {
-      "domainId": 29,
-      "domainName": "HQ Retail Team",
-      "domainCode": "OrgCode-7",
-      "parentDomainName": "Samsung Global",
-      "parentDomainId": 29,
+      "domainId": 361266,
+      "domainName": "South Korea",
+      "domainCode": "NAT_2410",
+      "parentDomainName": "KOREA",
+      "parentDomainId": 361265,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     },

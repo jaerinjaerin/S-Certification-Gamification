@@ -4,29 +4,29 @@
     "orderInStage": 1,
     "enabled": 1,
     "stage": 1,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Key Improvement",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "S23 Serisi ile kıyaslandığında aşağıdakilerden hangisi Galaxy S24 serisinde yer alan önemli geliştirmelerden biri DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
+    "text": "Galaxy S25 serisinin kilit satış özellikleri nelerdir? \n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Circle to Search - Google Destekli",
-        "answerStatus": 0
-      },
-      {
-        "text": "Fotoğraf Asistanı ve Nightography Zoom",
-        "answerStatus": 0
-      },
-      {
-        "text": "Oyun Performansı",
-        "answerStatus": 0
-      },
-      {
-        "text": "Kamera Sayısı",
+        "text": "Yeni Nesil Bağlantı Deneyimleri",
         "answerStatus": 1
+      },
+      {
+        "text": "En Gelişmiş Performans",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mükemmel Kamera Deneyimi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sağlık Rehberiniz",
+        "answerStatus": 0
       }
     ]
   },
@@ -35,29 +35,29 @@
     "orderInStage": 2,
     "enabled": 1,
     "stage": 1,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "-",
-    "importance": "A",
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinin tasarımına ait bir özellik DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
+    "text": "Galaxy S25 Ultra modeli hangi renk seçeneklerine sahiptir? \n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
     "options": [
       {
-        "text": "Premium Tasarım",
-        "answerStatus": 0
-      },
-      {
-        "text": "Edge Ekranlı Tasarım",
+        "text": "Titanyum Gümüş Mavi",
         "answerStatus": 1
       },
       {
-        "text": "Düz Ekran ve Titanyum Çerçeve (Galaxy S24 Ultra)",
-        "answerStatus": 0
+        "text": "Titanyum Gri",
+        "answerStatus": 1
       },
       {
-        "text": "Doğanın daimi ve dayanıklı niteliklerinden ilhamla tasarlanan zamansız renk seçenekleri",
-        "answerStatus": 0
+        "text": "Titanyum Beyaz Gümüş",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanyum Siyah",
+        "answerStatus": 1
       }
     ]
   },
@@ -66,28 +66,28 @@
     "orderInStage": 3,
     "enabled": 1,
     "stage": 1,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Durability",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
     "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangileri Galaxy S24 Serisinde gelişmiş dayanıklılığa sahip özelliklerdir? (İki yanıt seçin)",
-    "questionType": "MULTI_CHOICE",
+    "text": "\"Restoran bul ve arkadaşıma mesaj gönder\" işlevi hangi AI özelliğine aittir?",
+    "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "IPX8 derece Suya Dayanıklılık",
+        "text": "Now Bar & Now Brief",
         "answerStatus": 0
       },
       {
-        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "text": "Cross-app Action",
         "answerStatus": 1
       },
       {
-        "text": "Titanyum Çerçeve (Galaxy S24 Ultra) ve Daha Güçlü Armor Alüminyum Çerçeve (Galaxy S24+ | Galaxy S24)",
-        "answerStatus": 1
+        "text": "Circle to Search",
+        "answerStatus": 0
       },
       {
-        "text": "Esnek Menteşe",
+        "text": "Gemini Live",
         "answerStatus": 0
       }
     ]
@@ -97,29 +97,29 @@
     "orderInStage": 4,
     "enabled": 1,
     "stage": 1,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Circle to Search with Google",
-    "importance": "A",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Google Destekli Circle to Search özelliğinin kullanım alanlarından biri DEĞİLDİR?",
+    "text": "Hangisi Portre modunda fotoğraf çekmenin temel avantajlarından birisidir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Toplantıları kaydetme ve hızlı özetini alma.",
+        "text": "Daha az sarsıntıya sahip daha parlak videolar çekebilirsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "İstenmeyen sesleri filtreleyerek videolarınızdaki sesleri düzenleyebilirsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Serisi ile günlük konuşma dilinde komut vererek birden fazla uygulamada \nişlerinizi tamamlayabilirsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Çekimlerde doğal cilt dokusu görünümünü yakalayabilirsiniz",
         "answerStatus": 1
-      },
-      {
-        "text": "Video izlerken son moda ürünleri bulma.",
-        "answerStatus": 0
-      },
-      {
-        "text": "Akışta gördüğünüz bir tatil mekanını keşfetme.",
-        "answerStatus": 0
-      },
-      {
-        "text": "YouTube'da gördüğünüz bir yemeğin tarifini arama.",
-        "answerStatus": 0
       }
     ]
   },
@@ -128,458 +128,55 @@
     "orderInStage": 5,
     "enabled": 1,
     "stage": 1,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Chat Assist",
-    "importance": "A",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
     "timeLimitSeconds": 30,
-    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n ________, birçok üçüncü parti uygulamada (Instagram, Snapchat, Whatsapp, Google Chat) gerçek zamanlı olarak gelen ve giden sohbetleri çevirebilir ve konuşmanızın tonunu duruma göre profesyonel, günlük konuşma, sosyal, nazik ve emojili yanıt seçeneklerinden birine dönüştürebilir.",
+    "text": "Nightography Video ile çekim yapmanın avantajı nedir?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Canlı Çeviri",
-        "answerStatus": 0
-      },
-      {
-        "text": "Chat Asistanı",
+        "text": "Daha az sarsıntıya sahip daha parlak videolar çekebilirsiniz.",
         "answerStatus": 1
       },
       {
-        "text": "Not Asistanı",
+        "text": "İstenmeyen sesleri filtreleyerek videolarınızdaki sesleri düzenleyebilirsiniz.",
         "answerStatus": 0
       },
       {
-        "text": "Ses Kaydı Asistanı",
+        "text": "Galaxy S25 Serisi ile günlük konuşma dilinde komut vererek birden fazla uygulamada \nişlerinizi tamamlayabilirsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Çekimlerde gerçekçi bir ton ve doğal cilt dokusu görünümü yakalayabilirsiniz.",
         "answerStatus": 0
       }
     ]
   },
   {
     "originQuestionIndex": 6,
-    "orderInStage": 1,
+    "orderInStage": 6,
     "enabled": 1,
-    "stage": 2,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Live Translate",
-    "importance": "B",
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Canlı Çeviri özelliğinin doğru açıklamasıdır?",
+    "text": "Yeni Watch serisinde için günlük hayattan kullanım örnekleri verirken aşağıdakilerden hangisi temel bağlantı deneyimleri arasında vurgulanmalıdır? (tüm doğru yanıtları seçin)",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Telefon görüşmesi sırasında iki tarafa da gerçek zamanlı sesli çeviri yapılması özelliğidir.",
-        "answerStatus": 1
-      },
-      {
-        "text": "Başka bir çeviri uygulamasını kullanmanıza gerek kalmadan üçüncü taraf uygulamalarıyla çalışır.",
+        "text": "Mesajlara Akıllı Yanıt",
         "answerStatus": 0
       },
       {
-        "text": "El yazınızı otomatik olarak hizalar.",
+        "text": "Kamera Kontrolü",
         "answerStatus": 0
       },
       {
-        "text": "Notları daha biçimli hale getirerek düzenler.",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 7,
-    "orderInStage": 2,
-    "enabled": 1,
-    "stage": 2,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Note Assist",
-    "importance": "B",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Not Asistanı ve Galaxy S24 Serisine yeni eklenen Samsung Note özellikleri arasında yer almaz?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "S Pen ile yazılan el yazısını otomatik olarak hizalama ve boşluklarını ayarlama",
-        "answerStatus": 0
-      },
-      {
-        "text": "Notları daha biçimli hale getirecek şekilde düzenleme",
-        "answerStatus": 0
-      },
-      {
-        "text": "Notlarınıza bağlı olarak özet içeren kapaklar oluşturma",
-        "answerStatus": 0
-      },
-      {
-        "text": "Gelen ve gönderilen mesajları anında çevirir.",
-        "answerStatus": 1
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 8,
-    "orderInStage": 3,
-    "enabled": 1,
-    "stage": 2,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Space Zoom",
-    "importance": "B",
-    "timeLimitSeconds": 30,
-    "text": "Galaxy S24 Ultra'nın Telefoto kamerasının 5x Optik Zoom özelliğiyle elde edilebilecek en yüksek fotoğraf çözünürlüğü nedir?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "8 MP",
-        "answerStatus": 0
-      },
-      {
-        "text": "10 MP",
-        "answerStatus": 0
-      },
-      {
-        "text": "12 MP",
-        "answerStatus": 0
-      },
-      {
-        "text": "50 MP",
-        "answerStatus": 1
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 9,
-    "orderInStage": 4,
-    "enabled": 1,
-    "stage": 2,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Nightography",
-    "importance": "B",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n Galaxy S24 Ultra'nın ________ özelliği, gece karanlığında bile daha parlak ve daha net Zoom kalitesine sahip fotoğraflar sunar.",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "1,6 kat Daha Büyük Piksel",
-        "answerStatus": 1
-      },
-      {
-        "text": "Daha geniş OIS",
-        "answerStatus": 0
-      },
-      {
-        "text": "Tek Çekim",
-        "answerStatus": 0
-      },
-      {
-        "text": "Yeni Adaptif Piksel",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 10,
-    "orderInStage": 5,
-    "enabled": 1,
-    "stage": 2,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Photo Assist",
-    "importance": "B",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________ özelliği, eğik bir fotoğrafı düz konuma getirerek arka planı doldurabilir ve otomatik doldurmayla fotoğraflardaki nesnelerin yerini/boyutunu değiştirebilir.",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Gece Portresi",
-        "answerStatus": 0
-      },
-      {
-        "text": "Fotoğraf Asistanı (Yaratıcı Düzenleme)",
-        "answerStatus": 1
-      },
-      {
-        "text": "200 MP Yüksek Çözünürlük",
-        "answerStatus": 0
-      },
-      {
-        "text": "Not Asistanı",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 11,
-    "orderInStage": 1,
-    "enabled": 1,
-    "stage": 3,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Photo Assist",
-    "importance": "C",
-    "timeLimitSeconds": 30,
-    "text": "Galaxy S24 Serisinin Galeri uygulamasında anında fotoğraf düzenlemek (Portre efekti, Çözünürlüğü artırma, Yansımayı kaldırma ve fazlası) için Fotoğraf Asistanı'nın Düzenleme Önerisi özelliği nasıl açılır?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Fotoğraf düzenleme uygulamasını indirip açın ve efektleri tek tek uygulayın.",
-        "answerStatus": 0
-      },
-      {
-        "text": "Düzenleme simgesine ve sonra Fotoğraf Asistanı simgesine dokunun.",
-        "answerStatus": 0
-      },
-      {
-        "text": "Düzenleme simgesine dokunduğunuzda veya fotoğrafı basitçe yukarı kaydırdığınızda önerilen düzenleme seçeneklerine göz atabilirsiniz.",
-        "answerStatus": 1
-      },
-      {
-        "text": "Sosyal uygulamayı açın ve fotoğrafın üzerinde uygulamak istediğiniz filtreyi seçin.",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 12,
-    "orderInStage": 2,
-    "enabled": 1,
-    "stage": 3,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Social Camera",
-    "importance": "C",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde sosyal medya uygulamalarında desteklenen kamera özelliklerinden bir tanesi DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "HDR Fotoğraflar",
-        "answerStatus": 0
-      },
-      {
-        "text": "Nightography: Minimum titreşimle daha parlak gece fotoğrafları ve videoları",
-        "answerStatus": 0
-      },
-      {
-        "text": "Space Zoom",
-        "answerStatus": 1
-      },
-      {
-        "text": "Video Görüntü Sabitleyici",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 13,
-    "orderInStage": 3,
-    "enabled": 1,
-    "stage": 3,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Gaming Performance",
-    "importance": "C",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24'ün oyun performansına dair geliştirmelerden biri DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Galaxy Serileri Arasında En Hızlı İşlemcilere Sahip Seri",
-        "answerStatus": 0
-      },
-      {
-        "text": "Daha Geniş Buhar Haznesi  (Galaxy S24 Ultra modelinde 1,9 kat)",
-        "answerStatus": 0
-      },
-      {
-        "text": "Yapay Zeka Tabanlı Ağır Çekim",
-        "answerStatus": 1
-      },
-      {
-        "text": "Geliştirilmiş Işın İzleme Teknolojisi",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 14,
-    "orderInStage": 4,
-    "enabled": 1,
-    "stage": 3,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Immersive Display",
-    "importance": "C",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24'ün Sürükleyici Ekran tasarımına ait özelliklerden biri DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Daha ince çerçeve tasarımıyla daha geniş ekran",
-        "answerStatus": 0
-      },
-      {
-        "text": "Obje Duyarlı Teknoloji",
-        "answerStatus": 1
-      },
-      {
-        "text": "HBM Peak (Manuel Ayarlanabilir) 2.600 nit",
-        "answerStatus": 0
-      },
-      {
-        "text": "Vision Booster (Görüntü Güçlendirici)",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 15,
-    "orderInStage": 5,
-    "enabled": 1,
-    "stage": 3,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Longer Battery Life",
-    "importance": "C",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangileri Galaxy S24 serisinin daha uzun pil ömrüne ait özellikler arasında yer alır? (İki yanıt seçin)",
-    "questionType": "MULTI_CHOICE",
-    "options": [
-      {
-        "text": "Daha Uzun Video Oynatma Süresi",
-        "answerStatus": 1
-      },
-      {
-        "text": "Knox Kasası",
-        "answerStatus": 0
-      },
-      {
-        "text": "Yaratıcı Duvar Kağıdı",
-        "answerStatus": 0
-      },
-      {
-        "text": "Adaptif Ekran Yenileme Hızı",
-        "answerStatus": 1
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 16,
-    "orderInStage": 1,
-    "enabled": 1,
-    "stage": 4,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Memory & Storage",
-    "importance": "D",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisinde Galaxy S24 Serisinin her bir modeli için RAM seçenekleri doğru belirtilmiştir?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
-        "answerStatus": 0
-      },
-      {
-        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
-        "answerStatus": 0
-      },
-      {
-        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 12 GB",
-        "answerStatus": 0
-      },
-      {
-        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
-        "answerStatus": 1
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 17,
-    "orderInStage": 2,
-    "enabled": 1,
-    "stage": 4,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "One UI 6",
-    "importance": "D",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde ONE UI 6 arayüzüne ait özelliklerden biri DEĞİLDİR?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Göz alıcı Quick Panel",
-        "answerStatus": 0
-      },
-      {
-        "text": "Gelişmiş Emoji Tasarımı",
-        "answerStatus": 0
-      },
-      {
-        "text": "Windows Bağlantısı",
-        "answerStatus": 1
-      },
-      {
-        "text": "Kamera Widget'ı ve Hava Durumu Widget'ı",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 18,
-    "orderInStage": 3,
-    "enabled": 1,
-    "stage": 4,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Galaxy Ecosystem",
-    "importance": "D",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________, tüm telefon, tablet ve bilgisayarlar (Android, Windows ve fazlası) arasında kullanabilen Galaxy'e özel daha hızlı bir dosya paylaşım uygulamasıdır.",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Quick Share",
-        "answerStatus": 1
-      },
-      {
-        "text": "Bluetooth 5.3",
-        "answerStatus": 0
-      },
-      {
-        "text": "Wi-Fi Direct",
-        "answerStatus": 0
-      },
-      {
-        "text": "Samsung Wallet",
-        "answerStatus": 0
-      }
-    ]
-  },
-  {
-    "originQuestionIndex": 19,
-    "orderInStage": 4,
-    "enabled": 1,
-    "stage": 4,
-    "product": "S24",
-    "category": "Product",
-    "specificFeature": "Samsung Account",
-    "importance": "D",
-    "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Samsung Account'un avantajlarından bir tanesidir?",
-    "questionType": "SINGLE_CHOICE",
-    "options": [
-      {
-        "text": "Her adımda kolay bir kullanım deneyimi için zenginleştirilmiş yapay zeka teknolojisi sunar.",
-        "answerStatus": 0
-      },
-      {
-        "text": "İnternet'e bağlı olmasa bile kayıp telefonunuzu bulmanızı sağlar.",
-        "answerStatus": 0
-      },
-      {
-        "text": "Tüm Samsung hizmetlerinize, cihazlarınıza erişmenizi ve eşitlemenizi sağlar.",
+        "text": "Temassız Ödeme",
         "answerStatus": 0
       },
       {
@@ -589,33 +186,1040 @@
     ]
   },
   {
-    "originQuestionIndex": 20,
-    "orderInStage": 5,
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
     "enabled": 1,
-    "stage": 4,
-    "product": "S24",
-    "category": "Sales",
-    "specificFeature": "Cross Sell",
-    "importance": "D",
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
     "timeLimitSeconds": 30,
-    "text": "Aşağıdakilerden hangisi Galaxy S24 serisiyle Galaxy Watch6'nın çapraz satışında vurgulanması gereken bağlantı deneyimidir?",
+    "text": "Galaxy Buds3 Pro/Buds3 serisi için günlük hayattan kullanım örnekleri verirken aşağıdakilerden hangisi temel bağlantı deneyimleri arasında vurgulanmalıdır? (tüm doğru yanıtları seçin)",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
-        "text": "Saatinizden Galaxy S24 Serisinin kilit ekranı ve Always On Display'i değiştirerek tarzınızla uyum yaratın.",
+        "text": "Kolay kullanıma sahip kullanıcı arayüzü/kullanıcı deneyimi",
         "answerStatus": 0
       },
       {
-        "text": "Saatinizden doğrudan fotoğraf ve video çekin.",
+        "text": "Ses Optimizasyonu\n(Her Koşulda İdeal Ses Düzeyi)",
         "answerStatus": 1
       },
       {
-        "text": "Saatinizle rahat bir izleme deneyiminin tadını çıkarın.",
+        "text": "IP57",
         "answerStatus": 0
       },
       {
-        "text": "Sesi otomatik olarak aktif cihaza yönlendirin.",
+        "text": "Işıklı Tasarım",
         "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Notes'da DESTEKLENMEYEN özellik hangisidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF Metni Üzerinden Çeviri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yazıya Çevirme ve Çeviri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ses kaydedici ile eş zamanlı çeviri",
+        "answerStatus": 1
+      },
+      {
+        "text": "Özetleme ve Otomatik biçimlendirme",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI özelliklerini kullanmak için kullanıcılar ilk etapta ne yapmalı?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Samsung Account ile giriş yapmalı.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Belirli bir miktarda abonelik ücreti ödemeli.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI özel uygulamasını indirmeli.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hiç bir şey yapmaları gerekmez.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "\"Galaxy cihazımı neden One UI 7.0 sürümüne yükseltmeliyim\" diye soran bir müşteriye ne söylenmelidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1 ile karşılaştırıldığında çok şey değişmedi.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Önceki sürümle karşılaştırıldığında One UI 7.0  telefonda daha zengin bir yapay zeka deneyimi sunuyor.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Audio Eraser özelliğini kullanarak \nhangi tür sesleri silebilirim? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Müzik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rüzgar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gürültü",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yukarıdakilerin tümü",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 serisinde hangi yeni Galaxy AI özellikleri deneyimletilerek daha iyi aktarılabilir? \n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portre ve My Filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 serisinde geliştirilen \ntemel özellikler nelerdir?\n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodality",
+        "answerStatus": 1
+      },
+      {
+        "text": "Batarya",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm işlemci",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 serisinin işlemci değeri hangisidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm işlemci",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm işlemci",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm işlemci",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm işlemci",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra modelindeki geliştirmeler nelerdir? (üç seçim yapın)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra Geniş 50 MP Kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (ön ekran)",
+        "answerStatus": 1
+      },
+      {
+        "text": "İşlemci",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi yeni Watch serisinde kilit satış noktası DEĞİLDİR? (birini seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Üst Seviye Temel Özellikler\n(performans)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI Tabanlı Uyku Koçluğu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ekran Boyutu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kişiselleştirilmiş Egzersiz Deneyimi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Yeni müşterilere (ilk kez satın alan) Galaxy Buds3 Pro ve Buds3 serisini tanıtırken aşağıdaki özelliklerden hangisi vurgulanması gereken temel özellikler arasında yer alır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Daha Net Ses Kalitesi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptif Aktif Gürültü Engelleme",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rahat ve Uyumlu Tasarım",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hepsi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy Tab S10'da her ışık koşulunda ekran görünürlüğünü arttıran yeni özellik hangisidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dinamik AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yansıma önleme",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Geniş Ekran",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Diğer cihazlarla kolay ve hızlı bir şekilde fotoğraf/video paylaşılmasını sağlayan özelliğin adı nedir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "SmartThings",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Quick Share'i kullanırken paylaşım yapılan cihazın yakınında beklemek gerekiyor mu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Hayır, mobil veri aracılığıyla paylaşım devam eder.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Evet, ne yazık ki işlem bitene kadar beklenmeli.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Bir müşteriye Galaxy S25 serisini en iyi şekilde aktarmak için hangi yeni AI özellikleri mutlaka deneyimletilmeli? \n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app Action",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI Select",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yukarıdakilerin tümü",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Serisinde Cross-app action özelliği nasıl etkinleştirilir? (örnek olarak)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yakınlarda kebap restoranı bul ve Ali'ye mesaj gönder",
+        "answerStatus": 1
+      },
+      {
+        "text": "Merhaba Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bana bugünkü hava durumu bilgilerini ver",
+        "answerStatus": 0
+      },
+      {
+        "text": "Merhaba Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Fotoğraf çekerken nasıl filtre uygulanır? (birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Kamera uygulamasının önceden ayarlanmış filtresini kullanarak",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera uygulamasının Gece modunu kullanarak",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galeride fotoğraf için My Filter özelliğini kullanarak",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera uygulamasının Ağır Çekim özelliğini kullanarak",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "SPen kullanmayı seven bir müşteriye ne önerilmelidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Now Brief hangi bilgileri/verileri gösterir? \n(birden fazla seçim yapabilirsiniz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Enerji Skoru",
+        "answerStatus": 1
+      },
+      {
+        "text": "Takvim ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ev adresi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Yeni Watch serisinde Sağlık/Uyku ölçümüne ile ilgili bir özelliği seçin (tüm doğru yanıtları seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enerji Skoru",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kişiye Özel Koçluk",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kişisel Motivasyon ve Gelişim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hepsi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy Buds3 serisi ile başka dilde konuşan biriyle toplantı yaparken kullanılabilecek en uygun Galaxy AI özelliğini seçin.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sözlü Çevirmen",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rahat ve Uyumlu Tasarım",
+        "answerStatus": 0
+      },
+      {
+        "text": "Net Ses Kalitesi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy Tab S10 serisinin Klavyeli Tablet Kılıfı ile sunulan yeni özellik hangisidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Arkadan Aydınlatma ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Özel Galaxy AI Tuşu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note başlatma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Asistan",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Enerji Skoru hangi verilere göre belirlenir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Uyku",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktivite",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nabız",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yukarıdakilerin tümü",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Buy Back'in temel avantajı nedir? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Aylık finansman planından yararlanabilirsiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "En yeni akıllı telefonları satın alma maliyetini anında azaltabilirsiniz",
+        "answerStatus": 1
+      },
+      {
+        "text": "Aynı fiyata iki kat daha fazla depolama alanına sahip olursunuz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bir tane satın alıp bir taneye ücretsiz sahip olabilirsiniz",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Daha önceki S23 ve S24 serilerine kıyasla Galaxy S25 serisinde geliştirilen temel özellikler nelerdir? (iki yanıt seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm İşlemci",
+        "answerStatus": 1
+      },
+      {
+        "text": "Human-like AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera Sayısı",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP Ön Kamera",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 serisinde sadece Ultra modelinde  olan özellikler hangileridir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Entegre S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x yakınlaştırma & 200 MP kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "6,9\" Geniş Ekran",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yukarıdakilerin tümü",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Dosyaları Android olmayan cihazlarla paylaşmanın yöntemi nedir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "SmartThings",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kaydedilmiş videoyu ağır çekimde gösteren özellik hangisidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nightography Videoları",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anlık Ağır Çekim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Auto Trim",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "\"Günlük hayatımda çok fazla telefon görüşmesi yapıyorum, ancak genellikle ne konuştuğumu unutuyorum.\" diyen bir müşteriye hangi özellik önerilmelidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodal Search",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "\"Sık sık telefonumu düşürüyorum. Kırılacağı için pahalı bir şey almaktan çekiniyorum.\" diyen bir müşteriye ne önerilebilir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": " Samsung Care+",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 0
+      },
+      {
+        "text": "Daha uygun fiyatlı bir model",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Hangisi Samsung Care+ kapsamına GİRMEZ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Akıllı Telefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Masaüstü Bilgisayar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tablet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "If the Ring gets stuck on my finger, what should I do?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Immerse your finger in cold water to constrict blood vessels temporarily and shrink the finger. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce swelling by elevating your hand for more than 5 minutes.",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is Key CXP of Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Wear 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
       }
     ]
   }

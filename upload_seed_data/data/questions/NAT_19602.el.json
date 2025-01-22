@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιες είναι οι κύριες δυνατότητες των Galaxy S25; (επιλέξτε τρεις)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AI Βοηθός",
+        "answerStatus": 1
+      },
+      {
+        "text": "Η πιο προηγμένη απόδοση",
+        "answerStatus": 1
+      },
+      {
+        "text": "Κορυφαία εμπειρία κάμερας",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ο σύντροφός σας για την υγεία",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Τι χρώμα έχει το Galaxy S25 Ultra; (επιλέξτε όσα ισχύουν)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Άκουσα ότι υπάρχει δυνατότητα εύρεσης εστιατορίου και άμεσης αποστολής μηνύματος. Πώς λέγεται η λειτουργία;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Γραμμή ενημερώσεων και γρήγορη ενημέρωση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Εντολές μεταξύ εφαρμογών",
+        "answerStatus": 1
+      },
+      {
+        "text": "Κυκλώστε για αναζήτηση στο Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ποια είναι τα βασικά οφέλη κατά τη λήψη πορτραίτου;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Μπορείτε να τραβάτε ακόμα πιο φωτεινά νυχτερινά βίντεο με λιγότερο θόρυβο.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Πλέον, έχετε τη δυνατότητα να φιλτράρετε τους ανεπιθύμητους ήχους και να διατηρείτε αυτούς που θέλετε.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μπορείτε να ολοκληρώνετε εργασίες χρησιμοποιώντας πολλαπλές εφαρμογές ταυτόχρονα, μιλώντας με φυσική γλώσσα σε ένα Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μπορείτε να αποτυπώνετε τη φυσική υφή του δέρματος χωρίς περιορισμούς",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Πώς θα εξηγούσατε το Nightography βίντεο;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Μπορείτε να καταγράφετε ακόμα πιο φωτεινά νυχτερινά βίντεο με λιγότερο θόρυβο.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Πλέον, έχετε τη δυνατότητα να φιλτράρετε τους ανεπιθύμητους ήχους και να διατηρείτε αυτούς που θέλετε.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μπορείτε να ολοκληρώνετε εργασίες χρησιμοποιώντας πολλαπλές εφαρμογές ταυτόχρονα, μιλώντας με φυσική γλώσσα σε ένα Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μπορείτε να αποτυπώνετε τον ακριβή τόνο και τη φυσική υφή του δέρματος και να εφαρμόζετε φίλτρα",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιο από τα παρακάτω είναι σημαντικό χαρακτηριστικό των νέων Watch που θα πρέπει να τονιστεί ως εμπειρία συνδεσιμότητας κατά την επίδειξη και ανάλογα με τα ενδιαφέροντα πελάτη; (επιλέξτε όλες τις σωστές απαντήσεις)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Κρυστάλλινος ήχος κατά τις κλήσεις",
+        "answerStatus": 0
+      },
+      {
+        "text": "Βαθμολογία ενέργειας",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μετρήσεις σε αγώνες δρόμου",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιο από τα παρακάτω είναι σημαντικό χαρακτηριστικό των Buds3 Pro και Buds3 και θα πρέπει να τονιστεί ως εμπειρία συνδεσιμότητας κατά την επίδειξη και ανάλογα με τα ενδιαφέροντα πελάτη;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Διαισθητικό UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Βελτιστοποίηση ήχου\n(Βελτιστοποιημένος ήχος)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ανθεκτικότητα",
+        "answerStatus": 0
+      },
+      {
+        "text": "Έκπτωση κατά την αγορά",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ποιες λειτουργίες ΔΕΝ υποστηρίζονται στο Samsung Notes;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Μετάφραση PDF με επικάλυψη",
+        "answerStatus": 0
+      },
+      {
+        "text": "Εγγραφή φωνής και απομαγνητοφώνηση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 1
+      },
+      {
+        "text": "Περίληψη και αυτόματη μορφοποίηση",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Τι προετοιμασία απαιτείται για να χρησιμοποιήσω το Galaxy AI;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Πρέπει να συνδεθείτε με Samsung Account",
+        "answerStatus": 1
+      },
+      {
+        "text": "Πρέπει να πληρώσετε ένα ορισμένο ποσό τέλους συνδρομής",
+        "answerStatus": 0
+      },
+      {
+        "text": "Πρέπει να πραγματοποιήσετε λήψη της ειδικής εφαρμογής Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Τίποτα",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Γιατί να αναβαθμίσω το Galaxy μου σε One UI 7.0;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Δεν έχουν αλλάξει πολλά σε σύγκριση με το One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Με το One UI 7.0, θα έχετε πιο πλούσια AI εμπειρία στο Galaxy smartphone σας σε σύγκριση με το προηγούμενο λογισμικό",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ποιους ήχους μπορώ να διαγράψω χρησιμοποιώντας το Audio Eraser; (επιλέξτε όσα ισχύουν)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Μουσική",
+        "answerStatus": 0
+      },
+      {
+        "text": "Άνεμος",
+        "answerStatus": 0
+      },
+      {
+        "text": "Θόρυβος",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιες είναι οι κύριες δυνατότητες που πρέπει να δοκιμάσει ο πελάτης στα Galaxy S25; (επιλέξτε τρεις)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ενέργειες μεταξύ εφαρμογών",
+        "answerStatus": 1
+      },
+      {
+        "text": "Πορτρέτο και Τα Φίλτρα μου",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιες είναι οι κύριες βελτιώσεις στα Galaxy S25; (επιλέξτε τρεις)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ενέργειες μεταξύ εφαρμογών",
+        "answerStatus": 1
+      },
+      {
+        "text": "Αναζήτηση Πολλαπλής Εισόδου",
+        "answerStatus": 1
+      },
+      {
+        "text": "Μπαταρία",
+        "answerStatus": 0
+      },
+      {
+        "text": "Επεξεργαστής 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Με ποιο επεγεργαστή είναι εξοπλισμένη η σειρά Galaxy S25;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Επεξεργαστής 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Επεξεργαστής 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Επεξεργαστής 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Επεξεργαστής 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιες είναι οι βελτιώσεις στο Galaxy S25 Ultra; (Επιλέξτε τρεις)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Υπερευρυγώνια κάμερα 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Βάρος συσκευής",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (μπροστινή οθόνη)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Επεξεργαστής",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιο από τα παρακάτω ΔΕΝ είναι βασικό σημείο των νέων Watch; (επιλέξτε ένα)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ισχύς επόμενου επιπέδου\n(απόδοση)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ύπνος και ανάλυση μέσω AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μέγεθος οθόνης",
+        "answerStatus": 1
+      },
+      {
+        "text": "Εξατομικευμένη εμπειρία άσκησης",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιο από τα παρακάτω είναι σημαντικό χαρακτηριστικό που θα πρέπει να τονιστεί κατά την παρουσίαση των Buds3 Pro και Buds3 στους πελάτες που χρησιμοποιούν πρώτη φορά ασύρματα ακουστικά (πρώτη αγορά);",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Κρυστάλλινος ήχος κατά τις κλήσεις",
+        "answerStatus": 0
+      },
+      {
+        "text": "Προσαρμόσιμο ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Άνετη εφαρμογή",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ποια είναι η νέα λειτουργία στα Tab S10 που υποστηρίζει ακόμα πιο ζωντανή εμπειρία προβλής σε εξωτερικούς χώρους;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Αντιανακλαστική οθόνη",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μεγάλη οθόνη",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Υπάρχει δυνατότητα για εύκολη και γρήγορη κοινή χρήση φωτογραφιών/βίντεο με φίλους;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Χρειάζεται να παραμένω δίπλα στη συσκευή που στέλνω αρχεία κατά τη χρήση του Quick Share;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Δεν υπάρχει πρόβλημα, θα συνεχιστεί η μετάδοση μέσω cloud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ναι, δυστυχώς θα πρέπει να παραμένετε εκεί μέχρι το τέλος",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιες βασικές δυνατότητες θα μου προτείνατε να δοκιμάσω στη σειρά Galaxy S25; (επιλέξτε όσα ισχύουν)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ενέργειες μεταξύ εφαρμογών",
+        "answerStatus": 0
+      },
+      {
+        "text": "Πορτρέτο και Τα Φίλτρα μου",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Τι μου προτείνεις να δοκιμάσω στις Ενέργειες μεταξύ εφαρμογών στη σειρά Galaxy S25; (ως παράδειγμα)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Πες \"Αναζήτησε κινέζικο εστιατόριο σε κοντινή απόσταση και στείλε το με μήνυμα στον Tony\"",
+        "answerStatus": 1
+      },
+      {
+        "text": "Πες \"Γεια σου, Bixby\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ρώτησε \"Δώσε μου πληροφορίες για τον καιρό σήμερα\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Πες \"Γεια σου, Gemini\"",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Πώς μπορώ να εφαρμόσω φίλτρο κατά τη λήψη μιας φωτογραφίας; (επιλέξτε δύο)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "με χρήση προκαθορισμένων φίλτρων απευθείας στην προεπισκόπηση στην εφαρμογή της κάμερας",
+        "answerStatus": 1
+      },
+      {
+        "text": "με χρήση της λειτουργίας Νύχτα στην εφαρμογή της κάμερας",
+        "answerStatus": 0
+      },
+      {
+        "text": "με χρήση της επιλογής Τα Φίλτρα μου στην επεξεργασία της φωτογραφίας, στη συλλογή",
+        "answerStatus": 1
+      },
+      {
+        "text": "με χρήση της επιλογής Αργή κίνηση στην εφαρμογή της κάμερας",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Μου αρέσει πολύ το S Pen. Ποιο μοντέλο το διαθέτει;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ποιου είδους πληροφορίες/ενημέρωση μπορώ να λάβω με το Now Brief; (επιλέξτε τρεις)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 1
+      },
+      {
+        "text": "Πρόγραμμα ημερολογίου",
+        "answerStatus": 1
+      },
+      {
+        "text": "Επόμενα ραντεβού ή και ξυπνητήρια",
+        "answerStatus": 1
+      },
+      {
+        "text": "Διεύθυνση κατοικίας",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Επιλέξτε μια λειτουργία που σχετίζεται με την Ευεξία/τον Ύπνο στα νέα Watch (επιλέξτε όλες τις σωστές απαντήσεις)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Βαθμολογία ενέργειας",
+        "answerStatus": 0
+      },
+      {
+        "text": "Εξατομικευμένη προπόνηση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Κίνητρα και βελτίωση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Επιλέξτε το καταλληλότερο χαρακτηριστικό των Buds3 που μπορεί να χρησιμοποιηθεί σε σύσκεψη με ξένο που μιλά άλλη γλώσσα.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Διερμηνεία",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Άνετη εφαρμογή",
+        "answerStatus": 0
+      },
+      {
+        "text": "Κρυστάλλινος ήχος κατά τις κλήσεις",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Τι νέο υπάρχει σχετικά με την καινούρια θήκη με πληκτρολόγιο στο Tab S10;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Οπίσθιος φωτισμός ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ειδικό πλήκτρο AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Εκκίνηση του Samsung Notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ποια είναι τα κριτήρια για το Energy Score; (επιλέξτε όσα ισχύουν)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ύπνος",
+        "answerStatus": 0
+      },
+      {
+        "text": "Καταγραφή δραστηριότητας προηγούμενης μέρας",
+        "answerStatus": 0
+      },
+      {
+        "text": "Καρδιακός ρυθμός",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ποιο είναι το κύριο πλεονέκτημα του Trade-in; ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Μπορείτε να λάβετε μηνιαία χρηματοδότηση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μπορείτε να μειώσετε το κόστος της αγοράς ενός smartphone επιστρέφοντας το παλιό σας",
+        "answerStatus": 1
+      },
+      {
+        "text": "Μπορείτε να αποκτήσετε διπλάσιο αποθηκευτικό χώρο στην ίδια τιμή",
+        "answerStatus": 0
+      },
+      {
+        "text": "Αγοράζοντας ένα προϊόν, μπορείτε να αποκτήσετε ένα ακόμα δωρεάν",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Είμαι χρήστης ενός S22. Ποιες είναι οι βασικές βελτιώσεις του Galaxy S25 σε σύγκριση με αυτό; (επιλέξτε δύο)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Επεξεργαστής 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ποιότητα κάμερας και λήψεων",
+        "answerStatus": 1
+      },
+      {
+        "text": "Αριθμός καμερών",
+        "answerStatus": 0
+      },
+      {
+        "text": "Διαστάσεις",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Θα μπορούσατε να μου πείτε τις αποκλειστικές δυνατότητες του Galaxy S25 Ultra; (επιλέξτε όσα ισχύουν)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ενσωματωμένο S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ζουμ 100x και κάμερα 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μεγαλύτερη οθόνη / μπαταρία",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Υπάρχουν τρόποι κοινής χρήσης των αρχείων μου σε συσκευές που δεν είναι Android;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share με δημιουργία link",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποια είναι η λειτουργία προβολής ενός εγγεγραμμένου βίντεο σε αργή κίνηση στα Galaxy S;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Βίντεο Nightography",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instant Slow-mo",
+        "answerStatus": 1
+      },
+      {
+        "text": "Auto Trim",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Πραγματοποιώ πολλές επαγγελματικές κλήσεις, και θέλω να κρατάω το περιεχόμενο. Υπάρχει κάποια καλή δυνατότητα που μπορείτε να προτείνετε για αυτήν την περίπτωση;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Call Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Αναζήτηση Πολλαπλής Εισόδου",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Συχνά χάνω το smartphone μου ή μου πέφτει. Ανησυχώ μήπως αγοράσω κάτι ακριβό γιατί μπορεί να σπάσει.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Σας προτείνουμε το \"Samsung Care+\"",
+        "answerStatus": 1
+      },
+      {
+        "text": "Σας προτείνουμε το \"Samsung Wallet\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Σας προτείνουμε το \"Quick Share\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Σας προτείνουμε \"Φθηνότερο μοντέλο\"",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Τι ΔΕΝ καλύπτεται από το Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartphone",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Επιτραπέζιος υπολογιστής",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": " \"Αν το Ring κολλήσει στο δάχτυλό μου, τι πρέπει να κάνω;\"",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Εφαρμόστε λιπαντικό μέσο, όπως μια κρέμα χεριών, λάδι καθαρισμού ή σαπούνι, για να περιορίσετε την τριβή, για πιο εύκολη αφαίρεση.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Βυθίστε το δάχτυλό σας σε κρύο νερό για να συσταλούν τα αιμοφόρα αγγεία προσωρινά και να ξεπρηστεί το δάχτυλο. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Μειώστε το πρήξιμο σηκώνοντας το χέρι σας για περισσότερα από 5 λεπτά.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποια είναι η καταλληλότερη απάντηση για να συμπληρώσει το κενό;\nΤο Galaxy Ring είναι μια νέα συσκευή wearable. Ειδικά, για παρακολούθηση της υγείας με δυνατότητα AI και ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Βαθμολογία ενέργειας",
+        "answerStatus": 0
+      },
+      {
+        "text": "Κάρτα ενίσχυσης",
+        "answerStatus": 0
+      },
+      {
+        "text": "Καθοδήγηση ύπνου",
+        "answerStatus": 1
+      },
+      {
+        "text": "Διπλό τσίμπημα",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ποιο από τα παρακάτω είναι βασικό σημείο του Galaxy Ring;",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Εξατομικευμένη προπόνηση",
+        "answerStatus": 0
+      },
+      {
+        "text": "Άνεση 24 ώρες το 24ωρο",
+        "answerStatus": 0
+      },
+      {
+        "text": "Διπλό τσίμπημα  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Όλα τα παραπάνω",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

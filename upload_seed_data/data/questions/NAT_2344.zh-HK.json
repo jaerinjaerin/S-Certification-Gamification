@@ -1,0 +1,1381 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 的主要功能是什麼？（選擇三項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "真正的 AI 夥伴",
+        "answerStatus": 1
+      },
+      {
+        "text": "最進階的效能",
+        "answerStatus": 1
+      },
+      {
+        "text": "完美相機體驗",
+        "answerStatus": 1
+      },
+      {
+        "text": "您的健康夥伴",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra 有哪些顏色？（全選）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "鈦銀藍色",
+        "answerStatus": 1
+      },
+      {
+        "text": "鈦灰色",
+        "answerStatus": 1
+      },
+      {
+        "text": "鈦白銀色",
+        "answerStatus": 1
+      },
+      {
+        "text": "鈦黑色",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "I heard that there is a feature to find a restaurant and send a message at once. What's its name?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "拍攝人像時的主要優點是什麼？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "您可以錄製更加明亮的夜間影片，減少噪點。",
+        "answerStatus": 0
+      },
+      {
+        "text": "您現在可以過濾掉不需要的聲音並保留您想要的聲音。",
+        "answerStatus": 0
+      },
+      {
+        "text": "您可以與 Galaxy S25 系列自然地對話，一次使用多個應用程式來完成工作",
+        "answerStatus": 0
+      },
+      {
+        "text": "您可以自由地捕捉與自然的皮膚紋理",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "能說一說拍攝夜間攝影影片的效果嗎？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "您可以錄製更加明亮的夜間影片，減少噪點。",
+        "answerStatus": 1
+      },
+      {
+        "text": "您現在可以過濾掉不需要的聲音並保留您想要的聲音。",
+        "answerStatus": 0
+      },
+      {
+        "text": "您可以與 Galaxy S25 系列自然地對話，一次使用多個應用程式來完成工作",
+        "answerStatus": 0
+      },
+      {
+        "text": "您可以自由地捕捉準確的色調與自然的皮膚紋理",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "在提供生活方式用例演示時，以下哪項是應該作為跨裝置體驗強調的新手錶關鍵特點？（選擇全部正確答案）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "清澈的聲音",
+        "answerStatus": 0
+      },
+      {
+        "text": "能量分數",
+        "answerStatus": 0
+      },
+      {
+        "text": "競賽",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "在提供生活方式用例演示時，以下哪項是應該作為跨裝置體驗強調的 Buds3 Pro 與 Buds3 的關鍵特點？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "直觀的 UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "聲音優化\n（優化的聲音）",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "多種購買優惠",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Notes 不支援哪些功能？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "疊加 PDF 翻譯",
+        "answerStatus": 0
+      },
+      {
+        "text": "轉錄與翻譯",
+        "answerStatus": 0
+      },
+      {
+        "text": "錄音時即時翻譯",
+        "answerStatus": 1
+      },
+      {
+        "text": "提取摘要與自動格式化",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "我需要做哪些準備才能使用 Galaxy AI？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "您需要登入三星帳戶",
+        "answerStatus": 1
+      },
+      {
+        "text": "您需要支付一定的訂閱費",
+        "answerStatus": 0
+      },
+      {
+        "text": "您需要下載 Galaxy AI 專用應用程式",
+        "answerStatus": 0
+      },
+      {
+        "text": "無",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "我為何要將我的 Galaxy 升級到 One UI 7.0？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "相比於 One UI 6.1.1 變化不大",
+        "answerStatus": 0
+      },
+      {
+        "text": "使用 One UI 7.0 時，相比於之前的軟件，您將擁有更加豐富的 AI 手機體驗",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "我可以使用音訊消除器消除哪些元素？（全選）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "音樂",
+        "answerStatus": 0
+      },
+      {
+        "text": "風",
+        "answerStatus": 0
+      },
+      {
+        "text": "噪音",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What are the main features to experience for S25 ? (select all)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrait & My Filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What are the Key Improvements of S25? (select three)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodality",
+        "answerStatus": 1
+      },
+      {
+        "text": "Battery",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 系列配備哪種 AP",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra 的改善有哪些？（選擇三項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "50 MP 超級廣角相機",
+        "answerStatus": 1
+      },
+      {
+        "text": "重量",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2（適用於正面顯示屏）",
+        "answerStatus": 1
+      },
+      {
+        "text": "處理器",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下哪項不是新手錶的關鍵客戶體驗點？（選擇一項）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "下一個級別的基本要素\n（效能）",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI 支援的睡眠",
+        "answerStatus": 0
+      },
+      {
+        "text": "顯示屏尺寸",
+        "answerStatus": 1
+      },
+      {
+        "text": "個人化運動體驗",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下哪項是向不熟悉耳機的顧客（初次購買者）介紹 Buds3 Pro 與 Buds3 時應該強調的關鍵特點？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "清澈的聲音",
+        "answerStatus": 0
+      },
+      {
+        "text": "自適應主動降噪",
+        "answerStatus": 0
+      },
+      {
+        "text": "舒適佩戴",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 的哪個新功能支援生動的戶外檢視？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "防反光",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "大顯示屏",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "是否有功能可以與朋友輕鬆又快速地分享相片/影片？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "快速共享",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "即時翻譯",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "在使用快速共享時，我是否需要待在旁邊？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "不需要，此功能將透過雲端運作",
+        "answerStatus": 1
+      },
+      {
+        "text": "是，很遺憾，您必須待到最後",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What factors can I erase by using Audio Eraser? (select all)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Music",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wind",
+        "answerStatus": 0
+      },
+      {
+        "text": "Noise",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What are the main features to experience for S25 ? (select all)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrait & My Filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "拍照時如何應用濾鏡？（選擇兩項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "使用相機應用程式的預設濾鏡",
+        "answerStatus": 1
+      },
+      {
+        "text": "使用相機應用程式的夜間模式",
+        "answerStatus": 0
+      },
+      {
+        "text": "使用媒體瀏覽器中我的相片濾鏡",
+        "answerStatus": 1
+      },
+      {
+        "text": "使用相機應用程式的慢動作",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "我非常喜歡 S pen。能給我推薦一下嗎？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "我可以使用 Now Brief 收到哪些資訊/洞察？（選擇三項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "能量分數",
+        "answerStatus": 1
+      },
+      {
+        "text": "排程",
+        "answerStatus": 1
+      },
+      {
+        "text": "鬧鐘",
+        "answerStatus": 1
+      },
+      {
+        "text": "住家地址",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "選擇新手錶中與健康/睡眠相關的功能（選擇全部正確答案）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "能量分數",
+        "answerStatus": 0
+      },
+      {
+        "text": "個人化的指導",
+        "answerStatus": 0
+      },
+      {
+        "text": "自我激勵與改善",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "選擇 Buds3 中最適合在與一位說其他語言的外國人舉行會議時使用的功能。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "口譯工具",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "舒適佩戴",
+        "answerStatus": 0
+      },
+      {
+        "text": "清澈的聲音",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 的新筆記式保護套鍵盤的新功能是什麼？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "背光 ",
+        "answerStatus": 0
+      },
+      {
+        "text": "專用 AI 鍵",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note 啟動器",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "能量分數採用的標準是什麼？（全選）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "睡眠",
+        "answerStatus": 0
+      },
+      {
+        "text": "活動",
+        "answerStatus": 0
+      },
+      {
+        "text": "心跳",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "以舊換新的主要優勢是什麼？ ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "您可以取得月度金融計畫",
+        "answerStatus": 0
+      },
+      {
+        "text": "您可以立即減少購買最新智能手機的負擔/費用",
+        "answerStatus": 1
+      },
+      {
+        "text": "在相同的價格下，您可以取得 2 倍的儲存空間",
+        "answerStatus": 0
+      },
+      {
+        "text": "買一送一",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "我是 S22 用戶。Galaxy S25 有哪些關鍵改善？（選擇兩項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "圖像品質",
+        "answerStatus": 1
+      },
+      {
+        "text": "相機數量",
+        "answerStatus": 0
+      },
+      {
+        "text": "尺寸",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "你能告訴我 Galaxy S25 Ultra 的獨有功能嗎？（全選）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "內建 S pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100 倍變焦與 200 MP 相機",
+        "answerStatus": 0
+      },
+      {
+        "text": "更大的螢幕 / 電池",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "有沒有辦法分享我的檔案至非 Android 裝置？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "快速共享",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "用慢動作顯示已錄製影片的功能是什麼？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "夜間攝影影片",
+        "answerStatus": 0
+      },
+      {
+        "text": "音訊消除器",
+        "answerStatus": 0
+      },
+      {
+        "text": "即時慢動作",
+        "answerStatus": 1
+      },
+      {
+        "text": "自動修剪",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "我在日常生活中經常打電話，但我常常忘記所談的內容。能不能針對這種情況推薦一下實用的功能？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "轉錄助手",
+        "answerStatus": 1
+      },
+      {
+        "text": "即時翻譯",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "多模態搜尋",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "我經常弄丟或掉落手機。我擔心購買昂貴的東西，怕它會壞。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "推薦您使用「Samsung Care+」",
+        "answerStatus": 1
+      },
+      {
+        "text": "推薦您使用「Samsung Wallet」",
+        "answerStatus": 0
+      },
+      {
+        "text": "推薦您使用「快速共享」",
+        "answerStatus": 0
+      },
+      {
+        "text": "推薦您使用「更便宜的型號」",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+ 不承保哪些",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "智能手機",
+        "answerStatus": 0
+      },
+      {
+        "text": "手錶",
+        "answerStatus": 0
+      },
+      {
+        "text": "台式電腦",
+        "answerStatus": 1
+      },
+      {
+        "text": "平板",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "若 Ring 卡在我的手指上，該怎麼辦？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "塗抹潤滑劑，例如護手霜、卸妝油或肥皂，以便減少摩擦，使其更易於取下。",
+        "answerStatus": 0
+      },
+      {
+        "text": "將手指浸入冷水中，以便暫時收縮血管，讓手指變小。 ",
+        "answerStatus": 0
+      },
+      {
+        "text": "透過將手高舉超過 5 分鐘，緩解腫脹。",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "哪個答案最適合填入下方空白處？\nGalaxy Ring 是新的可穿戴式裝置。尤其是 AI 支援的健康追蹤與________。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "能量分數",
+        "answerStatus": 0
+      },
+      {
+        "text": "加速卡",
+        "answerStatus": 0
+      },
+      {
+        "text": "睡眠指導",
+        "answerStatus": 1
+      },
+      {
+        "text": "捏兩下",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "以下哪項是 Galaxy Ring 的關鍵客戶體驗點？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "個人化的指導",
+        "answerStatus": 0
+      },
+      {
+        "text": "全天候舒適佩戴",
+        "answerStatus": 0
+      },
+      {
+        "text": "捏兩下  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 41,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": "additional",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra 的鏡頭是?（全選）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "超廣角鏡 50 MP F1.9 ",
+        "answerStatus": 1
+      },
+      {
+        "text": "廣角鏡 200 MP F1.7 ",
+        "answerStatus": 1
+      },
+      {
+        "text": "遠攝鏡 (5x) 50 MP F3.4 ",
+        "answerStatus": 1
+      },
+      {
+        "text": "遠攝鏡 (3x) 10 MP F2.4",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 42,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": "additional",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 有哪些可體驗的主要功能？（全選）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "聊天助手",
+        "answerStatus": 0
+      },
+      {
+        "text": "FM 收音機",
+        "answerStatus": 0
+      },
+      {
+        "text": "人像和我的濾鏡",
+        "answerStatus": 1
+      },
+      {
+        "text": "音訊消除器",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 43,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": "additional",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 有哪些關鍵改善？（選擇兩項）",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "50MP 超廣角 鏡頭",
+        "answerStatus": 1
+      },
+      {
+        "text": "全系列支援 S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "電池",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 44,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": "additional",
+    "timeLimitSeconds": 30,
+    "text": "能給我推薦一下可體驗的主要功能嗎？（全選）",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "多模態搜尋",
+        "answerStatus": 0
+      },
+      {
+        "text": "人像和我的濾鏡",
+        "answerStatus": 0
+      },
+      {
+        "text": "音訊消除器",
+        "answerStatus": 0
+      },
+      {
+        "text": "以上皆是",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 45,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": "additional",
+    "timeLimitSeconds": 30,
+    "text": "在 Galaxy S25 系列中可使用什麼功能來體驗多模態搜尋? （選擇兩項）\n",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AI 智能選擇",
+        "answerStatus": 1
+      },
+      {
+        "text": "Google 一圈即搜",
+        "answerStatus": 1
+      },
+      {
+        "text": "S Pen 快速搜索",
+        "answerStatus": 0
+      },
+      {
+        "text": "嗨，Samsung",
+        "answerStatus": 0
+      }
+    ]
+  }
+]

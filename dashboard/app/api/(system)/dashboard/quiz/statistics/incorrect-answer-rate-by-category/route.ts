@@ -2,6 +2,7 @@
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 import { querySearchParams } from "../../../_lib/query";
+import { AuthType } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,23 +11,58 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const quizSets = await prisma.quizSet.findMany({
+    const jobNames = await prisma.job.findMany({
+      select: { id: true, group: true },
+    });
+
+    const questions = await prisma.userQuizQuestionStatistics.findMany({
       where: { ...where },
-      include: { quizStages: true },
     });
-    console.log("🚀 ~ GET ~ quizSets:", quizSets.slice(0, 2));
 
-    const qustionIds = quizSets.flatMap((qset) =>
-      qset.quizStages.flatMap((stage) => stage.questionIds)
-    );
+    const result: Record<string, any> = {};
+    // Iterate through each question
+    questions.forEach((question) => {
+      const { category: cate, authType, isCorrect, jobId } = question;
 
-    const questions = await prisma.question.findMany({
-      where: { id: { in: qustionIds } },
-      include: { options: true },
+      // Ensure category is a string (fallback to empty string if null/undefined)
+      const category = cate || "";
+
+      // Initialize or retrieve the existing category data
+      if (!result[category]) {
+        result[category] = {
+          pff: 0,
+          pfsm: 0,
+          nff: 0,
+          nfsm: 0,
+          corrects: {
+            p: { correct: 0, incorrect: 0 },
+            n: { correct: 0, incorrect: 0 },
+          },
+        };
+      }
+
+      const item = result[category];
+
+      // Find the job group (e.g., "ff" or "fsm")
+      const jobName = jobNames.find((job) => job.id === jobId)?.group;
+
+      if (jobName) {
+        const group = authType === AuthType.SUMTOTAL ? "p" : "n";
+        item.corrects[group][isCorrect ? "correct" : "incorrect"] += 1;
+        // Calculate the incorrect rate
+        const incorrect = item.corrects[group].incorrect;
+        const total = item.corrects[group].correct + incorrect;
+        const rate = incorrect / total;
+        // Update the respective rate (pff, pfsm, nff, nfsm)
+        if (jobName === "ff") {
+          item[`${group}ff`] = rate;
+        } else if (jobName === "fsm") {
+          item[`${group}fsm`] = rate;
+        }
+      }
     });
-    console.log("🚀 ~ GET ~ questions:", questions.slice(0, 2));
 
-    return NextResponse.json({ result: [] });
+    return NextResponse.json({ result });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

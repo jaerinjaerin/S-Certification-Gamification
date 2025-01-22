@@ -1,12 +1,25 @@
 import { prisma } from "@/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { withCors } from "@/lib/cors";
 import * as Sentry from "@sentry/nextjs";
 
-async function getHandler() {
+async function getHandler(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const domainCode = searchParams.get("domain_code");
+
   try {
-    const domains = await prisma.domain.findMany();
+    const domains = await prisma.domain.findMany({
+      where: domainCode ? { code: domainCode } : undefined,
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
     const response = NextResponse.json({ items: domains }, { status: 200 });
     response.headers.set("Cache-Control", "public, max-age=3600");
     return response;

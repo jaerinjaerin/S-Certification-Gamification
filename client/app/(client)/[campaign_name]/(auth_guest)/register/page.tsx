@@ -57,7 +57,7 @@ interface DomainDetail {
   name: string;
   code: string;
   regionId: string;
-  subsidaryId: string;
+  subsidiaryId: string;
 }
 
 export default function GuestRegisterPage() {
@@ -85,7 +85,7 @@ export default function GuestRegisterPage() {
 
   // select box options
   const [countries, setCountries] = useState<DomainDetail[]>([]);
-  const [channels, setChannels] = useState<Channel[]>([]);
+  const [channels, setChannels] = useState<Channel[] | null>(null);
   const [jobs] = useState<Job[]>([
     { name: "FSM", value: "8", id: "8" },
     { name: "FF", value: "9", id: "9" },
@@ -106,8 +106,8 @@ export default function GuestRegisterPage() {
     try {
       setLoading(true);
 
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/channels_20250117.json`;
-      // console.log("jsonUrl", jsonUrl);
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/channels.json`;
+      console.log("jsonUrl", jsonUrl);
       const res = await fetch(jsonUrl, {
         method: "GET",
         // cache: "force-cache",
@@ -115,7 +115,10 @@ export default function GuestRegisterPage() {
       });
 
       const data = await res.json();
-      // console.log("data", data);
+      data.sort((a: DomainDetail, b: DomainDetail) => {
+        return a.name.localeCompare(b.name);
+      });
+      console.log("data", data.length);
       setCountries(data as DomainDetail[]);
     } catch (error) {
       console.error("Failed to fetch data", error);
@@ -177,8 +180,10 @@ export default function GuestRegisterPage() {
     }
     setSelectedCountry(country!);
     const channels = country!.channels;
+    console.log("channels", channels);
     setChannels(channels ?? []);
     setSelectedChannel(null);
+    setChannelInput(false);
     setChannelName(null);
     setSelectedJobId(null);
   };
@@ -223,7 +228,7 @@ export default function GuestRegisterPage() {
       body: {
         domainId: selectedCountry.id,
         domainCode: selectedCountry.code,
-        subsidaryId: selectedCountry.subsidaryId,
+        subsidiaryId: selectedCountry.subsidiaryId,
         regionId: selectedCountry.regionId,
         jobId: jobs.find((j) => j.value === selectedJobId)?.id,
         storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
@@ -302,7 +307,7 @@ export default function GuestRegisterPage() {
               value={`${translation("channel")}*`}
             >
               <SelectTrigger
-                disabled={loading || loadingCreate || channels.length === 0}
+                disabled={loading || loadingCreate || channels == null}
                 className={cn(
                   selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
                 )}
@@ -314,7 +319,7 @@ export default function GuestRegisterPage() {
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px] font-one font-medium">
-                {channels.map((channel) => (
+                {channels?.map((channel) => (
                   <SelectItem key={channel.name} value={channel.name}>
                     {channel.name}
                   </SelectItem>
