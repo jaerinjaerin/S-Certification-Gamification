@@ -54,54 +54,106 @@ const badgeImagePaths = [
 
 async function main() {
   const activityIdData = [
-    {
-      domainCode: "NAT_2410",
-      activityIds: [251949, 251950],
-    },
-    {
-      domainCode: "NAT_7000",
-      activityIds: [251909, 251916],
-    },
-    {
-      domainCode: "NAT_2344",
-      activityIds: [251910, 251917],
-    },
-    {
-      domainCode: "NAT_2704",
-      activityIds: [251933, 251934],
-    },
-    {
-      domainCode: "NAT_051001",
-      activityIds: [251927, 251929],
-    },
-    {
-      domainCode: "NAT_2360",
-      activityIds: [251913, 251918],
-    },
-    {
-      domainCode: "NAT_2608",
-      activityIds: [251936, 251937],
-    },
-    {
-      domainCode: "NAT_2764",
-      activityIds: [251923, 251925],
-    },
-    {
-      domainCode: "NAT_3004",
-      activityIds: [251931, 251932],
-    },
-    {
-      domainCode: "NAT_2356",
-      activityIds: [251938, 251939],
-    },
-    {
-      domainCode: "NAT_2792",
-      activityIds: [251942, 251943],
-    },
-    {
-      domainCode: "NAT_2076",
-      activityIds: [251940, 251941],
-    },
+    { domainCode: "OrgCode-7", activityIds: [252545, 252547] },
+    { domainCode: "NAT_2008", activityIds: [252609, 252611] },
+    { domainCode: "NAT_2070", activityIds: [252617, 252618] },
+    { domainCode: "NAT_2191", activityIds: [252619, 252623] },
+    { domainCode: "NAT_2807", activityIds: [252625, 252627] },
+    { domainCode: "NAT_2688", activityIds: [252633, 252636] },
+    { domainCode: "NAT_2705", activityIds: [252660, 252661] },
+    { domainCode: "NAT_2756", activityIds: [252552, 252554] },
+    { domainCode: "NAT_2756", activityIds: [252558, 252560] },
+    { domainCode: "NAT_2756", activityIds: [252566, 252567] },
+    { domainCode: "NAT_2040", activityIds: [252546, 252548] },
+    { domainCode: "NAT_2233", activityIds: [252689, 252690] },
+    { domainCode: "NAT_2428", activityIds: [252695, 252698] },
+    { domainCode: "NAT_2440", activityIds: [252699, 252700] },
+    { domainCode: "NAT_2203", activityIds: [252604, 252605] },
+    { domainCode: "NAT_2703", activityIds: [252606, 252608] },
+    { domainCode: "NAT_2250", activityIds: [252521, 252523] },
+    { domainCode: "NAT_2300", activityIds: [252516, 252525] },
+    { domainCode: "NAT_19602", activityIds: [252533, 252534] },
+    { domainCode: "NAT_2348", activityIds: [252686, 252688] },
+    { domainCode: "NAT_2380", activityIds: [252528, 252531] },
+    { domainCode: "NAT_2724", activityIds: [252532, 252535] },
+    { domainCode: "NAT_2620", activityIds: [252537, 252538] },
+    { domainCode: "NAT_021501", activityIds: [252563, 252564] },
+    { domainCode: "NAT_021501", activityIds: [252568, 252569] },
+    { domainCode: "NAT_021502", activityIds: [252622, 252624] },
+    { domainCode: "NAT_021503", activityIds: [252630, 252631] },
+    { domainCode: "NAT_021504", activityIds: [252637, 252647] },
+    { domainCode: "NAT_021504", activityIds: [252648, 252649] },
+    { domainCode: "NAT_2616", activityIds: [252542, 252544] },
+    { domainCode: "NAT_2100", activityIds: [252555, 252556] },
+    { domainCode: "NAT_2642", activityIds: [252602, 252603] },
+    { domainCode: "NAT_2398", activityIds: [252693, 252697] },
+    { domainCode: "NAT_41702", activityIds: [252704, 252705] },
+    { domainCode: "NAT_76202", activityIds: [252708, 252710] },
+    { domainCode: "NAT_2860", activityIds: [252682, 252684] },
+    { domainCode: "NAT_2643", activityIds: [252656, 252657] },
+    { domainCode: "NAT_2645", activityIds: [252676, 252677] },
+    { domainCode: "NAT_2644", activityIds: [252672, 252673] },
+    { domainCode: "NAT_2158", activityIds: [252766, 252767] },
+    { domainCode: "NAT_2704", activityIds: [252679, 252680] },
+    { domainCode: "NAT_051001", activityIds: [252683, 252687] },
+    { domainCode: "NAT_2360", activityIds: [252638, 252640] },
+    { domainCode: "NAT_2608", activityIds: [252738, 252739] },
+    { domainCode: "NAT_2702", activityIds: [252736, 252737] },
+    { domainCode: "NAT_2458", activityIds: [252670, 252671] },
+    { domainCode: "NAT_2764", activityIds: [252718, 252724] },
+    { domainCode: "NAT_2116", activityIds: [252653, 252654] },
+    { domainCode: "NAT_2418", activityIds: [252666, 252667] },
+    { domainCode: "NAT_3004", activityIds: [252644, 252650] },
+    { domainCode: "NAT_2050", activityIds: [252743, 252744] },
+    { domainCode: "NAT_060401", activityIds: [252514, 252519] },
+    { domainCode: "NAT_2356", activityIds: [252692, 252694] },
+    { domainCode: "NAT_2144", activityIds: [252745, 252746] },
+    { domainCode: "NAT_2818", activityIds: [252634, 252641] },
+    { domainCode: "NAT_37602", activityIds: [252675, 252681] },
+    { domainCode: "NAT_2275", activityIds: [252685, 252691] },
+    { domainCode: "NAT_2400", activityIds: [252607, 252610] },
+    { domainCode: "NAT_2368", activityIds: [252613, 252615] },
+    { domainCode: "NAT_2422", activityIds: [252620, 252626] },
+    { domainCode: "NAT_2504", activityIds: [252645, 252651] },
+    { domainCode: "NAT_2788", activityIds: [252664, 252668] },
+    { domainCode: "NAT_2012", activityIds: [252655, 252658] },
+    { domainCode: "NAT_2586", activityIds: [252714, 252715] },
+    { domainCode: "NAT_2682", activityIds: [252570, 252572] },
+    { domainCode: "NAT_2792", activityIds: [252575, 252578] },
+    { domainCode: "NAT_2784", activityIds: [252515, 252518] },
+    { domainCode: "NAT_2048", activityIds: [252526, 252529] },
+    { domainCode: "NAT_2414", activityIds: [252536, 252540] },
+    { domainCode: "NAT_2512", activityIds: [252543, 252549] },
+    { domainCode: "NAT_2634", activityIds: [252557, 252565] },
+    { domainCode: "NAT_2170", activityIds: [252748, 252750] },
+    { domainCode: "NAT_2707", activityIds: [252539, 252541] },
+    { domainCode: "NAT_2152", activityIds: [252559, 252562] },
+    { domainCode: "NAT_2068", activityIds: [252571, 252574] },
+    { domainCode: "NAT_2076", activityIds: [252701, 252703] },
+    { domainCode: "NAT_2780", activityIds: [252621, 252628] },
+    { domainCode: "NAT_2630", activityIds: [252612, 252614] },
+    { domainCode: "NAT_2591", activityIds: [252632, 252635] },
+    { domainCode: "NAT_2218", activityIds: [252639, 252642] },
+    { domainCode: "NAT_2188", activityIds: [252643, 252646] },
+    { domainCode: "NAT_2212", activityIds: [252652, 252662] },
+    { domainCode: "NAT_2388", activityIds: [252663, 252665] },
+    { domainCode: "NAT_2631", activityIds: [252669, 252674] },
+    { domainCode: "NAT_2633", activityIds: [252696, 252702] },
+    { domainCode: "NAT_2635", activityIds: [252706, 252707] },
+    { domainCode: "NAT_2632", activityIds: [252711, 252713] },
+    { domainCode: "NAT_2600", activityIds: [252720, 252730] },
+    { domainCode: "NAT_2858", activityIds: [252733, 252734] },
+    { domainCode: "NAT_2484", activityIds: [252527, 252530] },
+    { domainCode: "NAT_2604", activityIds: [252752, 252753] },
+    { domainCode: "NAT_2404", activityIds: [252725, 252726] },
+    { domainCode: "NAT_2834", activityIds: [252727, 252729] },
+    { domainCode: "NAT_2566", activityIds: [252709, 252712] },
+    { domainCode: "NAT_2686", activityIds: [252728, 252735] },
+    { domainCode: "NAT_120", activityIds: [252740, 252741] },
+    { domainCode: "NAT_2288", activityIds: [252731, 252732] },
+    { domainCode: "NAT_384", activityIds: [252742, 252747] },
+    { domainCode: "NAT_3701", activityIds: [252716, 252717] },
+    { domainCode: "NAT_2710", activityIds: [252722, 252723] },
   ];
 
   // Create Campaign
@@ -328,8 +380,8 @@ async function main() {
       })
     );
 
-    console.log("charImages", charImages);
-    console.log("bgImages", bgImages);
+    // console.log("charImages", charImages);
+    // console.log("bgImages", bgImages);
 
     const badgeImages = await Promise.all(
       badgeImagePaths.map(async (imagePath: string) => {
@@ -350,11 +402,11 @@ async function main() {
 
     console.log("files", files);
 
-    // 먼저 NAT_2410 도메인 데이터를 처리
+    // 먼저 OrgCode-7 도메인 데이터를 처리
     const hqNatQuestions: any[] = [];
     let quizSetCount = 0;
     for (const fileName of files.sort((a, b) =>
-      a.includes("NAT_2410") ? -1 : 1
+      a.includes("OrgCode-7") ? -1 : 1
     )) {
       const filePath = path.join(folderPath, fileName);
       // const domainCode = fileName.split("|")[0];
@@ -368,7 +420,7 @@ async function main() {
       const domainOrSubsidiary = await prisma.domain.findFirst({
         where: { code: domainCode },
       });
-      // domainCode === "NAT_2410"
+      // domainCode === "OrgCode-7"
       //   ? await prisma.subsidiary.findFirst({
       //       where: { code: domainCode },
       //     })
@@ -387,8 +439,8 @@ async function main() {
       // }
 
       if (!domainOrSubsidiary) {
-        console.warn(`Domain not found for file: ${fileName}`);
-        continue;
+        console.error(`Domain not found for file: ${fileName}`);
+        return;
       }
 
       if (!language) {
@@ -409,7 +461,7 @@ async function main() {
         }
 
         let originalQuestionId =
-          domainCode === "NAT_2410"
+          domainCode === "OrgCode-7"
             ? questionId
             : hqNatQuestions.find(
                 (hqQ) => hqQ.originalIndex === question.originQuestionIndex
@@ -490,7 +542,7 @@ async function main() {
         // console.log("item", item);
 
         createdQuestions.push(item);
-        if (domainCode === "NAT_2410") {
+        if (domainCode === "OrgCode-7") {
           hqNatQuestions.push(item);
         }
       }
@@ -508,9 +560,9 @@ async function main() {
         data: {
           campaignId: campaign.id,
           domainId: domainOrSubsidiary.id,
-          // domainId: domainCode === "NAT_2410" ? null : domainOrSubsidiary.id,
+          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
           // subsidiaryId:
-          //   domainCode === "NAT_2410" ? domainOrSubsidiary.id : null,
+          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
           jobCodes: ["ff", "fsm"],
           createrId: "seed",
         },
@@ -533,7 +585,7 @@ async function main() {
         stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
         let questionIds = stageQuestions.map((question) => {
-          if (domainCode === "NAT_2410") {
+          if (domainCode === "OrgCode-7") {
             const q: any = createdQuestions.find(
               (q: any) => q.originalIndex === question.originQuestionIndex
             );

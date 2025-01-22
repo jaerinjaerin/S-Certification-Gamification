@@ -1040,7 +1040,7 @@
   {
     "originQuestionIndex": 35,
     "orderInStage": 35,
-    "enabled": 0,
+    "enabled": 1,
     "stage": 4,
     "product": "S25",
     "category": "Create Excitement",
@@ -1071,7 +1071,7 @@
   {
     "originQuestionIndex": 36,
     "orderInStage": 36,
-    "enabled": 0,
+    "enabled": 1,
     "stage": 4,
     "product": "Assurance\n&Service",
     "category": "Samsung Care+",
@@ -1102,7 +1102,7 @@
   {
     "originQuestionIndex": 37,
     "orderInStage": 37,
-    "enabled": 0,
+    "enabled": 1,
     "stage": 4,
     "product": "Assurance\n&Service",
     "category": "Samsung Care+",

@@ -1133,7 +1133,7 @@
   {
     "originQuestionIndex": 38,
     "orderInStage": 36,
-    "enabled": 0,
+    "enabled": 1,
     "stage": 4,
     "product": "Ring",
     "category": "FAQ",
