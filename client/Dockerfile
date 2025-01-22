@@ -59,7 +59,7 @@ RUN npm install
 
 # 1-2. 참조 파일 복사
 COPY data-model/prisma/schema.prisma data-model/prisma/
-COPY upload_seed_data/data/seeds/languages.json upload_seed_data/data/seeds/
+# COPY upload_seed_data/data/seeds/languages.json upload_seed_data/data/seeds/
 
 # 1-3. 소스 코드 복사
 COPY client/ client/
