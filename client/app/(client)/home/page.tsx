@@ -32,6 +32,10 @@ export default function Home() {
     await signOut();
   };
 
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
   if (session) {
     return (
       <div
@@ -60,7 +64,7 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
-      {status === "loading" && <p>Loading...</p>}
+      <p>Not signed in</p>
     </div>
   );
 }
