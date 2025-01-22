@@ -23,7 +23,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/usports/:path*", // 특정 경로에만 적용
+        source: "/api/:path*", // `/api` 하위 모든 경로에 적용
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
