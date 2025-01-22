@@ -45,14 +45,13 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    const { isWindows, isAndroid, isMac, isIOS } = useCheckOS();
-    console.log(isAndroid);
+    const { isWindows, isAndroid } = useCheckOS();
 
     return (
       <Comp
         className={cn(
           buttonVariants({ variant, size, className }),
-          (isAndroid || isWindows || isMac || isIOS) && `*:translate-y-[1px]`
+          (isAndroid || isWindows) && `*:translate-y-[1px]`
         )}
         ref={ref}
         {...props}
