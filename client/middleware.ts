@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
 
   const origin = request.headers.get("origin") ?? "";
-  console.log("middleware: origin:", origin);
+  // console.log("middleware: origin:", origin);
 
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
