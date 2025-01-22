@@ -620,6 +620,15 @@
   ],
   "domains": [
     {
+      "domainId": 29,
+      "domainName": "HQ",
+      "domainCode": "OrgCode-7",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
       "domainId": 349996,
       "domainName": "United States",
       "domainCode": "NAT_2840",
