@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM a Galaxy S24 sorozat egyik kulcsfontosságú fejlesztése az S23 sorozathoz képest?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to search by Google - Karikázz és keress a Google-lel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Képszerkesztő segéd és éjszakai zoom",
+        "answerStatus": 0
+      },
+      {
+        "text": "Megnövelt Játékteljesítmény",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kamerák száma",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM kapcsolódik a Galaxy S24 sorozat kialakításához?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Prémium kialakítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kerek dizájn",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lapos kijelző és titán keret (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Időtlen színkollekciók, amelyek a természet tartós szilárdságából származnak",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyek a Galaxy S24 sorozat fokozott tartósságával kapcsolatos jellemzők? (Kettőt válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "IPX8 besorolású vízállóság",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titán keret (Galaxy S24 Ultra) és továbbfejlesztett alumínium páncél keret (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Rugalmas zsanér",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbi használati esetek melyike NEM kapcsolódik a Bekarikázós Google kereséshez?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Értekezletek felvétele és gyors összefoglaló.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Divatcikkek keresése videók nézése közben.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Utazási helyek felfedezése, amit a hírcsatornán láttál.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ételrecept keresése, amit a YouTube-on láttál.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n ________ képes a bejövő és kimenő csevegéseket valós időben lefordítani a különböző üzenetküldő alkalmazásokon, és a szavak hangnemét a helyzethez igazítani: Professzionális, Hétköznapi, Közösségi, Udvarias és Emoji-s.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Az Élő fordítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "A chat segéd",
+        "answerStatus": 1
+      },
+      {
+        "text": "A jegyzet segéd",
+        "answerStatus": 0
+      },
+      {
+        "text": "Az átíró segéd",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak melyike helyes magyarázat az Élő fordításra?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Egy mindkét irányba működő valós idejű hangfordítás.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Működik harmadik fél alkalmazásokkal anélkül, hogy egy másik fordítóalkalmazásra kellene váltanod.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Automatikusan javítja a kézírásod.",
+        "answerStatus": 0
+      },
+      {
+        "text": "A jegyzeteket strukturáltabbá rendszerezi.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM kapcsolódik a Jegyzet segéd és a Galaxy S24 sorozathoz újonnan hozzáadott Samsung Note funkciókhoz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Automatikus javítás és igazítás S Pen kézírással",
+        "answerStatus": 0
+      },
+      {
+        "text": "A jegyzeteket strukturáltabbá rendszerezi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Összefoglaló borítók készítése a jegyzetek alapján",
+        "answerStatus": 0
+      },
+      {
+        "text": "A legfontosabb pontok kiemelése",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mekkora az elérhető legnagyobb felbontású fénykép a Galaxy S24 Ultra kamera 5-szörös optikai nagyításával?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n________ a Galaxy S24 Ultra számára a fényesebb, tisztább nagyítású fényképekhez, akár még éjszaka is",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1,6x nagyobb pixel",
+        "answerStatus": 1
+      },
+      {
+        "text": "Szélesebb OIS",
+        "answerStatus": 0
+      },
+      {
+        "text": "Okosfelvétel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Új adaptív pixel",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\n________ képes kitölteni a hátteret a képek kiegyenesítése (dőlése) közben, és automatikus kitöltéssel mozgatni/méretezni a fényképeken lévő objektumokat.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Az Éjszakai portré",
+        "answerStatus": 0
+      },
+      {
+        "text": "A Képszerkesztő segéd (Generatív szerkesztés)",
+        "answerStatus": 1
+      },
+      {
+        "text": "A 200 MP-es nagy felbontás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Jegyzet segéd",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Hogyan lehet aktiválni a Képszerkesztő segéd funkció Szerkesztési javaslatát a Galaxy S24 sorozat Galéria alkalmazásában az azonnali képszerkesztéshez (Portré effekt, Átdolgozás, Tükröződés eltávolítása és így tovább)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Töltsd le és nyisd meg a képszerkesztő alkalmazást, és alkalmazd az effekteket egyenként.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Érintsd meg a szerkesztés ikont, majd azon belül a Képszerkesztő segéd ikont.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Érintsd meg a képszerkesztő ikont, vagy csak legyints felfelé egy fényképen, és láthatod a javasolt szerkesztési opciókat.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nyisd meg a közösségi alkalmazást, válaszd ki a kívánt szűrőt, és alkalmazd a fényképen.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik kapcsolódik a legkevésbé a Galaxy S24 sorozat kamerafunkcióihoz a közösségi médiaalkalmazások felvételein?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "HDR fényképek",
+        "answerStatus": 0
+      },
+      {
+        "text": "Éjszakai fényképezés: fényesebb éjszakai fényképek és videók csökkentett zajjal",
+        "answerStatus": 0
+      },
+      {
+        "text": "Space Zoom",
+        "answerStatus": 1
+      },
+      {
+        "text": "Videóstabilizálás",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM sorolható a Galaxy S24 sorozat Játékteljesítményének javításai közé?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "A Galaxy-k közül az eddigi leggyorsabb processzor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nagyobb gőzkamra (1,9-szeres a Galaxy S24 Ultra esetében)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI Slow Motion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Fejlett Race Tracing technológia",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM sorolható a Galaxy S24 sorozat magával ragadó kijelzőjének elemei közé?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nagyobb képernyő vékonyabb keretekkel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Témafelismerő rendszer",
+        "answerStatus": 1
+      },
+      {
+        "text": "HBM csúcsfényerő 2600 nit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Láthatóság javító",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyek azok a jellemzők, amelyek a Galaxy S24 sorozat hosszabb akkumulátor-élettartamával kapcsolatosak? (Kettőt válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Nagyobb akkumulátor-kapacitás",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "Generatív háttérkép",
+        "answerStatus": 0
+      },
+      {
+        "text": "A kijelző adaptív frissítési sebessége",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik helyes az egyes Galaxy S24 sorozatú modellek memóriaspecifikációjára vonatkozóan?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 8 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik kapcsolódik legkevésbé a Galaxy S24 sorozat One UI 6 rendszerfrissítéséhez?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Szemet gyönyörködtető Quick panel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Továbbfejlesztett emoji kialakítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "A csatlakozás a Windows-hoz",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera widget és Időjárásbetekintési widget",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\nA ________ tökéletesen kompatibilis az összes telefon, táblagép és számítógép (Android, Windows stb.) közötti megosztáshoz.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik tartozik a Samsung-fiók előnyei közé?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Gazdag AI élmény az egyszerű életért",
+        "answerStatus": 0
+      },
+      {
+        "text": "Elveszett telefon megkeresése még úgy is, ha az offline állapotban van",
+        "answerStatus": 0
+      },
+      {
+        "text": "Az összes Samsung szolgáltatás és készülék elérése és szinkronizálása",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik a legmegfelelőbb bevezetés a Galaxy Watch6 számára a Galaxy S24 sorozattal való keresztértékesítés esetén?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Változtasd meg a Galaxy S24 sorozat zárképernyőjét és az AOD-t, hogy kifejezd a stílusod.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fényképeket és videókat felvételét indíthatod el közvetlenül a csuklódról.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Élvezd a kényelmes vizuális élményt vele.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Automatikusan átvált az aktív készülék hangjára.",
+        "answerStatus": 0
+      }
+    ]
+  }
+]
