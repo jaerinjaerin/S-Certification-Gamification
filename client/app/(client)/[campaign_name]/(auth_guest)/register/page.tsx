@@ -375,7 +375,7 @@ export default function GuestRegisterPage() {
                 loadingCreate ||
                 !selectedCountry ||
                 (!selectedChannel &&
-                  (!channelName || channelName.trim().length < 3)) ||
+                  (!channelName || channelName.trim().length < 2)) ||
                 !selectedJobId ||
                 !languageCode ||
                 (!loadingCreate && !!campaignPath)

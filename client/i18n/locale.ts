@@ -1,8 +1,8 @@
 "use server";
-import { defaultLocale } from "@/i18n/config";
 import { defaultLanguages } from "@/core/config/default";
-import { headers } from "next/headers";
+import { defaultLocale } from "@/i18n/config";
 import * as Sentry from "@sentry/nextjs";
+import { headers } from "next/headers";
 
 // ltn을 사용하는 국가
 const usedLTNLanguages = [
@@ -25,11 +25,12 @@ const usedLTNLanguages = [
   "VE",
   "KE",
 ];
-const supportedLanguagesCode = await fetchSupportedLanguages();
 
-const searchLangCodeInSupportedLanguagesCode = (
+const searchLangCodeInSupportedLanguagesCode = async (
   searchLangCode: string
-): string | undefined => {
+): Promise<string | undefined> => {
+  const supportedLanguagesCode = await fetchSupportedLanguages();
+
   return supportedLanguagesCode.find((lang: string) => {
     if (searchLangCode === "es") return lang === "es-ES";
     return lang.includes(searchLangCode);
@@ -37,7 +38,7 @@ const searchLangCodeInSupportedLanguagesCode = (
 };
 
 // langCode를 매칭하는 함수
-function mapBrowserLanguageToLocale(browswerLanguage: string) {
+async function mapBrowserLanguageToLocale(browswerLanguage: string) {
   const [languageCode, countryCode] = browswerLanguage.split("-");
 
   if (languageCode === "en") {
@@ -60,8 +61,9 @@ function mapBrowserLanguageToLocale(browswerLanguage: string) {
     return "es-ES";
   }
 
-  const matchingLanguageCode =
-    searchLangCodeInSupportedLanguagesCode(languageCode);
+  const matchingLanguageCode = await searchLangCodeInSupportedLanguagesCode(
+    languageCode
+  );
 
   if (matchingLanguageCode) return matchingLanguageCode;
 
@@ -76,8 +78,9 @@ export async function getServiceLangCode() {
     return defaultLocale;
   }
 
-  const matchingLanguageCode =
-    searchLangCodeInSupportedLanguagesCode(browswerLanguage);
+  const matchingLanguageCode = await searchLangCodeInSupportedLanguagesCode(
+    browswerLanguage
+  );
 
   if (matchingLanguageCode) {
     return matchingLanguageCode;
