@@ -15,16 +15,13 @@ export default async function SumtotalUserLayout({
   const timeZone = "Seoul/Asia";
   const locale = quizset_path.split("_").at(-1);
 
-  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
+  const { domainCode } = extractCodesFromPath(quizset_path);
   const privacyContent = await fetchPrivacyContent(domainCode);
-  const termContent = await fetchTermContent(languageCode);
+  const termContent = await fetchTermContent(domainCode);
 
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
-
-  // const { name, subsidiary, code } = await fetchInformationAboutDomain(
-  //   domainCode
-  // );
+  const { name } = await fetchInformationAboutDomain(domainCode);
 
   return (
     <div>
@@ -35,8 +32,9 @@ export default async function SumtotalUserLayout({
       >
         <AuthProvider>
           <PolicyProvider
-            privacyContent={privacyContent.contents}
-            termContent={termContent.contents}
+            privacyContent={privacyContent?.contents}
+            termContent={termContent?.contents}
+            domainName={name}
           >
             {children}
           </PolicyProvider>
@@ -46,37 +44,37 @@ export default async function SumtotalUserLayout({
   );
 }
 
-// async function fetchInformationAboutDomain(domainCode: string) {
-//   try {
-//     const response = await fetch(
-//       `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
-//     );
-//     if (!response.ok) {
-//       throw new Error(
-//         `fetch information about domain error: ${response.status}`
-//       );
-//     }
+async function fetchInformationAboutDomain(domainCode: string) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
+    );
+    if (!response.ok) {
+      throw new Error(
+        `fetch information about domain error: ${response.status}`
+      );
+    }
 
-//     const result = await response.json();
-//     if (!result) {
-//       throw new Error(
-//         `fetchError: information about domain response.json() error`
-//       );
-//     }
+    const result = await response.json();
+    if (!result) {
+      throw new Error(
+        `fetchError: information about domain response.json() error`
+      );
+    }
 
-//     return result.items[0];
-//   } catch (error) {
-//     Sentry.captureException(error);
-//   }
-// }
+    return result.items[0];
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+}
 
 async function fetchPrivacyContent(domainCode: string) {
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/privacy/${domainCode}.json`;
   return await fetchContent(url);
 }
 
-async function fetchTermContent(languageCode: string) {
-  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${languageCode}.json`;
+async function fetchTermContent(domainCode: string) {
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`;
   return await fetchContent(url);
 }
 

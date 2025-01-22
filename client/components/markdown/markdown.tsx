@@ -1,3 +1,4 @@
+import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
 import Link from "next/link";
 import React, { memo } from "react";
@@ -11,6 +12,8 @@ const NonMemoizedMarkdown = ({
   children: string;
   className?: string;
 }) => {
+  const { isArabic } = useCheckLocale();
+
   const components = {
     code: ({ inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || "");
@@ -32,7 +35,13 @@ const NonMemoizedMarkdown = ({
     },
     ol: ({ children, ...props }: any) => {
       return (
-        <ol className="list-decimal list-outside ml-4" {...props}>
+        <ol
+          className={cn(
+            "list-decimal list-outside",
+            isArabic ? "mr-4" : "ml-4"
+          )}
+          {...props}
+        >
           {children}
         </ol>
       );
@@ -46,7 +55,13 @@ const NonMemoizedMarkdown = ({
     },
     ul: ({ children, ...props }: any) => {
       return (
-        <ul className="list-decimal list-outside ml-4" {...props}>
+        <ul
+          className={cn(
+            "list-decimal list-outside ",
+            isArabic ? "mr-4" : "ml-4"
+          )}
+          {...props}
+        >
           {children}
         </ul>
       );

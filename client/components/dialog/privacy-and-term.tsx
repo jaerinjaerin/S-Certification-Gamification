@@ -4,7 +4,8 @@ import PrivacyOrTermPopup from "./privacy-term-popup";
 import { usePolicy } from "@/providers/policyProvider";
 
 export default function PolicyFooter({ className }: { className?: string }) {
-  const { privacyContent, termContent } = usePolicy();
+  const { privacyContent, termContent, domainName } = usePolicy();
+
   const translation = useTranslations();
   return (
     <div className={cn("font-medium text-sm", className)}>
@@ -14,6 +15,7 @@ export default function PolicyFooter({ className }: { className?: string }) {
           contents: `${privacyContent}`,
           actionButtonText: `${translation("accept")}`,
           triggerChildren: `${translation("privacy")}`,
+          domainName: domainName,
         }}
       />
       <span className="mx-2">|</span>
@@ -23,6 +25,7 @@ export default function PolicyFooter({ className }: { className?: string }) {
           contents: `${termContent}`,
           actionButtonText: `${translation("accept")}`,
           triggerChildren: `${translation("term")}`,
+          domainName: domainName,
         }}
       />
     </div>

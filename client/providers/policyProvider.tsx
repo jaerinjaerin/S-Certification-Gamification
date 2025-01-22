@@ -2,10 +2,13 @@
 
 import { createContext, useContext } from "react";
 
-interface PolicyContextType {
+type PolicyContextType = {
   privacyContent: string;
   termContent: string;
-}
+  domainName: string;
+};
+
+type PolicyProviderProps = PolicyContextType & { children: React.ReactNode };
 
 const PolicyContext = createContext<PolicyContextType | undefined>(undefined);
 
@@ -13,16 +16,14 @@ export const PolicyProvider = ({
   children,
   privacyContent,
   termContent,
-}: {
-  children: React.ReactNode;
-  privacyContent: string;
-  termContent: string;
-}) => {
+  domainName,
+}: PolicyProviderProps) => {
   return (
     <PolicyContext.Provider
       value={{
         privacyContent,
         termContent,
+        domainName,
       }}
     >
       {children}

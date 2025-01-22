@@ -55,21 +55,28 @@ def convert_doc_to_md_and_json(doc_filepath, markdown_dir, json_dir):
         md_file.write(markdown_content)
 
     # Convert to JSON
-    json_content = json.dumps({"contents": markdown_content}, indent=4)
+    json_content = {"contents": markdown_content}
 
     # Custom JSON filename logic
     original_name = os.path.basename(doc_filepath)
-    match = re.match(r"\{([^}]+)\}\.(\{[^}]+\})\.(\{[^}]+\})\.(.+)$", original_name)
+    match = re.match(r"\{([^}]+)\}\.\{([^}]+)\}\.\{([^}]+)\}\.(.+)$", original_name)
     if match:
-        lang_code = match.group(3).strip("{}")
-        json_filename = f"{lang_code}.json"
+        nat_code = match.group(2).strip("{}")  # Extract the second group (NAT code)
+        json_filename = f"{nat_code}.json"
     else:
         json_filename = os.path.splitext(original_name)[0] + ".json"
 
     # Save JSON content
     json_filepath = os.path.join(json_dir, json_filename)
+    if os.path.exists(json_filepath):
+        # If file exists, append new content to existing JSON with separator
+        with open(json_filepath, "r", encoding="utf8") as json_file:
+            existing_content = json.load(json_file)
+        existing_content["contents"] += "\n\n\n---\n\n" + json_content["contents"]
+        json_content = existing_content
+
     with open(json_filepath, "w", encoding="utf8") as json_file:
-        json_file.write(json_content)
+        json.dump(json_content, json_file, indent=4)
 
 # Input directory
 input_dir = "origins"

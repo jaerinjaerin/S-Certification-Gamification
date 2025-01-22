@@ -21,11 +21,17 @@ export default function PrivacyOrTermPopup({
     popupTitle: string;
     actionButtonText: string;
     triggerChildren: React.ReactNode | string;
+    domainName: string;
   };
 }) {
   const { isArabic, isMyanmar } = useCheckLocale();
-  const { contents, popupTitle, actionButtonText, triggerChildren } =
-    popupProps;
+  const {
+    contents,
+    popupTitle,
+    actionButtonText,
+    triggerChildren,
+    domainName,
+  } = popupProps;
 
   return (
     <Dialog>
@@ -36,12 +42,17 @@ export default function PrivacyOrTermPopup({
             {popupTitle}
           </DialogTitle>
         </DialogHeader>
-        <div className="max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium">
+        <div
+          className={cn(
+            "max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium "
+          )}
+          dir={isArabic ? "rtl" : "ltr"}
+        >
           <Markdown
             className={cn(
               "text-xs",
               isArabic && "text-right",
-              isMyanmar && "leading-loose"
+              domainName === "Myanmar" && "leading-loose"
             )}
           >
             {contents}
