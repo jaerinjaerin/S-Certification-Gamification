@@ -35,10 +35,16 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
         </AlertDialogHeader>
 
         <AlertDialogFooter className="sm:justify-center">
-          <AlertDialogCancel onClick={() => routeToPage("map")}>
+          <AlertDialogCancel
+            onClick={() => routeToPage("map")}
+            className="text-wrap"
+          >
             {translation("no")}
           </AlertDialogCancel>
-          <AlertDialogAction onClick={() => routeToPage("quiz")}>
+          <AlertDialogAction
+            onClick={() => routeToPage("quiz")}
+            className="text-wrap"
+          >
             {translation("retry")}
           </AlertDialogAction>
         </AlertDialogFooter>
