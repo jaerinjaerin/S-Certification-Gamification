@@ -3,6 +3,7 @@ import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
 import Connection from "@/components/map/connection";
 import Gradient from "@/components/map/gradient";
 import { StageMarker } from "@/components/map/stage-marker";
+import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
@@ -54,6 +55,7 @@ export default function QuizMap() {
           "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col"
         )}
       >
+        <TutorialGuidePopup />
         <div className="flex flex-col font-bold">
           <span className="text-2xl">{translation("total_score")}</span>
           <span className="text-5xl/normal">{quizStagesTotalScore}</span>
