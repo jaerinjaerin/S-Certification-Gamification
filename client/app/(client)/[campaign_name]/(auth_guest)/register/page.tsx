@@ -292,7 +292,7 @@ export default function GuestRegisterPage() {
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px] font-one font-medium">
-                {countries.map((country, idx) => (
+                {countries.slice(0, 10).map((country, idx) => (
                   <SelectItem key={idx} value={country.code}>
                     {country.name}
                   </SelectItem>
