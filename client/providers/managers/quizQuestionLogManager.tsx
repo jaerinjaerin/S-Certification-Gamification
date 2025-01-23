@@ -95,21 +95,16 @@ class QuizQuestionLogManager {
 
     this.isProcessingQueue = true;
 
-    while (!this.logQueue.isEmpty()) {
-      const log = await this.logQueue.dequeue();
-      try {
+    try {
+      while (!this.logQueue.isEmpty()) {
+        const log = await this.logQueue.dequeue();
         await this.attemptToSendLog(log);
-      } catch (error) {
-        console.error(
-          "[QuizLogManager] Failed to process log after retries:",
-          log,
-          error
-        );
-        Sentry.captureException(error);
       }
+    } catch (error) {
+      console.error("[QuizLogManager] Error in processLogQueue:", error);
+    } finally {
+      this.isProcessingQueue = false; // 반드시 false로 설정
     }
-
-    this.isProcessingQueue = false;
   }
 
   private async attemptToSendLog(log: QuizLog): Promise<void> {
@@ -142,7 +137,43 @@ class QuizQuestionLogManager {
       }
     }
 
-    throw new Error("Max attempts reached for log:");
+    Sentry.captureException(
+      new Error("Max attempts reached for log:"),
+      (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/logs/quizzes/questions",
+          method: "POST",
+          description: "Failed to send badge email",
+        });
+        scope.setTag("userId", log.userId);
+        scope.setTag("questionId", log.questionId);
+        scope.setTag("correctOptionIds", log.correctOptionIds.toString());
+        scope.setTag("selectedOptionIds", log.selectedOptionIds.toString());
+        scope.setTag("isCorrect", log.isCorrect.toString());
+        scope.setTag("campaignId", log.campaignId);
+        scope.setTag("quizSetId", log.quizSetId);
+        scope.setTag("quizStageId", log.quizStageId);
+        scope.setTag("category", log.category);
+        scope.setTag("specificFeature", log.specificFeature);
+        scope.setTag("product", log.product);
+        scope.setTag("questionType", log.questionType);
+        scope.setTag("elapsedSeconds", log.elapsedSeconds.toString());
+        scope.setTag("createdAt", log.createdAt);
+        scope.setTag("domainId", log.domainId);
+        scope.setTag("domainId", log.domainId);
+        scope.setTag("regionId", log.regionId);
+        scope.setTag("subsidiaryId", log.subsidiaryId);
+        scope.setTag("channelId", log.channelId);
+        scope.setTag("channelName", log.channelName);
+        scope.setTag("channelSegmentId", log.channelSegmentId);
+        scope.setTag("storeId", log.storeId);
+        scope.setTag("jobId", log.jobId);
+        scope.setTag("languageId", log.languageId);
+
+        return scope;
+      }
+    );
   }
 
   isQueueProcessing(): boolean {
@@ -150,12 +181,29 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(): Promise<void> {
-    // console.log("[QuizLogManager] waitForQueueToComplete waiting");
+  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
+    const start = Date.now();
+
     while (this.isProcessingQueue) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      if (Date.now() - start > timeout) {
+        console.error("[QuizLogManager] waitForQueueToComplete timed out");
+        // throw new Error("Queue processing timeout exceeded.");
+        Sentry.captureException(
+          new Error("Queue processing timeout exceeded."),
+          (scope) => {
+            scope.setContext("operation", {
+              type: "api",
+              endpoint: "/api/logs/quizzes/questions",
+              method: "POST",
+              description: "Queue processing timeout exceeded",
+            });
+            return scope;
+          }
+        );
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
-    // console.log("[QuizLogManager] waitForQueueToComplete done");
   }
 
   getLogs(): QuizLog[] {
