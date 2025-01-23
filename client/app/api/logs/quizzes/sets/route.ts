@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import {
   defaultLanguageCode,
   sumtotalUserOthersJobId,
@@ -11,6 +12,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   console.log("POST - QuizSet Log");
+  const session = await auth();
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await request.json();
   const { userId, quizSetPath } = body;
 
@@ -274,6 +281,11 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   // export async function GET(request: NextRequest) {
   console.log("GET - QuizSet Log");
+  // const session = await auth();
+  // if (!session) {
+  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  // }
+
   const url = request.url;
   const { searchParams } = new URL(url);
   const userId = searchParams.get("user_id");
