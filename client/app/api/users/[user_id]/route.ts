@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
@@ -11,10 +10,10 @@ type Props = {
 
 export async function GET(request: Request, props: Props) {
   try {
-    const session = await auth();
-    if (!session) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
+    // const session = await auth();
+    // if (!session) {
+    //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    // }
 
     const userId = props.params.user_id;
 
