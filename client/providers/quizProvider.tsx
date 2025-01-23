@@ -129,7 +129,7 @@ export const QuizProvider = ({
 
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
-  console.log("QuizProvider", quizSet);
+  // console.log("QuizProvider", quizSet);
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);
@@ -315,6 +315,33 @@ export const QuizProvider = ({
   };
 
   const getCurrentStageBadgeActivityId = (): string | null => {
+    if (_quizLog?.quizSetPath === "NAT_2756_de-DE") {
+      if (currentQuizStageIndex === 2) {
+        return "252552";
+      }
+      if (currentQuizStageIndex === 2) {
+        return "252554";
+      }
+    }
+
+    if (_quizLog?.quizSetPath === "NAT_2756_fr-FR") {
+      if (currentQuizStageIndex === 2) {
+        return "252558";
+      }
+      if (currentQuizStageIndex === 2) {
+        return "252560";
+      }
+    }
+
+    if (_quizLog?.quizSetPath === "NAT_2756_it-IT") {
+      if (currentQuizStageIndex === 2) {
+        return "252566";
+      }
+      if (currentQuizStageIndex === 2) {
+        return "252567";
+      }
+    }
+
     return currentQuizStage?.badgeActivityId ?? null;
   };
 
@@ -331,6 +358,9 @@ export const QuizProvider = ({
     // 썸토탈 뱃지 발급
     if (authType === AuthType.SUMTOTAL) {
       const activityId = getCurrentStageBadgeActivityId();
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      console.log("activityId", activityId, _quizLog?.quizSetPath);
       if (!activityId) {
         Sentry.captureMessage(
           `[processBadgeAcquisition] Activity ID is not found : ${quizLog?.quizSetPath}`
