@@ -47,5 +47,7 @@
   { "code": "zh-TW", "name": "Language for ZH TW" },
   { "code": "zh-HK", "name": "Language for ZH HK" },
   { "code": "lv", "name": "Language for Latvia lv" },
-  { "code": "ko", "name": "Language for KR" }
+  { "code": "ko", "name": "Language for KR" },
+  { "code": "en-US-my", "name": "Language for Malaysia" },
+  { "code": "en-US-au", "name": "Language for Australia" }
 ]

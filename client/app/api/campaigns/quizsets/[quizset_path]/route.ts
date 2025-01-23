@@ -64,6 +64,9 @@ export async function GET(request: NextRequest, props: Props) {
           include: {
             badgeImage: true, // Include badgeImage relation in quizStages
           },
+          orderBy: {
+            order: "asc", // 'asc' for ascending order, use 'desc' for descending
+          },
         },
       },
     });
@@ -72,9 +75,13 @@ export async function GET(request: NextRequest, props: Props) {
       throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
     }
 
+    console.log("quizSet:", quizSet);
+
     let language = await prisma.language.findFirst({
       where: { code: languageCode },
     });
+
+    console.log("language:", language);
 
     if (!language) {
       language = await prisma.language.findFirst({
