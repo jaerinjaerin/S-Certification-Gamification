@@ -265,7 +265,6 @@ export default function QuizPage() {
           question.options
             .sort((a, b) => a.order - b.order)
             .map((option: QuestionOption) => {
-              console.log(option);
               return (
                 <motion.label
                   key={option.id}
