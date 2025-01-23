@@ -5,8 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_ASSETS_DOMAIN ||
-      "https://assets-stage.samsungplus.net"
+    process.env.NEXT_PUBLIC_ASSETS_DOMAIN || "https://assets.samsungplus.net"
   ),
   title: "Samsung+ Certification Gamification",
   description: "Samsung+ Certification Gamification",
