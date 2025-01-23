@@ -3,11 +3,11 @@ from locust import HttpUser, TaskSet, task, between
 class UserBehavior(TaskSet):
     @task(1)
     def index_page(self):
-        self.client.get("/s24")  # Next.js 홈페이지
+        self.client.get("/s25")  # Next.js 홈페이지
 
-    @task(2)
-    def api_call(self):
-        self.client.get("https://stg-quiz.samsungplus.net/api/campaigns/quizsets/NAT_2764_th?user_id=33b5deb9-8549-4762-8b46-23ff56a71ec7")  # 특정 API 호출
+    # @task(2)
+    # def api_call(self):
+    #     self.client.get("https://stg-quiz.samsungplus.net/api/campaigns/quizsets/NAT_2764_th?user_id=33b5deb9-8549-4762-8b46-23ff56a71ec7")  # 특정 API 호출
 
     @task(3)
     def submit_form(self):

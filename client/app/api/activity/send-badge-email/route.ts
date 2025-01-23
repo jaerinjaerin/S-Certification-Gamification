@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { decrypt } from "@/utils/encrypt";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
@@ -19,6 +20,12 @@ const sesClient =
 
 export async function POST(request: NextRequest) {
   console.log("POST send badge email handler called");
+  const session = await auth();
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await request.json();
   const { userId, subject, bodyHtml } = body as {
     userId: string;

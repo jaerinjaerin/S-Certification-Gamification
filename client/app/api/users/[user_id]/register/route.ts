@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { defaultLanguageCode } from "@/core/config/default";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
@@ -10,6 +11,11 @@ type Props = {
 };
 
 export async function POST(request: Request, props: Props) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const userId = props.params.user_id;
   // const session = await auth();
   const body = await request.json();

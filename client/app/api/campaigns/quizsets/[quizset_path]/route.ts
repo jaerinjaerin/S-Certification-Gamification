@@ -20,6 +20,11 @@ export async function GET(request: NextRequest, props: Props) {
   const userId = searchParams.get("user_id");
   const quizsetPath = props.params.quizset_path;
 
+  // const session = await auth();
+  // if (!session) {
+  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  // }
+
   try {
     if (!quizsetPath || !userId) {
       throw new ApiError(
