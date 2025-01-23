@@ -199,7 +199,7 @@ export const QuizProvider = ({
 
     // 퀴즈 스테이지 로그 생성
     const quizStageLogHandler = new QuizStageLogHandler();
-    const newQuizStageLog = await quizStageLogHandler.create({
+    await quizStageLogHandler.create({
       userId: userId ?? _quizLog?.userId ?? "",
       campaignId: campaign.id,
       quizSetId: quizSet.id,
@@ -223,7 +223,7 @@ export const QuizProvider = ({
 
     // 퀴즈 로그 업데이트
     const quizLogHandler = new QuizLogHandler();
-    const updatedQuizLog: UserQuizLog = await quizLogHandler.update({
+    await quizLogHandler.update({
       quizStageIndex: currentQuizStageIndex,
       isBadgeAcquired,
       totalScore: totalQuizScore,
@@ -234,12 +234,12 @@ export const QuizProvider = ({
     console.info("scoreData", scoreData);
 
     // 퀴즈 로그 State 업데이트
-    setQuizStagesTotalScore(totalQuizScore);
-    setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
-    setQuizLog(updatedQuizLog);
+    // setQuizStagesTotalScore(totalQuizScore);
+    // setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+    // setQuizLog(updatedQuizLog);
 
     // 다음 스테이지로 이동
-    quizQuestionLogManager.reset();
+    // quizQuestionLogManager.reset();
 
     setIsLoading(false);
 
@@ -263,7 +263,7 @@ export const QuizProvider = ({
       await quizQuestionLogManager.waitForQueueToComplete();
     }
 
-    quizQuestionLogManager.init(currentQuizStageIndex);
+    // quizQuestionLogManager.init(currentQuizStageIndex);
 
     setIsLoading(false);
   };

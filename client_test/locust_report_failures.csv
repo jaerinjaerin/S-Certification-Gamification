@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences
+GET,/s25,HTTPError('502 Server Error: Bad Gateway for url: /s25'),3
+POST,/api/logs/quizzes/stages,HTTPError('502 Server Error: Bad Gateway for url: /api/logs/quizzes/stages'),7
+POST,/api/logs/quizzes/stages,HTTPError('500 Server Error: Internal Server Error for url: /api/logs/quizzes/stages'),43143

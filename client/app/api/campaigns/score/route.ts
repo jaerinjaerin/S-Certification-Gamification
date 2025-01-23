@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { AuthType } from "@prisma/client";
 import { NextResponse } from "next/server";
@@ -6,6 +7,11 @@ export const dynamic = "force-dynamic"; // 동적 렌더링 강제
 
 export async function GET(request: Request) {
   try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const url = request.url;
 
     const { searchParams } = new URL(url);

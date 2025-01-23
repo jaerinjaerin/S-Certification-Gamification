@@ -246,7 +246,7 @@ async function main() {
       // skipDuplicates: true, // 중복된 데이터를 무시
     });
 
-    // console.log("resultDomains", resultDomains);
+    console.log("resultDomains", resultDomains);
 
     const campaign = await prisma.campaign.findFirst();
     await prisma.domainGoal.createMany({
