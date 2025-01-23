@@ -26,7 +26,7 @@ export default async function SumtotalUserLayout({
 
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
-  const { name } = await fetchInformationAboutDomain(domainCode);
+  const domainInformation = await fetchInformationAboutDomain(domainCode);
 
   return (
     <div>
@@ -39,7 +39,8 @@ export default async function SumtotalUserLayout({
           <PolicyProvider
             privacyContent={privacyContent?.contents}
             termContent={termContent?.contents}
-            domainName={name}
+            domainName={domainInformation?.name}
+            subsidiary={domainInformation?.subsidiary}
           >
             {children}
           </PolicyProvider>
