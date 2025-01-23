@@ -144,36 +144,38 @@ export default function ReviewPage() {
       />
       <div className="pt-[30px] pb-[60px] px-5 flex flex-col gap-4 ">
         {question.options &&
-          question.options.map((option: QuestionOption) => {
-            return (
-              <motion.label
-                aria-readonly
-                key={option.id}
-                className={cn(
-                  "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
-                  isArabic && "text-right",
-                  selectedOptionIds.includes(option.id) &&
-                    !option.isCorrect &&
-                    "bg-[#EE3434] text-white pointer-events-none",
-                  selectedOptionIds.includes(option.id) &&
-                    option.isCorrect &&
-                    "bg-[#2686F5] text-white pointer-events-none",
-                  "pointer-events-none"
-                )}
-              >
-                {option.text}
-                {process.env.NODE_ENV !== "production" && (
-                  <span>({option.isCorrect ? "o" : "x"})</span>
-                )}
-                <input
-                  type="checkbox"
-                  checked={selectedOptionIds.includes(option.id)}
-                  readOnly
-                  className="hidden"
-                />
-              </motion.label>
-            );
-          })}
+          question.options
+            .sort((a, b) => a.order - b.order)
+            .map((option: QuestionOption) => {
+              return (
+                <motion.label
+                  aria-readonly
+                  key={option.id}
+                  className={cn(
+                    "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
+                    isArabic && "text-right",
+                    selectedOptionIds.includes(option.id) &&
+                      !option.isCorrect &&
+                      "bg-[#EE3434] text-white pointer-events-none",
+                    selectedOptionIds.includes(option.id) &&
+                      option.isCorrect &&
+                      "bg-[#2686F5] text-white pointer-events-none",
+                    "pointer-events-none"
+                  )}
+                >
+                  {option.text}
+                  {process.env.NODE_ENV !== "production" && (
+                    <span>({option.isCorrect ? "o" : "x"})</span>
+                  )}
+                  <input
+                    type="checkbox"
+                    checked={selectedOptionIds.includes(option.id)}
+                    readOnly
+                    className="hidden"
+                  />
+                </motion.label>
+              );
+            })}
       </div>
       <ErrorAlertDialog error={errorMessage} />
       {loading && <Spinner />}
