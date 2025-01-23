@@ -6,8 +6,8 @@ import json
 from io import BytesIO
 
 # 입력 및 출력 디렉토리 설정
-input_dir = "data/origins/v3"
-output_dir = "data/questions/s25"
+input_dir = "data/origins/v4"
+output_dir = "data/questions/new"
 
 # 출력 디렉토리가 없으면 생성
 if not os.path.exists(output_dir):

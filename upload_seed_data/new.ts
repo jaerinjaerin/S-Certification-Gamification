@@ -187,35 +187,59 @@ async function main() {
   };
 
   const createOriginQuizSet = async () => {
-    const charImages = await Promise.all(
-      charImagePaths.map(async (stagePaths) => {
-        return Promise.all(
-          stagePaths.map(async (imagePath) => {
-            return prisma.image.create({
-              data: {
-                imagePath: imagePath,
-                caption: "character",
-                format: "png",
-                alt: "character",
-              },
-            });
-          })
-        );
-      })
-    );
+    // const savedCharImages = await Promise.all(
+    //   charImagePaths.map(async (stagePaths) => {
+    //     return Promise.all(
+    //       stagePaths.map(async (imagePath) => {
+    //         return prisma.image.create({
+    //           data: {
+    //             imagePath: imagePath,
+    //             caption: "character",
+    //             format: "png",
+    //             alt: "character",
+    //           },
+    //         });
+    //       })
+    //     );
+    //   })
+    // );
 
-    const bgImages = await Promise.all(
-      bgImagePaths.map(async (imagePath: string) => {
-        return prisma.image.create({
-          data: {
-            imagePath: imagePath,
-            caption: "background",
-            format: "jpg",
-            alt: "background",
-          },
-        });
-      })
-    );
+    // const charImages = await Promise.all(
+    //   charImagePaths.map(async (stagePaths) => {
+    //     return Promise.all(
+    //       stagePaths.map(async (imagePath) => {
+    //         return prisma.image.create({
+    //           data: {
+    //             imagePath: imagePath,
+    //             caption: "character",
+    //             format: "png",
+    //             alt: "character",
+    //           },
+    //         });
+    //       })
+    //     );
+    //   })
+    // );
+
+    // const savedBgImages = await Promise.all(
+    //   bgImagePaths.map(async (imagePath: string) => {
+    //     return prisma.image.create({
+    //       data: {
+    //         imagePath: imagePath,
+    //         caption: "background",
+    //         format: "jpg",
+    //         alt: "background",
+    //       },
+    //     });
+    //   })
+    // );
+
+    // const bgImages = badgeImagePaths.map(async (imagePath: string) => {
+    //   const bgImage = savedBgImages.find(
+    //     (bgImage) => bgImage.imagePath === imagePath
+    //   );
+    //   return bgImage;
+    // });
 
     // console.log("charImages", charImages);
     // console.log("bgImages", bgImages);
@@ -355,6 +379,64 @@ async function main() {
         continue;
       }
 
+      const savedBadgeImages = await prisma.image.findMany({
+        where: {
+          alt: "badge",
+        },
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      // console.log("badgeImages", badgeImages);
+
+      const savedCharImages = await prisma.image.findMany({
+        where: {
+          alt: "character",
+        },
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      const savedBgImages = await prisma.image.findMany({
+        where: {
+          alt: "background",
+        },
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      const charImages = charImagePaths.map((stagePaths) => {
+        return stagePaths.map((imagePath) => {
+          const charImage = savedCharImages.find(
+            (charImage) => charImage.imagePath === imagePath
+          );
+          return charImage;
+        });
+      });
+
+      const bgImages = bgImagePaths.map((imagePath) => {
+        const bgImage = savedBgImages.find(
+          (bgImage) => bgImage.imagePath === imagePath
+        );
+        return bgImage;
+      });
+
+      const badgeImages = badgeImagePaths.map((imagePath) => {
+        const badgeImage = savedBadgeImages.find(
+          (badgeImage) => badgeImage.imagePath === imagePath
+        );
+        return badgeImage;
+      });
+
+      console.log("charImages", charImages);
+      console.log("bgImages", bgImages);
+      console.log("badgeImages", badgeImages);
+
+      // continue;
+
       const fileContent = fs.readFileSync(filePath, "utf-8");
       const questions = JSON.parse(fileContent);
       const createdQuestions: any[] = [];
@@ -485,39 +567,140 @@ async function main() {
           // },
         },
       });
-      if (!savedQuizSet) {
+      if (savedQuizSet) {
         continue;
       }
 
-      const quizStages = await prisma.quizStage.findMany({
-        where: {
-          quizSetId: savedQuizSet.id,
+      const quizSet = await prisma.quizSet.create({
+        data: {
+          campaignId: campaign.id,
+          domainId: domainOrSubsidiary.id,
+          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
+          // subsidiaryId:
+          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
+          jobCodes: ["ff", "fsm"],
+          createrId: "seed",
         },
       });
 
-      quizStages.sort((a, b) => a.order - b.order);
+      // console.log("quizSet", quizSet);
 
-      for (let i = 0; i < quizStages.length; i++) {
-        const stage: any = quizStages[i];
-        // )
-        // const stageQuestions = questions.filter(
-        //   (question) =>
-        //     question.stage === stage &&
-        //     (question.enabled === 1 || question.enabled === "1")
-        // );
+      const stages = [
+        ...new Set(questions.map((question) => question.stage)),
+      ].sort();
 
-        // stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
+      for (let i = 0; i < stages.length; i++) {
+        const stage: any = stages[i];
+        const stageQuestions = questions.filter(
+          (question) =>
+            question.stage === stage &&
+            (question.enabled === 1 || question.enabled === "1")
+        );
 
-        // let questionIds = createdQuestions.map((q) => q.stag q.id);
+        stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
-        await prisma.quizStage.update({
-          where: {
-            id: stage.id,
-          },
+        let questionIds = stageQuestions.map((question) => {
+          if (domainCode === "OrgCode-7") {
+            const q: any = createdQuestions.find(
+              (q: any) => q.originalIndex === question.originQuestionIndex
+            );
+            return q?.id;
+          } else {
+            const hqQuestion: any = hqNatQuestions.find(
+              (hqQ: any) => hqQ.originalIndex === question.originQuestionIndex
+            );
+
+            if (hqQuestion) {
+              return hqQuestion.id;
+            }
+
+            const q: any = createdQuestions.find(
+              (q: any) => q.originalIndex === question.originQuestionIndex
+            );
+
+            return q?.id;
+          }
+        });
+
+        // questionIds = questionIds.filter((id) => id !== undefined);
+        if (domainCode === "OrgCode-7") {
+          console.log("questionIds", domainCode, stage, questionIds);
+        }
+
+        // const isLastStage = i === stages.length - 1;
+        let isBadgeStage = false;
+        let badgeActivityId: string | null = null;
+        // let badgeImageUrl: string | null = null;
+        let badgeImageId: string | null = null;
+
+        const activityIds = activityIdData.find(
+          (data) => data.domainCode === domainCode
+        )?.activityIds;
+
+        const stage3BadgeActivityId =
+          activityIds != null ? activityIds![0].toString() : null; //"251745";
+        const stage4BadgeActivityId =
+          activityIds != null ? activityIds![1].toString() : null; //"251747";
+
+        if (i === 2) {
+          isBadgeStage = true;
+          badgeActivityId = stage3BadgeActivityId;
+          badgeImageId = badgeImages[0].id;
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage3.png";
+        } else if (i === 3) {
+          isBadgeStage = true;
+          badgeActivityId = stage4BadgeActivityId;
+          badgeImageId = badgeImages[1].id;
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage4.png";
+        }
+
+        // console.log("activityId", domainCode, activityIds);
+
+        await prisma.quizStage.create({
           data: {
-            questionIds: stagesQuestions[i],
+            name: stage.toString(),
+            order: stage,
+            questionIds,
+            lifeCount: 5,
+            quizSetId: quizSet.id,
+            isBadgeStage: isBadgeStage,
+            badgeActivityId: badgeActivityId, // 250659, 250642, 250639, 250641
+            // badgeImageUrl: badgeImageUrl,
+            badgeImageId: badgeImageId,
+            // backgroundImageUrl: bgImages[i],
+            // characterImageUrl: charImages[i],
           },
         });
+        // const quizStages = await prisma.quizStage.findMany({
+        //   where: {
+        //     quizSetId: savedQuizSet.id,
+        //   },
+        // });
+
+        // quizStages.sort((a, b) => a.order - b.order);
+
+        // for (let i = 0; i < quizStages.length; i++) {
+        //   const stage: any = quizStages[i];
+        //   // )
+        //   // const stageQuestions = questions.filter(
+        //   //   (question) =>
+        //   //     question.stage === stage &&
+        //   //     (question.enabled === 1 || question.enabled === "1")
+        //   // );
+
+        //   // stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
+
+        //   // let questionIds = createdQuestions.map((q) => q.stag q.id);
+
+        //   await prisma.quizStage.update({
+        //     where: {
+        //       id: stage.id,
+        //     },
+        //     data: {
+        //       questionIds: stagesQuestions[i],
+        //     },
+        //   });
+        // }
       }
     }
   };
