@@ -1761,5 +1761,13 @@
     "subsidiaryId": "49",
     "regionId": "508369",
     "channels": []
+  },
+  {
+    "id": "361267",
+    "name": "Ghana",
+    "code": "NAT_2288",
+    "subsidiaryId": "349948",
+    "regionId": "508375",
+    "channels": []
   }
 ]

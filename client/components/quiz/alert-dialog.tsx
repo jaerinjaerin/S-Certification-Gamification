@@ -36,10 +36,10 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
 
         <AlertDialogFooter className="sm:justify-center">
           <AlertDialogCancel onClick={() => routeToPage("map")}>
-            No
+            {translation("no")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => routeToPage("quiz")}>
-            Retry
+            {translation("retry")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -49,17 +49,18 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
 
 export function ErrorAlertDialog({ error }: { error: string | undefined }) {
   const { routeToPage } = usePathNavigator();
+  const translation = useTranslations();
 
   return (
     <AlertDialog open={!!error}>
       <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Game Over</AlertDialogTitle>
+          <AlertDialogTitle className="hidden" aria-hidden></AlertDialogTitle>
           <AlertDialogDescription>{error}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => routeToPage("map")}>
-            Back
+            {translation("back")}
           </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

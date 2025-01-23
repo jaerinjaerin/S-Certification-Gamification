@@ -75,7 +75,7 @@ export async function GET(request: NextRequest, props: Props) {
       throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
     }
 
-    console.log("quizSet:", quizSet);
+    // console.log("quizSet:", quizSet);
 
     let language = await prisma.language.findFirst({
       where: { code: languageCode },
