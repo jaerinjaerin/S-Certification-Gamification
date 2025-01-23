@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_ASSETS_DOMAIN || "https://assets.samsungplus.net"
   ),
-  title: "Be a Galaxy AI Expert! (S25)",
-  description: "Be a Galaxy AI Expert! (S25)",
+  title: "Be a Galaxy AI Expert(S25)",
+  description: "Be a Galaxy AI Expert",
   icons: {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/splus_logo.png`,
   },
