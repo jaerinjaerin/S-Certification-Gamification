@@ -33,6 +33,7 @@ const searchLangCodeInSupportedLanguagesCode = async (
 
   return supportedLanguagesCode.find((lang: string) => {
     if (searchLangCode === "es") return lang === "es-ES";
+    if (searchLangCode === "en") return lang === "en-US";
     return lang.includes(searchLangCode);
   });
 };

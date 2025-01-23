@@ -6,6 +6,7 @@ type PolicyContextType = {
   privacyContent: string;
   termContent: string;
   domainName: string;
+  subsidiary: any;
 };
 
 type PolicyProviderProps = PolicyContextType & { children: React.ReactNode };
@@ -17,6 +18,7 @@ export const PolicyProvider = ({
   privacyContent,
   termContent,
   domainName,
+  subsidiary,
 }: PolicyProviderProps) => {
   return (
     <PolicyContext.Provider
@@ -24,6 +26,7 @@ export const PolicyProvider = ({
         privacyContent,
         termContent,
         domainName,
+        subsidiary,
       }}
     >
       {children}
