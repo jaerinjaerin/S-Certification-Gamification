@@ -97,6 +97,8 @@ export async function GET(request: NextRequest, props: Props) {
 
     const languageId = language?.id;
 
+    console.log("languageId:", languageId);
+
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
         // console.log("quizStage:", quizStage.questionIds, languageId);
@@ -136,6 +138,8 @@ export async function GET(request: NextRequest, props: Props) {
         };
       })
     );
+
+    console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
     const response = NextResponse.json(
       {

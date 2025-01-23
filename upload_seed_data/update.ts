@@ -359,6 +359,10 @@ async function main() {
       const questions = JSON.parse(fileContent);
       const createdQuestions: any[] = [];
 
+      const stagesQuestions: string[][] = [[], [], [], []];
+      // const stagesQuestions2: string[] = [];
+      // const stagesQuestions3: string[] = [];
+      // const stagesQuestions4: string[] = [];
       for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
         const questionId = uuid.v4();
@@ -445,12 +449,75 @@ async function main() {
           }
         }
 
+        if (question.stage === 1 && question.enabled) {
+          stagesQuestions[0].push(item.originalQuestionId);
+        }
+
+        if (question.stage === 2 && question.enabled) {
+          stagesQuestions[1].push(item.originalQuestionId);
+        }
+
+        if (question.stage === 3 && question.enabled) {
+          stagesQuestions[2].push(item.originalQuestionId);
+        }
+
+        if (question.stage === 4 && question.enabled) {
+          stagesQuestions[3].push(item.originalQuestionId);
+        }
+
         // console.log("item", item);
 
         createdQuestions.push(item);
         if (domainCode === "OrgCode-7") {
           hqNatQuestions.push(item);
         }
+      }
+
+      ////////////
+      const savedQuizSet = await prisma.quizSet.findFirst({
+        where: {
+          campaignId: campaign.id,
+          domainId: domainOrSubsidiary.id,
+          // include: {
+          //   options: true,
+          //   backgroundImage: true,
+          //   characterImage: true,
+          // },
+        },
+      });
+      if (!savedQuizSet) {
+        continue;
+      }
+
+      const quizStages = await prisma.quizStage.findMany({
+        where: {
+          quizSetId: savedQuizSet.id,
+        },
+      });
+
+      quizStages.sort((a, b) => a.order - b.order);
+
+      for (let i = 0; i < quizStages.length; i++) {
+        const stage: any = quizStages[i];
+        // )
+        // const stageQuestions = questions.filter(
+        //   (question) =>
+        //     question.stage === stage &&
+        //     (question.enabled === 1 || question.enabled === "1")
+        // );
+
+        // stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
+
+        // let questionIds = createdQuestions.map((q) => q.stag q.id);
+
+        await prisma.quizStage.update({
+          where: {
+            id: stage.id,
+          },
+          data: {
+            questionIds: stagesQuestions[i],
+          },
+        });
       }
     }
   };
