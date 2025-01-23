@@ -1737,5 +1737,29 @@
     "subsidiaryId": "349937",
     "regionId": "508375",
     "channels": []
+  },
+  {
+    "id": "349992",
+    "name": "Taiwan",
+    "code": "NAT_2158",
+    "subsidiaryId": "349945",
+    "regionId": "508378",
+    "channels": []
+  },
+  {
+    "id": "349992",
+    "name": "Hong Kong",
+    "code": "NAT_2158",
+    "subsidiaryId": "349945",
+    "regionId": "508378",
+    "channels": []
+  },
+  {
+    "id": "50",
+    "name": "France",
+    "code": "NAT_2250",
+    "subsidiaryId": "49",
+    "regionId": "508369",
+    "channels": []
   }
 ]

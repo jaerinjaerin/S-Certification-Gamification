@@ -6,12 +6,21 @@ import { AuthType } from "@prisma/client";
 
 type GroupedResultProps = {
   category: string;
-  plus: Record<string, { correct: number; incorrect: number }>;
-  none: Record<string, { correct: number; incorrect: number }>;
+  plus: Record<
+    string,
+    { correct: number; incorrect: number; questionIds: string[] }
+  >;
+  none: Record<
+    string,
+    { correct: number; incorrect: number; questionIds: string[] }
+  >;
 };
 
-const calculateRate = (incorrect: number, correct: number): number =>
-  (incorrect / (correct + incorrect)) * 100 || 0;
+const calculateRate = (incorrect: number, correct: number): number => {
+  const correctValue = correct || 0;
+  const incorrectValue = incorrect || 0;
+  return (incorrectValue / (correctValue + incorrectValue)) * 100 || 0;
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,7 +36,7 @@ export async function GET(request: NextRequest) {
     const questions = await prisma.question.findMany({});
 
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ["category", "jobId", "authType", "isCorrect"],
+      by: ["category", "jobId", "authType", "isCorrect", "questionId"],
       where: {
         ...where,
         questionId: { in: questions.map((q) => q.id) },
@@ -47,18 +56,23 @@ export async function GET(request: NextRequest) {
     // 데이터 그룹화
     const groupedData: GroupedResultProps[] = corrects.reduce<any>(
       (acc, item) => {
-        const { category, _count, isCorrect, authType, jobId } = item;
-        if (!category) return;
+        const { category, questionId, _count, isCorrect, authType, jobId } =
+          item;
         // Job 그룹 찾기
         const jobGroup = jobGroupMap[jobId] || "Unknown";
-
         // 카테고리 찾거나 생성
         let categoryItem = acc.find((c: any) => c.category === category);
         if (!categoryItem) {
           categoryItem = {
             category,
-            plus: {},
-            none: {},
+            plus: {
+              ff: { correct: 0, incorrect: 0, questionIds: [] },
+              fsm: { correct: 0, incorrect: 0, questionIds: [] },
+            },
+            none: {
+              ff: { correct: 0, incorrect: 0, questionIds: [] },
+              fsm: { correct: 0, incorrect: 0, questionIds: [] },
+            },
           };
           acc.push(categoryItem);
         }
@@ -67,7 +81,11 @@ export async function GET(request: NextRequest) {
         const authTypeGroup =
           categoryItem[authType === AuthType.SUMTOTAL ? "plus" : "none"];
         if (!authTypeGroup[jobGroup]) {
-          authTypeGroup[jobGroup] = { correct: 0, incorrect: 0 };
+          authTypeGroup[jobGroup] = {
+            correct: 0,
+            incorrect: 0,
+            questionIds: [],
+          };
         }
 
         // isCorrect에 따라 값 누적
@@ -76,33 +94,43 @@ export async function GET(request: NextRequest) {
         } else {
           authTypeGroup[jobGroup].incorrect += _count.isCorrect;
         }
+        //
+        if (questionId) {
+          authTypeGroup[jobGroup].questionIds.push(questionId);
+        }
 
         return acc;
       },
       []
     );
 
-    const result = groupedData.map(({ category, plus, none }) => ({
-      id: category,
-      data: [
-        {
-          x: "S+ FF",
-          y: calculateRate(plus.ff.incorrect, plus.ff.correct),
-        },
-        {
-          x: "S+ FSM",
-          y: calculateRate(plus.fsm.incorrect, plus.fsm.correct),
-        },
-        {
-          x: "Non S+ FF",
-          y: calculateRate(none.ff.incorrect, none.ff.correct),
-        },
-        {
-          x: "Non S+ FSM",
-          y: calculateRate(none.fsm.incorrect, none.fsm.correct),
-        },
-      ],
-    }));
+    const result = groupedData.map(({ category, plus, none }) => {
+      return {
+        id: category,
+        data: [
+          {
+            x: "S+ FF",
+            y: calculateRate(plus.ff.incorrect, plus.ff.correct),
+            meta: { questionIds: Array.from(new Set(plus.ff.questionIds)) },
+          },
+          {
+            x: "S+ FSM",
+            y: calculateRate(plus.fsm.incorrect, plus.fsm.correct),
+            meta: { questionIds: Array.from(new Set(plus.fsm.questionIds)) },
+          },
+          {
+            x: "Non S+ FF",
+            y: calculateRate(none.ff.incorrect, none.ff.correct),
+            meta: { questionIds: Array.from(new Set(none.ff.questionIds)) },
+          },
+          {
+            x: "Non S+ FSM",
+            y: calculateRate(none.fsm.incorrect, none.fsm.correct),
+            meta: { questionIds: Array.from(new Set(none.fsm.questionIds)) },
+          },
+        ],
+      };
+    });
 
     return NextResponse.json({ result });
   } catch (error) {

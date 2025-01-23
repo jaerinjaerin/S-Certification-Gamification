@@ -1,3 +1,4 @@
+import { fetchSupportedLanguages } from "@/i18n/locale";
 import AuthProvider from "@/providers/authProvider";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -13,9 +14,13 @@ export default async function SumtotalUserLayout({
 }) {
   console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
-  const locale = quizset_path.split("_").at(-1);
+  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
+  const supportedLanguages = await fetchSupportedLanguages();
+  const locale = supportedLanguages.find((lang) => {
+    const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
+    return pattern.test(languageCode);
+  });
 
-  const { domainCode } = extractCodesFromPath(quizset_path);
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
 
