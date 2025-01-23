@@ -380,10 +380,7 @@ async function main() {
         continue;
       }
 
-      const savedBadgeImages = await prisma.image.findMany({
-        where: {
-          alt: "badge",
-        },
+      const savedBadgeImages = await prisma.quizBadge.findMany({
         orderBy: {
           imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
         },
