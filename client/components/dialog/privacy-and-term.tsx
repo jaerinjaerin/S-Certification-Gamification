@@ -23,7 +23,7 @@ export default function PolicyFooter({ className }: { className?: string }) {
         popupProps={{
           popupTitle: `${translation("term")}`,
           contents: `${termContent}`,
-          actionButtonText: `${translation("accept")}`,
+          actionButtonText: `${translation("ok")}`,
           triggerChildren: `${translation("term")}`,
           domainName: domainName,
         }}
