@@ -1,49 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+
+    const questionIds: string[] | null = JSON.parse(
+      searchParams.get("questionIds") ?? "[]"
+    );
+
+    if (!questionIds) {
+      return NextResponse.json(
+        { success: false, message: "questionIds is required" },
+        { status: 400, statusText: "Bad Request" }
+      );
+    }
 
     await prisma.$connect();
 
     const questions = await prisma.question.findMany({});
 
-    const count = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
-      where: {
-        ...where,
-        questionId: { in: questions.map((q) => q.id) },
-      },
-      orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
-      ],
-    });
-
     // 모든 isCorrect가 있는 데이터 가져오기
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
       by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
       where: {
-        ...where,
-        questionId: { in: questions.map((q) => q.id) },
+        questionId: { in: questionIds },
       },
       _count: { isCorrect: true },
       orderBy: [
         { questionId: "asc" }, // questionId 기준 정렬
       ],
-      take,
-      skip,
     });
 
     // corrects을 기반으로 오답만 가져오기
     let incorrects = await prisma.userQuizQuestionStatistics.groupBy({
       by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
       where: {
-        ...where,
-        questionId: { in: corrects.map((q) => q.questionId) },
+        questionId: { in: questionIds },
         isCorrect: false,
       },
       _count: { isCorrect: true },
@@ -97,7 +91,7 @@ export async function GET(request: NextRequest) {
       return acc;
     }, []);
 
-    return NextResponse.json({ result, total: count.length });
+    return NextResponse.json({ result });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(
