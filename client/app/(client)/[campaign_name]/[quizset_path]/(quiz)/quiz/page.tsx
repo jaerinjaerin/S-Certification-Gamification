@@ -262,51 +262,54 @@ export default function QuizPage() {
       />
       <div className="pt-[32px] pb-[48px] px-5 flex flex-col gap-4 ">
         {question.options &&
-          question.options.map((option: QuestionOption) => {
-            return (
-              <motion.label
-                key={option.id}
-                onClick={() => {
-                  handleOptionSave(option.id);
-                  handleConfirmAnswer(question, option.id);
-                }}
-                className={cn(
-                  "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
-                  isCorrectAnswer && "pointer-events-none",
-                  selectedOptionIds.includes(option.id) &&
-                    "pointer-events-none",
-                  isArabic && "text-right",
-                  isMyanmar && "leading-loose"
-                )}
-                initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
-                animate={getAnimateState(option)}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                {option.text}
-                {process.env.NODE_ENV !== "production" && (
-                  <span>({option.isCorrect ? "o" : "x"})</span>
-                )}
-                <input
-                  type="checkbox"
-                  checked={selectedOptionIds.includes(option.id)}
-                  readOnly
-                  className="hidden"
-                  onClick={(e) => {
-                    e.stopPropagation();
+          question.options
+            .sort((a, b) => a.order - b.order)
+            .map((option: QuestionOption) => {
+              console.log(option);
+              return (
+                <motion.label
+                  key={option.id}
+                  onClick={() => {
+                    handleOptionSave(option.id);
+                    handleConfirmAnswer(question, option.id);
                   }}
-                />
-                {option.isCorrect && animationRef.current && (
-                  <div
-                    className={cn(
-                      "absolute w-full h-full top-0 left-0 rounded-[20px]"
-                    )}
-                  >
-                    <HintAnimation />
-                  </div>
-                )}
-              </motion.label>
-            );
-          })}
+                  className={cn(
+                    "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
+                    isCorrectAnswer && "pointer-events-none",
+                    selectedOptionIds.includes(option.id) &&
+                      "pointer-events-none",
+                    isArabic && "text-right",
+                    isMyanmar && "leading-loose"
+                  )}
+                  initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
+                  animate={getAnimateState(option)}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  {option.text}
+                  {process.env.NODE_ENV !== "production" && (
+                    <span>({option.isCorrect ? "o" : "x"})</span>
+                  )}
+                  <input
+                    type="checkbox"
+                    checked={selectedOptionIds.includes(option.id)}
+                    readOnly
+                    className="hidden"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  />
+                  {option.isCorrect && animationRef.current && (
+                    <div
+                      className={cn(
+                        "absolute w-full h-full top-0 left-0 rounded-[20px]"
+                      )}
+                    >
+                      <HintAnimation />
+                    </div>
+                  )}
+                </motion.label>
+              );
+            })}
       </div>
       <GameOverAlertDialog gameOver={gameOver} />
       <ErrorAlertDialog error={errorMessage} />
