@@ -14,6 +14,7 @@ const matchingTable = {
   Czech: "cs",
   Danish: "da",
   English: "en-US",
+  "!English": "en-GB",
   Estonian: "et",
   Finnish: "fi",
   // "French(Canada)": "fr-CA",

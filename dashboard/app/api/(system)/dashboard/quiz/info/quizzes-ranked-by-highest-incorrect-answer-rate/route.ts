@@ -6,64 +6,78 @@ import { querySearchParams } from "../../../_lib/query";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where, take, skip } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
-    const userQuizQuestions = await prisma.userQuizQuestionStatistics.findMany({
-      where,
+    const questions = await prisma.question.findMany({});
+
+    const count = await prisma.userQuizQuestionStatistics.groupBy({
+      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      where: {
+        ...where,
+        questionId: { in: questions.map((q) => q.id) },
+      },
+      orderBy: [
+        { questionId: "asc" }, // questionId 기준 정렬
+      ],
     });
 
-    const questions = await prisma.question.findMany({
-      where: { id: { in: userQuizQuestions.map((q) => q.questionId) } },
+    const corrects = await prisma.userQuizQuestionStatistics.groupBy({
+      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      where: {
+        ...where,
+        questionId: { in: questions.map((q) => q.id) },
+        isCorrect: true,
+      },
+      _count: { isCorrect: true },
+      orderBy: [
+        { questionId: "asc" }, // questionId 기준 정렬
+      ],
+      take,
+      skip,
     });
 
-    const errorRates: Record<string, any> = {};
-    userQuizQuestions.forEach((userQuizQuestion) => {
-      const { questionId, isCorrect } = userQuizQuestion;
+    const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
+      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      where: {
+        ...where,
+        questionId: { in: questions.map((q) => q.id) },
+        isCorrect: false,
+      },
+      _count: { isCorrect: true },
+      orderBy: [
+        { questionId: "asc" }, // questionId 기준 정렬
+      ],
+      take,
+      skip,
+    });
 
-      if (!errorRates[questionId]) {
-        errorRates[questionId] = {
-          errorRate: 0,
-          correct: 0,
-          incorrect: 0,
+    const result = corrects.map((correct) => {
+      const incorrect = incorrects.find(
+        (ic) => ic.questionId === correct.questionId
+      );
+
+      let errorRate = 0;
+      if (incorrect) {
+        errorRate =
+          (incorrect._count.isCorrect / correct._count.isCorrect) * 100;
+      }
+
+      const question = questions.find((q) => q.id === correct.questionId);
+      if (question) {
+        return {
+          question: question.text,
+          product: question.product,
+          category: question.category,
+          questionType: question.questionType,
+          importance: question.importance,
+          errorRate,
         };
       }
-      const item = errorRates[questionId];
-
-      item[isCorrect ? "correct" : "incorrect"] += 1;
-
-      // Calculate the incorrect rate
-      const incorrect = item.incorrect;
-      const total = item.correct + incorrect;
-      const rate = incorrect / total;
-      item.errorRate = rate * 100;
     });
 
-    const result = userQuizQuestions
-      .map((userQuizQuestion) => {
-        const { id, questionId, category, product, questionType } =
-          userQuizQuestion;
-
-        const question = questions.find((q) => q.id === questionId);
-        if (question) {
-          const { errorRate } = errorRates[questionId];
-          const { text, importance } = question;
-          return {
-            id,
-            question: text,
-            product,
-            category,
-            questionType,
-            importance,
-            errorRate,
-          };
-        }
-        return null;
-      })
-      .filter(Boolean);
-
-    return NextResponse.json({ result });
+    return NextResponse.json({ result, total: count.length });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

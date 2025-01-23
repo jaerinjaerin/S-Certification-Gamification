@@ -252,7 +252,7 @@ export default function GuestRegisterPage() {
 
   return (
     <div
-      className="py-[20px] min-h-svh"
+      className="py-[20px] min-h-svh flex items-center justify-center"
       style={{
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
         backgroundSize: "cover",
@@ -260,135 +260,153 @@ export default function GuestRegisterPage() {
         backgroundPosition: "center",
       }}
     >
-      <Dialog open>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{translation("enter_details")}</DialogTitle>
-            <DialogDescription className="text-left">
-              {translation("select_inforamiton")}
-              <span className="block text-[#0037FF]">
-                {translation("mandatory_fields")}
-              </span>
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-[14px] font-one font-medium">
-            {/* countries */}
-            <Select
-              onValueChange={(value) => {
-                selectCountry(value);
-              }}
-              value={`${translation("country")}*`}
-            >
-              <SelectTrigger
-                disabled={loading || loadingCreate || countries == null}
-                className={cn(
-                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
-              >
-                <SelectValue>
-                  {selectedCountry === null
-                    ? `${translation("country")}*`
-                    : selectedCountry.name}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-[220px] font-one font-medium">
-                {countries.map((country, idx) => (
-                  <SelectItem key={idx} value={country.code}>
-                    {country.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {/* channel */}
-            <Select
-              onValueChange={(value) => {
-                selectChannel(value);
-              }}
-              value={`${translation("channel")}*`}
-            >
-              <SelectTrigger
-                disabled={loading || loadingCreate || channels == null}
-                className={cn(
-                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
-              >
-                <SelectValue>
-                  {selectedChannel === null
-                    ? `${translation("channel")}*`
-                    : selectedChannel.name}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-[220px] font-one font-medium">
-                {channels?.map((channel) => (
-                  <SelectItem key={channel.name} value={channel.name}>
-                    {channel.name}
-                  </SelectItem>
-                ))}
-
-                <SelectItem value={"input_directly"}>
-                  {translation("input_directly")}
-                </SelectItem>
-              </SelectContent>
-              {channelInput && (
-                <input
-                  type="text"
-                  className={cn(
-                    "relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]",
-                    isArabic && "text-right"
-                  )}
-                  placeholder={translation("input_directly")}
-                  onChange={(e) => {
-                    const value = e.target.value.trim();
-                    setChannelName(value);
-                  }}
-                />
+      <div
+        className={cn(
+          "gap-[26px] flex flex-col justify-center items-center bg-background",
+          "px-[25px] pb-[50px] pt-[62px]",
+          "w-[250px] sm:w-[340px]",
+          "rounded-[20px] border shadow-lg duration-200"
+        )}
+      >
+        {/* header */}
+        <div className="flex flex-col space-y-[26px] text-center w-full">
+          <h1 className="text-2xl">{translation("enter_details")}</h1>
+          <p
+            className={cn(
+              "text-left text-muted-foreground font-one font-medium text-base  block",
+              isArabic && "text-right"
+            )}
+          >
+            {translation("select_inforamiton")}
+            <span className="block text-[#0037FF]">
+              {translation("mandatory_fields")}
+            </span>
+          </p>
+        </div>
+        {/* combobox */}
+        <div
+          className={cn(
+            "flex flex-col w-full gap-[14px] font-one font-medium",
+            "data-[state=open]:animate-in data-[state=closed]:animate-out",
+            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95",
+            "data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]",
+            "data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]"
+          )}
+        >
+          {/* countries */}
+          <Select
+            onValueChange={(value) => {
+              selectCountry(value);
+            }}
+            value={`${translation("country")}*`}
+          >
+            <SelectTrigger
+              disabled={loading || loadingCreate || countries == null}
+              className={cn(
+                selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
               )}
-            </Select>
-            {/* job group */}
-            <Select
-              onValueChange={(value) => selectJob(value)}
-              value={selectedJobId || ""}
             >
-              <SelectTrigger
-                disabled={
-                  loading ||
-                  loadingCreate ||
-                  (selectedChannel === null &&
-                    (channelName === null || channelName.trim().length < 1))
-                }
-              >
-                <SelectValue placeholder={translation("job_group")} />
-              </SelectTrigger>
-              <SelectContent className="font-medium font-one">
-                {jobs.map((job) => (
-                  <SelectItem key={job.value} value={job.value}>
-                    {job.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <DialogFooter>
-            <Button
-              variant={"primary"}
-              disabled={
-                loadingCreate ||
-                !selectedCountry ||
-                (!selectedChannel &&
-                  (!channelName || channelName.trim().length < 2)) ||
-                !selectedJobId ||
-                !languageCode ||
-                (!loadingCreate && !!campaignPath)
-              }
-              onClick={routeQuizPage}
-              className="disabled:bg-disabled"
+              <SelectValue>
+                {selectedCountry === null
+                  ? `${translation("country")}*`
+                  : selectedCountry.name}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="max-h-[220px] font-one font-medium">
+              {countries.map((country, idx) => (
+                <SelectItem key={idx} value={country.code}>
+                  {country.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {/* channel */}
+          <Select
+            onValueChange={(value) => {
+              selectChannel(value);
+            }}
+            value={`${translation("channel")}*`}
+          >
+            <SelectTrigger
+              disabled={loading || loadingCreate || channels == null}
+              className={cn(
+                selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
+              )}
             >
-              <span>{translation("save")}</span>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+              <SelectValue>
+                {selectedChannel === null
+                  ? `${translation("channel")}*`
+                  : selectedChannel.name}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="max-h-[220px] font-one font-medium">
+              {channels?.map((channel) => (
+                <SelectItem key={channel.name} value={channel.name}>
+                  {channel.name}
+                </SelectItem>
+              ))}
 
+              <SelectItem value={"input_directly"}>
+                {translation("input_directly")}
+              </SelectItem>
+            </SelectContent>
+            {channelInput && (
+              <input
+                type="text"
+                className={cn(
+                  "relative flex w-full h-[52px] cursor-default select-none items-center py-[10px] px-5 rounded-[10px] border border-input outline-none bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 placeholder:text-[#5A5A5A]",
+                  isArabic && "text-right"
+                )}
+                placeholder={translation("input_directly")}
+                onChange={(e) => {
+                  const value = e.target.value.trim();
+                  setChannelName(value);
+                }}
+              />
+            )}
+          </Select>
+          {/* job group */}
+          <Select
+            onValueChange={(value) => selectJob(value)}
+            value={selectedJobId || ""}
+          >
+            <SelectTrigger
+              disabled={
+                loading ||
+                loadingCreate ||
+                (selectedChannel === null &&
+                  (channelName === null || channelName.trim().length < 1))
+              }
+            >
+              <SelectValue placeholder={translation("job_group")} />
+            </SelectTrigger>
+            <SelectContent className="font-medium font-one">
+              {jobs.map((job) => (
+                <SelectItem key={job.value} value={job.value}>
+                  {job.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        {/* button */}
+        <Button
+          variant={"primary"}
+          disabled={
+            loadingCreate ||
+            !selectedCountry ||
+            (!selectedChannel &&
+              (!channelName || channelName.trim().length < 2)) ||
+            !selectedJobId ||
+            !languageCode ||
+            (!loadingCreate && !!campaignPath)
+          }
+          onClick={routeQuizPage}
+          className="disabled:bg-disabled"
+        >
+          <span>{translation("save")}</span>
+        </Button>
+      </div>
       {/* error alert */}
       <AlertDialog
         open={!!errorMessage}
@@ -411,3 +429,6 @@ export default function GuestRegisterPage() {
     </div>
   );
 }
+
+// w-[250px] sm:w-[340px]
+// bg-background px-[25px] pt-[20px] pb-[50px]

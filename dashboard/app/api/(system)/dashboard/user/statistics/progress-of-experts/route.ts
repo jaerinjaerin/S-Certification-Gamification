@@ -1,61 +1,75 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { addDays, isWithinInterval } from "date-fns";
+import { addDays, endOfDay, startOfDay } from "date-fns";
 import { querySearchParams } from "../../../_lib/query";
-import { defaultDateFormat } from "@/lib/time";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where, period } = querySearchParams(searchParams);
 
     await prisma.$connect();
 
-    // 데이터 가져오기
-    const expertData = await prisma.userQuizBadgeStageStatistics.findMany({
+    // 오늘과 6일 전 설정
+    const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
+    const beforeWeek = new Date(
+      Math.max(
+        addDays(today, -6).getTime(), // today에서 6일 전
+        new Date(period.from).getTime() // period.from
+      )
+    );
+
+    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
+      by: ["quizStageId", "createdAt"], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
         isBadgeAcquired: true,
+        createdAt: {
+          gte: startOfDay(beforeWeek), // 6일 전부터
+          lte: endOfDay(today), // 오늘까지
+        },
       },
+      _count: { quizStageId: true }, // 각 그룹에 대한 개수 집계
+      orderBy: { createdAt: "asc" }, // 날짜 순 정렬
     });
 
-    // 오늘과 6일 전 설정
-    const today = new Date();
-    const beforeWeek = addDays(today, -6);
+    // 날짜 범위를 생성
+    const getDateRange = (start: Date, end: Date) => {
+      const dates = [];
+      const current = new Date(start);
+      while (current <= end) {
+        dates.push(current.toISOString().split("T")[0]);
+        current.setDate(current.getDate() + 1);
+      }
+      return dates;
+    };
 
-    // 결과 저장 배열
-    const result = [];
+    // 날짜별 초기 데이터 생성
+    const initialData = getDateRange(beforeWeek, today).map((date) => ({
+      date: date.replace(/-/g, "."), // YYYY-MM-DD -> YYYY.MM.DD
+      total: 0,
+      expert: 0,
+      advanced: 0,
+    }));
 
-    // 7일 동안 데이터를 처리하는 for문
-    for (let i = 0; i < 7; i++) {
-      const currentDate = addDays(beforeWeek, i);
-
-      // 해당 날짜에 맞는 데이터 필터링
-      const expertsTotal = expertData.filter((exp) =>
-        isWithinInterval(new Date(exp.createdAt), {
-          start: currentDate,
-          end: addDays(currentDate, 1),
-        })
-      );
-
-      // 추가적인 조건에 맞는 데이터
-      const experts = expertsTotal.filter(
-        (exp) => exp.quizStageId === "stage_2"
-      );
-      const expertsAdvanced = expertsTotal.filter(
-        (exp) => exp.quizStageId === "stage_3"
-      );
-
-      // 결과에 저장
-      result.push({
-        date: defaultDateFormat(currentDate), // YYYY.MM.DD
-        total: expertsTotal.length,
-        expert: experts.length,
-        advanced: expertsAdvanced.length,
-      });
-    }
-    console.log("result", result);
+    // 데이터 그룹화 및 합산
+    const result = experts.reduce((acc, item) => {
+      const dateKey = item.createdAt.toISOString().split("T")[0]; // 날짜 추출
+      const match = acc.find(
+        (entry) => entry.date === dateKey.replace(/-/g, ".")
+      ); // 날짜 일치 항목 찾기
+      if (match) {
+        const count = item._count.quizStageId;
+        if (item.quizStageId === "stage_2") {
+          match.expert += count; // stage_2는 expert
+        } else if (item.quizStageId === "stage_3") {
+          match.advanced += count; // stage_3은 advanced
+        }
+        match.total = match.expert + match.advanced; // total 계산
+      }
+      return acc;
+    }, initialData);
 
     return NextResponse.json({ result });
   } catch (error) {
