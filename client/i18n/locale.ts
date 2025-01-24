@@ -109,7 +109,10 @@ async function getBrowserLanguage() {
 export async function fetchSupportedLanguages() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
+      {
+        cache: "no-cache",
+      }
     );
     if (!response.ok) {
       throw new Error(`HTTP error. status: ${response.status}`);
