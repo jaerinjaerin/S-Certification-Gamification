@@ -41,6 +41,20 @@ export async function POST(request: NextRequest) {
       channelName,
     } = body;
 
+    function generateRandomNumber(length) {
+      if (length <= 0) {
+        throw new Error("Length must be a positive integer.");
+      }
+
+      let randomNumber = "";
+      while (randomNumber.length < length) {
+        const chunk = Math.random().toString().slice(2); // "0." 이후의 숫자만 가져옴
+        randomNumber += chunk;
+      }
+
+      return randomNumber.slice(0, length); // 정확히 length만큼 반환
+    }
+
     const result = await prisma.$transaction(async (tx) => {
       const userQuizStageLog = await tx.userQuizStageLog.create({
         data: {
@@ -73,7 +87,7 @@ export async function POST(request: NextRequest) {
 
       const userQuizStageStatistics = await tx.userQuizStageStatistics.create({
         data: {
-          id: userQuizStageLog.id,
+          // id: userQuizStageLog.id,
           userId,
           authType,
           campaignId,
@@ -110,6 +124,7 @@ export async function POST(request: NextRequest) {
         };
       }
 
+      const random100k = generateRandomNumber(100000);
       const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
         data: {
           userId,
@@ -118,7 +133,7 @@ export async function POST(request: NextRequest) {
           isBadgeAcquired,
           badgeActivityId,
           quizSetId,
-          quizStageId,
+          quizStageId: `${quizStageId}_${random100k}`,
           quizStageIndex,
           elapsedSeconds,
           score: totalScore,
@@ -134,17 +149,18 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      const random100k2 = generateRandomNumber(100000);
       const userQuizBadgeStageStatistics =
         await tx.userQuizBadgeStageStatistics.create({
           data: {
-            id: userQuizBadgeStageLog.id,
+            // id: userQuizBadgeStageLog.id,
             userId,
             authType,
             campaignId,
             isBadgeAcquired,
             badgeActivityId,
             quizSetId,
-            quizStageId,
+            quizStageId: `${quizStageId}_${random100k2}`,
             quizStageIndex,
             elapsedSeconds,
             score: totalScore,

@@ -93,78 +93,75 @@ export async function POST(request: NextRequest) {
     //   },
     // });
 
-    const result = await prisma.$transaction(async (tx) => {
-      const userQuizQuestionLog = await tx.userQuizQuestionLog.create({
-        data: {
-          authType,
-          isCorrect,
-          campaignId,
-          userId,
-          quizSetId,
-          questionId,
-          quizStageId,
-          selectedOptionIds,
-          correctOptionIds,
-          quizStageIndex,
-          category,
-          specificFeature,
-          product,
-          questionType,
-          elapsedSeconds,
-          createdAt,
-          domainId,
-          languageId,
-          jobId,
-          regionId,
-          subsidiaryId,
-          channelSegmentId,
-          storeId,
-          channelId,
-          channelName,
-          tryNumber,
-        },
-      });
-
-      const userQuizQuestionStatistics =
-        await tx.userQuizQuestionStatistics.create({
-          data: {
-            id: userQuizQuestionLog.id,
-            authType,
-            isCorrect,
-            campaignId,
-            userId,
-            quizSetId,
-            questionId,
-            quizStageId,
-            selectedOptionIds,
-            correctOptionIds,
-            quizStageIndex,
-            category,
-            specificFeature,
-            product,
-            questionType,
-            elapsedSeconds,
-            createdAt,
-            domainId,
-            languageId,
-            jobId,
-            regionId,
-            subsidiaryId,
-            channelSegmentId,
-            storeId,
-            channelId,
-            channelName,
-            tryNumber,
-          },
-        });
-
-      return { userQuizQuestionLog, userQuizQuestionStatistics };
+    // const result = await prisma.$transaction(async (tx) => {
+    const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
+      data: {
+        authType,
+        isCorrect,
+        campaignId,
+        userId,
+        quizSetId,
+        questionId,
+        quizStageId,
+        selectedOptionIds,
+        correctOptionIds,
+        quizStageIndex,
+        category,
+        specificFeature,
+        product,
+        questionType,
+        elapsedSeconds,
+        createdAt,
+        domainId,
+        languageId,
+        jobId,
+        regionId,
+        subsidiaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        channelName,
+        tryNumber,
+      },
     });
 
-    return NextResponse.json(
-      { item: result.userQuizQuestionLog },
-      { status: 200 }
-    );
+    // const userQuizQuestionStatistics =
+    await prisma.userQuizQuestionStatistics.create({
+      data: {
+        // id: userQuizQuestionLog.id,
+        authType,
+        isCorrect,
+        campaignId,
+        userId,
+        quizSetId,
+        questionId,
+        quizStageId,
+        selectedOptionIds,
+        correctOptionIds,
+        quizStageIndex,
+        category,
+        specificFeature,
+        product,
+        questionType,
+        elapsedSeconds,
+        createdAt,
+        domainId,
+        languageId,
+        jobId,
+        regionId,
+        subsidiaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        channelName,
+        tryNumber,
+      },
+    });
+
+    //   return { userQuizQuestionLog, userQuizQuestionStatistics };
+    // });
+
+    return NextResponse.json({ item: userQuizQuestionLog }, { status: 200 });
   } catch (error) {
     console.error("Error create quiz question log :", error);
     Sentry.captureException(error, (scope) => {
