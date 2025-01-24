@@ -22,7 +22,7 @@ export default async function CampaignLayout({
   };
 
   if (!response.ok) {
-    console.error("Failed to fetch campaign");
+    console.error("Failed to fetch campaign", params.campaign_name);
     Sentry.captureMessage(`Failed to fetch campaign: ${params.campaign_name}`);
     routeCommonError();
     return;

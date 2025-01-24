@@ -124,6 +124,7 @@ export async function POST(request: NextRequest) {
         };
       }
 
+      const random100k2 = generateRandomNumber(20);
       const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
         data: {
           userId,
@@ -132,7 +133,7 @@ export async function POST(request: NextRequest) {
           quizSetId,
           isBadgeAcquired,
           badgeActivityId,
-          quizStageId,
+          quizStageId: random100k2.toString(),
           quizStageIndex,
           elapsedSeconds,
           score: totalScore,

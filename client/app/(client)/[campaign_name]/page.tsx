@@ -60,7 +60,7 @@ export default async function CampaignPage({
 
   let userQuizLog: UserQuizLog | null = null;
   if (historyResponse.ok) {
-    console.error("CampaignPage quizHistory error", historyResponse);
+    // console.error("CampaignPage quizHistory error", historyResponse);
 
     const historyData = await historyResponse.json();
     userQuizLog = historyData?.item?.quizLog;
