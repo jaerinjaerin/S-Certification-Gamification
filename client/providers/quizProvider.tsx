@@ -129,7 +129,7 @@ export const QuizProvider = ({
 
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
-  console.log("QuizProvider", quizSet);
+  // console.log("QuizProvider", quizSet);
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);

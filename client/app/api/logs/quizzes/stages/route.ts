@@ -124,12 +124,13 @@ export async function POST(request: NextRequest) {
         };
       }
 
+      const random100k2 = generateRandomNumber(20);
       const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
         data: {
           userId,
           authType,
           campaignId,
-          quizSetId,
+          quizSetId: random100k2.toString(),
           isBadgeAcquired,
           badgeActivityId,
           quizStageId,
