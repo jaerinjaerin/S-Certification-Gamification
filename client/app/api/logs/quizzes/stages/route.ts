@@ -129,6 +129,7 @@ export async function POST(request: NextRequest) {
           userId,
           authType,
           campaignId,
+          quizSetId,
           isBadgeAcquired,
           badgeActivityId,
           quizStageId,
