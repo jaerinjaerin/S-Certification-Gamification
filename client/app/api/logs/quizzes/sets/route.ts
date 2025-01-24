@@ -11,7 +11,7 @@ import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  console.log("POST - QuizSet Log");
+  // console.log("POST - QuizSet Log");
   const session = await auth();
 
   if (!session) {

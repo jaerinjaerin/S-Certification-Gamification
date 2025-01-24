@@ -148,7 +148,8 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      const random100k = generateRandomNumber(10000);
+      const random100k = generateRandomNumber(20);
+      console.log("random100k", random100k);
       const userQuizBadgeStageStatistics =
         await tx.userQuizBadgeStageStatistics.create({
           data: {
