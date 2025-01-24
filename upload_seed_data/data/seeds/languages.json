@@ -60,5 +60,6 @@
   { "code": "es-LTN-pr", "name": "Language for Peru" },
   { "code": "fr-FR-sn", "name": "Language for Senegal" },
   { "code": "fr-FR-ch", "name": "Language for Switzerland" },
-  { "code": "fr-FR-TN", "name": "Language for Tunisia" }
+  { "code": "fr-FR-TN", "name": "Language for Tunisia" },
+  { "code": "uk", "name": "Ukraine" }
 ]
