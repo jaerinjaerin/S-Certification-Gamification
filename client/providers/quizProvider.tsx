@@ -315,29 +315,38 @@ export const QuizProvider = ({
   };
 
   const getCurrentStageBadgeActivityId = (): string | null => {
-    if (_quizLog?.quizSetPath === "NAT_2756_de-DE") {
+    if (
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+      "NAT_2756_de-DE"?.toLocaleLowerCase()
+    ) {
       if (currentQuizStageIndex === 2) {
         return "252552";
       }
-      if (currentQuizStageIndex === 2) {
+      if (currentQuizStageIndex === 3) {
         return "252554";
       }
     }
 
-    if (_quizLog?.quizSetPath === "NAT_2756_fr-FR") {
+    if (
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+      "NAT_2756_fr-FR"?.toLocaleLowerCase()
+    ) {
       if (currentQuizStageIndex === 2) {
         return "252558";
       }
-      if (currentQuizStageIndex === 2) {
+      if (currentQuizStageIndex === 3) {
         return "252560";
       }
     }
 
-    if (_quizLog?.quizSetPath === "NAT_2756_it-IT") {
+    if (
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+      "NAT_2756_it-IT"?.toLocaleLowerCase()
+    ) {
       if (currentQuizStageIndex === 2) {
         return "252566";
       }
-      if (currentQuizStageIndex === 2) {
+      if (currentQuizStageIndex === 3) {
         return "252567";
       }
     }
