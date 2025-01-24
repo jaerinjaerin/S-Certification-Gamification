@@ -51,6 +51,8 @@ const initializeFilters: InitializeFiltersPros = (
   setFilteredDomains(filters.domain);
 };
 
+const firstElement = { value: "all", label: "All" };
+
 // 렌더 데이터 시작
 const Filters = ({
   hasDownloadButton = false,
@@ -180,7 +182,7 @@ const Filters = ({
         const domain = filters.domain.find((domain) => domain.id === id);
 
         const subsidiary = filters.subsidiary.find(
-          (subsidiary: Subsidiary) => subsidiary.id === domain.subsidiaryId
+          (subsidiary: Subsidiary) => subsidiary.id === domain?.subsidiaryId
         );
 
         if (found && subsidiary && domain) {
@@ -222,11 +224,7 @@ const Filters = ({
     console.log("Downloading report...", formValues.campaign);
   };
 
-  if (
-    !filterData ||
-    filteredSubsidiaries.length <= 0 ||
-    filteredDomains.length <= 0
-  )
+  if (!filterData)
     return (
       <FiltersContainer>
         <Loader className="w-full flex items-center justify-center" />
@@ -306,8 +304,6 @@ const Filters = ({
           </div>
           <div className="flex flex-wrap gap-x-10 gap-y-7">
             {Object.entries(filterData.filters).map(([key, value]) => {
-              const firstElement = { value: "all", label: "All" };
-
               let items = [
                 firstElement,
                 ...value.map((item: { name: string; id: string | number }) => ({
@@ -341,6 +337,7 @@ const Filters = ({
                   key={key}
                   control={form.control}
                   name={key}
+                  defaultValue="all"
                   render={({ field }) => (
                     <SelectForm
                       label={formatCamelCaseToTitleCase(key)}
