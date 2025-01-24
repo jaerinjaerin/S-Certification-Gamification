@@ -138,7 +138,7 @@ export default function QuizPage() {
     setSelectedOptionIds([]);
 
     // nextStage();
-    routeToPage("complete");
+    // routeToPage("complete");
   };
 
   const handleGameOver = useCallback(async () => {

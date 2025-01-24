@@ -86,6 +86,8 @@ export class QuizBadgeHandler {
         }
       );
 
+      console.log("postActivitieRegister", activityId, response);
+
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
@@ -125,6 +127,8 @@ export class QuizBadgeHandler {
           }),
         }
       );
+
+      console.log("postActivityEnd", activityId, response);
 
       if (!response.ok) {
         const errorData = await response.json();

@@ -8,7 +8,7 @@ export async function GET() {
     const languages = await prisma.language.findMany();
 
     const response = NextResponse.json({ items: languages }, { status: 200 });
-    response.headers.set("Cache-Control", "public, max-age=3600");
+    // response.headers.set("Cache-Control", "public, max-age=3600");
     return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
