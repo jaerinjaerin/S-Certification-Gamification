@@ -139,7 +139,7 @@ export async function GET(request: NextRequest, props: Props) {
       })
     );
 
-    console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
+    // console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
     const response = NextResponse.json(
       {
