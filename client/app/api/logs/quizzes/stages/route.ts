@@ -41,19 +41,19 @@ export async function POST(request: NextRequest) {
       channelName,
     } = body;
 
-    // function generateRandomNumber(length) {
-    //   if (length <= 0) {
-    //     throw new Error("Length must be a positive integer.");
-    //   }
+    function generateRandomNumber(length) {
+      if (length <= 0) {
+        throw new Error("Length must be a positive integer.");
+      }
 
-    //   let randomNumber = "";
-    //   while (randomNumber.length < length) {
-    //     const chunk = Math.random().toString().slice(2); // "0." 이후의 숫자만 가져옴
-    //     randomNumber += chunk;
-    //   }
+      let randomNumber = "";
+      while (randomNumber.length < length) {
+        const chunk = Math.random().toString().slice(2); // "0." 이후의 숫자만 가져옴
+        randomNumber += chunk;
+      }
 
-    //   return randomNumber.slice(0, length); // 정확히 length만큼 반환
-    // }
+      return randomNumber.slice(0, length); // 정확히 length만큼 반환
+    }
 
     const result = await prisma.$transaction(async (tx) => {
       const userQuizStageLog = await tx.userQuizStageLog.create({
@@ -124,7 +124,6 @@ export async function POST(request: NextRequest) {
         };
       }
 
-      // const random100k = generateRandomNumber(100000);
       const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
         data: {
           userId,
@@ -132,7 +131,6 @@ export async function POST(request: NextRequest) {
           campaignId,
           isBadgeAcquired,
           badgeActivityId,
-          quizSetId,
           quizStageId,
           quizStageIndex,
           elapsedSeconds,
@@ -149,7 +147,7 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      // const random100k2 = generateRandomNumber(100000);
+      const random100k = generateRandomNumber(10000);
       const userQuizBadgeStageStatistics =
         await tx.userQuizBadgeStageStatistics.create({
           data: {
@@ -160,7 +158,7 @@ export async function POST(request: NextRequest) {
             isBadgeAcquired,
             badgeActivityId,
             quizSetId,
-            quizStageId,
+            quizStageId: random100k.toString(),
             quizStageIndex,
             elapsedSeconds,
             score: totalScore,

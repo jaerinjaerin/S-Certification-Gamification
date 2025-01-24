@@ -12,7 +12,7 @@ export default async function SumtotalUserLayout({
   children: React.ReactNode;
   params: { quizset_path: string };
 }) {
-  console.log("SumtotalUserLayout quizset_path", quizset_path);
+  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
   const supportedLanguages = await fetchSupportedLanguages();

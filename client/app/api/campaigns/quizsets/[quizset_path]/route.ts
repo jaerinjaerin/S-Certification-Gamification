@@ -81,7 +81,7 @@ export async function GET(request: NextRequest, props: Props) {
       where: { code: languageCode },
     });
 
-    console.log("language:", language);
+    // console.log("language:", language);
 
     if (!language) {
       language = await prisma.language.findFirst({
@@ -97,7 +97,7 @@ export async function GET(request: NextRequest, props: Props) {
 
     const languageId = language?.id;
 
-    console.log("languageId:", languageId);
+    // console.log("languageId:", languageId);
 
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {

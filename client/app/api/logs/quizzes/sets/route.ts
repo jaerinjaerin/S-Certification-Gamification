@@ -280,7 +280,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   // export async function GET(request: NextRequest) {
-  console.log("GET - QuizSet Log");
+  // console.log("GET - QuizSet Log");
   // const session = await auth();
   // if (!session) {
   //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
