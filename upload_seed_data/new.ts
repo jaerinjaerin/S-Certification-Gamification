@@ -154,12 +154,117 @@ async function main() {
     { domainCode: "NAT_384", activityIds: [252742, 252747] },
     { domainCode: "NAT_3701", activityIds: [252716, 252717] },
     { domainCode: "NAT_2710", activityIds: [252722, 252723] },
+    { domainCode: "NAT_2834", activityIds: [252727, 252729] },
   ];
 
   const createSeeds = async () => {
     // Create Regions
     let filePath;
     let fileContent;
+
+    filePath = path.join(
+      process.cwd(),
+      "data",
+      "seeds",
+      "grouped_domains.json"
+    );
+
+    fileContent = fs.readFileSync(filePath, "utf-8");
+    const allDomains = JSON.parse(fileContent);
+
+    const hqs = allDomains.hq;
+    const regions = allDomains.regions;
+    const subsidiaries = allDomains.subsidiaries;
+    const domains = allDomains.domains;
+
+    // console.log("domains", domains);
+
+    // 데이터 삽입
+    for (const region of hqs) {
+      const existingHq = await prisma.hq.findFirst({
+        where: { id: region.domainId.toString() },
+      });
+
+      if (!existingHq) {
+        console.log("create region", region);
+        await prisma.hq.create({
+          data: {
+            id: region.domainId.toString(),
+            code: region.domainCode.toString(),
+            name: region.domainName,
+            order: hqs.indexOf(region) + 1,
+          },
+        });
+      }
+    }
+
+    for (const region of regions) {
+      const existingRegion = await prisma.region.findFirst({
+        where: { id: region.domainId.toString() },
+      });
+
+      if (!existingRegion) {
+        console.log("create region", region);
+        await prisma.region.create({
+          data: {
+            id: region.domainId.toString(),
+            code: region.domainCode.toString(),
+            name: region.domainName,
+            hqId:
+              hqs
+                .find((hq) => hq.domainId === region.parentDomainId)
+                ?.domainId?.toString() ?? null,
+            order: regions.indexOf(region) + 1,
+          },
+        });
+      }
+    }
+
+    for (const subsidiary of subsidiaries) {
+      const existingSubsidiary = await prisma.subsidiary.findFirst({
+        where: { id: subsidiary.domainId.toString() },
+      });
+
+      if (!existingSubsidiary) {
+        console.log("create subsidiary", subsidiary);
+        await prisma.subsidiary.create({
+          data: {
+            id: subsidiary.domainId.toString(),
+            code: subsidiary.domainCode.toString(),
+            name: subsidiary.domainName,
+            regionId:
+              regions
+                .find((region) => region.domainId === subsidiary.parentDomainId)
+                ?.domainId?.toString() ?? null,
+            order: subsidiaries.indexOf(subsidiary) + 1,
+          },
+        });
+      }
+    }
+
+    for (const country of domains) {
+      const existingDomain = await prisma.domain.findFirst({
+        where: { id: country.domainId.toString() },
+      });
+
+      if (!existingDomain) {
+        console.log("create domain", country);
+        await prisma.domain.create({
+          data: {
+            id: country.domainId.toString(),
+            code: country.domainCode.toString(),
+            name: country.domainName,
+            subsidiaryId:
+              subsidiaries
+                .find(
+                  (subsidiary) => subsidiary.domainId === country.parentDomainId
+                )
+                ?.domainId?.toString() ?? null,
+            order: domains.indexOf(country) + 1,
+          },
+        });
+      }
+    }
 
     // Create Languages
     filePath = path.join(process.cwd(), "data", "seeds", "languages.json");
@@ -187,59 +292,19 @@ async function main() {
   };
 
   const createOriginQuizSet = async () => {
-    const charImages = await Promise.all(
-      charImagePaths.map(async (stagePaths) => {
-        return Promise.all(
-          stagePaths.map(async (imagePath) => {
-            return prisma.image.create({
-              data: {
-                imagePath: imagePath,
-                caption: "character",
-                format: "png",
-                alt: "character",
-              },
-            });
-          })
-        );
-      })
-    );
-
-    const bgImages = await Promise.all(
-      bgImagePaths.map(async (imagePath: string) => {
-        return prisma.image.create({
-          data: {
-            imagePath: imagePath,
-            caption: "background",
-            format: "jpg",
-            alt: "background",
-          },
-        });
-      })
-    );
-
-    // console.log("charImages", charImages);
-    // console.log("bgImages", bgImages);
-
-    // const badgeImages = await Promise.all(
-    //   badgeImagePaths.map(async (imagePath: string) => {
-    //     return prisma.quizBadge.create({
-    //       data: {
-    //         imagePath: imagePath,
-    //         name: "badge",
-    //       },
-    //     });
-    //   })
-    // );
-
-    // console.log("badgeImages", badgeImages);
-
-    const campaign = await prisma.campaign.findFirst();
-    const folderPath = path.join(process.cwd(), "data", "questions", "update");
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        name: "S25",
+      },
+    });
+    const folderPath = path.join(process.cwd(), "data", "questions", "new");
     const files = fs.readdirSync(folderPath);
 
+    // HQ 베이스 퀴즈 셋 가져오기
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: "29",
+        campaignId: campaign.id,
       },
       include: {
         quizStages: {
@@ -254,23 +319,22 @@ async function main() {
       throw new Error("Quiz set not found");
     }
 
-    const language = await prisma.language.findFirst({
+    // 기본 언어 가져오기
+    const hqLanguage = await prisma.language.findFirst({
       where: { code: "en-US" },
     });
 
-    if (!language) {
+    if (!hqLanguage) {
       throw new Error("Language not found");
     }
 
     const hqNatQuestions: any[] = [];
     const quizStagesWithQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
-        // console.log("quizStage:", quizStage.questionIds, languageId);
         const questions = await prisma.question.findMany({
           where: {
             originalQuestionId: { in: quizStage.questionIds },
-            // languageId: { in: [languageId!, defaultLanguage!.id] },
-            languageId: language.id,
+            languageId: hqLanguage.id,
           },
           include: {
             options: true,
@@ -281,42 +345,12 @@ async function main() {
 
         console.log("questions", questions.length);
         hqNatQuestions.push(...questions);
-
-        // return questions;
-        // ...quizStage,
-        // questions,
-
-        // questions.sort((a: any, b: any) => {
-        //   return a.order - b.order;
-        // });
-
-        // // console.log("questions:", questions);
-
-        // // languageId 우선, 없으면 defaultLanguage.id
-        // const prioritizedQuestions = questions.filter(
-        //   (q) => q.languageId === language.id
-        // );
-
-        // return {
-        //   ...quizStage,
-        //   questions: prioritizedQuestions[0],
-        // };
       })
     );
 
     console.log("hqNatQuestions", hqNatQuestions.length);
 
-    // console.log("files", files);
-
-    // 먼저 OrgCode-7 도메인 데이터를 처리
-    // const hqNatQuestions: any[] = [];
-    // const hqNatQuestions: any[] = quizStagesWithQuestions.flatMap(
-    //   (stage) => stage.questions || []
-    // );
-
-    // console.log("hqNatQuestions", hqNatQuestions);
-
-    // let quizSetCount = 0;
+    let quizSetCount = 0;
     for (const fileName of files.sort((a, b) =>
       a.includes("OrgCode-7") ? -1 : 1
     )) {
@@ -333,15 +367,8 @@ async function main() {
       const domainOrSubsidiary = await prisma.domain.findFirst({
         where: { code: domainCode },
       });
-      // domainCode === "OrgCode-7"
-      //   ? await prisma.subsidiary.findFirst({
-      //       where: { code: domainCode },
-      //     })
-      //   : await prisma.domain.findFirst({
-      //       where: { code: domainCode },
-      //     });
 
-      let language = await prisma.language.findFirst({
+      const language = await prisma.language.findFirst({
         where: { code: languageCode },
       });
 
@@ -355,16 +382,70 @@ async function main() {
         continue;
       }
 
+      // 저장된 이미지 가져오기
+      const savedBadgeImages = await prisma.quizBadge.findMany({
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      const savedCharImages = await prisma.image.findMany({
+        where: {
+          alt: "character",
+        },
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      const savedBgImages = await prisma.image.findMany({
+        where: {
+          alt: "background",
+        },
+        orderBy: {
+          imagePath: "asc", // 데이터가 일정하게 섞이도록 정렬
+        },
+      });
+
+      const charImages = charImagePaths.map((stagePaths) => {
+        return stagePaths.map((imagePath) => {
+          const charImage = savedCharImages.find(
+            (charImage) => charImage.imagePath === imagePath
+          );
+          return charImage;
+        });
+      });
+
+      const bgImages = bgImagePaths.map((imagePath) => {
+        const bgImage = savedBgImages.find(
+          (bgImage) => bgImage.imagePath === imagePath
+        );
+        return bgImage;
+      });
+
+      const badgeImages = badgeImagePaths.map((imagePath) => {
+        const badgeImage = savedBadgeImages.find(
+          (badgeImage) => badgeImage.imagePath === imagePath
+        );
+        return badgeImage;
+      });
+
+      console.log("charImages", charImages);
+      console.log("bgImages", bgImages);
+      console.log("badgeImages", badgeImages);
+
+      // continue;
+
       const fileContent = fs.readFileSync(filePath, "utf-8");
-      const questions = JSON.parse(fileContent);
+      const jsonQuestions = JSON.parse(fileContent);
       const createdQuestions: any[] = [];
 
       const stagesQuestions: string[][] = [[], [], [], []];
       // const stagesQuestions2: string[] = [];
       // const stagesQuestions3: string[] = [];
       // const stagesQuestions4: string[] = [];
-      for (let i = 0; i < questions.length; i++) {
-        const question = questions[i];
+      for (let i = 0; i < jsonQuestions.length; i++) {
+        const question = jsonQuestions[i];
         const questionId = uuid.v4();
 
         if (question.text == null) {
@@ -374,11 +455,9 @@ async function main() {
         console.log("question", question.text, question.originQuestionIndex);
 
         let originalQuestionId =
-          domainCode === "OrgCode-7"
-            ? questionId
-            : hqNatQuestions.find(
-                (hqQ) => hqQ.originalIndex === question.originQuestionIndex
-              )?.id || null;
+          hqNatQuestions.find(
+            (hqQ) => hqQ.originalIndex === question.originQuestionIndex
+          )?.id || null;
 
         // 국가별로 추가된 문제는 추가된 문제 자체가 베이스 퀴즈가 됨.
         if (originalQuestionId == null) {
@@ -420,32 +499,33 @@ async function main() {
               order: question.orderInStage ?? question.originQuestionIndex,
               backgroundImageId: bgImages[stageIndex].id,
               characterImageId: charImages[stageIndex][imageIndex].id,
-              // backgroundImageUrl: bgImages[stageIndex],
-              // characterImageUrl: charImages[stageIndex][imageIndex],
             },
           });
 
           console.log("item", item);
 
+          question.options.sort((a, b) => a.order - b.order);
           for (let j = 0; j < question.options.length; j++) {
             const option = question.options[j];
-            await prisma.questionOption.findFirst({
+            const item = await prisma.questionOption.findFirst({
               where: {
                 questionId,
                 order: j,
                 languageId: language.id,
               },
             });
-            await prisma.questionOption.create({
-              data: {
-                text: option.text.toString(),
-                order: j,
-                questionId,
-                isCorrect:
-                  option.answerStatus === 1 || option.answerStatus === "1",
-                languageId: language.id,
-              },
-            });
+            if (!item) {
+              await prisma.questionOption.create({
+                data: {
+                  text: option.text.toString(),
+                  order: j,
+                  questionId,
+                  isCorrect:
+                    option.answerStatus === 1 || option.answerStatus === "1",
+                  languageId: language.id,
+                },
+              });
+            }
           }
         }
 
@@ -478,29 +558,33 @@ async function main() {
         where: {
           campaignId: campaign.id,
           domainId: domainOrSubsidiary.id,
-          // include: {
-          //   options: true,
-          //   backgroundImage: true,
-          //   characterImage: true,
-          // },
         },
       });
-      if (!savedQuizSet) {
+      if (savedQuizSet) {
         continue;
       }
 
-      const quizStages = await prisma.quizStage.findMany({
-        where: {
-          quizSetId: savedQuizSet.id,
+      const quizSet = await prisma.quizSet.create({
+        data: {
+          campaignId: campaign.id,
+          domainId: domainOrSubsidiary.id,
+          // domainId: domainCode === "OrgCode-7" ? null : domainOrSubsidiary.id,
+          // subsidiaryId:
+          //   domainCode === "OrgCode-7" ? domainOrSubsidiary.id : null,
+          jobCodes: ["ff", "fsm"],
+          createrId: "seed",
         },
       });
 
-      quizStages.sort((a, b) => a.order - b.order);
+      // console.log("quizSet", quizSet);
 
-      for (let i = 0; i < quizStages.length; i++) {
-        const stage: any = quizStages[i];
-        // )
-        // const stageQuestions = questions.filter(
+      const stages = [
+        ...new Set(jsonQuestions.map((question) => question.stage)),
+      ].sort();
+
+      for (let i = 0; i < stages.length; i++) {
+        const stage: any = stages[i];
+        // const stageQuestions = jsonQuestions.filter(
         //   (question) =>
         //     question.stage === stage &&
         //     (question.enabled === 1 || question.enabled === "1")
@@ -508,16 +592,108 @@ async function main() {
 
         // stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
 
-        // let questionIds = createdQuestions.map((q) => q.stag q.id);
+        // let questionIds = stageQuestions.map((question) => {
+        //   if (domainCode === "OrgCode-7") {
+        //     const q: any = createdQuestions.find(
+        //       (q: any) => q.originalIndex === question.originQuestionIndex
+        //     );
+        //     return q?.id;
+        //   } else {
+        //     const hqQuestion: any = hqNatQuestions.find(
+        //       (hqQ: any) => hqQ.originalIndex === question.originQuestionIndex
+        //     );
 
-        await prisma.quizStage.update({
-          where: {
-            id: stage.id,
-          },
+        //     if (hqQuestion) {
+        //       return hqQuestion.id;
+        //     }
+
+        //     const q: any = createdQuestions.find(
+        //       (q: any) => q.originalIndex === question.originQuestionIndex
+        //     );
+
+        //     return q?.id;
+        //   }
+        // });
+
+        // questionIds = questionIds.filter((id) => id !== undefined);
+        // if (domainCode === "OrgCode-7") {
+        //   console.log("questionIds", domainCode, stage, questionIds);
+        // }
+
+        // const isLastStage = i === stages.length - 1;
+        let isBadgeStage = false;
+        let badgeActivityId: string | null = null;
+        // let badgeImageUrl: string | null = null;
+        let badgeImageId: string | null = null;
+
+        const activityIds = activityIdData.find(
+          (data) => data.domainCode === domainCode
+        )?.activityIds;
+
+        const stage3BadgeActivityId =
+          activityIds != null ? activityIds![0].toString() : null; //"251745";
+        const stage4BadgeActivityId =
+          activityIds != null ? activityIds![1].toString() : null; //"251747";
+
+        if (i === 2) {
+          isBadgeStage = true;
+          badgeActivityId = stage3BadgeActivityId;
+          badgeImageId = badgeImages[0].id;
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage3.png";
+        } else if (i === 3) {
+          isBadgeStage = true;
+          badgeActivityId = stage4BadgeActivityId;
+          badgeImageId = badgeImages[1].id;
+          // badgeImageUrl = "/certification/s25/images/badge/badge_stage4.png";
+        }
+
+        // console.log("activityId", domainCode, activityIds);
+
+        await prisma.quizStage.create({
           data: {
+            name: stage.toString(),
+            order: stage,
             questionIds: stagesQuestions[i],
+            lifeCount: 5,
+            quizSetId: quizSet.id,
+            isBadgeStage: isBadgeStage,
+            badgeActivityId: badgeActivityId, // 250659, 250642, 250639, 250641
+            // badgeImageUrl: badgeImageUrl,
+            badgeImageId: badgeImageId,
+            // backgroundImageUrl: bgImages[i],
+            // characterImageUrl: charImages[i],
           },
         });
+        // const quizStages = await prisma.quizStage.findMany({
+        //   where: {
+        //     quizSetId: savedQuizSet.id,
+        //   },
+        // });
+
+        // quizStages.sort((a, b) => a.order - b.order);
+
+        // for (let i = 0; i < quizStages.length; i++) {
+        //   const stage: any = quizStages[i];
+        //   // )
+        //   // const stageQuestions = jsonQuestions.filter(
+        //   //   (question) =>
+        //   //     question.stage === stage &&
+        //   //     (question.enabled === 1 || question.enabled === "1")
+        //   // );
+
+        //   // stageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
+
+        //   // let questionIds = createdQuestions.map((q) => q.stag q.id);
+
+        //   await prisma.quizStage.update({
+        //     where: {
+        //       id: stage.id,
+        //     },
+        //     data: {
+        //       questionIds: stagesQuestions[i],
+        //     },
+        //   });
+        // }
       }
     }
   };

@@ -633,6 +633,15 @@
       "parentDomainId": 508377,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349947,
+      "domainName": "SEUC",
+      "domainCode": "ORG_10",
+      "parentDomainName": "CIS",
+      "parentDomainId": 508370,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
     }
   ],
   "domains": [
@@ -1602,6 +1611,15 @@
       "domainCode": "NAT_23961",
       "parentDomainName": "SEJ",
       "parentDomainId": 336303,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349994,
+      "domainName": "Ukraine",
+      "domainCode": "NAT_2804",
+      "parentDomainName": "SEUC",
+      "parentDomainId": 349947,
       "isParentDomain": true,
       "domainHierarchy": "Samsung"
     }

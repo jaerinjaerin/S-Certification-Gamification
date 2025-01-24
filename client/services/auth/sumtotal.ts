@@ -1,3 +1,4 @@
+import { sumtotalUserOthersJobId } from "@/core/config/default";
 import { OAuth2Config, OAuthUserConfig } from "@auth/core/providers";
 
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
@@ -488,6 +489,11 @@ export async function fetchOrganizationDetails(
     }
   };
 
+  function isValidJobId(text9) {
+    const validValues = ["0", "1", "2", "3", "4", "5", "6", "7"];
+    return validValues.includes(String(text9));
+  }
+
   try {
     // Fetch organization data
     const results = await Promise.all(orgIds.map(fetchOrganizationData));
@@ -508,6 +514,9 @@ export async function fetchOrganizationDetails(
 
       if (integer1 === 7) {
         jobId = text9;
+        if (!isValidJobId(text9)) {
+          jobId = sumtotalUserOthersJobId;
+        }
       }
 
       if (integer1 === 5) {

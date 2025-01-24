@@ -16,9 +16,9 @@ const sesClient =
         region: process.env.AWS_SES_REGION,
       });
 
-console.log("process.env.AWS_SES_REGION:", process.env.AWS_SES_REGION);
-console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
-console.log("sesClient:", sesClient);
+// console.log("process.env.AWS_SES_REGION:", process.env.AWS_SES_REGION);
+// console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
+// console.log("sesClient:", sesClient);
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
