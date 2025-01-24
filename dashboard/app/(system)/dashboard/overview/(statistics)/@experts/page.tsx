@@ -47,6 +47,10 @@ const OverviewExperts = () => {
         setCount(data.result.count);
       });
     }
+
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (
@@ -69,27 +73,31 @@ const OverviewExperts = () => {
                     outerRadius={120}
                     fill={chartColorPrimary}
                     dataKey="value"
-                    label={({ name, value }) =>
-                      `${
-                        name === "expert" ? "Expert" : "Expert + Advanced"
-                      }: ${value}`
-                    } // 각 영역에 Label 추가
+                    label={({ name, value }) => {
+                      return `${
+                        name.toLowerCase() === "expert"
+                          ? "Expert"
+                          : "Expert + Advanced"
+                      }: ${value}`;
+                    }} // 각 영역에 Label 추가
                   >
                     {data.pie.map(
                       (
                         entry: { name: string; value: number },
                         index: number
-                      ) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                          name={
-                            entry.name === "expert"
-                              ? "Expert"
-                              : "Expert + Advanced"
-                          }
-                        />
-                      )
+                      ) => {
+                        return (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                            name={
+                              entry.name === "expert"
+                                ? "Expert"
+                                : "Expert + Advanced"
+                            }
+                          />
+                        );
+                      }
                     )}
                   </Pie>
                   <>
@@ -190,12 +198,15 @@ const renderLabelContent = (props: any) => {
   if (props.value === 0) return;
   //
   const { x, y, width, value } = props;
-  const padding = 12;
+  const padding = 5;
+
+  if (width < 30) return;
+
   return (
     <text
       x={x + width - padding}
-      y={y + padding}
-      textAnchor="middle"
+      y={y + padding + 8}
+      textAnchor="end"
       dominantBaseline="middle"
     >
       {value}

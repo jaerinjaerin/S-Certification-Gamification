@@ -20,18 +20,20 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ["elapsedSeconds", "createdAt"], // quizStageId와 createdAt으로 그룹화
+    let experts = await prisma.userQuizBadgeStageStatistics.groupBy({
+      by: ["userId", "elapsedSeconds", "createdAt"], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
-        isBadgeAcquired: true,
         createdAt: {
           gte: startOfDay(beforeWeek), // 6일 전부터
           lte: endOfDay(today), // 오늘까지
         },
+        quizStageIndex: { in: [2, 3] },
       },
       orderBy: { createdAt: "asc" }, // 날짜 순 정렬
     });
+
+    experts = filterHighestElapsedSeconds(experts);
 
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {
@@ -57,9 +59,10 @@ export async function GET(request: NextRequest) {
         const match = acc.find(
           (entry) => entry.date === dateKey.replace(/-/g, ".")
         ); // 날짜 일치 항목 찾기
+
         if (match) {
           const time = item?.elapsedSeconds || 0;
-          match.time += time; // stage_2는 expert
+          match.time += time;
         }
         return acc;
       }, initialData)
@@ -77,4 +80,20 @@ export async function GET(request: NextRequest) {
   } finally {
     prisma.$disconnect();
   }
+}
+
+function filterHighestElapsedSeconds(data: any) {
+  // Create a Map to store the highest elapsedSeconds for each userId
+  const userMap = new Map();
+
+  data.forEach((item: any) => {
+    const existingItem = userMap.get(item.userId);
+    if (!existingItem || item.elapsedSeconds > existingItem.elapsedSeconds) {
+      // Update the map if the userId is not present or the current elapsedSeconds is higher
+      userMap.set(item.userId, item);
+    }
+  });
+
+  // Return the values of the map as an array
+  return Array.from(userMap.values());
 }

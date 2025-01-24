@@ -47,6 +47,10 @@ function OverviewAchievementRate() {
         setCount(data.result.count);
       });
     }
+
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (

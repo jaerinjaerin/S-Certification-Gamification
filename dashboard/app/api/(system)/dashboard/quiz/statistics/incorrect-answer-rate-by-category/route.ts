@@ -80,20 +80,10 @@ export async function GET(request: NextRequest) {
         // AuthType별로 처리
         const authTypeGroup =
           categoryItem[authType === AuthType.SUMTOTAL ? "plus" : "none"];
-        if (!authTypeGroup[jobGroup]) {
-          authTypeGroup[jobGroup] = {
-            correct: 0,
-            incorrect: 0,
-            questionIds: [],
-          };
-        }
 
         // isCorrect에 따라 값 누적
-        if (isCorrect) {
-          authTypeGroup[jobGroup].correct += _count.isCorrect;
-        } else {
-          authTypeGroup[jobGroup].incorrect += _count.isCorrect;
-        }
+        authTypeGroup[jobGroup][isCorrect ? "correct" : "incorrect"] +=
+          _count.isCorrect;
         //
         if (questionId) {
           authTypeGroup[jobGroup].questionIds.push(questionId);

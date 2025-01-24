@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const count = await prisma.userQuizBadgeStageStatistics.count({
-      where: { ...where, isBadgeAcquired: true },
+      where: { ...where, quizStageIndex: 2 },
     });
     return NextResponse.json({ result: { count } });
   } catch (error) {

@@ -55,6 +55,10 @@ const UserOutcome = () => {
       );
       //
     }
+
+    return () => {
+      setLoading({ score: true, time: true });
+    };
   }, [state.fieldValues]);
 
   return (

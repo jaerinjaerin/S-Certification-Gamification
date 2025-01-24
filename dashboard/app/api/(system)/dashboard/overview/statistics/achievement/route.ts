@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const userQuizeBadges = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
-        isBadgeAcquired: true,
+        quizStageIndex: 2,
       },
       select: { regionId: true, domainId: true },
     });

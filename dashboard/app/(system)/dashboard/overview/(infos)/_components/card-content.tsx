@@ -5,7 +5,7 @@ type Props = { info: number | null; caption: string; unit?: "%" | "" };
 const InfoCardStyleContent = ({ info, caption, unit = "" }: Props) => {
   return (
     <>
-      {!info && <LoaderWithBackground />}
+      {info === null && <LoaderWithBackground />}
       <div className="text-zinc-950 font-bold text-size-24px my-1">
         {`${info?.toLocaleString() ?? 0}${unit}`}
       </div>

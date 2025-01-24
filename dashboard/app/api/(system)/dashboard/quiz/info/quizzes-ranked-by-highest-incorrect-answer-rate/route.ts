@@ -10,7 +10,9 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const questions = await prisma.question.findMany({});
+    const questions = await prisma.question.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
     const count = await prisma.userQuizQuestionStatistics.groupBy({
       by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
@@ -18,9 +20,6 @@ export async function GET(request: NextRequest) {
         ...where,
         questionId: { in: questions.map((q) => q.id) },
       },
-      orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
-      ],
     });
 
     // 모든 isCorrect가 있는 데이터 가져오기
@@ -32,7 +31,7 @@ export async function GET(request: NextRequest) {
       },
       _count: { isCorrect: true },
       orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
+        { questionId: "desc" }, // questionId 기준 정렬
       ],
       take,
       skip,
@@ -40,16 +39,13 @@ export async function GET(request: NextRequest) {
 
     // corrects을 기반으로 오답만 가져오기
     let incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      by: ["questionId"],
       where: {
         ...where,
         questionId: { in: corrects.map((q) => q.questionId) },
         isCorrect: false,
       },
       _count: { isCorrect: true },
-      orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
-      ],
     });
 
     // 오답처리 없을 경우 기본값 0으로 데이터생성
@@ -63,7 +59,6 @@ export async function GET(request: NextRequest) {
       .map((correct) => ({
         _count: { isCorrect: 0 }, // 없는 경우 _count.isCorrect를 0으로 설정
         questionId: correct.questionId,
-        isCorrect: false, // 기본값 false
       }));
 
     // 결과 합치기
