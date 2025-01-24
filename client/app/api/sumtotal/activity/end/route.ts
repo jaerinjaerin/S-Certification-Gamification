@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       }
     );
 
-    // console.log("activity/progress response", response);
+    console.log("activity/progress response", response);
 
     if (!response.ok) {
       // const errorData = await response.json();
