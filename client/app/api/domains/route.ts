@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
 export async function GET(request: NextRequest) {
-  console.log("GET - Domain");
+  // console.log("GET - Domain");
   const { searchParams } = new URL(request.url);
   const domainCode = searchParams.get("domain_code");
 
