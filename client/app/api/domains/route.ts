@@ -20,9 +20,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const response = NextResponse.json({ items: domains }, { status: 200 });
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    return NextResponse.json({ items: domains }, { status: 200 });
+    // response.headers.set("Cache-Control", "public, max-age=3600");
+    // return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
     Sentry.captureException(error);

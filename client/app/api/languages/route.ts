@@ -7,9 +7,11 @@ export async function GET() {
   try {
     const languages = await prisma.language.findMany();
     // console.log("languages");
-    const response = NextResponse.json({ items: languages }, { status: 200 });
+
+    return NextResponse.json({ items: languages }, { status: 200 });
+    // const response = NextResponse.json({ items: languages }, { status: 200 });
     // response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    // return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
     Sentry.captureException(error);

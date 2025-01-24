@@ -25,9 +25,9 @@ export async function GET(request: NextRequest, props: Props) {
     });
 
     // console.log("log:", log);
-    const response = NextResponse.json({ item: log }, { status: 200 });
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    return NextResponse.json({ item: log }, { status: 200 });
+    // response.headers.set("Cache-Control", "public, max-age=3600");
+    // return response;
   } catch (error) {
     console.error("Error UserCampaignQuizLog Data:", error);
     Sentry.captureException(error);

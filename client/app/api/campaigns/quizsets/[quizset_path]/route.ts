@@ -141,7 +141,7 @@ export async function GET(request: NextRequest, props: Props) {
 
     // console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       {
         item: {
           ...quizSet,
@@ -152,8 +152,8 @@ export async function GET(request: NextRequest, props: Props) {
       },
       { status: 200 }
     );
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    // response.headers.set("Cache-Control", "public, max-age=3600");
+    // return response;
   } catch (error) {
     console.error("Error fetching question data:", error);
 
