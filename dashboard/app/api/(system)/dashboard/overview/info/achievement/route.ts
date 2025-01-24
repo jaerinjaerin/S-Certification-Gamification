@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const expertCount = await prisma.userQuizBadgeStageStatistics.count({
-      where: { ...where, isBadgeAcquired: true },
+      where: { ...where, quizStageIndex: 2 },
     });
 
     const domain_goal = await prisma.domainGoal.findMany({

@@ -38,8 +38,7 @@ export async function GET(request: NextRequest) {
         )
       : 0;
 
-    let today = new Date();
-    today = addWeeks(today, 2);
+    const today = new Date();
     const startDate = startOfWeek(campaign.startedAt); // 캠페인 시작 주
     let weekIndex = 0;
     const weeklyJobData = [];
@@ -67,7 +66,7 @@ export async function GET(request: NextRequest) {
       if (isCurrentWeekValid && isWithinCampaign) {
         const weeklyWhere = {
           ...where,
-          updatedAt: {
+          createdAt: {
             gte: currentWeekStart,
             lt: weekEnd,
           },
@@ -76,7 +75,7 @@ export async function GET(request: NextRequest) {
         const plus = await prisma.userQuizBadgeStageStatistics.findMany({
           where: {
             ...weeklyWhere,
-            isBadgeAcquired: true,
+            quizStageIndex: 2,
             storeId: { not: "4" },
           },
         });
@@ -92,7 +91,7 @@ export async function GET(request: NextRequest) {
         });
 
         const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: { ...weeklyWhere, isBadgeAcquired: true, storeId: "4" },
+          where: { ...weeklyWhere, quizStageIndex: 2, storeId: "4" },
         });
 
         ses.forEach((user) => {

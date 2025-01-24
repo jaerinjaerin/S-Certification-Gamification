@@ -20,18 +20,21 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ["score", "createdAt"], // quizStageId와 createdAt으로 그룹화
+    let experts = await prisma.userQuizBadgeStageStatistics.groupBy({
+      by: ["score", "createdAt", "userId"], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
-        isBadgeAcquired: true,
         createdAt: {
           gte: startOfDay(beforeWeek), // 6일 전부터
           lte: endOfDay(today), // 오늘까지
         },
+        quizStageIndex: { in: [2, 3] },
       },
       orderBy: { createdAt: "asc" }, // 날짜 순 정렬
     });
+
+    experts = filterHighestScores(experts);
+    //
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {
       const dates = [];
@@ -56,7 +59,7 @@ export async function GET(request: NextRequest) {
         (entry) => entry.date === dateKey.replace(/-/g, ".")
       ); // 날짜 일치 항목 찾기
       if (match) {
-        const score = item.score;
+        const score = item.score / experts.length;
         match.score += score; // stage_2는 expert
       }
       return acc;
@@ -72,4 +75,20 @@ export async function GET(request: NextRequest) {
   } finally {
     prisma.$disconnect();
   }
+}
+
+function filterHighestScores(data: any) {
+  // Create a Map to store the highest score for each userId
+  const userMap = new Map();
+
+  data.forEach((item: any) => {
+    const existingItem = userMap.get(item.userId);
+    if (!existingItem || item.score > existingItem.score) {
+      // Update the map if the userId is not present or the current score is higher
+      userMap.set(item.userId, item);
+    }
+  });
+
+  // Return the values of the map as an array
+  return Array.from(userMap.values());
 }

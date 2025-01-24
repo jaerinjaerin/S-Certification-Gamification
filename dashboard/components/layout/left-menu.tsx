@@ -1,15 +1,5 @@
 "use client";
-import {
-  LayoutDashboard,
-  Users,
-  Sheet,
-  NotebookPen,
-  Tag,
-  Images,
-  Settings2,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { LayoutDashboard, ChevronDown, ChevronUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -29,33 +19,33 @@ const menuItems: MenuItems = [
     title: "Dashboard",
     items: [
       { label: "Overview", icon: LayoutDashboard, href: "/dashboard/overview" },
-      { label: "User", icon: Users, href: "/dashboard/user" },
-      { label: "Quiz", icon: Sheet, href: "/dashboard/quiz" },
+      // { label: "User", icon: Users, href: "/dashboard/user" },
+      // { label: "Quiz", icon: Sheet, href: "/dashboard/quiz" },
     ],
   },
-  {
-    title: "CMS",
-    items: [
-      {
-        label: "Questions",
-        icon: NotebookPen,
-        children: [
-          { label: "Question Bank", href: "/cms/questions/question-bank" },
-          { label: "Translation", href: "/cms/questions/translation" },
-        ],
-      },
-      { label: "Certification", icon: Tag, href: "/cms/certification" },
-      { label: "Media Library", icon: Images, href: "/cms/media-library" },
-      {
-        label: "Settings",
-        icon: Settings2,
-        children: [
-          { label: "User Setting", href: "/cms/settings/user-setting" },
-          { label: "Question Setting", href: "/cms/settings/question-setting" },
-        ],
-      },
-    ],
-  },
+  // {
+  //   title: "CMS",
+  //   items: [
+  //     {
+  //       label: "Questions",
+  //       icon: NotebookPen,
+  //       children: [
+  //         { label: "Question Bank", href: "/cms/questions/question-bank" },
+  //         { label: "Translation", href: "/cms/questions/translation" },
+  //       ],
+  //     },
+  //     { label: "Certification", icon: Tag, href: "/cms/certification" },
+  //     { label: "Media Library", icon: Images, href: "/cms/media-library" },
+  //     {
+  //       label: "Settings",
+  //       icon: Settings2,
+  //       children: [
+  //         { label: "User Setting", href: "/cms/settings/user-setting" },
+  //         { label: "Question Setting", href: "/cms/settings/question-setting" },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 
 // Menu 컴포넌트

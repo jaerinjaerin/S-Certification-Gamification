@@ -42,15 +42,17 @@ export function OverviewGoalAchievement() {
         "overview/statistics/progress-of-goal-achievement",
         (data) => {
           const { jobData, goalTotalScore, cumulativeRate } = data.result;
-          console.log("🚀 ~ useEffect ~ jobData:", jobData);
           count.current = cumulativeRate;
           expertRange.current = goalTotalScore;
           setData(jobData);
           setLoading(false);
         }
       );
-      //
     }
+
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (

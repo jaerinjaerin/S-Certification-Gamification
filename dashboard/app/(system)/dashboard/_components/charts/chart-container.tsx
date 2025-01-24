@@ -34,7 +34,7 @@ const ChartContainer = ({ children }: Props) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative p-4 border rounded-xl">
+    <div ref={containerRef} className="relative p-6 border rounded-xl">
       {children(resize)}
     </div>
   );

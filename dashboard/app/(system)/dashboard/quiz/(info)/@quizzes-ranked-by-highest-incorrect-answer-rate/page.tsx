@@ -66,7 +66,7 @@ const QuizQuizzesRanked = () => {
           return (
             <>
               {loading && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="Domain" />
+              <CardCustomHeaderWithoutDesc title="Quizzes Ranked by Highest Incorrect Answer Rate" />
               <div className="border rounded-md border-zinc-200">
                 <IncorrectTable
                   table={table}

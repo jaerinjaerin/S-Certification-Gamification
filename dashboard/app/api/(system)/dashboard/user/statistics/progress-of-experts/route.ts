@@ -21,16 +21,16 @@ export async function GET(request: NextRequest) {
     );
 
     const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ["quizStageId", "createdAt"], // quizStageId와 createdAt으로 그룹화
+      by: ["quizStageIndex", "createdAt"], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
-        isBadgeAcquired: true,
         createdAt: {
           gte: startOfDay(beforeWeek), // 6일 전부터
           lte: endOfDay(today), // 오늘까지
         },
+        quizStageIndex: { in: [2, 3] },
       },
-      _count: { quizStageId: true }, // 각 그룹에 대한 개수 집계
+      _count: { quizStageIndex: true }, // 각 그룹에 대한 개수 집계
       orderBy: { createdAt: "asc" }, // 날짜 순 정렬
     });
 
@@ -60,11 +60,12 @@ export async function GET(request: NextRequest) {
         (entry) => entry.date === dateKey.replace(/-/g, ".")
       ); // 날짜 일치 항목 찾기
       if (match) {
-        const count = item._count.quizStageId;
-        if (item.quizStageId === "stage_2") {
+        const count = item._count.quizStageIndex;
+        if (item.quizStageIndex === 2) {
           match.expert += count; // stage_2는 expert
-        } else if (item.quizStageId === "stage_3") {
+        } else if (item.quizStageIndex === 3) {
           match.advanced += count; // stage_3은 advanced
+          match.expert -= count;
         }
         match.total = match.expert + match.advanced; // total 계산
       }

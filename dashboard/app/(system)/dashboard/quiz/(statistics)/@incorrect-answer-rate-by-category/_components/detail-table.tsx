@@ -65,7 +65,7 @@ const DetailIncorrectTable = ({
           {group}
         </span>
       </div>
-      <div className="mt-5 border rounded-md">
+      <div className="mt-5 border rounded-md max-h-[28.3rem] overflow-y-auto">
         <IncorrectTable table={table} loading={loading} />
       </div>
     </div>

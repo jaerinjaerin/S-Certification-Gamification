@@ -42,6 +42,10 @@ export function UserProgressExperts() {
         }
       );
     }
+
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (

@@ -27,8 +27,11 @@ const QuizIncorrectAnswerRate = () => {
           setLoading(false);
         }
       );
-      //
     }
+
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (
@@ -49,7 +52,8 @@ const QuizIncorrectAnswerRate = () => {
                 <ResponsiveHeatMapCanvas
                   data={data}
                   margin={{ top: 20, right: 120, bottom: 60, left: 120 }}
-                  valueFormat=">-.2s"
+                  xOuterPadding={0.3}
+                  valueFormat="^-02.0f"
                   theme={{
                     labels: {
                       text: {
@@ -58,6 +62,7 @@ const QuizIncorrectAnswerRate = () => {
                     },
                     axis: {
                       ticks: {
+                        line: { stroke: "transparent" },
                         text: {
                           fontSize: 16,
                           fontWeight: 500,
@@ -100,36 +105,44 @@ const QuizIncorrectAnswerRate = () => {
                   }}
                   axisRight={null}
                   axisLeft={{
-                    tickSize: 0,
-                    tickPadding: 15,
+                    tickSize: -75,
                     tickRotation: -45,
                     legend: "Category",
                     legendPosition: "middle",
-                    legendOffset: -100,
+                    legendOffset: -75,
                     truncateTickAt: 0,
                   }}
                   colors={{
                     type: "diverging",
                     scheme: "yellow_green_blue",
                   }}
+                  tooltip={({ cell: { value, id, color } }) => {
+                    return (
+                      <div className="flex items-center space-x-2 p-3 rounded-xl shadow-md bg-white/90">
+                        <span
+                          className="flex items-center flex-row size-3 rounded-full border border-zinc-500"
+                          style={{ backgroundColor: color }}
+                        />
+                        <strong>{`${id.replace(".", " / ")} : `}</strong>
+                        <strong>{`${value?.toLocaleString()}%`}</strong>
+                      </div>
+                    );
+                  }}
                   labelTextColor={(cell) => {
-                    // RGB 값을 가져옴 (예: "rgb(255, 0, 0)")
                     const color = cell.color || "#000000";
 
-                    // 색상 밝기 계산 (YIQ 공식)
                     const [r, g, b] = color
                       .replace(/^rgba?\(|\s+|\)$/g, "")
                       .split(",")
                       .map(Number);
                     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-                    // 밝기가 낮으면 흰색, 높으면 검정색
                     return brightness > 128 ? "#000000" : "#ffffff";
                   }}
                   legends={[
                     {
                       anchor: "right",
-                      translateX: 50,
+                      translateX: -30,
                       translateY: 0,
                       length: width / 2 - 80,
                       thickness: 24,

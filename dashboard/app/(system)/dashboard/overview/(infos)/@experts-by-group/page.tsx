@@ -19,6 +19,9 @@ const OverviewExpertsByGroupInfo = () => {
         setLoading(false);
       });
     }
+    return () => {
+      setLoading(true);
+    };
   }, [state.fieldValues]);
 
   return (

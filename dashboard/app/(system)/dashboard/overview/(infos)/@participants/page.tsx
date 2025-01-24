@@ -15,6 +15,10 @@ const OverviewParticipantsInfo = () => {
         setCount(data.result.count ?? 0);
       });
     }
+
+    return () => {
+      setCount(null);
+    };
   }, [state.fieldValues]);
 
   return (

@@ -18,17 +18,16 @@ export async function GET(request: NextRequest) {
     const expertCount = await prisma.userQuizBadgeStageStatistics.count({
       where: {
         ...where,
-        isBadgeAcquired: true,
-        quizStageId: "stage_2",
+        quizStageIndex: 2,
       },
     });
 
     const advancedCount = await prisma.userQuizBadgeStageStatistics.count({
-      where: { ...where, isBadgeAcquired: true, quizStageId: "stage_3" },
+      where: { ...where, quizStageIndex: 3 },
     });
 
     const pie = [
-      { name: names.expert, value: expertCount },
+      { name: names.expert, value: expertCount - advancedCount },
       { name: names.advanced, value: advancedCount },
     ];
 
@@ -45,7 +44,11 @@ export async function GET(request: NextRequest) {
     });
 
     const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, isBadgeAcquired: true, storeId: { not: "4" } },
+      where: {
+        ...where,
+        quizStageIndex: { in: [2, 3] },
+        storeId: { not: "4" },
+      },
     });
 
     plus.forEach((user) => {
@@ -53,9 +56,10 @@ export async function GET(request: NextRequest) {
       if (jobName) {
         jobData.forEach((item) => {
           if (item.name === jobName.toUpperCase()) {
-            if (user.quizStageId === "stage_3") {
+            if (user.quizStageIndex === 3) {
               item[names.advanced] = (item[names.advanced] as number) + 1;
-            } else {
+              item[names.expert] = (item[names.expert] as number) - 1;
+            } else if (user.quizStageIndex === 2) {
               item[names.expert] = (item[names.expert] as number) + 1;
             }
           }
@@ -64,7 +68,7 @@ export async function GET(request: NextRequest) {
     });
 
     const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, isBadgeAcquired: true, storeId: "4" },
+      where: { ...where, quizStageIndex: { in: [2, 3] }, storeId: "4" },
     });
 
     ses.forEach((user) => {
@@ -73,9 +77,10 @@ export async function GET(request: NextRequest) {
         const jobNamewithSes = `${jobName} (SES)`;
         jobData.forEach((item) => {
           if (item.name === jobNamewithSes.toUpperCase()) {
-            if (user.quizStageId === "stage_3") {
+            if (user.quizStageIndex === 3) {
               item[names.advanced] = (item[names.advanced] as number) + 1;
-            } else {
+              item[names.expert] = (item[names.expert] as number) - 1;
+            } else if (user.quizStageIndex === 2) {
               item[names.expert] = (item[names.expert] as number) + 1;
             }
           }
@@ -94,9 +99,3 @@ export async function GET(request: NextRequest) {
     prisma.$disconnect();
   }
 }
-
-// {
-//   name: "FSM",
-//   expert: 3490,
-//   advanced: 4300,
-// },

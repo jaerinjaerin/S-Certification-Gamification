@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
     const experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
-        isBadgeAcquired: true,
+        quizStageIndex: { in: [2, 3] },
         domainId: {
           in: domainsGoals
             .map((goal) => goal.domainId)
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
         (exp) => exp.domainId === domain.id
       );
       const advancedByDomain = expertByDomain.filter(
-        (exp) => exp.quizStageId === "stage_3"
+        (exp) => exp.quizStageIndex === 3
       );
 
       //   expers data
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
           const lowJobName =
             jobName.toLowerCase() as keyof typeof jobData as string;
           if (lowJobName in jobData) {
-            if (user.quizStageId === "stage_3") {
+            if (user.quizStageIndex === 3) {
               jobData[`${lowJobName}_advanced`] += 1;
             }
             jobData[lowJobName] += 1;
@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
           const lowJobName =
             `${jobName.toLowerCase()}(ses)` as keyof typeof jobData as string;
           if (lowJobName in jobData) {
-            if (user.quizStageId === "stage_3") {
+            if (user.quizStageIndex === 3) {
               jobData[`${lowJobName}_advanced`] += 1;
             }
             jobData[lowJobName] += 1;
@@ -148,7 +148,7 @@ export async function GET(request: NextRequest) {
       );
 
       const plusExpertsAdvanced = plusExperts.filter(
-        (exp) => exp.quizStageId === "stage_3"
+        (exp) => exp.quizStageIndex === 3
       );
 
       const noneExperts = experts.filter(
@@ -157,7 +157,7 @@ export async function GET(request: NextRequest) {
       );
 
       const noneExpertsAdvanced = noneExperts.filter(
-        (exp) => exp.quizStageId === "stage_3"
+        (exp) => exp.quizStageIndex === 3
       );
 
       return {
@@ -167,17 +167,30 @@ export async function GET(request: NextRequest) {
           : null,
         region: region ? { id: region.id, name: region.name } : null,
         goal: goalTotal,
-        expert: `${expertByDomain.length}(${advancedByDomain.length})`,
-        achievement: (expertByDomain.length / goalTotal) * 100,
+        expert: `${expertByDomain.length - advancedByDomain.length}(${
+          advancedByDomain.length
+        })`,
+        achievement:
+          ((expertByDomain.length - advancedByDomain.length) / goalTotal) * 100,
         expertDetail: {
           date: domain.updatedAt,
           country: domain.name,
-          plus: `${plusExperts.length} (${plusExpertsAdvanced.length})`,
-          none: `${noneExperts.length} (${noneExpertsAdvanced.length})`,
-          ff: `${jobData.ff} (${jobData.ff_advanced})`,
-          fsm: `${jobData.fsm} (${jobData.fsm_advanced})`,
-          "ff(ses)": `${jobData["ff(ses)"]} (${jobData["ff(ses)_advanced"]})`,
-          "fsm(ses)": `${jobData["fsm(ses)"]} (${jobData["fsm(ses)_advanced"]})`,
+          plus: `${plusExperts.length - plusExpertsAdvanced.length} (${
+            plusExpertsAdvanced.length
+          })`,
+          none: `${noneExperts.length - noneExpertsAdvanced.length} (${
+            noneExpertsAdvanced.length
+          })`,
+          ff: `${jobData.ff - jobData.ff_advanced} (${jobData.ff_advanced})`,
+          fsm: `${jobData.fsm - jobData.fsm_advanced} (${
+            jobData.fsm_advanced
+          })`,
+          "ff(ses)": `${jobData["ff(ses)"] - jobData["ff(ses)_advanced"]} (${
+            jobData["ff(ses)_advanced"]
+          })`,
+          "fsm(ses)": `${jobData["fsm(ses)"] - jobData["fsm(ses)_advanced"]} (${
+            jobData["fsm(ses)_advanced"]
+          })`,
         },
       };
     });
