@@ -1731,14 +1731,6 @@
     "channels": []
   },
   {
-    "id": "349978",
-    "name": "South Africa",
-    "code": "NAT_2710",
-    "subsidiaryId": "349937",
-    "regionId": "508375",
-    "channels": []
-  },
-  {
     "id": "349992",
     "name": "Taiwan",
     "code": "NAT_2158",
@@ -1747,9 +1739,9 @@
     "channels": []
   },
   {
-    "id": "349992",
+    "id": "335242",
     "name": "Hong Kong",
-    "code": "NAT_2158",
+    "code": "NAT_2344",
     "subsidiaryId": "349945",
     "regionId": "508378",
     "channels": []
@@ -1760,6 +1752,14 @@
     "code": "NAT_2250",
     "subsidiaryId": "49",
     "regionId": "508369",
+    "channels": []
+  },
+  {
+    "id": "361267",
+    "name": "Ghana",
+    "code": "NAT_2288",
+    "subsidiaryId": "349948",
+    "regionId": "508375",
     "channels": []
   }
 ]
