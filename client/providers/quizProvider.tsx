@@ -329,8 +329,9 @@ export const QuizProvider = ({
 
     if (
       _quizLog?.quizSetPath?.toLocaleLowerCase() ===
-      ("NAT_2756_fr-FR"?.toLocaleLowerCase() ||
-        "NAT_2756_fr-FR-ch"?.toLocaleLowerCase())
+        "NAT_2756_fr-FR"?.toLocaleLowerCase() ||
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+        "NAT_2756_fr-FR-ch"?.toLocaleLowerCase()
     ) {
       if (currentQuizStageIndex === 2) {
         return "252558";
