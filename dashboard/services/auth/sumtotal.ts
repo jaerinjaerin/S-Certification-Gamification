@@ -1,5 +1,5 @@
-import { sumtotalUserOthersJobId } from "@/core/config/default";
-import { OAuth2Config, OAuthUserConfig } from "@auth/core/providers";
+import { sumtotalUserOthersJobId } from '@/core/config/default';
+import { OAuth2Config, OAuthUserConfig } from '@auth/core/providers';
 
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
 export interface Address {
@@ -295,23 +295,23 @@ export interface ExtendedOAuth2Config<Profile> extends OAuth2Config<Profile> {
 
 export default function SumTotal<SumtotalProfile>(
   callbackUrl: string,
-  options: OAuthUserConfig<SumtotalProfile>,
+  options: OAuthUserConfig<SumtotalProfile>
 ): ExtendedOAuth2Config<SumtotalProfile> {
   // console.log("SumTotal callbackUrl:", callbackUrl);
   return {
-    id: "sumtotal",
-    name: "SumTotal",
-    type: "oauth",
+    id: 'sumtotal',
+    name: 'SumTotal',
+    type: 'oauth',
     authorization: {
-      url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
+      url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
       params: {
-        scope: "allapis offline_access",
-        prompt: "select_account",
+        scope: 'allapis offline_access',
+        prompt: 'select_account',
         redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
       },
     },
-    token: "https://samsung.sumtotal.host/apisecurity/connect/token",
-    userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+    token: 'https://samsung.sumtotal.host/apisecurity/connect/token',
+    userinfo: 'https://samsung.sumtotal.host/apis/api/v2/advanced/users',
     // redirectProxyUrl: process.env.SUMTOTAL_CALLBACK_URL,
     callbackUrl: callbackUrl,
     // callback: process.env.SUMTOTAL_CALLBACK_URL,
@@ -321,7 +321,7 @@ export default function SumTotal<SumtotalProfile>(
 
 export function filterResultsByLatestDate(
   results: OrganizationResult[],
-  personOrganization: PersonOrganization[],
+  personOrganization: PersonOrganization[]
 ): Organization[] {
   // Flatten the results array into a single array
   const flatResults = results.flatMap((result) => result.data);
@@ -331,7 +331,7 @@ export function filterResultsByLatestDate(
     personOrganization.map((org) => [
       org.organizationId,
       new Date(org.joiningDate),
-    ]),
+    ])
   );
 
   // Reduce the flattened results array to keep only the latest entry for each integer1
@@ -354,7 +354,7 @@ export function filterResultsByLatestDate(
       }
 
       return acc;
-    }, {}),
+    }, {})
   );
 
   return latestResults;
@@ -370,7 +370,7 @@ export type OrganizationDetailsResultData = {
 
 export async function fetchOrganizationDetails(
   accessToken: string,
-  profile: { personOrganization: any[] },
+  profile: { personOrganization: any[] }
 ): Promise<OrganizationDetailsResultData> {
   let jobId: string | null = null;
   let storeId: string | null = null;
@@ -379,7 +379,7 @@ export async function fetchOrganizationDetails(
   let channelSegmentId: string | null = null;
 
   if (!accessToken) {
-    console.error("Access token is required");
+    console.error('Access token is required');
     return { jobId, storeId, storeSegmentText, channelId, channelSegmentId };
   }
 
@@ -392,12 +392,12 @@ export async function fetchOrganizationDetails(
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
         {
-          cache: "no-store",
+          cache: 'no-store',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
           },
-        },
+        }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch data: ${response.statusText}`);
@@ -410,19 +410,19 @@ export async function fetchOrganizationDetails(
   };
 
   const fetchOrganizationDataByParentName = async (
-    parentName: string,
+    parentName: string
   ): Promise<any> => {
     try {
       const encodedParentName = encodeURIComponent(parentName);
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?orgName=${encodedParentName}`,
         {
-          cache: "no-store",
+          cache: 'no-store',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
           },
-        },
+        }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch data: ${response.statusText}`);
@@ -434,8 +434,8 @@ export async function fetchOrganizationDetails(
     }
   };
 
-  function isValidJobId(text9) {
-    const validValues = ["0", "1", "2", "3", "4", "5", "6", "7"];
+  function isValidJobId(text9: string) {
+    const validValues = ['0', '1', '2', '3', '4', '5', '6', '7'];
     return validValues.includes(String(text9));
   }
 
@@ -444,7 +444,7 @@ export async function fetchOrganizationDetails(
     const results = await Promise.all(orgIds.map(fetchOrganizationData));
     const filteredResults = filterResultsByLatestDate(
       results,
-      profile.personOrganization,
+      profile.personOrganization
     );
 
     let parentOrganizationNames: string | null = null;
@@ -474,7 +474,7 @@ export async function fetchOrganizationDetails(
     // Fetch parent organization details if needed
     if (parentOrganizationNames) {
       const parentData = await fetchOrganizationDataByParentName(
-        parentOrganizationNames,
+        parentOrganizationNames
       );
 
       if (parentData && parentData.data.length > 0) {
@@ -487,7 +487,7 @@ export async function fetchOrganizationDetails(
       }
     }
   } catch (error) {
-    console.error("Error processing organization details:", error);
+    console.error('Error processing organization details:', error);
   }
 
   // Return the collected information

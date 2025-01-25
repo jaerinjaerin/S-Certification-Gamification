@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
 
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
@@ -111,10 +113,9 @@ const columns: ColumnDef<UserListProps>[] = [
     cell: ({ row }) => {
       if (row.original.authType !== 'SUMTOTAL') return '';
       const badgeActivities = row.original.badgeActivities;
-      const activity =
-        badgeActivities.find((activity) => activity.order === 3) || '';
-      const attended = activity.hasAttended ? '✅' : '⛔️';
+      const activity = badgeActivities.find((activity) => activity.order === 3);
       if (activity) {
+        const attended = activity.hasAttended ? '✅' : '⛔️';
         return `${activity.activityId} ${attended}`;
       } else {
         return '';
@@ -127,10 +128,9 @@ const columns: ColumnDef<UserListProps>[] = [
     cell: ({ row }) => {
       if (row.original.authType !== 'SUMTOTAL') return '';
       const badgeActivities = row.original.badgeActivities;
-      const activity =
-        badgeActivities.find((activity) => activity.order === 4) || '';
-      const attended = activity.hasAttended ? '✅' : '⛔️';
+      const activity = badgeActivities.find((activity) => activity.order === 4);
       if (activity) {
+        const attended = activity.hasAttended ? '✅' : '⛔️';
         return `${activity.activityId} ${attended}`;
       } else {
         return '';

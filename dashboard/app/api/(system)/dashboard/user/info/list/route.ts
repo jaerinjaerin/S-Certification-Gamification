@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { decrypt } from '@/utils/encrypt';
 import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
-import { Account } from '@prisma/client';
+import { Account, Prisma } from '@prisma/client';
 import { refreshToken } from '@/services/api/refresh_token';
+import UserWhereInput = Prisma.UserWhereInput;
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest) {
     const session = await auth();
     const account = await prisma.account.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session?.user.id,
       },
     });
 
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     const { regionId, subsidiaryId, domainId, createdAt, authType } = where;
     // Construct the dynamic where clause
-    const whereClause: any = { authType, createdAt }; // Base condition with authType and createdAt
+    const whereClause: UserWhereInput = { authType, createdAt }; // Base condition with authType and createdAt
 
     if (domainId) {
       whereClause.domainId = domainId; // Use domainId if it's not "all"
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const count = await prisma.user.count({
-      where: whereClause,
+      where: { ...whereClause },
     });
 
     const users = await prisma.user.findMany({
@@ -53,11 +54,11 @@ export async function GET(request: NextRequest) {
 
     const result = await Promise.all(
       users.map(async (user) => {
-        const quizLog = await prisma.userQuizLog.findMany({
-          where: {
-            userId: user.id, // Ensure only statistics related to the current user are fetched
-          },
-        });
+        // const quizLog = await prisma.userQuizLog.findMany({
+        //   where: {
+        //     userId: user.id, // Ensure only statistics related to the current user are fetched
+        //   },
+        // });
         const quizStatistics = await prisma.userQuizStatistics.findMany({
           where: {
             userId: user.id, // Ensure only statistics related to the current user are fetched
@@ -140,7 +141,7 @@ export async function GET(request: NextRequest) {
             return {
               ...activity,
               hasAttended: attend.hasAttended, // Add the attend status to each badgeActivity
-            };
+            } as BadgeActivity;
           })
         );
 
@@ -177,10 +178,12 @@ export async function GET(request: NextRequest) {
 }
 
 const testBadgeAttend = async (
-  account: Account,
-  userId: string,
-  activityId: string
+  account: Account | null,
+  userId: string | null,
+  activityId: string | null
 ) => {
+  if (!account || !userId || !activityId) return { hasAttended: false };
+
   try {
     let response = await fetch(
       `https://samsung.sumtotal.host/apis/api/v1/users/${userId}/activities/${activityId}/progress/details`,

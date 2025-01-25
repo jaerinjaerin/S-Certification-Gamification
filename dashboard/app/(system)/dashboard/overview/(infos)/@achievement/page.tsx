@@ -1,9 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
-import InfoCardStyleContent from "../_components/card-content";
-import InfoCardStyleContainer from "../_components/card-with-title";
-import { useOverviewContext } from "../../_provider/provider";
-import { fetchData } from "../../../_lib/fetch";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
+import { useEffect, useState } from 'react';
+import InfoCardStyleContent from '../_components/card-content';
+import InfoCardStyleContainer from '../_components/card-with-title';
+import { useOverviewContext } from '../../_provider/provider';
+import { fetchData } from '../../../_lib/fetch';
 
 const OverviewAchievementInfo = () => {
   const { state } = useOverviewContext();
@@ -11,7 +14,7 @@ const OverviewAchievementInfo = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      fetchData(state.fieldValues, "overview/info/achievement", (data) => {
+      fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
         setCount(data.result.count ?? 0);
       });
     }

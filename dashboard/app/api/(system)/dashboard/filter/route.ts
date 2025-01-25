@@ -1,5 +1,5 @@
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from '@/prisma-client';
+import { NextResponse } from 'next/server';
 
 async function fetchDependentFilters() {
   // Step 1: Fetch all regions
@@ -68,7 +68,7 @@ async function fetchDependentFilters() {
   };
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     await prisma.$connect();
 
@@ -78,13 +78,13 @@ export async function GET(request: NextRequest) {
       campaign: [],
       userGroup: {
         all: {
-          name: "All",
-          id: "all",
+          name: 'All',
+          id: 'all',
         },
-        plus: { name: "S+ User", id: "plus" },
+        plus: { name: 'S+ User', id: 'plus' },
         none: {
-          name: "Non S+ User",
-          id: "none",
+          name: 'Non S+ User',
+          id: 'none',
         },
       },
       filters: {
@@ -108,9 +108,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

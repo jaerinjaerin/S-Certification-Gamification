@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from "react";
-import { useUserContext } from "../../_provider/provider";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
+import { useEffect, useRef, useState } from 'react';
+import { useUserContext } from '../../_provider/provider';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
 import {
   Table,
   TableBody,
@@ -12,67 +14,67 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { LoaderWithBackground } from "@/components/loader";
-import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
-import { ResponsiveContainer } from "recharts";
-import Pagination from "../../../_components/pagenation";
+} from '@tanstack/react-table';
+import { LoaderWithBackground } from '@/components/loader';
+import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
+import { ResponsiveContainer } from 'recharts';
+import Pagination from '../../../_components/pagenation';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/tooltip';
+import { Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
-    id: "no",
-    header: "No",
+    id: 'no',
+    header: 'No',
     cell: (info) => {
       const { pageIndex, pageSize } = info.table.getState().pagination;
       return pageIndex * pageSize + info.row.index + 1; // 자동 번호 계산
     },
   },
   {
-    accessorKey: "region",
-    header: "Region",
+    accessorKey: 'region',
+    header: 'Region',
     cell: ({ getValue }) => {
       const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
+      return value ? value.name : '';
     },
   },
   {
-    accessorKey: "subsidiary",
-    header: "Subsidiary",
+    accessorKey: 'subsidiary',
+    header: 'Subsidiary',
     cell: ({ getValue }) => {
       const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
+      return value ? value.name : '';
     },
   },
   {
-    accessorKey: "domain",
-    header: "Domain",
+    accessorKey: 'domain',
+    header: 'Domain',
     cell: ({ getValue }) => {
       const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : "";
+      return value ? value.name : '';
     },
   },
   {
-    accessorKey: "goal",
-    header: "Goal",
+    accessorKey: 'goal',
+    header: 'Goal',
   },
   {
-    accessorKey: "expert",
-    header: "Expert(Advanced)",
+    accessorKey: 'expert',
+    header: 'Expert(Advanced)',
     cell: ({ row }) => {
       const expert = row.original.expert;
       const { date, country, ...expertDetail } = row.original.expertDetail;
@@ -91,23 +93,23 @@ const columns: ColumnDef<DomainProps>[] = [
                 className="w-[17.125rem] text-sm bg-background shadow-sm p-5 border"
                 side="right"
                 align="center"
-                style={{ marginLeft: "1rem" }}
+                style={{ marginLeft: '1rem' }}
               >
                 <div className="flex flex-col space-y-3 text-zinc-500 bg-background">
                   <div className="flex space-x-3">
                     <div>
-                      {new Date(date).toLocaleString("ko-KR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
+                      {new Date(date).toLocaleString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
                       })}
                     </div>
                     <div> {country}</div>
                   </div>
                   {Object.entries(expertDetail).map(([key, value]) => {
                     let keyName = key.toUpperCase();
-                    if (key.toLowerCase() === "plus") keyName = "S+";
-                    else if (key.toLowerCase() === "none") keyName = "Non S+";
+                    if (key.toLowerCase() === 'plus') keyName = 'S+';
+                    else if (key.toLowerCase() === 'none') keyName = 'Non S+';
                     return (
                       <div
                         key={key}
@@ -131,8 +133,8 @@ const columns: ColumnDef<DomainProps>[] = [
     },
   },
   {
-    accessorKey: "achievement",
-    header: "Achievement rate",
+    accessorKey: 'achievement',
+    header: 'Achievement rate',
     cell: ({ getValue }) => {
       const value = getValue<number>();
       return `${value.toLocaleString()}%`;
@@ -169,7 +171,7 @@ const UserDomain = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        "user/info/domain",
+        'user/info/domain',
         (data) => {
           total.current = data.total;
           setData(data.result);
@@ -240,7 +242,7 @@ const UserDomain = () => {
                           colSpan={columns.length}
                           className="h-24 text-center"
                         >
-                          {loading ? "" : "No results."}
+                          {loading ? '' : 'No results.'}
                         </TableCell>
                       </TableRow>
                     )}

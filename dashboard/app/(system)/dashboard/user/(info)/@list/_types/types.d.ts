@@ -8,12 +8,13 @@ type UserListProps = {
   quizDomain: string;
   providerUserId: string;
   providerPersonId: string;
-  badgeActivities: BadgeActivitiy[];
+  badgeActivities: BadgeActivity[];
   lastCompletedStage: number;
   score: number;
 };
 
-type BadgeActivitiy = {
-  order: number;
-  activityId: string;
+type BadgeActivity = {
+  order?: number;
+  activityId?: string;
+  hasAttended?: boolean;
 };
