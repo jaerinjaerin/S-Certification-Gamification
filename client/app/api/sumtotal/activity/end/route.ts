@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       }
     );
 
-    console.log("activity/progress response", response);
+    // console.log("activity/progress response", response);
 
     if (!response.ok) {
       // const errorData = await response.json();
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     Sentry.captureMessage("response", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activitie:", error);
+    console.error("Error end activity:", error);
     Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
