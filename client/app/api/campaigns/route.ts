@@ -25,7 +25,7 @@ export async function GET(request: Request) {
     });
 
     if (campaign == null) {
-      Sentry.captureMessage("Campaign not found");
+      Sentry.captureMessage(`Campaign not found: ${campaignName}`);
       return NextResponse.json(
         { message: "Campaign not found" },
         { status: 404 }

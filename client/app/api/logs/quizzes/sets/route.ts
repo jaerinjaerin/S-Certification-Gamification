@@ -315,7 +315,7 @@ export async function GET(request: NextRequest) {
       throw new ApiError(
         404,
         "NOT_FOUND",
-        "Campaign with the specified name does not exist"
+        `Campaign with the specified name does not exist: ${campaignName}`
       );
     }
 
