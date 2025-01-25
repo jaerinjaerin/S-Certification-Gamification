@@ -212,7 +212,13 @@ export default function GuestRegisterPage() {
 
   const routeQuizPage = () => {
     if (!selectedCountry) {
-      assert(false, "Please select a country.");
+      setErrorMessage("Please select a country.");
+      return;
+    }
+
+    if (!selectedJobId) {
+      setErrorMessage("Please select a job group.");
+      return;
     }
 
     createItem({
@@ -221,7 +227,7 @@ export default function GuestRegisterPage() {
         domainId: selectedCountry.id,
         domainCode: selectedCountry.code,
         subsidiaryId: selectedCountry.subsidiaryId,
-        regionId: selectedCountry.regionId,
+        regionId: selectedCountry?.regionId,
         jobId: jobs.find((j) => j.value === selectedJobId)?.id,
         storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
         languageCode: languageCode,
