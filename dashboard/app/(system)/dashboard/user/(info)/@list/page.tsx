@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { useUserContext } from "../../_provider/provider";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
+import { useEffect, useRef, useState } from 'react';
+import { useUserContext } from '../../_provider/provider';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
 import {
   Table,
   TableBody,
@@ -12,71 +12,71 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { LoaderWithBackground } from "@/components/loader";
-import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
-import { ResponsiveContainer } from "recharts";
-import Pagination from "../../../_components/pagenation";
+} from '@tanstack/react-table';
+import { LoaderWithBackground } from '@/components/loader';
+import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
+import { ResponsiveContainer } from 'recharts';
+import Pagination from '../../../_components/pagenation';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
-    id: "no",
-    header: "No",
+    id: 'no',
+    header: 'No',
     cell: (info) => {
       const { pageIndex, pageSize } = info.table.getState().pagination;
       return pageIndex * pageSize + info.row.index + 1; // 자동 번호 계산
     },
   },
   {
-    accessorKey: "authType",
-    header: "S+",
+    accessorKey: 'authType',
+    header: 'S+',
     cell: ({ getValue }) => {
       const value = getValue<string>();
-      return value === "SUMTOTAL" ? "S+ User" : "Non S+ User";
+      return value === 'SUMTOTAL' ? 'S+ User' : 'Non S+ User';
     },
   },
   {
-    accessorKey: "providerUserId",
-    header: "ID",
+    accessorKey: 'providerUserId',
+    header: 'ID',
   },
   {
-    accessorKey: "region",
-    header: "Region",
+    accessorKey: 'region',
+    header: 'Region',
   },
   {
-    accessorKey: "subsidiary",
-    header: "Subsidiary",
+    accessorKey: 'subsidiary',
+    header: 'Subsidiary',
   },
   {
-    accessorKey: "domain",
-    header: "Domain",
+    accessorKey: 'domain',
+    header: 'Domain',
     cell: ({ row }) => {
       const domain = row.original.domain;
       const quizDomain = row.original.quizDomain;
       const domainName = `${domain} (${quizDomain})`;
       if (domain != quizDomain) {
-        return <span className={"text-red-500"}>{domainName}</span>;
+        return <span className={'text-red-500'}>{domainName}</span>;
       }
       return domain;
     },
   },
   {
-    accessorKey: "expert",
-    header: "Expert",
+    accessorKey: 'expert',
+    header: 'Expert',
     cell: ({ row }) => {
       const lastCompletedStage = row.original.lastCompletedStage;
       if (lastCompletedStage === 3) {
         return (
           <div
             className={
-              "text-orange-700 bg-orange-100 border-orange-300 border rounded-md text-size-10px font-medium"
+              'text-orange-700 bg-orange-100 border-orange-300 border rounded-md text-size-10px font-medium'
             }
           >
             Expert Adv.
@@ -86,7 +86,7 @@ const columns: ColumnDef<UserListProps>[] = [
         return (
           <div
             className={
-              "text-purple-700 bg-purple-100 border-purple-300 border rounded-md text-size-10px font-medium"
+              'text-purple-700 bg-purple-100 border-purple-300 border rounded-md text-size-10px font-medium'
             }
           >
             Expert
@@ -96,35 +96,45 @@ const columns: ColumnDef<UserListProps>[] = [
         return (
           <div
             className={
-              "text-gray-700 bg-gray-100 border-gray-300 border rounded-md text-size-10px font-medium"
+              'text-gray-700 bg-gray-100 border-gray-300 border rounded-md text-size-10px font-medium'
             }
           >
-            Not completed
+            Stage : {lastCompletedStage}
           </div>
         );
       }
     },
   },
   {
-    accessorKey: "activity-expert",
-    header: "Expert Act. ID",
+    accessorKey: 'activity-expert',
+    header: 'Expert Act. ID',
     cell: ({ row }) => {
+      if (row.original.authType !== 'SUMTOTAL') return '';
       const badgeActivities = row.original.badgeActivities;
-      return (
-        badgeActivities.find((activity) => activity.order === 3)?.activityId ||
-        ""
-      );
+      const activity =
+        badgeActivities.find((activity) => activity.order === 3) || '';
+      const attended = activity.hasAttended ? '✅' : '⛔️';
+      if (activity) {
+        return `${activity.activityId} ${attended}`;
+      } else {
+        return '';
+      }
     },
   },
   {
-    accessorKey: "activity-advanced",
-    header: "Adv. Act. ID",
+    accessorKey: 'activity-advanced',
+    header: 'Adv. Act. ID',
     cell: ({ row }) => {
+      if (row.original.authType !== 'SUMTOTAL') return '';
       const badgeActivities = row.original.badgeActivities;
-      return (
-        badgeActivities.find((activity) => activity.order === 4)?.activityId ||
-        ""
-      );
+      const activity =
+        badgeActivities.find((activity) => activity.order === 4) || '';
+      const attended = activity.hasAttended ? '✅' : '⛔️';
+      if (activity) {
+        return `${activity.activityId} ${attended}`;
+      } else {
+        return '';
+      }
     },
   },
 ];
@@ -158,12 +168,12 @@ const UserList = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        "user/info/list",
+        'user/info/list',
         (data) => {
           total.current = data.total;
           setData(data.result);
           setLoading(false);
-        },
+        }
       );
     }
 
@@ -194,7 +204,7 @@ const UserList = () => {
                               ? null
                               : flexRender(
                                   header.column.columnDef.header,
-                                  header.getContext(),
+                                  header.getContext()
                                 )}
                           </TableHead>
                         ))}
@@ -215,7 +225,7 @@ const UserList = () => {
                                 >
                                   {flexRender(
                                     cell.column.columnDef.cell,
-                                    cell.getContext(),
+                                    cell.getContext()
                                   )}
                                 </TableCell>
                               );
@@ -229,7 +239,7 @@ const UserList = () => {
                           colSpan={columns.length}
                           className="h-24 text-center"
                         >
-                          {loading ? "" : "No results."}
+                          {loading ? '' : 'No results.'}
                         </TableCell>
                       </TableRow>
                     )}
