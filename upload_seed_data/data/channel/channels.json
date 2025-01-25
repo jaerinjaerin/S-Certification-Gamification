@@ -1761,5 +1761,13 @@
     "subsidiaryId": "349948",
     "regionId": "508375",
     "channels": []
+  },
+  {
+    "id": "349994",
+    "name": "Ukraine",
+    "code": "NAT_2804",
+    "subsidiaryId": "349947",
+    "regionId": "508370",
+    "channels": []
   }
 ]
