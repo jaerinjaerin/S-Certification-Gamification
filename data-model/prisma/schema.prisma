@@ -125,14 +125,12 @@ enum AuthType {
   UNKNOWN
 }
 
-
 model Language {
   id         String   @id @default(uuid())
   code       String   @unique // Language code (e.g., en, fr, es)
   name       String   // Language name
 }
 
-// model Countr
 model Campaign {
   id          String   @id @default(uuid())
   name        String      // Name of the campaign
@@ -147,8 +145,6 @@ model Campaign {
   updaterId   String?
 
   quizSets  QuizSet[]
-  // domainGoals  DomainGoal[]
-
 
   domainId              String?
 }
@@ -184,7 +180,6 @@ model Subsidiary {
   region Region? @relation(fields: [regionId], references: [id])
 
   domains Domain[]
-  // quizSets  QuizSet[]
 }
 
 model Domain {
@@ -198,8 +193,6 @@ model Domain {
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
-  // quizSets  QuizSet[]
 }
 
 model DomainGoal {
@@ -212,27 +205,10 @@ model DomainGoal {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
-  // campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  // domain     Domain      @relation(fields: [domainId], references: [id])
   domainId   String
   regionId String?
   subsidiaryId String?
 }
-
-// enum TranslationStatus {
-//   PENDING
-//   APPROVED
-//   REJECTED
-// }
-
-// model Translation {
-//   id         String   @id @default(uuid())
-//   campaignId String
-//   languageId String
-//   status     TranslationStatus
-//   createdAt   DateTime    @default(now())
-//   updatedAt   DateTime    @updatedAt
-// }
 
 model QuizSet {
   id         String   @id @default(uuid())
@@ -250,10 +226,6 @@ model QuizSet {
   updatedAt   DateTime    @updatedAt
 
   campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  // domain     Domain?      @relation(fields: [domainId], references: [id])
-  // subsidiary   Subsidiary?      @relation(fields: [subsidiaryId], references: [id])
-
-  // userQuizLogs UserQuizLog[]
 }
 
 model QuizBadge {
@@ -304,14 +276,9 @@ model QuizStage {
 
   isBadgeStage Boolean?
   badgeActivityId String?
-  // badgeImageUrl String?
 
   badgeImageId String?
-  // badgeImage Image? @relation(fields: [badgeImageId], references: [id])
   badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id])
-
-  // backgroundImageUrl String?
-  // characterImageUrl String?
 
   campaignId String?
   domainId   String?
@@ -332,17 +299,11 @@ model Question {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   
-  // backgroundImageUrl String?
-  // characterImageUrl String?
-
   backgroundImageId String?
   characterImageId String?
 
-  // backgroundImage Image? @relation(fields: [backgroundImageId], references: [id])
-  // characterImage Image? @relation(fields: [characterImageId], references: [id])
   backgroundImage    Image? @relation("BackgroundImage", fields: [backgroundImageId], references: [id])
   characterImage     Image? @relation("CharacterImage", fields: [characterImageId], references: [id])
-
 
   category    String?
   specificFeature   String?
@@ -350,7 +311,6 @@ model Question {
   product    String?
   enabled     Boolean
   questionType    QuestionType
-
 
   campaignId String?
   domainId   String?
@@ -383,8 +343,6 @@ model Job {
   description String? // Optional description
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
-  // users User[]
 }
 
 model Store {
@@ -417,15 +375,11 @@ model UserQuizLog {
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
-  // user        User    @relation(fields: [userId], references: [id])
-
   quizSetId String
 
   score       Int?
 
   quizSetPath String?
-
-
   
   domainId String?
   languageId String?
@@ -572,15 +526,11 @@ model UserQuizStatistics {
   createdAt   DateTime @default(now()) // 히스토리 생성 시간
   updatedAt   DateTime @updatedAt // 히스토리 수정 시간
 
-  // user        User    @relation(fields: [userId], references: [id])
-
   quizSetId String
 
   score       Int?
 
   quizSetPath String?
-
-
   
   domainId String?
   languageId String?

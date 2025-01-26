@@ -6,8 +6,8 @@ import json
 from io import BytesIO
 
 # 입력 및 출력 디렉토리 설정
-input_dir = "data/origins/v4"
-output_dir = "data/questions/new"
+input_dir = "data/origins/v5"
+output_dir = "data/questions/update_new"
 
 # 출력 디렉토리가 없으면 생성
 if not os.path.exists(output_dir):
@@ -60,15 +60,15 @@ def process_excel(file_path, output_path, password=None):
 
     # 데이터프레임으로 변환
     data = []
-    found_no_column = False  # "No." 또는 "No."가 나올 때까지 행을 스킵하기 위한 플래그
+    found_no_column = False  # "No" 또는 "No"가 나올 때까지 행을 스킵하기 위한 플래그
 
     for row in sheet.iter_rows():  # values_only=True 제거
         # 병합된 값 적용
         row_data = [merged_data.get(cell.coordinate, cell.value) for cell in row]
 
-        # "No." 또는 "No."가 포함된 행이 발견되면 플래그를 True로 설정
+        # "No" 또는 "No"가 포함된 행이 발견되면 플래그를 True로 설정
         if not found_no_column:
-            if any(cell_value in ["No."] for cell_value in row_data):
+            if any(cell_value in ["No"] for cell_value in row_data):
                 found_no_column = True
             else:
                 continue  # 플래그가 False면 해당 행 스킵
@@ -113,21 +113,21 @@ def process_excel(file_path, output_path, password=None):
         print(f"Error setting header for {file_path}: {e}")
         return
 
-    # "No." 열이 숫자인지 확인 및 변환
-    if "No." in df.columns:
-        df["No."] = pd.to_numeric(df["No."], errors="coerce")
-    # elif "No." in df.columns:
-    #     df["No."] = pd.to_numeric(df["No."], errors="coerce")
-    #     df = df.rename(columns={"No.": "No."})  # "No."를 "No."로 변경
-    # elif "No." in df.columns:
-    #     df["No."] = pd.to_numeric(df["No."], errors="coerce")
-    #     df = df.rename(columns={"No.": "No."})  # "No."를 "No."로 변경
+    # "No" 열이 숫자인지 확인 및 변환
+    if "No" in df.columns:
+        df["No"] = pd.to_numeric(df["No"], errors="coerce")
+    # elif "No" in df.columns:
+    #     df["No"] = pd.to_numeric(df["No"], errors="coerce")
+    #     df = df.rename(columns={"No": "No"})  # "No"를 "No"로 변경
+    # elif "No" in df.columns:
+    #     df["No"] = pd.to_numeric(df["No"], errors="coerce")
+    #     df = df.rename(columns={"No": "No"})  # "No"를 "No"로 변경
     else:
-        print(f"Neither 'No.' nor 'NO' column found in {file_path}. Skipping.")
+        print(f"Neither 'No' nor 'NO' column found in {file_path}. Skipping.")
         return
 
-    # "No." 열 기준으로 그룹화 및 JSON 변환
-    grouped_data = df.groupby("No.").apply(lambda group: {
+    # "No" 열 기준으로 그룹화 및 JSON 변환
+    grouped_data = df.groupby("No").apply(lambda group: {
         "originQuestionIndex": int(group.name),  # 그룹화 기준 키 값을 사용
         "orderInStage": group["New No"].iloc[0] if "New No" in group else None,
         "enabled": group["Enabled"].iloc[0] if "Enabled" in group else None,

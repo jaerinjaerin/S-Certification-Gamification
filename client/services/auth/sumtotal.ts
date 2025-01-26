@@ -532,13 +532,15 @@ export async function fetchOrganizationDetails(
         parentOrganizationNames
       );
 
-      if (parentData && parentData.data.length > 0) {
+      if (parentData && parentData.data != null && parentData.data.length > 0) {
         const { text7, text8, integer1 } = parentData.data[0]?.optionalInfo;
 
         if (integer1 === 4) {
           channelId = text7;
           channelSegmentId = text8;
         }
+      } else {
+        console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
