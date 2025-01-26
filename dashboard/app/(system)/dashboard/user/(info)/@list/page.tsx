@@ -45,8 +45,12 @@ const columns: ColumnDef<UserListProps>[] = [
     },
   },
   {
-    accessorKey: 'providerUserId',
+    accessorKey: 'id',
     header: 'ID',
+  },
+  {
+    accessorKey: 'providerUserId',
+    header: 'S+ ID',
   },
   {
     accessorKey: 'region',
