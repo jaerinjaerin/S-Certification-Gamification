@@ -55,6 +55,7 @@ export const {
         let storeSegmentText: string | null = null;
         let channelId: string | null = null;
         let channelSegmentId: string | null = null;
+        let channelName: string | null = null;
 
         if (accessToken) {
           const result = await fetchOrganizationDetails(accessToken, profile);
@@ -64,6 +65,7 @@ export const {
             storeSegmentText = result.storeSegmentText;
             channelId = result.channelId;
             channelSegmentId = result.channelSegmentId;
+            channelName = result.channelName;
           }
         }
 
@@ -130,6 +132,7 @@ export const {
           channelSegmentId: channelSegmentId,
           regionId: regionId,
           subsidiaryId: subsidiaryId,
+          channelName: channelName,
         };
       },
     },

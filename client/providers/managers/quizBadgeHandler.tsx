@@ -8,8 +8,11 @@ export class QuizBadgeHandler {
   ): Promise<boolean> => {
     try {
       // console.log("issueBadge");
-      const registered = await this.postActivitieRegister(activityId);
+      const registered = await this.postActivityRegister(activityId);
       const result = await this.postActivityEnd(activityId, elapsedSeconds);
+
+      console.log("issueBadge registered", registered);
+      console.log("issueBadge result", result);
 
       return false;
     } catch (error) {
@@ -73,7 +76,7 @@ export class QuizBadgeHandler {
     }
   };
 
-  postActivitieRegister = async (activityId: string): Promise<boolean> => {
+  postActivityRegister = async (activityId: string): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
@@ -86,7 +89,7 @@ export class QuizBadgeHandler {
         }
       );
 
-      console.log("postActivitieRegister", activityId, response);
+      console.log("postActivityRegister", activityId, response);
 
       if (!response.ok) {
         const errorData = await response.json();

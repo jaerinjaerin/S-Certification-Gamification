@@ -624,10 +624,10 @@ async function main() {
 
         const stage3BadgeActivityId = activityIds
           ? activityIds[0].toString()
-          : "251745"; //"251745";
+          : null;
         const stage4BadgeActivityId = activityIds
           ? activityIds[1].toString()
-          : "251747"; //"251747";
+          : null;
 
         if (i === 2) {
           isBadgeStage = true;

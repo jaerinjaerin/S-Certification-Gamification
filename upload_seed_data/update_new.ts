@@ -297,7 +297,12 @@ async function main() {
         name: "S25",
       },
     });
-    const folderPath = path.join(process.cwd(), "data", "questions", "new");
+    const folderPath = path.join(
+      process.cwd(),
+      "data",
+      "questions",
+      "update_new"
+    );
     const files = fs.readdirSync(folderPath);
 
     // HQ 베이스 퀴즈 셋 가져오기
@@ -328,8 +333,7 @@ async function main() {
       throw new Error("Language not found");
     }
 
-    const hqNatQuestions: any[] = [];
-    const quizStagesWithQuestions = await Promise.all(
+    let hqNatQuestions = await Promise.all(
       quizSet.quizStages.map(async (quizStage) => {
         const questions = await prisma.question.findMany({
           where: {
@@ -343,12 +347,12 @@ async function main() {
           },
         });
 
-        console.log("questions", questions.length);
-        hqNatQuestions.push(...questions);
+        return questions;
       })
     );
 
-    console.log("hqNatQuestions", hqNatQuestions.length);
+    hqNatQuestions = hqNatQuestions.flat();
+    hqNatQuestions.sort((a, b) => a.originalIndex - b.originalIndex);
 
     let quizSetCount = 0;
     for (const fileName of files.sort((a, b) =>
@@ -529,24 +533,6 @@ async function main() {
           }
         }
 
-        // if (question.stage === 1 && question.enabled) {
-        //   stagesQuestions[0].push(item.originalQuestionId);
-        // }
-
-        // if (question.stage === 2 && question.enabled) {
-        //   stagesQuestions[1].push(item.originalQuestionId);
-        // }
-
-        // if (question.stage === 3 && question.enabled) {
-        //   stagesQuestions[2].push(item.originalQuestionId);
-        // }
-
-        // if (question.stage === 4 && question.enabled) {
-        //   stagesQuestions[3].push(item.originalQuestionId);
-        // }
-
-        // console.log("item", item);
-
         createdQuestions.push(item);
         if (domainCode === "OrgCode-7") {
           hqNatQuestions.push(item);
@@ -572,14 +558,12 @@ async function main() {
       }
 
       // 퀴즈 스테이지 생성 또는 업데이트
-      const stageQuestionsList = [
+      const stageNumbers = [
         ...new Set(jsonQuestions.map((question) => question.stage)),
       ].sort();
 
-      console.log("stageQuestionsList", stageQuestionsList);
-
-      for (let i = 0; i < stageQuestionsList.length; i++) {
-        const stage: any = stageQuestionsList[i];
+      for (let i = 0; i < stageNumbers.length; i++) {
+        const stage: any = stageNumbers[i];
         // 같은 스테이지의 질문들만 필터링
         const stageQuestions = jsonQuestions.filter(
           (question) =>
@@ -624,12 +608,10 @@ async function main() {
           (data) => data.domainCode === domainCode
         )?.activityIds;
 
-        const stage3BadgeActivityId = activityIds
-          ? activityIds[0].toString()
-          : null;
-        const stage4BadgeActivityId = activityIds
-          ? activityIds[1].toString()
-          : null;
+        const stage3BadgeActivityId =
+          activityIds != null ? activityIds![0].toString() : null;
+        const stage4BadgeActivityId =
+          activityIds != null ? activityIds![1].toString() : null;
 
         if (i === 2) {
           isBadgeStage = true;

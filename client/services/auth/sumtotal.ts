@@ -421,6 +421,7 @@ export type OrganizationDetailsResultData = {
   storeSegmentText: string | null;
   channelId: string | null;
   channelSegmentId: string | null;
+  channelName: string | null;
 };
 
 export async function fetchOrganizationDetails(
@@ -432,10 +433,18 @@ export async function fetchOrganizationDetails(
   let storeSegmentText: string | null = null;
   let channelId: string | null = null;
   let channelSegmentId: string | null = null;
+  let channelName: string | null = null;
 
   if (!accessToken) {
     console.error("Access token is required");
-    return { jobId, storeId, storeSegmentText, channelId, channelSegmentId };
+    return {
+      jobId,
+      storeId,
+      storeSegmentText,
+      channelId,
+      channelSegmentId,
+      channelName,
+    };
   }
 
   const orgIds: string[] = profile.personOrganization
@@ -514,6 +523,7 @@ export async function fetchOrganizationDetails(
 
       if (integer1 === 7) {
         jobId = text9;
+        channelName = text9;
         if (!isValidJobId(text9)) {
           jobId = sumtotalUserOthersJobId;
         }
@@ -532,13 +542,15 @@ export async function fetchOrganizationDetails(
         parentOrganizationNames
       );
 
-      if (parentData && parentData.data.length > 0) {
+      if (parentData && parentData.data != null && parentData.data.length > 0) {
         const { text7, text8, integer1 } = parentData.data[0]?.optionalInfo;
 
         if (integer1 === 4) {
           channelId = text7;
           channelSegmentId = text8;
         }
+      } else {
+        console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
@@ -546,5 +558,12 @@ export async function fetchOrganizationDetails(
   }
 
   // Return the collected information
-  return { jobId, storeId, storeSegmentText, channelId, channelSegmentId };
+  return {
+    jobId,
+    storeId,
+    storeSegmentText,
+    channelId,
+    channelSegmentId,
+    channelName,
+  };
 }

@@ -44,15 +44,17 @@ export async function GET(request: NextRequest, props: Props) {
       throw new ApiError(404, "NOT_FOUND", "User not found");
     }
 
+    const userJobId = user.jobId ?? sumtotalUserOthersJobId;
+    console.log("userJobId:", userId);
     const job = await prisma.job.findFirst({
-      where: { id: user?.jobId ?? sumtotalUserOthersJobId },
+      where: { id: userJobId },
     });
 
     const domain = await prisma.domain.findFirst({
       where: { code: domainCode },
     });
 
-    // // console.log("domain:", domain, "job:", job);
+    // console.log("domain:", domain, "job:", job);
 
     const quizSet = await prisma.quizSet.findFirst({
       where: {
