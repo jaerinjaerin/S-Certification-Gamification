@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { useEffect, useState } from "react";
-import { useUserContext } from "../../_provider/provider";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
+import { useEffect, useState } from 'react';
+import { useUserContext } from '../../_provider/provider';
 import {
   Area,
   Bar,
@@ -13,19 +15,19 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
-import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
-import { chartHeight } from "../../../_lib/chart-variable";
+} from 'recharts';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
+import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
+import { chartHeight } from '../../../_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
-} from "../../../_lib/chart-colors";
-import { LoaderWithBackground } from "@/components/loader";
+} from '../../../_lib/chart-colors';
+import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
-} from "../../../_components/charts/chart-tooltip";
+} from '../../../_components/charts/chart-tooltip';
 
 const UserOutcome = () => {
   const { state } = useUserContext();
@@ -36,9 +38,9 @@ const UserOutcome = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        "user/statistics/outcome/average-score",
+        'user/statistics/outcome/average-score',
         (data) => {
-          console.log("🚀 ~ fetchData ~ data:", data);
+          console.log('🚀 ~ fetchData ~ data:', data);
           setData((v) => ({ ...v, score: data.result }));
           setLoading((v) => ({ ...v, score: false }));
         }
@@ -46,9 +48,9 @@ const UserOutcome = () => {
       //
       fetchData(
         state.fieldValues,
-        "user/statistics/outcome/total-quiz-completion-time",
+        'user/statistics/outcome/total-quiz-completion-time',
         (data) => {
-          console.log("🚀 ~ fetchData ~ data:", data);
+          console.log('🚀 ~ fetchData ~ data:', data);
           setData((v) => ({ ...v, time: data.result }));
           setLoading((v) => ({ ...v, time: false }));
         }

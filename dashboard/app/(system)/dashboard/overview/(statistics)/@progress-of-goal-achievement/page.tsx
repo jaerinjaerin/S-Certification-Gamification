@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
 import {
   Bar,
   CartesianGrid,
@@ -10,8 +12,8 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import CardCustomHeader from "../../../_components/charts/chart-header";
+} from 'recharts';
+import CardCustomHeader from '../../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
   chartColorLineStroke,
@@ -19,14 +21,14 @@ import {
   chartColorQuaternary,
   chartColorSecondary,
   chartColorTertiary,
-} from "../../../_lib/chart-colors";
-import { chartHeight } from "../../../_lib/chart-variable";
-import { useOverviewContext } from "../../_provider/provider";
-import { useEffect, useRef, useState } from "react";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
-import { LoaderWithBackground } from "@/components/loader";
-import CustomTooltip from "../../../_components/charts/chart-tooltip";
+} from '../../../_lib/chart-colors';
+import { chartHeight } from '../../../_lib/chart-variable';
+import { useOverviewContext } from '../../_provider/provider';
+import { useEffect, useRef, useState } from 'react';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
+import { LoaderWithBackground } from '@/components/loader';
+import CustomTooltip from '../../../_components/charts/chart-tooltip';
 
 export function OverviewGoalAchievement() {
   const { state } = useOverviewContext();
@@ -39,7 +41,7 @@ export function OverviewGoalAchievement() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        "overview/statistics/progress-of-goal-achievement",
+        'overview/statistics/progress-of-goal-achievement',
         (data) => {
           const { jobData, goalTotalScore, cumulativeRate } = data.result;
           count.current = cumulativeRate;

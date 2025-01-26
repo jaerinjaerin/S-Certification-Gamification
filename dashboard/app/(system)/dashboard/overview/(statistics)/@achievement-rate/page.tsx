@@ -1,4 +1,8 @@
-"use client";
+'use client';
+
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
 import {
   Bar,
   BarChart,
@@ -10,21 +14,21 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import CardCustomHeader from "../../../_components/charts/chart-header";
-import ChartContainer from "../../../_components/charts/chart-container";
+} from 'recharts';
+import CardCustomHeader from '../../../_components/charts/chart-header';
+import ChartContainer from '../../../_components/charts/chart-container';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from "../../../_lib/chart-colors";
-import { useEffect, useState } from "react";
-import { fetchData } from "../../../_lib/fetch";
-import { useOverviewContext } from "../../_provider/provider";
-import { legendCapitalizeFormatter } from "../../../_lib/text";
-import { chartHeight } from "../../../_lib/chart-variable";
-import { LoaderWithBackground } from "@/components/loader";
-import CustomTooltip from "../../../_components/charts/chart-tooltip";
+} from '../../../_lib/chart-colors';
+import { useEffect, useState } from 'react';
+import { fetchData } from '../../../_lib/fetch';
+import { useOverviewContext } from '../../_provider/provider';
+import { legendCapitalizeFormatter } from '../../../_lib/text';
+import { chartHeight } from '../../../_lib/chart-variable';
+import { LoaderWithBackground } from '@/components/loader';
+import CustomTooltip from '../../../_components/charts/chart-tooltip';
 
 function OverviewAchievementRate() {
   const { state } = useOverviewContext();
@@ -36,14 +40,14 @@ function OverviewAchievementRate() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        "overview/statistics/achievement",
+        'overview/statistics/achievement',
         (data) => {
           setData(data.result);
           setLoading(false);
         }
       );
       //
-      fetchData(state.fieldValues, "overview/info/achievement", (data) => {
+      fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
         setCount(data.result.count);
       });
     }

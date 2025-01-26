@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
 import {
   Bar,
   BarChart,
@@ -13,20 +16,20 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import CardCustomHeader from "../../../_components/charts/chart-header";
-import { useOverviewContext } from "../../_provider/provider";
-import { useEffect, useState } from "react";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
-import { chartHeight } from "../../../_lib/chart-variable";
+} from 'recharts';
+import CardCustomHeader from '../../../_components/charts/chart-header';
+import { useOverviewContext } from '../../_provider/provider';
+import { useEffect, useState } from 'react';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
+import { chartHeight } from '../../../_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from "../../../_lib/chart-colors";
-import { LoaderWithBackground } from "@/components/loader";
-import CustomTooltip from "../../../_components/charts/chart-tooltip";
+} from '../../../_lib/chart-colors';
+import { LoaderWithBackground } from '@/components/loader';
+import CustomTooltip from '../../../_components/charts/chart-tooltip';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -38,12 +41,12 @@ const OverviewExperts = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      fetchData(state.fieldValues, "overview/statistics/experts", (data) => {
+      fetchData(state.fieldValues, 'overview/statistics/experts', (data) => {
         setData(data.result);
         setLoading(false);
       });
       //
-      fetchData(state.fieldValues, "overview/info/experts", (data) => {
+      fetchData(state.fieldValues, 'overview/info/experts', (data) => {
         setCount(data.result.count);
       });
     }
@@ -75,9 +78,9 @@ const OverviewExperts = () => {
                     dataKey="value"
                     label={({ name, value }) => {
                       return `${
-                        name.toLowerCase() === "expert"
-                          ? "Expert"
-                          : "Expert + Advanced"
+                        name.toLowerCase() === 'expert'
+                          ? 'Expert'
+                          : 'Expert + Advanced'
                       }: ${value}`;
                     }} // 각 영역에 Label 추가
                   >
@@ -91,9 +94,9 @@ const OverviewExperts = () => {
                             key={`cell-${index}`}
                             fill={COLORS[index % COLORS.length]}
                             name={
-                              entry.name === "expert"
-                                ? "Expert"
-                                : "Expert + Advanced"
+                              entry.name === 'expert'
+                                ? 'Expert'
+                                : 'Expert + Advanced'
                             }
                           />
                         );

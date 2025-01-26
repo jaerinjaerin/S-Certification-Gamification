@@ -1,20 +1,23 @@
-"use client";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from "react";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
+
+import { useEffect, useRef, useState } from 'react';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
 import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { LoaderWithBackground } from "@/components/loader";
-import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
-import { ResponsiveContainer } from "recharts";
-import Pagination from "../../../_components/pagenation";
-import { useQuizContext } from "../../_provider/provider";
-import IncorrectTable, { columns } from "../../_components/incorrect-table";
+} from '@tanstack/react-table';
+import { LoaderWithBackground } from '@/components/loader';
+import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
+import { ResponsiveContainer } from 'recharts';
+import Pagination from '../../../_components/pagenation';
+import { useQuizContext } from '../../_provider/provider';
+import IncorrectTable, { columns } from '../../_components/incorrect-table';
 
 const QuizQuizzesRanked = () => {
   const { state } = useQuizContext();
@@ -45,7 +48,7 @@ const QuizQuizzesRanked = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        "quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate",
+        'quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate',
         (data) => {
           total.current = data.total;
           setData(data.result);

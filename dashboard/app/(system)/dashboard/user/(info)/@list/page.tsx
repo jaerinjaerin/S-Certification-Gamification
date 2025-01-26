@@ -26,16 +26,8 @@ import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
 import { ResponsiveContainer } from 'recharts';
 import Pagination from '../../../_components/pagenation';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
-const columns: ColumnDef<DomainProps>[] = [
+const columns: ColumnDef<UserListProps>[] = [
   {
     id: 'no',
     header: 'No',
@@ -45,106 +37,115 @@ const columns: ColumnDef<DomainProps>[] = [
     },
   },
   {
+    accessorKey: 'authType',
+    header: 'S+',
+    cell: ({ getValue }) => {
+      const value = getValue<string>();
+      return value === 'SUMTOTAL' ? 'S+ User' : 'Non S+ User';
+    },
+  },
+  {
+    accessorKey: 'id',
+    header: 'ID',
+  },
+  {
+    accessorKey: 'providerUserId',
+    header: 'S+ ID',
+  },
+  {
     accessorKey: 'region',
     header: 'Region',
-    cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : '';
-    },
   },
   {
     accessorKey: 'subsidiary',
     header: 'Subsidiary',
-    cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : '';
-    },
   },
   {
     accessorKey: 'domain',
     header: 'Domain',
-    cell: ({ getValue }) => {
-      const value = getValue<{ id: string; name: string }>();
-      return value ? value.name : '';
+    cell: ({ row }) => {
+      const domain = row.original.domain;
+      const quizDomain = row.original.quizDomain;
+      const domainName = `${domain} (${quizDomain})`;
+      if (domain != quizDomain) {
+        return <span className={'text-red-500'}>{domainName}</span>;
+      }
+      return domain;
     },
-  },
-  {
-    accessorKey: 'goal',
-    header: 'Goal',
   },
   {
     accessorKey: 'expert',
-    header: 'Expert(Advanced)',
+    header: 'Expert',
     cell: ({ row }) => {
-      const expert = row.original.expert;
-      const { date, country, ...expertDetail } = row.original.expertDetail;
-
-      return (
-        <TooltipProvider delayDuration={0}>
-          <div className="flex items-center place-self-center">
-            <span>{expert}</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="link" className="w-0">
-                  <Info className="w-4 h-4 text-gray-600" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                className="w-[17.125rem] text-sm bg-background shadow-sm p-5 border"
-                side="right"
-                align="center"
-                style={{ marginLeft: '1rem' }}
-              >
-                <div className="flex flex-col space-y-3 text-zinc-500 bg-background">
-                  <div className="flex space-x-3">
-                    <div>
-                      {new Date(date).toLocaleString('ko-KR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })}
-                    </div>
-                    <div> {country}</div>
-                  </div>
-                  {Object.entries(expertDetail).map(([key, value]) => {
-                    let keyName = key.toUpperCase();
-                    if (key.toLowerCase() === 'plus') keyName = 'S+';
-                    else if (key.toLowerCase() === 'none') keyName = 'Non S+';
-                    return (
-                      <div
-                        key={key}
-                        className="flex items-center justify-between"
-                      >
-                        <strong className="text-zinc-950 font-bold">
-                          {keyName}
-                        </strong>
-                        <strong className="text-zinc-950 font-bold">
-                          {value}
-                        </strong>
-                      </div>
-                    );
-                  })}
-                </div>
-              </TooltipContent>
-            </Tooltip>
+      const lastCompletedStage = row.original.lastCompletedStage;
+      if (lastCompletedStage === 3) {
+        return (
+          <div
+            className={
+              'text-orange-700 bg-orange-100 border-orange-300 border rounded-md text-size-10px font-medium'
+            }
+          >
+            Expert Adv.
           </div>
-        </TooltipProvider>
-      );
+        );
+      } else if (lastCompletedStage === 2) {
+        return (
+          <div
+            className={
+              'text-purple-700 bg-purple-100 border-purple-300 border rounded-md text-size-10px font-medium'
+            }
+          >
+            Expert
+          </div>
+        );
+      } else {
+        return (
+          <div
+            className={
+              'text-gray-700 bg-gray-100 border-gray-300 border rounded-md text-size-10px font-medium'
+            }
+          >
+            Stage : {lastCompletedStage}
+          </div>
+        );
+      }
     },
   },
   {
-    accessorKey: 'achievement',
-    header: 'Achievement rate',
-    cell: ({ getValue }) => {
-      const value = getValue<number>();
-      return `${value.toLocaleString()}%`;
+    accessorKey: 'activity-expert',
+    header: 'Expert Act. ID',
+    cell: ({ row }) => {
+      if (row.original.authType !== 'SUMTOTAL') return '';
+      const badgeActivities = row.original.badgeActivities;
+      const activity = badgeActivities.find((activity) => activity.order === 3);
+      if (activity) {
+        const attended = activity.hasAttended ? '✅' : '⛔️';
+        return `${activity.activityId} ${attended}`;
+      } else {
+        return '';
+      }
+    },
+  },
+  {
+    accessorKey: 'activity-advanced',
+    header: 'Adv. Act. ID',
+    cell: ({ row }) => {
+      if (row.original.authType !== 'SUMTOTAL') return '';
+      const badgeActivities = row.original.badgeActivities;
+      const activity = badgeActivities.find((activity) => activity.order === 4);
+      if (activity) {
+        const attended = activity.hasAttended ? '✅' : '⛔️';
+        return `${activity.activityId} ${attended}`;
+      } else {
+        return '';
+      }
     },
   },
 ];
 
-const UserDomain = () => {
+const UserList = () => {
   const { state } = useUserContext();
-  const [data, setData] = useState<DomainProps[]>([]);
+  const [data, setData] = useState<UserListProps[]>([]);
   const [loading, setLoading] = useState(true);
   const total = useRef<number>(0);
 
@@ -171,7 +172,7 @@ const UserDomain = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        'user/info/domain',
+        'user/info/list',
         (data) => {
           total.current = data.total;
           setData(data.result);
@@ -192,7 +193,7 @@ const UserDomain = () => {
           return (
             <>
               {loading && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="Domain" />
+              <CardCustomHeaderWithoutDesc title="User" />
               <div className="border rounded-md border-zinc-200">
                 <Table>
                   <TableHeader>
@@ -224,7 +225,7 @@ const UserDomain = () => {
                               return (
                                 <TableCell
                                   key={cell.id}
-                                  className="font-medium text-center text-size-14px text-zinc-950"
+                                  className="text-center text-xs text-zinc-950"
                                 >
                                   {flexRender(
                                     cell.column.columnDef.cell,
@@ -271,4 +272,4 @@ const UserDomain = () => {
   );
 };
 
-export default UserDomain;
+export default UserList;

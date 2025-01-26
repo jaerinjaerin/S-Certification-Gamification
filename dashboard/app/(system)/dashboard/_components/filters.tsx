@@ -31,7 +31,7 @@ type InitializeFiltersPros = (
   filters: FilterData,
   form: UseFormReturn,
   setFilteredSubsidiaries: Dispatch<SetStateAction<Subsidiary[]>>,
-  setFilteredDomains: Dispatch<SetStateAction<Subsidiary[]>>
+  setFilteredDomains: Dispatch<SetStateAction<Subsidiary[]>>,
 ) => void;
 
 // 데이터 초기화 함수
@@ -39,7 +39,7 @@ const initializeFilters: InitializeFiltersPros = (
   filters,
   form,
   setFilteredSubsidiaries,
-  setFilteredDomains
+  setFilteredDomains,
 ) => {
   // 모든 필터를 "all"로 설정
   Object.entries(filters).forEach(([key]) => {
@@ -85,7 +85,7 @@ const Filters = ({
         filterData.filters,
         form,
         setFilteredSubsidiaries,
-        setFilteredDomains
+        setFilteredDomains,
       );
 
       // 캠페인 초기화
@@ -144,7 +144,7 @@ const Filters = ({
     } else if (isSubsidiary) {
       if (id === "all") {
         const found = filters.region.find(
-          (region) => region.id === form.getValues().region
+          (region) => region.id === form.getValues().region,
         );
         //
         if (found) {
@@ -156,12 +156,12 @@ const Filters = ({
       } else {
         const found = filters.region.find((region) =>
           region.subsidiaries.some(
-            (subsidiary: Subsidiary) => subsidiary.id === id
-          )
+            (subsidiary: Subsidiary) => subsidiary.id === id,
+          ),
         );
 
         const subsidiary = filters.subsidiary.find(
-          (subsidiary: Subsidiary) => subsidiary.id === id
+          (subsidiary: Subsidiary) => subsidiary.id === id,
         );
 
         if (found) {
@@ -176,13 +176,13 @@ const Filters = ({
         return;
       } else {
         const found = filters.region.find((region) =>
-          region.domains.some((domain: Domain) => domain.id === id)
+          region.domains.some((domain: Domain) => domain.id === id),
         );
 
         const domain = filters.domain.find((domain) => domain.id === id);
 
         const subsidiary = filters.subsidiary.find(
-          (subsidiary: Subsidiary) => subsidiary.id === domain?.subsidiaryId
+          (subsidiary: Subsidiary) => subsidiary.id === domain?.subsidiaryId,
         );
 
         if (found && subsidiary && domain) {
@@ -212,7 +212,7 @@ const Filters = ({
       filterData.filters,
       form,
       setFilteredSubsidiaries,
-      setFilteredDomains
+      setFilteredDomains,
     );
 
     defaultValues.current = form.getValues();
@@ -294,7 +294,7 @@ const Filters = ({
                 return (
                   <ToggleUserButtons
                     data={Object.entries(filterData.userGroup).map(
-                      ([, value]) => ({ label: value.name, value: value.id })
+                      ([, value]) => ({ label: value.name, value: value.id }),
                     )}
                     field={field}
                   />
@@ -303,64 +303,105 @@ const Filters = ({
             />
           </div>
           <div className="flex flex-wrap gap-x-10 gap-y-7">
-            {Object.entries(filterData.filters).map(([key, value]) => {
-              let items = [
-                firstElement,
-                ...value.map((item: { name: string; id: string | number }) => ({
-                  label: item.name,
-                  value: item.id,
-                })),
-              ];
-
-              if (key === "subsidiary") {
-                items = [
+            {Object.entries(filterData.filters)
+              .slice(0, 3)
+              .map(([key, value]) => {
+                let items = [
                   firstElement,
-                  ...filteredSubsidiaries.map((subsidiary) => ({
-                    label: subsidiary.name,
-                    value: subsidiary.id,
-                  })),
+                  ...value.map(
+                    (item: { name: string; id: string | number }) => ({
+                      label: item.name,
+                      value: item.id,
+                    }),
+                  ),
                 ];
-              }
 
-              if (key === "domain") {
-                items = [
-                  firstElement,
-                  ...filteredDomains.map((domain) => ({
-                    label: domain.name,
-                    value: domain.id,
-                  })),
-                ];
-              }
+                if (key === "subsidiary") {
+                  items = [
+                    firstElement,
+                    ...filteredSubsidiaries.map((subsidiary) => ({
+                      label: subsidiary.name,
+                      value: subsidiary.id,
+                    })),
+                  ];
+                }
 
-              return (
-                <FormField
-                  key={key}
-                  control={form.control}
-                  name={key}
-                  defaultValue="all"
-                  render={({ field }) => (
-                    <SelectForm
-                      label={formatCamelCaseToTitleCase(key)}
-                      width="auto"
-                      field={field}
-                      items={items}
-                      onChange={(id: string | number) => {
-                        updateFilters(key, id);
-                      }}
-                    />
-                  )}
-                />
-              );
-            })}
+                if (key === "domain") {
+                  items = [
+                    firstElement,
+                    ...filteredDomains.map((domain) => ({
+                      label: domain.name,
+                      value: domain.id,
+                    })),
+                  ];
+                }
+
+                return (
+                  <FormField
+                    key={key}
+                    control={form.control}
+                    name={key}
+                    defaultValue="all"
+                    render={({ field }) => (
+                      <SelectForm
+                        label={formatCamelCaseToTitleCase(key)}
+                        width="auto"
+                        field={field}
+                        items={items}
+                        onChange={(id: string | number) => {
+                          updateFilters(key, id);
+                        }}
+                      />
+                    )}
+                  />
+                );
+              })}
           </div>
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              className="w-32"
-              disabled={applyButtonDisabled}
-            >
-              Apply
-            </Button>
+          <div className="flex justify-between">
+            <div className="flex flex-wrap gap-x-10 gap-y-7">
+              {Object.entries(filterData.filters)
+                .slice(3, 6)
+                .map(([key, value]) => {
+                  const items = [
+                    firstElement,
+                    ...value.map(
+                      (item: { name: string; id: string | number }) => ({
+                        label: item.name,
+                        value: item.id,
+                      }),
+                    ),
+                  ];
+
+                  return (
+                    <FormField
+                      key={key}
+                      control={form.control}
+                      name={key}
+                      defaultValue="all"
+                      render={({ field }) => (
+                        <SelectForm
+                          label={formatCamelCaseToTitleCase(key)}
+                          width="auto"
+                          field={field}
+                          items={items}
+                          onChange={(id: string | number) => {
+                            updateFilters(key, id);
+                          }}
+                        />
+                      )}
+                    />
+                  );
+                })}
+            </div>
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                className="w-32"
+                disabled={applyButtonDisabled}
+              >
+                Apply
+              </Button>
+            </div>
           </div>
         </FiltersContainer>
       </form>
@@ -390,7 +431,7 @@ const CampaignSelectForm = ({
       <SelectTrigger
         className={cn(
           "w-auto space-x-3 shadow-none bg-white hover:bg-zinc-100 border-0 hover:bg-transparent focus:bg-transparent focus:ring-0 focus:outline-none !text-size-20px font-bold",
-          !field.value && "text-muted-foreground"
+          !field.value && "text-muted-foreground",
         )}
       >
         <SelectValue />

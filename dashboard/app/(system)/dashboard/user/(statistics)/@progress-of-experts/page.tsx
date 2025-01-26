@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
 import {
   Bar,
   CartesianGrid,
@@ -10,21 +12,21 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import { CardCustomHeaderWithoutDesc } from "../../../_components/charts/chart-header";
+} from 'recharts';
+import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
   chartColorLineStroke,
   chartColorPrimary,
   chartColorSecondary,
-} from "../../../_lib/chart-colors";
-import { chartHeight } from "../../../_lib/chart-variable";
-import { useUserContext } from "../../_provider/provider";
-import { useEffect, useState } from "react";
-import { fetchData } from "../../../_lib/fetch";
-import ChartContainer from "../../../_components/charts/chart-container";
-import { LoaderWithBackground } from "@/components/loader";
-import CustomTooltip from "../../../_components/charts/chart-tooltip";
+} from '../../../_lib/chart-colors';
+import { chartHeight } from '../../../_lib/chart-variable';
+import { useUserContext } from '../../_provider/provider';
+import { useEffect, useState } from 'react';
+import { fetchData } from '../../../_lib/fetch';
+import ChartContainer from '../../../_components/charts/chart-container';
+import { LoaderWithBackground } from '@/components/loader';
+import CustomTooltip from '../../../_components/charts/chart-tooltip';
 
 export function UserProgressExperts() {
   const { state } = useUserContext();
@@ -35,7 +37,7 @@ export function UserProgressExperts() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        "user/statistics/progress-of-experts",
+        'user/statistics/progress-of-experts',
         (data) => {
           setData(data.result);
           setLoading(false);

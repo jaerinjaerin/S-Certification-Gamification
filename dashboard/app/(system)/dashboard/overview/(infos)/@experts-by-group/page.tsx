@@ -1,10 +1,13 @@
-"use client";
-import { useEffect, useState } from "react";
-import InfoCardStyleContainer from "../_components/card-with-title";
-import { useOverviewContext } from "../../_provider/provider";
-import { initialExpertsData } from "./_lib/state";
-import { fetchData } from "../../../_lib/fetch";
-import { LoaderWithBackground } from "@/components/loader";
+'use client';
+export const dynamic = 'force-dynamic';
+export const cache = 'no-store';
+
+import { useEffect, useState } from 'react';
+import InfoCardStyleContainer from '../_components/card-with-title';
+import { useOverviewContext } from '../../_provider/provider';
+import { initialExpertsData } from './_lib/state';
+import { fetchData } from '../../../_lib/fetch';
+import { LoaderWithBackground } from '@/components/loader';
 
 const OverviewExpertsByGroupInfo = () => {
   const { state } = useOverviewContext();
@@ -14,7 +17,7 @@ const OverviewExpertsByGroupInfo = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      fetchData(state.fieldValues, "overview/info/experts-by-group", (data) => {
+      fetchData(state.fieldValues, 'overview/info/experts-by-group', (data) => {
         setExpertData(data.result ?? initialExpertsData);
         setLoading(false);
       });
@@ -29,7 +32,7 @@ const OverviewExpertsByGroupInfo = () => {
       {loading && <LoaderWithBackground />}
       {expertData.map((groupData) => {
         const groupSuffix =
-          groupData.group === "plus" ? "" : `(${groupData.group})`;
+          groupData.group === 'plus' ? '' : `(${groupData.group})`;
         return (
           <div
             key={groupData.group}

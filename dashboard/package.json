@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cp -f .env.dev .env && next dev -p 3000",
+    "dev": "next dev -p 3000",
     "local": "cp -f .env.loc .env && next dev -p 3000",
     "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": " rm -rf .next && next build",
@@ -15,8 +15,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../dashboard/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../dashboard/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma",
+    "prisma:generate": "npx prisma generate --schema=../data-model/prisma/schema.prisma",
+    "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "pm2:stop": "pm2 delete squiz",
     "pm2:start": "pm2 start npm --name 'squiz' -- start"
   },
@@ -41,10 +41,11 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.469.0",
-    "next": "^14.2.22",
-    "react": "18",
+    "next": "^15.1.6",
+    "next-auth": "5.0.0-beta.25",
+    "react": "^19.0.0",
     "react-day-picker": "^8.10.1",
-    "react-dom": "18",
+    "react-dom": "^19.0.0",
     "react-heatmap-grid": "^0.9.1",
     "react-hook-form": "^7.54.2",
     "recharts": "^2.15.0",
@@ -62,6 +63,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.3",
     "postcss": "^8",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
