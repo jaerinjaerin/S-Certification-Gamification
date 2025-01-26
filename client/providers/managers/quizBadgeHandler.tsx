@@ -7,14 +7,13 @@ export class QuizBadgeHandler {
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      // console.log("issueBadge");
       const registered = await this.postActivityRegister(activityId);
-      const result = await this.postActivityEnd(activityId, elapsedSeconds);
+      const attended = await this.postActivityEnd(activityId, elapsedSeconds);
 
       console.log("issueBadge registered", registered);
-      console.log("issueBadge result", result);
+      console.log("issueBadge attended", attended);
 
-      return false;
+      return registered && attended;
     } catch (error) {
       Sentry.captureException(error);
       await Sentry.flush(2000); // 최대 2초 대기
