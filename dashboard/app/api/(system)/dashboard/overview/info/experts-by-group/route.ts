@@ -1,7 +1,9 @@
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { initialExpertsData } from '@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state';
-import { querySearchParams } from '../../../_lib/query';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {initialExpertsData} from '@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state';
+import {querySearchParams} from '../../../_lib/query';
 
 // UserQuizStatistics 사용
 // isCompleted 이면 퀴즈 완료

@@ -1,6 +1,8 @@
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {querySearchParams} from '../../../_lib/query';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수

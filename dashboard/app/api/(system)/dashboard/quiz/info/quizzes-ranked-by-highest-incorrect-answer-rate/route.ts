@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {querySearchParams} from '../../../_lib/query';
 
 export async function GET(request: NextRequest) {
   try {

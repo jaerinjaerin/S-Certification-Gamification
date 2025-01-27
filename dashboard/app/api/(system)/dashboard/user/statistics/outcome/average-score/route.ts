@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../../_lib/query';
-import { addDays, endOfDay, startOfDay } from 'date-fns';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {querySearchParams} from '../../../../_lib/query';
+import {addDays, endOfDay, startOfDay} from 'date-fns';
 
 export async function GET(request: NextRequest) {
   try {

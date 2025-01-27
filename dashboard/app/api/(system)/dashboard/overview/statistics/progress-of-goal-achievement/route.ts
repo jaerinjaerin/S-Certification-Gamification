@@ -1,8 +1,10 @@
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
-import { querySearchParams } from '../../../_lib/query';
-import { buildWhereWithValidKeys } from '../../../_lib/where';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {addWeeks, endOfWeek, isBefore, startOfWeek} from 'date-fns';
+import {querySearchParams} from '../../../_lib/query';
+import {buildWhereWithValidKeys} from '../../../_lib/where';
 
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 

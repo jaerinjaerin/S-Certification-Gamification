@@ -1,6 +1,8 @@
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {querySearchParams} from '../../../_lib/query';
 
 // UserQuizStatistics 중 isCompleted 기 true 인 유저
 
