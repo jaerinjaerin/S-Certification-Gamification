@@ -64,7 +64,7 @@ COPY dashboard/ dashboard/
 
 # 1-4. workspace 전체 설치
 WORKDIR /app/dashboard
-RUN npm install
+RUN npm install --force
 
 # 1-5. admin 앱 빌드
 RUN npm run prisma:generate
