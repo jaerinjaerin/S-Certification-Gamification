@@ -50,7 +50,7 @@ export const defaultLanguages = [
   { code: "lv", name: "Language for lv" },
   { code: "uk", name: "Language for uk" },
 ];
-export const defualtLanguagesByRegion = {
+export const defaultLanguagesByRegion = {
   EUROPE: [
     "sq",
     "bs",
