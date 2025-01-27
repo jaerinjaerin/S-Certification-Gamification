@@ -16,11 +16,24 @@ def extract_from_folder(folder_path, pattern):
             extracted.add(match.group(1))
     return extracted
 
+def extract_second_part(folder_path):
+    extracted = set()
+    try:
+        for filename in os.listdir(folder_path):
+            # { 와 } 제거
+            cleaned_filename = filename.replace("{", "").replace("}", "")
+            parts = cleaned_filename.split(".")  # .으로 분리
+            if len(parts) > 1:  # 두 번째 부분이 존재하는지 확인
+                extracted.add(parts[1])  # 두 번째 항목 추가
+            else:
+                print(f"Invalid filename format: {filename}")  # 디버깅 출력
+    except FileNotFoundError:
+        print(f"Folder not found: {folder_path}")
+    return extracted
+
 # 파일명에서 값을 추출
 nat_from_folder1 = extract_from_folder(folder1, pattern1)
-nat_from_folder2 = extract_from_folder(folder2, pattern2)
-
-print(nat_from_folder2)
+nat_from_folder2 = extract_second_part(folder2)
 
 # 서로 없는 값 계산
 only_in_folder1 = nat_from_folder1 - nat_from_folder2
