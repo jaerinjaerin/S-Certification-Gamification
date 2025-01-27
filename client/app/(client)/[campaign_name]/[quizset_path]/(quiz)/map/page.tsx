@@ -1,5 +1,5 @@
 "use client";
-import PrivacyAndTerm from "@/components/dialog/privacy-and-term";
+import PolicyFooter from "@/components/dialog/privacy-and-term";
 import Connection from "@/components/map/connection";
 import Gradient from "@/components/map/gradient";
 import { StageMarker } from "@/components/map/stage-marker";
@@ -82,7 +82,7 @@ export default function QuizMap() {
           );
         })}
       </div>
-      <PrivacyAndTerm className="fixed z-30 bottom-7 flex justify-center items-start" />
+      <PolicyFooter className="fixed z-30 bottom-7 flex justify-center items-start" />
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
       {loading && renderLoader()}

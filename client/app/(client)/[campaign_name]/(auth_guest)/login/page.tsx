@@ -546,6 +546,7 @@ export default function GuestLogin({
             <AlertDialogCancel
               onClick={() => {
                 setError(null);
+                window.location.reload();
               }}
             >
               <span>{translation("ok")}</span>
