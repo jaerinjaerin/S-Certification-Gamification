@@ -27,6 +27,7 @@ export default async function SumtotalUserLayout({
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
+  const agreementContent = await fetchAgreementContent(domainCode);
 
   return (
     <div>
@@ -39,6 +40,7 @@ export default async function SumtotalUserLayout({
           <PolicyProvider
             privacyContent={privacyContent?.contents}
             termContent={termContent?.contents}
+            agreementContent={agreementContent && agreementContent?.contents}
             domainName={domainInformation?.name}
             subsidiary={domainInformation?.subsidiary}
           >
@@ -72,6 +74,15 @@ async function fetchInformationAboutDomain(domainCode: string) {
   } catch (error) {
     Sentry.captureException(error);
   }
+}
+
+async function fetchAgreementContent(domainCode: string) {
+  if (domainCode !== "NAT_2410") {
+    null;
+  }
+
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/agreement/${domainCode}.json`;
+  return await fetchContent(url);
 }
 
 async function fetchPrivacyContent(domainCode: string) {

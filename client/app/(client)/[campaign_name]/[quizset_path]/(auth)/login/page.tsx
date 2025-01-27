@@ -6,9 +6,10 @@ import useLoader from "@/components/ui/loader";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
-import { cn } from "@/utils/utils";
+import { cn, isSheetLanguage } from "@/utils/utils";
 import { AutoTextSize } from "auto-text-size";
 import { signIn, useSession } from "next-auth/react";
+<<<<<<< HEAD
 import { useTranslations } from "next-intl";
 
 // import {
@@ -48,15 +49,40 @@ import { useTranslations } from "next-intl";
 // });
 // import { usePolicy } from "@/providers/policyProvider";
 
+=======
+import { useLocale, useTranslations } from "next-intl";
+import { usePolicy } from "@/providers/policyProvider";
+import PolicySheet from "@/components/login/policy-sheet";
+import { useState } from "react";
+
+>>>>>>> feature/accept-popup
 export default function Login() {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
   const { isArabic } = useCheckLocale();
   const { loading, setLoading, renderLoader } = useLoader();
+<<<<<<< HEAD
   // const { subsidiary } = usePolicy();
   // const regionName = subsidiary && subsidiary.region.name;
   // const ACCEPT_POLICY_REGION = regionName === "MENA";
+=======
+  const {
+    subsidiary,
+    privacyContent,
+    agreementContent,
+    termContent,
+    domainName,
+  } = usePolicy();
+  const regionName = subsidiary && subsidiary.region.name;
+  const locale = useLocale();
+
+  const isPolicyAcceptCountry = regionName === "MENA" || regionName === "Korea";
+  const [openSheet, setOpenSheet] = useState(isPolicyAcceptCountry);
+  const PRIVACY_CONTENT = agreementContent
+    ? `${agreementContent} === ${privacyContent}`
+    : privacyContent;
+>>>>>>> feature/accept-popup
 
   const processSignIn = async () => {
     setLoading(true);
@@ -91,6 +117,7 @@ export default function Login() {
                   {translation("be_a_galaxy_ai_expert")}
                 </AutoTextSize>
               </div>
+<<<<<<< HEAD
               <Button
                 variant={"primary"}
                 disabled={loading}
@@ -104,14 +131,13 @@ export default function Login() {
                 <span>{translation("login")}</span>
               </Button>
               {/* {!ACCEPT_POLICY_REGION && (
+=======
+              {!isPolicyAcceptCountry && (
+>>>>>>> feature/accept-popup
                 <Button
                   variant={"primary"}
                   disabled={loading}
-                  onClick={() => {
-                    if (!ACCEPT_POLICY_REGION) {
-                      processSignIn();
-                    }
-                  }}
+                  onClick={processSignIn}
                   className={cn(
                     "disabled:bg-disabled ",
                     isArabic && "flex-row-reverse"
@@ -120,21 +146,26 @@ export default function Login() {
                   <span>S+</span>
                   <span>{translation("login")}</span>
                 </Button>
+<<<<<<< HEAD
               )} */}
               {/* {ACCEPT_POLICY_REGION && (
+=======
+              )}
+              {isPolicyAcceptCountry && (
+>>>>>>> feature/accept-popup
                 <PolicySheet
-                  ACCEPT_POLICY_REGION={ACCEPT_POLICY_REGION}
+                  isSheetLanguage={isSheetLanguage(locale)}
                   processSignIn={processSignIn}
                   loading={loading}
+                  privacyContent={PRIVACY_CONTENT}
+                  termContent={termContent}
+                  domainName={domainName}
+                  openSheet={openSheet}
+                  setOpenSheet={setOpenSheet}
                 >
                   <Button
                     variant={"primary"}
                     disabled={loading}
-                    onClick={() => {
-                      if (!ACCEPT_POLICY_REGION) {
-                        processSignIn();
-                      }
-                    }}
                     className={cn(
                       "disabled:bg-disabled ",
                       isArabic && "flex-row-reverse"
@@ -154,6 +185,7 @@ export default function Login() {
     </>
   );
 }
+<<<<<<< HEAD
 
 // function PolicySheet({
 //   children,
@@ -348,3 +380,5 @@ export default function Login() {
 //     </AccordionTrigger>
 //   );
 // }
+=======
+>>>>>>> feature/accept-popup
