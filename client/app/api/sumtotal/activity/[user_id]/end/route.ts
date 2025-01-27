@@ -63,6 +63,7 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok) {
       // const errorData = await response.json();
+      console.error("activity/progress response", response);
       return NextResponse.json(
         { message: response.statusText || "Failed to fetch activities" },
         { status: response.status }
@@ -74,7 +75,7 @@ export async function GET(request: NextRequest) {
     Sentry.captureMessage("response", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("Error fetching activitie:", error);
+    console.error("Error activity/progress:", error);
     Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },

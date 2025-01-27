@@ -1,4 +1,4 @@
-import { extractCodesFromPath } from "./pathUtils";
+import { extractCodesFromPath } from "../../utils/pathUtils";
 
 describe("extractCodesFromPath", () => {
   it("should correctly extract domainCode, and languageCode for a valid input", () => {

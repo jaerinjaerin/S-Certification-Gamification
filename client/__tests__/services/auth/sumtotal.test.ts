@@ -2,7 +2,7 @@ import {
   filterResultsByLatestDate,
   OrganizationResult,
   PersonOrganization,
-} from "./sumtotal";
+} from "../../../services/auth/sumtotal";
 
 describe("filterResultsByLatestDate", () => {
   it("should filter out duplicate integer1 values and keep the latest by joiningDate", () => {

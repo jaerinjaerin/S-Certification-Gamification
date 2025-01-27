@@ -1,4 +1,4 @@
-import { usePathNavigator } from "./usePathNavigator";
+import { usePathNavigator } from "../../route/usePathNavigator";
 
 // Mock the window.location object
 const originalLocation = window.location;

@@ -64,6 +64,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       // const errorData = await response.json();
+      console.error("activity/progress response", response);
       return NextResponse.json(
         { message: response.statusText || "Failed to fetch activities" },
         { status: response.status }

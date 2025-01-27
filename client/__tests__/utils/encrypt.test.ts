@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { decrypt, encrypt } from "./encrypt";
+import { decrypt, encrypt } from "../../utils/encrypt";
 
 describe("Encryption and Decryption", () => {
   const email = "test@example.com";

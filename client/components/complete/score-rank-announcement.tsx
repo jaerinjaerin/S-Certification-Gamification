@@ -39,7 +39,8 @@ export default function ScoreRankAnnouncement({
   const { data: session } = useSession();
   const user = session?.user;
 
-  const percentile = (quizStageLogs && quizStageLogs.at(-1)!.percentile) || 0;
+  // const percentile = (quizStageLogs && quizStageLogs.at(-1)!.percentile) || 0;
+  const percentile = quizStageLogs?.at(-1)?.percentile ?? 0;
   const topRank = 100 - percentile || 1;
   const getScoreRankGraphImageUrl = (topRank: number) => {
     if (topRank < 0 || topRank > 100) {

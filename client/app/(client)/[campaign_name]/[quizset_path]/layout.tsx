@@ -96,6 +96,15 @@ async function fetchContent(url: string) {
     }
     return result;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "request/json",
+        method: "POST",
+        description: "Failed to fetch content",
+      });
+      scope.setTag("url", url);
+      return scope;
+    });
   }
 }

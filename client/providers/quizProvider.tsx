@@ -244,11 +244,13 @@ export const QuizProvider = ({
     setIsLoading(false);
 
     return {
-      score:
-        scoreData ??
-        ({
-          userScore: totalQuizScore,
-        } as ScoreData),
+      score: scoreData ?? {
+        data: [],
+        sampleSize: null,
+        userBin: null,
+        userScore: totalQuizScore,
+        percentile: 50,
+      },
       isBadgeAcquired: isBadgeAcquired,
       badgeStage: isBadgeStage(),
       badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",

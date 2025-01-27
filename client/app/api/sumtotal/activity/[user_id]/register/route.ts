@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
         );
 
         if (!response.ok) {
+          console.error("activity/register", response);
           if (response.status === 401 && attempt === 0 && !isTokenRefreshed) {
             // Refresh the token if the first attempt fails with a 401
             accessToken = await refreshToken(
@@ -61,7 +62,9 @@ export async function GET(request: NextRequest) {
             isTokenRefreshed = true;
             continue; // Retry the request with the new token
           }
-          throw new Error(`Failed to fetch activities: ${response.statusText}`);
+          throw new Error(
+            `Failed to register activity: ${response.statusText}`
+          );
         }
 
         const data = await response.json();

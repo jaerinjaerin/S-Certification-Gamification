@@ -25,7 +25,19 @@ export class QuizScoreHandler {
       return data as ScoreData;
     } catch (error) {
       console.error("Failed to get score:", error);
-      Sentry.captureException(error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "/api/campaigns/score",
+          method: "POST",
+          description: "Failed to fetch question data",
+        });
+        scope.setTag("authType", authType);
+        scope.setTag("campaignId", campaignId);
+        scope.setTag("quizStageIndex", quizStageIndex);
+        scope.setTag("score", score);
+        return scope;
+      });
       return null;
     }
   };

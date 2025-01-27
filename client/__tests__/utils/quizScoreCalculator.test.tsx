@@ -1,4 +1,4 @@
-import QuizScoreCalculator from "./quizScoreCalculator";
+import QuizScoreCalculator from "../../utils/quizScoreCalculator";
 
 describe("QuizScoreCalculator Tests", () => {
   let calculator: QuizScoreCalculator;

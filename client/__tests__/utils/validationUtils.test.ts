@@ -1,4 +1,4 @@
-import { isValidCampaignQuizSetId } from "./validationUtils";
+import { isValidCampaignQuizSetId } from "../../utils/validationUtils";
 
 describe("isValidCampaignQuizSetId", () => {
   test("should return true for valid campaign quiz set IDs", () => {

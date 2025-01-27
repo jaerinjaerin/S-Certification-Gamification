@@ -1,4 +1,4 @@
-import { mapBrowserLanguageToLocale } from "./convertBrowswerLanguageToLocale";
+import { mapBrowserLanguageToLocale } from "../../utils/convertBrowswerLanguageToLocale";
 
 describe("mapBrowserLanguageToLocale", () => {
   it("should return 'es-ES' for languageCode 'es'", () => {
