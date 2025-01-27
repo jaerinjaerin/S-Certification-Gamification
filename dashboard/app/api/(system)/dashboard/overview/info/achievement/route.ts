@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
-import { buildWhereWithValidKeys } from "../../../_lib/where";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -20,9 +19,9 @@ export async function GET(request: NextRequest) {
 
     const domain_goal = await prisma.domainGoal.findMany({
       where: buildWhereWithValidKeys(where, [
-        "campaignId",
-        "domainId",
-        "createdAt",
+        'campaignId',
+        'domainId',
+        'createdAt',
       ]),
     });
     //
@@ -40,9 +39,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result: { count } });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

@@ -1,6 +1,6 @@
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
 
 // UserQuizStatistics 중 isCompleted 기 true 인 유저
 
@@ -16,9 +16,9 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json({ result: { count } });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

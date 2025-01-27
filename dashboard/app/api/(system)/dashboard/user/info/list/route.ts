@@ -1,4 +1,4 @@
-import { prisma } from '@/prisma-client';
+import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { decrypt } from '@/utils/encrypt';

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -10,7 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where } = querySearchParams(searchParams);
-    const names = { expert: "expert", advanced: "advanced" };
+    const names = { expert: 'expert', advanced: 'advanced' };
 
     await prisma.$connect();
 
@@ -34,10 +33,10 @@ export async function GET(request: NextRequest) {
     // bar chart
 
     const jobData = [
-      { name: "FSM", [names.expert]: 0, [names.advanced]: 0 },
-      { name: "FF", [names.expert]: 0, [names.advanced]: 0 },
-      { name: "FSM (SES)", [names.expert]: 0, [names.advanced]: 0 },
-      { name: "FF (SES)", [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'FSM', [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'FF', [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'FSM (SES)', [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'FF (SES)', [names.expert]: 0, [names.advanced]: 0 },
     ];
     const jobGroup = await prisma.job.findMany({
       select: { id: true, group: true },
@@ -47,7 +46,7 @@ export async function GET(request: NextRequest) {
       where: {
         ...where,
         quizStageIndex: { in: [2, 3] },
-        storeId: { not: "4" },
+        storeId: { not: '4' },
       },
     });
 
@@ -68,7 +67,7 @@ export async function GET(request: NextRequest) {
     });
 
     const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, quizStageIndex: { in: [2, 3] }, storeId: "4" },
+      where: { ...where, quizStageIndex: { in: [2, 3] }, storeId: '4' },
     });
 
     ses.forEach((user) => {
@@ -90,9 +89,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result: { pie, bar: jobData } });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

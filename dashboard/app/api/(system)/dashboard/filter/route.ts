@@ -1,4 +1,4 @@
-import { prisma } from '@/prisma-client';
+import { prisma } from '@/model/prisma';
 import { NextResponse } from 'next/server';
 
 async function fetchDependentFilters() {

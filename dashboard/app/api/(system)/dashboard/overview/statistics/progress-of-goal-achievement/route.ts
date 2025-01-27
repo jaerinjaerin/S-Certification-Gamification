@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { addWeeks, endOfWeek, isBefore, startOfWeek } from "date-fns";
-import { querySearchParams } from "../../../_lib/query";
-import { buildWhereWithValidKeys } from "../../../_lib/where";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
+import { querySearchParams } from '../../../_lib/query';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
 
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
@@ -21,13 +20,13 @@ export async function GET(request: NextRequest) {
 
     if (!campaign?.startedAt || !campaign?.endedAt) {
       return NextResponse.json(
-        { error: "Invalid campaign date range" },
+        { error: 'Invalid campaign date range' },
         { status: 400 }
       );
     }
 
     const domain_goal = await prisma.domainGoal.findMany({
-      where: buildWhereWithValidKeys(where, ["campaignId", "createdAt"]),
+      where: buildWhereWithValidKeys(where, ['campaignId', 'createdAt']),
     });
 
     const goalTotalScore = Array.isArray(domain_goal)
@@ -45,8 +44,8 @@ export async function GET(request: NextRequest) {
     const defaultJobData = {
       ff: 0,
       fsm: 0,
-      "ff(ses)": 0,
-      "fsm(ses)": 0,
+      'ff(ses)': 0,
+      'fsm(ses)': 0,
     };
     let jobData = JSON.parse(JSON.stringify(defaultJobData));
 
@@ -76,7 +75,7 @@ export async function GET(request: NextRequest) {
           where: {
             ...weeklyWhere,
             quizStageIndex: 2,
-            storeId: { not: "4" },
+            storeId: { not: '4' },
           },
         });
 
@@ -91,7 +90,7 @@ export async function GET(request: NextRequest) {
         });
 
         const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: { ...weeklyWhere, quizStageIndex: 2, storeId: "4" },
+          where: { ...weeklyWhere, quizStageIndex: 2, storeId: '4' },
         });
 
         ses.forEach((user) => {
@@ -137,9 +136,9 @@ export async function GET(request: NextRequest) {
       result: { jobData: weeklyJobData, goalTotalScore, cumulativeRate },
     });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {
