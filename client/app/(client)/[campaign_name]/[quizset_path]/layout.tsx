@@ -78,7 +78,7 @@ async function fetchInformationAboutDomain(domainCode: string) {
 
 async function fetchAgreementContent(domainCode: string) {
   if (domainCode !== "NAT_2410") {
-    null;
+    return null;
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/agreement/${domainCode}.json`;
