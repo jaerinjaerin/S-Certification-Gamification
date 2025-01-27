@@ -1395,14 +1395,6 @@
     "channels": []
   },
   {
-    "id": "48",
-    "name": "Germany",
-    "code": "NAT_2276",
-    "subsidiaryId": "47",
-    "regionId": "508369",
-    "channels": []
-  },
-  {
     "id": "335253",
     "name": "Greece",
     "code": "NAT_2300",
