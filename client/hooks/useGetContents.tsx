@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
+import { useCallback, useEffect, useState } from "react";
 
 async function fetchInformationAboutDomain(domainCode: string) {
   try {
@@ -87,11 +87,37 @@ export default function useGetContents(domainCode: string | undefined) {
         contents: "",
       };
       if (!privacy || !privacy.contents) {
-        throw new Error("Invalid privacy content");
+        Sentry.captureException(
+          new Error("Failed to fetch privacy content"),
+          (scope) => {
+            scope.setContext("operation", {
+              type: "file",
+              path: `/certification/s25/jsons/privacy/${domainCode}.json`,
+              format: "json",
+              description: "Failed to fetch privacy content",
+            });
+            scope.setTag("domainCode", domainCode);
+            return scope;
+          }
+        );
+        throw new Error(`Invalid privacy content: ${domainCode}`);
       }
 
       const term = (await fetchTermContent(domainCode)) || { contents: "" };
       if (!term || !term.contents) {
+        Sentry.captureException(
+          new Error("Failed to fetch term content"),
+          (scope) => {
+            scope.setContext("operation", {
+              type: "file",
+              path: `/certification/s25/jsons/term/${domainCode}.json`,
+              format: "json",
+              description: "Failed to fetch term content",
+            });
+            scope.setTag("domainCode", domainCode);
+            return scope;
+          }
+        );
         throw new Error("Invalid term content");
       }
 
@@ -113,7 +139,6 @@ export default function useGetContents(domainCode: string | undefined) {
         setAgreementContent(agreement.contents);
       }
     } catch (error) {
-      Sentry.captureException(error);
       throw new Error(`fetchError: ${error} `);
     } finally {
       setIsLoading(false);
