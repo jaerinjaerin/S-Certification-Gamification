@@ -1,9 +1,7 @@
 'use client';
 export const dynamic = 'force-dynamic';
 export const cache = 'no-store';
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useEffect, useRef, useState } from 'react';
 import { fetchData } from '../../../_lib/fetch';
 import ChartContainer from '../../../_components/charts/chart-container';
@@ -14,7 +12,6 @@ import {
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import { ResponsiveContainer } from 'recharts';
 import Pagination from '../../../_components/pagenation';
 import { useQuizContext } from '../../_provider/provider';
 import IncorrectTable, { columns } from '../../_components/incorrect-table';
@@ -44,8 +41,24 @@ const QuizQuizzesRanked = () => {
     },
   });
 
+  // 이전 fieldValues를 추적하기 위한 함수
+  const prevFieldValues = useRef(state.fieldValues);
+
+  function fieldValuesChanged() {
+    const isChanged =
+      JSON.stringify(prevFieldValues.current) !==
+      JSON.stringify(state.fieldValues);
+    prevFieldValues.current = state.fieldValues; // 현재 값을 업데이트
+    return isChanged;
+  }
+
   useEffect(() => {
     if (state.fieldValues) {
+      if (fieldValuesChanged() && 1 < pageIndex) {
+        setPageIndex(1);
+        return;
+      }
+
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
         'quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate',
@@ -63,40 +76,32 @@ const QuizQuizzesRanked = () => {
   }, [state.fieldValues, pageIndex]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="Quizzes Ranked by Highest Incorrect Answer Rate" />
-              <div className="border rounded-md border-zinc-200">
-                <IncorrectTable
-                  table={table}
-                  loading={loading}
-                  pageIndex={pageIndex}
-                  pageSize={pageSize}
-                />
-              </div>
+    <ChartContainer>
+      {loading && <LoaderWithBackground />}
+      <CardCustomHeaderWithoutDesc title="Quizzes Ranked by Highest Incorrect Answer Rate" />
+      <div className="border rounded-md border-zinc-200">
+        <IncorrectTable
+          table={table}
+          loading={loading}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+        />
+      </div>
 
-              {/* 페이지네이션 컴포넌트 */}
-              {table.getRowModel().rows?.length ? (
-                <div className="py-5">
-                  <Pagination
-                    totalItems={total.current}
-                    pageSize={pageSize}
-                    currentPage={pageIndex}
-                    onPageChange={(page) => setPageIndex(page)}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+      {/* 페이지네이션 컴포넌트 */}
+      {table.getRowModel().rows?.length ? (
+        <div className="py-5">
+          <Pagination
+            totalItems={total.current}
+            pageSize={pageSize}
+            currentPage={pageIndex}
+            onPageChange={(page) => setPageIndex(page)}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+    </ChartContainer>
   );
 };
 

@@ -51,62 +51,52 @@ export function UserProgressExperts() {
   }, [state.fieldValues]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="Progess of Experts" />
-              <div className="flex" style={{ width }}>
-                <ComposedChart
-                  title="Experts distribution"
-                  width={width}
-                  height={chartHeight}
-                  data={data}
-                  barSize={40}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="category" dataKey="date" />
-                  <YAxis type="number" />
-                  <Tooltip
-                    cursor={{ fill: chartColorHoverBackground }}
-                    content={<CustomTooltip />}
-                  />
-                  <Legend iconSize={8} />
-                  {/* Job 데이터의 모든 Bar를 생성 */}
-                  <Bar
-                    name="Expert"
-                    dataKey="expert" // `FF`의 데이터 값
-                    stackId="a"
-                    fill={chartColorPrimary}
-                  />
-                  <Bar
-                    name="Expert + Advanced"
-                    dataKey="advanced" // `FSM`의 데이터 값
-                    stackId="a"
-                    fill={chartColorSecondary}
-                  />
-                  <Line
-                    name="Total"
-                    type="linear"
-                    strokeDasharray={2}
-                    dataKey="total"
-                    stroke={chartColorLineStroke}
-                  />
-                </ComposedChart>
-              </div>
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+    <ChartContainer>
+      {loading && <LoaderWithBackground />}
+      <CardCustomHeaderWithoutDesc title="Progess of Experts" />
+      <ResponsiveContainer width="100%" height={chartHeight}>
+        <ComposedChart
+          title="Experts distribution"
+          data={data}
+          barSize={40}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="category" dataKey="date" />
+          <YAxis type="number" />
+          <Tooltip
+            cursor={{ fill: chartColorHoverBackground }}
+            content={<CustomTooltip />}
+          />
+          <Legend iconSize={8} />
+          {/* Job 데이터의 모든 Bar를 생성 */}
+          <Bar
+            name="Expert"
+            dataKey="expert" // `FF`의 데이터 값
+            stackId="a"
+            fill={chartColorPrimary}
+          />
+          <Bar
+            name="Expert + Advanced"
+            dataKey="advanced" // `FSM`의 데이터 값
+            stackId="a"
+            fill={chartColorSecondary}
+          />
+          <Line
+            name="Total"
+            type="linear"
+            strokeDasharray={2}
+            dataKey="total"
+            stroke={chartColorLineStroke}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </ChartContainer>
   );
 }
 

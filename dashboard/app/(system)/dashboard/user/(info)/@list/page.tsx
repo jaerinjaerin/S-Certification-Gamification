@@ -2,7 +2,6 @@
 'use client';
 export const dynamic = 'force-dynamic';
 export const cache = 'no-store';
-
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import { fetchData } from '../../../_lib/fetch';
@@ -24,7 +23,6 @@ import {
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import { ResponsiveContainer } from 'recharts';
 import Pagination from '../../../_components/pagenation';
 
 const columns: ColumnDef<UserListProps>[] = [
@@ -168,8 +166,24 @@ const UserList = () => {
     },
   });
 
+  // 이전 fieldValues를 추적하기 위한 함수
+  const prevFieldValues = useRef(state.fieldValues);
+
+  function fieldValuesChanged() {
+    const isChanged =
+      JSON.stringify(prevFieldValues.current) !==
+      JSON.stringify(state.fieldValues);
+    prevFieldValues.current = state.fieldValues; // 현재 값을 업데이트
+    return isChanged;
+  }
+
   useEffect(() => {
     if (state.fieldValues) {
+      if (fieldValuesChanged() && 1 < pageIndex) {
+        setPageIndex(1);
+        return;
+      }
+
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
         'user/info/list',
@@ -187,88 +201,80 @@ const UserList = () => {
   }, [state.fieldValues, pageIndex]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="User" />
-              <div className="border rounded-md border-zinc-200">
-                <Table>
-                  <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-                        {headerGroup.headers.map((header) => (
-                          <TableHead
-                            key={header.id}
-                            className="font-medium text-center text-size-14px text-zinc-500"
-                          >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    ))}
-                  </TableHeader>
-                  <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                      table.getRowModel().rows.map((row) => {
-                        const id = row.id + pageIndex * pageSize;
-                        return (
-                          <TableRow key={id} className="h-[2.5625rem]">
-                            {row.getVisibleCells().map((cell) => {
-                              return (
-                                <TableCell
-                                  key={cell.id}
-                                  className="text-center text-xs text-zinc-950"
-                                >
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                  )}
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        );
-                      })
-                    ) : (
-                      <TableRow>
+    <ChartContainer>
+      {loading && <LoaderWithBackground />}
+      <CardCustomHeaderWithoutDesc title="User" />
+      <div className="border rounded-md border-zinc-200">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id} className="h-[2.5625rem]">
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className="font-medium text-center text-size-14px text-zinc-500"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => {
+                const id = row.id + pageIndex * pageSize;
+                return (
+                  <TableRow key={id} className="h-[2.5625rem]">
+                    {row.getVisibleCells().map((cell) => {
+                      return (
                         <TableCell
-                          colSpan={columns.length}
-                          className="h-24 text-center"
+                          key={cell.id}
+                          className="text-center text-xs text-zinc-950"
                         >
-                          {loading ? '' : 'No results.'}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
                         </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  {loading ? '' : 'No results.'}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-              {/* 페이지네이션 컴포넌트 */}
-              {table.getRowModel().rows?.length ? (
-                <div className="py-5">
-                  <Pagination
-                    totalItems={total.current}
-                    pageSize={pageSize}
-                    currentPage={pageIndex}
-                    onPageChange={(page) => setPageIndex(page)}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+      {/* 페이지네이션 컴포넌트 */}
+      {table.getRowModel().rows?.length ? (
+        <div className="py-5">
+          <Pagination
+            totalItems={total.current}
+            pageSize={pageSize}
+            currentPage={pageIndex}
+            onPageChange={(page) => setPageIndex(page)}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+    </ChartContainer>
   );
 };
 

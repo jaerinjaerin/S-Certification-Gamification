@@ -57,141 +57,130 @@ const OverviewExperts = () => {
   }, [state.fieldValues]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading && <LoaderWithBackground />}
-              <CardCustomHeader
-                title="Experts"
-                numbers={count.toLocaleString()}
-                description="Number of people completed"
+    <ChartContainer>
+      {loading && <LoaderWithBackground />}
+      <CardCustomHeader
+        title="Experts"
+        numbers={count.toLocaleString()}
+        description="Number of people completed"
+      />
+      <div className="flex items-center">
+        <div className="w-1/2">
+          <ResponsiveContainer width="100%" height={chartHeight}>
+            <PieChart>
+              <Pie
+                data={data.pie}
+                innerRadius={50}
+                outerRadius={120}
+                fill={chartColorPrimary}
+                dataKey="value"
+                label={({ name, value }) => {
+                  return `${
+                    name.toLowerCase() === 'expert'
+                      ? 'Expert'
+                      : 'Expert + Advanced'
+                  }: ${value}`;
+                }} // 각 영역에 Label 추가
+              >
+                {data.pie.map(
+                  (entry: { name: string; value: number }, index: number) => {
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                        name={
+                          entry.name === 'expert'
+                            ? 'Expert'
+                            : 'Expert + Advanced'
+                        }
+                      />
+                    );
+                  }
+                )}
+              </Pie>
+              <>
+                <text
+                  x="50%"
+                  y="47%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="font-bold text-size-20px opacity-90"
+                >
+                  {count}
+                </text>
+                <text
+                  x="50%"
+                  y="51%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="text-size-12px"
+                >
+                  total
+                </text>
+              </>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend iconType="circle" iconSize={8} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex items-center flex-col w-1/2">
+          <div className="text-size-14px text-zinc-950 font-semibold">
+            Experts distribution
+          </div>
+          <ResponsiveContainer width="100%" height={chartHeight}>
+            <BarChart
+              title="Experts distribution"
+              data={data.bar}
+              barSize={40}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+              layout="vertical"
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis
+                type="number"
+                orientation="top"
+                // domain={[200, 1000]}
               />
-              <div className="flex" style={{ width }}>
-                <PieChart width={width / 2} height={chartHeight}>
-                  <Pie
-                    data={data.pie}
-                    innerRadius={50}
-                    outerRadius={120}
-                    fill={chartColorPrimary}
-                    dataKey="value"
-                    label={({ name, value }) => {
-                      return `${
-                        name.toLowerCase() === 'expert'
-                          ? 'Expert'
-                          : 'Expert + Advanced'
-                      }: ${value}`;
-                    }} // 각 영역에 Label 추가
-                  >
-                    {data.pie.map(
-                      (
-                        entry: { name: string; value: number },
-                        index: number
-                      ) => {
-                        return (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                            name={
-                              entry.name === 'expert'
-                                ? 'Expert'
-                                : 'Expert + Advanced'
-                            }
-                          />
-                        );
-                      }
-                    )}
-                  </Pie>
-                  <>
-                    <text
-                      x="50%"
-                      y="47%"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      className="font-bold text-size-20px opacity-90"
-                    >
-                      {count}
-                    </text>
-                    <text
-                      x="50%"
-                      y="51%"
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      className="text-size-12px"
-                    >
-                      total
-                    </text>
-                  </>
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend iconType="circle" iconSize={8} />
-                </PieChart>
-                <div className="flex items-center flex-col">
-                  <div className="text-size-14px text-zinc-950 font-semibold">
-                    Experts distribution
-                  </div>
-                  <BarChart
-                    title="Experts distribution"
-                    width={width / 2}
-                    height={chartHeight}
-                    data={data.bar}
-                    barSize={40}
-                    margin={{
-                      top: 20,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                    layout="vertical"
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      type="number"
-                      orientation="top"
-                      // domain={[200, 1000]}
-                    />
-                    <YAxis
-                      type="category"
-                      dataKey="name"
-                      tick={renderCustomTick}
-                    />
-                    <Tooltip
-                      cursor={{ fill: chartColorHoverBackground }}
-                      content={<CustomTooltip />}
-                    />
-                    <Legend />
-                    <Bar
-                      dataKey="expert"
-                      name="Expert"
-                      stackId="a"
-                      fill={chartColorPrimary}
-                    >
-                      <LabelList
-                        dataKey="expert"
-                        name="Expert"
-                        content={renderLabelContent}
-                      />
-                    </Bar>
-                    <Bar
-                      dataKey="advanced"
-                      name="Expert + Advanced"
-                      stackId="a"
-                      fill={chartColorSecondary}
-                    >
-                      <LabelList
-                        dataKey="advanced"
-                        name="Expert + Advanced"
-                        content={renderLabelContent}
-                      />
-                    </Bar>
-                  </BarChart>
-                </div>
-              </div>
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+              <YAxis type="category" dataKey="name" tick={renderCustomTick} />
+              <Tooltip
+                cursor={{ fill: chartColorHoverBackground }}
+                content={<CustomTooltip />}
+              />
+              <Legend />
+              <Bar
+                dataKey="expert"
+                name="Expert"
+                stackId="a"
+                fill={chartColorPrimary}
+              >
+                <LabelList
+                  dataKey="expert"
+                  name="Expert"
+                  content={renderLabelContent}
+                />
+              </Bar>
+              <Bar
+                dataKey="advanced"
+                name="Expert + Advanced"
+                stackId="a"
+                fill={chartColorSecondary}
+              >
+                <LabelList
+                  dataKey="advanced"
+                  name="Expert + Advanced"
+                  content={renderLabelContent}
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </ChartContainer>
   );
 };
 

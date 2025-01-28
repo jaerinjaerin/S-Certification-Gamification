@@ -64,98 +64,80 @@ const UserOutcome = () => {
   }, [state.fieldValues]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading.score && loading.time && <LoaderWithBackground />}
-              <CardCustomHeaderWithoutDesc title="Outcome" />
-              <div className="flex" style={{ width }}>
-                <div className="relative flex items-center flex-col space-y-5">
-                  <div className="text-size-14px text-zinc-950 font-semibold">
-                    Average score
-                  </div>
-                  <BarChart
-                    data={data.score}
-                    width={width / 2}
-                    height={chartHeight / 1.5}
-                    barSize={40}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" className="text-size-12px" />
-                    <YAxis className="text-size-12px" />
-                    <Tooltip
-                      cursor={{ fill: chartColorHoverBackground }}
-                      content={<CustomTooltip />}
-                    />
-                    <Bar dataKey="score" fill={chartColorPrimary} />
-                  </BarChart>
-                </div>
-                <div className="relative flex items-center flex-col space-y-5">
-                  <div className="text-size-14px text-zinc-950 font-semibold">
-                    Total quiz completion time
-                  </div>
-                  <ComposedChart
-                    data={data.time}
-                    width={width / 2}
-                    height={chartHeight / 1.5}
-                    margin={{
-                      top: 10,
-                      right: 30,
-                      left: 0,
-                      bottom: 0,
-                    }}
-                  >
-                    <defs>
-                      <linearGradient
-                        id="gradientColor"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor={chartColorPrimary}
-                          stopOpacity={1}
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor={chartColorPrimary}
-                          stopOpacity={0}
-                        />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" className="text-size-12px" />
-                    <YAxis className="text-size-12px" />
-                    <Tooltip content={<CustomTimeTooltip />} />
-                    <Area
-                      type="linear"
-                      dataKey="time"
-                      stroke={chartColorPrimary}
-                      fill="url(#gradientColor)" // 그라데이션을 fill에 적용
-                    />
-                    <Line
-                      type="linear"
-                      dataKey="time"
-                      stroke={chartColorPrimary}
-                    />
-                  </ComposedChart>
-                </div>
-              </div>
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+    <ChartContainer>
+      {loading.score && loading.time && <LoaderWithBackground />}
+      <CardCustomHeaderWithoutDesc title="Outcome" />
+      <div className="flex w-full">
+        <div className="relative w-1/2 flex items-center flex-col space-y-5">
+          <div className="text-size-14px text-zinc-950 font-semibold">
+            Average score
+          </div>
+          <ResponsiveContainer width="100%" height={chartHeight / 1.5}>
+            <BarChart
+              data={data.score}
+              barSize={40}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" className="text-size-12px" />
+              <YAxis className="text-size-12px" />
+              <Tooltip
+                cursor={{ fill: chartColorHoverBackground }}
+                content={<CustomTooltip />}
+              />
+              <Bar dataKey="score" fill={chartColorPrimary} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="relative w-1/2 flex items-center flex-col space-y-5">
+          <div className="text-size-14px text-zinc-950 font-semibold">
+            Total quiz completion time
+          </div>
+          <ResponsiveContainer width="100%" height={chartHeight / 1.5}>
+            <ComposedChart
+              data={data.time}
+              margin={{
+                top: 10,
+                right: 30,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <defs>
+                <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="0%"
+                    stopColor={chartColorPrimary}
+                    stopOpacity={1}
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor={chartColorPrimary}
+                    stopOpacity={0}
+                  />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" className="text-size-12px" />
+              <YAxis className="text-size-12px" />
+              <Tooltip content={<CustomTimeTooltip />} />
+              <Area
+                type="linear"
+                dataKey="time"
+                stroke={chartColorPrimary}
+                fill="url(#gradientColor)" // 그라데이션을 fill에 적용
+              />
+              <Line type="linear" dataKey="time" stroke={chartColorPrimary} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </ChartContainer>
   );
 };
 

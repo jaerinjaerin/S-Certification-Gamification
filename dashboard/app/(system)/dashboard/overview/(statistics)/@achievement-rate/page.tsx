@@ -58,69 +58,56 @@ function OverviewAchievementRate() {
   }, [state.fieldValues]);
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ChartContainer>
-        {({ width }) => {
-          return (
-            <>
-              {loading && <LoaderWithBackground />}
-              <CardCustomHeader
-                title="Achievement Rate"
-                numbers={`${count.toLocaleString()}%`}
-                description="Displays goal achievement progress"
+    <ChartContainer>
+      {loading && <LoaderWithBackground />}
+      <CardCustomHeader
+        title="Achievement Rate"
+        numbers={`${count.toLocaleString()}%`}
+        description="Displays goal achievement progress"
+      />
+      <ResponsiveContainer width="100%" height={chartHeight}>
+        <BarChart
+          data={data}
+          margin={{
+            top: 30,
+            bottom: 30,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip
+            cursor={{ fill: chartColorHoverBackground }}
+            content={<CustomTooltip />}
+          />
+          <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
+          <Brush
+            dataKey="name"
+            height={20}
+            stroke={chartColorPrimary}
+            startIndex={0}
+            endIndex={9}
+          />
+          <Bar
+            dataKey="goal"
+            fill={chartColorPrimary}
+            activeBar={
+              <Rectangle fill={chartColorPrimary} stroke={chartColorPrimary} />
+            }
+          />
+          <Bar
+            dataKey="expert"
+            fill={chartColorSecondary}
+            activeBar={
+              <Rectangle
+                fill={chartColorSecondary}
+                stroke={chartColorSecondary}
               />
-              {/* <div className="overflow-x-auto" style={{ width }}> */}
-              <BarChart
-                width={width}
-                height={chartHeight}
-                data={data}
-                margin={{
-                  top: 30,
-                  bottom: 30,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip
-                  cursor={{ fill: chartColorHoverBackground }}
-                  content={<CustomTooltip />}
-                />
-                <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
-                <Brush
-                  dataKey="name"
-                  height={20}
-                  stroke={chartColorPrimary}
-                  startIndex={0}
-                  endIndex={9}
-                />
-                <Bar
-                  dataKey="goal"
-                  fill={chartColorPrimary}
-                  activeBar={
-                    <Rectangle
-                      fill={chartColorPrimary}
-                      stroke={chartColorPrimary}
-                    />
-                  }
-                />
-                <Bar
-                  dataKey="expert"
-                  fill={chartColorSecondary}
-                  activeBar={
-                    <Rectangle
-                      fill={chartColorSecondary}
-                      stroke={chartColorSecondary}
-                    />
-                  }
-                />
-              </BarChart>
-              {/* </div> */}
-            </>
-          );
-        }}
-      </ChartContainer>
-    </ResponsiveContainer>
+            }
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartContainer>
   );
 }
 

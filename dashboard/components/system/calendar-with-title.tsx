@@ -1,27 +1,27 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { CalendarIcon } from 'lucide-react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 const dateOptions = {
-  locale: "en-US",
+  locale: 'en-US',
   options: {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
   } as Intl.DateTimeFormatOptions,
 };
 
 export function CalendarForm({
   label,
-  width = "20rem",
+  width = '20rem',
   minDate,
   maxDate,
   field,
@@ -34,19 +34,25 @@ export function CalendarForm({
 }) {
   // 날짜 범위를 문자열로 표시
   const getDateRangeText = () => {
-    if (!field?.value?.from && !field?.value?.to) return "Pick a date";
+    if (!field?.value?.from && !field?.value?.to) return 'Pick a date';
     const from = field.value.from
       ? field.value.from.toLocaleDateString(
           dateOptions.locale,
           dateOptions.options
         )
-      : "Start";
+      : (minDate || new Date()).toLocaleDateString(
+          dateOptions.locale,
+          dateOptions.options
+        );
     const to = field.value.to
       ? field.value.to.toLocaleDateString(
           dateOptions.locale,
           dateOptions.options
         )
-      : "End";
+      : (maxDate || new Date()).toLocaleDateString(
+          dateOptions.locale,
+          dateOptions.options
+        );
     return `${from} - ${to}`;
   };
 
@@ -58,10 +64,10 @@ export function CalendarForm({
           <Button
             variant="outline"
             className={cn(
-              "block",
-              !field?.value?.from && "text-muted-foreground"
+              'block',
+              !field?.value?.from && 'text-muted-foreground'
             )}
-            style={{ minWidth: "7rem", width }}
+            style={{ minWidth: '7rem', width }}
           >
             <div className="flex items-center space-x-2">
               <CalendarIcon className="h-4 w-4 opacity-50" />
