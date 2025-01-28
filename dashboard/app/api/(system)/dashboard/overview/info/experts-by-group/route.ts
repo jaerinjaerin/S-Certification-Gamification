@@ -1,7 +1,9 @@
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { initialExpertsData } from "@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state";
-import { querySearchParams } from "../../../_lib/query";
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {initialExpertsData} from '@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state';
+import {querySearchParams} from '../../../_lib/query';
 
 // UserQuizStatistics 사용
 // isCompleted 이면 퀴즈 완료
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest) {
     });
 
     const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, quizStageIndex: 2, storeId: { not: "4" } },
+      where: { ...where, quizStageIndex: 2, storeId: { not: '4' } },
     });
 
     plus.forEach((user) => {
@@ -40,7 +42,7 @@ export async function GET(request: NextRequest) {
     });
 
     const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, quizStageIndex: 2, storeId: "4" },
+      where: { ...where, quizStageIndex: 2, storeId: '4' },
     });
 
     ses.forEach((user) => {
@@ -56,9 +58,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result: expertsData });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

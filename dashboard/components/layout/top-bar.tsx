@@ -1,4 +1,4 @@
-import { SquareUser } from "lucide-react";
+import { UserMenu } from '@/components/user-menu';
 
 const Topbar = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -6,10 +6,10 @@ const Topbar = (props: React.HTMLAttributes<HTMLDivElement>) => {
       <div className="flex items-center text-size-18px font-medium space-x-2">
         <img src="/assets/svg/logo.svg" alt="logo" className="size-8" />
         <span className="font-roboto font-bold text-white top-[0.05rem] relative">
-          Certification
+          Certification Admin
         </span>
       </div>
-      <SquareUser className="size-6 text-zinc-50" />
+      <UserMenu className="col-span-2 justify-end" />
     </div>
   );
 };

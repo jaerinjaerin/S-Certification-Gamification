@@ -1,10 +1,12 @@
-import { prisma } from '@/prisma-client';
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
-import { decrypt } from '@/utils/encrypt';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
-import { Account, Prisma } from '@prisma/client';
-import { refreshToken } from '@/services/api/refresh_token';
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {auth} from '@/auth';
+import {decrypt} from '@/utils/encrypt';
+import {querySearchParams} from '@/app/api/(system)/dashboard/_lib/query';
+import {Account, Prisma} from '@prisma/client';
+import {refreshToken} from '@/services/api/refresh_token';
 import UserWhereInput = Prisma.UserWhereInput;
 
 // UserQuizStatistics, DomainGoal사용

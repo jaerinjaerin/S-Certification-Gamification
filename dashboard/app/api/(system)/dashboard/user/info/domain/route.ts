@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
-import { AuthType } from "@prisma/client";
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {querySearchParams} from '../../../_lib/query';
+import {AuthType} from '@prisma/client';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -18,12 +18,12 @@ export async function GET(request: NextRequest) {
     const defaultJobData = {
       ff: 0,
       fsm: 0,
-      "ff(ses)": 0,
-      "fsm(ses)": 0,
+      'ff(ses)': 0,
+      'fsm(ses)': 0,
       ff_advanced: 0,
       fsm_advanced: 0,
-      "ff(ses)_advanced": 0,
-      "fsm(ses)_advanced": 0,
+      'ff(ses)_advanced': 0,
+      'fsm(ses)_advanced': 0,
     };
 
     const jobGroup = await prisma.job.findMany({
@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
       //   expers data
       const jobData = JSON.parse(JSON.stringify(defaultJobData));
       const plus = experts.filter(
-        (exp) => exp.storeId !== "4" && exp.domainId === domain.id
+        (exp) => exp.storeId !== '4' && exp.domainId === domain.id
       );
       plus.forEach((user) => {
         const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
       });
 
       const ses = experts.filter(
-        (exp) => exp.storeId === "4" && exp.domainId === domain.id
+        (exp) => exp.storeId === '4' && exp.domainId === domain.id
       );
 
       ses.forEach((user) => {
@@ -185,11 +185,11 @@ export async function GET(request: NextRequest) {
           fsm: `${jobData.fsm - jobData.fsm_advanced} (${
             jobData.fsm_advanced
           })`,
-          "ff(ses)": `${jobData["ff(ses)"] - jobData["ff(ses)_advanced"]} (${
-            jobData["ff(ses)_advanced"]
+          'ff(ses)': `${jobData['ff(ses)'] - jobData['ff(ses)_advanced']} (${
+            jobData['ff(ses)_advanced']
           })`,
-          "fsm(ses)": `${jobData["fsm(ses)"] - jobData["fsm(ses)_advanced"]} (${
-            jobData["fsm(ses)_advanced"]
+          'fsm(ses)': `${jobData['fsm(ses)'] - jobData['fsm(ses)_advanced']} (${
+            jobData['fsm(ses)_advanced']
           })`,
         },
       };
@@ -197,9 +197,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result, total: count });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

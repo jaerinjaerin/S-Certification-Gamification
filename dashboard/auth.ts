@@ -1,21 +1,21 @@
-import { prisma } from "@/prisma-client";
-import type { Adapter } from "@auth/core/adapters";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { AuthType, User } from "@prisma/client";
-import NextAuth, { DefaultSession, Session } from "next-auth";
+import { prisma } from '@/model/prisma';
+import type { Adapter } from '@auth/core/adapters';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { AuthType, User } from '@prisma/client';
+import NextAuth, { DefaultSession, Session } from 'next-auth';
 import {
   fetchOrganizationDetails,
   SumtotalProfile,
-} from "./services/auth/sumtotal";
-import { encrypt } from "./utils/encrypt";
+} from './services/auth/sumtotal';
+import { encrypt } from './utils/encrypt';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
       provider: string;
       authType: AuthType;
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 }
 
@@ -26,19 +26,19 @@ export const {
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     {
-      id: "sumtotal",
-      name: "SumTotal",
-      type: "oauth",
+      id: 'sumtotal',
+      name: 'SumTotal',
+      type: 'oauth',
       authorization: {
-        url: "https://samsung.sumtotal.host/apisecurity/connect/authorize",
+        url: 'https://samsung.sumtotal.host/apisecurity/connect/authorize',
         params: {
-          scope: "allapis offline_access",
-          prompt: "select_account",
+          scope: 'allapis offline_access',
+          prompt: 'select_account',
           redirect_uri: process.env.SUMTOTAL_CALLBACK_URL,
         },
       },
-      token: "https://samsung.sumtotal.host/apisecurity/connect/token",
-      userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+      token: 'https://samsung.sumtotal.host/apisecurity/connect/token',
+      userinfo: 'https://samsung.sumtotal.host/apis/api/v2/advanced/users',
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: async (profile: SumtotalProfile, tokens) => {
@@ -70,7 +70,7 @@ export const {
         let regionId: string | null = null;
         let subsidiaryId: string | null = null;
         const domainCode = profile.personDomain?.find(
-          (domain) => domain.isPrimary,
+          (domain) => domain.isPrimary
         )?.code;
         if (domainCode) {
           const domain = await prisma.domain.findFirst({
@@ -92,13 +92,6 @@ export const {
           }
         }
 
-        // console.log("jobId:", jobId);
-        // console.log("storeId:", storeId);
-        // console.log("storeSegmentText:", storeSegmentText);
-        // console.log("channelId:", channelId);
-        // console.log("regionId:", regionId);
-        // console.log("subsidiaryId:", subsidiaryId);
-
         return {
           id: encrypt(profile.userId, true),
           emailId:
@@ -106,7 +99,7 @@ export const {
               ? encrypt(profile.businessAddress.email1, true)
               : null,
           name:
-            process.env.NODE_ENV !== "production"
+            process.env.NODE_ENV !== 'production'
               ? profile.businessAddress.email1
               : null,
           image: profile.imagePath ?? null,
@@ -135,7 +128,7 @@ export const {
   ],
   secret: process.env.AUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 365 * 24 * 60 * 60, //365일
   },
   callbacks: {
@@ -154,7 +147,7 @@ export const {
       // // console.log("auth callbacks session", session);
 
       // JWT 전략일 경우 token을 사용
-      if ("token" in params) {
+      if ('token' in params) {
         const { token } = params;
 
         if (session.user && token.sub) {
@@ -165,7 +158,7 @@ export const {
       }
 
       // Database 전략일 경우 추가 로직이 필요하면 여기서 처리
-      if ("user" in params) {
+      if ('user' in params) {
         const { user } = params;
 
         if (session.user) {
@@ -175,19 +168,23 @@ export const {
 
       return session;
     },
-    authorized: ({ auth }) => {
-      // console.log("next-auth authorized", auth);
-      return !!auth?.user; // this ensures there is a logged in user for -every- request
+    authorized: ({ auth, request: { nextUrl } }) => {
+      const isLoggedIn = !!auth?.user;
+      const isOnLoginPage = nextUrl.pathname.startsWith('/login');
+      const isOnSignupPage = nextUrl.pathname.startsWith('/signup');
+
+      if (isLoggedIn) {
+        if (isOnLoginPage || isOnSignupPage) {
+          return Response.redirect(new URL('/', nextUrl));
+        }
+      }
+
+      return true;
     },
-    // redirect: async ({ url, baseUrl }) => {
-    //   // console.log("next-auth redirect", url, baseUrl);
-    //   const result = url.startsWith(baseUrl) ? url : baseUrl;
-    //   return result;
-    // },
   },
   pages: {
-    signIn: "/login",
-    error: "/error",
-    verifyRequest: "/verify-request",
+    signIn: '/login',
+    error: '/error',
+    verifyRequest: '/verify-request',
   },
 });

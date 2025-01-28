@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { addDays, endOfDay, startOfDay } from "date-fns";
-import { querySearchParams } from "../../../_lib/query";
+export const dynamic = "force-dynamic";
+
+import {prisma} from '@/model/prisma';
+import {NextRequest, NextResponse} from 'next/server';
+import {addDays, endOfDay, startOfDay} from 'date-fns';
+import {querySearchParams} from '../../../_lib/query';
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
     );
 
     const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ["quizStageIndex", "createdAt"], // quizStageId와 createdAt으로 그룹화
+      by: ['quizStageIndex', 'createdAt'], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
         createdAt: {
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest) {
         quizStageIndex: { in: [2, 3] },
       },
       _count: { quizStageIndex: true }, // 각 그룹에 대한 개수 집계
-      orderBy: { createdAt: "asc" }, // 날짜 순 정렬
+      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });
 
     // 날짜 범위를 생성
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
       const dates = [];
       const current = new Date(start);
       while (current <= end) {
-        dates.push(current.toISOString().split("T")[0]);
+        dates.push(current.toISOString().split('T')[0]);
         current.setDate(current.getDate() + 1);
       }
       return dates;
@@ -47,7 +48,7 @@ export async function GET(request: NextRequest) {
 
     // 날짜별 초기 데이터 생성
     const initialData = getDateRange(beforeWeek, today).map((date) => ({
-      date: date.replace(/-/g, "."), // YYYY-MM-DD -> YYYY.MM.DD
+      date: date.replace(/-/g, '.'), // YYYY-MM-DD -> YYYY.MM.DD
       total: 0,
       expert: 0,
       advanced: 0,
@@ -55,9 +56,9 @@ export async function GET(request: NextRequest) {
 
     // 데이터 그룹화 및 합산
     const result = experts.reduce((acc, item) => {
-      const dateKey = item.createdAt.toISOString().split("T")[0]; // 날짜 추출
+      const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
       const match = acc.find(
-        (entry) => entry.date === dateKey.replace(/-/g, ".")
+        (entry) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
         const count = item._count.quizStageIndex;
@@ -74,9 +75,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {
