@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-export const dynamic = 'force-dynamic';
-export const cache = 'no-store';
 
 import {
   Bar,
@@ -18,17 +16,13 @@ import {
   YAxis,
 } from 'recharts';
 import CardCustomHeader from '../../../_components/charts/chart-header';
-import { useOverviewContext } from '../../_provider/provider';
-import { useEffect, useState } from 'react';
-import { fetchData } from '../../../_lib/fetch';
+import {useOverviewContext} from '../../_provider/provider';
+import {useEffect, useState} from 'react';
+import {fetchData} from '../../../_lib/fetch';
 import ChartContainer from '../../../_components/charts/chart-container';
-import { chartHeight } from '../../../_lib/chart-variable';
-import {
-  chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
-} from '../../../_lib/chart-colors';
-import { LoaderWithBackground } from '@/components/loader';
+import {chartHeight} from '../../../_lib/chart-variable';
+import {chartColorHoverBackground, chartColorPrimary, chartColorSecondary,} from '../../../_lib/chart-colors';
+import {LoaderWithBackground} from '@/components/loader';
 import CustomTooltip from '../../../_components/charts/chart-tooltip';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];

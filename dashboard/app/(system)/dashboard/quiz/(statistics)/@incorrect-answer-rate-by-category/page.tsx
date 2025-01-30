@@ -1,6 +1,5 @@
 'use client';
-export const dynamic = 'force-dynamic';
-export const cache = 'no-store';
+
 import { useEffect, useState } from 'react';
 import { useQuizContext } from '../../_provider/provider';
 import { fetchData } from '../../../_lib/fetch';

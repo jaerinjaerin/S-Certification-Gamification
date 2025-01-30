@@ -1,7 +1,5 @@
 'use client';
-export const dynamic = 'force-dynamic';
-export const cache = 'no-store';
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useRef, useState } from 'react';
 import { fetchData } from '../../../_lib/fetch';
 import ChartContainer from '../../../_components/charts/chart-container';
