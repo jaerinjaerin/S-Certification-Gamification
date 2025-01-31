@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 export const cache = 'no-store';
 
 import { useEffect, useState } from 'react';
-import { useUserContext } from '../../_provider/provider';
+import { useUserContext } from '../_provider/provider';
 import {
   Area,
   Bar,
@@ -16,18 +16,18 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import { chartHeight } from '../../../_lib/chart-variable';
+import { fetchData } from '../../_lib/fetch';
+import ChartContainer from '../../_components/charts/chart-container';
+import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
+import { chartHeight } from '../../_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
-} from '../../../_lib/chart-colors';
+} from '../../_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
-} from '../../../_components/charts/chart-tooltip';
+} from '../../_components/charts/chart-tooltip';
 
 const UserOutcome = () => {
   const { state } = useUserContext();

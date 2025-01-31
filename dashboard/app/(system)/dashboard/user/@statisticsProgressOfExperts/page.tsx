@@ -13,20 +13,20 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
+import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
   chartColorLineStroke,
   chartColorPrimary,
   chartColorSecondary,
-} from '../../../_lib/chart-colors';
-import { chartHeight } from '../../../_lib/chart-variable';
-import { useUserContext } from '../../_provider/provider';
+} from '../../_lib/chart-colors';
+import { chartHeight } from '../../_lib/chart-variable';
+import { useUserContext } from '../_provider/provider';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
+import { fetchData } from '../../_lib/fetch';
+import ChartContainer from '../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../../_components/charts/chart-tooltip';
+import CustomTooltip from '../../_components/charts/chart-tooltip';
 
 export function UserProgressExperts() {
   const { state } = useUserContext();

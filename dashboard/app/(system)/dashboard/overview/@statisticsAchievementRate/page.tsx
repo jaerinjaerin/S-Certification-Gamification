@@ -12,20 +12,20 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '../../../_components/charts/chart-header';
-import ChartContainer from '../../../_components/charts/chart-container';
+import CardCustomHeader from '../../_components/charts/chart-header';
+import ChartContainer from '../../_components/charts/chart-container';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from '../../../_lib/chart-colors';
+} from '../../_lib/chart-colors';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../../_lib/fetch';
-import { useOverviewContext } from '../../_provider/provider';
-import { legendCapitalizeFormatter } from '../../../_lib/text';
-import { chartHeight } from '../../../_lib/chart-variable';
+import { fetchData } from '../../_lib/fetch';
+import { useOverviewContext } from '../_provider/provider';
+import { legendCapitalizeFormatter } from '../../_lib/text';
+import { chartHeight } from '../../_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../../_components/charts/chart-tooltip';
+import CustomTooltip from '../../_components/charts/chart-tooltip';
 
 function OverviewAchievementRate() {
   const { state } = useOverviewContext();

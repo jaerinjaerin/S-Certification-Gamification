@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import InfoCardStyleContainer from '../_components/card-with-title';
-import { useOverviewContext } from '../../_provider/provider';
+import { useOverviewContext } from '../_provider/provider';
 import { initialExpertsData } from './_lib/state';
-import { fetchData } from '../../../_lib/fetch';
+import { fetchData } from '../../_lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
 
 const OverviewExpertsByGroupInfo = () => {

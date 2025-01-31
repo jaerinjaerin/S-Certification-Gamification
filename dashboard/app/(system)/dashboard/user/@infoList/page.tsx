@@ -3,9 +3,9 @@
 export const dynamic = 'force-dynamic';
 export const cache = 'no-store';
 import { useEffect, useRef, useState } from 'react';
-import { useUserContext } from '../../_provider/provider';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
+import { useUserContext } from '../_provider/provider';
+import { fetchData } from '../../_lib/fetch';
+import ChartContainer from '../../_components/charts/chart-container';
 import {
   Table,
   TableBody,
@@ -22,8 +22,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import Pagination from '../../../_components/pagenation';
+import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
+import Pagination from '../../_components/pagenation';
 
 const columns: ColumnDef<UserListProps>[] = [
   {

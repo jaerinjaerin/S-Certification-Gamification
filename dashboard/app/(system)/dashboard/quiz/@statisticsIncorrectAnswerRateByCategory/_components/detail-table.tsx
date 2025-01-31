@@ -1,15 +1,15 @@
-"use client";
+'use client';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { LoaderWithBackground } from "@/components/loader";
-import { fetchData } from "@/app/(system)/dashboard/_lib/fetch";
-import { CardCustomHeaderWithoutDesc } from "@/app/(system)/dashboard/_components/charts/chart-header";
-import IncorrectTable, { columns } from "../../../_components/incorrect-table";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { useModal } from "@/components/provider/modal-provider";
+import { useEffect, useState } from 'react';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { LoaderWithBackground } from '@/components/loader';
+import { fetchData } from '@/app/(system)/dashboard/_lib/fetch';
+import { CardCustomHeaderWithoutDesc } from '@/app/(system)/dashboard/_components/charts/chart-header';
+import IncorrectTable, { columns } from '../../_components/incorrect-table';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import { useModal } from '@/components/provider/modal-provider';
 
 const DetailIncorrectTable = ({
   category,
@@ -34,7 +34,7 @@ const DetailIncorrectTable = ({
     if (questionIds) {
       fetchData(
         { questionIds },
-        "quiz/statistics/incorrect-answer-rate-by-category/info",
+        'quiz/statistics/incorrect-answer-rate-by-category/info',
         (data) => {
           setData(data.result);
           setLoading(false);

@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
+import { fetchData } from '../../_lib/fetch';
+import ChartContainer from '../../_components/charts/chart-container';
 import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import Pagination from '../../../_components/pagenation';
-import { useQuizContext } from '../../_provider/provider';
-import IncorrectTable, { columns } from '../../_components/incorrect-table';
+import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
+import Pagination from '../../_components/pagenation';
+import { useQuizContext } from '../_provider/provider';
+import IncorrectTable, { columns } from '../_components/incorrect-table';
 
 const QuizQuizzesRanked = () => {
   const { state } = useQuizContext();
