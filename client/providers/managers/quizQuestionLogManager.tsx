@@ -109,7 +109,7 @@ class QuizQuestionLogManager {
 
   private async attemptToSendLog(log: QuizLog): Promise<void> {
     let attempts = 0;
-    const maxAttempts = 2;
+    const maxAttempts = 3;
 
     while (attempts < maxAttempts) {
       attempts++;
@@ -181,7 +181,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {
