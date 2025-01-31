@@ -1,5 +1,5 @@
 "use client";
-// import { HeartFilledIcon, HeartIcon } from "@/components/icons/icons";
+
 import {
   ErrorAlertDialog,
   GameOverAlertDialog,
@@ -40,7 +40,7 @@ export default function QuizPage() {
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
   const currentStageTotalQuestions = currentStageQuestions?.length;
 
-  const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
+  const selectedOptionIdsRef = useRef<string[]>([]);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
 
   const LIFE_COUNT = currentQuizStage?.lifeCount ?? 5; // currentQuizStage.lifeCount
@@ -84,31 +84,42 @@ export default function QuizPage() {
     }
   };
 
-  const handleOptionSave = (optionId: string) => {
-    setSelectedOptionIds((prevSelected) => {
-      if (prevSelected.includes(optionId)) {
-        return [...prevSelected];
-      }
-      return [...prevSelected, optionId];
-    });
+  function isOptionSelected(optionId: string): boolean {
+    return selectedOptionIdsRef.current.includes(optionId);
+  }
+
+  function isAllCorrectSelected(): boolean {
+    return question.options.every((option) =>
+      option.isCorrect ? isOptionSelected(option.id) : true
+    );
+  }
+
+  const resetSelectedOptionIds = () => {
+    selectedOptionIdsRef.current = [];
+    console.log("Selected options reset:", selectedOptionIdsRef.current);
   };
 
   const handleConfirmAnswer = async (question: any, optionId: string) => {
+    const isSelected = selectedOptionIdsRef.current.includes(optionId);
+    if (isSelected) return;
+
+    selectedOptionIdsRef.current = [...selectedOptionIdsRef.current, optionId];
+
     const result = question.options.find((option) => option.id === optionId);
-    const selectedOptIds = [...new Set([...selectedOptionIds, optionId])];
     const elapsedSeconds = question.timeLimitSeconds - count;
 
     if (result.isCorrect) {
       // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
-      const isAllCorrectSelected = question.options.every((option) =>
-        option.isCorrect ? selectedOptIds.includes(option.id) : true
-      );
-
-      if (isAllCorrectSelected) {
+      if (isAllCorrectSelected()) {
         setIsCorrectAnswer(true);
         stopCountdown();
         setSuccess(true);
-        logUserAnswer(question.id, selectedOptIds, elapsedSeconds, true);
+        logUserAnswer(
+          question.id,
+          selectedOptionIdsRef.current,
+          elapsedSeconds,
+          true
+        );
         stopAnimation();
         await sleep(1500);
         await next();
@@ -118,15 +129,21 @@ export default function QuizPage() {
     } else {
       setLifeCount((lifeCount) => lifeCount - 1);
       triggerAnimation();
-      logUserAnswer(question.id, selectedOptIds, elapsedSeconds, false);
+      logUserAnswer(
+        question.id,
+        selectedOptionIdsRef.current,
+        elapsedSeconds,
+        false
+      );
     }
   };
 
   const next = async () => {
+    console.log("next");
     setIsCorrectAnswer(false);
 
     if (canNextQuestion()) {
-      setSelectedOptionIds([]);
+      // resetSelectedOptionIds();
       nextQuestion();
       window.scrollTo({ top: 0, behavior: "smooth" });
       resetCountdown();
@@ -134,8 +151,9 @@ export default function QuizPage() {
     }
 
     setLoading(true);
+    console.log("endStage", lifeCount);
     await endStage(lifeCount); // 남은 하트수
-    setSelectedOptionIds([]);
+    // resetSelectedOptionIds();
 
     // nextStage();
     routeToPage("complete");
@@ -194,7 +212,7 @@ export default function QuizPage() {
   }, [lifeCount, handleGameOver]);
 
   function getAnimateState(option: QuestionOption) {
-    if (selectedOptionIds.includes(option.id)) {
+    if (isOptionSelected(option.id)) {
       return {
         x: !option.isCorrect ? [0, -5, 5, -5, 5, 0] : 0,
         scale: !option.isCorrect ? 1 : [1, 1.1, 1],
@@ -269,14 +287,12 @@ export default function QuizPage() {
                 <motion.label
                   key={option.id}
                   onClick={() => {
-                    handleOptionSave(option.id);
                     handleConfirmAnswer(question, option.id);
                   }}
                   className={cn(
                     "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
                     isCorrectAnswer && "pointer-events-none",
-                    selectedOptionIds.includes(option.id) &&
-                      "pointer-events-none",
+                    isOptionSelected(option.id) && "pointer-events-none",
                     isArabic && "text-right",
                     isMyanmar && "leading-loose"
                   )}
@@ -290,7 +306,7 @@ export default function QuizPage() {
                   )}
                   <input
                     type="checkbox"
-                    checked={selectedOptionIds.includes(option.id)}
+                    checked={isOptionSelected(option.id)}
                     readOnly
                     className="hidden"
                     onClick={(e) => {
