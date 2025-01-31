@@ -45,7 +45,6 @@ export async function GET(request: NextRequest, props: Props) {
     }
 
     const userJobId = user.jobId ?? sumtotalUserOthersJobId;
-    console.log("userJobId:", userId);
     const job = await prisma.job.findFirst({
       where: { id: userJobId },
     });

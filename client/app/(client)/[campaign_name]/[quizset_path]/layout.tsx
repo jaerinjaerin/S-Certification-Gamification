@@ -72,7 +72,16 @@ async function fetchInformationAboutDomain(domainCode: string) {
 
     return result.items[0];
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "http_request",
+        endpoint: "/api/domains?domain_code",
+        method: "POST",
+        description: "Failed to fetch information about domain",
+      });
+      scope.setTag("domainCode", domainCode);
+      return scope;
+    });
   }
 }
 

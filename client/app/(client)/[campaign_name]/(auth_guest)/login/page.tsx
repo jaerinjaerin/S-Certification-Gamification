@@ -366,6 +366,7 @@ export default function GuestLogin({
           body: JSON.stringify({ email, code }),
         }
       );
+
       if (!response.ok) {
         const data = await response.json();
         const { code } = data;
@@ -388,7 +389,7 @@ export default function GuestLogin({
         return;
       }
 
-      await response.json();
+      // await response.json();
       await signIn("credentials", {
         email,
         code,
