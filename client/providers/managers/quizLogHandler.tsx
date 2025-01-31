@@ -62,7 +62,7 @@ export class QuizLogHandler {
             scope.setTag("quizSetPath", quizSetPath);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           return null;
         }
@@ -109,8 +109,8 @@ export class QuizLogHandler {
         );
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch user profile");
+          // const errorData = await response.json();
+          throw new Error("Failed to fetch quiz log");
         }
 
         const data = await response.json();
@@ -130,7 +130,7 @@ export class QuizLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           throw new Error(
             "An unexpected error occurred while registering quiz log"
