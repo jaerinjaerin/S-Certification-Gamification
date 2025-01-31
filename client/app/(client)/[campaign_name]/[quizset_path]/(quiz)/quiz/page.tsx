@@ -64,6 +64,7 @@ export default function QuizPage() {
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
   const { isArabic, isMyanmar } = useCheckLocale();
+  const [, forceUpdate] = useState(0);
 
   // 애니메이션 트리거
   const triggerAnimation = () => {
@@ -136,6 +137,8 @@ export default function QuizPage() {
         false
       );
     }
+
+    forceUpdate((prev) => prev + 1);
   };
 
   const next = async () => {
