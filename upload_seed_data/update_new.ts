@@ -301,7 +301,7 @@ async function main() {
       process.cwd(),
       "data",
       "questions",
-      "update_new"
+      "20250131"
     );
     const files = fs.readdirSync(folderPath);
 
