@@ -94,10 +94,10 @@ export default function QuizPage() {
     );
   }
 
-  const resetSelectedOptionIds = () => {
-    selectedOptionIdsRef.current = [];
-    console.log("Selected options reset:", selectedOptionIdsRef.current);
-  };
+  // const resetSelectedOptionIds = () => {
+  //   selectedOptionIdsRef.current = [];
+  //   console.log("Selected options reset:", selectedOptionIdsRef.current);
+  // };
 
   const handleConfirmAnswer = async (question: any, optionId: string) => {
     const isSelected = selectedOptionIdsRef.current.includes(optionId);
