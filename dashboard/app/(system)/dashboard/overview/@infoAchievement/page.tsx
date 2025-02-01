@@ -13,7 +13,7 @@ const OverviewAchievementInfo = () => {
   useEffect(() => {
     if (state.fieldValues) {
       fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
-        setCount(data.result.count ?? 0);
+        setCount(data.result.count.toFixed(2) ?? 0);
       });
     }
     return () => {

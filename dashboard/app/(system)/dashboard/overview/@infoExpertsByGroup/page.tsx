@@ -41,7 +41,9 @@ const OverviewExpertsByGroupInfo = () => {
               return (
                 <div key={title} className="flex items-center space-x-1">
                   <div className="uppercase">{title}</div>
-                  <div className="font-bold text-size-20px">{item.value}</div>
+                  <div className="font-bold text-size-20px">
+                    {item.value.toLocaleString()}
+                  </div>
                 </div>
               );
             })}

@@ -1,10 +1,10 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {addWeeks, endOfWeek, isBefore, startOfWeek} from 'date-fns';
-import {querySearchParams} from '../../../_lib/query';
-import {buildWhereWithValidKeys} from '../../../_lib/where';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
+import { querySearchParams } from '../../../_lib/query';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
 
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
@@ -48,8 +48,8 @@ export async function GET(request: NextRequest) {
       fsm: 0,
       'ff(ses)': 0,
       'fsm(ses)': 0,
+      other: 0,
     };
-    let jobData = JSON.parse(JSON.stringify(defaultJobData));
 
     const jobGroup = await prisma.job.findMany({
       select: { id: true, group: true },
@@ -57,6 +57,7 @@ export async function GET(request: NextRequest) {
 
     // 8주 데이터 생성
     for (let i = 0; i < 8; i++) {
+      let jobData = JSON.parse(JSON.stringify(defaultJobData));
       const currentWeekStart = addWeeks(startDate, i);
       const weekEnd = endOfWeek(currentWeekStart);
 
@@ -68,7 +69,7 @@ export async function GET(request: NextRequest) {
         const weeklyWhere = {
           ...where,
           createdAt: {
-            gte: currentWeekStart,
+            gte: startDate,
             lt: weekEnd,
           },
         };
@@ -77,7 +78,7 @@ export async function GET(request: NextRequest) {
           where: {
             ...weeklyWhere,
             quizStageIndex: 2,
-            storeId: { not: '4' },
+            OR: [{ storeId: null }, { storeId: { not: '4' } }],
           },
         });
 
@@ -88,13 +89,13 @@ export async function GET(request: NextRequest) {
             if (lowJobName in jobData) {
               jobData[lowJobName] += 1;
             }
+          } else {
+            jobData.other += 1;
           }
         });
-
         const ses = await prisma.userQuizBadgeStageStatistics.findMany({
           where: { ...weeklyWhere, quizStageIndex: 2, storeId: '4' },
         });
-
         ses.forEach((user) => {
           const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
           if (jobName) {
@@ -114,6 +115,10 @@ export async function GET(request: NextRequest) {
         date: `${currentWeekStart.toISOString()} - ${weekEnd.toISOString()}`,
         name: `W${weekIndex + 1}`,
         job: JSON.parse(JSON.stringify(jobData)),
+        total: Object.values(jobData).reduce(
+          (sum, value) => (sum as number) + (value as number),
+          0
+        ),
         target: weeklyGoalRate[weekIndex] || 0,
       });
 
@@ -131,7 +136,7 @@ export async function GET(request: NextRequest) {
       const expertTotal = Object.values(
         foundJobElement.job as Record<string, number>
       ).reduce((sum, value) => sum + value, 0);
-      cumulativeRate = expertTotal / goalTotalScore;
+      cumulativeRate = (expertTotal / goalTotalScore) * 100;
     }
 
     return NextResponse.json({

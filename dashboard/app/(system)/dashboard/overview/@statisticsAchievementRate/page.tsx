@@ -45,7 +45,7 @@ function OverviewAchievementRate() {
       );
       //
       fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
-        setCount(data.result.count);
+        setCount(data.result.count.toFixed(2) ?? 0);
       });
     }
 

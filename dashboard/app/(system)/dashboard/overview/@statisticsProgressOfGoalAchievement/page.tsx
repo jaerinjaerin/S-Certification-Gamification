@@ -26,7 +26,7 @@ import { useEffect, useRef, useState } from 'react';
 import { fetchData } from '../../_lib/fetch';
 import ChartContainer from '../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../_components/charts/chart-tooltip';
+import { ProgressTooltip } from '../../_components/charts/chart-tooltip';
 
 export function OverviewGoalAchievement() {
   const { state } = useOverviewContext();
@@ -60,7 +60,7 @@ export function OverviewGoalAchievement() {
       {loading && <LoaderWithBackground />}
       <CardCustomHeader
         title="Progress of goal achievement"
-        numbers={`${count.current.toLocaleString()}%`}
+        numbers={`${count.current.toFixed(2)}%`}
         description="Cumulative number of experts over time"
       />
       <ResponsiveContainer width="100%" height={chartHeight}>
@@ -85,7 +85,7 @@ export function OverviewGoalAchievement() {
           <YAxis type="number" domain={[0, expertRange.current]} />
           <Tooltip
             cursor={{ fill: chartColorHoverBackground }}
-            content={<CustomTooltip />}
+            content={<ProgressTooltip goal={expertRange.current} />}
           />
           <Legend iconSize={8} />
           {/* Job 데이터의 모든 Bar를 생성 */}

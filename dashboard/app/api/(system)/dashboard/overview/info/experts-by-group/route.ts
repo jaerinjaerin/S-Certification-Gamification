@@ -27,7 +27,11 @@ export async function GET(request: NextRequest) {
     });
 
     const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, quizStageIndex: 2, storeId: { not: '4' } },
+      where: {
+        ...where,
+        quizStageIndex: 2,
+        OR: [{ storeId: null }, { storeId: { not: '4' } }],
+      },
     });
 
     plus.forEach((user) => {

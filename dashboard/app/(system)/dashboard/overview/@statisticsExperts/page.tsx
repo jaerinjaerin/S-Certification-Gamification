@@ -27,7 +27,9 @@ import {
   chartColorSecondary,
 } from '../../_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../_components/charts/chart-tooltip';
+import CustomTooltip, {
+  ExpertsTooltip,
+} from '../../_components/charts/chart-tooltip';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -77,7 +79,7 @@ const OverviewExperts = () => {
                     name.toLowerCase() === 'expert'
                       ? 'Expert'
                       : 'Expert + Advanced'
-                  }: ${value}`;
+                  }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
                 {data.pie.map(
@@ -104,7 +106,7 @@ const OverviewExperts = () => {
                   dominantBaseline="middle"
                   className="font-bold text-size-20px opacity-90"
                 >
-                  {count}
+                  {count.toLocaleString()}
                 </text>
                 <text
                   x="50%"
@@ -147,7 +149,7 @@ const OverviewExperts = () => {
               <YAxis type="category" dataKey="name" tick={renderCustomTick} />
               <Tooltip
                 cursor={{ fill: chartColorHoverBackground }}
-                content={<CustomTooltip />}
+                content={<ExpertsTooltip />}
               />
               <Legend />
               <Bar
@@ -190,18 +192,20 @@ const renderLabelContent = (props: any) => {
   const { x, y, width, value } = props;
   const padding = 5;
 
-  if (width < 30) return;
-
-  return (
-    <text
-      x={x + width - padding}
-      y={y + padding + 8}
-      textAnchor="end"
-      dominantBaseline="middle"
-    >
-      {value}
-    </text>
-  );
+  if (width < 30) {
+    return null;
+  } else {
+    return (
+      <text
+        x={x + width - padding}
+        y={y + padding + 8}
+        textAnchor="end"
+        dominantBaseline="middle"
+      >
+        {value.toLocaleString()}
+      </text>
+    );
+  }
 };
 
 const renderCustomTick = (props: any) => {

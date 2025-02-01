@@ -1,8 +1,8 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {querySearchParams} from '../../../_lib/query';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -48,9 +48,11 @@ export async function GET(request: NextRequest) {
       where: {
         ...where,
         quizStageIndex: { in: [2, 3] },
-        storeId: { not: '4' },
+        OR: [{ storeId: null }, { storeId: { not: '4' } }],
       },
     });
+
+    console.log('plus.length:', plus.length);
 
     plus.forEach((user) => {
       const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
@@ -71,6 +73,8 @@ export async function GET(request: NextRequest) {
     const ses = await prisma.userQuizBadgeStageStatistics.findMany({
       where: { ...where, quizStageIndex: { in: [2, 3] }, storeId: '4' },
     });
+
+    console.log('ses.length:', ses.length);
 
     ses.forEach((user) => {
       const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
