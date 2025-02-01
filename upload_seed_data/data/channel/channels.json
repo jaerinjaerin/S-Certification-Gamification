@@ -1761,5 +1761,13 @@
     "subsidiaryId": "349947",
     "regionId": "508370",
     "channels": []
+  },
+  {
+    "id": "333980",
+    "name": "Austria",
+    "code": "NAT_2040",
+    "subsidiaryId": "335247",
+    "regionId": "508369",
+    "channels": []
   }
 ]

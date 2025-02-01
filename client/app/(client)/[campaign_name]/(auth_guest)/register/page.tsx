@@ -150,7 +150,7 @@ export default function GuestRegisterPage() {
     item: campaignPath,
     createItem,
   } = useCreateItem<string>();
-  console.log("로딩크리에이트트트트틑", loadingCreate);
+  // console.log("로딩크리에이트트트트틑", loadingCreate);
 
   useEffect(() => {
     if (campaignPath) {

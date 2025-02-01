@@ -15,8 +15,16 @@ export class QuizBadgeHandler {
 
       return registered && attended;
     } catch (error) {
-      Sentry.captureException(error);
-      await Sentry.flush(2000); // 최대 2초 대기
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "issueBadge",
+          description: "Failed to issue badge",
+        });
+        scope.setTag("activityId", activityId);
+        return scope;
+      });
+      // await Sentry.flush(2000); // 최대 2초 대기
       return false;
     }
   };
@@ -55,7 +63,7 @@ export class QuizBadgeHandler {
         throw new Error(errorData.message || "Failed to fetch sendBadgeEmail");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
       // console.log("sendBadgeEmail data", data);
 
       return true;
@@ -96,7 +104,7 @@ export class QuizBadgeHandler {
         throw new Error(errorData.message || "Failed to register activities");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
 
       return true;
     } catch (err: any) {
@@ -138,7 +146,7 @@ export class QuizBadgeHandler {
         throw new Error(errorData.message || "Failed to update activity");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
       // console.log("data", data);
 
       return true;

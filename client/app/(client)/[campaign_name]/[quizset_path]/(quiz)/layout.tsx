@@ -110,7 +110,18 @@ async function handleQuizSetup(
       quizQuestionLogs,
     };
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "http_request",
+        endpoint: "handleQuizSetup",
+        method: "POST",
+        description: "Failed to handle quiz setup",
+      });
+      scope.setTag("userId", userId);
+      scope.setTag("campaign_name", params.campaign_name);
+      scope.setTag("quizset_path", params.quizset_path);
+      return scope;
+    });
     return { redirectTo: "/error" };
   }
 }

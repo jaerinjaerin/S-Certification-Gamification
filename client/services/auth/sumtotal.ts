@@ -1,6 +1,7 @@
 import { sumtotalUserOthersJobId } from "@/core/config/default";
 import { OAuth2Config, OAuthUserConfig } from "@auth/core/providers";
 
+import * as Sentry from "@sentry/nextjs";
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
 export interface Address {
   email1: string;
@@ -468,6 +469,16 @@ export async function fetchOrganizationDetails(
       }
       return await response.json();
     } catch (error) {
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: `api/v1/organizations/search?organizationId=${orgId}`,
+          method: "GET",
+          description: "Failed to fetch organization data by orgId",
+        });
+        scope.setTag("orgId", orgId);
+        return scope;
+      });
       console.error(`Error fetching data for orgId ${orgId}:`, error);
       return null;
     }
@@ -493,6 +504,16 @@ export async function fetchOrganizationDetails(
       }
       return await response.json();
     } catch (error) {
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: `/apis/api/v1/organizations/search?orgName=${parentName}`,
+          method: "GET",
+          description: "Failed to fetch organization data by parent name",
+        });
+        scope.setTag("parentName", parentName);
+        return scope;
+      });
       console.error(`Error fetching data for parentName ${parentName}:`, error);
       return null;
     }

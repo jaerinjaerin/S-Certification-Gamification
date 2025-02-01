@@ -22,7 +22,16 @@ async function fetchInformationAboutDomain(domainCode: string) {
 
     return result.items;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "http_request",
+        endpoint: "fetchInformationAboutDomain",
+        method: "GET",
+        description: "Failed to fetch information about domain",
+      });
+      scope.setTag("domainCode", domainCode);
+      return scope;
+    });
   }
 }
 
@@ -54,7 +63,16 @@ async function fetchContent(url: string) {
 
     return result;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "http_request",
+        endpoint: "fetchContent",
+        method: "GET",
+        description: "Failed to fetch content",
+      });
+      scope.setTag("url", url);
+      return scope;
+    });
   }
 }
 

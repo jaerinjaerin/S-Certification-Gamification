@@ -87,10 +87,8 @@ export class QuizStageLogHandler {
         );
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.message || "Failed to create quiz stage log"
-          );
+          // const errorData = await response.json();
+          throw new Error("Failed to create quiz stage log");
         }
 
         // 성공적으로 처리되었으면 함수 종료
@@ -111,7 +109,7 @@ export class QuizStageLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           throw new Error(
             "Max attempts reached: An unexpected error occurred while registering quiz log"
