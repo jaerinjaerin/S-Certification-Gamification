@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {querySearchParams} from '../../../_lib/query';
-import {AuthType} from '@prisma/client';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
+import { AuthType } from '@prisma/client';
 
 type GroupedResultProps = {
   category: string;
@@ -27,11 +27,13 @@ const calculateRate = (incorrect: number, correct: number): number => {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     await prisma.$connect();
 
-    const jobNames = await prisma.job.findMany({
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
       select: { id: true, group: true },
     });
 
@@ -42,6 +44,7 @@ export async function GET(request: NextRequest) {
       where: {
         ...where,
         questionId: { in: questions.map((q) => q.id) },
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
       _count: { isCorrect: true },
       orderBy: [
@@ -50,7 +53,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Job ID를 매핑
-    const jobGroupMap = jobNames.reduce(
+    const jobGroupMap = jobGroup.reduce(
       (acc, job) => {
         acc[job.id] = job.group; // id: group 형태로 매핑
         return acc;

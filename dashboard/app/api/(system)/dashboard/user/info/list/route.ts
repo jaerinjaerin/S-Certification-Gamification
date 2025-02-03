@@ -1,12 +1,12 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {auth} from '@/auth';
-import {decrypt} from '@/utils/encrypt';
-import {querySearchParams} from '@/app/api/(system)/dashboard/_lib/query';
-import {Account, Prisma} from '@prisma/client';
-import {refreshToken} from '@/services/api/refresh_token';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/auth';
+import { decrypt } from '@/utils/encrypt';
+import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
+import { Account, Prisma } from '@prisma/client';
+import { refreshToken } from '@/services/api/refresh_token';
 import UserWhereInput = Prisma.UserWhereInput;
 
 // UserQuizStatistics, DomainGoal사용
@@ -22,9 +22,15 @@ export async function GET(request: NextRequest) {
     });
 
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+    const { where: condition, take, skip } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
-    console.log('where >> \n', where);
+    await prisma.$connect();
+
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
+      select: { id: true, group: true },
+    });
 
     const { regionId, subsidiaryId, domainId, createdAt, authType } = where;
     // Construct the dynamic where clause
@@ -41,11 +47,11 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const count = await prisma.user.count({
-      where: { ...whereClause },
+      where: { ...whereClause, jobId: { in: jobGroup.map((job) => job.id) } },
     });
 
     const users = await prisma.user.findMany({
-      where: whereClause,
+      where: { ...whereClause, jobId: { in: jobGroup.map((job) => job.id) } },
       take,
       skip,
     });

@@ -103,8 +103,20 @@ export async function GET() {
     data.filters = { ...data.filters, ...regions };
     // Fetch other data
     data.filters.channelSegment = await prisma.channelSegment.findMany({});
-    data.filters.jobGroup = await prisma.job.findMany({});
     data.filters.salesFormat = await prisma.store.findMany({});
+
+    // 잡그룹 정렬 (데이터 그대로 사용하지 않음)
+    const jobGroupData = await prisma.job.findMany({});
+    data.filters.jobGroup = jobGroupData.reduce(
+      (acc, job) => {
+        if (acc.findIndex((g) => g.name === job.group) === -1) {
+          acc.push({ id: job.group, name: job.group });
+        }
+
+        return acc;
+      },
+      [] as { id: string; name: string }[]
+    );
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -10,7 +11,8 @@ import { querySearchParams } from '../../../_lib/query';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
     const names = { expert: 'expert', advanced: 'advanced' };
 
     await prisma.$connect();
@@ -41,18 +43,27 @@ export async function GET(request: NextRequest) {
       { name: 'FF (SES)', [names.expert]: 0, [names.advanced]: 0 },
     ];
     const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
       select: { id: true, group: true },
     });
 
     const plus = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
-        ...where,
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'authType',
+          'channelSegmentId',
+          'storeId',
+          'createdAt',
+        ]),
         quizStageIndex: { in: [2, 3] },
         OR: [{ storeId: null }, { storeId: { not: '4' } }],
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
     });
-
-    console.log('plus.length:', plus.length);
 
     plus.forEach((user) => {
       const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
@@ -71,10 +82,22 @@ export async function GET(request: NextRequest) {
     });
 
     const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, quizStageIndex: { in: [2, 3] }, storeId: '4' },
+      where: {
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'authType',
+          'channelSegmentId',
+          'storeId',
+          'createdAt',
+        ]),
+        quizStageIndex: { in: [2, 3] },
+        storeId: '4',
+        jobId: { in: jobGroup.map((job) => job.id) },
+      },
     });
-
-    console.log('ses.length:', ses.length);
 
     ses.forEach((user) => {
       const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;

@@ -1,37 +1,37 @@
-"use client";
-import SelectForm from "@/components/system/select-with-title";
-import { Button } from "@/components/ui/button";
-import FiltersContainer from "@/components/system/filters-container";
+'use client';
+import SelectForm from '@/components/system/select-with-title';
+import { Button } from '@/components/ui/button';
+import FiltersContainer from '@/components/system/filters-container';
 import {
   ControllerRenderProps,
   FieldValues,
   useForm,
   UseFormReturn,
   useWatch,
-} from "react-hook-form";
-import { Form, FormField } from "@/components/ui/form";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { formatCamelCaseToTitleCase } from "@/lib/text";
-import { CalendarForm } from "@/components/system/calendar-with-title";
-import { ToggleUserButtons } from "@/components/system/toggle-buttons";
+} from 'react-hook-form';
+import { Form, FormField } from '@/components/ui/form';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { formatCamelCaseToTitleCase } from '@/lib/text';
+import { CalendarForm } from '@/components/system/calendar-with-title';
+import { ToggleUserButtons } from '@/components/system/toggle-buttons';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { Download } from "lucide-react";
-import Loader from "@/components/loader";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { Download } from 'lucide-react';
+import Loader from '@/components/loader';
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
   filters: FilterData,
   form: UseFormReturn,
   setFilteredSubsidiaries: Dispatch<SetStateAction<Subsidiary[]>>,
-  setFilteredDomains: Dispatch<SetStateAction<Subsidiary[]>>,
+  setFilteredDomains: Dispatch<SetStateAction<Subsidiary[]>>
 ) => void;
 
 // 데이터 초기화 함수
@@ -39,11 +39,11 @@ const initializeFilters: InitializeFiltersPros = (
   filters,
   form,
   setFilteredSubsidiaries,
-  setFilteredDomains,
+  setFilteredDomains
 ) => {
   // 모든 필터를 "all"로 설정
   Object.entries(filters).forEach(([key]) => {
-    form.setValue(key, "all");
+    form.setValue(key, 'all');
   });
 
   // 종속 데이터 업데이트
@@ -51,7 +51,7 @@ const initializeFilters: InitializeFiltersPros = (
   setFilteredDomains(filters.domain);
 };
 
-const firstElement = { value: "all", label: "All" };
+const firstElement = { value: 'all', label: 'All' };
 
 // 렌더 데이터 시작
 const Filters = ({
@@ -73,7 +73,7 @@ const Filters = ({
 
   // 필터 데이터 불러오기기
   useEffect(() => {
-    axios.get("/api/dashboard/filter").then((res) => {
+    axios.get('/api/dashboard/filter').then((res) => {
       setFilterData(res.data);
     });
   }, []);
@@ -85,21 +85,21 @@ const Filters = ({
         filterData.filters,
         form,
         setFilteredSubsidiaries,
-        setFilteredDomains,
+        setFilteredDomains
       );
 
       // 캠페인 초기화
       if (filterData.campaign.length > 0) {
         const campaign = filterData.campaign[0];
-        form.setValue("campaign", campaign.id);
-        form.setValue("date", {
+        form.setValue('campaign', campaign.id);
+        form.setValue('date', {
           from: new Date(campaign.startedAt),
           to: new Date(campaign.endedAt),
         });
       }
       //
       // 유저 선택 초기화
-      form.setValue("userGroup", "all");
+      form.setValue('userGroup', 'all');
       //
       // 적용버튼 활성화 기능을 위한 기준정보 저장
       defaultValues.current = form.getValues();
@@ -122,72 +122,72 @@ const Filters = ({
     if (!filterData) return;
     const { filters } = filterData;
 
-    const isRegion = key === "region";
-    const isSubsidiary = key === "subsidiary";
-    const isDomain = key === "domain";
+    const isRegion = key === 'region';
+    const isSubsidiary = key === 'subsidiary';
+    const isDomain = key === 'domain';
 
     if (isRegion) {
-      if (id === "all") {
-        form.setValue("subsidiary", "all");
-        form.setValue("domain", "all");
+      if (id === 'all') {
+        form.setValue('subsidiary', 'all');
+        form.setValue('domain', 'all');
         setFilteredSubsidiaries(filters.subsidiary);
         setFilteredDomains(filters.domain);
       } else {
         const found = filters.region.find((region) => region.id === id);
         if (found) {
-          form.setValue("subsidiary", "all");
-          form.setValue("domain", "all");
+          form.setValue('subsidiary', 'all');
+          form.setValue('domain', 'all');
           setFilteredSubsidiaries(found.subsidiaries);
           setFilteredDomains(found.domains);
         }
       }
     } else if (isSubsidiary) {
-      if (id === "all") {
+      if (id === 'all') {
         const found = filters.region.find(
-          (region) => region.id === form.getValues().region,
+          (region) => region.id === form.getValues().region
         );
         //
         if (found) {
-          form.setValue("region", found.id);
-          form.setValue("domain", "all");
+          form.setValue('region', found.id);
+          form.setValue('domain', 'all');
           setFilteredSubsidiaries(found.subsidiaries);
           setFilteredDomains(found.domains);
         }
       } else {
         const found = filters.region.find((region) =>
           region.subsidiaries.some(
-            (subsidiary: Subsidiary) => subsidiary.id === id,
-          ),
+            (subsidiary: Subsidiary) => subsidiary.id === id
+          )
         );
 
         const subsidiary = filters.subsidiary.find(
-          (subsidiary: Subsidiary) => subsidiary.id === id,
+          (subsidiary: Subsidiary) => subsidiary.id === id
         );
 
         if (found) {
-          form.setValue("region", found.id);
-          form.setValue("domain", "all");
+          form.setValue('region', found.id);
+          form.setValue('domain', 'all');
           setFilteredSubsidiaries(found.subsidiaries);
           setFilteredDomains(subsidiary.domains);
         }
       }
     } else if (isDomain) {
-      if (id === "all") {
+      if (id === 'all') {
         return;
       } else {
         const found = filters.region.find((region) =>
-          region.domains.some((domain: Domain) => domain.id === id),
+          region.domains.some((domain: Domain) => domain.id === id)
         );
 
         const domain = filters.domain.find((domain) => domain.id === id);
 
         const subsidiary = filters.subsidiary.find(
-          (subsidiary: Subsidiary) => subsidiary.id === domain?.subsidiaryId,
+          (subsidiary: Subsidiary) => subsidiary.id === domain?.subsidiaryId
         );
 
         if (found && subsidiary && domain) {
-          form.setValue("region", found.id);
-          form.setValue("subsidiary", domain.subsidiary.id);
+          form.setValue('region', found.id);
+          form.setValue('subsidiary', domain.subsidiary.id);
           setFilteredSubsidiaries(found.subsidiaries);
           setFilteredDomains(subsidiary.domains);
         }
@@ -204,15 +204,15 @@ const Filters = ({
       from: new Date(found.startedAt),
       to: new Date(found.endedAt),
     };
-    form.setValue("date", date);
-    form.setValue("userGroup", "all");
+    form.setValue('date', date);
+    form.setValue('userGroup', 'all');
 
     // 필터 초기화 호출
     initializeFilters(
       filterData.filters,
       form,
       setFilteredSubsidiaries,
-      setFilteredDomains,
+      setFilteredDomains
     );
 
     defaultValues.current = form.getValues();
@@ -221,7 +221,7 @@ const Filters = ({
 
   const onDownload = () => {
     // Simulate download
-    console.log("Downloading report...", formValues.campaign);
+    console.log('Downloading report...', formValues.campaign);
   };
 
   if (!filterData)
@@ -294,7 +294,7 @@ const Filters = ({
                 return (
                   <ToggleUserButtons
                     data={Object.entries(filterData.userGroup).map(
-                      ([, value]) => ({ label: value.name, value: value.id }),
+                      ([, value]) => ({ label: value.name, value: value.id })
                     )}
                     field={field}
                   />
@@ -312,11 +312,11 @@ const Filters = ({
                     (item: { name: string; id: string | number }) => ({
                       label: item.name,
                       value: item.id,
-                    }),
+                    })
                   ),
                 ];
 
-                if (key === "subsidiary") {
+                if (key === 'subsidiary') {
                   items = [
                     firstElement,
                     ...filteredSubsidiaries.map((subsidiary) => ({
@@ -326,7 +326,7 @@ const Filters = ({
                   ];
                 }
 
-                if (key === "domain") {
+                if (key === 'domain') {
                   items = [
                     firstElement,
                     ...filteredDomains.map((domain) => ({
@@ -368,7 +368,8 @@ const Filters = ({
                       (item: { name: string; id: string | number }) => ({
                         label: item.name,
                         value: item.id,
-                      }),
+                        meta: item,
+                      })
                     ),
                   ];
 
@@ -384,9 +385,9 @@ const Filters = ({
                           width="auto"
                           field={field}
                           items={items}
-                          onChange={(id: string | number) => {
-                            updateFilters(key, id);
-                          }}
+                          // onChange={(id: string | number) => {
+                          // updateFilters(key, id);
+                          // }}
                         />
                       )}
                     />
@@ -430,8 +431,8 @@ const CampaignSelectForm = ({
     >
       <SelectTrigger
         className={cn(
-          "w-auto space-x-3 shadow-none bg-white hover:bg-zinc-100 border-0 hover:bg-transparent focus:bg-transparent focus:ring-0 focus:outline-none !text-size-20px font-bold",
-          !field.value && "text-muted-foreground",
+          'w-auto space-x-3 shadow-none bg-white hover:bg-zinc-100 border-0 hover:bg-transparent focus:bg-transparent focus:ring-0 focus:outline-none !text-size-20px font-bold',
+          !field.value && 'text-muted-foreground'
         )}
       >
         <SelectValue />

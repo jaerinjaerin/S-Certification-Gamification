@@ -11,7 +11,8 @@ const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     await prisma.$connect();
 
@@ -52,6 +53,7 @@ export async function GET(request: NextRequest) {
     };
 
     const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
       select: { id: true, group: true },
     });
 
@@ -67,7 +69,15 @@ export async function GET(request: NextRequest) {
 
       if (isCurrentWeekValid && isWithinCampaign) {
         const weeklyWhere = {
-          ...where,
+          ...buildWhereWithValidKeys(where, [
+            'campaignId',
+            'regionId',
+            'subsidiaryId',
+            'domainId',
+            'authType',
+            'channelSegmentId',
+            'storeId',
+          ]),
           createdAt: {
             gte: startDate,
             lt: weekEnd,
@@ -79,6 +89,7 @@ export async function GET(request: NextRequest) {
             ...weeklyWhere,
             quizStageIndex: 2,
             OR: [{ storeId: null }, { storeId: { not: '4' } }],
+            jobId: { in: jobGroup.map((job) => job.id) },
           },
         });
 
@@ -94,7 +105,12 @@ export async function GET(request: NextRequest) {
           }
         });
         const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: { ...weeklyWhere, quizStageIndex: 2, storeId: '4' },
+          where: {
+            ...weeklyWhere,
+            quizStageIndex: 2,
+            storeId: '4',
+            jobId: { in: jobGroup.map((job) => job.id) },
+          },
         });
         ses.forEach((user) => {
           const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
