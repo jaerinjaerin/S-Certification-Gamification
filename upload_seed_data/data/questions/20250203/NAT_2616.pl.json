@@ -1419,7 +1419,7 @@
     "specificFeature": null,
     "importance": null,
     "timeLimitSeconds": 30,
-    "text": "W Galaxy jest funkcja, która prezentuje  spersonalizowany plan dnia. Jak nazywa się ta funkcja?",
+    "text": "W Galaxy jest funkcja, która prezentuje spersonalizowany plan dnia. Jak nazywa się ta funkcja?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {

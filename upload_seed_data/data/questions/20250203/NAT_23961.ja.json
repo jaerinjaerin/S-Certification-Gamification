@@ -1499,7 +1499,7 @@
     "importance": null,
     "timeLimitSeconds": 30,
     "text": "Samsung Walletは海外で使えますか？",
-    "questionType": "TURE_FALSE",
+    "questionType": "TRUE_FALSE",
     "options": [
       {
         "text": "はい",
