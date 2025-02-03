@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {querySearchParams} from '../../../_lib/query';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+    const { where: condition, take, skip } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     await prisma.$connect();
+
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
+      select: { id: true, group: true },
+    });
 
     const questions = await prisma.question.findMany({
       orderBy: { createdAt: 'desc' },
@@ -21,6 +27,7 @@ export async function GET(request: NextRequest) {
       where: {
         ...where,
         questionId: { in: questions.map((q) => q.id) },
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
     });
 
@@ -30,6 +37,7 @@ export async function GET(request: NextRequest) {
       where: {
         ...where,
         questionId: { in: questions.map((q) => q.id) },
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
       _count: { isCorrect: true },
       orderBy: [
@@ -46,6 +54,7 @@ export async function GET(request: NextRequest) {
         ...where,
         questionId: { in: corrects.map((q) => q.questionId) },
         isCorrect: false,
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
       _count: { isCorrect: true },
     });

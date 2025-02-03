@@ -15,7 +15,7 @@ type ChannelSegment = Prisma.ChannelSegmentGetPayload<{
   select: { id: true; name: true };
 }>;
 type JobGroup = Prisma.JobGetPayload<{
-  select: { id: true; name: true; group: true };
+  select: { id: true; name: true };
 }>;
 type Store = Prisma.StoreGetPayload<{
   select: { id: true; name: true };

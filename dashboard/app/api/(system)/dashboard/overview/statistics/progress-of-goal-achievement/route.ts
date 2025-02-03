@@ -11,7 +11,10 @@ const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
+
+
 
     await prisma.$connect();
 
@@ -48,10 +51,11 @@ export async function GET(request: NextRequest) {
       fsm: 0,
       'ff(ses)': 0,
       'fsm(ses)': 0,
-      other: 0,
+      others: 0,
     };
 
     const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
       select: { id: true, group: true },
     });
 
@@ -67,7 +71,15 @@ export async function GET(request: NextRequest) {
 
       if (isCurrentWeekValid && isWithinCampaign) {
         const weeklyWhere = {
-          ...where,
+          ...buildWhereWithValidKeys(where, [
+            'campaignId',
+            'regionId',
+            'subsidiaryId',
+            'domainId',
+            'authType',
+            'channelSegmentId',
+            'storeId',
+          ]),
           createdAt: {
             gte: startDate,
             lt: weekEnd,
@@ -79,9 +91,9 @@ export async function GET(request: NextRequest) {
             ...weeklyWhere,
             quizStageIndex: 2,
             OR: [{ storeId: null }, { storeId: { not: '4' } }],
+            jobId: { in: jobGroup.map((job) => job.id) },
           },
         });
-
         plus.forEach((user) => {
           const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
           if (jobName) {
@@ -90,11 +102,17 @@ export async function GET(request: NextRequest) {
               jobData[lowJobName] += 1;
             }
           } else {
-            jobData.other += 1;
+            jobData.others += 1;
           }
         });
+
         const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: { ...weeklyWhere, quizStageIndex: 2, storeId: '4' },
+          where: {
+            ...weeklyWhere,
+            quizStageIndex: 2,
+            storeId: '4',
+            jobId: { in: jobGroup.map((job) => job.id) },
+          },
         });
         ses.forEach((user) => {
           const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
@@ -103,11 +121,11 @@ export async function GET(request: NextRequest) {
               `${jobName.toLowerCase()}(ses)` as keyof typeof jobData;
             if (lowJobName in jobData) {
               jobData[lowJobName] += 1;
+            } else {
+              jobData.others += 1;
             }
           }
         });
-      } else {
-        jobData = defaultJobData;
       }
 
       // 결과 저장

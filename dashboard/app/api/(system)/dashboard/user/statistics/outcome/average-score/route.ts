@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {querySearchParams} from '../../../../_lib/query';
-import {addDays, endOfDay, startOfDay} from 'date-fns';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../../_lib/query';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, period } = querySearchParams(searchParams);
+    const { where: condition, period } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     await prisma.$connect();
+
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
+      select: { id: true, group: true },
+    });
 
     // 오늘과 6일 전 설정
     const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
@@ -31,6 +37,7 @@ export async function GET(request: NextRequest) {
           lte: endOfDay(today), // 오늘까지
         },
         quizStageIndex: { in: [2, 3] },
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
       orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });

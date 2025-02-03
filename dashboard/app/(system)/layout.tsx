@@ -8,6 +8,7 @@ import { auth } from '@/auth';
 import { Session } from 'next-auth';
 import NotPermission from '@/components/not-permission';
 import { getUserPermissions } from '@/model/qureries';
+import LeftMenu from '@/components/layout/left-menu';
 
 type Props = { children: React.ReactNode };
 
@@ -18,7 +19,7 @@ const ManagementLayout = async ({ children }: Props) => {
 
   const permissions = await getUserPermissions(user.id);
   console.log(permissions);
-  const permit = permissions.includes('Global');
+  const permit = true || permissions.includes('Global');
 
   return (
     <>

@@ -1,9 +1,9 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import {prisma} from '@/model/prisma';
-import {NextRequest, NextResponse} from 'next/server';
-import {querySearchParams} from '../../../_lib/query';
-import {AuthType} from '@prisma/client';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
+import { AuthType } from '@prisma/client';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -11,7 +11,8 @@ import {AuthType} from '@prisma/client';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+    const { where: condition, take, skip } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     await prisma.$connect();
 
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
     };
 
     const jobGroup = await prisma.job.findMany({
+      where: jobId ? { group: jobId } : {},
       select: { id: true, group: true },
     });
 
@@ -49,6 +51,7 @@ export async function GET(request: NextRequest) {
             .map((goal) => goal.domainId)
             .filter((id): id is string => id !== null),
         },
+        jobId: { in: jobGroup.map((job) => job.id) },
       },
     });
 
