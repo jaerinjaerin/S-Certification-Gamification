@@ -19,7 +19,7 @@ const ManagementLayout = async ({ children }: Props) => {
 
   const permissions = await getUserPermissions(user.id);
   console.log(permissions);
-  const permit = true || permissions.includes('Global');
+  const permit = permissions.includes('Global');
 
   return (
     <>
