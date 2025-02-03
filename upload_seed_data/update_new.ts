@@ -155,6 +155,7 @@ async function main() {
     { domainCode: "NAT_3701", activityIds: [252716, 252717] },
     { domainCode: "NAT_2710", activityIds: [252722, 252723] },
     { domainCode: "NAT_2834", activityIds: [252727, 252729] },
+    { domainCode: "NAT_2392", activityIds: [255056, 255057] },
   ];
 
   const createSeeds = async () => {
@@ -301,7 +302,7 @@ async function main() {
       process.cwd(),
       "data",
       "questions",
-      "20250131"
+      "20250203"
     );
     const files = fs.readdirSync(folderPath);
 
@@ -473,8 +474,15 @@ async function main() {
           // return;
         }
 
-        const stageIndex = jsonQuestion.stage - 1;
-        const imageIndex = i % charImages[stageIndex].length;
+        let backgroundImageId = null;
+        let characterImageId = null;
+        if (jsonQuestion.stage != null) {
+          const stageIndex = jsonQuestion.stage - 1;
+          const imageIndex = i % charImages[stageIndex].length;
+          backgroundImageId = bgImages[stageIndex].id;
+          characterImageId = charImages[stageIndex][imageIndex].id;
+        }
+
         // const imageIndex = charImages[stageIndex + i];
         let item = await prisma.question.findFirst({
           where: {
@@ -504,12 +512,12 @@ async function main() {
               questionType: jsonQuestion.questionType,
               order:
                 jsonQuestion.orderInStage ?? jsonQuestion.originQuestionIndex,
-              backgroundImageId: bgImages[stageIndex].id,
-              characterImageId: charImages[stageIndex][imageIndex].id,
+              backgroundImageId: backgroundImageId,
+              characterImageId: characterImageId,
             },
           });
 
-          console.log("item", item);
+          // console.log("item", item);
 
           jsonQuestion.options.sort((a, b) => a.order - b.order);
           for (let j = 0; j < jsonQuestion.options.length; j++) {
@@ -536,7 +544,12 @@ async function main() {
           }
         } else {
           // 질문이나 답변이 변경되었는지 확인
-          if (item.text !== jsonQuestion.text) {
+          console.log("jsonQuestion", jsonQuestion);
+          if (
+            item.text !== jsonQuestion.text ||
+            (jsonQuestion.orderInStage != null &&
+              item.order !== jsonQuestion.orderInStage)
+          ) {
             console.log("update question", item.text, jsonQuestion.text);
             await prisma.question.update({
               where: {
@@ -544,6 +557,7 @@ async function main() {
               },
               data: {
                 text: jsonQuestion.text.toString(),
+                order: jsonQuestion.orderInStage,
               },
             });
           }
@@ -608,7 +622,11 @@ async function main() {
 
       // 퀴즈 스테이지 생성 또는 업데이트
       const stageNumbers = [
-        ...new Set(jsonQuestions.map((question) => question.stage)),
+        ...new Set(
+          jsonQuestions
+            .map((question) => question.stage)
+            .filter((stage) => stage != null)
+        ),
       ].sort();
 
       for (let i = 0; i < stageNumbers.length; i++) {
