@@ -41,6 +41,7 @@ export async function GET(request: NextRequest) {
       { name: 'FF', [names.expert]: 0, [names.advanced]: 0 },
       { name: 'FSM (SES)', [names.expert]: 0, [names.advanced]: 0 },
       { name: 'FF (SES)', [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'OTHERS', [names.expert]: 0, [names.advanced]: 0 },
     ];
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { group: jobId } : {},
@@ -105,6 +106,13 @@ export async function GET(request: NextRequest) {
         const jobNamewithSes = `${jobName} (SES)`;
         jobData.forEach((item) => {
           if (item.name === jobNamewithSes.toUpperCase()) {
+            if (user.quizStageIndex === 3) {
+              item[names.advanced] = (item[names.advanced] as number) + 1;
+              item[names.expert] = (item[names.expert] as number) - 1;
+            } else if (user.quizStageIndex === 2) {
+              item[names.expert] = (item[names.expert] as number) + 1;
+            }
+          } else {
             if (user.quizStageIndex === 3) {
               item[names.advanced] = (item[names.advanced] as number) + 1;
               item[names.expert] = (item[names.expert] as number) - 1;

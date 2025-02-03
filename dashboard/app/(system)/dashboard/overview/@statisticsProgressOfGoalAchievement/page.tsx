@@ -14,7 +14,7 @@ import {
 import CardCustomHeader from '../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
-  chartColorLineStroke,
+  chartColorLineStroke, chartColorOthers,
   chartColorPrimary,
   chartColorQuaternary,
   chartColorSecondary,
@@ -112,6 +112,12 @@ export function OverviewGoalAchievement() {
             dataKey="job.fsm(ses)" // `FSM(SES)`의 데이터 값
             stackId="a"
             fill={chartColorQuaternary}
+          />
+          <Bar
+            name="Others"
+            dataKey="job.others" // `Others`의 데이터 값
+            stackId="a"
+            fill={chartColorOthers}
           />
           <Line
             yAxisId="percentage"

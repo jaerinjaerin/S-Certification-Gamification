@@ -16,13 +16,14 @@ export const ProgressTooltip = ({
       (payload[0]?.value ?? 0) +
       (payload[1]?.value ?? 0) +
       (payload[2]?.value ?? 0) +
-      (payload[3]?.value ?? 0);
+      (payload[3]?.value ?? 0) +
+      (payload[4]?.value ?? 0);
     const rate = ((total / (goal ?? 1)) * 100).toFixed(2);
 
     return (
       <div className="border rounded-md bg-white p-5 shadow-sm space-y-2">
         <p className="text-zinc-500">
-          {label} ({payload[4]?.value ?? 0}%)
+          {label} ({payload[5]?.value ?? 0}%)
         </p>
         <p className="font-bold text-size-16px">{`Achievement: ${rate}%`}</p>
         <p key={1} className="text-size-16px">{`${
@@ -37,8 +38,11 @@ export const ProgressTooltip = ({
         <p key={2} className="text-size-16px">{`${
           payload[2]?.name ?? 'N/A'
         }: ${(payload[2]?.value ?? 0).toLocaleString()}`}</p>
+        <p key={4} className="text-size-16px">{`${
+          payload[4]?.name ?? 'N/A'
+        }: ${(payload[4]?.value ?? 0).toLocaleString()}`}</p>
         <p
-          key={4}
+          key={5}
           className="text-size-16px"
         >{`Total : ${total.toLocaleString()}`}</p>
       </div>
