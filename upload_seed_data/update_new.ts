@@ -540,6 +540,26 @@ async function main() {
                   languageId: language.id,
                 },
               });
+            } else {
+              if (
+                item.text !== option.text ||
+                item.isCorrect !==
+                  (option.answerStatus === 1 || option.answerStatus === "1")
+              ) {
+                await prisma.questionOption.update({
+                  where: {
+                    id: item.id,
+                  },
+                  data: {
+                    text: option.text.toString(),
+                    order: j,
+                    questionId,
+                    isCorrect:
+                      option.answerStatus === 1 || option.answerStatus === "1",
+                    languageId: language.id,
+                  },
+                });
+              }
             }
           }
         } else {
@@ -575,7 +595,12 @@ async function main() {
 
           // 답변이 변경되었는지 확인 후, 업데이트
           questionOptions.forEach(async (option, index) => {
-            if (option.text !== jsonQuestion.options[index].text) {
+            if (
+              option.text !== jsonQuestion.options[index].text ||
+              option.isCorrect !==
+                (jsonQuestion.options[index].answerStatus === 1 ||
+                  jsonQuestion.options[index].answerStatus === "1")
+            ) {
               console.log(
                 "update option",
                 option.text,
