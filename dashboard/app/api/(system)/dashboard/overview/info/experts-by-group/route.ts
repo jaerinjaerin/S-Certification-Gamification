@@ -1,15 +1,64 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const dynamic = 'force-dynamic';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { initialExpertsData } from '@/app/(system)/dashboard/overview/@infoExpertsByGroup/_lib/state';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { UserQuizBadgeStageStatistics } from '@prisma/client';
 
-// UserQuizStatistics 사용
-// isCompleted 이면 퀴즈 완료
-// jodId와 storeId 정보를 가지고 그룹핑 해야함
-// jobId로 Job 정보 참조. job의 group을 사용
-// storeId가 4인 경우 SES 유저. 아니면 SES 유저 아님
+async function fetchUserStatistics(
+  where: any,
+  jobGroup: { id: string; code: string }[],
+  moreWhere: any
+) {
+  return prisma.userQuizBadgeStageStatistics.findMany({
+    where: {
+      ...buildWhereWithValidKeys(where, [
+        'campaignId',
+        'regionId',
+        'subsidiaryId',
+        'domainId',
+        'authType',
+        'channelSegmentId',
+        'createdAt',
+      ]),
+      quizStageIndex: 2,
+      jobId: { in: jobGroup.map((job) => job.id) },
+      ...moreWhere,
+    },
+  });
+}
+
+async function processUserStatistics(
+  users: UserQuizBadgeStageStatistics[],
+  jobGroup: { id: string; code: string }[],
+  expertsData: any
+) {
+  // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
+  const removeDuplicateUsers = Object.values(
+    users.reduce(
+      (acc, user: UserQuizBadgeStageStatistics) => {
+        if (!acc[user.userId]) {
+          acc[user.userId] = user;
+        }
+        return acc;
+      },
+      {} as Record<string, any>
+    )
+  );
+  //
+  removeDuplicateUsers.forEach((user) => {
+    const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
+    if (jobName) {
+      expertsData.items.forEach((item: { title: string; value: number }) => {
+        if (item.title === jobName) {
+          item.value++;
+        }
+      });
+    }
+  });
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,134 +73,19 @@ export async function GET(request: NextRequest) {
     );
 
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
-    if (where?.storeId && where.storeId !== '4') {
-      const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-        where: {
-          ...buildWhereWithValidKeys(where, [
-            'campaignId',
-            'regionId',
-            'subsidiaryId',
-            'domainId',
-            'authType',
-            'channelSegmentId',
-            'storeId',
-            'createdAt',
-          ]),
-          quizStageIndex: 2,
-          jobId: { in: jobGroup.map((job) => job.id) },
-        },
-      });
-
-      plus.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          expertsData[0].items.forEach((item) => {
-            if (item.title === jobName) {
-              item.value++;
-            }
-          });
-        }
-      });
-
-      expertsData[1].items.forEach((item) => {
-        item.value = 0;
-      });
-      //
-      return NextResponse.json({ result: expertsData });
-    } else if (where?.storeId && where.storeId === '4') {
-      const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-        where: {
-          ...buildWhereWithValidKeys(where, [
-            'campaignId',
-            'regionId',
-            'subsidiaryId',
-            'domainId',
-            'authType',
-            'channelSegmentId',
-            'createdAt',
-          ]),
-          quizStageIndex: 2,
-          storeId: '4',
-        },
-      });
-
-      ses.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          expertsData[1].items.forEach((item) => {
-            if (item.title === jobName) {
-              item.value++;
-            }
-          });
-        }
-      });
-
-      expertsData[0].items.forEach((item) => {
-        item.value = 0;
-      });
-
-      return NextResponse.json({ result: expertsData });
-    }
-
+    const plusUsers = await fetchUserStatistics(where, jobGroup, {
+      OR: [{ storeId: { not: '4' } }, { storeId: null }],
+    });
+    processUserStatistics(plusUsers, jobGroup, expertsData[0]);
     //
-    const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'authType',
-          'channelSegmentId',
-          'createdAt',
-        ]),
-        quizStageIndex: 2,
-        OR: [{ storeId: null }, { storeId: { not: '4' } }],
-        jobId: { in: jobGroup.map((job) => job.id) },
-      },
+    const sesUsers = await fetchUserStatistics(where, jobGroup, {
+      storeId: '4',
     });
-
-    plus.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        expertsData[0].items.forEach((item) => {
-          if (item.title === jobName) {
-            item.value++;
-          }
-        });
-      }
-    });
-
-    const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'authType',
-          'channelSegmentId',
-          'createdAt',
-        ]),
-        quizStageIndex: 2,
-        storeId: '4',
-      },
-    });
-
-    ses.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        expertsData[1].items.forEach((item) => {
-          if (item.title === jobName) {
-            item.value++;
-          }
-        });
-      }
-    });
+    processUserStatistics(sesUsers, jobGroup, expertsData[1]);
 
     return NextResponse.json({ result: expertsData });
   } catch (error) {

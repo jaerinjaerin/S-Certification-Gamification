@@ -9,7 +9,7 @@ export const config = {
 export async function middleware(request: NextRequest) {
   const session = await auth();
 
-  console.log(session);
+  // console.log(session);
 
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';

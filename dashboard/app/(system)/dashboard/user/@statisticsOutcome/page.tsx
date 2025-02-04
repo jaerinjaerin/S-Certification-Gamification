@@ -40,7 +40,6 @@ const UserOutcome = () => {
         state.fieldValues,
         'user/statistics/outcome/average-score',
         (data) => {
-          console.log('🚀 ~ fetchData ~ data:', data);
           setData((v) => ({ ...v, score: data.result }));
           setLoading((v) => ({ ...v, score: false }));
         }
@@ -50,7 +49,6 @@ const UserOutcome = () => {
         state.fieldValues,
         'user/statistics/outcome/total-quiz-completion-time',
         (data) => {
-          console.log('🚀 ~ fetchData ~ data:', data);
           setData((v) => ({ ...v, time: data.result }));
           setLoading((v) => ({ ...v, time: false }));
         }

@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
     // 오늘과 6일 전 설정

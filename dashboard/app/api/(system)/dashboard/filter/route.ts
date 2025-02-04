@@ -109,8 +109,8 @@ export async function GET() {
     const jobGroupData = await prisma.job.findMany({});
     data.filters.jobGroup = jobGroupData.reduce(
       (acc, job) => {
-        if (acc.findIndex((g) => g.name === job.group) === -1) {
-          acc.push({ id: job.group, name: job.group });
+        if (acc.findIndex((g) => g.name === job.code) === -1) {
+          acc.push({ id: job.code, name: job.code });
         }
 
         return acc;

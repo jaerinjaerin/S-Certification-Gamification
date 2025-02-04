@@ -11,13 +11,13 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition } = querySearchParams(searchParams);
-    const { jobId, ...where } = condition;
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
     const count = await prisma.userQuizStatistics.count({
@@ -29,10 +29,14 @@ export async function GET(request: NextRequest) {
           'domainId',
           'authType',
           'channelSegmentId',
-          'storeId',
           'createdAt',
         ]),
         jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
     });
     return NextResponse.json({ result: { count } });

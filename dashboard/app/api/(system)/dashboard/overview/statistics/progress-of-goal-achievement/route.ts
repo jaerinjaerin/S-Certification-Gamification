@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/model/prisma';
@@ -6,6 +7,49 @@ import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
 
+async function processUserQuizBadgeStageStatistics(
+  weeklyWhere: any,
+  moreWhere: any,
+  jobData: any,
+  jobGroup: any[],
+  isSES: boolean = false
+) {
+  const users = await prisma.userQuizBadgeStageStatistics.findMany({
+    where: {
+      ...weeklyWhere,
+      quizStageIndex: 2,
+      jobId: { in: jobGroup.map((job) => job.id) },
+      ...moreWhere,
+    },
+  });
+
+  // userId 중복 제거
+  const removeDuplicateUsers = Object.values(
+    users.reduce(
+      (acc, user) => {
+        if (!acc[user.userId]) {
+          acc[user.userId] = user;
+        }
+        return acc;
+      },
+      {} as Record<string, any>
+    )
+  );
+
+  removeDuplicateUsers.forEach((user) => {
+    const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
+    if (jobName) {
+      const lowJobName = isSES
+        ? (`${jobName.toLowerCase()}(ses)` as keyof typeof jobData)
+        : (jobName.toLowerCase() as keyof typeof jobData);
+
+      if (lowJobName in jobData) {
+        jobData[lowJobName] += 1;
+      }
+    }
+  });
+}
+
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
 export async function GET(request: NextRequest) {
@@ -13,8 +57,6 @@ export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl;
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, ...where } = condition;
-
-
 
     await prisma.$connect();
 
@@ -31,7 +73,15 @@ export async function GET(request: NextRequest) {
     }
 
     const domain_goal = await prisma.domainGoal.findMany({
-      where: buildWhereWithValidKeys(where, ['campaignId', 'createdAt']),
+      where: {
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'createdAt',
+        ]),
+      },
     });
 
     const goalTotalScore = Array.isArray(domain_goal)
@@ -51,17 +101,16 @@ export async function GET(request: NextRequest) {
       fsm: 0,
       'ff(ses)': 0,
       'fsm(ses)': 0,
-      others: 0,
     };
 
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
     // 8주 데이터 생성
     for (let i = 0; i < 8; i++) {
-      let jobData = JSON.parse(JSON.stringify(defaultJobData));
+      const jobData = JSON.parse(JSON.stringify(defaultJobData));
       const currentWeekStart = addWeeks(startDate, i);
       const weekEnd = endOfWeek(currentWeekStart);
 
@@ -78,7 +127,6 @@ export async function GET(request: NextRequest) {
             'domainId',
             'authType',
             'channelSegmentId',
-            'storeId',
           ]),
           createdAt: {
             gte: startDate,
@@ -86,46 +134,22 @@ export async function GET(request: NextRequest) {
           },
         };
 
-        const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
-            ...weeklyWhere,
-            quizStageIndex: 2,
-            OR: [{ storeId: null }, { storeId: { not: '4' } }],
-            jobId: { in: jobGroup.map((job) => job.id) },
-          },
-        });
-        plus.forEach((user) => {
-          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-          if (jobName) {
-            const lowJobName = jobName.toLowerCase() as keyof typeof jobData;
-            if (lowJobName in jobData) {
-              jobData[lowJobName] += 1;
-            }
-          } else {
-            jobData.others += 1;
-          }
-        });
+        // plus
+        await processUserQuizBadgeStageStatistics(
+          weeklyWhere,
+          { OR: [{ storeId: null }, { storeId: { not: '4' } }] },
+          jobData,
+          jobGroup
+        );
 
-        const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
-            ...weeklyWhere,
-            quizStageIndex: 2,
-            storeId: '4',
-            jobId: { in: jobGroup.map((job) => job.id) },
-          },
-        });
-        ses.forEach((user) => {
-          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-          if (jobName) {
-            const lowJobName =
-              `${jobName.toLowerCase()}(ses)` as keyof typeof jobData;
-            if (lowJobName in jobData) {
-              jobData[lowJobName] += 1;
-            } else {
-              jobData.others += 1;
-            }
-          }
-        });
+        // ses
+        await processUserQuizBadgeStageStatistics(
+          weeklyWhere,
+          { storeId: '4' },
+          jobData,
+          jobGroup,
+          true
+        );
       }
 
       // 결과 저장

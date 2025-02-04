@@ -9,13 +9,13 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition, period } = querySearchParams(searchParams);
-    const { jobId, ...where } = condition;
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
     // 오늘과 6일 전 설정
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     );
 
     const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['quizStageIndex', 'createdAt'], // quizStageId와 createdAt으로 그룹화
+      by: ['userId', 'quizStageIndex', 'createdAt'], // quizStageId와 createdAt으로 그룹화
       where: {
         ...where,
         createdAt: {
@@ -37,10 +37,16 @@ export async function GET(request: NextRequest) {
         },
         quizStageIndex: { in: [2, 3] },
         jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
       _count: { quizStageIndex: true }, // 각 그룹에 대한 개수 집계
       orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });
+    console.log('🚀 ~ GET ~ experts:', experts);
 
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {

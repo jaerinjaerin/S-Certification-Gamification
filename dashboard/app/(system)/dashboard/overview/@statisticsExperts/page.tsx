@@ -43,11 +43,8 @@ const OverviewExperts = () => {
     if (state.fieldValues) {
       fetchData(state.fieldValues, 'overview/statistics/experts', (data) => {
         setData(data.result);
+        setCount(data.count);
         setLoading(false);
-      });
-      //
-      fetchData(state.fieldValues, 'overview/info/experts', (data) => {
-        setCount(data.result.count);
       });
     }
 

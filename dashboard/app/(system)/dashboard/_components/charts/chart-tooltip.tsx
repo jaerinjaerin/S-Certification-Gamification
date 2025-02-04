@@ -16,8 +16,7 @@ export const ProgressTooltip = ({
       (payload[0]?.value ?? 0) +
       (payload[1]?.value ?? 0) +
       (payload[2]?.value ?? 0) +
-      (payload[3]?.value ?? 0) +
-      (payload[4]?.value ?? 0);
+      (payload[3]?.value ?? 0);
     const rate = ((total / (goal ?? 1)) * 100).toFixed(2);
 
     return (

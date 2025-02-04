@@ -1,130 +1,122 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { UserQuizBadgeStageStatistics } from '@prisma/client';
 
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+async function fetchUserStatistics(
+  where: any,
+  jobGroup: { id: string; code: string }[],
+  moreWhere: any
+) {
+  return prisma.userQuizBadgeStageStatistics.findMany({
+    where: {
+      ...buildWhereWithValidKeys(where, [
+        'campaignId',
+        'regionId',
+        'subsidiaryId',
+        'domainId',
+        'authType',
+        'channelSegmentId',
+        'createdAt',
+      ]),
+      quizStageIndex: { in: [2, 3] },
+      jobId: { in: jobGroup.map((job) => job.id) },
+      ...moreWhere,
+    },
+  });
+}
+
+async function processUserData(
+  users: UserQuizBadgeStageStatistics[],
+  jobGroup: { id: string; code: string }[],
+  jobData: any,
+  isSES: boolean = false
+) {
+  // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
+  const removeDuplicateUsers = Object.values(
+    users.reduce(
+      (acc, user: UserQuizBadgeStageStatistics) => {
+        if (
+          !acc[user.userId] ||
+          acc[user.userId].quizStageIndex < user.quizStageIndex
+        ) {
+          acc[user.userId] = user;
+        }
+        return acc;
+      },
+      {} as Record<string, any>
+    )
+  );
+
+  removeDuplicateUsers.forEach((user) => {
+    const jobNameBase = jobGroup.find((j) => j.id === user.jobId)?.code;
+    if (!jobNameBase) return;
+
+    const jobName = isSES ? `${jobNameBase} (SES)` : jobNameBase;
+
+    jobData.forEach(
+      (item: { name: string; expert: number; advanced: number }) => {
+        if (item.name === jobName.toUpperCase()) {
+          if (user.quizStageIndex === 3) {
+            item.advanced += 1;
+          } else if (user.quizStageIndex === 2) {
+            item.expert += 1;
+          }
+        }
+      }
+    );
+  });
+}
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, ...where } = condition;
-    const names = { expert: 'expert', advanced: 'advanced' };
 
     await prisma.$connect();
 
-    // pie chart
-    const expertCount = await prisma.userQuizBadgeStageStatistics.count({
-      where: {
-        ...where,
-        quizStageIndex: 2,
-      },
-    });
-
-    const advancedCount = await prisma.userQuizBadgeStageStatistics.count({
-      where: { ...where, quizStageIndex: 3 },
-    });
-
-    const pie = [
-      { name: names.expert, value: expertCount - advancedCount },
-      { name: names.advanced, value: advancedCount },
-    ];
-
     // bar chart
-
     const jobData = [
-      { name: 'FSM', [names.expert]: 0, [names.advanced]: 0 },
-      { name: 'FF', [names.expert]: 0, [names.advanced]: 0 },
-      { name: 'FSM (SES)', [names.expert]: 0, [names.advanced]: 0 },
-      { name: 'FF (SES)', [names.expert]: 0, [names.advanced]: 0 },
-      { name: 'OTHERS', [names.expert]: 0, [names.advanced]: 0 },
+      { name: 'FSM', expert: 0, advanced: 0 },
+      { name: 'FF', expert: 0, advanced: 0 },
+      { name: 'FSM (SES)', expert: 0, advanced: 0 },
+      { name: 'FF (SES)', expert: 0, advanced: 0 },
     ];
     const jobGroup = await prisma.job.findMany({
-      where: jobId ? { group: jobId } : {},
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
-    const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'authType',
-          'channelSegmentId',
-          'storeId',
-          'createdAt',
-        ]),
-        quizStageIndex: { in: [2, 3] },
-        OR: [{ storeId: null }, { storeId: { not: '4' } }],
-        jobId: { in: jobGroup.map((job) => job.id) },
+    const plusUsers = await fetchUserStatistics(where, jobGroup, {
+      OR: [{ storeId: { not: '4' } }, { storeId: null }],
+    });
+    processUserData(plusUsers, jobGroup, jobData);
+
+    const sesUsers = await fetchUserStatistics(where, jobGroup, {
+      storeId: '4',
+    });
+    processUserData(sesUsers, jobGroup, jobData, true);
+
+    // pie chart
+    const pie = [
+      {
+        name: 'expert',
+        value: jobData.reduce((acc, item) => acc + item.expert, 0),
       },
-    });
-
-    plus.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        jobData.forEach((item) => {
-          if (item.name === jobName.toUpperCase()) {
-            if (user.quizStageIndex === 3) {
-              item[names.advanced] = (item[names.advanced] as number) + 1;
-              item[names.expert] = (item[names.expert] as number) - 1;
-            } else if (user.quizStageIndex === 2) {
-              item[names.expert] = (item[names.expert] as number) + 1;
-            }
-          }
-        });
-      }
-    });
-
-    const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'authType',
-          'channelSegmentId',
-          'storeId',
-          'createdAt',
-        ]),
-        quizStageIndex: { in: [2, 3] },
-        storeId: '4',
-        jobId: { in: jobGroup.map((job) => job.id) },
+      {
+        name: 'advanced',
+        value: jobData.reduce((acc, item) => acc + item.advanced, 0),
       },
-    });
+    ];
 
-    ses.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        const jobNamewithSes = `${jobName} (SES)`;
-        jobData.forEach((item) => {
-          if (item.name === jobNamewithSes.toUpperCase()) {
-            if (user.quizStageIndex === 3) {
-              item[names.advanced] = (item[names.advanced] as number) + 1;
-              item[names.expert] = (item[names.expert] as number) - 1;
-            } else if (user.quizStageIndex === 2) {
-              item[names.expert] = (item[names.expert] as number) + 1;
-            }
-          } else {
-            if (user.quizStageIndex === 3) {
-              item[names.advanced] = (item[names.advanced] as number) + 1;
-              item[names.expert] = (item[names.expert] as number) - 1;
-            } else if (user.quizStageIndex === 2) {
-              item[names.expert] = (item[names.expert] as number) + 1;
-            }
-          }
-        });
-      }
-    });
+    const count = pie.reduce((acc, item) => acc + item.value, 0);
 
-    return NextResponse.json({ result: { pie, bar: jobData } });
+    return NextResponse.json({ result: { pie, bar: jobData }, count });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
