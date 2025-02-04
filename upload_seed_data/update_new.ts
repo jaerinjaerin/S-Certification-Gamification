@@ -298,12 +298,7 @@ async function main() {
         name: "S25",
       },
     });
-    const folderPath = path.join(
-      process.cwd(),
-      "data",
-      "questions",
-      "20250203"
-    );
+    const folderPath = path.join(process.cwd(), "data", "questions", "new");
     const files = fs.readdirSync(folderPath);
 
     //////////// HQ 베이스 퀴즈 셋 가져오기
