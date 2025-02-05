@@ -64,6 +64,8 @@ async function exportDataToCSV() {
         uq."lastCompletedStage",
         uq."elapsedSeconds",
         uq."quizSetId",
+        uq."createdAt",
+        uq."updatedAt",
         a."provider_account_id",
         a."expires_at",
         a."type"
@@ -83,9 +85,12 @@ async function exportDataToCSV() {
     const processedData = data.map((row) => ({
       // quiz_log_id: row.quiz_log_id,
       userId: decrypt(row.provider_account_id, true) || "DECRYPTION_FAILED", // 복호화 적용
+      userId: row.userId,
       // isCompleted: row.isCompleted,
       "완료한 Stage":
         row.lastCompletedStage != null ? row.lastCompletedStage + 1 : null,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
       // elapsedSeconds: row.elapsedSeconds,
       // quizSetId: row.quizSetId,
       // expires_at: row.expires_at,

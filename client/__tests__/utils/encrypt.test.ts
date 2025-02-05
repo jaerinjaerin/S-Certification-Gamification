@@ -19,6 +19,10 @@ describe("Encryption and Decryption", () => {
     it("should return the same encrypted value for the same input", () => {
       const encrypted1 = encrypt(email, true);
       const encrypted2 = encrypt(email, true);
+      const encrypted3 = encrypt("IDFL-00269550", true);
+      const encrypted4 = encrypt("IDFL-00279441", true);
+      console.log("encrypted3:", encrypted3);
+      console.log("encrypted4:", encrypted4);
 
       expect(encrypted1).toEqual(encrypted2); // 고정된 IV에서는 같은 값이어야 함
     });
