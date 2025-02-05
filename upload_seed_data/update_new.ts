@@ -589,27 +589,37 @@ async function main() {
           });
 
           // 답변이 변경되었는지 확인 후, 업데이트
+          console.log("questionOptions", questionOptions);
+          console.log("jsonQuestion.options", jsonQuestion.options);
           questionOptions.forEach(async (option, index) => {
-            if (
-              option.text !== jsonQuestion.options[index].text ||
-              option.isCorrect !==
-                (jsonQuestion.options[index].answerStatus === 1 ||
-                  jsonQuestion.options[index].answerStatus === "1")
-            ) {
-              console.log(
-                "update option",
-                option.text,
-                jsonQuestion.options[index].text
-              );
-              await prisma.questionOption.update({
+            if (jsonQuestion.options.length > index) {
+              if (
+                option.text !== jsonQuestion.options[index].text ||
+                option.isCorrect !==
+                  (jsonQuestion.options[index].answerStatus === 1 ||
+                    jsonQuestion.options[index].answerStatus === "1")
+              ) {
+                console.log(
+                  "update option",
+                  option.text,
+                  jsonQuestion.options[index].text
+                );
+                await prisma.questionOption.update({
+                  where: {
+                    id: option.id,
+                  },
+                  data: {
+                    text: jsonQuestion.options[index].text.toString(),
+                    isCorrect:
+                      jsonQuestion.options[index].answerStatus === 1 ||
+                      jsonQuestion.options[index].answerStatus === "1",
+                  },
+                });
+              }
+            } else {
+              await prisma.questionOption.delete({
                 where: {
                   id: option.id,
-                },
-                data: {
-                  text: jsonQuestion.options[index].text.toString(),
-                  isCorrect:
-                    jsonQuestion.options[index].answerStatus === 1 ||
-                    jsonQuestion.options[index].answerStatus === "1",
                 },
               });
             }
