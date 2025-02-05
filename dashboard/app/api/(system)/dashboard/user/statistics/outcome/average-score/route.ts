@@ -5,12 +5,13 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../../_lib/query';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
+import { removeDuplicateUsers } from '@/lib/data';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition, period } = querySearchParams(searchParams);
-    const { jobId, ...where } = condition;
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
@@ -28,8 +29,7 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['score', 'createdAt', 'userId'], // quizStageId와 createdAt으로 그룹화
+    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
         createdAt: {
@@ -38,10 +38,16 @@ export async function GET(request: NextRequest) {
         },
         quizStageIndex: { in: [2, 3] },
         jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
       orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });
-
+    // 중복 userId 제거
+    experts = removeDuplicateUsers(experts);
     experts = filterHighestScores(experts);
     //
     // 날짜 범위를 생성

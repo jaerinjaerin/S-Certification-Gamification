@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition } = querySearchParams(searchParams);
-    const { jobId, ...where } = condition;
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
@@ -43,8 +43,14 @@ export async function GET(request: NextRequest) {
       by: ['category', 'jobId', 'authType', 'isCorrect', 'questionId'],
       where: {
         ...where,
+        category: { not: null },
         questionId: { in: questions.map((q) => q.id) },
         jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
       _count: { isCorrect: true },
       orderBy: [
@@ -55,7 +61,7 @@ export async function GET(request: NextRequest) {
     // Job ID를 매핑
     const jobGroupMap = jobGroup.reduce(
       (acc, job) => {
-        acc[job.id] = job.group; // id: group 형태로 매핑
+        acc[job.id] = job.code; // id: group 형태로 매핑
         return acc;
       },
       {} as Record<string, string>

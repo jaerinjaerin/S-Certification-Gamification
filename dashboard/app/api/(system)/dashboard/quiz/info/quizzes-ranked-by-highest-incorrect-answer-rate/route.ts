@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition, take, skip } = querySearchParams(searchParams);
-    const { jobId, ...where } = condition;
+    const { jobId, storeId, ...restWhere } = condition;
 
     await prisma.$connect();
 
@@ -22,23 +22,26 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
+    const where = {
+      ...restWhere,
+      questionId: { in: questions.map((q) => q.id) },
+      jobId: { in: jobGroup.map((job) => job.id) },
+      ...(storeId
+        ? storeId === '4'
+          ? { storeId }
+          : { OR: [{ storeId }, { storeId: null }] }
+        : {}),
+    };
+
     const count = await prisma.userQuizQuestionStatistics.groupBy({
       by: ['questionId'], // questionId와 isCorrect를 기준으로 그룹핑
-      where: {
-        ...where,
-        questionId: { in: questions.map((q) => q.id) },
-        jobId: { in: jobGroup.map((job) => job.id) },
-      },
+      where,
     });
 
     // 모든 isCorrect가 있는 데이터 가져오기
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
       by: ['questionId'], // questionId와 isCorrect를 기준으로 그룹핑
-      where: {
-        ...where,
-        questionId: { in: questions.map((q) => q.id) },
-        jobId: { in: jobGroup.map((job) => job.id) },
-      },
+      where,
       _count: { isCorrect: true },
       orderBy: [
         { questionId: 'desc' }, // questionId 기준 정렬
@@ -52,9 +55,7 @@ export async function GET(request: NextRequest) {
       by: ['questionId'],
       where: {
         ...where,
-        questionId: { in: corrects.map((q) => q.questionId) },
         isCorrect: false,
-        jobId: { in: jobGroup.map((job) => job.id) },
       },
       _count: { isCorrect: true },
     });

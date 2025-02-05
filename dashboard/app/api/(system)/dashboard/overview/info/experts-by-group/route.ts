@@ -6,6 +6,7 @@ import { initialExpertsData } from '@/app/(system)/dashboard/overview/@infoExper
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
 import { UserQuizBadgeStageStatistics } from '@prisma/client';
+import { removeDuplicateUsers } from '@/lib/data';
 
 async function fetchUserStatistics(
   where: any,
@@ -36,19 +37,7 @@ async function processUserStatistics(
   expertsData: any
 ) {
   // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
-  const removeDuplicateUsers = Object.values(
-    users.reduce(
-      (acc, user: UserQuizBadgeStageStatistics) => {
-        if (!acc[user.userId]) {
-          acc[user.userId] = user;
-        }
-        return acc;
-      },
-      {} as Record<string, any>
-    )
-  );
-  //
-  removeDuplicateUsers.forEach((user) => {
+  removeDuplicateUsers(users).forEach((user) => {
     const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
     if (jobName) {
       expertsData.items.forEach((item: { title: string; value: number }) => {

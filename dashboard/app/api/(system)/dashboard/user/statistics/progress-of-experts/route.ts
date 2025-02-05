@@ -4,6 +4,7 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { querySearchParams } from '../../../_lib/query';
+import { removeDuplicateUsers } from '@/lib/data';
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,8 +28,7 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['userId', 'quizStageIndex', 'createdAt'], // quizStageId와 createdAt으로 그룹화
+    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
         createdAt: {
@@ -43,10 +43,11 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      _count: { quizStageIndex: true }, // 각 그룹에 대한 개수 집계
       orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });
-    console.log('🚀 ~ GET ~ experts:', experts);
+
+    // 중복 userId 제거
+    experts = removeDuplicateUsers(experts);
 
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {
@@ -74,12 +75,10 @@ export async function GET(request: NextRequest) {
         (entry) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
-        const count = item._count.quizStageIndex;
         if (item.quizStageIndex === 2) {
-          match.expert += count; // stage_2는 expert
+          match.expert += 1; // stage_2는 expert
         } else if (item.quizStageIndex === 3) {
-          match.advanced += count; // stage_3은 advanced
-          match.expert -= count;
+          match.advanced += 1; // stage_3은 advanced
         }
         match.total = match.expert + match.advanced; // total 계산
       }
