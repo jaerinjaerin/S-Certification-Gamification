@@ -465,7 +465,27 @@ async function main() {
           console.warn(
             `Original question not found for file: ${fileName}, ${jsonQuestion.originQuestionIndex}`
           );
-          originalQuestionId = questionId;
+
+          // 해당 국가만 사용하는 문제가 등록되어 있는지 확인
+          const item = await prisma.question.findFirst({
+            where: {
+              // originalQuestionId: jsonQuestion.originQuestionIndex,
+              originalIndex: jsonQuestion.originQuestionIndex,
+              languageId: language.id,
+            },
+          });
+
+          if (item) {
+            originalQuestionId = item.id;
+            hqNatQuestions.push(item);
+          } else {
+            originalQuestionId = questionId;
+          }
+
+          console.log(
+            "해당 국가만 사용하는 문제가 등록되어 있는지 확인 item",
+            item
+          );
           // return;
         }
 
