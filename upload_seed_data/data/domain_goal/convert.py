@@ -28,7 +28,7 @@ data_dict = {
 }
 
 # JSON 파일로 저장
-json_file_path = "domain_targetpyth.json"
+json_file_path = "domain_target.json"
 import json
 
 with open(json_file_path, "w", encoding="utf-8") as f:
