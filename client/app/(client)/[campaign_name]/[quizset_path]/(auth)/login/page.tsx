@@ -91,8 +91,6 @@ export default function Login() {
                   privacyContent={PRIVACY_CONTENT}
                   termContent={termContent}
                   domainName={domainName}
-                  openSheet={openSheet}
-                  setOpenSheet={setOpenSheet}
                 >
                   <Button
                     variant={"primary"}
