@@ -40,6 +40,9 @@ export default function ReviewPage() {
   )[0].questions;
   const question = questions[currentQuestionIndex];
 
+  console.log("questions", questions);
+  console.log("reviewQuizQuestionLogs", reviewQuizQuestionLogs);
+
   useEffect(() => {
     const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
       (log) => log.questionId === question.id

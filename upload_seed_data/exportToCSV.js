@@ -71,7 +71,7 @@ async function exportDataToCSV() {
         a."type"
       FROM "UserQuizLog" uq
       JOIN "accounts" a ON uq."userId" = a."user_id"
-      WHERE uq."domainId" = '46';
+      WHERE uq."domainId" = '349961';
     `;
 
     if (data.length === 0) {
@@ -85,12 +85,12 @@ async function exportDataToCSV() {
     const processedData = data.map((row) => ({
       // quiz_log_id: row.quiz_log_id,
       userId: decrypt(row.provider_account_id, true) || "DECRYPTION_FAILED", // 복호화 적용
-      userId: row.userId,
+      // userId: row.userId,
       // isCompleted: row.isCompleted,
       "완료한 Stage":
         row.lastCompletedStage != null ? row.lastCompletedStage + 1 : null,
-      createdAt: row.createdAt,
-      updatedAt: row.updatedAt,
+      // createdAt: row.createdAt,
+      // updatedAt: row.updatedAt,
       // elapsedSeconds: row.elapsedSeconds,
       // quizSetId: row.quizSetId,
       // expires_at: row.expires_at,

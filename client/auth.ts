@@ -175,7 +175,7 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      console.log("auth callbacks jwt", token, profile, user, account);
+      // console.log("auth callbacks jwt", token, profile, user, account);
       /*
        {
         id: 'cd6ac648-b5d5-4e0b-9073-249bb5fbd813',
