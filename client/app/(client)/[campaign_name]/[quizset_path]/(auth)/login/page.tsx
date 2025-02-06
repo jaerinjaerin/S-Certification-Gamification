@@ -12,7 +12,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePolicy } from "@/providers/policyProvider";
 import PolicySheet from "@/components/login/policy-sheet";
-// import { useState } from "react";
+import { useState } from "react";
 
 export default function Login() {
   useGAPageView();
@@ -31,7 +31,7 @@ export default function Login() {
   const locale = useLocale();
 
   const isPolicyAcceptCountry = regionName === "MENA" || regionName === "Korea";
-  // const [openSheet, setOpenSheet] = useState(isPolicyAcceptCountry);
+  const [openSheet, setOpenSheet] = useState(isPolicyAcceptCountry);
   const PRIVACY_CONTENT = agreementContent
     ? `${agreementContent} === ${privacyContent}`
     : privacyContent;
@@ -91,6 +91,8 @@ export default function Login() {
                   privacyContent={PRIVACY_CONTENT}
                   termContent={termContent}
                   domainName={domainName}
+                  openSheet={openSheet}
+                  setOpenSheet={setOpenSheet}
                 >
                   <Button
                     variant={"primary"}
