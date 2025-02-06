@@ -7,18 +7,21 @@ import { ModalProvider } from '@/components/provider/modal-provider';
 import { auth } from '@/auth';
 import { Session } from 'next-auth';
 import NotPermission from '@/components/not-permission';
-import { getUserPermissions } from '@/model/qureries';
+import {getUserFromDB, getUserPermissions} from '@/model/qureries';
+import LeftMenu from "@/components/layout/left-menu";
 
 type Props = { children: React.ReactNode };
 
 const ManagementLayout = async ({ children }: Props) => {
   const session = (await auth()) as Session;
-  // console.log(session);
   const { user } = session;
-
-  const permissions = await getUserPermissions(user.id);
-  // console.log(permissions);
-  const permit = true || permissions.includes('Global');
+  const userFromDB = await getUserFromDB(user.id);
+  let permit = false;
+  if(userFromDB) {
+    const permissions = await getUserPermissions(userFromDB);
+    // console.log(permissions);
+    permit = permissions.includes('Global');
+  }
 
   return (
     <>
@@ -28,9 +31,9 @@ const ManagementLayout = async ({ children }: Props) => {
             <Topbar className="bg-zinc-950 h-14 w-full flex items-center justify-between flex-shrink-0 px-[1.875rem]" />
             <div className="flex flex-1 h-full">
               {/* Sidebar hide left menu for temperately open  */}
-              {/*<aside className="relative w-[16.5rem] bg-zinc-50">*/}
-              {/*  <LeftMenu />*/}
-              {/*</aside>*/}
+              <aside className="relative w-[16.5rem] bg-zinc-50">
+                <LeftMenu />
+              </aside>
 
               {/* Main Content */}
               <div className="w-full p-5 space-y-5">

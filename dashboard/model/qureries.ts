@@ -1,6 +1,9 @@
+import {User} from "@prisma/client";
+import {prisma} from "@/model/prisma";
+
 ('server-only');
 
-export async function getUserPermissions(userId: string): Promise<string[]> {
+export async function getUserPermissions(user:User): Promise<string[]> {
   const authorized =
     process.env.NEXT_PUBLIC_ASSETS_DOMAIN +
     '/certification/admin/authorized.json' +
@@ -18,9 +21,12 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
   if (response.ok) {
     const data = await response.json();
     if (data.users) {
-      for (const user of data.users) {
-        if (user.id === userId) {
-          return user.permissions;
+      for (const admin of data.users) {
+        console.log(admin);
+        if (admin.id === user.id
+          || admin.providerUserId === user.providerUserId
+          || admin.providerUserId === user.providerPersonId) {
+          return admin.permissions;
         }
       }
     }
@@ -29,4 +35,18 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
   }
 
   return [];
+}
+
+export async function getUserFromDB(userId: string): Promise<User | null> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    return user;
+  } catch (error) {
+    console.error(`Error fetching user from DB: ${error}`);
+    return null;
+  }
 }
