@@ -1,7 +1,10 @@
 import UserFilterForm from './@filters/page';
 import { UserProvider } from './_provider/provider';
 
-type Props = { children: React.ReactNode };
+type Props = {
+  children: React.ReactNode;
+  filters: any;
+};
 
 const UserLayout = ({ children }: Props) => {
   return (

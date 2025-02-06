@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 export const dynamic = 'force-dynamic';
-export const cache = 'no-store';
+
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import { fetchData } from '../../../_lib/fetch';

@@ -1,6 +1,6 @@
 'use client';
 export const dynamic = 'force-dynamic';
-export const cache = 'no-store';
+
 
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
