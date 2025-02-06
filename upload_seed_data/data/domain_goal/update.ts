@@ -1,5 +1,5 @@
-const { PrismaClient, Question } = require("@prisma/client");
-const fs = require("fs");
+import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 
@@ -10,27 +10,31 @@ const jsonFilePath = "./domain_target.json";
 const rawData = fs.readFileSync(jsonFilePath, "utf-8");
 const jsonData = JSON.parse(rawData);
 
-async function updateDomainGoals() {
-  for (const [code, data] of Object.entries(jsonData)) {
-    try {
-      // 1. `Domain` 테이블에서 code를 기준으로 domainId 찾기
-      const domain = await prisma.domain.findUnique({
-        where: { code },
-        select: { id: true },
-      });
+async function updateAllDomainGoals() {
+  try {
+    // 1. 모든 Domain 데이터 가져오기
+    const domains = await prisma.domain.findMany({
+      select: { id: true, code: true },
+    });
 
-      if (!domain) {
-        console.log(`⚠️ Domain not found for code: ${code}`);
-        continue;
-      }
+    for (const domain of domains) {
+      const { id: domainId, code } = domain;
 
-      // 2. `DomainGoal` 테이블에서 domainId로 기존 데이터 찾기
+      // 2. 엑셀 데이터에서 해당 코드의 데이터 찾기
+      const data = jsonData[code] || {
+        ff: 0,
+        fsm: 0,
+        ffSes: 0,
+        fsmSes: 0,
+      };
+
+      // 3. `DomainGoal` 테이블에서 domainId로 기존 데이터 찾기
       const existingDomainGoal = await prisma.domainGoal.findFirst({
-        where: { domainId: domain.id },
+        where: { domainId },
       });
 
       if (existingDomainGoal) {
-        // 3. 기존 데이터 업데이트
+        // 4. 기존 데이터 업데이트
         await prisma.domainGoal.update({
           where: { id: existingDomainGoal.id },
           data: {
@@ -43,10 +47,10 @@ async function updateDomainGoals() {
         });
         console.log(`✅ Updated DomainGoal for ${code}`);
       } else {
-        // 4. 데이터가 없으면 새로 생성
+        // 5. 데이터가 없으면 새로 생성
         await prisma.domainGoal.create({
           data: {
-            domainId: domain.id,
+            domainId,
             campaignId: "default_campaign", // 적절한 campaignId 설정 필요
             ff: data.ff || 0,
             fsm: data.fsm || 0,
@@ -56,19 +60,14 @@ async function updateDomainGoals() {
         });
         console.log(`✅ Created new DomainGoal for ${code}`);
       }
-    } catch (error) {
-      console.error(`❌ Error processing ${code}:`, error);
     }
+  } catch (error) {
+    console.error("❌ Error updating DomainGoal:", error);
+  } finally {
+    await prisma.$disconnect();
+    console.log("🚀 Update process completed");
   }
 }
 
 // 실행
-updateDomainGoals()
-  .then(() => {
-    console.log("🚀 Update process completed");
-    prisma.$disconnect();
-  })
-  .catch((error) => {
-    console.error("❌ Unexpected error:", error);
-    prisma.$disconnect();
-  });
+updateAllDomainGoals();
