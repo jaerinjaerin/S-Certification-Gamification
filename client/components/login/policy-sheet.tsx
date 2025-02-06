@@ -93,6 +93,7 @@ export default function PolicySheet({
           <SheetTitle aria-hidden className="hidden"></SheetTitle>
           <SheetDescription>
             <Accordion type="single" collapsible defaultValue="privacy">
+              <div></div>
               <Form {...form}>
                 <form>
                   <AccordionFormItem
@@ -102,11 +103,15 @@ export default function PolicySheet({
                       accordionTitle: `${translation("privacy")}`,
                       contents: `${privacyContent}`,
                       formKey: "privacy",
-                      formLabelText: `${
-                        isSheetLanguage
-                          ? `${translation("mena_check_1")}`
-                          : "I have read and agree to the Samsung Plus Privacy Policy"
-                      }`,
+                      formLabelText: isSheetLanguage
+                        ? translation.rich("mena_check_1", {
+                            strong: (chunks) => (
+                              <span className="text-blue-500 font-bold inline-block">
+                                {chunks}
+                              </span>
+                            ),
+                          })
+                        : "I have read and agree to the Samsung Plus Privacy Policy",
                     }}
                   />
                   <AccordionFormItem
@@ -116,11 +121,15 @@ export default function PolicySheet({
                       accordionTitle: `${translation("term")}`,
                       contents: `${termContent}`,
                       formKey: "term",
-                      formLabelText: `${
-                        isSheetLanguage
-                          ? `${translation("mena_check_2")}`
-                          : "I have read and agree to the Samsung Plus Terms and Conditions"
-                      }`,
+                      formLabelText: isSheetLanguage
+                        ? translation.rich("mena_check_2", {
+                            strong: (chunks) => (
+                              <span className="text-blue-500 font-bold inline-block">
+                                {chunks}
+                              </span>
+                            ),
+                          })
+                        : "I have read and agree to the Samsung Plus Terms and Conditions",
                     }}
                   />
                 </form>
@@ -183,7 +192,7 @@ function AccordionFormItem({
     domainName: string;
     contents: string;
     formKey: "privacy" | "term";
-    formLabelText: string;
+    formLabelText: string | React.ReactNode;
     form: UseFormReturn<
       {
         privacy: boolean;
