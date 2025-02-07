@@ -26,8 +26,12 @@ import { legendCapitalizeFormatter } from '../../_lib/text';
 import { chartHeight } from '../../_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 function OverviewAchievementRate() {
+  const { createController, abort } = useAbortController();
+  const { createController: createControllerInfo, abort: abortInfo } =
+    useAbortController();
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -41,15 +45,23 @@ function OverviewAchievementRate() {
         (data) => {
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
       //
-      fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
-        setCount(data.result.count.toFixed(2) ?? 0);
-      });
+      fetchData(
+        state.fieldValues,
+        'overview/info/achievement',
+        (data) => {
+          setCount(data.result.count.toFixed(2) ?? 0);
+        },
+        createControllerInfo()
+      );
     }
 
     return () => {
+      abort();
+      abortInfo();
       setLoading(true);
     };
   }, [state.fieldValues]);

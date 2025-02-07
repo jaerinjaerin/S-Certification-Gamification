@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
-import { removeDuplicateUsers } from '@/lib/data';
+import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
 
 async function processUserQuizBadgeStageStatistics(
   weeklyWhere: any,
@@ -61,16 +61,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // domainId만 확인해서 필터링 생성성
+    const whereForGoal = await domainCheckOnly(where);
     const domain_goal = await prisma.domainGoal.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
+      orderBy: { updatedAt: 'desc' },
     });
 
     const goalTotalScore = Array.isArray(domain_goal)
@@ -80,6 +75,7 @@ export async function GET(request: NextRequest) {
           0
         )
       : 0;
+    console.log('🚀 ~ GET ~ goalTotalScore:', goalTotalScore);
 
     const today = new Date();
     const startDate = startOfWeek(campaign.startedAt); // 캠페인 시작 주
@@ -167,7 +163,9 @@ export async function GET(request: NextRequest) {
       const expertTotal = Object.values(
         foundJobElement.job as Record<string, number>
       ).reduce((sum, value) => sum + value, 0);
-      cumulativeRate = (expertTotal / goalTotalScore) * 100;
+      console.log('🚀 ~ GET ~ expertTotal:', expertTotal);
+      cumulativeRate =
+        expertTotal > 0 ? (expertTotal / goalTotalScore) * 100 : 0;
     }
 
     return NextResponse.json({

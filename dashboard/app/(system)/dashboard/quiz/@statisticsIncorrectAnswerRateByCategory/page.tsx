@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useQuizContext } from '../_provider/provider';
 import { fetchData } from '../../_lib/fetch';
@@ -9,8 +8,10 @@ import { DefaultHeatMapDatum, ResponsiveHeatMapCanvas } from '@nivo/heatmap';
 import { LoaderWithBackground } from '@/components/loader';
 import { useModal } from '@/components/provider/modal-provider';
 import DetailIncorrectTable from './_components/detail-table';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const QuizIncorrectAnswerRate = () => {
+  const { createController, abort } = useAbortController();
   const { state } = useQuizContext();
   const { setContent } = useModal();
   const [data, setData] = useState([]);
@@ -24,11 +25,13 @@ const QuizIncorrectAnswerRate = () => {
         (data) => {
           setData(data.result || []);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);
@@ -71,9 +74,9 @@ const QuizIncorrectAnswerRate = () => {
           }}
           onClick={(props) => {
             const data = props.data as DefaultHeatMapDatum & {
-              meta: { questionIds: string[] };
+              meta: { questions: QuizRankedIncorrectAnswerRateProps[] };
             };
-            const questionIds = JSON.stringify(data.meta.questionIds);
+            const questions = data.meta.questions;
             const category = props.serieId;
             const group = props.data.x;
 
@@ -81,7 +84,7 @@ const QuizIncorrectAnswerRate = () => {
               <DetailIncorrectTable
                 category={category}
                 group={group}
-                questionIds={questionIds}
+                questions={questions}
               />
             );
           }}

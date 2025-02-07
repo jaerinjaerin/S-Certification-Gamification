@@ -1,7 +1,6 @@
 'use client';
 export const dynamic = 'force-dynamic';
 
-
 import {
   Bar,
   CartesianGrid,
@@ -27,8 +26,10 @@ import { fetchData } from '../../../_lib/fetch';
 import ChartContainer from '../../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '../../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 export function UserProgressExperts() {
+  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,11 +42,13 @@ export function UserProgressExperts() {
         (data) => {
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);

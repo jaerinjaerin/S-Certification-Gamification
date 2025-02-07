@@ -4,21 +4,21 @@
 import { useEffect, useState } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { fetchData } from '@/app/(system)/dashboard/_lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/app/(system)/dashboard/_components/charts/chart-header';
 import IncorrectTable, { columns } from '../../_components/incorrect-table';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import { useModal } from '@/components/provider/modal-provider';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const DetailIncorrectTable = ({
   category,
   group,
-  questionIds,
+  questions,
 }: {
   category: string;
   group: string;
-  questionIds: string;
+  questions: QuizRankedIncorrectAnswerRateProps[];
 }) => {
   const { setContent } = useModal();
   const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
@@ -31,21 +31,15 @@ const DetailIncorrectTable = ({
   });
 
   useEffect(() => {
-    if (questionIds) {
-      fetchData(
-        { questionIds },
-        'quiz/statistics/incorrect-answer-rate-by-category/info',
-        (data) => {
-          setData(data.result);
-          setLoading(false);
-        }
-      );
+    if (questions) {
+      setData(questions);
+      setLoading(false);
     }
 
     return () => {
       setLoading(true);
     };
-  }, [questionIds]);
+  }, [questions]);
 
   return (
     <div>
@@ -66,7 +60,11 @@ const DetailIncorrectTable = ({
         </span>
       </div>
       <div className="mt-5 border rounded-md max-h-[28.3rem]">
-        <IncorrectTable table={table} loading={loading} />
+        <ScrollArea className="w-full">
+          <div className="max-h-[25.6rem]">
+            <IncorrectTable table={table} loading={loading} />
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

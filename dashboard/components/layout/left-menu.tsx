@@ -25,7 +25,11 @@ const menuItems: MenuItems = [
     title: 'Dashboard',
     items: [
       { label: 'Overview', icon: LayoutDashboard, href: '/dashboard/overview' },
-      { label: 'User', icon: Users, href: '/dashboard/user' },
+      {
+        label: 'User',
+        icon: Users,
+        children: [{ label: 'Stats', href: '/dashboard/user/stats' }],
+      },
       { label: 'Quiz', icon: Sheet, href: '/dashboard/quiz' },
     ],
   },
