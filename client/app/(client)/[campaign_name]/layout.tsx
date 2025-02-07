@@ -14,7 +14,7 @@ export default async function CampaignLayout({
   // // console.log("CampaignLayout url", url);
   const response = await fetch(url, {
     method: "GET",
-    // cache: "force-cache",
+    cache: "no-cache",
   });
 
   const routeCommonError = () => {
