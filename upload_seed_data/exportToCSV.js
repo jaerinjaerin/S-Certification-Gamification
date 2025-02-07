@@ -64,6 +64,7 @@ async function exportDataToCSV() {
         uq."lastCompletedStage",
         uq."elapsedSeconds",
         uq."quizSetId",
+        uq."authType",
         uq."createdAt",
         uq."updatedAt",
         a."provider_account_id",
@@ -71,7 +72,7 @@ async function exportDataToCSV() {
         a."type"
       FROM "UserQuizLog" uq
       JOIN "accounts" a ON uq."userId" = a."user_id"
-      WHERE uq."domainId" = '349961';
+      WHERE uq."domainId" = '46';
     `;
 
     if (data.length === 0) {
@@ -81,21 +82,51 @@ async function exportDataToCSV() {
 
     console.log(`✅ ${data.length}개의 데이터가 조회되었습니다.`);
 
+    // // ✅ 2️⃣ 복호화 및 데이터 변환
+    // const processedData = data.map((row) => ({
+    //   // quiz_log_id: row.quiz_log_id,
+    //   userId: decrypt(row.provider_account_id, true) || "DECRYPTION_FAILED", // 복호화 적용
+    //   // userId: row.userId,
+    //   // isCompleted: row.isCompleted,
+    //   "완료한 Stage":
+    //     row.lastCompletedStage != null ? row.lastCompletedStage + 1 : null,
+    //   // createdAt: row.createdAt,
+    //   // updatedAt: row.updatedAt,
+    //   // elapsedSeconds: row.elapsedSeconds,
+    //   // quizSetId: row.quizSetId,
+    //   // expires_at: row.expires_at,
+    //   // type: row.type,
+    // }));
+
     // ✅ 2️⃣ 복호화 및 데이터 변환
-    const processedData = data.map((row) => ({
-      // quiz_log_id: row.quiz_log_id,
-      userId: decrypt(row.provider_account_id, true) || "DECRYPTION_FAILED", // 복호화 적용
-      // userId: row.userId,
-      // isCompleted: row.isCompleted,
-      "완료한 Stage":
-        row.lastCompletedStage != null ? row.lastCompletedStage + 1 : null,
-      // createdAt: row.createdAt,
-      // updatedAt: row.updatedAt,
-      // elapsedSeconds: row.elapsedSeconds,
-      // quizSetId: row.quizSetId,
-      // expires_at: row.expires_at,
-      // type: row.type,
-    }));
+    const seenUserIds = new Set();
+    const duplicateUserIds = new Set();
+
+    const processedData = data.map((row) => {
+      const decryptedUserId =
+        decrypt(row.provider_account_id, true) || "DECRYPTION_FAILED";
+
+      // 중복 체크
+      if (seenUserIds.has(decryptedUserId)) {
+        duplicateUserIds.add(decryptedUserId);
+      } else {
+        seenUserIds.add(decryptedUserId);
+      }
+
+      return {
+        userId: decryptedUserId, // 복호화 적용
+        authType: row.authType,
+        "완료한 Stage":
+          row.lastCompletedStage != null ? row.lastCompletedStage + 1 : null,
+      };
+    });
+
+    // ✅ 3️⃣ 중복된 userId 로그 출력
+    if (duplicateUserIds.size > 0) {
+      console.warn("⚠️ 중복된 userId 발견:", Array.from(duplicateUserIds));
+    } else {
+      console.log("✅ 중복된 userId 없음");
+    }
 
     // ✅ 3️⃣ CSV 파일 저장 설정
     const csvWriter = createObjectCsvWriter({
