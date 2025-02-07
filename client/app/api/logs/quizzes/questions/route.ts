@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -182,6 +183,95 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: "An unexpected error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  // export async function GET(request: NextRequest) {
+  // console.log("GET - QuizSet Log");
+  // const session = await auth();
+  // if (!session) {
+  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  // }
+
+  const url = request.url;
+  const { searchParams } = new URL(url);
+  const quizSetId = searchParams.get("quizset_id");
+  const quizStageIndex = searchParams.get("stage_index");
+
+  try {
+    if (!quizSetId || !quizStageIndex) {
+      throw new ApiError(
+        400,
+        "BAD_REQUEST",
+        "quizset_id and stage_index are required"
+      );
+    }
+
+    const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+      where: {
+        quizSetId: quizSetId,
+        quizStageIndex: Number(quizStageIndex),
+      },
+      orderBy: [
+        {
+          questionId: "asc", // questionId를 기준으로 정렬
+        },
+        {
+          createdAt: "desc", // 최신 항목을 우선 정렬
+        },
+      ],
+      distinct: ["questionId"], // questionId별로 중복 제거
+    });
+
+    return NextResponse.json(
+      {
+        items: userQuizQuestionLogs,
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "/api/logs/quizzes/questions",
+        method: "GET",
+        description: "Failed to fetch quiz set data",
+      });
+      scope.setTag("ququizSetId", quizSetId);
+      scope.setTag("quizStageIndex", quizStageIndex);
+      return scope;
+    });
+
+    // ApiError에 대한 특수 처리
+    if (error instanceof ApiError) {
+      return NextResponse.json(
+        {
+          status: error.statusCode,
+          message: error.message,
+          error: {
+            code: error.statusCode === 400 ? "BAD_REQUEST" : "NOT_FOUND",
+            details: error.message,
+          },
+        },
+        { status: error.statusCode }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        status: 500,
+        message: "Internal server error",
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          details:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        },
+      },
       { status: 500 }
     );
   }

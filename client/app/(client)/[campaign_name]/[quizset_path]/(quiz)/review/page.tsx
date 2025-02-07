@@ -4,6 +4,7 @@ import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import { useQuizQuestionLogs } from "@/hooks/api/log/useQuizQuestionLogs";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
@@ -15,8 +16,7 @@ import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
   useGAPageView();
-  const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
-    useQuiz();
+  const { currentQuizStage, currentStageQuestions, quizSet } = useQuiz();
 
   const router = useRouter();
 
@@ -29,9 +29,9 @@ export default function ReviewPage() {
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const reviewQuizQuestionLogs = quizQuestionLogs.filter(
-    (log) => log.quizStageIndex + 1 === searchStage
-  );
+  // const reviewQuizQuestionLogs = quizQuestionLogs.filter(
+  //   (log) => log.quizStageIndex + 1 === searchStage
+  // );
 
   const { isArabic } = useCheckLocale();
 
@@ -40,10 +40,32 @@ export default function ReviewPage() {
   )[0].questions;
   const question = questions[currentQuestionIndex];
 
+  const {
+    data: quizQuestionLogs,
+    loading: logsLoading,
+    error,
+  } = useQuizQuestionLogs(quizSet.id, searchStage);
+
+  // useEffect(() => {
+  //   const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
+  //     (log) => log.questionId === question.id
+  //   );
+
+  //   if (!currentReviewQuizQuestionLogs) {
+  //     const correctOptionIds = question.options
+  //       .filter((option) => option.isCorrect)
+  //       .map((option) => option.id);
+
+  //     setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  //   } else {
+  //     setSelectedOptionIds([
+  //       ...currentReviewQuizQuestionLogs.correctOptionIds,
+  //       ...currentReviewQuizQuestionLogs.selectedOptionIds,
+  //     ]);
+  //   }
+  // }, [currentQuestionIndex]);
   useEffect(() => {
-    const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
-      (log) => log.questionId === question.id
-    );
+    const currentReviewQuizQuestionLogs = quizQuestionLogs ?? [];
 
     if (!currentReviewQuizQuestionLogs) {
       const correctOptionIds = question.options
@@ -57,7 +79,7 @@ export default function ReviewPage() {
         ...currentReviewQuizQuestionLogs.selectedOptionIds,
       ]);
     }
-  }, [currentQuestionIndex]);
+  }, [quizQuestionLogs]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;

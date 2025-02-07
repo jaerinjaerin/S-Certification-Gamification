@@ -340,7 +340,7 @@ export async function GET(request: NextRequest) {
           item: {
             quizLog: null,
             quizStageLogs: [],
-            quizQuestionLogs: [],
+            // quizQuestionLogs: [],
           },
         },
         { status: 200 }
@@ -366,21 +366,21 @@ export async function GET(request: NextRequest) {
     //   },
     // });
 
-    const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-      where: {
-        userId: userId,
-        quizSetId: userQuizLog.quizSetId,
-      },
-      orderBy: [
-        {
-          questionId: "asc", // questionId를 기준으로 정렬
-        },
-        {
-          createdAt: "desc", // 최신 항목을 우선 정렬
-        },
-      ],
-      distinct: ["questionId"], // questionId별로 중복 제거
-    });
+    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+    //   where: {
+    //     userId: userId,
+    //     quizSetId: userQuizLog.quizSetId,
+    //   },
+    //   orderBy: [
+    //     {
+    //       questionId: "asc", // questionId를 기준으로 정렬
+    //     },
+    //     {
+    //       createdAt: "desc", // 최신 항목을 우선 정렬
+    //     },
+    //   ],
+    //   distinct: ["questionId"], // questionId별로 중복 제거
+    // });
 
     // console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
 
@@ -389,7 +389,7 @@ export async function GET(request: NextRequest) {
         item: {
           quizLog: userQuizLog,
           quizStageLogs: userQuizStageLogs,
-          quizQuestionLogs: userQuizQuestionLogs,
+          // quizQuestionLogs: userQuizQuestionLogs,
         },
       },
       { status: 200 }
