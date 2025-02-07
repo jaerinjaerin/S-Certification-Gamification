@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
+export const dynamic = 'force-dynamic';
+
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
 
     const questionIds: string[] | null = JSON.parse(
-      searchParams.get("questionIds") ?? "[]"
+      searchParams.get('questionIds') ?? '[]'
     );
 
     if (!questionIds) {
       return NextResponse.json(
-        { success: false, message: "questionIds is required" },
-        { status: 400, statusText: "Bad Request" }
+        { success: false, message: 'questionIds is required' },
+        { status: 400, statusText: 'Bad Request' }
       );
     }
 
@@ -23,26 +25,26 @@ export async function GET(request: NextRequest) {
 
     // 모든 isCorrect가 있는 데이터 가져오기
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      by: ['questionId'], // questionId와 isCorrect를 기준으로 그룹핑
       where: {
         questionId: { in: questionIds },
       },
       _count: { isCorrect: true },
       orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
+        { questionId: 'asc' }, // questionId 기준 정렬
       ],
     });
 
     // corrects을 기반으로 오답만 가져오기
     let incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ["questionId"], // questionId와 isCorrect를 기준으로 그룹핑
+      by: ['questionId'], // questionId와 isCorrect를 기준으로 그룹핑
       where: {
         questionId: { in: questionIds },
         isCorrect: false,
       },
       _count: { isCorrect: true },
       orderBy: [
-        { questionId: "asc" }, // questionId 기준 정렬
+        { questionId: 'asc' }, // questionId 기준 정렬
       ],
     });
 
@@ -93,9 +95,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

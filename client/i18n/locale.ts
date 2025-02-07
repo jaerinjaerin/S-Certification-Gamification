@@ -169,6 +169,7 @@ export async function fetchSupportedLanguages() {
     { code: "fr-FR-ch", name: "Language for Switzerland" },
     { code: "fr-FR-TN", name: "Language for Tunisia" },
     { code: "uk", name: "Ukraine" },
+    { code: "ar-TN", name: "Tunisia, Arabic" },
   ].map((code) => code.code);
 
   // try {

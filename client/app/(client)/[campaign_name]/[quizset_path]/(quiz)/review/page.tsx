@@ -160,8 +160,7 @@ export default function ReviewPage() {
                     selectedOptionIds.includes(option.id) &&
                       !option.isCorrect &&
                       "bg-[#EE3434] text-white pointer-events-none",
-                    selectedOptionIds.includes(option.id) &&
-                      option.isCorrect &&
+                    option.isCorrect &&
                       "bg-[#2686F5] text-white pointer-events-none",
                     "pointer-events-none"
                   )}

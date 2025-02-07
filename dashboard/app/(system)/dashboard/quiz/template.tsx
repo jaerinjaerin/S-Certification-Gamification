@@ -1,7 +1,7 @@
-import QuizQuizzesRanked from "./(info)/@quizzes-ranked-by-highest-incorrect-answer-rate/page";
-import QuizIncorrectAnswerRate from "./(statistics)/@incorrect-answer-rate-by-category/page";
-import QuizFilterForm from "./@filters/page";
-import { QuizProvider } from "./_provider/provider";
+import QuizQuizzesRanked from './@infoQuizzesRankedByHighestIncorrectAnswerRate/page';
+import QuizIncorrectAnswerRate from './@statisticsIncorrectAnswerRateByCategory/page';
+import QuizFilterForm from './@filters/page';
+import { QuizProvider } from './_provider/provider';
 
 const QuizTemplete = () => {
   return (

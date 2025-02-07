@@ -355,6 +355,18 @@ export const QuizProvider = ({
       }
     }
 
+    if (
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+      "NAT_2788_ar-TN"?.toLocaleLowerCase()
+    ) {
+      if (currentQuizStageIndex === 2) {
+        return "255424";
+      }
+      if (currentQuizStageIndex === 3) {
+        return "255426";
+      }
+    }
+
     return currentQuizStage?.badgeActivityId ?? null;
   };
 

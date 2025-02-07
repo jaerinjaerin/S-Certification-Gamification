@@ -142,7 +142,6 @@ export default function QuizPage() {
   };
 
   const next = async () => {
-    console.log("next");
     setIsCorrectAnswer(false);
 
     if (canNextQuestion()) {

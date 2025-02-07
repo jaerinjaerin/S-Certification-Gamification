@@ -7,18 +7,19 @@ export const config = {
   ],
 };
 export async function middleware(request: NextRequest) {
-  // const session = await auth();
-  //
+  const session = await auth();
+
   // console.log(session);
-  //
-  // const { pathname, search } = request.nextUrl;
-  // const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  //
-  // // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
-  // if (!session && !pathname.includes('/login')) {
-  //   const url = '/login';
-  //   return NextResponse.redirect(new URL(url, request.url));
-  // }
+
+  const { pathname, search } = request.nextUrl;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+  // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
+  if (!session && !pathname.includes('/login')) {
+    const url = '/login';
+    return NextResponse.redirect(new URL(url, request.url));
+  } else if (session && pathname.includes('/login')) {
+  }
 
   return NextResponse.next();
 }
