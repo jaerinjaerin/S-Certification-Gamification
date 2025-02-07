@@ -298,12 +298,7 @@ async function main() {
         name: "S25",
       },
     });
-    const folderPath = path.join(
-      process.cwd(),
-      "data",
-      "questions",
-      "20250203"
-    );
+    const folderPath = path.join(process.cwd(), "data", "questions", "new");
     const files = fs.readdirSync(folderPath);
 
     //////////// HQ 베이스 퀴즈 셋 가져오기
@@ -470,7 +465,27 @@ async function main() {
           console.warn(
             `Original question not found for file: ${fileName}, ${jsonQuestion.originQuestionIndex}`
           );
-          originalQuestionId = questionId;
+
+          // 해당 국가만 사용하는 문제가 등록되어 있는지 확인
+          const item = await prisma.question.findFirst({
+            where: {
+              // originalQuestionId: jsonQuestion.originQuestionIndex,
+              originalIndex: jsonQuestion.originQuestionIndex,
+              languageId: language.id,
+            },
+          });
+
+          if (item) {
+            originalQuestionId = item.id;
+            hqNatQuestions.push(item);
+          } else {
+            originalQuestionId = questionId;
+          }
+
+          console.log(
+            "해당 국가만 사용하는 문제가 등록되어 있는지 확인 item",
+            item
+          );
           // return;
         }
 
@@ -540,6 +555,26 @@ async function main() {
                   languageId: language.id,
                 },
               });
+            } else {
+              if (
+                item.text !== option.text ||
+                item.isCorrect !==
+                  (option.answerStatus === 1 || option.answerStatus === "1")
+              ) {
+                await prisma.questionOption.update({
+                  where: {
+                    id: item.id,
+                  },
+                  data: {
+                    text: option.text.toString(),
+                    order: j,
+                    questionId,
+                    isCorrect:
+                      option.answerStatus === 1 || option.answerStatus === "1",
+                    languageId: language.id,
+                  },
+                });
+              }
             }
           }
         } else {
@@ -557,7 +592,8 @@ async function main() {
               },
               data: {
                 text: jsonQuestion.text.toString(),
-                order: jsonQuestion.orderInStage,
+                order:
+                  jsonQuestion.orderInStage ?? jsonQuestion.originQuestionIndex,
               },
             });
           }
@@ -574,26 +610,61 @@ async function main() {
           });
 
           // 답변이 변경되었는지 확인 후, 업데이트
+          // console.log("questionOptions", questionOptions);
+          console.log("jsonQuestion.options", jsonQuestion.options);
           questionOptions.forEach(async (option, index) => {
-            if (option.text !== jsonQuestion.options[index].text) {
-              console.log(
-                "update option",
-                option.text,
-                jsonQuestion.options[index].text
-              );
-              await prisma.questionOption.update({
+            if (jsonQuestion.options.length > index) {
+              if (
+                option.text !== jsonQuestion.options[index].text ||
+                option.isCorrect !==
+                  (jsonQuestion.options[index].answerStatus === 1 ||
+                    jsonQuestion.options[index].answerStatus === "1")
+              ) {
+                console.log(
+                  "update option",
+                  option.text,
+                  jsonQuestion.options[index].text
+                );
+                await prisma.questionOption.update({
+                  where: {
+                    id: option.id,
+                  },
+                  data: {
+                    text: jsonQuestion.options[index].text.toString(),
+                    isCorrect:
+                      jsonQuestion.options[index].answerStatus === 1 ||
+                      jsonQuestion.options[index].answerStatus === "1",
+                  },
+                });
+              }
+            } else {
+              await prisma.questionOption.delete({
                 where: {
                   id: option.id,
-                },
-                data: {
-                  text: jsonQuestion.options[index].text.toString(),
-                  isCorrect:
-                    jsonQuestion.options[index].answerStatus === 1 ||
-                    jsonQuestion.options[index].answerStatus === "1",
                 },
               });
             }
           });
+
+          if (jsonQuestion.options.length > questionOptions.length) {
+            for (
+              let j = questionOptions.length;
+              j < jsonQuestion.options.length;
+              j++
+            ) {
+              const option = jsonQuestion.options[j];
+              await prisma.questionOption.create({
+                data: {
+                  text: option.text.toString(),
+                  order: j,
+                  questionId: item.id,
+                  isCorrect:
+                    option.answerStatus === 1 || option.answerStatus === "1",
+                  languageId: language.id,
+                },
+              });
+            }
+          }
         }
 
         createdQuestions.push(item);

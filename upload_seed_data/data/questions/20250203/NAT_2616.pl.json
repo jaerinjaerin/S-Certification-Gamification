@@ -1021,7 +1021,7 @@
     "options": [
       {
         "text": "Gumka",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "Natychmiastowe zwolnienie tempa",
@@ -1029,7 +1029,7 @@
       },
       {
         "text": "Wysoka rozdzielczość",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Automatyczne przycinanie",
@@ -1304,11 +1304,11 @@
       },
       {
         "text": "Object-aware Engine",
-        "answerStatus": 0
+        "answerStatus": 1
       },
       {
         "text": "Filtry",
-        "answerStatus": 1
+        "answerStatus": 0
       },
       {
         "text": "Ray Tracing",
@@ -1419,7 +1419,7 @@
     "specificFeature": null,
     "importance": null,
     "timeLimitSeconds": 30,
-    "text": "W Galaxy jest funkcja, która prezentuje spersonalizowany plan dnia. Jak nazywa się ta funkcja?",
+    "text": "W Galaxy jest funkcja, która prezentuje  spersonalizowany plan dnia. Jak nazywa się ta funkcja?",
     "questionType": "SINGLE_CHOICE",
     "options": [
       {
@@ -1580,14 +1580,6 @@
       {
         "text": "Tak",
         "answerStatus": 1
-      },
-      {
-        "text": "Tak",
-        "answerStatus": 1
-      },
-      {
-        "text": "Nie",
-        "answerStatus": 0
       },
       {
         "text": "Nie",
