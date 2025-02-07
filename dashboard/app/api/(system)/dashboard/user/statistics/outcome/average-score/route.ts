@@ -1,15 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../../_lib/query";
-import { addDays, endOfDay, startOfDay } from "date-fns";
+export const dynamic = 'force-dynamic';
+
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../../_lib/query';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
+import { removeDuplicateUsers } from '@/lib/data';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, period } = querySearchParams(searchParams);
+    const { where: condition, period } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
+
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
+    });
 
     // 오늘과 6일 전 설정
     const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
@@ -20,8 +29,7 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ["score", "createdAt", "userId"], // quizStageId와 createdAt으로 그룹화
+    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
         ...where,
         createdAt: {
@@ -29,10 +37,17 @@ export async function GET(request: NextRequest) {
           lte: endOfDay(today), // 오늘까지
         },
         quizStageIndex: { in: [2, 3] },
+        jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
-      orderBy: { createdAt: "asc" }, // 날짜 순 정렬
+      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
     });
-
+    // 중복 userId 제거
+    experts = removeDuplicateUsers(experts);
     experts = filterHighestScores(experts);
     //
     // 날짜 범위를 생성
@@ -40,7 +55,7 @@ export async function GET(request: NextRequest) {
       const dates = [];
       const current = new Date(start);
       while (current <= end) {
-        dates.push(current.toISOString().split("T")[0]);
+        dates.push(current.toISOString().split('T')[0]);
         current.setDate(current.getDate() + 1);
       }
       return dates;
@@ -48,15 +63,15 @@ export async function GET(request: NextRequest) {
 
     // 날짜별 초기 데이터 생성
     const initialData = getDateRange(beforeWeek, today).map((date) => ({
-      date: date.replace(/-/g, "."), // YYYY-MM-DD -> YYYY.MM.DD
+      date: date.replace(/-/g, '.'), // YYYY-MM-DD -> YYYY.MM.DD
       score: 0,
     }));
 
     // 데이터 그룹화 및 합산
     const result = experts.reduce((acc, item) => {
-      const dateKey = item.createdAt.toISOString().split("T")[0]; // 날짜 추출
+      const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
       const match = acc.find(
-        (entry) => entry.date === dateKey.replace(/-/g, ".")
+        (entry) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
         const score = item.score / experts.length;
@@ -67,9 +82,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

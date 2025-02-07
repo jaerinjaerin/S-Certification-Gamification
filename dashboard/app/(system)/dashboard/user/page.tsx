@@ -1,5 +1,6 @@
-const UserBoard = () => {
-  return <div>UserBoard</div>;
-};
+import { redirect } from 'next/navigation';
 
-export default UserBoard;
+export default function System() {
+  redirect('/dashboard/user/stats');
+  return null;
+}

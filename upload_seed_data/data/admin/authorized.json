@@ -1,0 +1,175 @@
+{
+  "users": [
+    {
+      "name": "hq_api.test1",
+      "providerUserId": "tIRw7YwCdAvn6R+Ha45xdA==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "seokhyun.mun",
+      "providerUserId": "7Td9/irKUB0fFj8SpgMJ5w==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "rino.park",
+      "providerUserId": "Y7XixLuM8I7KAMorpjK3lw==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "edward.kwon",
+      "providerUserId": "QeKlkxZzzhuM9PTBLJfxXQ==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "hs23.jin",
+      "providerUserId": "MRVMxkONVjPBHcrxaima8g==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.chae1",
+      "providerUserId": "UyuA2lbp7qdvXqVOYV4nDw==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.pth",
+      "providerUserId": "BvyBKjYqudVJ19ml+0Dghw==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.kang",
+      "providerUserId": "UBtTjp2a0pryQC3MWKfRIg==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.chjang",
+      "providerUserId": "C9OZYbrW82Urz8Xo7tIzAQ==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.chanju",
+      "providerUserId": "VwtJy1RCI6CSFvxEIUOG1w==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.mos",
+      "providerUserId": "BrK45DASNPau0CICiFA7Gg==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.soolim",
+      "providerUserId": "1E2jvcBCQpxMPaub8h86RA==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.1",
+      "providerUserId": "ktG29ThwlGLLLaLFZTA9qg==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.6",
+      "providerUserId": "L63ws6OIH/BGCZOH+nbWTw==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.7",
+      "providerUserId": "V7apyjFPtk32miyT6TCxEQ==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.11",
+      "providerUserId": "0uZVuNqgb1cUp/oLZdb5Yg==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.8",
+      "providerUserId": "xFtZV29t61PJs+hTWynW/w==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.21",
+      "providerUserId": "9bKIfK75pd2PI4cAOFP7Aw==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "bpo.22",
+      "providerUserId": "i6RvlH253la7IyuRn619gA==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    }
+  ]
+}

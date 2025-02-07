@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
-import { AuthType } from "@prisma/client";
+export const dynamic = 'force-dynamic';
+
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
+import { AuthType } from '@prisma/client';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { removeDuplicateUsers } from '@/lib/data';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -11,46 +14,75 @@ import { AuthType } from "@prisma/client";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+    const { where: condition, take, skip } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
     const defaultJobData = {
       ff: 0,
       fsm: 0,
-      "ff(ses)": 0,
-      "fsm(ses)": 0,
+      'ff(ses)': 0,
+      'fsm(ses)': 0,
       ff_advanced: 0,
       fsm_advanced: 0,
-      "ff(ses)_advanced": 0,
-      "fsm(ses)_advanced": 0,
+      'ff(ses)_advanced': 0,
+      'fsm(ses)_advanced': 0,
     };
 
     const jobGroup = await prisma.job.findMany({
-      select: { id: true, group: true },
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
     const count = await prisma.domainGoal.count({
-      where,
+      where: {
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'createdAt',
+        ]),
+      },
     });
 
     const domainsGoals = await prisma.domainGoal.findMany({
-      where,
+      where: {
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'createdAt',
+        ]),
+      },
       take,
       skip,
     });
 
-    const experts = await prisma.userQuizBadgeStageStatistics.findMany({
+    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
-        ...where,
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subsidiaryId',
+          'domainId',
+          'authType',
+          'channelSegmentId',
+          'createdAt',
+        ]),
         quizStageIndex: { in: [2, 3] },
-        domainId: {
-          in: domainsGoals
-            .map((goal) => goal.domainId)
-            .filter((id): id is string => id !== null),
-        },
+        jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
     });
+
+    experts = removeDuplicateUsers(experts);
 
     const domains = await prisma.domain.findMany({
       where: {
@@ -107,11 +139,14 @@ export async function GET(request: NextRequest) {
 
       //   expers data
       const jobData = JSON.parse(JSON.stringify(defaultJobData));
-      const plus = experts.filter(
-        (exp) => exp.storeId !== "4" && exp.domainId === domain.id
+      const plusUsers = experts.filter(
+        (exp) =>
+          (exp.storeId !== '4' || !exp.storeId) && exp.domainId === domain.id
       );
-      plus.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
+
+      // userId 중복제거
+      plusUsers.forEach((user) => {
+        const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
         if (jobName) {
           const lowJobName =
             jobName.toLowerCase() as keyof typeof jobData as string;
@@ -124,12 +159,13 @@ export async function GET(request: NextRequest) {
         }
       });
 
-      const ses = experts.filter(
-        (exp) => exp.storeId === "4" && exp.domainId === domain.id
+      const sesUsers = experts.filter(
+        (exp) => exp.storeId === '4' && exp.domainId === domain.id
       );
 
-      ses.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
+      // userId 중복제거
+      sesUsers.forEach((user) => {
+        const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
         if (jobName) {
           const lowJobName =
             `${jobName.toLowerCase()}(ses)` as keyof typeof jobData as string;
@@ -167,29 +203,18 @@ export async function GET(request: NextRequest) {
           : null,
         region: region ? { id: region.id, name: region.name } : null,
         goal: goalTotal,
-        expert: `${expertByDomain.length - advancedByDomain.length}(${
-          advancedByDomain.length
-        })`,
-        achievement:
-          ((expertByDomain.length - advancedByDomain.length) / goalTotal) * 100,
+        expert: `${expertByDomain.length}(${advancedByDomain.length})`,
+        achievement: (expertByDomain.length / goalTotal) * 100,
         expertDetail: {
           date: domain.updatedAt,
           country: domain.name,
-          plus: `${plusExperts.length - plusExpertsAdvanced.length} (${
-            plusExpertsAdvanced.length
-          })`,
-          none: `${noneExperts.length - noneExpertsAdvanced.length} (${
-            noneExpertsAdvanced.length
-          })`,
-          ff: `${jobData.ff - jobData.ff_advanced} (${jobData.ff_advanced})`,
-          fsm: `${jobData.fsm - jobData.fsm_advanced} (${
-            jobData.fsm_advanced
-          })`,
-          "ff(ses)": `${jobData["ff(ses)"] - jobData["ff(ses)_advanced"]} (${
-            jobData["ff(ses)_advanced"]
-          })`,
-          "fsm(ses)": `${jobData["fsm(ses)"] - jobData["fsm(ses)_advanced"]} (${
-            jobData["fsm(ses)_advanced"]
+          plus: `${plusExperts.length} (${plusExpertsAdvanced.length})`,
+          none: `${noneExperts.length} (${noneExpertsAdvanced.length})`,
+          ff: `${jobData.ff} (${jobData.ff_advanced})`,
+          fsm: `${jobData.fsm} (${jobData.fsm_advanced})`,
+          'ff(ses)': `${jobData['ff(ses)']} (${jobData['ff(ses)_advanced']})`,
+          'fsm(ses)': `${jobData['fsm(ses)']} (${
+            jobData['fsm(ses)_advanced']
           })`,
         },
       };
@@ -197,9 +222,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result, total: count });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

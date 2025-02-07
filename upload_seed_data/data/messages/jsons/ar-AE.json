@@ -73,7 +73,7 @@
   "email_badge_description_2": "لقد حصلت على وسام خبير Galaxy AI .",
   "email_badge_description_3": "لقد حصلت على وسام متقدم لخبير Galaxy AI .",
   "email_badge_description_4": "تم تسليم هذه الرسالة تلقائياً من خلال خدمة +Samsung. يرجى عدم الردّ على هذه الرسالة",
-  "mena_check_1": " أقر بقراءة وقبول سياسة خصوصية  Samsung Plus",
-  "mena_check_2": "أقر بقراءة وقبول شروط وأحكام Samsung Plus",
+  "mena_check_1": "أقر بقراءة وقبول <strong>سياسة خصوصية Samsung Plus</strong>",
+  "mena_check_2": "أقر بقراءة وقبول <strong>شروط وأحكام Samsung Plus</strong>",
   "mena_Decline": "لا أوافق"
 }

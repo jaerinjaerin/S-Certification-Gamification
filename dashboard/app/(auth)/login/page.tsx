@@ -1,30 +1,19 @@
-"use client";
+import { redirect } from 'next/navigation';
+import { LoginForm } from '@/components/login-form';
+import { auth } from '@/auth';
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/utils";
-import { signIn } from "next-auth/react";
-
-export default function Login() {
-  const processSignIn = async () => {
-    await signIn("sumtotal");
-  };
+export default async function Login() {
+  const session = await auth();
+  // redirect to home if user is already logged in
+  if (session?.user) {
+    redirect('/dashboard/overview');
+  }
 
   return (
-    <>
-      <div className={cn("h-svh")}>
-        <div className="object-fill w-full h-svh">
-          <div className="flex flex-col items-center h-full py-[20px] relative">
-            <div
-              className={cn("flex flex-col items-center my-auto gap-[49px]")}
-            >
-              <Button variant={"default"} onClick={processSignIn}>
-                <span>S+</span>
-                <span>Login</span>
-              </Button>
-            </div>
-          </div>
-        </div>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <LoginForm />
       </div>
-    </>
+    </div>
   );
 }

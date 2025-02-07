@@ -1,29 +1,60 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
-import { buildWhereWithValidKeys } from "../../../_lib/where";
-
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+export const dynamic = 'force-dynamic';
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '../../../_lib/query';
+import { buildWhereWithValidKeys } from '../../../_lib/where';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
 
-    const expertCount = await prisma.userQuizBadgeStageStatistics.count({
-      where: { ...where, quizStageIndex: 2 },
+    const jobGroup = await prisma.job.findMany({
+      where: jobId ? { code: jobId } : {},
+      select: { id: true, code: true },
     });
 
+    // userId가 중복되는 데이터가 있어서 그룹으로 데이터 가져옴
+    const userGroupByUserId = await prisma.userQuizBadgeStageStatistics.groupBy(
+      {
+        by: ['userId'],
+        where: {
+          ...buildWhereWithValidKeys(where, [
+            'campaignId',
+            'regionId',
+            'subsidiaryId',
+            'domainId',
+            'authType',
+            'channelSegmentId',
+            'createdAt',
+          ]),
+          quizStageIndex: 2,
+          jobId: { in: jobGroup.map((job) => job.id) },
+          ...(storeId
+            ? storeId === '4'
+              ? { storeId }
+              : { OR: [{ storeId }, { storeId: null }] }
+            : {}),
+        },
+        _count: { userId: true },
+      }
+    );
+
+    const expertCount = userGroupByUserId.length;
+
     const domain_goal = await prisma.domainGoal.findMany({
-      where: buildWhereWithValidKeys(where, [
-        "campaignId",
-        "domainId",
-        "createdAt",
-      ]),
+      where: {
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'regionId',
+          'subidiaryId',
+          'domainId',
+          'createdAt',
+        ]),
+      },
     });
     //
     const total = domain_goal.reduce((sum, item) => {
@@ -40,9 +71,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ result: { count } });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   } finally {

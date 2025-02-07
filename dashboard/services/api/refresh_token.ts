@@ -1,22 +1,22 @@
-"use server";
-import { prisma } from "@/prisma-client";
+'use server';
+import { prisma } from '@/model/prisma';
 
 // Refresh token 함수
 export async function refreshToken(accountId: string, refreshToken: string) {
   const TOKEN_REFRESH_URL =
-    "https://samsung.sumtotal.host/apisecurity/connect/token";
+    'https://samsung.sumtotal.host/apisecurity/connect/token';
 
   const CLIENT_ID = process.env.SUMTOTAL_CLIENT_ID;
   const CLIENT_SECRET = process.env.SUMTOTAL_CLIENT_SECRET;
 
   try {
     const response = await fetch(TOKEN_REFRESH_URL, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        grant_type: "refresh_token",
+        grant_type: 'refresh_token',
         refresh_token: refreshToken,
         client_id: CLIENT_ID!,
         client_secret: CLIENT_SECRET!,
@@ -24,7 +24,7 @@ export async function refreshToken(accountId: string, refreshToken: string) {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to refresh token");
+      throw new Error('Failed to refresh token');
     }
 
     const tokens = await response.json();
@@ -43,7 +43,7 @@ export async function refreshToken(accountId: string, refreshToken: string) {
 
     return tokens.access_token;
   } catch (error) {
-    console.error("Error refreshing token:", error);
-    throw new Error("Unable to refresh token");
+    console.error('Error refreshing token:', error);
+    throw new Error('Unable to refresh token');
   }
 }

@@ -1,5 +1,11 @@
-"use client";
-import { LayoutDashboard, ChevronDown, ChevronUp } from "lucide-react";
+'use client';
+import {
+  LayoutDashboard,
+  ChevronDown,
+  ChevronUp,
+  Sheet,
+  Users,
+} from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -9,18 +15,18 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+} from '@/components/ui/sidebar';
+import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 // 메뉴 데이터를 배열로 정의
 const menuItems: MenuItems = [
   {
-    title: "Dashboard",
+    title: 'Dashboard',
     items: [
-      { label: "Overview", icon: LayoutDashboard, href: "/dashboard/overview" },
-      // { label: "User", icon: Users, href: "/dashboard/user" },
-      // { label: "Quiz", icon: Sheet, href: "/dashboard/quiz" },
+      { label: 'Overview', icon: LayoutDashboard, href: '/dashboard/overview' },
+      { label: 'User', icon: Users, href: '/dashboard/user' },
+      { label: 'Quiz', icon: Sheet, href: '/dashboard/quiz' },
     ],
   },
   // {

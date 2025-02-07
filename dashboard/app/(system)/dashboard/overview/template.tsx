@@ -1,12 +1,12 @@
-import OverviewAchievementInfo from "./(infos)/@achievement/page";
-import OverviewExpertsByGroupInfo from "./(infos)/@experts-by-group/page";
-import OverviewExpertsInfo from "./(infos)/@experts/page";
-import OverviewParticipantsInfo from "./(infos)/@participants/page";
-import OverviewAchievementRate from "./(statistics)/@achievement-rate/page";
-import OverviewExperts from "./(statistics)/@experts/page";
-import OverviewGoalAchievement from "./(statistics)/@progress-of-goal-achievement/page";
-import OverviewFilterForm from "./@filters/page";
-import { OverviewProvider } from "./_provider/provider";
+import OverviewAchievementInfo from './@infoAchievement/page';
+import OverviewExpertsByGroupInfo from './@infoExpertsByGroup/page';
+import OverviewExpertsInfo from './@infoExperts/page';
+import OverviewParticipantsInfo from './@infoParticipants/page';
+import OverviewAchievementRate from './@statisticsAchievementRate/page';
+import OverviewExperts from './@statisticsExperts/page';
+import OverviewGoalAchievement from './@statisticsProgressOfGoalAchievement/page';
+import OverviewFilterForm from './@filters/page';
+import { OverviewProvider } from './_provider/provider';
 
 const OverviewTemplete = () => {
   return (
