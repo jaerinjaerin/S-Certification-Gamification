@@ -43,7 +43,7 @@ const QuizIncorrectAnswerRate = () => {
         title="Incorrect answer rate by category"
         description="The darker the color, the more incorrect answers there were for that question type."
       />
-      <div className="w-full h-[30rem] px-10">
+      <div className="w-full h-[30rem] px-10 cursor-pointer">
         <ResponsiveHeatMapCanvas
           data={data}
           margin={{ top: 20, right: 120, bottom: 60, left: 120 }}
