@@ -56,7 +56,7 @@ export function UserProgressExperts() {
   return (
     <ChartContainer>
       {loading && <LoaderWithBackground />}
-      <CardCustomHeaderWithoutDesc title="Progess of Experts" />
+      <CardCustomHeaderWithoutDesc title="Progress of Experts" />
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart
           title="Experts distribution"
