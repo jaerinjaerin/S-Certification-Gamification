@@ -77,9 +77,9 @@ class QuizQuestionLogManager {
       return;
     }
 
-    if (this.logs.find((l) => l.questionId === log.questionId)) {
-      return;
-    }
+    // if (this.logs.find((l) => l.questionId === log.questionId)) {
+    //   return;
+    // }
 
     this.logs.push(log);
     this.logQueue.enqueue(log);
@@ -127,7 +127,7 @@ class QuizQuestionLogManager {
         );
 
         if (result.ok) {
-          // console.log("[QuizLogManager] Log successfully sent:", log);
+          console.log("[QuizLogManager] Log successfully sent:", log);
           return;
         }
 
@@ -181,7 +181,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {
