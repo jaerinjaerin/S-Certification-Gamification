@@ -8,7 +8,7 @@ import { useQuizQuestionLogs } from "@/hooks/api/log/useQuizQuestionLogs";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
-import { QuestionOption } from "@prisma/client";
+import { QuestionOption, UserQuizQuestionLog } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -44,7 +44,7 @@ export default function ReviewPage() {
     data: quizQuestionLogs,
     loading: logsLoading,
     error,
-  } = useQuizQuestionLogs(quizSet.id, searchStage);
+  } = useQuizQuestionLogs(quizSet.id, searchStage - 1);
 
   // useEffect(() => {
   //   const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
@@ -65,21 +65,22 @@ export default function ReviewPage() {
   //   }
   // }, [currentQuestionIndex]);
   useEffect(() => {
-    const currentReviewQuizQuestionLogs = quizQuestionLogs ?? [];
+    const reviewQuizQuestionLog: UserQuizQuestionLog | undefined =
+      quizQuestionLogs?.find((log) => log.questionId === question.id);
 
-    if (!currentReviewQuizQuestionLogs) {
-      const correctOptionIds = question.options
-        .filter((option) => option.isCorrect)
-        .map((option) => option.id);
+    const correctOptionIds = question.options
+      .filter((option) => option.isCorrect)
+      .map((option) => option.id);
 
+    if (!reviewQuizQuestionLog) {
       setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
     } else {
       setSelectedOptionIds([
-        ...currentReviewQuizQuestionLogs.correctOptionIds,
-        ...currentReviewQuizQuestionLogs.selectedOptionIds,
+        ...correctOptionIds,
+        ...reviewQuizQuestionLog.selectedOptionIds,
       ]);
     }
-  }, [quizQuestionLogs]);
+  }, [quizQuestionLogs, currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
@@ -102,6 +103,8 @@ export default function ReviewPage() {
       setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
     }
   }, [currentQuizStage, currentStageQuestions]);
+
+  console.log("selectedOptionIds", selectedOptionIds);
 
   return (
     <div className="min-h-svh bg-slate-200/20">
@@ -199,7 +202,7 @@ export default function ReviewPage() {
             })}
       </div>
       <ErrorAlertDialog error={errorMessage} />
-      {loading && <Spinner />}
+      {(loading || logsLoading) && <Spinner />}
     </div>
   );
 }

@@ -210,6 +210,23 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
+    //   where: {
+    //     quizSetId: quizSetId,
+    //     quizStageIndex: Number(quizStageIndex),
+    //     tryNumber: 1,
+    //   },
+    //   orderBy: [
+    //     {
+    //       questionId: "asc", // questionId를 기준으로 정렬
+    //     },
+    //     {
+    //       createdAt: "desc", // 최신 항목을 우선 정렬
+    //     },
+    //   ],
+    //   distinct: ["questionId"], // questionId별로 중복 제거
+    // });
+
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
         quizSetId: quizSetId,
@@ -217,18 +234,30 @@ export async function GET(request: NextRequest) {
       },
       orderBy: [
         {
-          questionId: "asc", // questionId를 기준으로 정렬
+          questionId: "asc",
         },
         {
-          createdAt: "desc", // 최신 항목을 우선 정렬
+          tryNumber: "desc", // 높은 tryNumber 우선
+        },
+        {
+          createdAt: "desc", // 최신 데이터 우선
         },
       ],
-      distinct: ["questionId"], // questionId별로 중복 제거
     });
+
+    // questionId 기준으로 중복 제거 (최초 등장하는 항목 유지)
+    const uniqueLogs = Object.values(
+      userQuizQuestionLogs.reduce((acc, log) => {
+        if (!acc[log.questionId]) {
+          acc[log.questionId] = log;
+        }
+        return acc;
+      }, {} as Record<string, (typeof userQuizQuestionLogs)[number]>)
+    );
 
     return NextResponse.json(
       {
-        items: userQuizQuestionLogs,
+        items: uniqueLogs,
       },
       { status: 200 }
     );

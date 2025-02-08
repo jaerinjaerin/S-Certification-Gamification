@@ -77,9 +77,10 @@ class QuizQuestionLogManager {
       return;
     }
 
-    // if (this.logs.find((l) => l.questionId === log.questionId)) {
-    //   return;
-    // }
+    if (this.logs.find((l) => l.questionId === log.questionId)) {
+      console.log("이미 로그가 있습니다.");
+      return;
+    }
 
     this.logs.push(log);
     this.logQueue.enqueue(log);
