@@ -15,7 +15,7 @@
     "start": "next start -p 3000",
     "start:local": "cp -f .env.loc.production .env && next start -p 3000",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --no-silent",
     "postinstall": "patch-package",
     "test:watch": "jest --watch",
     "prisma:generate": "npx prisma generate --schema=../data-model/prisma/schema.prisma",

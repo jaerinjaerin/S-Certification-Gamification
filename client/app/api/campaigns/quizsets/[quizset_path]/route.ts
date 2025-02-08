@@ -116,6 +116,7 @@ export async function GET(request: NextRequest, props: Props) {
           },
         });
 
+        // TODO: questionIds 순서로 정렬해야 함.
         questions.sort((a: Question, b: Question) => {
           return a.order - b.order;
         });

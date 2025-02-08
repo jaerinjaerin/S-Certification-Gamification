@@ -61,15 +61,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(url, request.url));
   }
 
-  if (session && pathname.includes("/login")) {
-    const url = campaignQuizSetPath
-      ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
-      : `${basePath}/${campaignName}${search}`;
+  // if (session && pathname.includes("/login")) {
+  //   const url = campaignQuizSetPath
+  //     ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
+  //     : `${basePath}/${campaignName}${search}`;
 
-    // console.log("middleware: url:", url);
+  //   // console.log("middleware: url:", url);
 
-    return NextResponse.redirect(new URL(url, request.url));
-  }
+  //   return NextResponse.redirect(new URL(url, request.url));
+  // }
 
   if (session && campaignQuizSetPath && segments.length === 2) {
     const url = `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`;
