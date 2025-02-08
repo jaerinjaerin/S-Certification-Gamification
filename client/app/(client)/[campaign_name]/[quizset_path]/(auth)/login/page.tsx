@@ -1,20 +1,35 @@
 "use client";
 
 import PolicyFooter from "@/components/dialog/privacy-and-term";
+import PolicySheet from "@/components/login/policy-sheet";
+import {
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useLoader from "@/components/ui/loader";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
+import { usePolicy } from "@/providers/policyProvider";
 import { cn, isSheetLanguage } from "@/utils/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from "@radix-ui/react-alert-dialog";
 import { AutoTextSize } from "auto-text-size";
 import { signIn, useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePolicy } from "@/providers/policyProvider";
-import PolicySheet from "@/components/login/policy-sheet";
 import { useState } from "react";
 
-export default function Login() {
+export default function Login({
+  params,
+}: {
+  params: { campaign_name: string; quizset_path: string };
+}) {
   useGAPageView();
   const { status } = useSession();
   const translation = useTranslations();
@@ -36,9 +51,23 @@ export default function Login() {
     ? `${agreementContent} === ${privacyContent}`
     : privacyContent;
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+
   const processSignIn = async () => {
     setLoading(true);
-    await signIn("sumtotal");
+
+    try {
+      console.log("로그인 시도");
+      await signIn("sumtotal", {
+        callbackUrl: `${window.location.origin}/${params.campaign_name}/${params.quizset_path}/map`,
+      });
+    } catch (error) {
+      console.error("로그인 오류:", error);
+      setErrorMessage(translation("unexpected_error"));
+      setLoading(false);
+    }
   };
 
   if (status === "loading") {
@@ -113,6 +142,24 @@ export default function Login() {
         </div>
       </div>
       {loading && renderLoader()}
+      <AlertDialog
+        open={!!errorMessage}
+        onOpenChange={() => setErrorMessage(undefined)}
+      >
+        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle></AlertDialogTitle>
+            <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction asChild>
+              <Button variant={"primary"} onClick={() => {}}>
+                <span>{translation("ok")}</span>
+              </Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
