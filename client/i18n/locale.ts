@@ -1,5 +1,7 @@
 "use server";
+import { defaultLanguages } from "@/core/config/default";
 import { defaultLocale } from "@/i18n/config";
+import * as Sentry from "@sentry/nextjs";
 import { headers } from "next/headers";
 
 // ltn을 사용하는 국가
@@ -105,92 +107,27 @@ async function getBrowserLanguage() {
 
 // /api/languages의 데이터를 리턴하는 함수
 export async function fetchSupportedLanguages() {
-  return [
-    { code: "ar-AE", name: "Language for AR AE" },
-    { code: "az", name: "Language for AZ" },
-    { code: "bg", name: "Language for BG" },
-    { code: "bn", name: "Language for BN" },
-    { code: "bs", name: "Language for BS" },
-    { code: "cs", name: "Language for CS" },
-    { code: "da", name: "Language for DA" },
-    { code: "de-DE", name: "Language for DE DE" },
-    { code: "el", name: "Language for EL" },
-    { code: "en-GB", name: "Language for EN GB" },
-    { code: "en-US", name: "Language for EN US" },
-    { code: "es-LTN", name: "Language for ES 419" },
-    { code: "es-ES", name: "Language for ES ES" },
-    { code: "et", name: "Language for ET" },
-    { code: "fi", name: "Language for FI" },
-    { code: "fr-CA", name: "Language for FR CA" },
-    { code: "fr-FR", name: "Language for FR FR" },
-    { code: "he", name: "Language for HE" },
-    { code: "hr-HR", name: "Language for HR HR" },
-    { code: "hu", name: "Language for HU" },
-    { code: "id", name: "Language for ID" },
-    { code: "it-IT", name: "Language for IT IT" },
-    { code: "ja", name: "Language for JA" },
-    { code: "ka", name: "Language for KA" },
-    { code: "km", name: "Language for KM" },
-    { code: "lo", name: "Language for LO" },
-    { code: "lt", name: "Language for LT" },
-    { code: "mk", name: "Language for MK" },
-    { code: "my", name: "Language for MY" },
-    { code: "nb", name: "Language for NB" },
-    { code: "pl", name: "Language for PL" },
-    { code: "pt-BR", name: "Language for PT BR" },
-    { code: "pt-PT", name: "Language for PT PT" },
-    { code: "ro", name: "Language for RO" },
-    { code: "ru", name: "Language for RU" },
-    { code: "sk-SK", name: "Language for SK SK" },
-    { code: "sl", name: "Language for SL" },
-    { code: "sq", name: "Language for SQ" },
-    { code: "sr-Cyrl", name: "Language for SR CYRL" },
-    { code: "sv", name: "Language for SV" },
-    { code: "th", name: "Language for TH" },
-    { code: "tr", name: "Language for TR" },
-    { code: "uz", name: "Language for UZ" },
-    { code: "vi", name: "Language for VI" },
-    { code: "zh-CN", name: "Language for ZH CN" },
-    { code: "zh-TW", name: "Language for ZH TW" },
-    { code: "zh-HK", name: "Language for ZH HK" },
-    { code: "lv", name: "Language for Latvia lv" },
-    { code: "ko", name: "Language for KR" },
-    { code: "en-US-my", name: "Language for Malaysia" },
-    { code: "en-US-au", name: "Language for Australia" },
-    { code: "fr-FR-cm", name: "Language for Cameroon" },
-    { code: "fr-FR-ci", name: "Language for Ivory Coast" },
-    { code: "fr-FR-dz", name: "Language for Algeria" },
-    { code: "es-LTN-co", name: "Language for Colombia" },
-    { code: "fr-FR-fr", name: "Language for France" },
-    { code: "es-LTN-mx", name: "Language for Mexico" },
-    { code: "fr-FR-ma", name: "Language for Morocco" },
-    { code: "es-LTN-pr", name: "Language for Peru" },
-    { code: "fr-FR-sn", name: "Language for Senegal" },
-    { code: "fr-FR-ch", name: "Language for Switzerland" },
-    { code: "fr-FR-TN", name: "Language for Tunisia" },
-    { code: "uk", name: "Ukraine" },
-    { code: "ar-TN", name: "Tunisia, Arabic" },
-  ].map((code) => code.code);
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
+      {
+        cache: "no-store",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error. status: ${response.status}`);
+    }
 
-  // try {
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
-  //     {
-  //       cache: "no-cache",
-  //     }
-  //   );
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error. status: ${response.status}`);
-  //   }
+    const result = await response.json();
+    if (!result) {
+      // return defaultLanguages.map((code) => code.code);
+      throw new Error("No data returned from /api/languages");
+    }
 
-  //   const result = await response.json();
-  //   if (!result) {
-  //     return defaultLanguages.map((code) => code.code);
-  //   }
-
-  //   return result.items.map((item) => item.code);
-  // } catch (error) {
-  //   console.error("Failed to fetch supported languages:", error);
-  //   Sentry.captureException(error);
-  // }
+    return result.items.map((item) => item.code);
+  } catch (error) {
+    console.error("Failed to fetch supported languages:", error);
+    Sentry.captureException(error);
+    return defaultLanguages.map((code) => code.code);
+  }
 }
