@@ -54,6 +54,7 @@ export interface ApiResponse<T> {
   item: T | null;
   success: boolean;
   message?: string;
+  status?: number;
 }
 
 export interface ApiListResponse<T> {
