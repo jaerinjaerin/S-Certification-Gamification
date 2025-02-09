@@ -1,7 +1,8 @@
 // src/app/quiz/[campaign_name]/[quizset_path]/layout.tsx
 import { auth } from "@/auth";
 import { QuizProvider } from "@/providers/quizProvider";
-import { fetchQuizLog, fetchQuizSet } from "@/services/quizService";
+import { fetchQuizSet } from "@/services/api/fetchQuizSet";
+import { fetchQuizLog } from "@/services/quizService";
 import { fetchUserInfo } from "@/services/userService";
 import { hasSavedDetails } from "@/utils/userHelper";
 import { AuthType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
@@ -68,6 +69,7 @@ async function handleQuizSetup(
   try {
     // 1. Fetch quiz set
     const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
+    console.log("fetchQuizSet response", quizSetResponse);
     const quizSet = quizSetResponse.item;
 
     if (!quizSet) {
