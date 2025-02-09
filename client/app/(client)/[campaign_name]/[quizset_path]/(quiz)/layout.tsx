@@ -69,7 +69,7 @@ async function handleQuizSetup(
   try {
     // 1. Fetch quiz set
     const quizSetResponse = await fetchQuizSet(params.quizset_path, userId);
-    console.log("fetchQuizSet response", quizSetResponse);
+    // console.log("fetchQuizSet response", quizSetResponse);
     const quizSet = quizSetResponse.item;
 
     if (!quizSet) {

@@ -82,6 +82,14 @@ export default function ReviewPage() {
     }
   }, [quizQuestionLogs, currentQuestionIndex]);
 
+  useEffect(() => {
+    const correctOptionIds = question.options
+      .filter((option) => option.isCorrect)
+      .map((option) => option.id);
+
+    setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  }, [error, currentStageQuestions]);
+
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
 
@@ -103,8 +111,6 @@ export default function ReviewPage() {
       setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
     }
   }, [currentQuizStage, currentStageQuestions]);
-
-  console.log("selectedOptionIds", selectedOptionIds);
 
   return (
     <div className="min-h-svh bg-slate-200/20">
