@@ -57,7 +57,9 @@ export async function POST(request: Request) {
             isTokenRefreshed = true;
             continue; // Retry the request with the new token
           }
-          throw new Error(`Failed to fetch activities: ${response.statusText}`);
+          throw new Error(
+            `Failed to register activity: ${response.statusText}, ${session.user.id}, ${accessToken}`
+          );
         }
 
         const data = await response.json();

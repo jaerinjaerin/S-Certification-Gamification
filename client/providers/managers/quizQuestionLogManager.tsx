@@ -78,6 +78,7 @@ class QuizQuestionLogManager {
     }
 
     if (this.logs.find((l) => l.questionId === log.questionId)) {
+      console.log("이미 로그가 있습니다.");
       return;
     }
 
@@ -127,7 +128,7 @@ class QuizQuestionLogManager {
         );
 
         if (result.ok) {
-          // console.log("[QuizLogManager] Log successfully sent:", log);
+          console.log("[QuizLogManager] Log successfully sent:", log);
           return;
         }
 
@@ -181,7 +182,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {

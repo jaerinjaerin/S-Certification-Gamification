@@ -4,12 +4,7 @@ import { QuizProvider } from "@/providers/quizProvider";
 import { fetchQuizLog, fetchQuizSet } from "@/services/quizService";
 import { fetchUserInfo } from "@/services/userService";
 import { hasSavedDetails } from "@/utils/userHelper";
-import {
-  AuthType,
-  UserQuizLog,
-  UserQuizQuestionLog,
-  UserQuizStageLog,
-} from "@prisma/client";
+import { AuthType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
@@ -45,7 +40,7 @@ export default async function QuizLayout({
         // language={quizSetResponse.item.language}
         quizLog={result.quizLog!}
         quizStageLogs={result.quizStageLogs!}
-        quizQuestionLogs={result.quizQuestionLogs!}
+        // quizQuestionLogs={result.quizQuestionLogs!}
         userId={userId}
         authType={session?.user.authType || AuthType.GUEST}
         quizSetPath={params.quizset_path}
@@ -61,7 +56,7 @@ type RedirectResult = {
   quizSet?: any; // 퀴즈 세트 정보
   quizLog?: UserQuizLog | null; // 퀴즈 로그
   quizStageLogs?: UserQuizStageLog[] | null; // 퀴즈 스테이지 로그
-  quizQuestionLogs?: UserQuizQuestionLog[] | null; // 퀴즈 질문 로그
+  // quizQuestionLogs?: UserQuizQuestionLog[] | null; // 퀴즈 질문 로그
   user?: any; // 사용자 정보
 };
 
@@ -84,8 +79,8 @@ async function handleQuizSetup(
     const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
     const quizStageLogs: UserQuizStageLog[] | null =
       quizLogResponse.item?.quizStageLogs || null;
-    const quizQuestionLogs: UserQuizQuestionLog[] | null =
-      quizLogResponse.item?.quizQuestionLogs || null;
+    // const quizQuestionLogs: UserQuizQuestionLog[] | null =
+    //   quizLogResponse.item?.quizQuestionLogs || null;
 
     // 3. Check guest user details
     if (session?.user.authType === "GUEST") {
@@ -107,7 +102,7 @@ async function handleQuizSetup(
       quizSet,
       quizLog,
       quizStageLogs,
-      quizQuestionLogs,
+      // quizQuestionLogs,
     };
   } catch (error) {
     Sentry.captureException(error, (scope) => {
