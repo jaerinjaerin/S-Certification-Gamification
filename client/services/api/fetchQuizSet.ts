@@ -26,7 +26,7 @@ export async function fetchQuizSet(
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${quizsetPath}?user_id=${userId}`;
     const response = await apiClient.get<ApiResponse<QuizSetEx>>(url);
 
-    console.log("fetchQuizSet response", response);
+    // console.log("fetchQuizSet response", response);
 
     if (!response.item) {
       return {
