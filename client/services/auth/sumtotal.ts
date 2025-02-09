@@ -448,7 +448,7 @@ export async function fetchOrganizationDetails(
     };
   }
 
-  console.info("fetchOrganizationDetails profile:", profile);
+  console.log("fetchOrganizationDetails profile:", profile);
 
   // const orgIds: string[] =
   //   profile.personOrganization != null
@@ -494,6 +494,7 @@ export async function fetchOrganizationDetails(
         scope.setTag("orgId", orgId);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
@@ -534,8 +535,9 @@ export async function fetchOrganizationDetails(
         scope.setTag("parentName", parentName);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
-        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}:`,
+        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
         error
       );
       return null;
@@ -553,7 +555,7 @@ export async function fetchOrganizationDetails(
       await Promise.all(orgIds.map(fetchOrganizationData))
     ).filter((result) => result != null);
 
-    console.info(
+    console.log(
       "fetchOrganizationDetails results:",
       JSON.stringify(results, null, 2)
     );
@@ -563,7 +565,7 @@ export async function fetchOrganizationDetails(
       profile.personOrganization
     );
 
-    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
+    console.log("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -590,8 +592,8 @@ export async function fetchOrganizationDetails(
       }
     });
 
-    console.info("fetchOrganizationDetails jobId:", jobId);
-    console.info(
+    console.log("fetchOrganizationDetails jobId:", jobId);
+    console.log(
       "fetchOrganizationDetails parentOrganizationNames:",
       parentOrganizationNames
     );
@@ -610,10 +612,12 @@ export async function fetchOrganizationDetails(
           channelSegmentId = text8;
         }
       } else {
+        console.info("profile:", profile, "accessToken:", accessToken);
         console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
+    console.info("profile:", profile, "accessToken:", accessToken);
     console.error("Error processing organization details:", error);
   }
 
