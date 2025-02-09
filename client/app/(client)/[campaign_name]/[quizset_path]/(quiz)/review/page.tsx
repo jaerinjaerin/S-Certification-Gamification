@@ -43,7 +43,7 @@ export default function ReviewPage() {
   const {
     data: quizQuestionLogs,
     loading: logsLoading,
-    error,
+    // error,
   } = useQuizQuestionLogs(quizSet.id, searchStage - 1);
 
   // useEffect(() => {
