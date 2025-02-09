@@ -448,7 +448,7 @@ export async function fetchOrganizationDetails(
     };
   }
 
-  console.log("fetchOrganizationDetails profile:", profile);
+  console.info("fetchOrganizationDetails profile:", profile);
 
   // const orgIds: string[] =
   //   profile.personOrganization != null
@@ -471,7 +471,6 @@ export async function fetchOrganizationDetails(
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
         {
-          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
@@ -550,14 +549,21 @@ export async function fetchOrganizationDetails(
 
   try {
     // Fetch organization data
-    const results = await Promise.all(orgIds.map(fetchOrganizationData));
-    console.log("fetchOrganizationDetails results:", results);
+    const results = (
+      await Promise.all(orgIds.map(fetchOrganizationData))
+    ).filter((result) => result != null);
+
+    console.info(
+      "fetchOrganizationDetails results:",
+      JSON.stringify(results, null, 2)
+    );
+
     const filteredResults = filterResultsByLatestDate(
       results,
       profile.personOrganization
     );
 
-    console.log("fetchOrganizationDetails filteredResults:", filteredResults);
+    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -584,8 +590,8 @@ export async function fetchOrganizationDetails(
       }
     });
 
-    console.log("fetchOrganizationDetails jobId:", jobId);
-    console.log(
+    console.info("fetchOrganizationDetails jobId:", jobId);
+    console.info(
       "fetchOrganizationDetails parentOrganizationNames:",
       parentOrganizationNames
     );
@@ -611,9 +617,9 @@ export async function fetchOrganizationDetails(
     console.error("Error processing organization details:", error);
   }
 
-  console.log("fetchOrganizationDetails jobId:", jobId);
-  console.log("fetchOrganizationDetails storeId:", storeId);
-  console.log("fetchOrganizationDetails channelId:", channelId);
+  console.info("fetchOrganizationDetails jobId:", jobId);
+  console.info("fetchOrganizationDetails storeId:", storeId);
+  console.info("fetchOrganizationDetails channelId:", channelId);
 
   // Return the collected information
   return {
