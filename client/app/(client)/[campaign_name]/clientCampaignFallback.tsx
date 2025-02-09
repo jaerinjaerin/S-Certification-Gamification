@@ -15,7 +15,7 @@ export default function ClientCampaignFallback({
 }) {
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [error, setError] = useState<string | null>(
-    "서버 오류가 발생했습니다. 다시 시도해주세요."
+    "The network is unstable. Please try again later."
   );
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -27,6 +27,7 @@ export default function ClientCampaignFallback({
     try {
       const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${campaignName}`;
       const response = await fetch(url, { method: "GET", cache: "no-cache" });
+      console.log("ClientCampaignFallback fetchCampaign response", response);
 
       if (response.status === 404) {
         console.log("ClientCampaignFallback fetchCampaign 404");

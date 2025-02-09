@@ -26,6 +26,8 @@ export async function fetchCampaign(
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${campaignName}`;
     const response = await fetch(url, { method: "GET", cache: "no-store" });
 
+    console.log(`🔗 API 요청: ${response.status}`);
+
     if (response.status === 404) {
       console.log(`⚠️ 데이터 없음: ${campaignName}`);
       return {
@@ -47,11 +49,12 @@ export async function fetchCampaign(
 
     const data = (await response.json()) as ApiResponse<Campaign>;
 
-    if (!data.success || !data.item) {
+    if (!data.item) {
       return {
         item: null,
         success: false,
         message: "캠페인 데이터를 찾을 수 없습니다.",
+        status: response.status,
       };
     }
 
