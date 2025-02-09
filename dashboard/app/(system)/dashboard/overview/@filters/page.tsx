@@ -9,7 +9,7 @@ const OverviewFilterForm = () => {
     dispatch({ type: 'SET_FIELD_VALUES', payload: formData });
   };
 
-  return <Filters onSubmit={onSubmit} hasDownloadButton={false} />;
+  return <Filters onSubmit={onSubmit} hasDownloadButton={true} />;
 };
 
 export default OverviewFilterForm;

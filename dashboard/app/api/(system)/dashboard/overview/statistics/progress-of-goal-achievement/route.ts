@@ -75,7 +75,6 @@ export async function GET(request: NextRequest) {
           0
         )
       : 0;
-    console.log('🚀 ~ GET ~ goalTotalScore:', goalTotalScore);
 
     const today = new Date();
     const startDate = startOfWeek(campaign.startedAt); // 캠페인 시작 주
@@ -163,7 +162,6 @@ export async function GET(request: NextRequest) {
       const expertTotal = Object.values(
         foundJobElement.job as Record<string, number>
       ).reduce((sum, value) => sum + value, 0);
-      console.log('🚀 ~ GET ~ expertTotal:', expertTotal);
       cumulativeRate =
         expertTotal > 0 ? (expertTotal / goalTotalScore) * 100 : 0;
     }
