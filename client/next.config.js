@@ -76,7 +76,7 @@ const nextConfig = {
   },
 };
 
-if (process.env.ENV === "production") {
+if (process.env.ENV === "production" || process.env.ENV === "staging") {
   nextConfig.compiler = {
     removeConsole: {
       exclude: ["error", "warn", "info"],
