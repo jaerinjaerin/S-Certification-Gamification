@@ -86,9 +86,8 @@ export default function ReviewPage() {
     const correctOptionIds = question.options
       .filter((option) => option.isCorrect)
       .map((option) => option.id);
-
     setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
-  }, [error, currentStageQuestions]);
+  }, [error, currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
