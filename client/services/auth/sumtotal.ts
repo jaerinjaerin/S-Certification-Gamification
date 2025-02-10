@@ -448,7 +448,7 @@ export async function fetchOrganizationDetails(
     };
   }
 
-  console.info("fetchOrganizationDetails profile:", profile);
+  console.log("fetchOrganizationDetails profile:", profile);
 
   // const orgIds: string[] =
   //   profile.personOrganization != null
@@ -592,8 +592,8 @@ export async function fetchOrganizationDetails(
       }
     });
 
-    console.info("fetchOrganizationDetails jobId:", jobId);
-    console.info(
+    console.log("fetchOrganizationDetails jobId:", jobId);
+    console.log(
       "fetchOrganizationDetails parentOrganizationNames:",
       parentOrganizationNames
     );

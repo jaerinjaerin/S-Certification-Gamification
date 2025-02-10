@@ -14,7 +14,7 @@ export async function fetchSupportedLanguageCodes(): Promise<string[]> {
     lastFetchLangTime &&
     now - lastFetchLangTime < CACHE_DURATION
   ) {
-    console.info(`✅ 캐시된 (언어셋) 데이터 반환`);
+    // console.info(`✅ 캐시된 (언어셋) 데이터 반환`);
     return cachedLanguages;
   }
 
@@ -39,7 +39,7 @@ export async function fetchSupportedLanguageCodes(): Promise<string[]> {
     cachedLanguages = result.items.map((item) => item.code);
     lastFetchLangTime = now;
 
-    console.info(`🔄 캐시 (언어셋) 업데이트`);
+    // console.info(`🔄 캐시 (언어셋) 업데이트`);
 
     return cachedLanguages!;
   } catch (error) {

@@ -18,7 +18,7 @@ export async function fetchQuizSet(
     lastFetchQuizSetTime[cacheKey] &&
     now - lastFetchQuizSetTime[cacheKey] < CACHE_DURATION
   ) {
-    console.info(`✅ 캐시된 (퀴즈셋) 데이터 반환: ${cacheKey}`);
+    // console.info(`✅ 캐시된 (퀴즈셋) 데이터 반환: ${cacheKey}`);
     return cachedQuizSets[cacheKey];
   }
 
@@ -51,7 +51,7 @@ export async function fetchQuizSet(
     cachedQuizSets[cacheKey] = data;
     lastFetchQuizSetTime[cacheKey] = now;
 
-    console.info(`🔄 캐시 (퀴즈셋) 업데이트: ${cacheKey}`);
+    // console.info(`🔄 캐시 (퀴즈셋) 업데이트: ${cacheKey}`);
 
     return {
       item: data.item,

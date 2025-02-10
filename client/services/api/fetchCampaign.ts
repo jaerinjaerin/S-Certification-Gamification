@@ -17,7 +17,7 @@ export async function fetchCampaign(
     lastFetchCampaignTime[campaignName] &&
     now - lastFetchCampaignTime[campaignName] < CACHE_DURATION
   ) {
-    console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
+    // console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
     return cachedCampaigns[campaignName];
   }
 
@@ -52,7 +52,7 @@ export async function fetchCampaign(
     cachedCampaigns[campaignName] = data;
     lastFetchCampaignTime[campaignName] = now;
 
-    console.info(`🔄 캐시 (캠페인) 업데이트: ${campaignName}`);
+    // console.info(`🔄 캐시 (캠페인) 업데이트: ${campaignName}`);
 
     return {
       item: data.item,

@@ -42,7 +42,11 @@ export default async function QuizLayout({
 
   // 🚀 500번대 에러면 클라이언트에서 재시도 가능하도록 Fallback을 제공
   if (quizResponse.status != null && quizResponse.status >= 500) {
-    console.error("Server error while fetching quiz set", params.quizset_path);
+    console.error(
+      "Server error while fetching quiz set",
+      params.quizset_path,
+      quizResponse
+    );
     Sentry.captureMessage(
       `Server error while fetching quiz set: ${params.campaign_name}`
     );
@@ -67,7 +71,11 @@ export default async function QuizLayout({
   }
 
   if (quizLogResponse.status != null && quizLogResponse.status >= 500) {
-    console.error("Server error while fetching quiz log", params.campaign_name);
+    console.error(
+      "Server error while fetching quiz log",
+      params.campaign_name,
+      quizLogResponse
+    );
     Sentry.captureMessage(
       `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
     );

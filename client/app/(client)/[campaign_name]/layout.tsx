@@ -17,14 +17,18 @@ export default async function CampaignLayout({
 
   // 🚀 404 에러면 바로 not-found 페이지로 이동
   if (response.status === 404) {
-    console.error("Campaign not found", params.campaign_name);
+    console.error("Campaign not found", params.campaign_name, response);
     Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
     redirect("/error/not-found");
   }
 
   // 🚀 500번대 에러면 클라이언트에서 재시도 가능하도록 Fallback을 제공
   if (response.status != null && response.status >= 500) {
-    console.error("Server error while fetching campaign", params.campaign_name);
+    console.error(
+      "Server error while fetching campaign",
+      params.campaign_name,
+      response
+    );
     Sentry.captureMessage(`Server error: ${params.campaign_name}`);
     return <RefreshButton />;
   }
