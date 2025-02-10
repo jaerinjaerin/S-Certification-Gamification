@@ -13,13 +13,13 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    // ✅ 필터링된 `jobId` 가져오기
+    // 필터링된 `jobId` 가져오기
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { code: jobId } : {},
       select: { id: true, code: true },
     });
 
-    // ✅ 필터링된 `questionId` 가져오기
+    // 필터링된 `questionId` 가져오기
     const questions: Question[] = await prisma.$queryRaw`
       SELECT q.*
       FROM "Question" q
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     const where = {
       ...restWhere,
-      category: { not: null },
+      // category: { not: null },
       questionId: { in: questions.map((q) => q.id) },
       jobId: { in: jobGroup.map((job) => job.id) },
       ...(storeId
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         : {}),
     };
 
-    // ✅ `correct` 및 `incorrect` 개수 조회 (필터 적용됨)
+    // `correct` 및 `incorrect` 개수 조회 (필터 적용됨)
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
       by: ['category', 'questionId', 'authType', 'jobId'],
       where: { ...where, isCorrect: true },
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
       _count: { isCorrect: true },
     });
 
-    // ✅ 히트맵 데이터 그룹화
+    // 히트맵 데이터 그룹화
     const groupedMap = new Map();
 
     corrects.forEach(({ category, questionId, authType, jobId, _count }) => {
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
           correct: 0,
           incorrect: 0,
           rate: 0,
-          questions: new Map(), // ✅ `questions`을 `Map`으로 변경하여 `questionId`별로 저장
+          questions: new Map(), // `questions`을 `Map`으로 변경하여 `questionId`별로 저장
         });
       }
 
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      // ✅ 각 `questionId`에 대해 `correct` 값을 누적 저장
+      // 각 `questionId`에 대해 `correct` 값을 누적 저장
       categoryItem.questions.get(questionId).correct += _count.isCorrect;
     });
 
@@ -95,7 +95,14 @@ export async function GET(request: NextRequest) {
       const authName = authType === AuthType.SUMTOTAL ? 'plus' : 'none';
       const mapName = `${category}:${authName}-${jobName}`;
 
-      if (!groupedMap.has(mapName)) return;
+      if (!groupedMap.has(mapName)) {
+        groupedMap.set(mapName, {
+          correct: 0,
+          incorrect: 0,
+          rate: 0,
+          questions: new Map(), // `questions`을 `Map`으로 변경하여 `questionId`별로 저장
+        });
+      }
 
       const categoryItem = groupedMap.get(mapName);
       categoryItem.incorrect += _count.isCorrect;
@@ -109,7 +116,7 @@ export async function GET(request: NextRequest) {
         //
       }
 
-      // ✅ 각 `questionId`에 대해 `incorrect` 값을 누적 저장
+      // 각 `questionId`에 대해 `incorrect` 값을 누적 저장
       categoryItem.questions.get(questionId).incorrect += _count.isCorrect;
     });
 
@@ -119,7 +126,7 @@ export async function GET(request: NextRequest) {
       data.rate = total === 0 ? 0 : (data.incorrect / total) * 100;
     });
 
-    // ✅ `errorRate` 계산 추가
+    // `errorRate` 계산 추가
     groupedMap.forEach((data) => {
       data.questions.forEach((values: any) => {
         const total = values.correct + values.incorrect;
@@ -127,7 +134,7 @@ export async function GET(request: NextRequest) {
       });
     });
 
-    // ✅ 1. `questionMap` 생성 (기본값 포함)
+    // 1. `questionMap` 생성 (기본값 포함)
     const questionMap = new Map(
       questions.map((q) => [
         q.id,
@@ -141,12 +148,12 @@ export async function GET(request: NextRequest) {
       'none-fsm': 'Non S+ FSM',
       'none-ff': 'Non S+ FF',
     };
-    // ✅ 히트맵 및 개별 `question` 정보 포함 결과 생성
+    // 히트맵 및 개별 `question` 정보 포함 결과 생성
     const result = Array.from(groupedMap, ([name, data]) => {
       const [category, type] = name.split(':');
       const userType = jobtypes[type as keyof typeof jobtypes];
 
-      // ✅ `questions`에 대해 `questionMap`을 사용하여 매핑
+      // `questions`에 대해 `questionMap`을 사용하여 매핑
       const formattedQuestions = Array.from(data.questions, ([id, values]) => {
         const question = questionMap.get(id);
         if (question) {
@@ -164,10 +171,10 @@ export async function GET(request: NextRequest) {
         id: category,
         data: [
           {
-            x: userType, // ✅ `userType`을 `x` 값으로 사용
-            y: data.rate, // ✅ `userType`별 rate 값
+            x: userType, // `userType`을 `x` 값으로 사용
+            y: data.rate, // `userType`별 rate 값
             meta: {
-              questions: formattedQuestions, // ✅ `{ id, errorRate, ...question }` 형태로 저장
+              questions: formattedQuestions, // `{ id, errorRate, ...question }` 형태로 저장
             },
           },
         ],

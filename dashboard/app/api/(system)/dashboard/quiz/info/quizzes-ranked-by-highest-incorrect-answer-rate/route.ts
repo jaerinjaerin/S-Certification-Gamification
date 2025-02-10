@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
 
     // 모든 isCorrect가 있는 데이터 가져오기
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['questionId'], // ✅ 그룹화 기준 필드는 questionId만 포함
+      by: ['questionId'], // 그룹화 기준 필드는 questionId만 포함
       where: { ...where, isCorrect: true },
       _count: {
         isCorrect: true,
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
     });
 
     const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['questionId'], // ✅ 그룹화 기준 필드는 questionId만 포함
+      by: ['questionId'], // 그룹화 기준 필드는 questionId만 포함
       where: { ...where, isCorrect: false },
       _count: {
         isCorrect: true,
@@ -73,8 +73,14 @@ export async function GET(request: NextRequest) {
     });
 
     incorrects.forEach(({ questionId, _count }) => {
-      if (!groupedMap.has(questionId)) return;
-
+      if (!groupedMap.has(questionId)) {
+        groupedMap.set(questionId, {
+          correct: 0,
+          incorrect: 0,
+          errorRate: 0,
+        });
+      }
+      //
       const categoryItem = groupedMap.get(questionId);
       categoryItem.incorrect += _count.isCorrect;
     });

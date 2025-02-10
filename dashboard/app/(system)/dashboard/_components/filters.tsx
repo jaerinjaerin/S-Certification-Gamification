@@ -55,10 +55,10 @@ const firstElement = { value: 'all', label: 'All' };
 
 // 렌더 데이터 시작
 const Filters = ({
-  hasDownloadButton = false,
+  onDownload,
   onSubmit,
 }: {
-  hasDownloadButton?: boolean;
+  onDownload?: (data: FieldValues) => void;
   onSubmit: (data: FieldValues) => void;
 }) => {
   const form = useForm();
@@ -219,11 +219,6 @@ const Filters = ({
     onSubmit(form.getValues());
   };
 
-  const onDownload = () => {
-    // Simulate download
-    console.log('Downloading report...', formValues.campaign);
-  };
-
   if (!filterData)
     return (
       <FiltersContainer>
@@ -258,8 +253,14 @@ const Filters = ({
               />
             )}
           />
-          {hasDownloadButton && (
-            <Button variant="outline" type="button" onClick={onDownload}>
+          {onDownload && (
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                onDownload(form.getValues());
+              }}
+            >
               <div className="flex items-center space-x-2 text-zinc-950">
                 <Download />
                 <span>Download Report</span>

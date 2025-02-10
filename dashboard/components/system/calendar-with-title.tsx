@@ -79,7 +79,6 @@ export function CalendarForm({
           <Calendar
             mode="range" // 날짜 범위 선택 모드
             numberOfMonths={2}
-            defaultMonth={field.value.from}
             selected={field.value}
             onSelect={field.onChange}
             // disabled={(date) => {

@@ -2,7 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '@/app/(system)/dashboard/_components/charts/chart-header';
 import IncorrectTable, { columns } from '../../_components/incorrect-table';
@@ -23,11 +28,17 @@ const DetailIncorrectTable = ({
   const { setContent } = useModal();
   const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
     columns, // 테이블 컬럼 정의
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(), // 정렬 모델 활성화
+    onSortingChange: setSorting, // 정렬 상태 관리
+    state: {
+      sorting,
+    },
   });
 
   useEffect(() => {

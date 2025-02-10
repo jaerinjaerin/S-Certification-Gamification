@@ -14,6 +14,8 @@ import {
   Table as TableProps,
 } from '@tanstack/react-table';
 import { formatSnakeToTitleCase } from '@/lib/text';
+import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
   {
@@ -49,11 +51,13 @@ export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
   },
   {
     accessorKey: 'errorRate',
+    id: 'errorRate',
     header: 'Error Rate',
     cell: ({ getValue }) => {
       const value = getValue<number>();
-      return `${value.toLocaleString()}%`;
+      return `${value.toFixed(2)}%`; // Error Rate를 소수점 두 자리까지 표시
     },
+    sortingFn: 'basic',
   },
 ];
 
@@ -77,18 +81,40 @@ const IncorrectTable = ({
               return (
                 <TableHead
                   key={header.id}
-                  className="text-nowrap font-medium text-center text-size-14px text-zinc-500"
-                  onClick={header.column.getToggleSortingHandler()} // 헤더 클릭 시 정렬 변경
+                  className={cn(
+                    'text-nowrap font-medium text-center text-size-14px text-zinc-500',
+                    header.id === 'errorRate' && 'cursor-pointer'
+                  )}
+                  onClick={
+                    header.id === 'errorRate'
+                      ? header.column.getToggleSortingHandler()
+                      : undefined
+                  }
                   style={{
                     width: header.id === 'question' ? '50%' : 'auto',
                   }}
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  <TableCell>
+                    <div className="flex items-center">
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
+                      {header.id === 'errorRate' && (
+                        <>
+                          {!header.column.getIsSorted() && (
+                            <ChevronsUpDown className="ml-2 h-4 w-4" />
+                          )}
+                          {header.column.getIsSorted() === 'asc' && (
+                            <ArrowUp className="ml-2 h-4 w-4" />
+                          )}
+                          {header.column.getIsSorted() === 'desc' && (
+                            <ArrowDown className="ml-2 h-4 w-4" />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
                 </TableHead>
               );
             })}

@@ -5,9 +5,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createOverviewExcelBlob, OverviewExcelDataProps } from '@/lib/excel';
 import { removeDuplicateUsers } from '@/lib/data';
 import { AuthType } from '@prisma/client';
+import { querySearchParams } from '../../_lib/query';
+import { formatDate } from 'date-fns';
 
 export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = request.nextUrl;
+    const { where: condition, period } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
+
     await prisma.$connect();
 
     const regions = await prisma.region.findMany({
@@ -18,7 +24,11 @@ export async function GET(request: NextRequest) {
     const jobs = await prisma.job.findMany({});
     const goals = await prisma.domainGoal.findMany({});
     let badges = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { quizStageIndex: 2 },
+      where: {
+        quizStageIndex: 2,
+        ...(where?.campaignId ? { campaignId: where.campaignId } : {}),
+        ...(where?.createdAt ? { createdAt: where.createdAt } : {}),
+      },
     });
     // 유저 중복 제거
     badges = removeDuplicateUsers(badges);
@@ -145,12 +155,8 @@ export async function GET(request: NextRequest) {
     // 데이터 생성 끝
     //
 
-    // return NextResponse.json(expertUsers);
-
     const blob = await createOverviewExcelBlob(expertUsers);
-
-    const today = new Date().toLocaleDateString();
-    const filename = `certification_status_${today}.xlsx`;
+    const filename = `certification_status_${where?.campaignId || 'all'}_${formatDate(period.from, 'yyyy-MM-dd')}_to_${formatDate(period.to, 'yyyy-MM-dd')}.xlsx`;
 
     return new Response(blob, {
       status: 200,

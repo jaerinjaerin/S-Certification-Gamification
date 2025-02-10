@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 
 import {
   Bar,
+  Brush,
   CartesianGrid,
   ComposedChart,
   Legend,
@@ -77,6 +78,17 @@ export function UserProgressExperts() {
             content={<CustomTooltip />}
           />
           <Legend iconSize={8} />
+
+          {data.length > 6 && (
+            <Brush
+              dataKey="date"
+              height={20}
+              stroke={chartColorPrimary}
+              startIndex={0}
+              endIndex={5}
+            />
+          )}
+
           {/* Job 데이터의 모든 Bar를 생성 */}
           <Bar
             name="Expert"

@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Bar,
   BarChart,
@@ -43,6 +42,7 @@ function OverviewAchievementRate() {
         state.fieldValues,
         'overview/statistics/achievement',
         (data) => {
+          console.log('🚀 ~ useEffect ~ data.result:', data.result);
           setData(data.result);
           setLoading(false);
         },
@@ -90,13 +90,17 @@ function OverviewAchievementRate() {
             content={<CustomTooltip />}
           />
           <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
-          <Brush
-            dataKey="name"
-            height={20}
-            stroke={chartColorPrimary}
-            startIndex={0}
-            endIndex={9}
-          />
+
+          {data.length > 10 && (
+            <Brush
+              dataKey="name"
+              height={20}
+              stroke={chartColorPrimary}
+              startIndex={0}
+              endIndex={9}
+            />
+          )}
+
           <Bar
             dataKey="goal"
             fill={chartColorPrimary}

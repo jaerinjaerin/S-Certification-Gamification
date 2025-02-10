@@ -2,7 +2,12 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../_lib/fetch';
 import ChartContainer from '../../_components/charts/chart-container';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
 import { useQuizContext } from '../_provider/provider';
@@ -14,11 +19,17 @@ const QuizQuizzesRanked = () => {
   const { state } = useQuizContext();
   const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
     columns, // 테이블 컬럼 정의
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(), // 정렬 모델 활성화
+    onSortingChange: setSorting, // 정렬 상태 관리
+    state: {
+      sorting,
+    },
   });
 
   useEffect(() => {
