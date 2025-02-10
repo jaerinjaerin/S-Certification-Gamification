@@ -95,10 +95,10 @@ export default function QuizPage() {
     );
   }
 
-  // const resetSelectedOptionIds = () => {
-  //   selectedOptionIdsRef.current = [];
-  //   console.log("Selected options reset:", selectedOptionIdsRef.current);
-  // };
+  const resetSelectedOptionIds = () => {
+    selectedOptionIdsRef.current = [];
+    console.log("Selected options reset:", selectedOptionIdsRef.current);
+  };
 
   const handleConfirmAnswer = async (question: any, optionId: string) => {
     const isSelected = selectedOptionIdsRef.current.includes(optionId);
@@ -142,11 +142,10 @@ export default function QuizPage() {
   };
 
   const next = async () => {
-    console.log("next");
     setIsCorrectAnswer(false);
 
     if (canNextQuestion()) {
-      // resetSelectedOptionIds();
+      resetSelectedOptionIds();
       nextQuestion();
       window.scrollTo({ top: 0, behavior: "smooth" });
       resetCountdown();
@@ -156,7 +155,7 @@ export default function QuizPage() {
     setLoading(true);
     console.log("endStage", lifeCount);
     await endStage(lifeCount); // 남은 하트수
-    // resetSelectedOptionIds();
+    resetSelectedOptionIds();
 
     // nextStage();
     routeToPage("complete");

@@ -35,7 +35,11 @@ export interface QuestionEx extends Question {
 export interface QuizLogResponse {
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
-  quizQuestionLogs: UserQuizQuestionLog[] | null;
+  // quizQuestionLogs: UserQuizQuestionLog[] | null;
+}
+
+export interface QuizQuestionLogsResponse {
+  items: UserQuizQuestionLog[] | null;
 }
 
 export interface DomainsResponse {

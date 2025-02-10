@@ -155,6 +155,7 @@ async function main() {
     { domainCode: "NAT_3701", activityIds: [252716, 252717] },
     { domainCode: "NAT_2710", activityIds: [252722, 252723] },
     { domainCode: "NAT_2834", activityIds: [252727, 252729] },
+    { domainCode: "NAT_2392", activityIds: [255056, 255057] },
   ];
 
   const createSeeds = async () => {
@@ -297,12 +298,7 @@ async function main() {
         name: "S25",
       },
     });
-    const folderPath = path.join(
-      process.cwd(),
-      "data",
-      "questions",
-      "20250131"
-    );
+    const folderPath = path.join(process.cwd(), "data", "questions", "new");
     const files = fs.readdirSync(folderPath);
 
     //////////// HQ 베이스 퀴즈 셋 가져오기
@@ -469,12 +465,39 @@ async function main() {
           console.warn(
             `Original question not found for file: ${fileName}, ${jsonQuestion.originQuestionIndex}`
           );
-          originalQuestionId = questionId;
+
+          // 해당 국가만 사용하는 문제가 등록되어 있는지 확인
+          const item = await prisma.question.findFirst({
+            where: {
+              // originalQuestionId: jsonQuestion.originQuestionIndex,
+              originalIndex: jsonQuestion.originQuestionIndex,
+              languageId: language.id,
+            },
+          });
+
+          if (item) {
+            originalQuestionId = item.id;
+            hqNatQuestions.push(item);
+          } else {
+            originalQuestionId = questionId;
+          }
+
+          console.log(
+            "해당 국가만 사용하는 문제가 등록되어 있는지 확인 item",
+            item
+          );
           // return;
         }
 
-        const stageIndex = jsonQuestion.stage - 1;
-        const imageIndex = i % charImages[stageIndex].length;
+        let backgroundImageId = null;
+        let characterImageId = null;
+        if (jsonQuestion.stage != null) {
+          const stageIndex = jsonQuestion.stage - 1;
+          const imageIndex = i % charImages[stageIndex].length;
+          backgroundImageId = bgImages[stageIndex].id;
+          characterImageId = charImages[stageIndex][imageIndex].id;
+        }
+
         // const imageIndex = charImages[stageIndex + i];
         let item = await prisma.question.findFirst({
           where: {
@@ -504,12 +527,12 @@ async function main() {
               questionType: jsonQuestion.questionType,
               order:
                 jsonQuestion.orderInStage ?? jsonQuestion.originQuestionIndex,
-              backgroundImageId: bgImages[stageIndex].id,
-              characterImageId: charImages[stageIndex][imageIndex].id,
+              backgroundImageId: backgroundImageId,
+              characterImageId: characterImageId,
             },
           });
 
-          console.log("item", item);
+          // console.log("item", item);
 
           jsonQuestion.options.sort((a, b) => a.order - b.order);
           for (let j = 0; j < jsonQuestion.options.length; j++) {
@@ -532,11 +555,36 @@ async function main() {
                   languageId: language.id,
                 },
               });
+            } else {
+              if (
+                item.text !== option.text ||
+                item.isCorrect !==
+                  (option.answerStatus === 1 || option.answerStatus === "1")
+              ) {
+                await prisma.questionOption.update({
+                  where: {
+                    id: item.id,
+                  },
+                  data: {
+                    text: option.text.toString(),
+                    order: j,
+                    questionId,
+                    isCorrect:
+                      option.answerStatus === 1 || option.answerStatus === "1",
+                    languageId: language.id,
+                  },
+                });
+              }
             }
           }
         } else {
           // 질문이나 답변이 변경되었는지 확인
-          if (item.text !== jsonQuestion.text) {
+          console.log("jsonQuestion", jsonQuestion);
+          if (
+            item.text !== jsonQuestion.text ||
+            (jsonQuestion.orderInStage != null &&
+              item.order !== jsonQuestion.orderInStage)
+          ) {
             console.log("update question", item.text, jsonQuestion.text);
             await prisma.question.update({
               where: {
@@ -544,6 +592,8 @@ async function main() {
               },
               data: {
                 text: jsonQuestion.text.toString(),
+                order:
+                  jsonQuestion.orderInStage ?? jsonQuestion.originQuestionIndex,
               },
             });
           }
@@ -560,26 +610,61 @@ async function main() {
           });
 
           // 답변이 변경되었는지 확인 후, 업데이트
+          // console.log("questionOptions", questionOptions);
+          console.log("jsonQuestion.options", jsonQuestion.options);
           questionOptions.forEach(async (option, index) => {
-            if (option.text !== jsonQuestion.options[index].text) {
-              console.log(
-                "update option",
-                option.text,
-                jsonQuestion.options[index].text
-              );
-              await prisma.questionOption.update({
+            if (jsonQuestion.options.length > index) {
+              if (
+                option.text !== jsonQuestion.options[index].text ||
+                option.isCorrect !==
+                  (jsonQuestion.options[index].answerStatus === 1 ||
+                    jsonQuestion.options[index].answerStatus === "1")
+              ) {
+                console.log(
+                  "update option",
+                  option.text,
+                  jsonQuestion.options[index].text
+                );
+                await prisma.questionOption.update({
+                  where: {
+                    id: option.id,
+                  },
+                  data: {
+                    text: jsonQuestion.options[index].text.toString(),
+                    isCorrect:
+                      jsonQuestion.options[index].answerStatus === 1 ||
+                      jsonQuestion.options[index].answerStatus === "1",
+                  },
+                });
+              }
+            } else {
+              await prisma.questionOption.delete({
                 where: {
                   id: option.id,
-                },
-                data: {
-                  text: jsonQuestion.options[index].text.toString(),
-                  isCorrect:
-                    jsonQuestion.options[index].answerStatus === 1 ||
-                    jsonQuestion.options[index].answerStatus === "1",
                 },
               });
             }
           });
+
+          if (jsonQuestion.options.length > questionOptions.length) {
+            for (
+              let j = questionOptions.length;
+              j < jsonQuestion.options.length;
+              j++
+            ) {
+              const option = jsonQuestion.options[j];
+              await prisma.questionOption.create({
+                data: {
+                  text: option.text.toString(),
+                  order: j,
+                  questionId: item.id,
+                  isCorrect:
+                    option.answerStatus === 1 || option.answerStatus === "1",
+                  languageId: language.id,
+                },
+              });
+            }
+          }
         }
 
         createdQuestions.push(item);
@@ -608,7 +693,11 @@ async function main() {
 
       // 퀴즈 스테이지 생성 또는 업데이트
       const stageNumbers = [
-        ...new Set(jsonQuestions.map((question) => question.stage)),
+        ...new Set(
+          jsonQuestions
+            .map((question) => question.stage)
+            .filter((stage) => stage != null)
+        ),
       ].sort();
 
       for (let i = 0; i < stageNumbers.length; i++) {

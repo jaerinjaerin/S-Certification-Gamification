@@ -448,16 +448,29 @@ export async function fetchOrganizationDetails(
     };
   }
 
-  const orgIds: string[] = profile.personOrganization
-    .filter((org) => org.deleted !== 1)
-    .map((org) => org.organizationId.toString());
+  console.log("fetchOrganizationDetails profile:", profile);
+
+  // const orgIds: string[] =
+  //   profile.personOrganization != null
+  //     ? profile.personOrganization
+  //         .filter((org) => org.deleted !== 1)
+  //         .map((org) => org.organizationId.toString())
+  //     : [];
+
+  const orgIds: string[] =
+    profile?.personOrganization && Array.isArray(profile.personOrganization)
+      ? profile.personOrganization
+          .filter(
+            (org) => org && org.deleted !== 1 && org.organizationId != null
+          )
+          .map((org) => org.organizationId.toString())
+      : [];
 
   const fetchOrganizationData = async (orgId: string): Promise<any> => {
     try {
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
         {
-          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
@@ -465,7 +478,9 @@ export async function fetchOrganizationDetails(
         }
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
+        throw new Error(
+          `fetchOrganizationData Failed to fetch data: orgId: ${orgId}, ${response.statusText}`
+        );
       }
       return await response.json();
     } catch (error) {
@@ -479,7 +494,11 @@ export async function fetchOrganizationDetails(
         scope.setTag("orgId", orgId);
         return scope;
       });
-      console.error(`Error fetching data for orgId ${orgId}:`, error);
+      console.info("profile:", profile, "accessToken:", accessToken);
+      console.error(
+        `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
+        error
+      );
       return null;
     }
   };
@@ -500,7 +519,9 @@ export async function fetchOrganizationDetails(
         }
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
+        throw new Error(
+          `fetchOrganizationDataByParentName Failed to fetch data: parentName: ${parentName} ${response.statusText}`
+        );
       }
       return await response.json();
     } catch (error) {
@@ -514,7 +535,11 @@ export async function fetchOrganizationDetails(
         scope.setTag("parentName", parentName);
         return scope;
       });
-      console.error(`Error fetching data for parentName ${parentName}:`, error);
+      console.info("profile:", profile, "accessToken:", accessToken);
+      console.error(
+        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
+        error
+      );
       return null;
     }
   };
@@ -526,11 +551,21 @@ export async function fetchOrganizationDetails(
 
   try {
     // Fetch organization data
-    const results = await Promise.all(orgIds.map(fetchOrganizationData));
+    const results = (
+      await Promise.all(orgIds.map(fetchOrganizationData))
+    ).filter((result) => result != null);
+
+    console.log(
+      "fetchOrganizationDetails results:",
+      JSON.stringify(results, null, 2)
+    );
+
     const filteredResults = filterResultsByLatestDate(
       results,
       profile.personOrganization
     );
+
+    console.log("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -557,6 +592,12 @@ export async function fetchOrganizationDetails(
       }
     });
 
+    console.log("fetchOrganizationDetails jobId:", jobId);
+    console.log(
+      "fetchOrganizationDetails parentOrganizationNames:",
+      parentOrganizationNames
+    );
+
     // Fetch parent organization details if needed
     if (parentOrganizationNames) {
       const parentData = await fetchOrganizationDataByParentName(
@@ -571,12 +612,18 @@ export async function fetchOrganizationDetails(
           channelSegmentId = text8;
         }
       } else {
+        console.info("profile:", profile, "accessToken:", accessToken);
         console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
+    console.info("profile:", profile, "accessToken:", accessToken);
     console.error("Error processing organization details:", error);
   }
+
+  console.info("fetchOrganizationDetails jobId:", jobId);
+  console.info("fetchOrganizationDetails storeId:", storeId);
+  console.info("fetchOrganizationDetails channelId:", channelId);
 
   // Return the collected information
   return {

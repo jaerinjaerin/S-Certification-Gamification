@@ -14,7 +14,7 @@ export default async function CampaignLayout({
   // // console.log("CampaignLayout url", url);
   const response = await fetch(url, {
     method: "GET",
-    // cache: "force-cache",
+    cache: "no-cache",
   });
 
   const routeCommonError = () => {
@@ -22,7 +22,7 @@ export default async function CampaignLayout({
   };
 
   if (!response.ok) {
-    console.error("Failed to fetch campaign", params.campaign_name);
+    console.error("Failed to fetch campaign", params.campaign_name, response);
     Sentry.captureMessage(`Failed to fetch campaign: ${params.campaign_name}`);
     routeCommonError();
     return;

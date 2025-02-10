@@ -11,6 +11,7 @@ const customJestConfig = {
     "^@/(.*)$": "<rootDir>/app/$1", // "@/..."를 "app/..."로 매핑
     "^.+\\.(css|scss)$": "identity-obj-proxy",
   },
+  silent: false, // console.log를 항상 출력
 };
 
 module.exports = createJestConfig(customJestConfig);

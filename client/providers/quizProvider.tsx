@@ -7,7 +7,6 @@ import {
   Question,
   QuestionOption,
   UserQuizLog,
-  UserQuizQuestionLog,
   UserQuizStageLog,
 } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
@@ -25,7 +24,7 @@ import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
 interface QuizContextType {
   quizSet: QuizSetEx;
   quizStageLogs: UserQuizStageLog[];
-  quizQuestionLogs: UserQuizQuestionLog[];
+  // quizQuestionLogs: UserQuizQuestionLog[];
   quizLog: UserQuizLog | null;
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
@@ -62,7 +61,7 @@ export const QuizProvider = ({
   quizSet,
   quizLog,
   quizStageLogs,
-  quizQuestionLogs,
+  // quizQuestionLogs,
   quizSetPath,
 }: {
   userId: string;
@@ -72,7 +71,7 @@ export const QuizProvider = ({
   quizSet: QuizSetEx;
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
-  quizQuestionLogs: UserQuizQuestionLog[] | null;
+  // quizQuestionLogs: UserQuizQuestionLog[] | null;
 }) => {
   const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
@@ -83,9 +82,9 @@ export const QuizProvider = ({
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
     quizStageLogs ?? []
   );
-  const [_quizQuestionLogs] = useState<UserQuizQuestionLog[]>(
-    quizQuestionLogs ?? []
-  );
+  // const [_quizQuestionLogs] = useState<UserQuizQuestionLog[]>(
+  // quizQuestionLogs ?? []
+  // );
   const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
     (quizStageLogs ?? []).reduce(
       (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
@@ -355,6 +354,18 @@ export const QuizProvider = ({
       }
     }
 
+    if (
+      _quizLog?.quizSetPath?.toLocaleLowerCase() ===
+      "NAT_2788_ar-TN"?.toLocaleLowerCase()
+    ) {
+      if (currentQuizStageIndex === 2) {
+        return "255424";
+      }
+      if (currentQuizStageIndex === 3) {
+        return "255426";
+      }
+    }
+
     return currentQuizStage?.badgeActivityId ?? null;
   };
 
@@ -506,7 +517,7 @@ export const QuizProvider = ({
         isLoading,
         quizSet,
         quizStageLogs: _quizStageLogs,
-        quizQuestionLogs: _quizQuestionLogs,
+        // quizQuestionLogs: _quizQuestionLogs,
         quizLog: _quizLog,
         quizStagesTotalScore,
         currentQuizStageIndex,
