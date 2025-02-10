@@ -3,7 +3,9 @@ import * as Sentry from "@sentry/nextjs";
 
 let cachedQuizSets: Record<string, ApiResponse<QuizSetEx>> = {};
 let lastFetchQuizSetTime: Record<string, number> = {};
-const CACHE_DURATION = 60000; // 60초 캐싱
+
+const CACHE_DURATION = 2 * 60 * 1000; // 2분 캐싱
+const CACHE_TTL = 30 * 60 * 1000; // ✅ 30분(1800000ms) 후 캐시 삭제
 
 export async function fetchQuizSet(
   quizsetPath: string,
@@ -12,13 +14,26 @@ export async function fetchQuizSet(
   const cacheKey = `${quizsetPath}_${userId}`;
   const now = Date.now();
 
+  // ✅ 오래된 캐시 삭제 (30분 이상 된 항목 정리)
+  let deletedCount = 0;
+  Object.keys(lastFetchQuizSetTime).forEach((key) => {
+    if (now - lastFetchQuizSetTime[key] > CACHE_TTL) {
+      delete cachedQuizSets[key];
+      delete lastFetchQuizSetTime[key];
+      deletedCount++;
+    }
+  });
+
+  if (deletedCount > 0) {
+    console.warn(`🗑️ 캐시 삭제됨: ${deletedCount}개`);
+  }
+
   // ✅ 캐시된 데이터가 있고, 60초 이내라면 캐시된 데이터 반환
   if (
     cachedQuizSets[cacheKey] &&
     lastFetchQuizSetTime[cacheKey] &&
     now - lastFetchQuizSetTime[cacheKey] < CACHE_DURATION
   ) {
-    // console.info(`✅ 캐시된 (퀴즈셋) 데이터 반환: ${cacheKey}`);
     return cachedQuizSets[cacheKey];
   }
 
@@ -27,7 +42,7 @@ export async function fetchQuizSet(
     const response = await fetch(url, { method: "GET", cache: "no-store" });
 
     if (!response.ok) {
-      console.log(`⚠️ 데이터 없음: ${quizsetPath}`);
+      console.warn(`⚠️ 데이터 없음: ${quizsetPath}, ${response}, ${url}`);
       return {
         item: null,
         success: false,
@@ -47,16 +62,14 @@ export async function fetchQuizSet(
       };
     }
 
-    // ✅ API 요청 성공 시 로컬 캐시에 저장
+    // ✅ API 요청 성공 시 캐시에 저장
     cachedQuizSets[cacheKey] = data;
     lastFetchQuizSetTime[cacheKey] = now;
-
-    // console.info(`🔄 캐시 (퀴즈셋) 업데이트: ${cacheKey}`);
 
     return {
       item: data.item,
       success: true,
-      message: "캠페인 데이터를 성공적으로 가져왔습니다.",
+      message: "퀴즈 세트를 성공적으로 가져왔습니다.",
       status: response.status,
     };
   } catch (error) {
