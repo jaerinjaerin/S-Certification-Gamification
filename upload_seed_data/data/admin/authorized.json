@@ -19,8 +19,8 @@
       ]
     },
     {
-      "name": "rino.park",
-      "providerUserId": "Y7XixLuM8I7KAMorpjK3lw==",
+      "name": "rino_global",
+      "providerUserId": "hXiglq46fbu2Pke9iKoTsg==",
       "role": "admin",
       "permissions": [
         "Global",
