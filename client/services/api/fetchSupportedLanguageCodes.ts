@@ -27,6 +27,7 @@ export async function fetchSupportedLanguageCodes(): Promise<string[]> {
     );
 
     if (!response.ok) {
+      console.warn(`⚠️ 데이터 없음: 언어코드셋`);
       throw new Error(`HTTP error. status: ${response.status}`);
     }
 

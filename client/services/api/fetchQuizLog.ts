@@ -10,7 +10,9 @@ export async function fetchQuizLog(
     const response = await fetch(url, { method: "GET", cache: "no-store" });
 
     if (!response.ok) {
-      console.warn(`⚠️ 데이터 없음: ${campaignName}, ${userId}`);
+      console.warn(
+        `⚠️ 데이터 없음 fetchQuizLog: ${campaignName}, ${userId}, ${url}`
+      );
       return {
         item: null,
         success: false,
