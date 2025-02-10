@@ -3,7 +3,7 @@ import { Campaign } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 
 let cachedCampaigns: Record<string, ApiResponse<Campaign>> = {};
-let lastFetchTime: Record<string, number> = {};
+let lastFetchCampaignTime: Record<string, number> = {};
 const CACHE_DURATION = 60000; // 60초 캐싱 (ms 단위)
 
 export async function fetchCampaign(
@@ -14,10 +14,10 @@ export async function fetchCampaign(
   // ✅ 로컬 캐시에 데이터가 있고, 60초 이내라면 캐시된 데이터 반환
   if (
     cachedCampaigns[campaignName] &&
-    lastFetchTime[campaignName] &&
-    now - lastFetchTime[campaignName] < CACHE_DURATION
+    lastFetchCampaignTime[campaignName] &&
+    now - lastFetchCampaignTime[campaignName] < CACHE_DURATION
   ) {
-    console.log(`✅ 캐시된 데이터 반환: ${campaignName}`);
+    console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
     return cachedCampaigns[campaignName];
   }
 
@@ -28,26 +28,16 @@ export async function fetchCampaign(
 
     console.log(`🔗 API 요청: ${response.status}`);
 
-    if (response.status === 404) {
-      console.log(`⚠️ 데이터 없음: ${campaignName}`);
+    if (!response.ok) {
       return {
         item: null,
         success: false,
         message: "캠페인 데이터를 찾을 수 없습니다.",
-        status: 404,
+        status: response.status,
       };
     }
 
-    if (response.status >= 500) {
-      console.log(`❌ 서버 오류: ${response.status}`);
-      throw new Error(`서버 오류: ${response.status}`);
-    }
-
-    if (!response.ok) {
-      throw new Error(`API 요청 실패: ${response.status}`);
-    }
-
-    const data = (await response.json()) as ApiResponse<Campaign>;
+    const data = await response.json();
 
     if (!data.item) {
       return {
@@ -60,11 +50,16 @@ export async function fetchCampaign(
 
     // ✅ API 요청 성공 시 로컬 캐시에 저장
     cachedCampaigns[campaignName] = data;
-    lastFetchTime[campaignName] = now;
+    lastFetchCampaignTime[campaignName] = now;
 
-    console.log(`🔄 캐시 업데이트: ${campaignName}`);
+    console.info(`🔄 캐시 (캠페인) 업데이트: ${campaignName}`);
 
-    return data;
+    return {
+      item: data.item,
+      success: true,
+      message: "캠페인 데이터를 성공적으로 가져왔습니다.",
+      status: response.status,
+    };
   } catch (error) {
     console.error(`❌ fetchCampaign error: ${error}`);
     Sentry.captureException(error);
