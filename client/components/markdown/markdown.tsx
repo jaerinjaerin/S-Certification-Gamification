@@ -48,7 +48,11 @@ const NonMemoizedMarkdown = ({
     },
     li: ({ children, ...props }: any) => {
       return (
-        <li className={`${className} py-1`} {...props}>
+        <li
+          className={`${className} py-1`}
+          dir={isArabic ? "rtl" : "ltr"}
+          {...props}
+        >
           {children}
         </li>
       );
