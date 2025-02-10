@@ -1,5 +1,4 @@
 import { getBrowserLocale, getServiceLangCode } from "@/i18n/locale";
-import AuthProvider from "@/providers/authProvider";
 import { NextIntlClientProvider } from "next-intl";
 
 export default async function GuestLayout({
@@ -28,7 +27,8 @@ export default async function GuestLayout({
         messages={messages}
         locale={locale}
       >
-        <AuthProvider>{children}</AuthProvider>
+        {/* <AuthProvider>{children}</AuthProvider> */}
+        {children}
       </NextIntlClientProvider>
     </div>
   );

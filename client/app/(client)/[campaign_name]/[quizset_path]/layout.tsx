@@ -1,4 +1,3 @@
-import AuthProvider from "@/providers/authProvider";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { fetchSupportedLanguageCodes } from "@/services/api/fetchSupportedLanguageCodes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -37,17 +36,17 @@ export default async function SumtotalUserLayout({
         messages={translatedMessages}
         locale={locale}
       >
-        <AuthProvider>
-          <PolicyProvider
-            privacyContent={privacyContent?.contents}
-            termContent={termContent?.contents}
-            agreementContent={agreementContent && agreementContent?.contents}
-            domainName={domainInformation?.name}
-            subsidiary={domainInformation?.subsidiary}
-          >
-            {children}
-          </PolicyProvider>
-        </AuthProvider>
+        {/* <AuthProvider> */}
+        <PolicyProvider
+          privacyContent={privacyContent?.contents}
+          termContent={termContent?.contents}
+          agreementContent={agreementContent && agreementContent?.contents}
+          domainName={domainInformation?.name}
+          subsidiary={domainInformation?.subsidiary}
+        >
+          {children}
+        </PolicyProvider>
+        {/* </AuthProvider> */}
       </NextIntlClientProvider>
     </div>
   );
@@ -117,6 +116,7 @@ async function fetchContent(url: string) {
     }
     return result;
   } catch (error) {
+    console.error(`fetchContent error: ${url}, ${error}`);
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
         type: "api",
