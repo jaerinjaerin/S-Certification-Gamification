@@ -16,7 +16,8 @@ import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
   useGAPageView();
-  const { currentQuizStage, currentStageQuestions, quizSet } = useQuiz();
+  const { userId, currentQuizStage, currentStageQuestions, quizSet } =
+    useQuiz();
 
   const router = useRouter();
 
@@ -44,7 +45,7 @@ export default function ReviewPage() {
     data: quizQuestionLogs,
     loading: logsLoading,
     error,
-  } = useQuizQuestionLogs(quizSet.id, searchStage - 1);
+  } = useQuizQuestionLogs(userId, quizSet.id, searchStage - 1);
 
   // useEffect(() => {
   //   const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
@@ -80,14 +81,14 @@ export default function ReviewPage() {
         ...reviewQuizQuestionLog.selectedOptionIds,
       ]);
     }
-  }, [quizQuestionLogs, currentQuestionIndex]);
+  }, [error, quizQuestionLogs, currentQuestionIndex]);
 
-  useEffect(() => {
-    const correctOptionIds = question.options
-      .filter((option) => option.isCorrect)
-      .map((option) => option.id);
-    setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
-  }, [error, currentQuestionIndex]);
+  // useEffect(() => {
+  //   const correctOptionIds = question.options
+  //     .filter((option) => option.isCorrect)
+  //     .map((option) => option.id);
+  //   setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  // }, [error, currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;

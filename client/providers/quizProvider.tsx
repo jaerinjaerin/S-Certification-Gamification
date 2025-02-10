@@ -22,6 +22,7 @@ import { QuizScoreHandler } from "./managers/quizScoreHandler";
 import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
 
 interface QuizContextType {
+  userId: string;
   quizSet: QuizSetEx;
   quizStageLogs: UserQuizStageLog[];
   // quizQuestionLogs: UserQuizQuestionLog[];
@@ -230,7 +231,7 @@ export const QuizProvider = ({
       quizLogId: _quizLog?.id ?? "",
       quizStagesLength: quizSet.quizStages.length,
     });
-    console.info("scoreData", scoreData);
+    // console.info("scoreData", scoreData);
 
     // 퀴즈 로그 State 업데이트
     // setQuizStagesTotalScore(totalQuizScore);
@@ -514,6 +515,7 @@ export const QuizProvider = ({
   return (
     <QuizContext.Provider
       value={{
+        userId,
         isLoading,
         quizSet,
         quizStageLogs: _quizStageLogs,
