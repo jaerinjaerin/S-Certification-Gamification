@@ -494,6 +494,7 @@ export async function fetchOrganizationDetails(
         scope.setTag("orgId", orgId);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
@@ -534,8 +535,9 @@ export async function fetchOrganizationDetails(
         scope.setTag("parentName", parentName);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
-        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}:`,
+        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
         error
       );
       return null;
@@ -553,7 +555,7 @@ export async function fetchOrganizationDetails(
       await Promise.all(orgIds.map(fetchOrganizationData))
     ).filter((result) => result != null);
 
-    console.info(
+    console.log(
       "fetchOrganizationDetails results:",
       JSON.stringify(results, null, 2)
     );
@@ -610,16 +612,19 @@ export async function fetchOrganizationDetails(
           channelSegmentId = text8;
         }
       } else {
+        console.info("profile:", profile, "accessToken:", accessToken);
         console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
+    console.info("profile:", profile, "accessToken:", accessToken);
     console.error("Error processing organization details:", error);
   }
 
-  console.info("fetchOrganizationDetails jobId:", jobId);
-  console.info("fetchOrganizationDetails storeId:", storeId);
-  console.info("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails jobId:", jobId);
+  console.log("fetchOrganizationDetails storeId:", storeId);
+  console.log("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails channelName:", channelName);
 
   // Return the collected information
   return {

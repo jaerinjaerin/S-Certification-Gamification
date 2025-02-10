@@ -229,10 +229,13 @@ function AccordionFormItem({
                 </Markdown>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div
+                className={cn("flex items-center gap-2")}
+                dir={isArabic ? "rtl" : "ltr"}
+              >
                 <FormItem
                   key={formKey}
-                  className="flex flex-row items-start space-x-3 space-y-0 w-full"
+                  className="flex flex-row items-start gap-3 space-y-0 w-full"
                 >
                   <FormControl>
                     <Checkbox
@@ -242,7 +245,13 @@ function AccordionFormItem({
                       }}
                     />
                   </FormControl>
-                  <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#0F0F0F]">
+                  <FormLabel
+                    className={cn(
+                      "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#0F0F0F]",
+                      isArabic && "text-right"
+                    )}
+                    dir={isArabic ? "rtl" : "ltr"}
+                  >
                     {formLabelText}
                   </FormLabel>
                 </FormItem>

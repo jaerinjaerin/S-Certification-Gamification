@@ -2,6 +2,7 @@ import {
   ApiListResponse,
   ApiResponse,
   QuizLogResponse,
+  QuizQuestionLogsResponse,
   QuizSetEx,
 } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -41,6 +42,23 @@ export const fetchQuizLog = async (
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${userId}&campaign_name=${campaignName}`;
     const result = await apiClient.get<ApiResponse<QuizLogResponse>>(url);
+    // console.log("Quiz log result:", result.item?.quizQuestionLogs);
+    return result;
+  } catch (error) {
+    console.error(`Failed to fetch quiz log: ${error}`);
+    throw new Error("퀴즈 로그를 가져오는 중 문제가 발생했습니다.");
+  }
+};
+
+export const fetchQuizQuestionLogs = async (
+  quizSetId: string,
+  quizStageIndex: number
+): Promise<ApiResponse<QuizQuestionLogsResponse>> => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}`;
+    const result = await apiClient.get<ApiResponse<QuizQuestionLogsResponse>>(
+      url
+    );
     // console.log("Quiz log result:", result.item?.quizQuestionLogs);
     return result;
   } catch (error) {

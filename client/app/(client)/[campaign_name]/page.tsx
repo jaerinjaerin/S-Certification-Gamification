@@ -54,7 +54,7 @@ export default async function CampaignPage({
     {
       method: "GET",
       // cache: "force-cache",
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
 
