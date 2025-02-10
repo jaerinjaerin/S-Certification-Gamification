@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 
 let cachedCampaigns: Record<string, ApiResponse<Campaign>> = {};
 let lastFetchCampaignTime: Record<string, number> = {};
-const CACHE_DURATION = 60000; // 60초 캐싱 (ms 단위)
+const CACHE_DURATION = 86400000; // 24 시간 캐싱 (ms 단위)
 
 export async function fetchCampaign(
   campaignName: string
@@ -29,6 +29,7 @@ export async function fetchCampaign(
     console.log(`🔗 API 요청: ${response.status}`);
 
     if (!response.ok) {
+      console.warn(`⚠️ 데이터 없음 fetchQuizLog: ${campaignName}, ${url}`);
       return {
         item: null,
         success: false,
