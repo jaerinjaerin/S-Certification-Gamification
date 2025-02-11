@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
               fsmSes: 0,
             };
             const target = ff + fsm + ffSes + fsmSes;
+            if (target === 0) return;
 
             // 도메인 진행 상황
             const badgesInDomain = badges.filter(
@@ -68,6 +69,7 @@ export async function GET(request: NextRequest) {
             );
             const progress = badgesInDomain.length;
             const percentage = progress / target;
+
             const sPlus = badgesInDomain.filter(
               (badge) => badge.authType === AuthType.SUMTOTAL
             ).length;

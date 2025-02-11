@@ -99,7 +99,7 @@ export const createOverviewExcelBlob = async (
   sheet.mergeCells('L2:N2'); // # Field Force group
 
   // 병합된 셀에 텍스트 삽입
-  const customHeaders = [
+  const headerCells = [
     { cell: 'A2', value: 'Region' },
     { cell: 'B2', value: 'Subsidiary' },
     { cell: 'C2', value: 'Country' },
@@ -116,95 +116,55 @@ export const createOverviewExcelBlob = async (
     { cell: 'N3', value: 'Non-SES' },
   ];
 
-  customHeaders.forEach(({ cell, value }) => {
-    const exception = cell === 'L2' || cell === 'I2';
-    const headerCell = sheet.getCell(cell);
-    headerCell.value = value;
-    headerCell.font = exception ? {} : { bold: true, name: 'Arial', size: 11 };
-    headerCell.alignment = {
-      vertical: 'middle',
-      horizontal: exception ? 'left' : 'center',
-    };
-  });
-
   // 2. 나머지 열은 sheet.columns로 정의
-  sheet.columns = [
+  const headerStyles = {
+    alignment: { vertical: 'middle', horizontal: 'center' },
+    font: { bold: true, name: 'Arial', size: 11 },
+  } as Partial<ExcelJS.Column>;
+  const headers = [
+    { header: 'Region', key: 'region', width: 20, ...headerStyles },
+    { header: 'Subsidiary', key: 'subsidiary', width: 30, ...headerStyles },
+    { header: 'Country', key: 'country', width: 20, ...headerStyles },
+    { header: 'Target', key: 'target', width: 10, ...headerStyles },
+    { header: 'Progress', key: 'progress', width: 10, ...headerStyles },
+    { header: '(%)', key: 'percentage', width: 15, ...headerStyles },
+    { header: 'S+', key: 'sPlus', width: 10, ...headerStyles },
+    { header: 'Non-S+', key: 'nonSPlus', width: 10, ...headerStyles },
     {
-      key: 'region',
-      width: 20,
-    },
-    {
-      key: 'subsidiary',
-      width: 30,
-    },
-    {
-      key: 'country',
-      width: 20,
-    },
-    {
-      key: 'target',
-      width: 10,
-    },
-    {
-      key: 'progress',
-      width: 10,
-    },
-    {
-      key: 'percentage',
-      width: 15,
-    },
-    {
-      key: 'sPlus',
-      width: 10,
-    },
-    {
-      key: 'nonSPlus',
-      width: 10,
-    },
-    {
+      header: '#of FSMs',
       key: 'numFSMs',
       width: 10,
+      font: { ...headerStyles.font, bold: false },
+      alignment: { ...headerStyles.alignment, horizontal: 'left' },
     },
+    { header: 'SES', key: 'ses', width: 10, ...headerStyles },
+    { header: 'C&R', key: 'cnr', width: 10, ...headerStyles },
     {
-      key: 'ses',
-      width: 10,
-    },
-    {
-      key: 'cnr',
-      width: 10,
-    },
-    {
+      header: '#of Field Force',
       key: 'numFieldForce',
       width: 15,
+      font: { ...headerStyles.font, bold: false },
+      alignment: { ...headerStyles.alignment, horizontal: 'left' },
     },
-    {
-      key: 'sesFieldForce',
-      width: 15,
-    },
-    {
-      key: 'nonSesFieldForce',
-      width: 20,
-    },
+    { header: 'SES', key: 'sesFieldForce', width: 15, ...headerStyles },
+    { header: 'Non-SES', key: 'nonSesFieldForce', width: 20, ...headerStyles },
   ];
 
+  headerCells.forEach(({ cell, value }) => {
+    const header = headers.find((header) => header.header === value);
+    if (header) {
+      const headerCell = sheet.getCell(cell);
+      headerCell.value = header.header as string;
+      headerCell.alignment = header.alignment as Partial<ExcelJS.Alignment>;
+      headerCell.font = header.font as Partial<ExcelJS.Font>;
+    }
+  });
+
+  sheet.columns = headers.map((header) => ({ key: header.key }));
+
   // 3. 데이터 삽입 (A4부터)
-  data.forEach((item) => {
-    sheet.addRow([
-      item.region,
-      item.subsidiary,
-      item.country,
-      item.target,
-      item.progress,
-      item.percentage,
-      item.sPlus,
-      item.nonSPlus,
-      item.numFSMs,
-      item.ses,
-      item.cnr,
-      item.numFieldForce,
-      item.sesFieldForce,
-      item.nonSesFieldForce,
-    ]);
+  data.forEach((row) => {
+    sheet.addRow(row);
   });
 
   // 데이터 포맷 및 스타일 적용
