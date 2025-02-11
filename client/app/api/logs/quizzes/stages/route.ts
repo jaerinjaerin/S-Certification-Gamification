@@ -41,156 +41,277 @@ export async function POST(request: NextRequest) {
       channelName,
     } = body;
 
-    function generateRandomNumber(length) {
-      if (length <= 0) {
-        throw new Error("Length must be a positive integer.");
-      }
+    // function generateRandomNumber(length) {
+    //   if (length <= 0) {
+    //     throw new Error("Length must be a positive integer.");
+    //   }
 
-      let randomNumber = "";
-      while (randomNumber.length < length) {
-        const chunk = Math.random().toString().slice(2); // "0." 이후의 숫자만 가져옴
-        randomNumber += chunk;
-      }
+    //   let randomNumber = "";
+    //   while (randomNumber.length < length) {
+    //     const chunk = Math.random().toString().slice(2); // "0." 이후의 숫자만 가져옴
+    //     randomNumber += chunk;
+    //   }
 
-      return randomNumber.slice(0, length); // 정확히 length만큼 반환
-    }
+    //   return randomNumber.slice(0, length); // 정확히 length만큼 반환
+    // }
 
-    const result = await prisma.$transaction(async (tx) => {
-      const userQuizStageLog = await tx.userQuizStageLog.create({
-        data: {
-          userId,
-          authType,
-          campaignId,
-          isBadgeStage,
-          isBadgeAcquired,
-          badgeActivityId,
-          remainingHearts,
-          quizSetId,
-          quizStageId,
-          quizStageIndex,
-          elapsedSeconds,
-          score,
-          totalScore,
-          percentile,
-          scoreRange,
-          domainId,
-          languageId,
-          jobId,
-          regionId,
-          subsidiaryId,
-          channelSegmentId,
-          storeId,
-          channelId,
-          channelName,
+    const domain = await prisma.domain.findFirst({
+      where: {
+        id: domainId,
+      },
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
         },
-      });
+      },
+    });
 
-      const userQuizStageStatistics = await tx.userQuizStageStatistics.create({
+    const userQuizStageLog = await prisma.userQuizStageLog.create({
+      data: {
+        userId,
+        authType,
+        campaignId,
+        isBadgeStage,
+        isBadgeAcquired,
+        badgeActivityId,
+        remainingHearts,
+        quizSetId,
+        quizStageId,
+        quizStageIndex,
+        elapsedSeconds,
+        score,
+        totalScore,
+        percentile,
+        scoreRange,
+        domainId,
+        languageId,
+        jobId,
+        regionId: domain?.subsidiary?.regionId,
+        subsidiaryId: domain?.subsidiaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        channelName,
+      },
+    });
+
+    await prisma.userQuizStageStatistics.create({
+      data: {
+        // id: userQuizStageLog.id,
+        userId,
+        authType,
+        campaignId,
+        isBadgeStage,
+        isBadgeAcquired,
+        badgeActivityId,
+        remainingHearts,
+        quizSetId,
+        quizStageId,
+        quizStageIndex,
+        elapsedSeconds,
+        score,
+        totalScore,
+        percentile,
+        scoreRange,
+        domainId,
+        languageId,
+        jobId,
+        regionId: domain?.subsidiary?.regionId,
+        subsidiaryId: domain?.subsidiaryId,
+        channelSegmentId,
+        storeId,
+        channelId,
+        channelName,
+      },
+    });
+
+    const userQuizBadgeStageLog = await prisma.userQuizBadgeStageLog.findFirst({
+      where: {
+        userId,
+        quizSetId,
+        quizStageId,
+      },
+    });
+
+    if (!userQuizBadgeStageLog) {
+      await prisma.userQuizBadgeStageLog.create({
         data: {
-          // id: userQuizStageLog.id,
           userId,
           authType,
           campaignId,
-          isBadgeStage,
+          quizSetId,
           isBadgeAcquired,
           badgeActivityId,
-          remainingHearts,
-          quizSetId,
           quizStageId,
-          quizStageIndex,
-          elapsedSeconds,
-          score,
-          totalScore,
-          percentile,
-          scoreRange,
-          domainId,
-          languageId,
-          jobId,
-          regionId,
-          subsidiaryId,
-          channelSegmentId,
-          storeId,
-          channelId,
-          channelName,
-        },
-      });
-
-      // // console.log("userQuizStageLog", userQuizStageLog);
-
-      if (!isBadgeStage) {
-        return {
-          userQuizStageLog,
-          userQuizStageStatistics,
-        };
-      }
-
-      const random100k2 = generateRandomNumber(20);
-      const userQuizBadgeStageLog = await tx.userQuizBadgeStageLog.create({
-        data: {
-          userId,
-          authType,
-          campaignId,
-          quizSetId,
-          isBadgeAcquired,
-          badgeActivityId,
-          quizStageId: random100k2.toString(),
           quizStageIndex,
           elapsedSeconds,
           score: totalScore,
           domainId,
           languageId,
           jobId,
-          regionId,
-          subsidiaryId,
+          regionId: domain?.subsidiary?.regionId,
+          subsidiaryId: domain?.subsidiaryId,
           channelSegmentId,
           storeId,
           channelId,
           channelName,
         },
       });
+    } else {
+      await prisma.userQuizBadgeStageLog.update({
+        where: {
+          id: userQuizBadgeStageLog.id,
+        },
+        data: {
+          quizSetId,
+          isBadgeAcquired,
+          badgeActivityId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds,
+          score: totalScore,
+          domainId,
+          languageId,
+          jobId,
+          regionId: domain?.subsidiary?.regionId,
+          subsidiaryId: domain?.subsidiaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+    }
 
-      const random100k = generateRandomNumber(20);
-      // console.log("random100k", random100k);
-      const userQuizBadgeStageStatistics =
-        await tx.userQuizBadgeStageStatistics.create({
+    if (isBadgeStage) {
+      const userQuizBadgeStageLog =
+        await prisma.userQuizBadgeStageLog.findFirst({
+          where: {
+            userId,
+            quizSetId,
+            quizStageId,
+          },
+        });
+
+      if (!userQuizBadgeStageLog) {
+        await prisma.userQuizBadgeStageLog.create({
           data: {
-            // id: userQuizBadgeStageLog.id,
             userId,
             authType,
             campaignId,
             isBadgeAcquired,
             badgeActivityId,
             quizSetId,
-            quizStageId: random100k.toString(),
+            quizStageId,
             quizStageIndex,
             elapsedSeconds,
             score: totalScore,
             domainId,
             languageId,
             jobId,
-            regionId,
-            subsidiaryId,
+            regionId: domain?.subsidiary?.regionId,
+            subsidiaryId: domain?.subsidiaryId,
             channelSegmentId,
             storeId,
             channelId,
             channelName,
           },
         });
+      } else {
+        await prisma.userQuizBadgeStageLog.update({
+          where: {
+            id: userQuizBadgeStageLog.id,
+          },
+          data: {
+            userId,
+            authType,
+            campaignId,
+            isBadgeAcquired,
+            badgeActivityId,
+            quizSetId,
+            quizStageId,
+            quizStageIndex,
+            elapsedSeconds,
+            score: totalScore,
+            domainId,
+            languageId,
+            jobId,
+            regionId: domain?.subsidiary?.regionId,
+            subsidiaryId: domain?.subsidiaryId,
+            channelSegmentId,
+            storeId,
+            channelId,
+            channelName,
+          },
+        });
+      }
 
-      // // console.log("userQuizBadgeStageLog", userQuizBadgeStageLog);
+      const userQuizBadgeStageStatistics =
+        await prisma.userQuizBadgeStageStatistics.findFirst({
+          where: {
+            userId,
+            quizSetId,
+            quizStageId,
+          },
+        });
 
-      return {
-        userQuizStageLog,
-        userQuizStageStatistics,
-        userQuizBadgeStageLog,
-        userQuizBadgeStageStatistics,
-      };
-    });
+      if (!userQuizBadgeStageStatistics) {
+        await prisma.userQuizBadgeStageStatistics.create({
+          data: {
+            userId,
+            authType,
+            campaignId,
+            isBadgeAcquired,
+            badgeActivityId,
+            quizSetId,
+            quizStageId,
+            quizStageIndex,
+            elapsedSeconds,
+            score: totalScore,
+            domainId,
+            languageId,
+            jobId,
+            regionId: domain?.subsidiary?.regionId,
+            subsidiaryId: domain?.subsidiaryId,
+            channelSegmentId,
+            storeId,
+            channelId,
+            channelName,
+          },
+        });
+      } else {
+        await prisma.userQuizBadgeStageStatistics.update({
+          where: {
+            id: userQuizBadgeStageStatistics.id,
+          },
+          data: {
+            userId,
+            authType,
+            campaignId,
+            isBadgeAcquired,
+            badgeActivityId,
+            quizSetId,
+            quizStageId,
+            quizStageIndex,
+            elapsedSeconds,
+            score: totalScore,
+            domainId,
+            languageId,
+            jobId,
+            regionId: domain?.subsidiary?.regionId,
+            subsidiaryId: domain?.subsidiaryId,
+            channelSegmentId,
+            storeId,
+            channelId,
+            channelName,
+          },
+        });
+      }
+    }
 
-    return NextResponse.json(
-      { item: result?.userQuizStageLog },
-      { status: 200 }
-    );
+    return NextResponse.json({ item: userQuizStageLog }, { status: 200 });
   } catch (error) {
     console.error("Error create quiz stage log:", error);
     return NextResponse.json(

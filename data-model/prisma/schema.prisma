@@ -215,6 +215,7 @@ model QuizSet {
 
   campaignId String      // Foreign key to Campaign
   domainId   String?      // Foreign key to Domain
+  languageId String?      // Foreign key to Language
   subsidiaryId   String?      // Foreign key to Subsidiary
   jobCodes             String[]
   quizStages     QuizStage[]
@@ -237,6 +238,7 @@ model QuizBadge {
   updatedAt  DateTime   @updatedAt
 
   quizStages QuizStage[]
+  // activities Activity[]
 
   campaignId String?
   domainId   String?
@@ -282,6 +284,7 @@ model QuizStage {
 
   campaignId String?
   domainId   String?
+  languageId String?
 }
 
 model Question {
@@ -313,7 +316,7 @@ model Question {
   questionType    QuestionType
 
   campaignId String?
-  domainId   String?
+  domainId   String? // 필수로 넣어야 함
 }
 
 enum QuestionType {
@@ -333,6 +336,8 @@ model QuestionOption {
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  domainId   String?
 }
 
 model Job {
@@ -512,6 +517,9 @@ model UserQuizQuestionLog {
   updatedAt    DateTime @updatedAt
 
   tryNumber Int
+
+  originalQuestionId String?
+  originalIndex Int?
 }
 
 model UserQuizStatistics {
@@ -661,4 +669,38 @@ model UserQuizQuestionStatistics {
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  originalQuestionId String?
+  originalIndex Int?
+}
+
+// model Activity {
+//   id            String   @id @default(uuid())
+//   name          String
+
+//   badgeImageId  String?
+//   badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+
+//   activityId    String
+//   jobCodes      String[]
+
+//   domainId      String
+//   languageId    String
+
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
+
+model ActivityFailLog {
+  id            String   @id @default(uuid())
+  api           String
+  userId        String
+  activityId    String
+
+  status        Int
+  statusText    String
+  rawLog        String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
