@@ -198,17 +198,20 @@ export async function GET(request: NextRequest) {
 
   const url = request.url;
   const { searchParams } = new URL(url);
+  const userId = searchParams.get("user_id");
   const quizSetId = searchParams.get("quizset_id");
   const quizStageIndex = searchParams.get("stage_index");
 
   try {
-    if (!quizSetId || !quizStageIndex) {
+    if (!userId || !quizSetId || !quizStageIndex) {
       throw new ApiError(
         400,
         "BAD_REQUEST",
         "quizset_id and stage_index are required"
       );
     }
+
+    console.log("userId", userId);
 
     // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
     //   where: {
@@ -229,6 +232,7 @@ export async function GET(request: NextRequest) {
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
+        userId: userId,
         quizSetId: quizSetId,
         quizStageIndex: Number(quizStageIndex),
       },
@@ -244,6 +248,8 @@ export async function GET(request: NextRequest) {
         },
       ],
     });
+
+    console.log("quizSetId", quizSetId);
 
     // questionId 기준으로 중복 제거 (최초 등장하는 항목 유지)
     const uniqueLogs = Object.values(
