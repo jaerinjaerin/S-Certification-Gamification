@@ -122,7 +122,7 @@ export const createOverviewExcelBlob = async (
     font: { bold: true, name: 'Arial', size: 11 },
   } as Partial<ExcelJS.Column>;
   const headers = [
-    { header: 'Region', key: 'region', width: 20, ...headerStyles },
+    { header: 'Region', key: 'region', width: 25, ...headerStyles },
     { header: 'Subsidiary', key: 'subsidiary', width: 30, ...headerStyles },
     { header: 'Country', key: 'country', width: 20, ...headerStyles },
     { header: 'Target', key: 'target', width: 10, ...headerStyles },
