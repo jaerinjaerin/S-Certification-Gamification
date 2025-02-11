@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 
 let cachedCampaigns: Record<string, ApiResponse<Campaign>> = {};
 let lastFetchCampaignTime: Record<string, number> = {};
-const CACHE_DURATION = 86400000; // 24 시간 캐싱 (ms 단위)
+const CAMPAIGN_CACHE_DURATION = 86400000; // 24 시간 캐싱 (ms 단위)
 
 export async function fetchCampaign(
   campaignName: string
@@ -15,7 +15,7 @@ export async function fetchCampaign(
   if (
     cachedCampaigns[campaignName] &&
     lastFetchCampaignTime[campaignName] &&
-    now - lastFetchCampaignTime[campaignName] < CACHE_DURATION
+    now - lastFetchCampaignTime[campaignName] < CAMPAIGN_CACHE_DURATION
   ) {
     // console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
     return cachedCampaigns[campaignName];

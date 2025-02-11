@@ -3,9 +3,10 @@ import * as Sentry from "@sentry/nextjs";
 
 let cachedQuizSets: Record<string, ApiResponse<QuizSetEx>> = {};
 let lastFetchQuizSetTime: Record<string, number> = {};
+let lastCacheCleanupTime = Date.now(); // ✅ 마지막 캐시 정리 시간 기록
 
-const CACHE_DURATION = 2 * 60 * 1000; // 2분 캐싱
-const CACHE_TTL = 30 * 60 * 1000; // ✅ 30분(1800000ms) 후 캐시 삭제
+const QUIZ_SET_CACHE_DURATION = 10 * 60 * 1000; // 10분 캐싱
+const QUIZ_SET_CACHE_TTL = 30 * 60 * 1000; // 30분 후 캐시 삭제
 
 export async function fetchQuizSet(
   quizsetPath: string,
@@ -14,25 +15,35 @@ export async function fetchQuizSet(
   const cacheKey = `${quizsetPath}_${userId}`;
   const now = Date.now();
 
-  // ✅ 오래된 캐시 삭제 (30분 이상 된 항목 정리)
-  let deletedCount = 0;
-  Object.keys(lastFetchQuizSetTime).forEach((key) => {
-    if (now - lastFetchQuizSetTime[key] > CACHE_TTL) {
-      delete cachedQuizSets[key];
-      delete lastFetchQuizSetTime[key];
-      deletedCount++;
-    }
-  });
+  // ✅ 마지막 캐시 정리 이후 30분 이상 경과한 경우에만 캐시 삭제 실행
+  console.log(
+    "now - lastCacheCleanupTime",
+    now - lastCacheCleanupTime,
+    now,
+    lastCacheCleanupTime
+  );
+  if (now - lastCacheCleanupTime > QUIZ_SET_CACHE_TTL) {
+    let deletedCount = 0;
+    Object.keys(lastFetchQuizSetTime).forEach((key) => {
+      if (now - lastFetchQuizSetTime[key] > QUIZ_SET_CACHE_TTL) {
+        delete cachedQuizSets[key];
+        delete lastFetchQuizSetTime[key];
+        deletedCount++;
+      }
+    });
 
-  if (deletedCount > 0) {
-    console.warn(`🗑️ 캐시 삭제됨: ${deletedCount}개`);
+    if (deletedCount > 0) {
+      console.warn(`🗑️ 캐시 삭제됨: ${deletedCount}개`);
+    }
+
+    lastCacheCleanupTime = now; // ✅ 마지막 캐시 삭제 시간 갱신
   }
 
   // ✅ 캐시된 데이터가 있고, 60초 이내라면 캐시된 데이터 반환
   if (
     cachedQuizSets[cacheKey] &&
     lastFetchQuizSetTime[cacheKey] &&
-    now - lastFetchQuizSetTime[cacheKey] < CACHE_DURATION
+    now - lastFetchQuizSetTime[cacheKey] < QUIZ_SET_CACHE_DURATION
   ) {
     return cachedQuizSets[cacheKey];
   }

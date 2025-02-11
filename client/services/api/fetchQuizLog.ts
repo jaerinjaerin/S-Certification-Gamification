@@ -25,7 +25,7 @@ export async function fetchQuizLog(
 
     return data;
   } catch (error) {
-    console.error(`fetchQuizSet error: ${error}`);
+    console.error(`fetchQuizLog error: ${error}`);
     Sentry.captureException(error);
 
     return {

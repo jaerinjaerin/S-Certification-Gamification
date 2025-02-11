@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 
 let cachedLanguages: string[] | null = null;
 let lastFetchLangTime: number | null = null;
-const CACHE_DURATION = 60000; // 60초 (1분) 캐싱
+const LANG_CACHE_DURATION = 60000; // 60초 (1분) 캐싱
 
 export async function fetchSupportedLanguageCodes(): Promise<string[]> {
   const now = Date.now();
@@ -12,7 +12,7 @@ export async function fetchSupportedLanguageCodes(): Promise<string[]> {
   if (
     cachedLanguages &&
     lastFetchLangTime &&
-    now - lastFetchLangTime < CACHE_DURATION
+    now - lastFetchLangTime < LANG_CACHE_DURATION
   ) {
     // console.info(`✅ 캐시된 (언어셋) 데이터 반환`);
     return cachedLanguages;
