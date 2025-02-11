@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
           : { OR: [{ storeId }, { storeId: null }] }
         : {}),
     };
-    console.log('🚀 ~ GET ~ where:', where);
 
     // 모든 isCorrect가 있는 데이터 가져오기
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
@@ -49,7 +48,6 @@ export async function GET(request: NextRequest) {
         isCorrect: true,
       },
     });
-    console.log('🚀 ~ GET ~ corrects:', corrects);
 
     const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
       by: ['questionId'], // 그룹화 기준 필드는 questionId만 포함

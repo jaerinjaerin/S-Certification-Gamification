@@ -22,7 +22,7 @@ const ManagementLayout = async ({ children }: Props) => {
     // console.log(permissions);
     permit = permissions.includes('Global');
   }
-  permit = true;
+
   return (
     <>
       {permit && (
