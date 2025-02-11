@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     const where = {
       ...restWhere,
-      // category: { not: null },
+      category: { not: null },
       questionId: { in: questions.map((q) => q.id) },
       jobId: { in: jobGroup.map((job) => job.id) },
       ...(storeId

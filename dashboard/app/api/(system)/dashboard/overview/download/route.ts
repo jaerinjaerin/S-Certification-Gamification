@@ -22,6 +22,11 @@ export async function GET(request: NextRequest) {
     });
 
     const jobs = await prisma.job.findMany({});
+    const jobFF = jobs.filter((job) => job.code === 'ff').map((job) => job.id);
+    const jobFSM = jobs
+      .filter((job) => job.code === 'fsm')
+      .map((job) => job.id);
+
     const goals = await prisma.domainGoal.findMany({});
     let badges = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {
@@ -46,13 +51,6 @@ export async function GET(request: NextRequest) {
 
           // 도메인 반복
           subsidiary.domains.forEach((domain) => {
-            const jobFF = jobs
-              .filter((job) => job.code === 'ff')
-              .map((job) => job.id);
-            const jobFSM = jobs
-              .filter((job) => job.code === 'fsm')
-              .map((job) => job.id);
-
             // 목표값 계산
             const { ff, fsm, ffSes, fsmSes } = goals.find(
               (goal) => goal.domainId === domain.id
@@ -84,8 +82,7 @@ export async function GET(request: NextRequest) {
             ).length;
             const cnr = badgesInDomain.filter(
               (badge) =>
-                badge.storeId !== '4' &&
-                badge.storeId === null &&
+                (badge.storeId !== '4' || badge.storeId === null) &&
                 badge.jobId &&
                 jobFSM.includes(badge.jobId)
             ).length;
@@ -97,8 +94,7 @@ export async function GET(request: NextRequest) {
             ).length;
             const nonSesFieldForce = badgesInDomain.filter(
               (badge) =>
-                badge.storeId !== '4' &&
-                badge.storeId === null &&
+                (badge.storeId !== '4' || badge.storeId === null) &&
                 badge.jobId &&
                 jobFF.includes(badge.jobId)
             ).length;
