@@ -18,8 +18,8 @@
     "test": "jest --no-silent",
     "postinstall": "patch-package",
     "test:watch": "jest --watch",
-    "prisma:generate": "npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
+    "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
+    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "pm2:stop": "pm2 delete squiz",
     "pm2:start": "pm2 start npm --name 'squiz' -- start",
     "pm2:go": "pm2 start ecosystem.config.js"
