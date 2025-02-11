@@ -62,7 +62,7 @@ export default function PolicySheet({
   setOpenSheet,
 }: PolicySheetProps) {
   const translation = useTranslations();
-
+  const { isArabic } = useCheckLocale();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -137,7 +137,9 @@ export default function PolicySheet({
             </Accordion>
           </SheetDescription>
         </SheetHeader>
-        <SheetFooter className="mt-[26px]">
+        <SheetFooter
+          className={cn("mt-[26px]", isArabic && "sm:flex-row-reverse")}
+        >
           <Button
             variant={"primary"}
             disabled={loading || !isAllChecked}
