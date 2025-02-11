@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -141,6 +142,7 @@ const columns: ColumnDef<DomainProps>[] = [
 ];
 
 const UserDomain = () => {
+  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState<DomainProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -190,11 +192,13 @@ const UserDomain = () => {
           total.current = data.total;
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues, pageIndex]);

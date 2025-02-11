@@ -4,7 +4,7 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
-import { removeDuplicateUsers } from '@/lib/data';
+import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -41,28 +41,30 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      select: { userId: true, regionId: true, domainId: true },
+      select: {
+        userId: true,
+        regionId: true,
+        subsidiaryId: true,
+        domainId: true,
+      },
     });
 
     // userId 중복 제거
     userQuizeBadges = removeDuplicateUsers(userQuizeBadges);
 
-    const domains = await prisma.domain.findMany();
-
+    // domainId만 확인해서 필터링 생성
+    const whereForGoal = await domainCheckOnly(where);
     const domain_goal = await prisma.domainGoal.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
       orderBy: { updatedAt: 'desc' },
     });
+
+    const domains = await prisma.domain.findMany({
+      where: { id: whereForGoal.domainId },
+    });
+
     //
-    const result = domain_goal
+    let result = domain_goal
       .map(({ domainId, ff, ffSes, fsm, fsmSes }) => {
         const currentDomain = domains.find((domain) => domain.id === domainId);
         if (!currentDomain) return null;
@@ -73,13 +75,61 @@ export async function GET(request: NextRequest) {
 
         const goal = (ff || 0) + (fsm || 0) + (ffSes || 0) + (fsmSes || 0);
 
+        if (!where.regionId && !where.subsidiaryId && !where.domainId) {
+          return {
+            name: currentDomain.name,
+            domainId: currentDomain.id,
+            subsidiaryId: currentDomain.subsidiaryId,
+            order: currentDomain.order || 0,
+            goal,
+            expert,
+          };
+        }
+
         return {
-          name: currentDomain?.name,
+          name: currentDomain.name,
+          order: currentDomain.order || 0,
           goal,
           expert,
         };
       })
-      .filter((item) => item);
+      .filter((item) => item)
+      .sort((a: any, b: any) => a.order - b.order);
+
+    if (!where.regionId && !where.subsidiaryId && !where.domainId) {
+      const subsidiaries = await prisma.subsidiary.findMany();
+
+      const extract = result.reduce(
+        (acc, item) => {
+          if (!item?.subsidiaryId) return acc;
+
+          const existingEntry = acc[item.subsidiaryId];
+          const subsidiary = subsidiaries.find(
+            (sub) => sub.id === item.subsidiaryId
+          );
+
+          if (!existingEntry) {
+            acc[item.subsidiaryId] = {
+              name: subsidiary?.name || '',
+              goal: item.goal,
+              expert: item.expert,
+              order: subsidiary?.order || 0,
+            };
+          } else {
+            existingEntry.goal += item.goal;
+            existingEntry.expert += item.expert;
+          }
+
+          return acc;
+        },
+        {} as Record<
+          string,
+          { name: string; goal: number; expert: number; order: number }
+        >
+      );
+
+      result = Object.values(extract).sort((a, b) => a.order - b.order) as any;
+    }
 
     return NextResponse.json({ result });
   } catch (error) {

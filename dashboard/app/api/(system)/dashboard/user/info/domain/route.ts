@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
 import { AuthType } from '@prisma/client';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
-import { removeDuplicateUsers } from '@/lib/data';
+import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -35,28 +35,14 @@ export async function GET(request: NextRequest) {
       select: { id: true, code: true },
     });
 
+    // domainId만 확인해서 필터링 생성성
+    const whereForGoal = await domainCheckOnly(where);
     const count = await prisma.domainGoal.count({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
     });
 
     const domainsGoals = await prisma.domainGoal.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
       take,
       skip,
     });

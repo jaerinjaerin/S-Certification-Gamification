@@ -20,13 +20,17 @@ export async function GET(request: NextRequest) {
     });
 
     // 오늘과 6일 전 설정
-    const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
-    const beforeWeek = new Date(
-      Math.max(
-        addDays(today, -6).getTime(), // today에서 6일 전
-        new Date(period.from).getTime() // period.from
-      )
+    const today = addDays(
+      new Date(Math.min(new Date().getTime(), period.to.getTime())),
+      1
     );
+    const beforeWeek = new Date(addDays(period.from, 1).getTime());
+    // const beforeWeek = new Date(
+    //   Math.min(
+    //     addDays(today, -5).getTime(), // today포함해서 6일 전
+    //     addDays(period.from, 1).getTime() // period.from
+    //   )
+    // );
 
     let experts = await prisma.userQuizBadgeStageStatistics.findMany({
       where: {

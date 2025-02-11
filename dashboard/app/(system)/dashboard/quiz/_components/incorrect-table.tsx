@@ -14,19 +14,19 @@ import {
   Table as TableProps,
 } from '@tanstack/react-table';
 import { formatSnakeToTitleCase } from '@/lib/text';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
   {
     id: 'no',
     header: 'No',
     cell: (info) => {
-      const { pageIndex, pageSize } = info.table.getState().pagination;
-      return pageIndex * pageSize + info.row.index + 1; // 자동 번호 계산
+      return info.row.index + 1; // 자동 번호 계산
     },
   },
   {
-    accessorKey: 'question',
+    accessorKey: 'text',
     header: 'Question',
   },
   {
@@ -51,11 +51,13 @@ export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
   },
   {
     accessorKey: 'errorRate',
+    id: 'errorRate',
     header: 'Error Rate',
     cell: ({ getValue }) => {
       const value = getValue<number>();
-      return `${value.toLocaleString()}%`;
+      return `${value.toFixed(2)}%`; // Error Rate를 소수점 두 자리까지 표시
     },
+    sortingFn: 'basic',
   },
 ];
 
@@ -71,72 +73,86 @@ const IncorrectTable = ({
   pageSize?: number;
 }) => {
   return (
-    <ScrollArea className="w-full">
-      <div className="max-h-[25.6rem]">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className="text-nowrap font-medium text-center text-size-14px text-zinc-500"
-                      onClick={header.column.getToggleSortingHandler()} // 헤더 클릭 시 정렬 변경
-                      style={{
-                        width: header.id === 'question' ? '50%' : 'auto',
-                      }}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
+    <Table>
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id} className="h-[2.5625rem]">
+            {headerGroup.headers.map((header) => {
+              return (
+                <TableHead
+                  key={header.id}
+                  className={cn(
+                    'text-nowrap font-medium text-center text-size-14px text-zinc-500',
+                    header.id === 'errorRate' && 'cursor-pointer'
+                  )}
+                  onClick={
+                    header.id === 'errorRate'
+                      ? header.column.getToggleSortingHandler()
+                      : undefined
+                  }
+                  style={{
+                    width: header.id === 'question' ? '50%' : 'auto',
+                  }}
+                >
+                  <TableCell>
+                    <div className="flex items-center">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {header.id === 'errorRate' && (
+                        <>
+                          {!header.column.getIsSorted() && (
+                            <ChevronsUpDown className="ml-2 h-4 w-4" />
                           )}
-                    </TableHead>
+                          {header.column.getIsSorted() === 'asc' && (
+                            <ArrowUp className="ml-2 h-4 w-4" />
+                          )}
+                          {header.column.getIsSorted() === 'desc' && (
+                            <ArrowDown className="ml-2 h-4 w-4" />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
+
+      <TableBody>
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => {
+            const id = row.id + pageIndex * pageSize;
+            return (
+              <TableRow key={id} className="h-[2.5625rem]">
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      className="font-medium text-center text-size-14px text-zinc-950"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
                   );
                 })}
               </TableRow>
-            ))}
-          </TableHeader>
-
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => {
-                const id = row.id + pageIndex * pageSize;
-                return (
-                  <TableRow key={id} className="h-[2.5625rem]">
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className="font-medium text-center text-size-14px text-zinc-950"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  {loading ? '' : 'No results.'}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <ScrollBar orientation="vertical" />
-    </ScrollArea>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={columns.length} className="h-24 text-center">
+              {loading ? '' : 'No results.'}
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };
 
