@@ -109,7 +109,7 @@ async function fetchTermContent(domainCode: string) {
 
 async function fetchContent(url: string) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) {
       throw new Error(`fetchError: ${response.status}`);
     }
