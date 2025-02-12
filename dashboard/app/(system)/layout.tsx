@@ -1,6 +1,5 @@
 import CurrentBreadCrumb from '@/components/system/current-bread-crumb';
-import Topbar from '@/components/layout/top-bar';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import React from 'react';
 import ContentWithTitleSection from '@/components/system/content-with-title-section';
 import { ModalProvider } from '@/components/provider/modal-provider';
@@ -19,30 +18,25 @@ const ManagementLayout = async ({ children }: Props) => {
   let permit = false;
   if (userFromDB) {
     const permissions = await getUserPermissions(userFromDB);
-    // console.log(permissions);
+    console.log(permissions);
     permit = permissions.includes('Global');
+    // permit = true;
   }
 
   return (
     <>
       {permit && (
         <ModalProvider>
-          <SidebarProvider className="flex flex-col overflow-x-auto overflow-y-hidden">
-            <Topbar className="bg-zinc-950 h-14 w-full flex items-center justify-between flex-shrink-0 px-[1.875rem]" />
-            <div className="flex flex-1 h-full">
-              {/* Sidebar hide left menu for temperately open  */}
-              <aside className="relative w-[16.5rem] bg-zinc-50">
-                <LeftMenu />
-              </aside>
-
-              {/* Main Content */}
-              <div className="w-full p-5 space-y-5">
+          <SidebarProvider className="pt-[3.5rem]">
+            <LeftMenu />
+            <SidebarInset>
+              <div className="w-full p-5 space-y-5 ">
                 <CurrentBreadCrumb />
                 <div className="relative h-full w-full">
                   <ContentWithTitleSection>{children}</ContentWithTitleSection>
                 </div>
               </div>
-            </div>
+            </SidebarInset>
           </SidebarProvider>
         </ModalProvider>
       )}

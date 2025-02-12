@@ -1,10 +1,13 @@
 'use client';
 import {
   LayoutDashboard,
-  ChevronDown,
-  ChevronUp,
   Sheet,
   Users,
+  NotebookPen,
+  Images,
+  Languages,
+  Goal,
+  ChevronRight,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -15,9 +18,20 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarTrigger,
+  useSidebar,
 } from '@/components/ui/sidebar';
-import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+
+import { usePathname } from 'next/navigation';
+import { Separator } from '../ui/separator';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../ui/collapsible';
 
 // 메뉴 데이터를 배열로 정의
 const menuItems: MenuItems = [
@@ -33,43 +47,32 @@ const menuItems: MenuItems = [
       { label: 'Quiz', icon: Sheet, href: '/dashboard/quiz' },
     ],
   },
-  // {
-  //   title: "CMS",
-  //   items: [
-  //     {
-  //       label: "Questions",
-  //       icon: NotebookPen,
-  //       children: [
-  //         { label: "Question Bank", href: "/cms/questions/question-bank" },
-  //         { label: "Translation", href: "/cms/questions/translation" },
-  //       ],
-  //     },
-  //     { label: "Certification", icon: Tag, href: "/cms/certification" },
-  //     { label: "Media Library", icon: Images, href: "/cms/media-library" },
-  //     {
-  //       label: "Settings",
-  //       icon: Settings2,
-  //       children: [
-  //         { label: "User Setting", href: "/cms/settings/user-setting" },
-  //         { label: "Question Setting", href: "/cms/settings/question-setting" },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    title: 'CMS',
+    items: [
+      { label: 'Set Quiz', icon: NotebookPen, href: '/cms/set-quiz' },
+      { label: 'Media Library', icon: Images, href: '/cms/media-library' },
+      { label: 'UI Language', icon: Languages, href: '/cms/ui-language' },
+      { label: 'Target', icon: Goal, href: '/cms/target' },
+    ],
+  },
 ];
 
 // Menu 컴포넌트
 const LeftMenu = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = usePathname();
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const { setOpen } = useSidebar();
+  // const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
-  const toggleSection = (label: string) => {
-    setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
+  // const toggleSection = (label: string) => {
+  //   setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
+  // };
 
   return (
-    <Sidebar variant="inset" collapsible="none">
+    <Sidebar variant="sidebar" collapsible="icon">
+      <SidebarTrigger className="ml-auto" />
+      <Separator />
       <SidebarContent className="p-2">
         {menuItems.map((group, groupIndex) => (
           <SidebarGroup key={groupIndex}>
@@ -80,50 +83,60 @@ const LeftMenu = () => {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               {group.items.map((item, itemIndex) => {
-                return (
-                  <SidebarMenu key={itemIndex} className="mb-1">
-                    {/* 상위 메뉴 */}
-                    <SidebarMenuButton
-                      isActive={pathname === item.href}
-                      disabled={!item?.children && !item?.href}
-                      className="flex items-center justify-between !px-4 !py-6"
-                      onClick={() => {
-                        if (item?.children) {
-                          toggleSection(item.label);
-                        } else if (item?.href) {
-                          router.push(item.href);
-                        }
-                      }}
-                    >
-                      <div className="flex items-center gap-2">
-                        <item.icon className="w-5 h-5" />
-                        <span>{item.label}</span>
-                      </div>
-                      {item?.children &&
-                        (openSections[item.label] ? (
-                          <ChevronUp className="size-[0.9375rem]" />
-                        ) : (
-                          <ChevronDown className="size-[0.9375rem]" />
-                        ))}
-                    </SidebarMenuButton>
+                if (item.children) {
+                  return (
+                    <SidebarMenu key={itemIndex}>
+                      <Collapsible asChild className="group/collapsible">
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton
+                              isActive={pathname === item.href}
+                              tooltip={item.label}
+                              onClick={() => {
+                                setOpen(true);
+                              }}
+                            >
+                              <item.icon className="w-5 h-5" />
+                              <span>{item.label}</span>
+                              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenuSub>
+                              {item.children.map((child, childIndex) => (
+                                <SidebarMenuSubItem key={childIndex}>
+                                  <SidebarMenuSubButton
+                                    asChild
+                                    isActive={pathname === child.href}
+                                  >
+                                    <a href={child.href}>
+                                      <span>{child.label}</span>
+                                    </a>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ))}
+                            </SidebarMenuSub>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                    </SidebarMenu>
+                  );
+                }
 
-                    {/* 자식 메뉴 */}
-                    {item?.children && openSections[item.label] && (
-                      <SidebarMenuItem className="space-y-1">
-                        {item.children.map((child, childIndex) => (
-                          <SidebarMenuButton
-                            key={childIndex}
-                            isActive={pathname === child.href}
-                            className="pl-11 py-5"
-                            onClick={() => {
-                              if (child?.href) router.push(child.href);
-                            }}
-                          >
-                            {child.label}
-                          </SidebarMenuButton>
-                        ))}
-                      </SidebarMenuItem>
-                    )}
+                return (
+                  <SidebarMenu key={itemIndex}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.href}
+                        tooltip={item.label}
+                      >
+                        <a href={item.href}>
+                          <item.icon className="w-5 h-5" />
+                          <span>{item.label}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
                   </SidebarMenu>
                 );
               })}
