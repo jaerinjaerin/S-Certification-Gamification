@@ -303,31 +303,31 @@ deploy_prd_client:
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_C "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_D "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_E "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
