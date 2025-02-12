@@ -94,9 +94,10 @@ export const QuizProvider = ({
   );
 
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
-    quizLog?.lastCompletedStage == null
-      ? 0
-      : Math.min(quizLog?.lastCompletedStage + 1, quizSet.quizStages.length - 1)
+    quizLog?.lastCompletedStage == null ? 0 : quizLog?.lastCompletedStage + 1
+    // quizLog?.lastCompletedStage == null
+    //   ? 0
+    //   : Math.min(quizLog?.lastCompletedStage + 1, quizSet.quizStages.length - 1)
   );
 
   // TODO: 방어 코드. 코드가 정리되면 제거

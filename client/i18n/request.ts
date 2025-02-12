@@ -6,7 +6,8 @@ export default getRequestConfig(async () => {
   const lang = await getServiceLangCode();
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${lang}.json`
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${lang}.json`,
+    { cache: "force-cache" }
   );
 
   if (response.ok) {

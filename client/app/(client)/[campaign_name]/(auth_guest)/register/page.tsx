@@ -111,7 +111,7 @@ export default function GuestRegisterPage() {
       const res = await fetch(jsonUrl, {
         method: "GET",
         // cache: "force-cache",
-        cache: "no-store",
+        // cache: "no-store",
       });
 
       const data = await res.json();

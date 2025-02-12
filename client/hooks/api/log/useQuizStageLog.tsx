@@ -1,15 +1,15 @@
 import { apiClient } from "@/services/apiClient";
-import { QuizQuestionLogsResponse } from "@/types/apiTypes";
-import { UserQuizQuestionLog } from "@prisma/client";
+import { QuizStageLogResponse } from "@/types/apiTypes";
+import { UserQuizStageLog } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { useEffect, useState } from "react";
 
-export const useQuizQuestionLogs = (
+export const useQuizStageLog = (
   userId: string,
   quizSetId: string,
   quizStageIndex: number
 ) => {
-  const [data, setData] = useState<UserQuizQuestionLog[] | null>(null);
+  const [data, setData] = useState<UserQuizStageLog | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,13 +18,13 @@ export const useQuizQuestionLogs = (
       try {
         setLoading(true);
         setError(null);
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}&user_id=${userId}`;
-        const response = await apiClient.get<QuizQuestionLogsResponse>(
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/stages?quizset_id=${quizSetId}&quizstage_index=${quizStageIndex}`;
+        const response = await apiClient.get<QuizStageLogResponse>(
           url,
           "force-cache"
         );
 
-        setData(response.items || null);
+        setData(response.item || null);
       } catch (err) {
         setError("Failed to fetch quiz question logs");
         Sentry.captureMessage("Quiz path validation error", (scope) => {

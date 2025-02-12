@@ -42,6 +42,10 @@ export interface QuizQuestionLogsResponse {
   items: UserQuizQuestionLog[] | null;
 }
 
+export interface QuizStageLogResponse {
+  item: UserQuizStageLog | null;
+}
+
 export interface DomainsResponse {
   items: Domain[];
 }
