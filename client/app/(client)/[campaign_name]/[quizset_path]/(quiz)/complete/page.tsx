@@ -47,29 +47,31 @@ export default function QuizComplete() {
   );
 
   return (
-    <div className="overflow-x-hidden min-h-svh">
-      <motion.div
-        className="flex w-full min-h-svh text-center py-[21px] font-bold "
-        animate={{
-          translateX: `-${switchlIndex * 100}%`,
-        }}
-      >
-        <ScoreAnnouncement
-          stageName={lastCompletedQuizStage?.name ?? ""}
-          className="w-full h-full shrink-0"
-        />
+    <div className="px-9">
+      <div className="overflow-x-hidden min-h-svh">
+        <motion.div
+          className="flex w-full min-h-svh text-center py-[21px] font-bold "
+          animate={{
+            translateX: `-${switchlIndex * 100}%`,
+          }}
+        >
+          <ScoreAnnouncement
+            stageName={lastCompletedQuizStage?.name ?? ""}
+            className="w-full h-full shrink-0"
+          />
 
-        {isBadgeStage && (
-          <>
-            <GetBadgeAnnouncment
-              stageName={lastCompletedQuizStage?.name ?? ""}
-              badgeStage={lastCompletedQuizStage}
-              className="w-full h-full shrink-0"
-            />
-            <ScoreRankAnnouncement className="w-full h-full shrink-0" />
-          </>
-        )}
-      </motion.div>
+          {isBadgeStage && (
+            <>
+              <GetBadgeAnnouncment
+                stageName={lastCompletedQuizStage?.name ?? ""}
+                badgeStage={lastCompletedQuizStage}
+                className="w-full h-full shrink-0"
+              />
+              <ScoreRankAnnouncement className="w-full h-full shrink-0" />
+            </>
+          )}
+        </motion.div>
+      </div>
     </div>
   );
 }

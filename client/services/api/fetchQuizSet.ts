@@ -12,8 +12,8 @@ export async function fetchQuizSet(
   quizsetPath: string,
   userId: string
 ): Promise<ApiResponse<QuizSetEx>> {
-  const cacheKey = `${quizsetPath}_${userId}`;
-  const now = Date.now();
+  // const cacheKey = `${quizsetPath}_${userId}`;
+  // const now = Date.now();
 
   // // ✅ 마지막 캐시 정리 이후 30분 이상 경과한 경우에만 캐시 삭제 실행
   // console.log(
