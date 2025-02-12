@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 export async function GET(request: Request) {
-  console.warn("GET /api/campaigns");
+  // console.warn("GET /api/campaigns");
   const { searchParams } = new URL(request.url);
   const campaignName = searchParams.get("campaign_name");
 
