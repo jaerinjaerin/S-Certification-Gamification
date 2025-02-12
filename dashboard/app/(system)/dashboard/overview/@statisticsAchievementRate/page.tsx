@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Bar,
   BarChart,
@@ -26,8 +25,12 @@ import { legendCapitalizeFormatter } from '../../_lib/text';
 import { chartHeight } from '../../_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 function OverviewAchievementRate() {
+  const { createController, abort } = useAbortController();
+  const { createController: createControllerInfo, abort: abortInfo } =
+    useAbortController();
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -39,17 +42,26 @@ function OverviewAchievementRate() {
         state.fieldValues,
         'overview/statistics/achievement',
         (data) => {
+          console.log('🚀 ~ useEffect ~ data.result:', data.result);
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
       //
-      fetchData(state.fieldValues, 'overview/info/achievement', (data) => {
-        setCount(data.result.count.toFixed(2) ?? 0);
-      });
+      fetchData(
+        state.fieldValues,
+        'overview/info/achievement',
+        (data) => {
+          setCount(data.result.count.toFixed(2) ?? 0);
+        },
+        createControllerInfo()
+      );
     }
 
     return () => {
+      abort();
+      abortInfo();
       setLoading(true);
     };
   }, [state.fieldValues]);
@@ -78,13 +90,17 @@ function OverviewAchievementRate() {
             content={<CustomTooltip />}
           />
           <Legend iconSize={8} formatter={legendCapitalizeFormatter} />
-          <Brush
-            dataKey="name"
-            height={20}
-            stroke={chartColorPrimary}
-            startIndex={0}
-            endIndex={9}
-          />
+
+          {data.length > 10 && (
+            <Brush
+              dataKey="name"
+              height={20}
+              stroke={chartColorPrimary}
+              startIndex={0}
+              endIndex={9}
+            />
+          )}
+
           <Bar
             dataKey="goal"
             fill={chartColorPrimary}

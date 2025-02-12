@@ -15,8 +15,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prisma:generate": "npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
+    "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
+    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "pm2:stop": "pm2 delete squiz",
     "pm2:start": "pm2 start npm --name 'squiz' -- start"
   },

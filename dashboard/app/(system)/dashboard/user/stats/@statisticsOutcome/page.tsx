@@ -1,7 +1,6 @@
 'use client';
 export const dynamic = 'force-dynamic';
 
-
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import {
@@ -28,8 +27,12 @@ import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
 } from '../../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const UserOutcome = () => {
+  const { createController, abort } = useAbortController();
+  const { createController: createControllerTime, abort: abortTime } =
+    useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState({ score: [], time: [] });
   const [loading, setLoading] = useState({ score: true, time: true });
@@ -42,7 +45,8 @@ const UserOutcome = () => {
         (data) => {
           setData((v) => ({ ...v, score: data.result }));
           setLoading((v) => ({ ...v, score: false }));
-        }
+        },
+        createController()
       );
       //
       fetchData(
@@ -51,12 +55,15 @@ const UserOutcome = () => {
         (data) => {
           setData((v) => ({ ...v, time: data.result }));
           setLoading((v) => ({ ...v, time: false }));
-        }
+        },
+        createControllerTime()
       );
       //
     }
 
     return () => {
+      abort();
+      abortTime();
       setLoading({ score: true, time: true });
     };
   }, [state.fieldValues]);
