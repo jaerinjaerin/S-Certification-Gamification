@@ -1,10 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 export default function RefreshButton() {
-  const router = useRouter();
-
   return (
     <div
       className="h-full bg-[#F0F0F0] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]"
@@ -16,7 +12,9 @@ export default function RefreshButton() {
         The network is unstable. Please try again later.
       </h1>
       <button
-        onClick={() => router.refresh()}
+        onClick={() => {
+          window.location.reload();
+        }}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
       >
         Retry
