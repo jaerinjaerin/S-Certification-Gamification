@@ -1,2 +1,0 @@
-Method,Name,Error,Occurrences
-GET,/api/logs/quizzes/sets?user_id=9032d015-86ae-4056-9fef-36adca43d897&campaign_name=s25,HTTPError('502 Server Error: Bad Gateway for url: /api/logs/quizzes/sets?user_id=9032d015-86ae-4056-9fef-36adca43d897&campaign_name=s25'),1

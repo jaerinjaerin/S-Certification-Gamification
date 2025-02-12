@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+
 import time
 from locust import HttpUser, TaskSet, task, between
 
@@ -5,32 +7,74 @@ class UserBehavior(TaskSet):
     @task(1)
     def index_page(self):
         timestamp = int(time.time() * 1000)
-        self.client.get("/s25/${timestamp}")  # Next.js 홈페이지
+        self.client.get(f"/s25/{timestamp}")  # Next.js 홈페이지
 
     @task(2)
-    def index_page(self):
+    def index_page2(self):
         timestamp = int(time.time() * 1000)
-        self.client.get("/s25/${timestamp}")  # Next.js 홈페이지
-
-    @task(2)
-    def api_call(self):
-        timestamp = int(time.time() * 1000)
-        self.client.get("https://stg-quiz.samsungplus.net/api/campaigns/quizsets/NAT_2360_id?user_id=a0c29c07-5eed-49b8-8f8d-39639e3e882a&nocache={timestamp}")  # 특정 API 호출
+        self.client.get(f"/s25/NAT_2862_ko/quiz")  # Next.js 홈페이지
 
     @task(3)
-    def api_call(self):
+    def index_page3(self):
         timestamp = int(time.time() * 1000)
-        self.client.get("https://stg-quiz.samsungplus.net/api/logs/quizzes/sets?user_id=9032d015-86ae-4056-9fef-36adca43d897&campaign_name=s25&nocache={timestamp}")  # 특정 API 호출
+        self.client.get(f"/s25/NAT_2862_ko/map")  # Next.js 홈페이지
+
+    @task(4)
+    def index_page4(self):
+        timestamp = int(time.time() * 1000)
+        self.client.get(f"/s25/NAT_2862_ko/complete")  # Next.js 홈페이지
 
     @task(5)
-    def api_call(self):
+    def api_call1(self):
         timestamp = int(time.time() * 1000)
-        self.client.get("https://stg-quiz.samsungplus.net/api/campaigns?campaign_name=s25")  # 특정 API 호출
+        self.client.get(f"https://stg-quiz.samsungplus.net/api/campaigns/quizsets/NAT_2360_id?user_id=a0c29c07-5eed-49b8-8f8d-39639e3e882a&nocache={timestamp}")  # 특정 API 호출
 
     @task(6)
-    def api_call(self):
+    def api_call2(self):
         timestamp = int(time.time() * 1000)
-        self.client.get("https://stg-quiz.samsungplus.net/api/languages")  # 특정 API 호출
+        self.client.get(f"https://stg-quiz.samsungplus.net/api/logs/quizzes/sets?user_id=9032d015-86ae-4056-9fef-36adca43d897&campaign_name=s25&nocache={timestamp}")  # 특정 API 호출
+
+    @task(7)
+    def api_call3(self):
+        timestamp = int(time.time() * 1000)
+        self.client.get(f"https://stg-quiz.samsungplus.net/api/campaigns?campaign_name=s25")  # 특정 API 호출
+
+    @task(8)
+    def api_call4(self):
+        timestamp = int(time.time() * 1000)
+        self.client.get(f"https://stg-quiz.samsungplus.net/api/languages")  # 특정 API 호출
+
+    @task(9)
+    def load_homepage(self):
+        """메인 페이지 로드 + 관련 리소스 자동 요청"""
+        response = self.client.get("/s25")
+        
+        if response.status_code == 200:
+            self.fetch_assets(response.text)  # HTML 파싱 후 리소스 요청
+
+    def fetch_assets(self, html):
+        """HTML 내부에서 CSS, JS, 이미지 링크를 찾아 요청"""
+        soup = BeautifulSoup(html, "html.parser")
+
+        static_assets = []
+
+        # CSS 파일 찾기
+        for link in soup.find_all("link", {"rel": "stylesheet"}):
+            static_assets.append(link["href"])
+
+        # JS 파일 찾기
+        for script in soup.find_all("script", {"src": True}):
+            static_assets.append(script["src"])
+
+        # 이미지 파일 찾기
+        for img in soup.find_all("img", {"src": True}):
+            static_assets.append(img["src"])
+
+        # 병렬로 리소스 가져오기
+        for asset in static_assets:
+            if not asset.startswith("http"):  # 상대경로이면 절대경로로 변경
+                asset = self.client.base_url + asset
+            self.client.get(asset, name="Static Asset")
 
     # @task(3)
     # def submit_form(self):
