@@ -109,6 +109,8 @@ export default async function QuizLayout({
       }}
     >
       <QuizProvider
+        campaignName={params.campaign_name}
+        quizSetPath={params.quizset_path}
         quizSet={quizSet}
         // language={response.item.language}
         quizLog={quizLog}
@@ -116,7 +118,6 @@ export default async function QuizLayout({
         // quizQuestionLogs={result.quizQuestionLogs!}
         userId={userId}
         authType={session?.user.authType || AuthType.GUEST}
-        quizSetPath={params.quizset_path}
       >
         {children}
       </QuizProvider>

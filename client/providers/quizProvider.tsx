@@ -12,7 +12,7 @@ import {
 import * as Sentry from "@sentry/nextjs";
 import assert from "assert";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import { QuizBadgeHandler } from "./managers/quizBadgeHandler";
@@ -56,6 +56,7 @@ interface QuizContextType {
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider = ({
+  campaignName,
   userId,
   authType,
   children,
@@ -65,6 +66,7 @@ export const QuizProvider = ({
   // quizQuestionLogs,
   quizSetPath,
 }: {
+  campaignName: string;
   userId: string;
   authType: AuthType;
   children: React.ReactNode;
@@ -105,7 +107,7 @@ export const QuizProvider = ({
     currentQuizStageIndex >= quizSet.quizStages.length &&
     pathname.includes("/quiz")
   ) {
-    routeToPage("map");
+    redirect(`/${campaignName}/${quizSetPath}/map`);
   }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
