@@ -8,7 +8,7 @@
     "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": "rm -rf .next && next build",
     "build:stg": "NODE_ENV=staging && rm -rf .next && next build",
-    "build:prd": "NODE_ENV=production && rm -rf app/(client)/test && rm -rf .next && next build",
+    "build:prd": "NODE_ENV=production && rm -rf .next && next build",
     "build:local": "cp -f .env.loc.production .env && next build",
     "build:analyze": "npm run build && source-map-explorer .next/static/**/*.js",
     "analyze": "ANALYZE=true next build",
