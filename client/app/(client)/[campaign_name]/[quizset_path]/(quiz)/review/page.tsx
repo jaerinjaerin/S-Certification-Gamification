@@ -21,9 +21,7 @@ export default function ReviewPage() {
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage] = useState<string | undefined>(undefined);
   const [loading] = useState(false);
 
   const searchParams = useSearchParams();
