@@ -55,7 +55,10 @@ export default async function SumtotalUserLayout({
 async function fetchInformationAboutDomain(domainCode: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`,
+      {
+        cache: "force-cache",
+      }
     );
     if (!response.ok) {
       throw new Error(

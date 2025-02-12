@@ -2,9 +2,9 @@ import { ApiResponse } from "@/types/apiTypes";
 import { Campaign } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 
-let cachedCampaigns: Record<string, ApiResponse<Campaign>> = {};
-let lastFetchCampaignTime: Record<string, number> = {};
-const CAMPAIGN_CACHE_DURATION = 86400000; // 24 시간 캐싱 (ms 단위)
+// let cachedCampaigns: Record<string, ApiResponse<Campaign>> = {};
+// let lastFetchCampaignTime: Record<string, number> = {};
+// const CAMPAIGN_CACHE_DURATION = 86400000; // 24 시간 캐싱 (ms 단위)
 
 export async function fetchCampaign(
   campaignName: string
@@ -12,19 +12,19 @@ export async function fetchCampaign(
   const now = Date.now();
 
   // ✅ 로컬 캐시에 데이터가 있고, 60초 이내라면 캐시된 데이터 반환
-  if (
-    cachedCampaigns[campaignName] &&
-    lastFetchCampaignTime[campaignName] &&
-    now - lastFetchCampaignTime[campaignName] < CAMPAIGN_CACHE_DURATION
-  ) {
-    // console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
-    return cachedCampaigns[campaignName];
-  }
+  // if (
+  //   cachedCampaigns[campaignName] &&
+  //   lastFetchCampaignTime[campaignName] &&
+  //   now - lastFetchCampaignTime[campaignName] < CAMPAIGN_CACHE_DURATION
+  // ) {
+  //   // console.info(`✅ 캐시된 (캠페인) 데이터 반환: ${campaignName}`);
+  //   return cachedCampaigns[campaignName];
+  // }
 
   try {
     // ✅ API 요청 (fetch 사용)
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${campaignName}`;
-    const response = await fetch(url, { method: "GET", cache: "no-store" });
+    const response = await fetch(url, { method: "GET", cache: "force-cache" });
 
     console.log(`🔗 API 요청: ${response.status}`);
 
@@ -49,9 +49,9 @@ export async function fetchCampaign(
       };
     }
 
-    // ✅ API 요청 성공 시 로컬 캐시에 저장
-    cachedCampaigns[campaignName] = data;
-    lastFetchCampaignTime[campaignName] = now;
+    // // ✅ API 요청 성공 시 로컬 캐시에 저장
+    // cachedCampaigns[campaignName] = data;
+    // lastFetchCampaignTime[campaignName] = now;
 
     // console.info(`🔄 캐시 (캠페인) 업데이트: ${campaignName}`);
 
