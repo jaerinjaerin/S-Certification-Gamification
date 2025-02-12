@@ -1,9 +1,3 @@
-type QuizRankedIncorrectAnswerRateProps = {
-  id: string;
-  question: string;
-  product: string;
-  category: string;
-  questionType: string;
-  importance: string;
+type QuizRankedIncorrectAnswerRateProps = Question & {
   errorRate: number;
 };

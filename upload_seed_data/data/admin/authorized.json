@@ -19,8 +19,8 @@
       ]
     },
     {
-      "name": "rino.park",
-      "providerUserId": "Y7XixLuM8I7KAMorpjK3lw==",
+      "name": "rino_global",
+      "providerUserId": "hXiglq46fbu2Pke9iKoTsg==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -47,7 +47,7 @@
     },
     {
       "name": "cheil.chae1",
-      "providerUserId": "UyuA2lbp7qdvXqVOYV4nDw==",
+      "providerUserId": "nYmWFrWJzsWN5+otXdatMg==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -56,7 +56,16 @@
     },
     {
       "name": "cheil.pth",
-      "providerUserId": "BvyBKjYqudVJ19ml+0Dghw==",
+      "providerUserId": "8hVvYzjbhfA4muLhB4q/lQ==",
+      "role": "admin",
+      "permissions": [
+        "Global",
+        "OrgCode-7"
+      ]
+    },
+    {
+      "name": "cheil.harry",
+      "providerUserId": "33rp3bO4PhMwZdqXQswM1w==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -74,7 +83,7 @@
     },
     {
       "name": "cheil.chjang",
-      "providerUserId": "C9OZYbrW82Urz8Xo7tIzAQ==",
+      "providerUserId": "ax6EEQMNOLCK+EfHuKc++w==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -83,7 +92,7 @@
     },
     {
       "name": "cheil.chanju",
-      "providerUserId": "VwtJy1RCI6CSFvxEIUOG1w==",
+      "providerUserId": "q9iM7XvUJ1d7rmt6ZaCoEA==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -92,7 +101,7 @@
     },
     {
       "name": "cheil.mos",
-      "providerUserId": "BrK45DASNPau0CICiFA7Gg==",
+      "providerUserId": "XOjC84xIv3Y/Cx7Cgb212Q==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -101,7 +110,7 @@
     },
     {
       "name": "cheil.soolim",
-      "providerUserId": "1E2jvcBCQpxMPaub8h86RA==",
+      "providerUserId": "BYDsAju8Lc59H7+aIqiiBA==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -119,7 +128,7 @@
     },
     {
       "name": "bpo.6",
-      "providerUserId": "L63ws6OIH/BGCZOH+nbWTw==",
+      "providerUserId": "Ahvfzsw7amH+4BW/bru9ag==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -128,7 +137,7 @@
     },
     {
       "name": "bpo.7",
-      "providerUserId": "V7apyjFPtk32miyT6TCxEQ==",
+      "providerUserId": "6t14Zal3kmprwbbWrf47Ug==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -137,7 +146,7 @@
     },
     {
       "name": "bpo.11",
-      "providerUserId": "0uZVuNqgb1cUp/oLZdb5Yg==",
+      "providerUserId": "vEZSt2PCzrW8/svJ42R8iw==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -155,7 +164,7 @@
     },
     {
       "name": "bpo.21",
-      "providerUserId": "9bKIfK75pd2PI4cAOFP7Aw==",
+      "providerUserId": "zBCpo1YksBMZnl4D2kMwlA==",
       "role": "admin",
       "permissions": [
         "Global",
@@ -164,7 +173,7 @@
     },
     {
       "name": "bpo.22",
-      "providerUserId": "i6RvlH253la7IyuRn619gA==",
+      "providerUserId": "grgeJn5pISXX4LNbQP2L/g==",
       "role": "admin",
       "permissions": [
         "Global",

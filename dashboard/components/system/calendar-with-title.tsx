@@ -78,20 +78,21 @@ export function CalendarForm({
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="range" // 날짜 범위 선택 모드
+            numberOfMonths={2}
             selected={field.value}
             onSelect={field.onChange}
-            disabled={(date) => {
-              if (minDate && maxDate) {
-                return date < minDate || date > maxDate;
-              }
-              if (minDate) {
-                return date < minDate;
-              }
-              if (maxDate) {
-                return date > maxDate;
-              }
-              return false;
-            }}
+            // disabled={(date) => {
+            //   if (minDate && maxDate) {
+            //     return date < minDate || date > maxDate;
+            //   }
+            //   if (minDate) {
+            //     return date < minDate;
+            //   }
+            //   if (maxDate) {
+            //     return date > maxDate;
+            //   }
+            //   return false;
+            // }}
             initialFocus
           />
         </PopoverContent>

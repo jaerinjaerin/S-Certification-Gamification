@@ -26,8 +26,10 @@ import { fetchData } from '../../_lib/fetch';
 import ChartContainer from '../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
 import { ProgressTooltip } from '../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 export function OverviewGoalAchievement() {
+  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
   const count = useRef(0);
@@ -45,11 +47,13 @@ export function OverviewGoalAchievement() {
           expertRange.current = goalTotalScore;
           setData(jobData);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);

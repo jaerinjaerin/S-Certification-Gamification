@@ -1,9 +1,9 @@
 'use client';
 export const dynamic = 'force-dynamic';
 
-
 import {
   Bar,
+  Brush,
   CartesianGrid,
   ComposedChart,
   Legend,
@@ -27,8 +27,10 @@ import { fetchData } from '../../../_lib/fetch';
 import ChartContainer from '../../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '../../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 export function UserProgressExperts() {
+  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,11 +43,13 @@ export function UserProgressExperts() {
         (data) => {
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);
@@ -53,7 +57,7 @@ export function UserProgressExperts() {
   return (
     <ChartContainer>
       {loading && <LoaderWithBackground />}
-      <CardCustomHeaderWithoutDesc title="Progess of Experts" />
+      <CardCustomHeaderWithoutDesc title="Progress of Experts" />
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart
           title="Experts distribution"
@@ -74,6 +78,17 @@ export function UserProgressExperts() {
             content={<CustomTooltip />}
           />
           <Legend iconSize={8} />
+
+          {data.length > 6 && (
+            <Brush
+              dataKey="date"
+              height={20}
+              stroke={chartColorPrimary}
+              startIndex={0}
+              endIndex={5}
+            />
+          )}
+
           {/* Job 데이터의 모든 Bar를 생성 */}
           <Bar
             name="Expert"

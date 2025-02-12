@@ -24,6 +24,7 @@ import {
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
 import Pagination from '../../../_components/pagenation';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -142,6 +143,7 @@ const columns: ColumnDef<UserListProps>[] = [
 ];
 
 const UserList = () => {
+  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState<UserListProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -191,11 +193,13 @@ const UserList = () => {
           total.current = data.total;
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues, pageIndex]);

@@ -30,10 +30,12 @@ import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   ExpertsTooltip,
 } from '../../_components/charts/chart-tooltip';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExperts = () => {
+  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
   const [data, setData] = useState({ pie: [], bar: [] });
   const [count, setCount] = useState([]);
@@ -41,14 +43,20 @@ const OverviewExperts = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      fetchData(state.fieldValues, 'overview/statistics/experts', (data) => {
-        setData(data.result);
-        setCount(data.count);
-        setLoading(false);
-      });
+      fetchData(
+        state.fieldValues,
+        'overview/statistics/experts',
+        (data) => {
+          setData(data.result);
+          setCount(data.count);
+          setLoading(false);
+        },
+        createController()
+      );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);
