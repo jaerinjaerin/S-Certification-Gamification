@@ -6,6 +6,16 @@ const path = require("path");
 const prisma = new PrismaClient();
 
 async function main() {
+  const domains = await prisma.domain.findMany({
+    include: {
+      subsidiary: {
+        include: {
+          region: true,
+        },
+      },
+    },
+  });
+
   const languageCode = "en-US";
   const language = await prisma.language.findFirst({
     where: { code: languageCode },
@@ -58,6 +68,7 @@ async function main() {
             gte: startOfDay,
             lte: endOfDay,
           },
+          originalQuestionId: null,
         },
         orderBy: { createdAt: "asc" },
         skip,
@@ -77,12 +88,16 @@ async function main() {
               (q) => q.id === question.originalQuestionId
             );
 
+            const domain = domains.find((d) => d.id === log.domainId);
+
             if (originQuestion) {
               await prisma.userQuizQuestionStatistics.update({
                 where: { id: log.id },
                 data: {
                   originalQuestionId: originQuestion.id,
                   originalIndex: originQuestion.originalIndex,
+                  regionId: domain.subsidiary.regionId,
+                  subsidiaryId: domain.subsidiaryId,
                 },
               });
             }
