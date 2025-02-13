@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const dynamic = 'force-dynamic';
 import { prisma } from '@/model/prisma';
@@ -16,10 +17,21 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const regions = await prisma.region.findMany({
+    let regions = await prisma.region.findMany({
       include: { subsidiaries: { include: { domains: true } } },
       orderBy: { order: 'asc' },
     });
+
+    const domainsWithSubsidiaryNull = await prisma.domain.findMany({
+      where: { subsidiaryId: null },
+      orderBy: { order: 'asc' },
+    });
+
+    const domainsIntoRegion = domainsWithSubsidiaryNull.map((domain) =>
+      transformDataToRegion(domain)
+    );
+
+    regions = [...domainsIntoRegion, ...regions];
 
     const jobs = await prisma.job.findMany({});
     const jobFF = jobs.filter((job) => job.code === 'ff').map((job) => job.id);
@@ -218,3 +230,34 @@ const calculateTotals = (
   totals.percentage = calculatePercentage(totals.progress, totals.target);
   return totals;
 };
+
+// Region 구조로 데이터 변경(Region, Subsidiary 값이 null 경우 사용)
+function transformDataToRegion(input: Record<string, any>) {
+  return {
+    id: input.id,
+    name: input.name,
+    code: input.code,
+    order: input.order,
+    hqId: input.id,
+    subsidiaries: [
+      {
+        id: input.id,
+        name: input.name,
+        code: input.code,
+        order: input.order,
+        regionId: input.id,
+        domains: [
+          {
+            id: input.id,
+            name: input.name,
+            code: input.code,
+            subsidiaryId: input.id,
+            order: input.order,
+            createdAt: input.createdAt,
+            updatedAt: input.updatedAt,
+          },
+        ],
+      },
+    ],
+  };
+}
