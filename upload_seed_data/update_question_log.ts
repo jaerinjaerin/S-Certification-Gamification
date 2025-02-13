@@ -120,7 +120,7 @@ async function main() {
             if (originQuestion) {
               const domain = domains.find((d) => d.id === log.domainId);
 
-              if ((domain.subsidiary = null)) {
+              if (domain.subsidiary == null) {
                 console.error(`❌ Domain not found: ${log.domainId}`);
               }
 
