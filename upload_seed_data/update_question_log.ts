@@ -80,18 +80,46 @@ async function main() {
         break;
       }
 
-      for (const log of logs) {
-        if (log.originalQuestionId != null) {
+      // for await (const log of logs) {
+      //   if (log.originalQuestionId != null) {
+      //     const question = questions.find((q) => q.id === log.questionId);
+      //     if (question) {
+      //       const originQuestion = hqQuestions.find(
+      //         (q) => q.id === question.originalQuestionId
+      //       );
+
+      //       console.log("originQuestion", originQuestion);
+
+      //       if (originQuestion) {
+      //         const domain = domains.find((d) => d.id === log.domainId);
+      //         await prisma.userQuizQuestionStatistics.update({
+      //           where: { id: log.id },
+      //           data: {
+      //             originalQuestionId: originQuestion.id,
+      //             originalIndex: originQuestion.originalIndex,
+      //             regionId: domain.subsidiary.regionId,
+      //             subsidiaryId: domain.subsidiaryId,
+      //           },
+      //         });
+      //       }
+      //     }
+
+      //     if (!question) {
+      //       console.error(`❌ Question not found: ${log.originalQuestionId}`);
+      //     }
+      //   }
+      // }
+      const result = await Promise.all(
+        logs.map(async (log) => {
           const question = questions.find((q) => q.id === log.questionId);
           if (question) {
             const originQuestion = hqQuestions.find(
               (q) => q.id === question.originalQuestionId
             );
 
-            const domain = domains.find((d) => d.id === log.domainId);
-
             if (originQuestion) {
-              await prisma.userQuizQuestionStatistics.update({
+              const domain = domains.find((d) => d.id === log.domainId);
+              return prisma.userQuizQuestionStatistics.update({
                 where: { id: log.id },
                 data: {
                   originalQuestionId: originQuestion.id,
@@ -106,8 +134,10 @@ async function main() {
           if (!question) {
             console.error(`❌ Question not found: ${log.originalQuestionId}`);
           }
-        }
-      }
+        })
+      );
+
+      console.log("✅ Updated logs:", result.length);
 
       const dateKey = startOfDay.toISOString().split("T")[0];
       if (!dailyLogs[dateKey]) dailyLogs[dateKey] = [];
