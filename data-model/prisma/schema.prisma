@@ -238,7 +238,7 @@ model QuizBadge {
   updatedAt  DateTime   @updatedAt
 
   quizStages QuizStage[]
-  // activities Activity[]
+  activities Activity[]
 
   campaignId String?
   domainId   String?
@@ -674,22 +674,22 @@ model UserQuizQuestionStatistics {
   originalIndex Int?
 }
 
-// model Activity {
-//   id            String   @id @default(uuid())
-//   name          String
+model Activity {
+  id            String   @id @default(uuid())
+  name          String
 
-//   badgeImageId  String?
-//   badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+  badgeImageId  String?
+  badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
 
-//   activityId    String
-//   jobCodes      String[]
+  activityId    String
+  jobCodes      String[]
 
-//   domainId      String
-//   languageId    String
+  domainId      String
+  languageId    String
 
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-// }
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
 
 model ActivityFailLog {
   id            String   @id @default(uuid())
