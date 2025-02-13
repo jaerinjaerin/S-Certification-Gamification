@@ -119,12 +119,17 @@ async function main() {
 
             if (originQuestion) {
               const domain = domains.find((d) => d.id === log.domainId);
+
+              if ((domain.subsidiary = null)) {
+                console.error(`❌ Domain not found: ${log.domainId}`);
+              }
+
               return prisma.userQuizQuestionStatistics.update({
                 where: { id: log.id },
                 data: {
                   originalQuestionId: originQuestion.id,
                   originalIndex: originQuestion.originalIndex,
-                  regionId: domain.subsidiary.regionId,
+                  regionId: domain.subsidiary?.regionId,
                   subsidiaryId: domain.subsidiaryId,
                 },
               });
