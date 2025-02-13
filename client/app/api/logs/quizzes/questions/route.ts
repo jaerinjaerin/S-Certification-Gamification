@@ -199,23 +199,6 @@ export async function GET(request: NextRequest) {
 
     console.log("userId", userId);
 
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     quizSetId: quizSetId,
-    //     quizStageIndex: Number(quizStageIndex),
-    //     tryNumber: 1,
-    //   },
-    //   orderBy: [
-    //     {
-    //       questionId: "asc", // questionId를 기준으로 정렬
-    //     },
-    //     {
-    //       createdAt: "desc", // 최신 항목을 우선 정렬
-    //     },
-    //   ],
-    //   distinct: ["questionId"], // questionId별로 중복 제거
-    // });
-
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
         userId: userId,

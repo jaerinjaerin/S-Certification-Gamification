@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 export const dynamic = 'force-dynamic';
-
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import { fetchData } from '../../../_lib/fetch';
@@ -32,6 +31,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAbortController } from '@/components/hook/use-abort-controller';
+import { updateSearchParamsOnUrl } from '@/lib/url';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -141,6 +142,7 @@ const columns: ColumnDef<DomainProps>[] = [
 ];
 
 const UserDomain = () => {
+  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
   const [data, setData] = useState<DomainProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -178,26 +180,51 @@ const UserDomain = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
+      const { domainPageIndex, ...fieldValues } = state.fieldValues;
       if (fieldValuesChanged() && 1 < pageIndex) {
         setPageIndex(1);
         return;
       }
 
       fetchData(
-        { ...state.fieldValues, take: pageSize, page: pageIndex },
+        {
+          ...fieldValues,
+          take: pageSize,
+          page: pageIndex,
+        },
         'user/info/domain',
         (data) => {
+          updateSearchParamsOnUrl({
+            ...fieldValues,
+            domainPageIndex: pageIndex,
+          });
+          //
           total.current = data.total;
           setData(data.result);
           setLoading(false);
-        }
+        },
+        createController()
       );
     }
 
     return () => {
+      abort();
       setLoading(true);
     };
-  }, [state.fieldValues, pageIndex]);
+  }, [state.fieldValues, pageIndex, pageSize]);
+
+  // 서치파람으로 페이지 지정
+  useEffect(() => {
+    if (state.fieldValues) {
+      const { domainPageIndex } = state.fieldValues;
+
+      if (domainPageIndex && /^\d+$/.test(domainPageIndex)) {
+        setPageIndex(parseInt(domainPageIndex, 10));
+      } else {
+        setPageIndex(1);
+      }
+    }
+  }, [state.fieldValues]);
 
   return (
     <ChartContainer>

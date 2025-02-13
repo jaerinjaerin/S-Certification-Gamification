@@ -19,7 +19,10 @@ export const useQuizQuestionLogs = (
         setLoading(true);
         setError(null);
         const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}&user_id=${userId}`;
-        const response = await apiClient.get<QuizQuestionLogsResponse>(url);
+        const response = await apiClient.get<QuizQuestionLogsResponse>(
+          url,
+          "force-cache"
+        );
 
         setData(response.items || null);
       } catch (err) {

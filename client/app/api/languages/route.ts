@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
 export async function GET() {
+  // console.warn("GET /api/languages");
   try {
     const languages = await prisma.language.findMany();
     // console.log("languages");

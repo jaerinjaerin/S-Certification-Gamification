@@ -4,7 +4,7 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { decrypt } from '@/utils/encrypt';
-import * as ExcelJS from 'exceljs';
+import { createNormalExcelBlob } from '@/lib/excel';
 
 export async function GET(request: NextRequest) {
   try {
@@ -48,52 +48,21 @@ export async function GET(request: NextRequest) {
       })
     );
 
-    const result = logs.map((log) => ({
-      providerUserId: userMap.get(log.userId) || null,
-      lastCompletedStage: log.lastCompletedStage
-        ? log.lastCompletedStage + 1
-        : 0,
+    const result = logs.map((log, index) => ({
+      no: index + 1,
+      eid: userMap.get(log.userId) || null,
+      stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
     }));
 
-    // Creating a new Excel workbook and sheet
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('User Stage Progress');
-
-    // Adding header row
-    worksheet.columns = [
-      { header: 'No', key: 'no', width: 10 },
-      { header: 'Employee ID', key: 'eid', width: 50 },
-      { header: 'Stage', key: 'stage', width: 30 },
-    ];
-
-    // Populating rows with data
-    let no = 0;
-    result.forEach((user) => {
-      worksheet.addRow({
-        no: ++no,
-        eid: user.providerUserId,
-        stage: user.lastCompletedStage,
-      });
+    const blob = await createNormalExcelBlob({
+      sheetName: 'User Stage Progress',
+      columns: [
+        { header: 'No', key: 'no', width: 10 },
+        { header: 'Employee ID', key: 'eid', width: 30 },
+        { header: 'Stage', key: 'stage', width: 10 },
+      ],
+      data: result,
     });
-
-    // Formatting the columns for better readability
-    worksheet.eachRow((row, rowNumber) => {
-      row.eachCell((cell) => {
-        cell.alignment = { vertical: 'middle', horizontal: 'center' };
-        cell.font = { name: 'Arial', size: 12 };
-      });
-
-      if (rowNumber === 1) {
-        // Apply bold font to the header row
-        row.font = { name: 'Arial', size: 12, bold: true };
-      }
-    });
-
-    // Generating the Excel file and saving
-    const buffer = await workbook.xlsx.writeBuffer();
-
-    // Downloading the file (if in React or browser environment)
-    const blob = await new Blob([buffer], { type: 'application/octet-stream' });
 
     const { createdAt, campaignId, authType, ...args } = condition;
     const range = `${period.from.toISOString().split('T')[0]}_to_${period.to.toISOString().split('T')[0]}`;

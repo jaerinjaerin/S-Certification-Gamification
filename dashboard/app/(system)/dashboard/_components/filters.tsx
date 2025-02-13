@@ -25,6 +25,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
 import Loader from '@/components/loader';
+import { useSearchParams } from 'next/navigation';
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
@@ -55,12 +56,13 @@ const firstElement = { value: 'all', label: 'All' };
 
 // 렌더 데이터 시작
 const Filters = ({
-  hasDownloadButton = false,
+  onDownload,
   onSubmit,
 }: {
-  hasDownloadButton?: boolean;
-  onSubmit: (data: FieldValues) => void;
+  onDownload?: (data: FieldValues) => void;
+  onSubmit: (data: FieldValues, action?: boolean) => void;
 }) => {
+  const searchParams = useSearchParams();
   const form = useForm();
   const formValues = useWatch({ control: form.control });
   const [filterData, setFilterData] = useState<AllFilterData | null>(null);
@@ -80,34 +82,84 @@ const Filters = ({
 
   useEffect(() => {
     if (filterData && !defaultValues.current) {
-      // 필터 초기화 호출
-      initializeFilters(
-        filterData.filters,
-        form,
-        setFilteredSubsidiaries,
-        setFilteredDomains
-      );
-
-      // 캠페인 초기화
-      if (filterData.campaign.length > 0) {
-        const campaign = filterData.campaign[0];
-        form.setValue('campaign', campaign.id);
-        form.setValue('date', {
-          from: new Date(campaign.startedAt),
-          to: new Date(campaign.endedAt),
+      if (searchParams) {
+        searchParams.forEach((value, key) => {
+          if (!key.includes('date')) {
+            form.setValue(key, value);
+          }
         });
-      }
-      //
-      // 유저 선택 초기화
-      form.setValue('userGroup', 'all');
-      //
-      // 적용버튼 활성화 기능을 위한 기준정보 저장
-      defaultValues.current = form.getValues();
+        //
 
-      // reducer에 알림
-      onSubmit(form.getValues());
+        // date 설정
+        if (searchParams.get('date.from') && searchParams.get('date.to')) {
+          const fromDate = searchParams.get('date.from');
+          const toDate = searchParams.get('date.to');
+
+          if (fromDate && toDate) {
+            form.setValue('date', {
+              from: new Date(fromDate),
+              to: new Date(toDate),
+            });
+          }
+        }
+        //
+
+        // 지역 셀렉트 박스 설정
+        const priorities = ['domain', 'subsidiary', 'region']; // 우선순위 설정
+        let isUpdated = false; // 플래그 변수 설정
+
+        for (const k of priorities) {
+          if (searchParams.get(k) && searchParams.get(k) !== 'all') {
+            updateFilters(k, searchParams.get(k) as string); // 조건을 만족하면 updateFilters 호출
+            isUpdated = true; // 플래그 설정
+            break; // 한 번 실행 후 루프 종료
+          }
+        }
+
+        if (!isUpdated) {
+          initializeFilters(
+            filterData.filters,
+            form,
+            setFilteredSubsidiaries,
+            setFilteredDomains
+          );
+        }
+        //
+        // 적용버튼 활성화 기능을 위한 기준정보 저장
+        defaultValues.current = form.getValues();
+
+        // reducer에 알림
+        onSubmit(form.getValues());
+      } else {
+        // 필터 초기화 호출
+        initializeFilters(
+          filterData.filters,
+          form,
+          setFilteredSubsidiaries,
+          setFilteredDomains
+        );
+
+        // 캠페인 초기화
+        if (filterData.campaign.length > 0) {
+          const campaign = filterData.campaign[0];
+          form.setValue('campaign', campaign.id);
+          form.setValue('date', {
+            from: new Date(campaign.startedAt),
+            to: new Date(campaign.endedAt),
+          });
+        }
+        //
+        // 유저 선택 초기화
+        form.setValue('userGroup', 'all');
+        //
+        // 적용버튼 활성화 기능을 위한 기준정보 저장
+        defaultValues.current = form.getValues();
+
+        // reducer에 알림
+        onSubmit(form.getValues());
+      }
     }
-  }, [form, filterData, onSubmit]);
+  }, [form, filterData, onSubmit, searchParams]);
 
   // 폼 데이터 상태 확인 후 현재 기준 값과 비교 (Apply버튼 활성여부)
   useEffect(() => {
@@ -219,11 +271,6 @@ const Filters = ({
     onSubmit(form.getValues());
   };
 
-  const onDownload = () => {
-    // Simulate download
-    console.log('Downloading report...', formValues.campaign);
-  };
-
   if (!filterData)
     return (
       <FiltersContainer>
@@ -238,7 +285,7 @@ const Filters = ({
           defaultValues.current = data;
           setApplyButtonDisabled(true);
           //
-          onSubmit(data);
+          onSubmit(data, true);
         })}
         className="space-y-5"
       >
@@ -246,7 +293,9 @@ const Filters = ({
           <FormField
             control={form.control}
             name="campaign"
-            defaultValue={filterData.campaign[0].id}
+            defaultValue={
+              searchParams.get('campaign') || filterData.campaign[0].id
+            }
             render={({ field }) => (
               <CampaignSelectForm
                 field={field}
@@ -258,8 +307,14 @@ const Filters = ({
               />
             )}
           />
-          {hasDownloadButton && (
-            <Button variant="outline" type="button" onClick={onDownload}>
+          {onDownload && (
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                onDownload(form.getValues());
+              }}
+            >
               <div className="flex items-center space-x-2 text-zinc-950">
                 <Download />
                 <span>Download Report</span>
@@ -273,15 +328,30 @@ const Filters = ({
               control={form.control}
               name="date"
               defaultValue={{
-                from: new Date(filterData.campaign[0].startedAt),
-                to: new Date(filterData.campaign[0].endedAt),
+                from: new Date(
+                  searchParams.get('date.from') ||
+                    filterData.campaign[0].startedAt
+                ),
+                to: new Date(
+                  searchParams.get('date.to') || filterData.campaign[0].endedAt
+                ),
               }}
               render={({ field }) => {
                 return (
                   <CalendarForm
                     field={field}
-                    minDate={new Date(filterData.campaign[0].startedAt)}
-                    maxDate={new Date(filterData.campaign[0].endedAt)}
+                    minDate={
+                      new Date(
+                        searchParams.get('date.from') ||
+                          filterData.campaign[0].startedAt
+                      )
+                    }
+                    maxDate={
+                      new Date(
+                        searchParams.get('date.to') ||
+                          filterData.campaign[0].endedAt
+                      )
+                    }
                   />
                 );
               }}
@@ -289,7 +359,7 @@ const Filters = ({
             <FormField
               control={form.control}
               name="userGroup"
-              defaultValue="all"
+              defaultValue={searchParams.get('userGroup') || 'all'}
               render={({ field }) => {
                 return (
                   <ToggleUserButtons
@@ -341,7 +411,7 @@ const Filters = ({
                     key={key}
                     control={form.control}
                     name={key}
-                    defaultValue="all"
+                    defaultValue={searchParams.get(key) || 'all'}
                     render={({ field }) => (
                       <SelectForm
                         label={formatCamelCaseToTitleCase(key)}
@@ -378,7 +448,7 @@ const Filters = ({
                       key={key}
                       control={form.control}
                       name={key}
-                      defaultValue="all"
+                      defaultValue={searchParams.get(key) || 'all'}
                       render={({ field }) => (
                         <SelectForm
                           label={formatCamelCaseToTitleCase(key)}

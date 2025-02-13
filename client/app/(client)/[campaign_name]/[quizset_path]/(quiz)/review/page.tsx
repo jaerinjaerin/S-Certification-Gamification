@@ -16,15 +16,12 @@ import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
   useGAPageView();
-  const { userId, currentQuizStage, currentStageQuestions, quizSet } =
-    useQuiz();
+  const { userId, quizSet } = useQuiz();
 
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage] = useState<string | undefined>(undefined);
   const [loading] = useState(false);
 
   const searchParams = useSearchParams();
@@ -106,11 +103,11 @@ export default function ReviewPage() {
     return;
   };
 
-  useEffect(() => {
-    if (!currentQuizStage || !currentStageQuestions) {
-      setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
-    }
-  }, [currentQuizStage, currentStageQuestions]);
+  // useEffect(() => {
+  //   if (!currentQuizStage || !currentStageQuestions) {
+  //     setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
+  //   }
+  // }, [currentQuizStage, currentStageQuestions]);
 
   return (
     <div className="min-h-svh bg-slate-200/20">

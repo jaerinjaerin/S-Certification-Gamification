@@ -1,6 +1,6 @@
 {
   "name": "splus-cert-gamification",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "cp -f .env.dev .env && next dev -p 3000",
@@ -8,7 +8,7 @@
     "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": "rm -rf .next && next build",
     "build:stg": "NODE_ENV=staging && rm -rf .next && next build",
-    "build:prd": "NODE_ENV=production && rm -rf app/(client)/test && rm -rf .next && next build",
+    "build:prd": "NODE_ENV=production && rm -rf .next && next build",
     "build:local": "cp -f .env.loc.production .env && next build",
     "build:analyze": "npm run build && source-map-explorer .next/static/**/*.js",
     "analyze": "ANALYZE=true next build",
@@ -19,10 +19,11 @@
     "postinstall": "patch-package",
     "test:watch": "jest --watch",
     "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
+    "prisma:studio": "PRISMA_CLIENT_OUTPUT=../../client/node_modules/.prisma/client npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "pm2:stop": "pm2 delete squiz",
     "pm2:start": "pm2 start npm --name 'squiz' -- start",
-    "pm2:go": "pm2 start ecosystem.config.js"
+    "pm2:go": "pm2 start ecosystem.config.js",
+    "start:pm2": "pm2 list && pm2-runtime start ecosystem.config.js"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",

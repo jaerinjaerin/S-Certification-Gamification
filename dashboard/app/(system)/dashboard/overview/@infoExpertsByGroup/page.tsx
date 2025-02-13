@@ -6,8 +6,11 @@ import { useOverviewContext } from '../_provider/provider';
 import { initialExpertsData } from './_lib/state';
 import { fetchData } from '../../_lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
+import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const OverviewExpertsByGroupInfo = () => {
+  const { createController, abort } = useAbortController();
+
   const { state } = useOverviewContext();
   const [expertData, setExpertData] =
     useState<ImprovedDataStructure>(initialExpertsData);
@@ -15,12 +18,18 @@ const OverviewExpertsByGroupInfo = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
-      fetchData(state.fieldValues, 'overview/info/experts-by-group', (data) => {
-        setExpertData(data.result ?? initialExpertsData);
-        setLoading(false);
-      });
+      fetchData(
+        state.fieldValues,
+        'overview/info/experts-by-group',
+        (data) => {
+          setExpertData(data.result ?? initialExpertsData);
+          setLoading(false);
+        },
+        createController()
+      );
     }
     return () => {
+      abort();
       setLoading(true);
     };
   }, [state.fieldValues]);

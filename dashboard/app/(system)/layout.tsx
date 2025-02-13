@@ -7,8 +7,8 @@ import { ModalProvider } from '@/components/provider/modal-provider';
 import { auth } from '@/auth';
 import { Session } from 'next-auth';
 import NotPermission from '@/components/not-permission';
-import {getUserFromDB, getUserPermissions} from '@/model/qureries';
-import LeftMenu from "@/components/layout/left-menu";
+import { getUserFromDB, getUserPermissions } from '@/model/qureries';
+import LeftMenu from '@/components/layout/left-menu';
 
 type Props = { children: React.ReactNode };
 
@@ -17,7 +17,7 @@ const ManagementLayout = async ({ children }: Props) => {
   const { user } = session;
   const userFromDB = await getUserFromDB(user.id);
   let permit = false;
-  if(userFromDB) {
+  if (userFromDB) {
     const permissions = await getUserPermissions(userFromDB);
     // console.log(permissions);
     permit = permissions.includes('Global');

@@ -1,18 +1,18 @@
-"use client";
+'use client';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 const SelectForm = ({
   label,
-  placeholder = "Select",
-  width = "auto",
+  placeholder = 'Select',
+  width = 'auto',
   field,
   items,
   onChange,
@@ -36,10 +36,10 @@ const SelectForm = ({
       >
         <SelectTrigger
           className={cn(
-            "bg-white hover:bg-zinc-100",
-            !field.value && "text-muted-foreground"
+            'bg-white hover:bg-zinc-100',
+            !field.value && 'text-muted-foreground'
           )}
-          style={{ minWidth: "7rem", width }}
+          style={{ minWidth: '7rem', width }}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
