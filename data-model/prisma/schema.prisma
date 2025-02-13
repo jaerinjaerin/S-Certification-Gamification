@@ -238,7 +238,7 @@ model QuizBadge {
   updatedAt  DateTime   @updatedAt
 
   quizStages QuizStage[]
-  activities Activity[]
+  // activities Activity[]
 
   campaignId String?
   domainId   String?
@@ -447,6 +447,8 @@ model UserQuizStageLog {
   isBadgeStage Boolean?
   isBadgeAcquired   Boolean?
   badgeActivityId String?
+
+  // completerType          QuizCompleterType?
 
   remainingHearts Int
 
@@ -674,33 +676,48 @@ model UserQuizQuestionStatistics {
   originalIndex Int?
 }
 
-model Activity {
-  id            String   @id @default(uuid())
-  name          String
+// model Activity {
+//   id            String   @id @default(uuid())
+//   name          String
 
-  badgeImageId  String?
-  badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+//   badgeImageId  String?
+//   badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
 
-  activityId    String
-  jobCodes      String[]
+//   activityId    String
+//   jobCodes      String[]
 
-  domainId      String
-  languageId    String
+//   domainId      String
+//   languageId    String
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
 
-model ActivityFailLog {
-  id            String   @id @default(uuid())
-  api           String
-  userId        String
-  activityId    String
+// model ActivityFailLog {
+//   id            String   @id @default(uuid())
+//   api           String
+//   userId        String
+//   activityId    String
 
-  status        Int
-  statusText    String
-  rawLog        String
+//   status        Int
+//   statusText    String
+//   rawLog        String
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
+
+// model QuizCompleterStage {
+//   id            String   @id @default(uuid())
+//   campaignId    String
+//   type          QuizCompleterType
+//   quizStageIndex Int
+  
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+// }
+
+// enum QuizCompleterType {
+//   EXPERT
+//   ADVANCED
+// }

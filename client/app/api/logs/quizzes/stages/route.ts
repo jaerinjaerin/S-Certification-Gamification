@@ -34,8 +34,6 @@ export async function POST(request: NextRequest) {
       domainId,
       languageId,
       jobId,
-      regionId,
-      subsidiaryId,
       channelSegmentId,
       storeId,
       channelId,

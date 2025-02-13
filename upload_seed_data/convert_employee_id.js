@@ -85,8 +85,7 @@ function decrypt(encryptedData, useFixedIV = false) {
 }
 
 async function convert() {
-  console.log(encrypt("FI_U_49762", true));
-  console.log(encrypt("FI_U_68171", true));
+  console.log(encrypt("crew.s.fujita", true));
 }
 
 // ✅ 실행

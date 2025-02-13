@@ -37,8 +37,6 @@ export async function POST(request: NextRequest) {
     domainId,
     languageId,
     jobId,
-    regionId,
-    subsidiaryId,
     channelSegmentId,
     storeId,
     channelId,
@@ -142,6 +140,8 @@ export async function POST(request: NextRequest) {
         channelId,
         channelName,
         tryNumber,
+        originalQuestionId,
+        originalIndex,
       },
     });
 
