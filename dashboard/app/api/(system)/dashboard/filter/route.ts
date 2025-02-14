@@ -3,23 +3,28 @@ import { NextResponse } from 'next/server';
 
 async function fetchDependentFilters() {
   // Step 1: Fetch all regions
-  const regions = await prisma.region.findMany();
+  const regions = await prisma.region.findMany({
+    include: { subsidiaries: { include: { domains: true } } },
+    orderBy: { order: 'asc' },
+  });
 
   // Step 2: Fetch all subsidiaries
-  const subsidiaries = await prisma.subsidiary.findMany();
+  const subsidiaries = regions
+    .flatMap((region) => region.subsidiaries)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   // Step 3: Fetch all domains
-  const domains = await prisma.domain.findMany();
+  const domains = subsidiaries
+    .flatMap((subsidiary) => subsidiary.domains)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   // Step 4: Map dependencies
   const regionWithDependencies = regions.map((region) => {
     // Find subsidiaries and domains related to this region
-    const relatedSubsidiaries = subsidiaries.filter(
-      (subsidiary) => subsidiary.regionId === region.id
-    );
+    const relatedSubsidiaries = region.subsidiaries;
 
-    const relatedDomains = relatedSubsidiaries.flatMap((subsidiary) =>
-      domains.filter((domain) => domain.subsidiaryId === subsidiary.id)
+    const relatedDomains = relatedSubsidiaries.flatMap(
+      (subsidiary) => subsidiary.domains
     );
 
     return {

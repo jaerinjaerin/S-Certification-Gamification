@@ -110,7 +110,7 @@ const Filters = ({
 
         for (const k of priorities) {
           if (searchParams.get(k) && searchParams.get(k) !== 'all') {
-            updateFilters(k, searchParams.get(k) as string); // 조건을 만족하면 updateFilters 호출
+            if (!isUpdated) updateFilters(k, searchParams.get(k) as string); // 조건을 만족하면 updateFilters 호출
             isUpdated = true; // 플래그 설정
             break; // 한 번 실행 후 루프 종료
           }

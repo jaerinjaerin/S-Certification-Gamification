@@ -124,30 +124,30 @@ export const createOverviewExcelBlob = async (
   const headers = [
     { header: 'Region', key: 'region', width: 25, ...headerStyles },
     { header: 'Subsidiary', key: 'subsidiary', width: 30, ...headerStyles },
-    { header: 'Country', key: 'country', width: 20, ...headerStyles },
-    { header: 'Target', key: 'target', width: 10, ...headerStyles },
-    { header: 'Progress', key: 'progress', width: 10, ...headerStyles },
-    { header: '(%)', key: 'percentage', width: 15, ...headerStyles },
-    { header: 'S+', key: 'sPlus', width: 10, ...headerStyles },
-    { header: 'Non-S+', key: 'nonSPlus', width: 10, ...headerStyles },
+    { header: 'Country', key: 'country', width: 15, ...headerStyles },
+    { header: 'Target', key: 'target', width: 15, ...headerStyles },
+    { header: 'Progress', key: 'progress', width: 15, ...headerStyles },
+    { header: '(%)', key: 'percentage', width: 10, ...headerStyles },
+    { header: 'S+', key: 'sPlus', width: 12, ...headerStyles },
+    { header: 'Non-S+', key: 'nonSPlus', width: 12, ...headerStyles },
     {
       header: '#of FSMs',
       key: 'numFSMs',
-      width: 10,
+      width: 12,
       font: { ...headerStyles.font, bold: false },
       alignment: { ...headerStyles.alignment, horizontal: 'left' },
     },
-    { header: 'SES', key: 'ses', width: 10, ...headerStyles },
-    { header: 'C&R', key: 'cnr', width: 10, ...headerStyles },
+    { header: 'SES', key: 'ses', width: 12, ...headerStyles },
+    { header: 'C&R', key: 'cnr', width: 12, ...headerStyles },
     {
       header: '#of Field Force',
       key: 'numFieldForce',
-      width: 15,
+      width: 12,
       font: { ...headerStyles.font, bold: false },
       alignment: { ...headerStyles.alignment, horizontal: 'left' },
     },
-    { header: 'SES', key: 'sesFieldForce', width: 15, ...headerStyles },
-    { header: 'Non-SES', key: 'nonSesFieldForce', width: 20, ...headerStyles },
+    { header: 'SES', key: 'sesFieldForce', width: 12, ...headerStyles },
+    { header: 'Non-SES', key: 'nonSesFieldForce', width: 12, ...headerStyles },
   ];
 
   headerCells.forEach(({ cell, value }) => {
@@ -160,7 +160,10 @@ export const createOverviewExcelBlob = async (
     }
   });
 
-  sheet.columns = headers.map((header) => ({ key: header.key }));
+  sheet.columns = headers.map((header) => ({
+    key: header.key,
+    width: header.width,
+  }));
 
   // 3. 데이터 삽입 (A4부터)
   data.forEach((row) => {
