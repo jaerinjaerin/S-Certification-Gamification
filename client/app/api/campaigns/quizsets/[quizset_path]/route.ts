@@ -16,6 +16,7 @@ type Props = {
 };
 
 export async function GET(request: NextRequest, props: Props) {
+  // console.warn("GET /api/campaigns/quizsets/[quizset_path]");
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("user_id");
   const quizsetPath = props.params.quizset_path;

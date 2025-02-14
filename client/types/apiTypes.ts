@@ -42,6 +42,10 @@ export interface QuizQuestionLogsResponse {
   items: UserQuizQuestionLog[] | null;
 }
 
+export interface QuizStageLogResponse {
+  item: UserQuizStageLog | null;
+}
+
 export interface DomainsResponse {
   items: Domain[];
 }
@@ -54,6 +58,7 @@ export interface ApiResponse<T> {
   item: T | null;
   success: boolean;
   message?: string;
+  status?: number;
 }
 
 export interface ApiListResponse<T> {

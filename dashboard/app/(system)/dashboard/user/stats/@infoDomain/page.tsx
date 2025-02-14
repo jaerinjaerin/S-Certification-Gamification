@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 export const dynamic = 'force-dynamic';
-
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import { fetchData } from '../../../_lib/fetch';
@@ -33,6 +32,7 @@ import {
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { updateSearchParamsOnUrl } from '@/lib/url';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -180,15 +180,25 @@ const UserDomain = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
+      const { domainPageIndex, ...fieldValues } = state.fieldValues;
       if (fieldValuesChanged() && 1 < pageIndex) {
         setPageIndex(1);
         return;
       }
 
       fetchData(
-        { ...state.fieldValues, take: pageSize, page: pageIndex },
+        {
+          ...fieldValues,
+          take: pageSize,
+          page: pageIndex,
+        },
         'user/info/domain',
         (data) => {
+          updateSearchParamsOnUrl({
+            ...fieldValues,
+            domainPageIndex: pageIndex,
+          });
+          //
           total.current = data.total;
           setData(data.result);
           setLoading(false);
@@ -201,7 +211,20 @@ const UserDomain = () => {
       abort();
       setLoading(true);
     };
-  }, [state.fieldValues, pageIndex]);
+  }, [state.fieldValues, pageIndex, pageSize]);
+
+  // 서치파람으로 페이지 지정
+  useEffect(() => {
+    if (state.fieldValues) {
+      const { domainPageIndex } = state.fieldValues;
+
+      if (domainPageIndex && /^\d+$/.test(domainPageIndex)) {
+        setPageIndex(parseInt(domainPageIndex, 10));
+      } else {
+        setPageIndex(1);
+      }
+    }
+  }, [state.fieldValues]);
 
   return (
     <ChartContainer>

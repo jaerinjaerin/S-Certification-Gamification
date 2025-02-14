@@ -26,6 +26,7 @@ import { CardCustomHeaderWithDownload } from '../../_components/charts/chart-hea
 import Pagination from '../../_components/pagenation';
 import { serializeJsonToQuery } from '../../_lib/search-params';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { updateSearchParamsOnUrl } from '@/lib/url';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -85,6 +86,7 @@ const UserProgress = () => {
 
   useEffect(() => {
     if (state.fieldValues) {
+      const { progressPageIndex, ...fieldValues } = state.fieldValues;
       if (fieldValuesChanged() && 1 < pageIndex) {
         setPageIndex(1);
         return;
@@ -94,6 +96,11 @@ const UserProgress = () => {
         { ...state.fieldValues, take: pageSize, page: pageIndex },
         'user/progress',
         (data) => {
+          updateSearchParamsOnUrl({
+            ...fieldValues,
+            progressPageIndex: pageIndex,
+          });
+          //
           total.current = data.total;
           setData(data.result);
           setLoading(false);
@@ -106,7 +113,20 @@ const UserProgress = () => {
       abort();
       setLoading(true);
     };
-  }, [state.fieldValues, pageIndex]);
+  }, [state.fieldValues, pageIndex, pageSize]);
+
+  // 서치파람으로 페이지 지정
+  useEffect(() => {
+    if (state.fieldValues) {
+      const { progressPageIndex } = state.fieldValues;
+
+      if (progressPageIndex && /^\d+$/.test(progressPageIndex)) {
+        setPageIndex(parseInt(progressPageIndex, 10));
+      } else {
+        setPageIndex(1);
+      }
+    }
+  }, [state.fieldValues]);
 
   const onDownload = () => {
     if (state.fieldValues) {

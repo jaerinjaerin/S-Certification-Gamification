@@ -565,7 +565,7 @@ export async function fetchOrganizationDetails(
       profile.personOrganization
     );
 
-    console.log("fetchOrganizationDetails filteredResults:", filteredResults);
+    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -621,9 +621,10 @@ export async function fetchOrganizationDetails(
     console.error("Error processing organization details:", error);
   }
 
-  console.info("fetchOrganizationDetails jobId:", jobId);
-  console.info("fetchOrganizationDetails storeId:", storeId);
-  console.info("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails jobId:", jobId);
+  console.log("fetchOrganizationDetails storeId:", storeId);
+  console.log("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails channelName:", channelName);
 
   // Return the collected information
   return {

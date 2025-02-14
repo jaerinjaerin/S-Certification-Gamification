@@ -198,11 +198,12 @@ export async function GET(request: NextRequest) {
 
   const url = request.url;
   const { searchParams } = new URL(url);
+  const userId = searchParams.get("user_id");
   const quizSetId = searchParams.get("quizset_id");
   const quizStageIndex = searchParams.get("stage_index");
 
   try {
-    if (!quizSetId || !quizStageIndex) {
+    if (!userId || !quizSetId || !quizStageIndex) {
       throw new ApiError(
         400,
         "BAD_REQUEST",
@@ -210,25 +211,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     quizSetId: quizSetId,
-    //     quizStageIndex: Number(quizStageIndex),
-    //     tryNumber: 1,
-    //   },
-    //   orderBy: [
-    //     {
-    //       questionId: "asc", // questionId를 기준으로 정렬
-    //     },
-    //     {
-    //       createdAt: "desc", // 최신 항목을 우선 정렬
-    //     },
-    //   ],
-    //   distinct: ["questionId"], // questionId별로 중복 제거
-    // });
+    console.log("userId", userId);
 
     const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
       where: {
+        userId: userId,
         quizSetId: quizSetId,
         quizStageIndex: Number(quizStageIndex),
       },
@@ -244,6 +231,8 @@ export async function GET(request: NextRequest) {
         },
       ],
     });
+
+    console.log("quizSetId", quizSetId);
 
     // questionId 기준으로 중복 제거 (최초 등장하는 항목 유지)
     const uniqueLogs = Object.values(

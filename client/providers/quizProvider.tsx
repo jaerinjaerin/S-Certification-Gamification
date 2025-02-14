@@ -12,7 +12,7 @@ import {
 import * as Sentry from "@sentry/nextjs";
 import assert from "assert";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import { QuizBadgeHandler } from "./managers/quizBadgeHandler";
@@ -22,6 +22,7 @@ import { QuizScoreHandler } from "./managers/quizScoreHandler";
 import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
 
 interface QuizContextType {
+  userId: string;
   quizSet: QuizSetEx;
   quizStageLogs: UserQuizStageLog[];
   // quizQuestionLogs: UserQuizQuestionLog[];
@@ -55,6 +56,7 @@ interface QuizContextType {
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider = ({
+  campaignName,
   userId,
   authType,
   children,
@@ -64,6 +66,7 @@ export const QuizProvider = ({
   // quizQuestionLogs,
   quizSetPath,
 }: {
+  campaignName: string;
   userId: string;
   authType: AuthType;
   children: React.ReactNode;
@@ -93,9 +96,10 @@ export const QuizProvider = ({
   );
 
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
-    quizLog?.lastCompletedStage == null
-      ? 0
-      : Math.min(quizLog?.lastCompletedStage + 1, quizSet.quizStages.length - 1)
+    quizLog?.lastCompletedStage == null ? 0 : quizLog?.lastCompletedStage + 1
+    // quizLog?.lastCompletedStage == null
+    //   ? 0
+    //   : Math.min(quizLog?.lastCompletedStage + 1, quizSet.quizStages.length - 1)
   );
 
   // TODO: 방어 코드. 코드가 정리되면 제거
@@ -103,7 +107,7 @@ export const QuizProvider = ({
     currentQuizStageIndex >= quizSet.quizStages.length &&
     pathname.includes("/quiz")
   ) {
-    routeToPage("map");
+    redirect(`/${campaignName}/${quizSetPath}/map`);
   }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -230,7 +234,7 @@ export const QuizProvider = ({
       quizLogId: _quizLog?.id ?? "",
       quizStagesLength: quizSet.quizStages.length,
     });
-    console.info("scoreData", scoreData);
+    // console.info("scoreData", scoreData);
 
     // 퀴즈 로그 State 업데이트
     // setQuizStagesTotalScore(totalQuizScore);
@@ -514,6 +518,7 @@ export const QuizProvider = ({
   return (
     <QuizContext.Provider
       value={{
+        userId,
         isLoading,
         quizSet,
         quizStageLogs: _quizStageLogs,

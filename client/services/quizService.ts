@@ -84,8 +84,8 @@ export const validateAndCorrectQuizSetPath = async (
 
     // 도메인 검증
     const domainsResponse = await apiClient.get<ApiListResponse<Domain>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`
-      // "force-cache"
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
+      "force-cache"
     );
 
     const isDomainValid = domainsResponse.items?.some(

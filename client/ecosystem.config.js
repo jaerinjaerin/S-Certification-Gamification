@@ -2,10 +2,11 @@ module.exports = {
   apps: [
     {
       name: "squiz", // 애플리케이션 이름
-      script: "npm", // 실행할 명령어
+      cwd: './',
+      script: 'node_modules/next/dist/bin/next',
       args: "start", // npm 명령의 인자
       exec_mode: "cluster", // 클러스터 모드
-      instances: 3, // CPU 코어 수만큼 인스턴스 실행
+      instances: 0, // CPU 코어 수만큼 인스턴스 실행
       autorestart: true, // 프로세스가 죽으면 자동 재시작
       watch: false, // 파일 변경 감지 비활성화
       max_restarts: 5, // 최대 재시작 횟수
@@ -22,7 +23,6 @@ module.exports = {
       env: {
         PORT: 3000, // 각 프로세스가 환경 변수를 통해 포트 설정
       },
-      post_exit: "node notify-sentry.js",
     },
   ],
 };

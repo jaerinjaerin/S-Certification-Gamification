@@ -53,8 +53,8 @@ export default async function CampaignPage({
     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${params.campaign_name}`,
     {
       method: "GET",
-      // cache: "force-cache",
-      cache: "no-store",
+      cache: "force-cache",
+      // cache: "no-store",
     }
   );
 

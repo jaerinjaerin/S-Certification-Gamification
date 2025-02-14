@@ -61,6 +61,13 @@ export async function GET(request: NextRequest) {
 
     const domains = await prisma.domain.findMany({
       where: { id: whereForGoal.domainId },
+      include: {
+        subsidiary: {
+          include: {
+            region: { select: { id: true, name: true, order: true } },
+          },
+        },
+      },
     });
 
     //
@@ -79,7 +86,7 @@ export async function GET(request: NextRequest) {
           return {
             name: currentDomain.name,
             domainId: currentDomain.id,
-            subsidiaryId: currentDomain.subsidiaryId,
+            region: currentDomain.subsidiary?.region,
             order: currentDomain.order || 0,
             goal,
             expert,
@@ -97,23 +104,18 @@ export async function GET(request: NextRequest) {
       .sort((a: any, b: any) => a.order - b.order);
 
     if (!where.regionId && !where.subsidiaryId && !where.domainId) {
-      const subsidiaries = await prisma.subsidiary.findMany();
-
       const extract = result.reduce(
         (acc, item) => {
-          if (!item?.subsidiaryId) return acc;
+          if (!item?.region) return acc;
 
-          const existingEntry = acc[item.subsidiaryId];
-          const subsidiary = subsidiaries.find(
-            (sub) => sub.id === item.subsidiaryId
-          );
+          const existingEntry = acc[item.region.id];
 
           if (!existingEntry) {
-            acc[item.subsidiaryId] = {
-              name: subsidiary?.name || '',
+            acc[item.region.id] = {
+              name: item.region.name || '',
               goal: item.goal,
               expert: item.expert,
-              order: subsidiary?.order || 0,
+              order: item.region.order || 0,
             };
           } else {
             existingEntry.goal += item.goal;

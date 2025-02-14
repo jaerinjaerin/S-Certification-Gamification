@@ -16,14 +16,12 @@ import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
   useGAPageView();
-  const { currentQuizStage, currentStageQuestions, quizSet } = useQuiz();
+  const { userId, quizSet } = useQuiz();
 
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage] = useState<string | undefined>(undefined);
   const [loading] = useState(false);
 
   const searchParams = useSearchParams();
@@ -44,7 +42,7 @@ export default function ReviewPage() {
     data: quizQuestionLogs,
     loading: logsLoading,
     error,
-  } = useQuizQuestionLogs(quizSet.id, searchStage - 1);
+  } = useQuizQuestionLogs(userId, quizSet.id, searchStage - 1);
 
   // useEffect(() => {
   //   const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
@@ -80,14 +78,14 @@ export default function ReviewPage() {
         ...reviewQuizQuestionLog.selectedOptionIds,
       ]);
     }
-  }, [quizQuestionLogs, currentQuestionIndex]);
+  }, [error, quizQuestionLogs, currentQuestionIndex]);
 
-  useEffect(() => {
-    const correctOptionIds = question.options
-      .filter((option) => option.isCorrect)
-      .map((option) => option.id);
-    setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
-  }, [error, currentQuestionIndex]);
+  // useEffect(() => {
+  //   const correctOptionIds = question.options
+  //     .filter((option) => option.isCorrect)
+  //     .map((option) => option.id);
+  //   setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  // }, [error, currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
@@ -105,13 +103,11 @@ export default function ReviewPage() {
     return;
   };
 
-  useEffect(() => {
-    if (!currentQuizStage || !currentStageQuestions) {
-      setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
-    }
-  }, [currentQuizStage, currentStageQuestions]);
-
-  console.log("selectedOptionIds", selectedOptionIds);
+  // useEffect(() => {
+  //   if (!currentQuizStage || !currentStageQuestions) {
+  //     setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
+  //   }
+  // }, [currentQuizStage, currentStageQuestions]);
 
   return (
     <div className="min-h-svh bg-slate-200/20">
