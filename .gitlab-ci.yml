@@ -289,6 +289,7 @@ deploy_stg_admin:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
         sudo docker pull $ADMIN_IMAGE && \
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
@@ -411,15 +412,23 @@ deploy_prd_admin:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker pull $ADMIN_IMAGE && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker pull $ADMIN_IMAGE && \
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
