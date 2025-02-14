@@ -67,86 +67,32 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const userQuizStageLog = await prisma.userQuizStageLog.create({
-      data: {
-        userId,
-        authType,
-        campaignId,
-        isBadgeStage,
-        isBadgeAcquired,
-        badgeActivityId,
-        remainingHearts,
-        quizSetId,
-        quizStageId,
-        quizStageIndex,
-        elapsedSeconds,
-        score,
-        totalScore,
-        percentile,
-        scoreRange,
-        domainId,
-        languageId,
-        jobId,
-        regionId: domain?.subsidiary?.regionId,
-        subsidiaryId: domain?.subsidiaryId,
-        channelSegmentId,
-        storeId,
-        channelId,
-        channelName,
-      },
-    });
-
-    await prisma.userQuizStageStatistics.create({
-      data: {
-        // id: userQuizStageLog.id,
-        userId,
-        authType,
-        campaignId,
-        isBadgeStage,
-        isBadgeAcquired,
-        badgeActivityId,
-        remainingHearts,
-        quizSetId,
-        quizStageId,
-        quizStageIndex,
-        elapsedSeconds,
-        score,
-        totalScore,
-        percentile,
-        scoreRange,
-        domainId,
-        languageId,
-        jobId,
-        regionId: domain?.subsidiary?.regionId,
-        subsidiaryId: domain?.subsidiaryId,
-        channelSegmentId,
-        storeId,
-        channelId,
-        channelName,
-      },
-    });
-
-    const userQuizBadgeStageLog = await prisma.userQuizBadgeStageLog.findFirst({
+    const userQuizStageLog = await prisma.userQuizStageLog.findFirst({
       where: {
         userId,
-        quizSetId,
+        campaignId,
         quizStageId,
       },
     });
 
-    if (!userQuizBadgeStageLog) {
-      await prisma.userQuizBadgeStageLog.create({
+    if (!userQuizStageLog) {
+      await prisma.userQuizStageLog.create({
         data: {
           userId,
           authType,
           campaignId,
-          quizSetId,
+          isBadgeStage,
           isBadgeAcquired,
           badgeActivityId,
+          remainingHearts,
+          quizSetId,
           quizStageId,
           quizStageIndex,
           elapsedSeconds,
-          score: totalScore,
+          score,
+          totalScore,
+          percentile,
+          scoreRange,
           domainId,
           languageId,
           jobId,
@@ -159,18 +105,100 @@ export async function POST(request: NextRequest) {
         },
       });
     } else {
-      await prisma.userQuizBadgeStageLog.update({
+      await prisma.userQuizStageLog.update({
         where: {
-          id: userQuizBadgeStageLog.id,
+          id: userQuizStageLog.id,
         },
         data: {
-          quizSetId,
+          userId,
+          authType,
+          campaignId,
+          isBadgeStage,
           isBadgeAcquired,
           badgeActivityId,
+          remainingHearts,
+          quizSetId,
           quizStageId,
           quizStageIndex,
           elapsedSeconds,
-          score: totalScore,
+          score,
+          totalScore,
+          percentile,
+          scoreRange,
+          domainId,
+          languageId,
+          jobId,
+          regionId: domain?.subsidiary?.regionId,
+          subsidiaryId: domain?.subsidiaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+    }
+
+    const userQuizStageStatistics =
+      await prisma.userQuizStageStatistics.findFirst({
+        where: {
+          userId,
+          campaignId,
+          quizStageId,
+        },
+      });
+
+    if (!userQuizStageStatistics) {
+      await prisma.userQuizStageStatistics.create({
+        data: {
+          // id: userQuizStageLog.id,
+          userId,
+          authType,
+          campaignId,
+          isBadgeStage,
+          isBadgeAcquired,
+          badgeActivityId,
+          remainingHearts,
+          quizSetId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds,
+          score,
+          totalScore,
+          percentile,
+          scoreRange,
+          domainId,
+          languageId,
+          jobId,
+          regionId: domain?.subsidiary?.regionId,
+          subsidiaryId: domain?.subsidiaryId,
+          channelSegmentId,
+          storeId,
+          channelId,
+          channelName,
+        },
+      });
+    } else {
+      await prisma.userQuizStageStatistics.update({
+        where: {
+          id: userQuizStageStatistics.id,
+        },
+        data: {
+          // id: userQuizStageLog.id,
+          userId,
+          authType,
+          campaignId,
+          isBadgeStage,
+          isBadgeAcquired,
+          badgeActivityId,
+          remainingHearts,
+          quizSetId,
+          quizStageId,
+          quizStageIndex,
+          elapsedSeconds,
+          score,
+          totalScore,
+          percentile,
+          scoreRange,
           domainId,
           languageId,
           jobId,
