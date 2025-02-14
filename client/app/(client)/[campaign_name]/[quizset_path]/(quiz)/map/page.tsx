@@ -67,7 +67,7 @@ export default function QuizMap() {
                 currentQuizStageIndex={currentQuizStageIndex}
                 routeNextQuizStage={routeNextQuizStage}
                 stage={quizStage}
-                isCompleted={index > currentQuizStageIndex}
+                isCompleted={index < currentQuizStageIndex}
                 setLoading={setLoading}
               />
               {quizStage.order !== quizSet.quizStages.length && <Connection />}

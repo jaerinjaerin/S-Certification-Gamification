@@ -28,6 +28,7 @@ import { AutoTextSize } from "auto-text-size";
 import { X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useCountdown } from "usehooks-ts";
 
@@ -37,6 +38,8 @@ export default function GuestLogin({
   params: { campaign_name: string };
 }) {
   useGAPageView();
+
+  const router = useRouter();
 
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
@@ -547,7 +550,8 @@ export default function GuestLogin({
             <AlertDialogCancel
               onClick={() => {
                 setError(null);
-                window.location.reload();
+                // window.location.reload();
+                router.refresh();
               }}
             >
               <span>{translation("ok")}</span>

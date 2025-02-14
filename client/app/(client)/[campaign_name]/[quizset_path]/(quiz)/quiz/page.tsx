@@ -7,6 +7,15 @@ import {
 import CountDownBar from "@/components/quiz/countdown-bar";
 import Qusetion from "@/components/quiz/question-area";
 import SuccessNotify from "@/components/quiz/success-notify";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -56,6 +65,7 @@ export default function QuizPage() {
     undefined
   );
   const { isAndroid, isWindows } = useCheckOS();
+  const [error, setError] = useState<string | null>(null);
 
   const animationRef = useRef<boolean | null>(null); // 애니메이션 상태 관리
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -171,7 +181,7 @@ export default function QuizPage() {
 
   const showFailEndStageAlert = () => {
     confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
-    tryEndStage(lifeCount);
+    setError(translation("unexpected_error"));
   };
 
   const handleGameOver = useCallback(async () => {
@@ -356,6 +366,24 @@ export default function QuizPage() {
       <ErrorAlertDialog error={errorMessage} />
       {success && <SuccessNotify />}
       {loading && <Spinner />}
+      <AlertDialog open={!!error}>
+        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle></AlertDialogTitle>
+            <AlertDialogDescription>{error}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setError(null);
+                tryEndStage(lifeCount);
+              }}
+            >
+              <span>{translation("ok")}</span>
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
