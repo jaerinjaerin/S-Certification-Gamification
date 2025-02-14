@@ -192,8 +192,10 @@ model Domain {
 
   subsidiary Subsidiary? @relation(fields: [subsidiaryId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Permission   Permission? @relation(fields: [permissionId], references: [id])
+  permissionId String?
 }
 
 model DomainGoal {
@@ -214,12 +216,12 @@ model DomainGoal {
 model QuizSet {
   id String @id @default(uuid())
 
-  campaignId String      // Foreign key to Campaign
-  domainId   String?      // Foreign key to Domain
-  languageId String?      // Foreign key to Language
-  subsidiaryId   String?      // Foreign key to Subsidiary
-  jobCodes             String[]
-  quizStages     QuizStage[]
+  campaignId   String // Foreign key to Campaign
+  domainId     String? // Foreign key to Domain
+  languageId   String? // Foreign key to Language
+  subsidiaryId String? // Foreign key to Subsidiary
+  jobCodes     String[]
+  quizStages   QuizStage[]
 
   createrId String
   updaterId String?
@@ -335,10 +337,10 @@ model QuestionOption {
   languageId String
   isCorrect  Boolean // Whether the option is correct
 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  domainId   String?
+  domainId String?
 }
 
 model Job {
@@ -523,7 +525,7 @@ model UserQuizQuestionLog {
   tryNumber Int
 
   originalQuestionId String?
-  originalIndex Int?
+  originalIndex      Int?
 }
 
 model UserQuizStatistics {
@@ -676,7 +678,7 @@ model UserQuizQuestionStatistics {
   updatedAt DateTime @updatedAt
 
   originalQuestionId String?
-  originalIndex Int?
+  originalIndex      Int?
 }
 
 model Role {
@@ -697,7 +699,8 @@ model Permission {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  roles RolePermission[]
+  roles   RolePermission[]
+  domains Domain[]
 }
 
 model RolePermission {
@@ -766,7 +769,7 @@ model UserRole {
 //   campaignId      String
 //   badgeType       QuizBadgeType
 //   quizStageIndex  Int
-  
+
 //   createdAt       DateTime @default(now())
 //   updatedAt       DateTime @updatedAt
 // }
