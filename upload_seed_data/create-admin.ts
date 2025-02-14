@@ -40,10 +40,7 @@ async function main() {
   for (const perName of allPermissions) {
     const permission = await prisma.permission.upsert({
       where: { name: perName },
-      update: {
-        name: perName,
-        description: `Permission for ${perName}`,
-      },
+      update: {},
       create: {
         name: perName,
         description: `Permission for ${perName}`,
@@ -59,10 +56,7 @@ async function main() {
           permissionId: permission.id,
         },
       },
-      update: {
-        roleId: adminRole.id,
-        permissionId: permission.id,
-      },
+      update: {},
       create: {
         roleId: adminRole.id,
         permissionId: permission.id,
@@ -73,10 +67,7 @@ async function main() {
     const roleName = `DOMAIN_${String(perName).toUpperCase()}`;
     const role = await prisma.role.upsert({
       where: { name: roleName }, // 유니크 값
-      update: {
-        name: roleName,
-        description: "domain role with its permissions",
-      }, // 존재하면 아무 것도 업데이트하지 않음
+      update: {}, // 존재하면 아무 것도 업데이트하지 않음
       create: {
         name: roleName,
         description: "domain role with its permissions",
@@ -91,10 +82,7 @@ async function main() {
           permissionId: permission.id,
         },
       },
-      update: {
-        roleId: role.id,
-        permissionId: permission.id,
-      },
+      update: {},
       create: {
         roleId: role.id,
         permissionId: permission.id,
