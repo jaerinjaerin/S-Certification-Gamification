@@ -238,7 +238,7 @@ model QuizBadge {
   updatedAt  DateTime   @updatedAt
 
   quizStages QuizStage[]
-  // activities Activity[]
+  activities Activity[]
 
   campaignId String?
   domainId   String?
@@ -431,6 +431,8 @@ model UserQuizBadgeStageLog {
   channelSegmentId String?
   channelName String?
 
+  quizBadgeType QuizBadgeType?
+
   @@unique([userId, campaignId, quizStageId])
 }
 
@@ -585,6 +587,8 @@ model UserQuizBadgeStageStatistics {
   channelSegmentId String?
   channelName String?
 
+  quizBadgeType QuizBadgeType?
+
   @@unique([userId, campaignId, quizStageId])
 }
 
@@ -676,48 +680,48 @@ model UserQuizQuestionStatistics {
   originalIndex Int?
 }
 
-// model Activity {
-//   id            String   @id @default(uuid())
-//   name          String
+model Activity {
+  id              String   @id @default(uuid())
+  campaignId      String
+  activityId      String
+  jobCodes        String[]
 
-//   badgeImageId  String?
-//   badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+  domainId        String
+  languageId      String
 
-//   activityId    String
-//   jobCodes      String[]
+  badgeImageId    String?
+  badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
 
-//   domainId      String
-//   languageId    String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-// }
+model ActivityFailLog {
+  id              String   @id @default(uuid())
+  api             String
+  userId          String
+  activityId      String
+  accessToken     String
 
-// model ActivityFailLog {
-//   id            String   @id @default(uuid())
-//   api           String
-//   userId        String
-//   activityId    String
+  status          Int
+  statusText      String
+  rawLog          String
 
-//   status        Int
-//   statusText    String
-//   rawLog        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-// }
-
-// model QuizCompleterStage {
-//   id            String   @id @default(uuid())
-//   campaignId    String
-//   type          QuizCompleterType
-//   quizStageIndex Int
+model QuizBadgeStage {
+  id              String   @id @default(uuid())
+  campaignId      String
+  badgeType       QuizBadgeType
+  quizStageIndex  Int
   
-//   createdAt     DateTime @default(now())
-//   updatedAt     DateTime @updatedAt
-// }
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 
-// enum QuizCompleterType {
-//   EXPERT
-//   ADVANCED
-// }
+enum QuizBadgeType {
+  EXPERT
+  ADVANCED
+}
