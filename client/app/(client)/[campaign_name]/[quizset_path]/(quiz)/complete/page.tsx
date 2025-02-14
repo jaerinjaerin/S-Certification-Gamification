@@ -4,17 +4,17 @@ import ScoreAnnouncement from "@/components/complete/score-announcement";
 import ScoreRankAnnouncement from "@/components/complete/score-rank-announcement";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { sleep } from "@/utils/utils";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 
 export default function QuizComplete() {
   useGAPageView();
+  const router = useRouter();
   const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
-  const { routeToPage } = usePathNavigator();
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
   const [switchlIndex, setSwitchIndex] = useState(0);
@@ -30,7 +30,7 @@ export default function QuizComplete() {
   useEffect(() => {
     const routeToMapPage = async () => {
       await sleep(3000);
-      routeToPage("map");
+      router.push("map");
     };
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;

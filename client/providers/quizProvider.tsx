@@ -1,5 +1,4 @@
 "use client";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/types/apiTypes";
 import { EndStageResult, ScoreData } from "@/types/type";
 import {
@@ -40,6 +39,7 @@ interface QuizContextType {
   failStage(): Promise<void>;
   nextQuestion(): boolean;
   nextStage(): boolean;
+  restartStage(): void;
   canNextQuestion(): boolean;
   logUserAnswer(
     questionId: string,
@@ -63,7 +63,6 @@ export const QuizProvider = ({
   quizSet,
   quizLog,
   quizStageLogs,
-  // quizQuestionLogs,
   quizSetPath,
 }: {
   campaignName: string;
@@ -74,9 +73,7 @@ export const QuizProvider = ({
   quizSet: QuizSetEx;
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
-  // quizQuestionLogs: UserQuizQuestionLog[] | null;
 }) => {
-  const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
   const pathname = usePathname();
 
@@ -114,11 +111,12 @@ export const QuizProvider = ({
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
     quizSet.quizStages[currentQuizStageIndex]
   );
-  const [lastCompletedQuizStage] = useState<QuizStageEx | null>(
-    quizLog?.lastCompletedStage != null
-      ? quizSet.quizStages[quizLog?.lastCompletedStage]
-      : null
-  );
+  const [lastCompletedQuizStage, setLastCompletedQuizStage] =
+    useState<QuizStageEx | null>(
+      quizLog?.lastCompletedStage != null
+        ? quizSet.quizStages[quizLog?.lastCompletedStage]
+        : null
+    );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
     QuestionEx[]
   >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
@@ -163,101 +161,113 @@ export const QuizProvider = ({
   };
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
-    const quizScoreHandler = new QuizScoreHandler();
+    try {
+      const quizScoreHandler = new QuizScoreHandler();
 
-    // 현재 스테이지의 점수 계산
-    const score = quizScoreHandler.calculateStageScore(
-      quizQuestionLogManager.getLogs(),
-      remainingHearts
-    );
-    const totalQuizScore = quizStagesTotalScore + score;
-
-    // 현재 스테이지의 총 소요시간 계산
-    const stageElapsedSeconds = quizQuestionLogManager.getTotalElapsedSeconds();
-    const totalQuizTime = getQuizTotalElapsedSeconds() + stageElapsedSeconds;
-
-    setIsLoading(true);
-
-    // 뱃지 스테이지 여부 확인
-    const isBadgeAcquired = isBadgeStage()
-      ? await processBadgeAcquisition(stageElapsedSeconds)
-      : false;
-
-    // 랭킹 및 그래프 데이터 가져오기
-    let scoreData: ScoreData | null = null;
-    if (isBadgeStage() || isLastStage()) {
-      scoreData = await quizScoreHandler.fetchRankAndGraphData(
-        authType,
-        campaign.id,
-        currentQuizStageIndex,
-        totalQuizScore
+      // 현재 스테이지의 점수 계산
+      const score = quizScoreHandler.calculateStageScore(
+        quizQuestionLogManager.getLogs(),
+        remainingHearts
       );
-      // console.log("scoreData", scoreData);
+      const totalQuizScore = quizStagesTotalScore + score;
+
+      // 현재 스테이지의 총 소요시간 계산
+      const stageElapsedSeconds =
+        quizQuestionLogManager.getTotalElapsedSeconds();
+      const totalQuizTime = getQuizTotalElapsedSeconds() + stageElapsedSeconds;
+
+      setIsLoading(true);
+
+      // 뱃지 스테이지 여부 확인
+      const isBadgeAcquired = isBadgeStage()
+        ? await processBadgeAcquisition(stageElapsedSeconds)
+        : false;
+
+      // 랭킹 및 그래프 데이터 가져오기
+      let scoreData: ScoreData | null = null;
+      if (isBadgeStage() || isLastStage()) {
+        scoreData = await quizScoreHandler.fetchRankAndGraphData(
+          authType,
+          campaign.id,
+          currentQuizStageIndex,
+          totalQuizScore
+        );
+        // console.log("scoreData", scoreData);
+      }
+
+      // 퀴즈 답변 로그 전송 중인지 확인
+      if (quizQuestionLogManager.isQueueProcessing()) {
+        await quizQuestionLogManager.waitForQueueToComplete();
+      }
+
+      // 퀴즈 스테이지 로그 생성
+      const quizStageLogHandler = new QuizStageLogHandler();
+      const newQuizStageLog = await quizStageLogHandler.create({
+        userId: userId ?? _quizLog?.userId ?? "",
+        campaignId: campaign.id,
+        quizSetId: quizSet.id,
+        quizStageIndex: currentQuizStageIndex,
+        quizStageId: currentQuizStage?.id ?? "",
+        authType: authType,
+        score,
+        totalScore: totalQuizScore,
+        percentile: scoreData?.percentile || null,
+        scoreRange: scoreData?.userBin?.range || null,
+        elapsedSeconds: stageElapsedSeconds,
+        remainingHearts,
+        isBadgeStage: isBadgeStage(),
+        isBadgeAcquired,
+        badgeActivityId:
+          authType === AuthType.SUMTOTAL
+            ? getCurrentStageBadgeActivityId()
+            : null,
+        quizLog: _quizLog,
+      });
+
+      // 퀴즈 로그 업데이트
+      const quizLogHandler = new QuizLogHandler();
+      const updatedQuizLog = await quizLogHandler.update({
+        quizStageIndex: currentQuizStageIndex,
+        isBadgeAcquired,
+        totalScore: totalQuizScore,
+        elapsedSeconds: totalQuizTime,
+        quizLogId: _quizLog?.id ?? "",
+        quizStagesLength: quizSet.quizStages.length,
+      });
+      // console.info("scoreData", scoreData);
+
+      // ################ DATA 업데이트 모두 완료 ################
+      // 퀴즈 로그 State 업데이트
+      setQuizStagesTotalScore(totalQuizScore);
+      setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+      setQuizLog(updatedQuizLog);
+      setLastCompletedQuizStage(
+        updatedQuizLog.lastCompletedStage != null
+          ? quizSet.quizStages[updatedQuizLog.lastCompletedStage]
+          : null
+      );
+
+      // 다음 스테이지로 이동
+      quizQuestionLogManager.reset();
+
+      setIsLoading(false);
+
+      return {
+        score: scoreData ?? {
+          data: [],
+          sampleSize: null,
+          userBin: null,
+          userScore: totalQuizScore,
+          percentile: 50,
+        },
+        isBadgeAcquired: isBadgeAcquired,
+        badgeStage: isBadgeStage(),
+        badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",
+      };
+    } catch (error) {
+      console.error("endStage에서 에러 발생:", error);
+      throw error; // 🚨 여기서 반드시 throw 해야 호출한 곳에서 catch 가능!
     }
-
-    // 퀴즈 답변 로그 전송 중인지 확인
-    if (quizQuestionLogManager.isQueueProcessing()) {
-      await quizQuestionLogManager.waitForQueueToComplete();
-    }
-
-    // 퀴즈 스테이지 로그 생성
-    const quizStageLogHandler = new QuizStageLogHandler();
-    await quizStageLogHandler.create({
-      userId: userId ?? _quizLog?.userId ?? "",
-      campaignId: campaign.id,
-      quizSetId: quizSet.id,
-      quizStageIndex: currentQuizStageIndex,
-      quizStageId: currentQuizStage?.id ?? "",
-      authType: authType,
-      score,
-      totalScore: totalQuizScore,
-      percentile: scoreData?.percentile || null,
-      scoreRange: scoreData?.userBin?.range || null,
-      elapsedSeconds: stageElapsedSeconds,
-      remainingHearts,
-      isBadgeStage: isBadgeStage(),
-      isBadgeAcquired,
-      badgeActivityId:
-        authType === AuthType.SUMTOTAL
-          ? getCurrentStageBadgeActivityId()
-          : null,
-      quizLog: _quizLog,
-    });
-
-    // 퀴즈 로그 업데이트
-    const quizLogHandler = new QuizLogHandler();
-    await quizLogHandler.update({
-      quizStageIndex: currentQuizStageIndex,
-      isBadgeAcquired,
-      totalScore: totalQuizScore,
-      elapsedSeconds: totalQuizTime,
-      quizLogId: _quizLog?.id ?? "",
-      quizStagesLength: quizSet.quizStages.length,
-    });
-    // console.info("scoreData", scoreData);
-
-    // 퀴즈 로그 State 업데이트
-    // setQuizStagesTotalScore(totalQuizScore);
-    // setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
-    // setQuizLog(updatedQuizLog);
-
-    // 다음 스테이지로 이동
-    // quizQuestionLogManager.reset();
-
-    setIsLoading(false);
-
-    return {
-      score: scoreData ?? {
-        data: [],
-        sampleSize: null,
-        userBin: null,
-        userScore: totalQuizScore,
-        percentile: 50,
-      },
-      isBadgeAcquired: isBadgeAcquired,
-      badgeStage: isBadgeStage(),
-      badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",
-    };
   };
 
   const failStage = async (): Promise<void> => {
@@ -268,7 +278,7 @@ export const QuizProvider = ({
       await quizQuestionLogManager.waitForQueueToComplete();
     }
 
-    // quizQuestionLogManager.init(currentQuizStageIndex);
+    quizQuestionLogManager.init(currentQuizStageIndex);
 
     setIsLoading(false);
   };
@@ -309,6 +319,17 @@ export const QuizProvider = ({
 
     quizQuestionLogManager.init(nextQuizStageIndex);
     return true;
+  };
+
+  const restartStage = () => {
+    setCurrentQuizStageIndex(currentQuizStageIndex);
+    setCurrentQuizStage(quizSet.quizStages[currentQuizStageIndex]);
+    setCurrentStageQuestions(
+      quizSet.quizStages[currentQuizStageIndex].questions
+    );
+    setCurrentQuestionIndex(0);
+
+    quizQuestionLogManager.init(currentQuizStageIndex);
   };
 
   const isBadgeStage = (): boolean => {
@@ -535,6 +556,7 @@ export const QuizProvider = ({
         endStage,
         failStage,
         nextStage,
+        restartStage,
         logUserAnswer,
         isLastQuestionOnState,
         nextQuestion,

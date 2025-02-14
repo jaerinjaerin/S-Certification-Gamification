@@ -13,12 +13,12 @@ import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCheckOS } from "@/hooks/useCheckOS";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quizProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
@@ -33,9 +33,10 @@ export default function QuizPage() {
     canNextQuestion,
     logUserAnswer,
     isComplete,
+    restartStage,
   } = useQuiz();
   const translation = useTranslations();
-  const { routeToPage } = usePathNavigator();
+  const router = useRouter();
 
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
   const currentStageTotalQuestions = currentStageQuestions?.length;
@@ -154,11 +155,23 @@ export default function QuizPage() {
 
     setLoading(true);
     console.log("endStage", lifeCount);
-    await endStage(lifeCount); // 남은 하트수
-    resetSelectedOptionIds();
+    tryEndStage(lifeCount);
+  };
 
-    // nextStage();
-    routeToPage("complete");
+  const tryEndStage = async (lifeCount: number) => {
+    try {
+      await endStage(lifeCount); // 남은 하트수
+      resetSelectedOptionIds();
+      router.push("complete");
+    } catch (error) {
+      console.error("fail retryEndStage", error);
+      showFailEndStageAlert();
+    }
+  };
+
+  const showFailEndStageAlert = () => {
+    confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
+    tryEndStage(lifeCount);
   };
 
   const handleGameOver = useCallback(async () => {
@@ -168,6 +181,14 @@ export default function QuizPage() {
     stopCountdown();
     setGameOver(true);
   }, [stopCountdown, setGameOver]);
+
+  const handleRestartQuizStage = () => {
+    resetCountdown();
+    startCountdown();
+    setLifeCount(LIFE_COUNT);
+    setGameOver(false);
+    restartStage();
+  };
 
   const handleRestart = useCallback(() => {
     resetCountdown();
@@ -189,7 +210,7 @@ export default function QuizPage() {
     setLoading(true);
 
     if (isComplete()) {
-      routeToPage("/map");
+      router.push("map");
       return;
     }
     setLoading(false);
@@ -328,7 +349,10 @@ export default function QuizPage() {
               );
             })}
       </div>
-      <GameOverAlertDialog gameOver={gameOver} />
+      <GameOverAlertDialog
+        gameOver={gameOver}
+        onRestart={handleRestartQuizStage}
+      />
       <ErrorAlertDialog error={errorMessage} />
       {success && <SuccessNotify />}
       {loading && <Spinner />}
