@@ -38,7 +38,7 @@ export default function QuizPage() {
     currentStageQuestions,
     endStage,
     failStage,
-    initStage,
+    // initStage,
     resetStage,
     nextQuestion,
     canNextQuestion,
@@ -174,7 +174,7 @@ export default function QuizPage() {
 
   const tryEndStage = async (lifeCount: number) => {
     try {
-      const result = await endStage(lifeCount); // 남은 하트수
+      await endStage(lifeCount); // 남은 하트수
       resetSelectedOptionIds();
       router.push("complete");
       // if (result.nextStageIndex != null) {

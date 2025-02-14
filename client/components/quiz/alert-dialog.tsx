@@ -23,7 +23,6 @@ export function GameOverAlertDialog({
   onGotoMap: () => void;
 }) {
   const translation = useTranslations();
-  const router = useRouter();
   // const { restartStage } = useQuiz();
   const { isMyanmar } = useCheckLocale();
   return (
