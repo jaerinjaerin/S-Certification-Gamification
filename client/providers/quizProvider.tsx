@@ -11,7 +11,7 @@ import {
 import * as Sentry from "@sentry/nextjs";
 import assert from "assert";
 import { useTranslations } from "next-intl";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import { QuizBadgeHandler } from "./managers/quizBadgeHandler";
@@ -38,7 +38,9 @@ interface QuizContextType {
   endStage(remainingHearts: number): Promise<EndStageResult>;
   failStage(): Promise<void>;
   nextQuestion(): boolean;
+  initStage(stageIndex: number): boolean;
   nextStage(): boolean;
+  resetStage(): void;
   restartStage(): void;
   canNextQuestion(): boolean;
   logUserAnswer(
@@ -49,6 +51,7 @@ interface QuizContextType {
   ): void;
   getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
+  // getQuizStagesTotalScore(): number;
   quizStagesTotalScore: number;
   getAllStageMaxScore(): number;
 }
@@ -76,20 +79,53 @@ export const QuizProvider = ({
 }) => {
   const translation = useTranslations();
   const pathname = usePathname();
+  const router = useRouter();
 
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
+
+  // 네트워크 오류로 인해 quizStageLog만 저장되고 quizLog가 저장되지 않은 경우에 대한 처리 추가
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
-    quizStageLogs ?? []
+    quizStageLogs != null
+      ? quizStageLogs.filter(
+          (log) => log.quizStageIndex <= (_quizLog?.lastCompletedStage ?? -1)
+        )
+      : []
   );
   // const [_quizQuestionLogs] = useState<UserQuizQuestionLog[]>(
   // quizQuestionLogs ?? []
   // );
-  const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
-    (quizStageLogs ?? []).reduce(
-      (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
+  const getQuizStagesTotalScore = (stageLogs: UserQuizStageLog[] | null) => {
+    if (stageLogs == null) {
+      return 0;
+    }
+
+    const quizStageIndex =
+      quizLog?.lastCompletedStage == null ? -1 : quizLog?.lastCompletedStage;
+
+    const filteredQuizStageLogs = stageLogs.filter(
+      (log) => log.quizStageIndex <= quizStageIndex
+    );
+    const score = filteredQuizStageLogs.reduce(
+      (total, stageLog: UserQuizStageLog) => {
+        return total + (stageLog.score ?? 0);
+      },
       0
-    )
+    );
+
+    console.log("getQuizStagesTotalScore", quizStageIndex, score);
+
+    return score;
+  };
+
+  // const totalStagesScore = getQuizStagesTotalScore(quizStageLogs);
+  // console.log("totalStagesScore", totalStagesScore);
+  const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
+    // (quizStageLogs ?? []).reduce((total, stageLog: UserQuizStageLog) => {
+    //   return total + (stageLog.score ?? 0);
+    // }, 0)
+    // totalStagesScore
+    getQuizStagesTotalScore(quizStageLogs)
   );
 
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
@@ -100,12 +136,18 @@ export const QuizProvider = ({
   );
 
   // TODO: 방어 코드. 코드가 정리되면 제거
-  if (
-    currentQuizStageIndex >= quizSet.quizStages.length &&
-    pathname.includes("/quiz")
-  ) {
-    redirect(`/${campaignName}/${quizSetPath}/map`);
-  }
+  // if (
+  //   currentQuizStageIndex >= quizSet.quizStages.length &&
+  //   pathname.includes("/quiz")
+  // ) {
+  //   // redirect(`/${campaignName}/${quizSetPath}/map`);
+  //   console.log(
+  //     "redirect to map",
+  //     currentQuizStageIndex,
+  //     quizSet.quizStages.length
+  //   );
+  //   router.push("map");
+  // }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
@@ -159,6 +201,26 @@ export const QuizProvider = ({
 
     isCreatingQuizLogRef.current = false;
   };
+
+  // const getQuizStagesTotalScore = (): number => {
+  //   if (quizStageLogs == null) {
+  //     return 0;
+  //   }
+
+  //   const filteredQuizStageLogs = quizStageLogs.filter(
+  //     (log) => log.quizStageIndex < currentQuizStageIndex
+  //   );
+  //   const score = filteredQuizStageLogs.reduce(
+  //     (total, stageLog: UserQuizStageLog) => {
+  //       return total + (stageLog.score ?? 0);
+  //     },
+  //     0
+  //   );
+
+  //   console.log("getQuizStagesTotalScore", currentQuizStageIndex, score);
+
+  //   return score;
+  // };
 
   const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
     try {
@@ -236,16 +298,43 @@ export const QuizProvider = ({
       });
       // console.info("scoreData", scoreData);
 
+      console.log("newQuizStageLog", newQuizStageLog);
       // ################ DATA 업데이트 모두 완료 ################
       // 퀴즈 로그 State 업데이트
       setQuizStagesTotalScore(totalQuizScore);
-      setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+      // setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+      setQuizStageLogs((prevLogs) => {
+        const logMap = new Map();
+
+        [...prevLogs, newQuizStageLog].forEach((log) => {
+          // 같은 quizStageIndex가 있다면 updatedAt이 더 큰 값을 유지
+          if (
+            !logMap.has(log.quizStageIndex) ||
+            logMap.get(log.quizStageIndex).updatedAt < log.updatedAt
+          ) {
+            logMap.set(log.quizStageIndex, log);
+          }
+        });
+
+        return Array.from(logMap.values());
+      });
+
       setQuizLog(updatedQuizLog);
       setLastCompletedQuizStage(
         updatedQuizLog.lastCompletedStage != null
           ? quizSet.quizStages[updatedQuizLog.lastCompletedStage]
           : null
       );
+
+      // const nextQuizStageIndex = currentQuizStageIndex + 1;
+      // setCurrentQuizStageIndex(nextQuizStageIndex);
+      // setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
+      // setCurrentStageQuestions(
+      //   quizSet.quizStages[nextQuizStageIndex].questions
+      // );
+      // setCurrentQuestionIndex(0);
+
+      // quizQuestionLogManager.init(nextQuizStageIndex);
 
       // 다음 스테이지로 이동
       quizQuestionLogManager.reset();
@@ -263,6 +352,9 @@ export const QuizProvider = ({
         isBadgeAcquired: isBadgeAcquired,
         badgeStage: isBadgeStage(),
         badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",
+        nextStageIndex: updatedQuizLog.isCompleted
+          ? null
+          : currentQuizStageIndex + 1,
       };
     } catch (error) {
       console.error("endStage에서 에러 발생:", error);
@@ -311,13 +403,39 @@ export const QuizProvider = ({
     if (isLastStage()) {
       return false;
     }
-    const nextQuizStageIndex = currentQuizStageIndex + 1;
+
+    console.log("nextStage", currentQuizStageIndex);
+    const nextQuizStageIndex =
+      _quizLog?.lastCompletedStage != null
+        ? _quizLog?.lastCompletedStage + 1
+        : 0;
     setCurrentQuizStageIndex(nextQuizStageIndex);
     setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
     setCurrentStageQuestions(quizSet.quizStages[nextQuizStageIndex].questions);
     setCurrentQuestionIndex(0);
 
     quizQuestionLogManager.init(nextQuizStageIndex);
+    return true;
+  };
+
+  const resetStage = () => {
+    setCurrentQuizStageIndex(currentQuizStageIndex);
+    setCurrentQuizStage(quizSet.quizStages[currentQuizStageIndex]);
+    setCurrentStageQuestions(
+      quizSet.quizStages[currentQuizStageIndex].questions
+    );
+    setCurrentQuestionIndex(0);
+
+    quizQuestionLogManager.init(currentQuizStageIndex);
+  };
+
+  const initStage = (stageIndex: number): boolean => {
+    setCurrentQuizStageIndex(stageIndex);
+    setCurrentQuizStage(quizSet.quizStages[stageIndex]);
+    setCurrentStageQuestions(quizSet.quizStages[stageIndex].questions);
+    setCurrentQuestionIndex(0);
+
+    quizQuestionLogManager.init(stageIndex);
     return true;
   };
 
@@ -545,6 +663,7 @@ export const QuizProvider = ({
         quizStageLogs: _quizStageLogs,
         // quizQuestionLogs: _quizQuestionLogs,
         quizLog: _quizLog,
+        // quizStagesTotalScore,
         quizStagesTotalScore,
         currentQuizStageIndex,
         currentQuestionIndex,
@@ -555,7 +674,9 @@ export const QuizProvider = ({
         isLastStage,
         endStage,
         failStage,
+        initStage,
         nextStage,
+        resetStage,
         restartStage,
         logUserAnswer,
         isLastQuestionOnState,

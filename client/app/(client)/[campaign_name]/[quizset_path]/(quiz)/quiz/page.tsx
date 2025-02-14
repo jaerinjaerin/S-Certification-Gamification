@@ -38,6 +38,8 @@ export default function QuizPage() {
     currentStageQuestions,
     endStage,
     failStage,
+    initStage,
+    resetStage,
     nextQuestion,
     canNextQuestion,
     logUserAnswer,
@@ -112,6 +114,8 @@ export default function QuizPage() {
   };
 
   const handleConfirmAnswer = async (question: any, optionId: string) => {
+    if (lifeCount === 0) return;
+
     const isSelected = selectedOptionIdsRef.current.includes(optionId);
     if (isSelected) return;
 
@@ -170,9 +174,12 @@ export default function QuizPage() {
 
   const tryEndStage = async (lifeCount: number) => {
     try {
-      await endStage(lifeCount); // 남은 하트수
+      const result = await endStage(lifeCount); // 남은 하트수
       resetSelectedOptionIds();
       router.push("complete");
+      // if (result.nextStageIndex != null) {
+      //   initStage(result.nextStageIndex);
+      // }
     } catch (error) {
       console.error("fail retryEndStage", error);
       showFailEndStageAlert();
@@ -180,8 +187,8 @@ export default function QuizPage() {
   };
 
   const showFailEndStageAlert = () => {
-    confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
-    setError(translation("unexpected_error"));
+    // confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
+    setError(translation("network_error"));
   };
 
   const handleGameOver = useCallback(async () => {
@@ -198,6 +205,13 @@ export default function QuizPage() {
     setLifeCount(LIFE_COUNT);
     setGameOver(false);
     restartStage();
+  };
+
+  const handleGotoMap = () => {
+    resetCountdown();
+    setLifeCount(LIFE_COUNT);
+    setGameOver(false);
+    router.push("map");
   };
 
   const handleRestart = useCallback(() => {
@@ -222,6 +236,10 @@ export default function QuizPage() {
     if (isComplete()) {
       router.push("map");
       return;
+    }
+
+    if (currentQuestionIndex !== 0) {
+      resetStage();
     }
     setLoading(false);
   }, []);
@@ -362,6 +380,7 @@ export default function QuizPage() {
       <GameOverAlertDialog
         gameOver={gameOver}
         onRestart={handleRestartQuizStage}
+        onGotoMap={handleGotoMap}
       />
       <ErrorAlertDialog error={errorMessage} />
       {success && <SuccessNotify />}

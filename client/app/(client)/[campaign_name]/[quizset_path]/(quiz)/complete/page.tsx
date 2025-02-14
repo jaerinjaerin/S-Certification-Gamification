@@ -13,7 +13,7 @@ import { useInterval } from "usehooks-ts";
 export default function QuizComplete() {
   useGAPageView();
   const router = useRouter();
-  const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
+  const { quizStageLogs, lastCompletedQuizStage, nextStage } = useQuiz();
 
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
@@ -27,11 +27,19 @@ export default function QuizComplete() {
     });
   };
 
+  console.log("QuizComplete lastCompletedQuizStage", lastCompletedQuizStage);
+
+  useEffect(() => {
+    nextStage();
+  }, []);
+
   useEffect(() => {
     const routeToMapPage = async () => {
       await sleep(3000);
+      console.log("퀴즈 완료 페이지에서 맵 페이지로 이동");
       router.push("map");
     };
+    console.log("quizStageLogs", quizStageLogs.at(-1), quizStageLogs);
     if (!quizStageLogs.at(-1)) return;
     if (isBadgeStage) return;
     routeToMapPage();

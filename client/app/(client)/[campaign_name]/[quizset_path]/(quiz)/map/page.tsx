@@ -15,7 +15,12 @@ import { Fragment, useEffect, useRef } from "react";
 
 export default function QuizMap() {
   useGAPageView();
-  const { quizSet, quizStagesTotalScore, currentQuizStageIndex } = useQuiz();
+  const {
+    quizSet,
+    quizStagesTotalScore,
+    currentQuizStageIndex,
+    quizStageLogs,
+  } = useQuiz();
   const translation = useTranslations();
   const { loading, setLoading, renderLoader } = useLoader();
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -67,7 +72,10 @@ export default function QuizMap() {
                 currentQuizStageIndex={currentQuizStageIndex}
                 routeNextQuizStage={routeNextQuizStage}
                 stage={quizStage}
-                isCompleted={index < currentQuizStageIndex}
+                // isCompleted={index < currentQuizStageIndex}
+                isCompleted={quizStageLogs.some(
+                  (log) => log.quizStageId === quizStage.id
+                )}
                 setLoading={setLoading}
               />
               {quizStage.order !== quizSet.quizStages.length && <Connection />}

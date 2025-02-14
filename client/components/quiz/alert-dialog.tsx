@@ -9,7 +9,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import useCheckLocale from "@/hooks/useCheckLocale";
-import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -17,13 +16,15 @@ import { useRouter } from "next/navigation";
 export function GameOverAlertDialog({
   gameOver,
   onRestart,
+  onGotoMap,
 }: {
   gameOver: boolean;
   onRestart: () => void;
+  onGotoMap: () => void;
 }) {
   const translation = useTranslations();
   const router = useRouter();
-  const { restartStage } = useQuiz();
+  // const { restartStage } = useQuiz();
   const { isMyanmar } = useCheckLocale();
   return (
     <AlertDialog open={gameOver}>
@@ -43,18 +44,10 @@ export function GameOverAlertDialog({
         </AlertDialogHeader>
 
         <AlertDialogFooter className="sm:justify-center">
-          <AlertDialogCancel
-            onClick={() => router.push("map")}
-            className="text-wrap"
-          >
+          <AlertDialogCancel onClick={() => onGotoMap()} className="text-wrap">
             {translation("no")}
           </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              onRestart();
-            }}
-            className="text-wrap"
-          >
+          <AlertDialogAction onClick={() => onRestart()} className="text-wrap">
             {translation("retry")}
           </AlertDialogAction>
         </AlertDialogFooter>
