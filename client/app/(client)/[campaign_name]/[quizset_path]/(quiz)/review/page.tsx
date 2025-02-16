@@ -103,12 +103,6 @@ export default function ReviewPage() {
     return;
   };
 
-  // useEffect(() => {
-  //   if (!currentQuizStage || !currentStageQuestions) {
-  //     setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
-  //   }
-  // }, [currentQuizStage, currentStageQuestions]);
-
   return (
     <div className="min-h-svh bg-slate-200/20">
       <div className="sticky top-0 z-10">

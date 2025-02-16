@@ -9,9 +9,7 @@ import {
   UserQuizStageLog,
 } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
-import assert from "assert";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import { QuizBadgeHandler } from "./managers/quizBadgeHandler";
@@ -23,37 +21,28 @@ import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
 interface QuizContextType {
   userId: string;
   quizSet: QuizSetEx;
-  quizStageLogs: UserQuizStageLog[];
-  // quizQuestionLogs: UserQuizQuestionLog[];
   quizLog: UserQuizLog | null;
+  quizStageLogs: UserQuizStageLog[];
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
-  currentQuizStage: QuizStageEx;
-  lastCompletedQuizStage: QuizStageEx | null;
+  currentQuizStage: QuizStageEx | null;
   currentStageQuestions: QuestionEx[];
+  lastCompletedQuizStage: QuizStageEx | null;
   isBadgeStage(): boolean;
   isComplete(): boolean;
   isLastQuestionOnState(): boolean;
-  isLastStage(): boolean;
-  endStage(remainingHearts: number): Promise<EndStageResult>;
-  failStage(): Promise<void>;
-  nextQuestion(): boolean;
-  initStage(stageIndex: number): boolean;
-  nextStage(): boolean;
-  resetStage(): void;
-  restartStage(): void;
-  canNextQuestion(): boolean;
+  finalizeCurrentStage(remainingHearts: number): Promise<EndStageResult>;
+  handleStageFailure(): Promise<void>;
   logUserAnswer(
     questionId: string,
     selectedOptionIds: string[],
     elapsedSeconds: number,
     isCorrect: boolean
   ): void;
-  getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
-  // getQuizStagesTotalScore(): number;
   quizStagesTotalScore: number;
   getAllStageMaxScore(): number;
+  clearUserAnswerLogs(): void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -78,8 +67,6 @@ export const QuizProvider = ({
   quizStageLogs: UserQuizStageLog[] | null;
 }) => {
   const translation = useTranslations();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
@@ -92,9 +79,7 @@ export const QuizProvider = ({
         )
       : []
   );
-  // const [_quizQuestionLogs] = useState<UserQuizQuestionLog[]>(
-  // quizQuestionLogs ?? []
-  // );
+
   const getQuizStagesTotalScore = (stageLogs: UserQuizStageLog[] | null) => {
     if (stageLogs == null) {
       return 0;
@@ -118,13 +103,7 @@ export const QuizProvider = ({
     return score;
   };
 
-  // const totalStagesScore = getQuizStagesTotalScore(quizStageLogs);
-  // console.log("totalStagesScore", totalStagesScore);
   const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
-    // (quizStageLogs ?? []).reduce((total, stageLog: UserQuizStageLog) => {
-    //   return total + (stageLog.score ?? 0);
-    // }, 0)
-    // totalStagesScore
     getQuizStagesTotalScore(quizStageLogs)
   );
 
@@ -150,8 +129,10 @@ export const QuizProvider = ({
   // }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
-    quizSet.quizStages[currentQuizStageIndex]
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
+    quizSet.quizStages.length > currentQuizStageIndex
+      ? quizSet.quizStages[currentQuizStageIndex]
+      : null
   );
   const [lastCompletedQuizStage, setLastCompletedQuizStage] =
     useState<QuizStageEx | null>(
@@ -173,6 +154,18 @@ export const QuizProvider = ({
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
   // console.log("QuizProvider", quizSet);
+
+  useEffect(() => {
+    console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
+  }, [currentQuizStageIndex]);
+
+  useEffect(() => {
+    console.log("currentQuizStage 업데이트됨:", currentQuizStage);
+  }, [currentQuizStage]);
+
+  useEffect(() => {
+    console.log("currentStageQuestions 업데이트됨:", currentStageQuestions);
+  }, [currentStageQuestions]);
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);
@@ -202,27 +195,9 @@ export const QuizProvider = ({
     isCreatingQuizLogRef.current = false;
   };
 
-  // const getQuizStagesTotalScore = (): number => {
-  //   if (quizStageLogs == null) {
-  //     return 0;
-  //   }
-
-  //   const filteredQuizStageLogs = quizStageLogs.filter(
-  //     (log) => log.quizStageIndex < currentQuizStageIndex
-  //   );
-  //   const score = filteredQuizStageLogs.reduce(
-  //     (total, stageLog: UserQuizStageLog) => {
-  //       return total + (stageLog.score ?? 0);
-  //     },
-  //     0
-  //   );
-
-  //   console.log("getQuizStagesTotalScore", currentQuizStageIndex, score);
-
-  //   return score;
-  // };
-
-  const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
+  const finalizeCurrentStage = async (
+    remainingHearts: number
+  ): Promise<EndStageResult> => {
     try {
       const quizScoreHandler = new QuizScoreHandler();
 
@@ -326,18 +301,9 @@ export const QuizProvider = ({
           : null
       );
 
-      // const nextQuizStageIndex = currentQuizStageIndex + 1;
-      // setCurrentQuizStageIndex(nextQuizStageIndex);
-      // setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
-      // setCurrentStageQuestions(
-      //   quizSet.quizStages[nextQuizStageIndex].questions
-      // );
-      // setCurrentQuestionIndex(0);
-
-      // quizQuestionLogManager.init(nextQuizStageIndex);
-
-      // 다음 스테이지로 이동
-      quizQuestionLogManager.reset();
+      if (!isLastStage()) {
+        nextStage();
+      }
 
       setIsLoading(false);
 
@@ -357,12 +323,12 @@ export const QuizProvider = ({
           : currentQuizStageIndex + 1,
       };
     } catch (error) {
-      console.error("endStage에서 에러 발생:", error);
-      throw error; // 🚨 여기서 반드시 throw 해야 호출한 곳에서 catch 가능!
+      console.error("finalizeCurrentStage에서 에러 발생:", error);
+      throw error;
     }
   };
 
-  const failStage = async (): Promise<void> => {
+  const handleStageFailure = async (): Promise<void> => {
     setIsLoading(true);
 
     // 퀴즈 답변 로그 전송 중인지 확인
@@ -386,68 +352,19 @@ export const QuizProvider = ({
     return currentQuizStage?.questions.length - 1 === currentQuestionIndex;
   };
 
-  const canNextQuestion = (): boolean => {
-    if (isLastQuestionOnState()) {
-      return false;
-    }
-    return true;
-  };
+  const nextStage = (): void => {
+    const nextQuizStageIndex = currentQuizStageIndex + 1;
+    console.log("nextStage", currentQuizStageIndex, nextQuizStageIndex);
 
-  const nextQuestion = (): boolean => {
-    // console.log("nextQuestion", currentQuestionIndex);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    return true;
-  };
-
-  const nextStage = (): boolean => {
-    if (isLastStage()) {
-      return false;
-    }
-
-    console.log("nextStage", currentQuizStageIndex);
-    const nextQuizStageIndex =
-      _quizLog?.lastCompletedStage != null
-        ? _quizLog?.lastCompletedStage + 1
-        : 0;
     setCurrentQuizStageIndex(nextQuizStageIndex);
     setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
     setCurrentStageQuestions(quizSet.quizStages[nextQuizStageIndex].questions);
     setCurrentQuestionIndex(0);
-
     quizQuestionLogManager.init(nextQuizStageIndex);
-    return true;
   };
 
-  const resetStage = () => {
-    setCurrentQuizStageIndex(currentQuizStageIndex);
-    setCurrentQuizStage(quizSet.quizStages[currentQuizStageIndex]);
-    setCurrentStageQuestions(
-      quizSet.quizStages[currentQuizStageIndex].questions
-    );
-    setCurrentQuestionIndex(0);
-
-    quizQuestionLogManager.init(currentQuizStageIndex);
-  };
-
-  const initStage = (stageIndex: number): boolean => {
-    setCurrentQuizStageIndex(stageIndex);
-    setCurrentQuizStage(quizSet.quizStages[stageIndex]);
-    setCurrentStageQuestions(quizSet.quizStages[stageIndex].questions);
-    setCurrentQuestionIndex(0);
-
-    quizQuestionLogManager.init(stageIndex);
-    return true;
-  };
-
-  const restartStage = () => {
-    setCurrentQuizStageIndex(currentQuizStageIndex);
-    setCurrentQuizStage(quizSet.quizStages[currentQuizStageIndex]);
-    setCurrentStageQuestions(
-      quizSet.quizStages[currentQuizStageIndex].questions
-    );
-    setCurrentQuestionIndex(0);
-
-    quizQuestionLogManager.init(currentQuizStageIndex);
+  const clearUserAnswerLogs = (): void => {
+    quizQuestionLogManager.clear();
   };
 
   const isBadgeStage = (): boolean => {
@@ -455,6 +372,11 @@ export const QuizProvider = ({
   };
 
   const isLastStage = (): boolean => {
+    console.log(
+      "isLastStage",
+      quizSet.quizStages.length - 1,
+      currentQuizStageIndex
+    );
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
@@ -571,7 +493,11 @@ export const QuizProvider = ({
   };
 
   const isComplete = (): boolean => {
-    return _quizLog?.isCompleted ?? false;
+    if (_quizLog) {
+      return _quizLog.lastCompletedStage === quizSet.quizStages.length - 1;
+    }
+    return false;
+    // return _quizLog?.isCompleted ?? false;
   };
 
   const logUserAnswer = (
@@ -625,21 +551,6 @@ export const QuizProvider = ({
     });
   };
 
-  const getCorrectOptionIds = (questionId: string): string[] => {
-    const question = currentQuizStage?.questions.find(
-      (q: Question) => q.id === questionId
-    );
-
-    if (!question) {
-      // throw new Error("Question not found");
-      assert(false, "Question not found");
-    }
-
-    return question.options
-      .filter((option: QuestionOption) => option.isCorrect)
-      .map((option: QuestionOption) => option.id);
-  };
-
   const getAllStageMaxScore = () => {
     const maxScore = quizSet.quizStages.reduce(
       (total, stage: QuizStageEx) =>
@@ -661,9 +572,7 @@ export const QuizProvider = ({
         isLoading,
         quizSet,
         quizStageLogs: _quizStageLogs,
-        // quizQuestionLogs: _quizQuestionLogs,
         quizLog: _quizLog,
-        // quizStagesTotalScore,
         quizStagesTotalScore,
         currentQuizStageIndex,
         currentQuestionIndex,
@@ -671,20 +580,13 @@ export const QuizProvider = ({
         lastCompletedQuizStage,
         currentStageQuestions,
         isComplete,
-        isLastStage,
-        endStage,
-        failStage,
-        initStage,
-        nextStage,
-        resetStage,
-        restartStage,
+        finalizeCurrentStage,
+        handleStageFailure,
         logUserAnswer,
         isLastQuestionOnState,
-        nextQuestion,
-        canNextQuestion,
         isBadgeStage,
-        getCorrectOptionIds,
         getAllStageMaxScore,
+        clearUserAnswerLogs,
       }}
     >
       {children}

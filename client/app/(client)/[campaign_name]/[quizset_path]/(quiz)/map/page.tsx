@@ -26,6 +26,9 @@ export default function QuizMap() {
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const router = useRouter();
 
+  console.log("quizStageLogs", quizStageLogs);
+  console.log("currentQuizStageIndex", currentQuizStageIndex);
+
   useEffect(() => {
     const targetStage = itemsRef.current[currentQuizStageIndex];
 
