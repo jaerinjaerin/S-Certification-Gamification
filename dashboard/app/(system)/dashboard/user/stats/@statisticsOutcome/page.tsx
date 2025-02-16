@@ -41,7 +41,7 @@ const UserOutcome = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'user/statistics/outcome/average-score',
+        'dashboard/user/statistics/outcome/average-score',
         (data) => {
           setData((v) => ({ ...v, score: data.result }));
           setLoading((v) => ({ ...v, score: false }));
@@ -51,7 +51,7 @@ const UserOutcome = () => {
       //
       fetchData(
         state.fieldValues,
-        'user/statistics/outcome/total-quiz-completion-time',
+        'dashboard/user/statistics/outcome/total-quiz-completion-time',
         (data) => {
           setData((v) => ({ ...v, time: data.result }));
           setLoading((v) => ({ ...v, time: false }));

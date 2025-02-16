@@ -94,7 +94,7 @@ const UserProgress = () => {
 
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        'user/progress',
+        'dashboard/user/progress',
         (data) => {
           updateSearchParamsOnUrl({
             ...fieldValues,

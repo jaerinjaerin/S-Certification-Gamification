@@ -47,7 +47,7 @@ export const {
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: async (profile: SumtotalProfile, tokens) => {
-        console.log('profile:', profile);
+        // console.log('profile:', profile);
         // // console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
 
@@ -98,7 +98,7 @@ export const {
         }
 
         return {
-          id: encrypt(profile.userId, true),
+          // id: encrypt(profile.userId, true),
           emailId:
             profile.businessAddress.email1 != null
               ? encrypt(profile.businessAddress.email1, true)
@@ -139,7 +139,7 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // // console.log("auth callbacks jwt", token, profile, user, account);
+      // console.log('auth callbacks jwt', token, profile, user, account);
       if (account) {
         token.provider = account.provider;
       }

@@ -188,7 +188,7 @@ const UserList = () => {
 
       fetchData(
         { ...state.fieldValues, take: pageSize, page: pageIndex },
-        'user/info/list',
+        'dashboard/user/info/list',
         (data) => {
           total.current = data.total;
           setData(data.result);

@@ -40,7 +40,7 @@ function OverviewAchievementRate() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/statistics/achievement',
+        'dashboard/overview/statistics/achievement',
         (data) => {
           console.log('🚀 ~ useEffect ~ data.result:', data.result);
           setData(data.result);
@@ -51,7 +51,7 @@ function OverviewAchievementRate() {
       //
       fetchData(
         state.fieldValues,
-        'overview/info/achievement',
+        'dashboard/overview/info/achievement',
         (data) => {
           setCount(data.result.count.toFixed(2) ?? 0);
         },

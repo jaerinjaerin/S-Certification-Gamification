@@ -36,7 +36,7 @@ const QuizQuizzesRanked = () => {
     if (state.fieldValues) {
       fetchData(
         { ...state.fieldValues },
-        'quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate',
+        'dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate',
         (data) => {
           setData(data.result);
           setLoading(false);

@@ -20,7 +20,7 @@ const OverviewExpertsByGroupInfo = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/info/experts-by-group',
+        'dashboard/overview/info/experts-by-group',
         (data) => {
           setExpertData(data.result ?? initialExpertsData);
           setLoading(false);
