@@ -13,7 +13,7 @@ import { useInterval } from "usehooks-ts";
 export default function QuizComplete() {
   useGAPageView();
   const router = useRouter();
-  const { quizStageLogs, lastCompletedQuizStage, nextStage } = useQuiz();
+  const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
 
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
 
@@ -28,10 +28,6 @@ export default function QuizComplete() {
   };
 
   console.log("QuizComplete lastCompletedQuizStage", lastCompletedQuizStage);
-
-  useEffect(() => {
-    nextStage();
-  }, []);
 
   useEffect(() => {
     const routeToMapPage = async () => {
