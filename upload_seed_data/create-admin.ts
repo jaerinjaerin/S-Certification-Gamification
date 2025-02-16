@@ -47,6 +47,12 @@ async function main() {
       },
     });
 
+    // 도메인에 업데이트
+    await prisma.domain.update({
+      where: { code: perName },
+      data: { permissionId: permission.id },
+    });
+
     // Admin Role과 Permission 연결
     await prisma.rolePermission.upsert({
       where: {
