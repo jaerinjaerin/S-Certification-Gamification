@@ -82,6 +82,8 @@ model User {
 
   channelName String? // S+미사용 유저가 채널을 직접 입력한 경우, 여기에 저장
 
+  userRoles UserRole[]
+
   @@map("users")
 }
 
@@ -719,4 +721,55 @@ enum BadgeType {
 enum BadgeApiType {
   REGISTER
   PROGRESS
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String   @id @default(uuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([roleId, permissionId], name: "role_permission_unique")
+  @@index([roleId])
+  @@index([permissionId])
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, roleId], name: "user_role_unique")
+  @@index([userId])
+  @@index([roleId])
 }
