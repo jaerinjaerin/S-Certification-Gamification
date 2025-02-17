@@ -29,10 +29,10 @@ export async function POST(req: Request) {
         status: validatedData.status,
         message: validatedData.message,
         userId: validatedData.userId,
-        accountUserId: validatedData.accountUserId,
+        accountUserId: validatedData.accountUserId ?? "",
         activityId: validatedData.activityId,
-        accessToken: validatedData.accessToken,
-        rawLog: validatedData.rawLog,
+        accessToken: validatedData.accessToken ?? "",
+        rawLog: validatedData.rawLog ?? "",
       },
     });
 
