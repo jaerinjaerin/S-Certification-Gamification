@@ -6,15 +6,18 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "prisma:generate": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma generate --schema=../data-model/prisma/schema.prisma",
-    "prisma:migrate:dev": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma migrate dev --schema=../data-model/prisma/schema.prisma",
-    "prisma:migrate:deploy": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma migrate deploy --schema=../data-model/prisma/schema.prisma",
-    "prisma:db:push": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma db push --schema=../data-model/prisma/schema.prisma",
+    "prisma:generate": "npx prisma generate --schema=../data-model/prisma/schema.prisma",
+    "prisma:migrate:dev": "npx prisma migrate dev --schema=../data-model/prisma/schema.prisma",
+    "prisma:migrate:deploy": "npx prisma migrate deploy --schema=../data-model/prisma/schema.prisma",
+    "prisma:migrate:update": "npx prisma migrate dev --create-only --schema=../data-model/prisma/schema.prisma",
+    "prisma:db:push": "npx prisma db push --schema=../data-model/prisma/schema.prisma",
     "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "prisma:seed": "ts-node ./seed.ts --schema=../data-model/prisma/schema.prisma",
     "prisma:update": "ts-node ./update.ts --schema=../data-model/prisma/schema.prisma",
+    "prisma:update_question_logs": "ts-node ./update_question_log.ts --schema=../data-model/prisma/schema.prisma",
     "prisma:new": "ts-node ./update_new.ts --schema=../data-model/prisma/schema.prisma",
-    "prisma:dbreset": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma db push --force-reset --schema=../data-model/prisma/schema.prisma"
+    "prisma:dbreset": "npx prisma db push --force-reset --schema=../data-model/prisma/schema.prisma",
+    "prisma:migrate:baseline": "npx prisma migrate resolve --applied '20250122151657_' --schema=../data-model/prisma/schema.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",

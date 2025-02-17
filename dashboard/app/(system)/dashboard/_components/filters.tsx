@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import SelectForm from '@/components/system/select-with-title';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,6 @@ import {
 } from 'react-hook-form';
 import { Form, FormField } from '@/components/ui/form';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { formatCamelCaseToTitleCase } from '@/lib/text';
 import { CalendarForm } from '@/components/system/calendar-with-title';
 import { ToggleUserButtons } from '@/components/system/toggle-buttons';
@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
 import Loader from '@/components/loader';
 import { useSearchParams } from 'next/navigation';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
@@ -52,6 +53,30 @@ const initializeFilters: InitializeFiltersPros = (
   setFilteredDomains(filters.domain);
 };
 
+const setRolePermission = (
+  form: UseFormReturn,
+  filters: FilterData,
+  role: any | null
+) => {
+  if (!role) return;
+  //
+  const domainId = role.permissions[0].permission.domains[0].id;
+  //
+  // 도메인 필터링
+  const domain: Domain = filters.domain.find(
+    (fd: Domain) => fd.id === domainId
+  );
+  if (domain) {
+    const region = domain?.region || { id: domain.id };
+    const subsidiary = domain?.subsidiary || { id: domain.id };
+
+    // 권한 제한
+    form.setValue('region', region.id);
+    form.setValue('subsidiary', subsidiary.id);
+    form.setValue('domain', domain.id);
+  }
+};
+
 const firstElement = { value: 'all', label: 'All' };
 
 // 렌더 데이터 시작
@@ -63,9 +88,10 @@ const Filters = ({
   onSubmit: (data: FieldValues, action?: boolean) => void;
 }) => {
   const searchParams = useSearchParams();
+  const { filter, role } = useStateVariables();
+  const [filterData, setFilterData] = useState<AllFilterData | null>(null);
   const form = useForm();
   const formValues = useWatch({ control: form.control });
-  const [filterData, setFilterData] = useState<AllFilterData | null>(null);
   const [filteredSubsidiaries, setFilteredSubsidiaries] = useState<
     Subsidiary[]
   >([]);
@@ -73,23 +99,36 @@ const Filters = ({
   const defaultValues = useRef<FieldValues | null>(null);
   const [applyButtonDisabled, setApplyButtonDisabled] = useState<boolean>(true);
 
-  // 필터 데이터 불러오기기
   useEffect(() => {
-    axios.get('/api/dashboard/filter').then((res) => {
-      setFilterData(res.data);
-    });
-  }, []);
+    if (filter) {
+      // role 없으면 admin
+      if (!!role) {
+        // form에 권한에 맞는 데이터 세팅
+        setRolePermission(form, filter.filters, role);
+      }
+      // 권한 필터링 된 데이터 갱신
+      setFilterData(filter);
+    }
+    //
+  }, [filter, role, form]);
 
   useEffect(() => {
     if (filterData && !defaultValues.current) {
       if (searchParams) {
+        // 지역 셀렉트 박스 설정
+        const priorities = ['domain', 'subsidiary', 'region']; // 우선순위 설정
+        let isUpdated = false; // 플래그 변수 설정
+        //
         searchParams.forEach((value, key) => {
-          if (!key.includes('date')) {
+          if (!key.includes('date') && (!role || !priorities.includes(key))) {
             form.setValue(key, value);
           }
         });
-        //
 
+        //
+        // 권한 필터링을 위해서 권한 내의 값 강제적용(외부 URL에서 변경해서 들어오는걸 방지)
+        if (!!role) setRolePermission(form, filterData.filters, role);
+        //
         // date 설정
         if (searchParams.get('date.from') && searchParams.get('date.to')) {
           const fromDate = searchParams.get('date.from');
@@ -103,28 +142,39 @@ const Filters = ({
           }
         }
         //
-
-        // 지역 셀렉트 박스 설정
-        const priorities = ['domain', 'subsidiary', 'region']; // 우선순위 설정
-        let isUpdated = false; // 플래그 변수 설정
-
+        //  form에 저장된 값으로 filter setting
         for (const k of priorities) {
-          if (searchParams.get(k) && searchParams.get(k) !== 'all') {
-            if (!isUpdated) updateFilters(k, searchParams.get(k) as string); // 조건을 만족하면 updateFilters 호출
+          const v = form.watch(k);
+          if (v && v !== 'all') {
+            if (!isUpdated) updateFilters(k, v as string); // 조건을 만족하면 updateFilters 호출
             isUpdated = true; // 플래그 설정
             break; // 한 번 실행 후 루프 종료
           }
         }
 
+        // filter setting이 없으면 초기화
         if (!isUpdated) {
-          initializeFilters(
-            filterData.filters,
-            form,
-            setFilteredSubsidiaries,
-            setFilteredDomains
-          );
+          if (!!role) {
+            Object.entries(filterData.filters).forEach(([key, value]) => {
+              if (priorities.includes(key)) {
+                form.setValue(key, value[0].id);
+              }
+            });
+
+            updateFilters(
+              'domain',
+              role.permissions[0].permission.domains[0].id
+            );
+          } else {
+            initializeFilters(
+              filterData.filters,
+              form,
+              setFilteredSubsidiaries,
+              setFilteredDomains
+            );
+          }
         }
-        //
+
         // 적용버튼 활성화 기능을 위한 기준정보 저장
         defaultValues.current = form.getValues();
 
@@ -159,7 +209,7 @@ const Filters = ({
         onSubmit(form.getValues());
       }
     }
-  }, [form, filterData, onSubmit, searchParams]);
+  }, [form, filterData, onSubmit, searchParams, role]);
 
   // 폼 데이터 상태 확인 후 현재 기준 값과 비교 (Apply버튼 활성여부)
   useEffect(() => {
@@ -414,6 +464,7 @@ const Filters = ({
                     defaultValue={searchParams.get(key) || 'all'}
                     render={({ field }) => (
                       <SelectForm
+                        disabled={!!role}
                         label={formatCamelCaseToTitleCase(key)}
                         width="auto"
                         field={field}

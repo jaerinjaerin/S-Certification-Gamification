@@ -40,7 +40,7 @@ export function OverviewGoalAchievement() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/statistics/progress-of-goal-achievement',
+        'dashboard/overview/statistics/progress-of-goal-achievement',
         (data) => {
           const { jobData, goalTotalScore, cumulativeRate } = data.result;
           count.current = cumulativeRate;

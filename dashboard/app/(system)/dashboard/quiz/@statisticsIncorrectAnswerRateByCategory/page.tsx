@@ -21,7 +21,7 @@ const QuizIncorrectAnswerRate = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'quiz/statistics/incorrect-answer-rate-by-category',
+        'dashboard/quiz/statistics/incorrect-answer-rate-by-category',
         (data) => {
           setData(data.result || []);
           setLoading(false);

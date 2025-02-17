@@ -1,13 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
+  output        = env("PRISMA_CLIENT_OUTPUT")
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
-  output   = env("PRISMA_CLIENT_OUTPUT")
 }
 
 datasource db {
@@ -21,17 +15,16 @@ model Account {
   type              String
   provider          String
   providerAccountId String   @map("provider_account_id")
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?  @db.Text
+  id_token          String?
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -50,37 +43,32 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String?
-  email         String?  @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-
-  emailId   String?
-  
-  authType  AuthType
-
-  providerUserId        String?
-  providerPersonId      String?
-  jobId             String?
-  // job               Job? @relation(fields: [jobId], references: [id])
-  
-  domainId              String?
-  domainCode              String?
-  languageId              String?
-
-  regionId String?
-  subsidiaryId String?
-  storeId String?
+  id               String     @id @default(uuid())
+  name             String?
+  loginName        String?
+  email            String?    @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  emailId          String?
+  authType         AuthType
+  providerUserId   String?
+  providerPersonId String?
+  jobId            String?
+  domainId         String?
+  domainCode       String?
+  languageId       String?
+  regionId         String?
+  subsidiaryId     String?
+  storeId          String?
   storeSegmentText String?
-  channelId String?
+  channelId        String?
   channelSegmentId String?
-
-  channelName String? // S+미사용 유저가 채널을 직접 입력한 경우, 여기에 저장
+  channelName      String?
+  UserRole         UserRole[]
+  accounts         Account[]
+  sessions         Session[]
 
   @@map("users")
 }
@@ -108,15 +96,522 @@ model VerificationToken {
 }
 
 model VerifyToken {
-  id          String   @id @default(uuid()) // 고유 식별자
-  email       String   // 인증할 이메일
-  token       String   // 인증 토큰 (6개의 숫자 문자열)
-  expiresAt   DateTime // 토큰 만료 시간
-  createdAt   DateTime @default(now()) // 생성 시간
-  updatedAt   DateTime @updatedAt // 마지막 갱신 시간
+  id        String   @id @default(uuid())
+  email     String
+  token     String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@index([email]) // 이메일 검색을 빠르게 하기 위한 인덱스
-  @@index([token]) // 토큰 검색을 빠르게 하기 위한 인덱스
+  @@index([email])
+  @@index([token])
+}
+
+model Language {
+  id   String @id @default(uuid())
+  code String @unique
+  name String
+}
+
+model Campaign {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  startedAt   DateTime
+  endedAt     DateTime
+  createrId   String
+  updaterId   String?
+  domainId    String?
+  quizSets    QuizSet[]
+}
+
+model Hq {
+  id      String   @id
+  name    String
+  code    String   @unique
+  order   Int?
+  regions Region[]
+}
+
+model Region {
+  id           String       @id
+  name         String
+  code         String       @unique
+  order        Int?
+  hqId         String?
+  hq           Hq?          @relation(fields: [hqId], references: [id])
+  subsidiaries Subsidiary[]
+}
+
+model Subsidiary {
+  id       String   @id
+  name     String
+  code     String   @unique
+  order    Int?
+  regionId String?
+  domains  Domain[]
+  region   Region?  @relation(fields: [regionId], references: [id])
+}
+
+model Domain {
+  id           String      @id
+  name         String
+  code         String      @unique
+  subsidiaryId String?
+  order        Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  permissionId String?
+  Permission   Permission? @relation(fields: [permissionId], references: [id])
+  subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
+}
+
+model DomainGoal {
+  id           String   @id @default(uuid())
+  campaignId   String
+  ff           Int
+  fsm          Int
+  ffSes        Int
+  fsmSes       Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  domainId     String
+  regionId     String?
+  subsidiaryId String?
+}
+
+model QuizSet {
+  id           String      @id @default(uuid())
+  campaignId   String
+  domainId     String?
+  languageId   String?
+  subsidiaryId String?
+  jobCodes     String[]
+  createrId    String
+  updaterId    String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  campaign     Campaign    @relation(fields: [campaignId], references: [id])
+  quizStages   QuizStage[]
+}
+
+model QuizBadge {
+  id          String      @id @default(uuid())
+  name        String?
+  description String?
+  imagePath   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  campaignId  String?
+  domainId    String?
+  quizStages  QuizStage[]
+}
+
+model Image {
+  id                   String     @id @default(uuid())
+  alt                  String?
+  title                String?
+  caption              String?
+  format               String
+  categories           String[]
+  imagePath            String
+  thumbnailPath        String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  campaignId           String?
+  domainId             String?
+  questionsBackgrounds Question[] @relation("BackgroundImage")
+  questionsCharacters  Question[] @relation("CharacterImage")
+}
+
+model QuizStage {
+  id              String     @id @default(uuid())
+  name            String
+  order           Int
+  questionIds     String[]
+  lifeCount       Int
+  quizSetId       String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  isBadgeStage    Boolean?
+  badgeActivityId String?
+  badgeImageId    String?
+  campaignId      String?
+  domainId        String?
+  languageId      String?
+  badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id])
+  quizSet         QuizSet    @relation(fields: [quizSetId], references: [id])
+}
+
+model Question {
+  id                 String           @id @default(uuid())
+  text               String
+  timeLimitSeconds   Int
+  order              Int
+  languageId         String
+  originalQuestionId String
+  originalIndex      Int
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  backgroundImageId  String?
+  characterImageId   String?
+  category           String?
+  specificFeature    String?
+  importance         String?
+  product            String?
+  enabled            Boolean
+  questionType       QuestionType
+  campaignId         String?
+  domainId           String?
+  backgroundImage    Image?           @relation("BackgroundImage", fields: [backgroundImageId], references: [id])
+  characterImage     Image?           @relation("CharacterImage", fields: [characterImageId], references: [id])
+  options            QuestionOption[]
+}
+
+model QuestionOption {
+  id         String   @id @default(uuid())
+  text       String
+  order      Int
+  questionId String
+  languageId String
+  isCorrect  Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  domainId   String?
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+model Job {
+  id          String   @id
+  code        String
+  group       String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Store {
+  id        String   @id
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Channel {
+  id   String @id @default(uuid())
+  name String
+}
+
+model ChannelSegment {
+  id   String @id @default(uuid())
+  name String
+}
+
+model UserQuizLog {
+  id                 String   @id @default(uuid())
+  userId             String
+  authType           AuthType
+  campaignId         String
+  isCompleted        Boolean?
+  isBadgeAcquired    Boolean?
+  lastCompletedStage Int?
+  elapsedSeconds     Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  quizSetId          String
+  score              Int?
+  quizSetPath        String?
+  domainId           String?
+  languageId         String?
+  jobId              String?
+  regionId           String?
+  subsidiaryId       String?
+  storeId            String?
+  storeSegmentText   String?
+  channelId          String?
+  channelSegmentId   String?
+  channelName        String?
+
+  @@unique([userId, campaignId])
+}
+
+model UserQuizBadgeStageLog {
+  id               String   @id @default(uuid())
+  userId           String
+  authType         AuthType
+  campaignId       String
+  isBadgeAcquired  Boolean?
+  badgeActivityId  String?
+  elapsedSeconds   Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  quizSetId        String
+  quizStageId      String
+  quizStageIndex   Int
+  score            Int
+  domainId         String?
+  languageId       String?
+  jobId            String?
+  regionId         String?
+  subsidiaryId     String?
+  storeId          String?
+  storeSegmentText String?
+  channelId        String?
+  channelSegmentId String?
+  channelName      String?
+
+  @@unique([userId, campaignId, quizStageId])
+}
+
+model UserQuizStageLog {
+  id               String   @id @default(uuid())
+  userId           String
+  authType         AuthType
+  campaignId       String
+  quizStageId      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isBadgeStage     Boolean?
+  isBadgeAcquired  Boolean?
+  badgeActivityId  String?
+  remainingHearts  Int
+  quizSetId        String
+  quizStageIndex   Int
+  elapsedSeconds   Int
+  score            Int?
+  totalScore       Int?
+  percentile       Int?
+  scoreRange       String?
+  domainId         String
+  languageId       String?
+  jobId            String
+  regionId         String?
+  subsidiaryId     String?
+  storeId          String?
+  storeSegmentText String?
+  channelId        String?
+  channelSegmentId String?
+  channelName      String?
+}
+
+model UserQuizQuestionLog {
+  id                 String       @id @default(uuid())
+  userId             String
+  authType           AuthType
+  quizSetId          String
+  questionId         String
+  questionText       String?
+  isCorrect          Boolean
+  selectedOptionIds  String[]
+  correctOptionIds   String[]
+  quizStageId        String
+  quizStageIndex     Int
+  elapsedSeconds     Int
+  questionType       QuestionType
+  category           String?
+  product            String?
+  specificFeature    String?
+  importance         String?
+  campaignId         String
+  jobId              String
+  languageId         String?
+  domainId           String?
+  regionId           String?
+  subsidiaryId       String?
+  storeId            String?
+  storeSegmentText   String?
+  channelId          String?
+  channelSegmentId   String?
+  channelName        String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  tryNumber          Int
+  originalQuestionId String?
+  originalIndex      Int?
+}
+
+model UserQuizStatistics {
+  id                 String   @id @default(uuid())
+  userId             String
+  authType           AuthType
+  campaignId         String
+  isCompleted        Boolean?
+  isBadgeAcquired    Boolean?
+  lastCompletedStage Int?
+  elapsedSeconds     Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  quizSetId          String
+  score              Int?
+  quizSetPath        String?
+  domainId           String?
+  languageId         String?
+  jobId              String?
+  regionId           String?
+  subsidiaryId       String?
+  storeId            String?
+  storeSegmentText   String?
+  channelId          String?
+  channelSegmentId   String?
+  channelName        String?
+}
+
+model UserQuizBadgeStageStatistics {
+  id               String   @id @default(uuid())
+  userId           String
+  authType         AuthType
+  campaignId       String
+  isBadgeAcquired  Boolean?
+  badgeActivityId  String?
+  elapsedSeconds   Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  quizSetId        String
+  quizStageId      String
+  quizStageIndex   Int
+  score            Int
+  domainId         String?
+  languageId       String?
+  jobId            String?
+  regionId         String?
+  subsidiaryId     String?
+  storeId          String?
+  storeSegmentText String?
+  channelId        String?
+  channelSegmentId String?
+  channelName      String?
+
+  @@unique([userId, campaignId, quizStageId])
+}
+
+model UserQuizStageStatistics {
+  id               String   @id @default(uuid())
+  userId           String
+  authType         AuthType
+  campaignId       String
+  quizStageId      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isBadgeStage     Boolean?
+  isBadgeAcquired  Boolean?
+  badgeActivityId  String?
+  remainingHearts  Int
+  quizSetId        String
+  quizStageIndex   Int
+  elapsedSeconds   Int
+  score            Int?
+  totalScore       Int?
+  percentile       Int?
+  scoreRange       String?
+  domainId         String
+  languageId       String?
+  jobId            String
+  regionId         String?
+  subsidiaryId     String?
+  storeId          String?
+  storeSegmentText String?
+  channelId        String?
+  channelSegmentId String?
+  channelName      String?
+}
+
+model UserQuizQuestionStatistics {
+  id                 String       @id @default(uuid())
+  userId             String
+  authType           AuthType
+  quizSetId          String
+  questionId         String
+  questionText       String?
+  isCorrect          Boolean
+  selectedOptionIds  String[]
+  correctOptionIds   String[]
+  quizStageId        String
+  quizStageIndex     Int
+  elapsedSeconds     Int
+  tryNumber          Int
+  questionType       QuestionType
+  category           String?
+  product            String?
+  specificFeature    String?
+  importance         String?
+  campaignId         String
+  jobId              String
+  languageId         String?
+  domainId           String?
+  regionId           String?
+  subsidiaryId       String?
+  storeId            String?
+  storeSegmentText   String?
+  channelId          String?
+  channelSegmentId   String?
+  channelName        String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  originalQuestionId String?
+  originalIndex      Int?
+}
+
+model Role {
+  id              String            @id @default(uuid())
+  name            String            @unique
+  description     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  permissions     RolePermission[]
+  users           UserRole[]
+  UserRoleMapping UserRoleMapping[]
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  domains     Domain[]
+  roles       RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now())
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id])
+
+  @@unique([roleId, permissionId], name: "role_permission_unique")
+  @@index([roleId])
+  @@index([permissionId])
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  role      Role     @relation(fields: [roleId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId], name: "user_role_unique")
+  @@index([userId])
+  @@index([roleId])
+}
+
+model UserRoleMapping {
+  id        String   @id @default(uuid())
+  loginName String   @unique
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @relation(fields: [roleId], references: [id])
+
+  @@index([roleId])
 }
 
 enum AuthType {
@@ -125,540 +620,8 @@ enum AuthType {
   UNKNOWN
 }
 
-model Language {
-  id         String   @id @default(uuid())
-  code       String   @unique // Language code (e.g., en, fr, es)
-  name       String   // Language name
-}
-
-model Campaign {
-  id          String   @id @default(uuid())
-  name        String      // Name of the campaign
-  description String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  startedAt   DateTime
-  endedAt     DateTime
-
-  createrId   String
-  updaterId   String?
-
-  quizSets  QuizSet[]
-
-  domainId              String?
-}
-
-model Hq {
-  id         String   @id 
-  name       String
-  code       String   @unique // Domain name
-  order Int?
-
-  regions Region[] 
-}
-
-model Region {
-  id         String   @id 
-  name String
-  code       String   @unique // Domain name
-  order Int?
-
-  hqId String?
-  hq Hq? @relation(fields: [hqId], references: [id])
-
-  subsidiaries Subsidiary[]
-}
-
-model Subsidiary {
-  id         String   @id 
-  name String
-  code       String   @unique // Domain name
-  order Int?
-
-  regionId String?
-  region Region? @relation(fields: [regionId], references: [id])
-
-  domains Domain[]
-}
-
-model Domain {
-  id         String   @id 
-  name       String
-  code       String   @unique // Domain name
-  subsidiaryId  String?
-  order Int?
-
-  subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
-
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model DomainGoal {
-  id         String   @id @default(uuid())
-  campaignId String
-  ff     Int
-  fsm    Int
-  ffSes  Int
-  fsmSes Int
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  domainId   String
-  regionId String?
-  subsidiaryId String?
-}
-
-model QuizSet {
-  id         String   @id @default(uuid())
-
-  campaignId String      // Foreign key to Campaign
-  domainId   String?      // Foreign key to Domain
-  subsidiaryId   String?      // Foreign key to Subsidiary
-  jobCodes             String[]
-  quizStages     QuizStage[]
-
-  createrId   String
-  updaterId   String?
-
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  campaign   Campaign    @relation(fields: [campaignId], references: [id])
-}
-
-model QuizBadge {
-  id         String   @id @default(uuid())
-  name       String?
-  description String?
-  imagePath   String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  quizStages QuizStage[]
-
-  campaignId String?
-  domainId   String?
-}
-
-model Image {
-  id         String   @id @default(uuid())
-  alt       String?
-  title     String?
-  caption String?
-  format   String
-  categories String[]
-  imagePath   String
-  thumbnailPath String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  questionsBackgrounds      Question[] @relation("BackgroundImage")
-  questionsCharacters  Question[] @relation("CharacterImage")
-
-  campaignId String?
-  domainId   String?
-}
-
-model QuizStage {
-  id         String   @id @default(uuid())
-  name       String     // Name of the stage]
-  order      Int        // Order of the stage within the quiz set
-  
-  questionIds       String[]
-  lifeCount   Int         // Number of lives for the question
-  quizSetId  String
-  quizSet  QuizSet @relation(fields: [quizSetId], references: [id])
-
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  isBadgeStage Boolean?
-  badgeActivityId String?
-
-  badgeImageId String?
-  badgeImage    QuizBadge? @relation(fields: [badgeImageId], references: [id])
-
-  campaignId String?
-  domainId   String?
-}
-
-model Question {
-  id          String   @id @default(uuid())
-  text        String      // Text of the question in default language
-  
-  timeLimitSeconds   Int         // Expiration time for the question in seconds
-  options     QuestionOption[] // Associated options
-  order       Int
-  
-  languageId  String      // Foreign key to Language
-  originalQuestionId    String     // Foreign key to Question
-  originalIndex    Int     // Foreign key to Question
-  
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  
-  backgroundImageId String?
-  characterImageId String?
-
-  backgroundImage    Image? @relation("BackgroundImage", fields: [backgroundImageId], references: [id])
-  characterImage     Image? @relation("CharacterImage", fields: [characterImageId], references: [id])
-
-  category    String?
-  specificFeature   String?
-  importance String?
-  product    String?
-  enabled     Boolean
-  questionType    QuestionType
-
-  campaignId String?
-  domainId   String?
-}
-
 enum QuestionType {
   MULTI_CHOICE
   SINGLE_CHOICE
   TRUE_FALSE
-}
-
-model QuestionOption {
-  id          String   @id @default(uuid())
-  text        String              // Text of the option
-  order       Int                 // Order of the option within the question
-  questionId  String                 // Foreign key to Question
-  question    Question            @relation(fields: [questionId], references: [id])
-  languageId   String
-  isCorrect   Boolean             // Whether the option is correct
-
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model Job {
-  id         String   @id
-  code        String
-  group        String
-  name       String   // Name of the user group (e.g., A, B)
-  description String? // Optional description
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model Store {
-  id         String   @id
-  name       String
-  // code       String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model Channel {
-  id            String                @id @default(uuid())
-  name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
-}
-
-model ChannelSegment {
-  id            String                @id @default(uuid())
-  name          String          // e.g., "Carrier", "Retailer (MM/IT/Traditional etc)"
-}
-
-model UserQuizLog {
-  id          String   @id @default(uuid())
-  userId      String
-  authType  AuthType
-  campaignId String
-  isCompleted    Boolean?
-  isBadgeAcquired Boolean?
-  lastCompletedStage    Int?
-  elapsedSeconds    Int?      // Time spent on this activity (in seconds)
-  createdAt   DateTime @default(now()) // 히스토리 생성 시간
-  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
-
-  quizSetId String
-
-  score       Int?
-
-  quizSetPath String?
-  
-  domainId String?
-  languageId String?
-
-  jobId       String?
-
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-
-  @@unique([userId, campaignId])
-}
-
-model UserQuizBadgeStageLog {
-  id          String   @id @default(uuid())
-  userId      String
-  authType  AuthType
-  campaignId String
-  
-  isBadgeAcquired Boolean?
-  badgeActivityId String?
-  elapsedSeconds    Int?
-  createdAt   DateTime @default(now()) // 히스토리 생성 시간
-  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
-
-  quizSetId String
-  quizStageId String
-  quizStageIndex Int
-  
-  score       Int
-
-  domainId String?
-  languageId String?
-  jobId       String?
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-
-  @@unique([userId, campaignId, quizStageId])
-}
-
-
-model UserQuizStageLog {
-  id           String   @id @default(uuid())
-  userId       String      // Foreign key to User
-  authType  AuthType
-  
-  campaignId  String
-  quizStageId      String      // Foreign key to Stage
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  isBadgeStage Boolean?
-  isBadgeAcquired   Boolean?
-  badgeActivityId String?
-
-  remainingHearts Int
-
-  quizSetId String
-  quizStageIndex Int
-
-  elapsedSeconds Int
-
-  score       Int?
-  totalScore       Int?
-  percentile  Int?
-  scoreRange  String?
-
-  domainId String
-  languageId String?
-  jobId String
-  
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-}
-
-model UserQuizQuestionLog {
-  id           String   @id @default(uuid())
-  userId       String      // Foreign key to User
-  authType  AuthType
-  quizSetId   String      // Foreign key to QuizSet
-  
-  // user result
-  questionId   String      // Foreign key to Question
-  questionText String?
-
-  isCorrect    Boolean  // Whether the user answered the question correctly
-  selectedOptionIds String[]
-  correctOptionIds String[]
-  quizStageId String
-
-  quizStageIndex  Int
-  elapsedSeconds Int
-
-  // question
-  questionType    QuestionType
-  category    String?
-  product    String?
-  specificFeature   String?
-  importance String?
-
-  // country
-  campaignId  String
-  jobId String
-  languageId String?
-
-  domainId String?
-
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  tryNumber Int
-}
-
-model UserQuizStatistics {
-  id          String   @id @default(uuid())
-  userId      String
-  authType  AuthType
-  campaignId String
-  isCompleted    Boolean?
-  isBadgeAcquired Boolean?
-  lastCompletedStage    Int?
-  elapsedSeconds    Int?      // Time spent on this activity (in seconds)
-  createdAt   DateTime @default(now()) // 히스토리 생성 시간
-  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
-
-  quizSetId String
-
-  score       Int?
-
-  quizSetPath String?
-  
-  domainId String?
-  languageId String?
-
-  jobId       String?
-
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-}
-
-model UserQuizBadgeStageStatistics {
-  id          String   @id @default(uuid())
-  userId      String
-  authType  AuthType
-  campaignId String
-  
-  isBadgeAcquired Boolean?
-  badgeActivityId String?
-  elapsedSeconds    Int?
-  createdAt   DateTime @default(now()) // 히스토리 생성 시간
-  updatedAt   DateTime @updatedAt // 히스토리 수정 시간
-
-  quizSetId String
-  quizStageId String
-  quizStageIndex Int
-  
-  score       Int
-
-  domainId String?
-  languageId String?
-  jobId       String?
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-
-  @@unique([userId, campaignId, quizStageId])
-}
-
-
-model UserQuizStageStatistics {
-  id           String   @id @default(uuid())
-  userId       String      // Foreign key to User
-  authType  AuthType
-  
-  campaignId  String
-  quizStageId      String      // Foreign key to Stage
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  isBadgeStage Boolean?
-  isBadgeAcquired   Boolean?
-  badgeActivityId String?
-
-  remainingHearts Int
-
-  quizSetId String
-  quizStageIndex Int
-
-  elapsedSeconds Int
-
-  score       Int?
-  totalScore       Int?
-  percentile  Int?
-  scoreRange  String?
-
-  domainId String
-  languageId String?
-  jobId String
-  
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-}
-
-model UserQuizQuestionStatistics {
-  id           String   @id @default(uuid())
-  userId       String      // Foreign key to User
-  authType  AuthType
-  quizSetId   String      // Foreign key to QuizSet
-  
-  // user result
-  questionId   String      // Foreign key to Question
-  questionText String?
-
-  isCorrect    Boolean  // Whether the user answered the question correctly
-  selectedOptionIds String[]
-  correctOptionIds String[]
-  quizStageId String
-
-  quizStageIndex  Int
-  elapsedSeconds Int
-
-  tryNumber Int
-
-  // question
-  questionType    QuestionType
-  category    String?
-  product    String?
-  specificFeature   String?
-  importance String?
-
-  // country
-  campaignId  String
-  jobId String
-  languageId String?
-
-  domainId String?
-
-  regionId String?
-  subsidiaryId String?
-  storeId String?
-  storeSegmentText String?
-  channelId String?
-  channelSegmentId String?
-  channelName String?
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 }

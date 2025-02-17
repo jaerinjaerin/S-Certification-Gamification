@@ -16,7 +16,7 @@ const OverviewParticipantsInfo = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/info/participants',
+        'dashboard/overview/info/participants',
         (data) => {
           setCount(data.result.count ?? 0);
         },

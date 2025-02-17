@@ -12,7 +12,7 @@ export const fetchData = async (
 
   try {
     const searchParams = serializeJsonToQuery(fieldValues);
-    const url = `/api/dashboard/${urlIdentifier}?${searchParams.toString()}`;
+    const url = `/api/${urlIdentifier}?${searchParams.toString()}`;
 
     const response = await axios.get(url, {
       signal: controller.signal, // AbortController 적용

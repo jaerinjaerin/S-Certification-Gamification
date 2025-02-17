@@ -39,7 +39,7 @@ export function UserProgressExperts() {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'user/statistics/progress-of-experts',
+        'dashboard/user/statistics/progress-of-experts',
         (data) => {
           setData(data.result);
           setLoading(false);

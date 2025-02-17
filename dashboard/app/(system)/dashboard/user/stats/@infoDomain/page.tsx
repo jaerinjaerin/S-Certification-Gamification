@@ -192,7 +192,7 @@ const UserDomain = () => {
           take: pageSize,
           page: pageIndex,
         },
-        'user/info/domain',
+        'dashboard/user/info/domain',
         (data) => {
           updateSearchParamsOnUrl({
             ...fieldValues,

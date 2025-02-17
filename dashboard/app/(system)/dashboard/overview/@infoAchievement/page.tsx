@@ -16,7 +16,7 @@ const OverviewAchievementInfo = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/info/achievement',
+        'dashboard/overview/info/achievement',
         (data) => {
           setCount(data.result.count.toFixed(2) ?? 0);
         },

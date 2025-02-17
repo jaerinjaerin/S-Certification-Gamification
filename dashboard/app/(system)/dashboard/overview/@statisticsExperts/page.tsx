@@ -45,7 +45,7 @@ const OverviewExperts = () => {
     if (state.fieldValues) {
       fetchData(
         state.fieldValues,
-        'overview/statistics/experts',
+        'dashboard/overview/statistics/experts',
         (data) => {
           setData(data.result);
           setCount(data.count);
