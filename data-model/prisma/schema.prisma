@@ -237,6 +237,7 @@ model QuizBadge {
   updatedAt  DateTime   @updatedAt
 
   quizStages QuizStage[]
+  activityBadbges ActivityBadge[]
 
   campaignId String?
   domainId   String?
@@ -282,6 +283,9 @@ model QuizStage {
 
   campaignId String?
   domainId   String?
+  languageId String?
+
+  questions Question[]
 }
 
 model Question {
@@ -314,6 +318,9 @@ model Question {
 
   campaignId String?
   domainId   String?
+
+  quizStageId String?
+  quizStage  QuizStage? @relation(fields: [quizStageId], references: [id])
 }
 
 enum QuestionType {
@@ -661,4 +668,55 @@ model UserQuizQuestionStatistics {
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model ActivityBadge {
+  id              String   @id @default(uuid())
+  activityId      String
+
+  campaignId      String
+  jobCodes        String[]
+  domainId        String
+  languageId      String
+
+  badgeImageId    String?
+  badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BadgeLog {
+  id              String   @id @default(uuid())
+  api             BadgeApiType
+  userId          String
+  activityId      String
+  accessToken     String
+
+  status          Int
+  statusText      String
+  rawLog          String
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BadgeStage {
+  id              String   @id @default(uuid())
+  campaignId      String
+  badgeType       BadgeType
+  quizStageIndex  Int
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum BadgeType {
+  EXPERT
+  ADVANCED
+}
+
+enum BadgeApiType {
+  REGISTER
+  PROGRESS
 }
