@@ -1,11 +1,20 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
+import { BadgeApiType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    const { activityId, status, elapsedSeconds, userId } = body as {
+      userId: string;
+      activityId: string;
+      status: string;
+      elapsedSeconds: number;
+    };
+
     const session = await auth();
 
     if (!session) {
@@ -23,18 +32,27 @@ export async function POST(request: Request) {
     // console.log("account", account);
 
     if (!account) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sumtotal/activity/log`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            apiType: BadgeApiType.PROGRESS,
+            userId,
+            status: 404,
+            message: "Account not found",
+          }),
+        }
+      );
+
       return NextResponse.json(
         { message: "Account not found" },
         { status: 404 }
       );
     }
-
-    const body = await request.json();
-    const { activityId, status, elapsedSeconds } = body as {
-      activityId: string;
-      status: string;
-      elapsedSeconds: number;
-    };
 
     const now = new Date(); // 현재 시간
     const updatedTime = elapsedSeconds
@@ -71,6 +89,27 @@ export async function POST(request: Request) {
         account.providerAccountId,
         account.access_token
       );
+
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sumtotal/activity/log`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            apiType: BadgeApiType.PROGRESS,
+            activityId,
+            userId,
+            accountUserId: account.providerAccountId,
+            status: response.status,
+            message:
+              response.statusText || "Failed to update activity/progress",
+            rawLog: JSON.stringify(response),
+          }),
+        }
+      );
+
       return NextResponse.json(
         {
           message: response.statusText || "Failed to update activity/progress",
@@ -82,9 +121,39 @@ export async function POST(request: Request) {
     const data = await response.json();
     // console.log("data", data);
     Sentry.captureMessage("response", data);
+
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sumtotal/activity/log`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        apiType: BadgeApiType.PROGRESS,
+        activityId,
+        userId,
+        accountUserId: account.providerAccountId,
+        status: response.status,
+        message: response.statusText || "success",
+        rawLog: JSON.stringify(data),
+      }),
+    });
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error end activity:", error);
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sumtotal/activity/log`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        apiType: BadgeApiType.PROGRESS,
+        status: 500,
+        message: "An unexpected error occurred",
+        rawLog: JSON.stringify(error),
+      }),
+    });
+
     Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },

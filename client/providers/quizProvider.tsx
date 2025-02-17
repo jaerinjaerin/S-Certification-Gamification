@@ -458,6 +458,7 @@ export const QuizProvider = ({
       }
 
       const result = await new QuizBadgeHandler().issueBadge(
+        userId,
         activityId,
         elapsedSeconds
       );
