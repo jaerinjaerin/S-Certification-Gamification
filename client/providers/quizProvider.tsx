@@ -448,8 +448,8 @@ export const QuizProvider = ({
     if (authType === AuthType.SUMTOTAL) {
       const activityId = getCurrentStageBadgeActivityId();
 
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      console.log("activityId", activityId, _quizLog?.quizSetPath);
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      // console.log("activityId", activityId, _quizLog?.quizSetPath);
       if (!activityId) {
         Sentry.captureMessage(
           `[processBadgeAcquisition] Activity ID is not found : ${quizLog?.quizSetPath}`
