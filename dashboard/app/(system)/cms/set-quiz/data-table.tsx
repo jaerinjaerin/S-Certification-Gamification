@@ -39,7 +39,7 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead className="px-4" key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -56,6 +56,7 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
+                className="px-4"
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
               >
@@ -67,7 +68,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
-            <TableRow>
+            <TableRow className="px-4">
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
