@@ -1,5 +1,5 @@
 'use client';
-import Filters from '@/app/(system)/dashboard/_components/filters';
+import Filters from '@/app/(system)/(hub)/dashboard/_components/filters';
 import { FieldValues } from 'react-hook-form';
 import { useUserContext } from '../_provider/provider';
 import { updateSearchParamsOnUrl } from '@/lib/url';

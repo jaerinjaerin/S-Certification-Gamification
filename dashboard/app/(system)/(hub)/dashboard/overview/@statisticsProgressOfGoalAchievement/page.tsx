@@ -17,13 +17,13 @@ import {
   chartColorQuaternary,
   chartColorSecondary,
   chartColorTertiary,
-} from '@/app/(system)/dashboard/_lib/chart-colors';
-import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { useOverviewContext } from '../_provider/provider';
 import { useEffect, useRef, useState } from 'react';
 import { fetchData } from '@/lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
-import { ProgressTooltip } from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
+import { ProgressTooltip } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';

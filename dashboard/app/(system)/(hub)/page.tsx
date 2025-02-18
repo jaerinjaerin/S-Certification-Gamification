@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
 export default function System() {
-  redirect('/campaign');
+  redirect('/dashboard/overview');
   return null;
 }

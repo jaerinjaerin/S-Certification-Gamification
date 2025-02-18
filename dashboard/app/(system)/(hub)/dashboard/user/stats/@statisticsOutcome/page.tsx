@@ -15,15 +15,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
-} from '@/app/(system)/dashboard/_lib/chart-colors';
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
-} from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
+} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import { fetchData } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';

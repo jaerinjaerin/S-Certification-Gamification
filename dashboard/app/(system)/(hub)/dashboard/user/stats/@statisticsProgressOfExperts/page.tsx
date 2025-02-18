@@ -18,12 +18,12 @@ import {
   chartColorLineStroke,
   chartColorPrimary,
   chartColorSecondary,
-} from '@/app/(system)/dashboard/_lib/chart-colors';
-import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { useUserContext } from '../../_provider/provider';
 import { useEffect, useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
+import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import { fetchData } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';

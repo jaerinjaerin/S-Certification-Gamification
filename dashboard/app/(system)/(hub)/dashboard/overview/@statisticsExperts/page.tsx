@@ -20,16 +20,16 @@ import { useOverviewContext } from '../_provider/provider';
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
-import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from '@/app/(system)/dashboard/_lib/chart-colors';
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   ExpertsTooltip,
-} from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
+} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];

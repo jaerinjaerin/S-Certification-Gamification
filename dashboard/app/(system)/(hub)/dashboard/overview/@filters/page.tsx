@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import Filters from '@/app/(system)/dashboard/_components/filters';
+import Filters from '@/app/(system)/(hub)/dashboard/_components/filters';
 import { FieldValues } from 'react-hook-form';
 import { useOverviewContext } from '../_provider/provider';
 import { updateSearchParamsOnUrl } from '@/lib/url';

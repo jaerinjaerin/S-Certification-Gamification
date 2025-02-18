@@ -15,14 +15,14 @@ import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from '@/app/(system)/dashboard/_lib/chart-colors';
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/lib/fetch';
 import { useOverviewContext } from '../_provider/provider';
-import { legendCapitalizeFormatter } from '@/app/(system)/dashboard/_lib/text';
-import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
+import { legendCapitalizeFormatter } from '@/app/(system)/(hub)/dashboard/_lib/text';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
+import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';

@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import InfoCardStyleContent from '@/app/(system)/dashboard/overview/_components/card-content';
-import InfoCardStyleContainer from '@/app/(system)/dashboard/overview/_components/card-with-title';
-import { useOverviewContext } from '@/app/(system)/dashboard/overview/_provider/provider';
+import InfoCardStyleContent from '@/app/(system)/(hub)/dashboard/overview/_components/card-content';
+import InfoCardStyleContainer from '@/app/(system)/(hub)/dashboard/overview/_components/card-with-title';
+import { useOverviewContext } from '@/app/(system)/(hub)/dashboard/overview/_provider/provider';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import { fetchData } from '@/lib/fetch';
 
