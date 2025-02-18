@@ -10,7 +10,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
   chartColorLineStroke,
@@ -18,15 +17,16 @@ import {
   chartColorQuaternary,
   chartColorSecondary,
   chartColorTertiary,
-} from '../../_lib/chart-colors';
-import { chartHeight } from '../../_lib/chart-variable';
+} from '@/app/(system)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
 import { useOverviewContext } from '../_provider/provider';
 import { useEffect, useRef, useState } from 'react';
-import { fetchData } from '../../_lib/fetch';
-import ChartContainer from '../../_components/charts/chart-container';
+import { fetchData } from '@/lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
-import { ProgressTooltip } from '../../_components/charts/chart-tooltip';
+import { ProgressTooltip } from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
 
 export function OverviewGoalAchievement() {
   const { createController, abort } = useAbortController();

@@ -19,9 +19,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { fetchData } from '@/app/(system)/dashboard/_lib/fetch';
-import ChartContainer from '@/app/(system)/dashboard/_components/charts/chart-container';
-import { CardCustomHeaderWithoutDesc } from '@/app/(system)/dashboard/_components/charts/chart-header';
+import { fetchData } from '@/lib/fetch';
+import ChartContainer from '@/components/system/chart-container';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { ShowPermissionList } from './ui/select';
 import { AlertInfoDialog, Delete } from '@/components/dialog';
 import { Input } from '@/components/ui/input';

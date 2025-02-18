@@ -15,19 +15,19 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import { chartHeight } from '../../../_lib/chart-variable';
+import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
-} from '../../../_lib/chart-colors';
+} from '@/app/(system)/dashboard/_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
-} from '../../../_components/charts/chart-tooltip';
+} from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { fetchData } from '@/lib/fetch';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
+import ChartContainer from '@/components/system/chart-container';
 
 const UserOutcome = () => {
   const { createController, abort } = useAbortController();

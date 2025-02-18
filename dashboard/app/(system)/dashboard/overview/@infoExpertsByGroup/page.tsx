@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import { useOverviewContext } from '../_provider/provider';
 import { initialExpertsData } from './_lib/state';
-import { fetchData } from '../../_lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { fetchData } from '@/lib/fetch';
 
 const OverviewExpertsByGroupInfo = () => {
   const { createController, abort } = useAbortController();

@@ -24,19 +24,20 @@ const RoleManagement = () => {
   return (
     <Tabs
       value={tab}
+      defaultValue="role"
       onValueChange={(v) => {
         updateSearchParamsOnUrl({ page: v });
       }}
     >
-      <TabsList className="w-[24rem]">
-        <TabsTrigger className="w-full" value="roll">
+      <TabsList className="w-[24rem]" defaultValue="role">
+        <TabsTrigger className="w-full" value="role">
           User Role
         </TabsTrigger>
         <TabsTrigger className="w-full" value="permission">
           Add User Permission
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="roll" className="w-full">
+      <TabsContent value="role" className="w-full">
         <UserRole />
       </TabsContent>
       <TabsContent value="permission" className="w-full">

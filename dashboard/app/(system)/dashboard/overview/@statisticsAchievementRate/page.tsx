@@ -11,21 +11,21 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '../../_components/charts/chart-header';
-import ChartContainer from '../../_components/charts/chart-container';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from '../../_lib/chart-colors';
+} from '@/app/(system)/dashboard/_lib/chart-colors';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../_lib/fetch';
+import { fetchData } from '@/lib/fetch';
 import { useOverviewContext } from '../_provider/provider';
-import { legendCapitalizeFormatter } from '../../_lib/text';
-import { chartHeight } from '../../_lib/chart-variable';
+import { legendCapitalizeFormatter } from '@/app/(system)/dashboard/_lib/text';
+import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../_components/charts/chart-tooltip';
+import CustomTooltip from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
 
 function OverviewAchievementRate() {
   const { createController, abort } = useAbortController();

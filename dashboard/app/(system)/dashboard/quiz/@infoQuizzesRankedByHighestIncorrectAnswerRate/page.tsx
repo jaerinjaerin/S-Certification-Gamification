@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../_lib/fetch';
-import ChartContainer from '../../_components/charts/chart-container';
+import { fetchData } from '@/lib/fetch';
+import ChartContainer from '@/components/system/chart-container';
 import {
   getCoreRowModel,
   getSortedRowModel,
@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '../../_components/charts/chart-header';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { useQuizContext } from '../_provider/provider';
 import IncorrectTable, { columns } from '../_components/incorrect-table';
 import { useAbortController } from '@/components/hook/use-abort-controller';

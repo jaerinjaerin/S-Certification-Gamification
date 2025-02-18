@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useQuizContext } from '../_provider/provider';
-import { fetchData } from '../../_lib/fetch';
-import ChartContainer from '../../_components/charts/chart-container';
-import CardCustomHeader from '../../_components/charts/chart-header';
+import { fetchData } from '@/lib/fetch';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
 import { DefaultHeatMapDatum, ResponsiveHeatMapCanvas } from '@nivo/heatmap';
 import { LoaderWithBackground } from '@/components/loader';
 import { useModal } from '@/components/provider/modal-provider';

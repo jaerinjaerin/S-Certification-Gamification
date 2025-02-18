@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import InfoCardStyleContent from '../_components/card-content';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import { useOverviewContext } from '../_provider/provider';
-import { fetchData } from '../../_lib/fetch';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { fetchData } from '@/lib/fetch';
 
 const OverviewAchievementInfo = () => {
   const { createController, abort } = useAbortController();

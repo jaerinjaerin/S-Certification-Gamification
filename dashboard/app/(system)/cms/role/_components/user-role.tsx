@@ -10,10 +10,9 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '../../../dashboard/_lib/fetch';
-import ChartContainer from '../../../dashboard/_components/charts/chart-container';
+import ChartContainer from '@/components/system/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '../../../dashboard/_components/charts/chart-header';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import {
   Table,
   TableBody,
@@ -25,6 +24,7 @@ import {
 import { ShowPermissionList } from './ui/select';
 import { Delete } from '@/components/dialog';
 import axios from 'axios';
+import { fetchData } from '@/lib/fetch';
 
 const columns: ColumnDef<UserRole>[] = [
   {

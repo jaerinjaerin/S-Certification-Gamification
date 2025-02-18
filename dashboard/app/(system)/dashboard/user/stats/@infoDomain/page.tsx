@@ -3,8 +3,7 @@
 export const dynamic = 'force-dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
+import ChartContainer from '@/components/system/chart-container';
 import {
   Table,
   TableBody,
@@ -21,8 +20,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
-import Pagination from '../../../_components/pagenation';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
+import Pagination from '@/components/pagenation';
 import {
   Tooltip,
   TooltipContent,
@@ -33,6 +32,7 @@ import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import { updateSearchParamsOnUrl } from '@/lib/url';
+import { fetchData } from '@/lib/fetch';
 
 const columns: ColumnDef<DomainProps>[] = [
   {

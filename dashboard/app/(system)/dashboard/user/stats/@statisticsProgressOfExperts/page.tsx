@@ -13,21 +13,21 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { CardCustomHeaderWithoutDesc } from '../../../_components/charts/chart-header';
 import {
   chartColorHoverBackground,
   chartColorLineStroke,
   chartColorPrimary,
   chartColorSecondary,
-} from '../../../_lib/chart-colors';
-import { chartHeight } from '../../../_lib/chart-variable';
+} from '@/app/(system)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
 import { useUserContext } from '../../_provider/provider';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../../_lib/fetch';
-import ChartContainer from '../../../_components/charts/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
-import CustomTooltip from '../../../_components/charts/chart-tooltip';
+import CustomTooltip from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { fetchData } from '@/lib/fetch';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
+import ChartContainer from '@/components/system/chart-container';
 
 export function UserProgressExperts() {
   const { createController, abort } = useAbortController();

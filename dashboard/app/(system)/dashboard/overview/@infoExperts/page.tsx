@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import InfoCardStyleContent from '../_components/card-content';
-import InfoCardStyleContainer from '../_components/card-with-title';
-import { useOverviewContext } from '../_provider/provider';
-import { fetchData } from '../../_lib/fetch';
+import InfoCardStyleContent from '@/app/(system)/dashboard/overview/_components/card-content';
+import InfoCardStyleContainer from '@/app/(system)/dashboard/overview/_components/card-with-title';
+import { useOverviewContext } from '@/app/(system)/dashboard/overview/_provider/provider';
 import { useAbortController } from '@/components/hook/use-abort-controller';
+import { fetchData } from '@/lib/fetch';
 
 const OverviewExpertsInfo = () => {
   const { createController, abort } = useAbortController();

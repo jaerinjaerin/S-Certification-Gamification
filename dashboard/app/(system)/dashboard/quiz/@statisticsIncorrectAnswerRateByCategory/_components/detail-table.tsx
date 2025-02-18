@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithoutDesc } from '@/app/(system)/dashboard/_components/charts/chart-header';
+import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import IncorrectTable, { columns } from '../../_components/incorrect-table';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';

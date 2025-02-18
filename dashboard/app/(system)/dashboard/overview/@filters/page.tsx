@@ -3,8 +3,8 @@
 import Filters from '@/app/(system)/dashboard/_components/filters';
 import { FieldValues } from 'react-hook-form';
 import { useOverviewContext } from '../_provider/provider';
-import { serializeJsonToQuery } from '../../_lib/search-params';
 import { updateSearchParamsOnUrl } from '@/lib/url';
+import { serializeJsonToQuery } from '@/lib/search-params';
 
 const OverviewFilterForm = () => {
   const { dispatch } = useOverviewContext();

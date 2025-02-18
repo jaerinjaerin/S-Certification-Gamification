@@ -15,21 +15,21 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '../../_components/charts/chart-header';
+import CardCustomHeader from '@/components/system/chart-header';
 import { useOverviewContext } from '../_provider/provider';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../_lib/fetch';
-import ChartContainer from '../../_components/charts/chart-container';
-import { chartHeight } from '../../_lib/chart-variable';
+import { fetchData } from '@/lib/fetch';
+import ChartContainer from '@/components/system/chart-container';
+import { chartHeight } from '@/app/(system)/dashboard/_lib/chart-variable';
 import {
   chartColorHoverBackground,
   chartColorPrimary,
   chartColorSecondary,
-} from '../../_lib/chart-colors';
+} from '@/app/(system)/dashboard/_lib/chart-colors';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   ExpertsTooltip,
-} from '../../_components/charts/chart-tooltip';
+} from '@/app/(system)/dashboard/_components/charts/chart-tooltip';
 import { useAbortController } from '@/components/hook/use-abort-controller';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
