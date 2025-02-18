@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const userQuizStageLog = await prisma.userQuizStageLog.findFirst({
+    let userQuizStageLog = await prisma.userQuizStageLog.findFirst({
       where: {
         userId,
         campaignId,
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!userQuizStageLog) {
-      await prisma.userQuizStageLog.create({
+      userQuizStageLog = await prisma.userQuizStageLog.create({
         data: {
           userId,
           authType,
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         },
       });
     } else {
-      await prisma.userQuizStageLog.update({
+      userQuizStageLog = await prisma.userQuizStageLog.update({
         where: {
           id: userQuizStageLog.id,
         },
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const userQuizStageStatistics =
+    let userQuizStageStatistics =
       await prisma.userQuizStageStatistics.findFirst({
         where: {
           userId,
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
       });
 
     if (!userQuizStageStatistics) {
-      await prisma.userQuizStageStatistics.create({
+      userQuizStageStatistics = await prisma.userQuizStageStatistics.create({
         data: {
           // id: userQuizStageLog.id,
           userId,
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
         },
       });
     } else {
-      await prisma.userQuizStageStatistics.update({
+      userQuizStageStatistics = await prisma.userQuizStageStatistics.update({
         where: {
           id: userQuizStageStatistics.id,
         },

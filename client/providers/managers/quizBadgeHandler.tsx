@@ -3,12 +3,17 @@ import * as Sentry from "@sentry/nextjs";
 
 export class QuizBadgeHandler {
   issueBadge = async (
+    userId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      const registered = await this.postActivityRegister(activityId);
-      const attended = await this.postActivityEnd(activityId, elapsedSeconds);
+      const registered = await this.postActivityRegister(userId, activityId);
+      const attended = await this.postActivityEnd(
+        userId,
+        activityId,
+        elapsedSeconds
+      );
 
       console.log("issueBadge registered", registered);
       console.log("issueBadge attended", attended);
@@ -83,7 +88,10 @@ export class QuizBadgeHandler {
     }
   };
 
-  postActivityRegister = async (activityId: string): Promise<boolean> => {
+  postActivityRegister = async (
+    userId: string,
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
@@ -91,7 +99,8 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
           }),
         }
       );
@@ -120,6 +129,7 @@ export class QuizBadgeHandler {
   };
 
   postActivityEnd = async (
+    userId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -130,7 +140,8 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
             elapsedSeconds: 120,

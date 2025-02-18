@@ -207,6 +207,7 @@ model QuizBadge {
   campaignId  String?
   domainId    String?
   quizStages  QuizStage[]
+  activityBadges ActivityBadge[]
 }
 
 model Image {
@@ -624,4 +625,58 @@ enum QuestionType {
   MULTI_CHOICE
   SINGLE_CHOICE
   TRUE_FALSE
+}
+
+model ActivityBadge {
+  id              String   @id @default(uuid())
+  activityId      String
+
+  campaignId      String
+  jobCodes        String[]
+  domainId        String
+  languageId      String
+
+  badgeImageId    String?
+  badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id]) 
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BadgeLog {
+  id              String   @id @default(uuid())
+  apiType         BadgeApiType
+  status          Int
+  message         String
+  
+  userId          String?
+  accountUserId   String?
+
+  activityId      String
+  accessToken     String?
+
+  rawLog          String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BadgeStage {
+  id              String   @id @default(uuid())
+  campaignId      String
+  badgeType       BadgeType
+  quizStageIndex  Int
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum BadgeType {
+  EXPERT
+  ADVANCED
+}
+
+enum BadgeApiType {
+  REGISTER
+  PROGRESS
 }

@@ -22,6 +22,7 @@ export default async function QuizLayout({
 }) {
   const session: Session | null = await auth();
   const userId = session?.user.id;
+  console.log("userId", userId);
 
   if (!userId) {
     redirect("/login");
