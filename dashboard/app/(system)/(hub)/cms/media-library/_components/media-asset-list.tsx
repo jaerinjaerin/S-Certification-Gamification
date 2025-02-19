@@ -1,19 +1,29 @@
-import { Download } from 'lucide-react';
-
+'use client';
+import { Download, Pen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PenIcon } from 'lucide-react';
 import { handleDownload } from '../../_utils/utils';
 import { UploadImageFileModal } from './upload-image-file-modal';
+import ChartContainer from '@/components/system/chart-container';
 
 export function MediaAssetListContainer({
+  title,
   children,
 }: {
+  title: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="border border-zinc-200 rounded-lg flex-col relative">
-      {children}
-    </div>
+    <ChartContainer>
+      <div className="flex justify-between mb-5">
+        <div className="mb-4 font-bold text-size-14px text-zinc-950">
+          {title}
+        </div>
+        <UploadImageFileModal type="add">
+          <Button className="bg-blue-600 hover:bg-blue-800">{`Add ${title}`}</Button>
+        </UploadImageFileModal>
+      </div>
+      <div className="flex gap-4 flex-wrap">{children}</div>
+    </ChartContainer>
   );
 }
 
@@ -28,27 +38,35 @@ export function MediaAssetItem({
   updatedAt: string;
 }) {
   return (
-    <div className="flex flex-col">
-      <div className="border border-zinc-200 rounded-md size-[150px]">
+    <div className="">
+      <div className="relative border border-zinc-200 rounded-md size-[9.375rem]">
         <img src={imageUrl} className="object-cover w-full h-full" />
       </div>
-      <div className="flex">
-        <span className="inline-block">{fileName}</span>
-        <UploadImageFileModal type="edit">
-          <Button variant="download" size="icon" className="ml-auto size-6">
-            <PenIcon color="#2563EB" />
+      <div className="flex justify-between mt-4">
+        <span className="inline-block font-medium text-size-14px">
+          {fileName}
+        </span>
+        <div className="space-x-0.5">
+          <UploadImageFileModal type="edit">
+            <Button
+              size="icon"
+              className="size-6 bg-zinc-50 hover:bg-zinc-200 shadow-none"
+            >
+              <Pen className="text-blue-500" />
+            </Button>
+          </UploadImageFileModal>
+          <Button
+            size="icon"
+            className="size-6 bg-zinc-50 hover:bg-zinc-200 shadow-none"
+            onClick={() => handleDownload(fileName, imageUrl)}
+          >
+            <Download className="text-zinc-950" />
           </Button>
-        </UploadImageFileModal>
-        <Button
-          variant="download"
-          size="icon"
-          className="size-6"
-          onClick={() => handleDownload(fileName, imageUrl)}
-        >
-          <Download />
-        </Button>
+        </div>
       </div>
-      <span>Last Updated: {updatedAt} </span>
+      <span className="text-size-12px text-zinc-500">
+        Last Updated: {updatedAt}
+      </span>
     </div>
   );
 }

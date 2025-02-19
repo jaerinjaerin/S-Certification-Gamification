@@ -83,6 +83,7 @@ export default {
         'size-14px': '0.875rem',
         'size-15px': '0.9375rem',
         'size-16px': '1rem',
+        'size-17px': '1.0625rem',
         'size-18px': '1.125rem',
         'size-20px': '1.25rem',
         'size-24px': '1.5rem',
