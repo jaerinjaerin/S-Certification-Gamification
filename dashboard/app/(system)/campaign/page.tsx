@@ -1,18 +1,9 @@
-'use client';
-import { useRouter } from 'next/navigation';
+import CertificationClientComponent from './_components/certification-component';
 
-const Campaign = () => {
-  const router = useRouter();
+export default function HomePage() {
   return (
-    <div
-      className="flex items-center justify-center w-full text-7xl font-bold uppercase cursor-pointer"
-      onClick={() => {
-        router.push('/dashboard/overview');
-      }}
-    >
-      Campaign
+    <div className="flex justify-center min-w-[800px] w-full mx-6">
+      <CertificationClientComponent />
     </div>
   );
-};
-
-export default Campaign;
+}

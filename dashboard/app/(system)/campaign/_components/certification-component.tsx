@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CalendarIcon, Pen, RotateCw } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -42,13 +42,25 @@ import {
 } from '@/components/ui/table';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 
-export default function CertificationClientComponent() {
-  const [isCreateCertification, setIsCreateCertification] = useState(false);
+type CertificationFormState = {
+  isFormOpen: boolean;
+  type: 'create' | 'edit';
+};
 
-  if (isCreateCertification) {
+export default function CertificationClientComponent() {
+  const [isCreateCertification, setIsCreateCertification] =
+    useState<CertificationFormState>({
+      isFormOpen: false,
+      type: 'create',
+    });
+
+  if (
+    isCreateCertification.isFormOpen &&
+    isCreateCertification.type === 'create'
+  ) {
     return (
       <CertificationForm
-        type="create"
+        isCreateCertification={isCreateCertification}
         setIsCreateCertification={setIsCreateCertification}
       />
     );
@@ -59,33 +71,52 @@ export default function CertificationClientComponent() {
         <h2>Certification List</h2>
         <div>
           <DownloadFileListPopoverButton type="template" />
-          {/* <CertificationFormModal type="create"> */}
+
           <Button
             variant="action"
-            onClick={() => setIsCreateCertification(true)}
+            onClick={() =>
+              setIsCreateCertification({
+                isFormOpen: true,
+                type: 'create',
+              })
+            }
           >
             Create Certification
           </Button>
-          {/* </CertificationFormModal> */}
         </div>
       </div>
-      <div className="flex">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <CertificationListItem key={index} />
+      <div className="flex flex-wrap gap-4">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <CertificationListItem
+            key={index}
+            setIsCreateCertification={setIsCreateCertification}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function CertificationListItem() {
+function CertificationListItem({
+  setIsCreateCertification,
+}: {
+  setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
+}) {
   return (
     <div className="flex items-center border border-zinc-200 rounded-md">
       <div>
         <h3>Galaxy S25 Expert: certification.name</h3>
         <time>2025.02.08</time>
       </div>
-      <Button variant="ghost">
+      <Button
+        variant="ghost"
+        onClick={() =>
+          setIsCreateCertification({
+            isFormOpen: true,
+            type: 'edit',
+          })
+        }
+      >
         <Pen />
       </Button>
     </div>
@@ -93,11 +124,11 @@ function CertificationListItem() {
 }
 
 function CertificationForm({
-  type,
+  isCreateCertification,
   setIsCreateCertification,
 }: {
-  type: 'create' | 'edit';
-  setIsCreateCertification: (value: boolean) => void;
+  isCreateCertification: CertificationFormState;
+  setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
 }) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -128,16 +159,18 @@ function CertificationForm({
   };
 
   return (
-    <div>
-      <h2>
-        {type === 'create' ? 'Create Certification' : 'Edit Certification'}
+    <div className="w-full">
+      <h2 className="text-2xl font-bold">
+        {isCreateCertification.type === 'create'
+          ? 'Create Certification'
+          : 'Edit Certification'}
       </h2>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           id="certification-form"
-          className="space-y-8"
+          className="space-y-8 px-[205px]"
         >
           <FormField
             control={form.control}
@@ -498,17 +531,23 @@ function CertificationForm({
           </Table>
         </form>
       </Form>
+      <div className="flex justify-center">
+        <Button
+          variant="secondary"
+          onClick={() =>
+            setIsCreateCertification({
+              isFormOpen: false,
+              type: 'create',
+            })
+          }
+        >
+          Cancel
+        </Button>
 
-      <Button
-        variant="secondary"
-        onClick={() => setIsCreateCertification(false)}
-      >
-        Cancel
-      </Button>
-
-      <Button variant="action" type="submit" form="certification-form">
-        Save
-      </Button>
+        <Button variant="action" type="submit" form="certification-form">
+          Save
+        </Button>
+      </div>
     </div>
   );
 }
