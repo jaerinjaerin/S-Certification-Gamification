@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       select: { id: true, code: true },
     });
 
-    const count = await prisma.userQuizLog.count({
+    const count = await prisma.userQuizStatistics.count({
       where: {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const logs = await prisma.userQuizLog.findMany({
+    const logs = await prisma.userQuizStatistics.findMany({
       where: {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },

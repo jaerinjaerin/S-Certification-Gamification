@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       select: { id: true, code: true },
     });
 
-    const logs = await prisma.userQuizLog.findMany({
+    const logs = await prisma.userQuizStatistics.findMany({
       where: {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },

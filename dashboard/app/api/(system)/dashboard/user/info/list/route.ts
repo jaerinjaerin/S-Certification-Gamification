@@ -62,11 +62,6 @@ export async function GET(request: NextRequest) {
 
     const result = await Promise.all(
       users.map(async (user) => {
-        // const quizLog = await prisma.userQuizLog.findMany({
-        //   where: {
-        //     userId: user.id, // Ensure only statistics related to the current user are fetched
-        //   },
-        // });
         const quizStatistics = await prisma.userQuizStatistics.findMany({
           where: {
             userId: user.id, // Ensure only statistics related to the current user are fetched
