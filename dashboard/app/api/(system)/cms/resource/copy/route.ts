@@ -116,11 +116,25 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    for (var i = 0; i < destinationKeys.length; i++) {
-      const destinationKey = destinationKeys[i];
+    const quizBadges = await prisma.quizBadge.findMany({
+      where: {
+        campaignId: soruceCampaign.id,
+      },
+    });
+
+    const uniqueImages = Array.from(
+      new Map(images.map((image) => [image.title, image])).values()
+    );
+
+    const uniqueQuizBadges = Array.from(
+      new Map(quizBadges.map((badge) => [badge.name, badge])).values()
+    );
+
+    for (const destinationKey of destinationKeys) {
       const fileName = destinationKey.split('/').pop();
 
-      const sourceImage = images.find(
+      // 이미지 저장
+      const sourceImage = uniqueImages.find(
         (image) => image.imagePath.split('/').pop() === fileName
       );
       if (sourceImage) {
@@ -134,6 +148,22 @@ export async function POST(request: NextRequest) {
             format: sourceImage.format,
             thumbnailPath: sourceImage.thumbnailPath,
             domainId: sourceImage.domainId,
+          },
+        });
+      }
+
+      // 퀴즈 배지 저장
+      const sourceQuizBadge = uniqueQuizBadges.find(
+        (badge) => badge.imagePath.split('/').pop() === fileName
+      );
+      if (sourceQuizBadge) {
+        await prisma.quizBadge.create({
+          data: {
+            campaignId: destinationCampaign.id,
+            imagePath: destinationKey,
+            name: sourceQuizBadge.name,
+            description: sourceQuizBadge.description,
+            domainId: sourceQuizBadge.domainId,
           },
         });
       }
