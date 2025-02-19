@@ -5,6 +5,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect, useState } from "react";
 
 export const useQuizQuestionLogs = (
+  userId: string,
   quizSetId: string,
   quizStageIndex: number
 ) => {
@@ -17,8 +18,11 @@ export const useQuizQuestionLogs = (
       try {
         setLoading(true);
         setError(null);
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}`;
-        const response = await apiClient.get<QuizQuestionLogsResponse>(url);
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}&user_id=${userId}`;
+        const response = await apiClient.get<QuizQuestionLogsResponse>(
+          url,
+          "force-cache"
+        );
 
         setData(response.items || null);
       } catch (err) {

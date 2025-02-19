@@ -1,6 +1,5 @@
-import { fetchSupportedLanguages } from "@/i18n/locale";
-import AuthProvider from "@/providers/authProvider";
 import { PolicyProvider } from "@/providers/policyProvider";
+import { fetchSupportedLanguageCodes } from "@/services/api/fetchSupportedLanguageCodes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
@@ -15,7 +14,8 @@ export default async function SumtotalUserLayout({
   // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
-  const supportedLanguages = await fetchSupportedLanguages();
+  // const supportedLanguages = await fetchSupportedLanguages();
+  const supportedLanguages = await fetchSupportedLanguageCodes();
   const locale = supportedLanguages.find((lang) => {
     const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
     return pattern.test(languageCode);
@@ -36,17 +36,17 @@ export default async function SumtotalUserLayout({
         messages={translatedMessages}
         locale={locale}
       >
-        <AuthProvider>
-          <PolicyProvider
-            privacyContent={privacyContent?.contents}
-            termContent={termContent?.contents}
-            agreementContent={agreementContent && agreementContent?.contents}
-            domainName={domainInformation?.name}
-            subsidiary={domainInformation?.subsidiary}
-          >
-            {children}
-          </PolicyProvider>
-        </AuthProvider>
+        {/* <AuthProvider> */}
+        <PolicyProvider
+          privacyContent={privacyContent?.contents}
+          termContent={termContent?.contents}
+          agreementContent={agreementContent && agreementContent?.contents}
+          domainName={domainInformation?.name}
+          subsidiary={domainInformation?.subsidiary}
+        >
+          {children}
+        </PolicyProvider>
+        {/* </AuthProvider> */}
       </NextIntlClientProvider>
     </div>
   );
@@ -55,7 +55,10 @@ export default async function SumtotalUserLayout({
 async function fetchInformationAboutDomain(domainCode: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`,
+      {
+        cache: "force-cache",
+      }
     );
     if (!response.ok) {
       throw new Error(
@@ -106,7 +109,7 @@ async function fetchTermContent(domainCode: string) {
 
 async function fetchContent(url: string) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) {
       throw new Error(`fetchError: ${response.status}`);
     }
@@ -116,6 +119,7 @@ async function fetchContent(url: string) {
     }
     return result;
   } catch (error) {
+    console.error(`fetchContent error: ${url}, ${error}`);
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
         type: "api",

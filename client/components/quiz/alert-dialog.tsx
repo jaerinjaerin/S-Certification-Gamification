@@ -9,12 +9,19 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import useCheckLocale from "@/hooks/useCheckLocale";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
-export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
-  const { routeToPage } = usePathNavigator();
+export function GameOverAlertDialog({
+  gameOver,
+  onRestart,
+  onGotoMap,
+}: {
+  gameOver: boolean;
+  onRestart: () => void;
+  onGotoMap: () => void;
+}) {
   const translation = useTranslations();
   const { isMyanmar } = useCheckLocale();
   return (
@@ -35,16 +42,10 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
         </AlertDialogHeader>
 
         <AlertDialogFooter className="sm:justify-center">
-          <AlertDialogCancel
-            onClick={() => routeToPage("map")}
-            className="text-wrap"
-          >
+          <AlertDialogCancel onClick={() => onGotoMap()} className="text-wrap">
             {translation("no")}
           </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => routeToPage("quiz")}
-            className="text-wrap"
-          >
+          <AlertDialogAction onClick={() => onRestart()} className="text-wrap">
             {translation("retry")}
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -54,8 +55,8 @@ export function GameOverAlertDialog({ gameOver }: { gameOver: boolean }) {
 }
 
 export function ErrorAlertDialog({ error }: { error: string | undefined }) {
-  const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
+  const router = useRouter();
 
   return (
     <AlertDialog open={!!error}>
@@ -65,7 +66,7 @@ export function ErrorAlertDialog({ error }: { error: string | undefined }) {
           <AlertDialogDescription>{error}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => routeToPage("map")}>
+          <AlertDialogCancel onClick={() => router.push("map")}>
             {translation("back")}
           </AlertDialogCancel>
         </AlertDialogFooter>

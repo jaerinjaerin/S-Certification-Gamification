@@ -1,5 +1,4 @@
 import { getBrowserLocale, getServiceLangCode } from "@/i18n/locale";
-import AuthProvider from "@/providers/authProvider";
 import { NextIntlClientProvider } from "next-intl";
 
 export default async function GuestLayout({
@@ -16,7 +15,8 @@ export default async function GuestLayout({
   // console.log("GuestLayout locale", locale);
 
   const messages = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${serviceLangCode}.json`
+    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${serviceLangCode}.json`,
+    { cache: "force-cache" }
   )
     .then((res) => res.json())
     .catch((error) => console.error("get message error", error));
@@ -28,7 +28,8 @@ export default async function GuestLayout({
         messages={messages}
         locale={locale}
       >
-        <AuthProvider>{children}</AuthProvider>
+        {/* <AuthProvider>{children}</AuthProvider> */}
+        {children}
       </NextIntlClientProvider>
     </div>
   );

@@ -1,7 +1,6 @@
 "use server";
-import { defaultLanguages } from "@/core/config/default";
 import { defaultLocale } from "@/i18n/config";
-import * as Sentry from "@sentry/nextjs";
+import { fetchSupportedLanguageCodes } from "@/services/api/fetchSupportedLanguageCodes";
 import { headers } from "next/headers";
 
 // ltn을 사용하는 국가
@@ -29,9 +28,9 @@ const usedLTNLanguages = [
 const searchLangCodeInSupportedLanguagesCode = async (
   searchLangCode: string
 ): Promise<string | undefined> => {
-  const supportedLanguagesCode = await fetchSupportedLanguages();
+  const supportedLanguagesCodes = await fetchSupportedLanguageCodes();
 
-  return supportedLanguagesCode.find((lang: string) => {
+  return supportedLanguagesCodes.find((lang: string) => {
     if (searchLangCode === "es") return lang === "es-ES";
     if (searchLangCode === "en") return lang === "en-US";
     return lang.includes(searchLangCode);
@@ -106,28 +105,28 @@ async function getBrowserLanguage() {
 }
 
 // /api/languages의 데이터를 리턴하는 함수
-export async function fetchSupportedLanguages() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
-      {
-        cache: "no-store",
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error. status: ${response.status}`);
-    }
+// export async function fetchSupportedLanguages() {
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
+//       {
+//         cache: "no-store",
+//       }
+//     );
+//     if (!response.ok) {
+//       throw new Error(`HTTP error. status: ${response.status}`);
+//     }
 
-    const result = await response.json();
-    if (!result) {
-      // return defaultLanguages.map((code) => code.code);
-      throw new Error("No data returned from /api/languages");
-    }
+//     const result = await response.json();
+//     if (!result) {
+//       // return defaultLanguages.map((code) => code.code);
+//       throw new Error("No data returned from /api/languages");
+//     }
 
-    return result.items.map((item) => item.code);
-  } catch (error) {
-    console.error("Failed to fetch supported languages:", error);
-    Sentry.captureException(error);
-    return defaultLanguages.map((code) => code.code);
-  }
-}
+//     return result.items.map((item) => item.code);
+//   } catch (error) {
+//     console.error("Failed to fetch supported languages:", error);
+//     Sentry.captureException(error);
+//     return defaultLanguages.map((code) => code.code);
+//   }
+// }

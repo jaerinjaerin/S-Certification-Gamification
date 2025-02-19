@@ -75,4 +75,5 @@ export interface EndStageResult {
   isBadgeAcquired: boolean;
   badgeStage: boolean;
   badgeImageURL: string;
+  nextStageIndex: number | null;
 }
