@@ -33,7 +33,7 @@ export type nonSUser = {
   channelSegment: string;
   jobGroup: string;
 };
-export const sUserColumns: ColumnDef<sUser>[] = [
+const sUserColumns: ColumnDef<sUser>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
@@ -64,7 +64,7 @@ export const sUserColumns: ColumnDef<sUser>[] = [
   },
 ];
 
-export const nonSUserColumns: ColumnDef<nonSUser>[] = [
+const nonSUserColumns: ColumnDef<nonSUser>[] = [
   {
     accessorKey: 'status',
     header: 'Status',

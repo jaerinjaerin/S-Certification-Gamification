@@ -14,7 +14,7 @@ export type Payment = {
   fsm_ses_target: number;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: 'domain',
     header: 'Domain',
