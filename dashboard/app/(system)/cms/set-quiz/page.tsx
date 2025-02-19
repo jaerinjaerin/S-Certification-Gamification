@@ -5,6 +5,13 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from './data-table';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { UploadImageFileModal } from '../media-library/_components/upload-image-file-modal';
 
 export type sUser = {
   id: string;
@@ -113,7 +120,19 @@ export default function SetQuizPage() {
 
         <div>
           <DownloadFileListPopoverButton type="data" />
-          <Button variant="action">Bulk Upload</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="action">Upload</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <UploadImageFileModal type="add">
+                  <Button>Quiz Set</Button>
+                </UploadImageFileModal>
+              </DropdownMenuItem>
+              <DropdownMenuItem>Activity ID</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       {/* TODO 데이터 테이블 추가 */}

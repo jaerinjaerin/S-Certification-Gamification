@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog';
 import { Dialog } from '@/components/ui/dialog';
 import { FileWithPreview } from '../../_types/type';
-
 import { DropzoneProps } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
@@ -20,7 +19,7 @@ type OptionalDropzoneProps = Omit<
 type PreviewDialogProps = OptionalDropzoneProps & {
   children: React.ReactNode;
   clearFiles: () => void;
-  modalOpen: boolean;
+  modalOpen?: boolean;
   type: 'add' | 'edit';
   files: FileWithPreview[];
 };
@@ -34,6 +33,7 @@ export function PreviewDialog({
   open,
   getInputProps,
 }: PreviewDialogProps) {
+  console.log('🥕 files', files);
   return (
     <Dialog open={modalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -43,12 +43,20 @@ export function PreviewDialog({
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}
           </DialogTitle>
         </DialogHeader>
-        <AssetPreviewView
-          files={files}
-          open={open}
-          type={type}
-          getInputProps={getInputProps}
-        />
+        {type === 'add' ? (
+          <AddAssetPreviewView
+            files={files}
+            open={open}
+            getInputProps={getInputProps}
+          />
+        ) : (
+          <EditAssetPreviewView
+            getInputProps={getInputProps}
+            open={open}
+            files={files}
+          />
+        )}
+
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="secondary" onClick={clearFiles}>
@@ -70,30 +78,22 @@ export function PreviewDialog({
 type AssetPreviewViewProps = {
   files: FileWithPreview[];
   open: () => void;
-  type: 'add' | 'edit';
+  extraContent?: React.ReactNode;
 } & Pick<DropzoneProps, 'getInputProps'>;
 
 function AssetPreviewView({
+  extraContent,
+  getInputProps,
   files,
   open,
-  type,
-  getInputProps,
 }: AssetPreviewViewProps) {
-  console.log('🥕 files', files);
   return (
     <div>
       <div>
         <input {...getInputProps()} />
         <Button onClick={open}>Upload</Button>
       </div>
-      {type === 'edit' && (
-        <div>
-          <span>version: 25.02.05 23:55:23</span>
-          <Button variant="download" size="icon">
-            <Download />
-          </Button>
-        </div>
-      )}
+      {extraContent && <div>{extraContent}</div>}
       <div>
         {files?.map((file) => (
           <div key={file.name}>
@@ -115,5 +115,29 @@ function AssetPreviewView({
         ))}
       </div>
     </div>
+  );
+}
+
+function AddAssetPreviewView(
+  props: Omit<AssetPreviewViewProps, 'extraContent'>
+) {
+  return <AssetPreviewView {...props} />;
+}
+
+function EditAssetPreviewView(
+  props: Omit<AssetPreviewViewProps, 'extraContent'>
+) {
+  return (
+    <AssetPreviewView
+      {...props}
+      extraContent={
+        <div>
+          <span>version: 25.02.05 23:55:23</span>
+          <Button variant="download" size="icon">
+            <Download />
+          </Button>
+        </div>
+      }
+    />
   );
 }

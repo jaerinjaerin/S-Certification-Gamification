@@ -3,6 +3,7 @@ import { Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PenIcon } from 'lucide-react';
 import { handleDownload } from '../../_utils/utils';
+import { UploadImageFileModal } from './upload-image-file-modal';
 
 export function MediaAssetListContainer({
   children,
@@ -33,16 +34,11 @@ export function MediaAssetItem({
       </div>
       <div className="flex">
         <span className="inline-block">{fileName}</span>
-
-        <Button
-          variant="download"
-          size="icon"
-          className="ml-auto size-6"
-          onClick={() => console.log('🥕 이미지 수정 모달 띄우기')}
-        >
-          <PenIcon color="#2563EB" />
-        </Button>
-
+        <UploadImageFileModal type="edit">
+          <Button variant="download" size="icon" className="ml-auto size-6">
+            <PenIcon color="#2563EB" />
+          </Button>
+        </UploadImageFileModal>
         <Button
           variant="download"
           size="icon"

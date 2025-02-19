@@ -7,11 +7,12 @@ import { PreviewDialog } from './preivew-dialog';
 
 export function UploadImageFileModal({
   children,
+  type,
 }: {
   children: React.ReactNode;
+  type: 'add' | 'edit';
 }) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  console.log('🥕 files', files);
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     accept: {
       'image/jpeg': [],
@@ -42,11 +43,25 @@ export function UploadImageFileModal({
       });
   }, [files]);
 
+  if (type === 'edit') {
+    return (
+      <PreviewDialog
+        clearFiles={clearFiles}
+        open={open}
+        getInputProps={getInputProps}
+        files={files}
+        type={type}
+      >
+        {children}
+      </PreviewDialog>
+    );
+  }
+
   return (
     <>
       {isEmpty(files) ? (
         <UploadFilesDialog
-          title="Asset Upload"
+          title="Upload Asset"
           getRootProps={getRootProps}
           getInputProps={getInputProps}
           isDragActive={isDragActive}
@@ -58,10 +73,10 @@ export function UploadImageFileModal({
         <PreviewDialog
           modalOpen={!isEmpty(files)}
           clearFiles={clearFiles}
-          type={'add'}
           open={open}
           getInputProps={getInputProps}
           files={files}
+          type={type}
         >
           {children}
         </PreviewDialog>

@@ -27,7 +27,7 @@ export default function MediaLibraryPage() {
           ))}
         </div>
         <div>Character</div>
-        <UploadImageFileModal>
+        <UploadImageFileModal type="add">
           <Button variant="action" className="absolute top-0 right-0">
             Add Badge
           </Button>
@@ -46,7 +46,7 @@ export default function MediaLibraryPage() {
             />
           ))}
         </div>
-        <UploadImageFileModal>
+        <UploadImageFileModal type="add">
           <Button variant="action" className="absolute top-0 right-0">
             Add Character
           </Button>
@@ -65,7 +65,7 @@ export default function MediaLibraryPage() {
             />
           ))}
         </div>
-        <UploadImageFileModal>
+        <UploadImageFileModal type="add">
           <Button variant="action" className="absolute top-0 right-0">
             Add Background
           </Button>
