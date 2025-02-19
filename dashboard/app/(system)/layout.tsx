@@ -1,15 +1,15 @@
 import CurrentBreadCrumb from '@/components/system/current-bread-crumb';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import React from 'react';
-import ContentWithTitleSection from '@/components/system/content-with-title-section';
 import { ModalProvider } from '@/components/provider/modal-provider';
 import { auth } from '@/auth';
 import { Session } from 'next-auth';
 import NotPermission from '@/components/not-permission';
 import { getUserFromDB, getUserPermissions } from '@/model/qureries';
-import LeftMenu from '@/components/layout/left-menu';
 import { StateVariablesProvider } from '@/components/provider/state-provider';
 import { Role } from '@prisma/client';
+import ContentWithTitleSection from '@/components/system/content-with-title-section';
+import LeftMenu from '@/components/layout/left-menu';
 
 type Props = { children: React.ReactNode };
 

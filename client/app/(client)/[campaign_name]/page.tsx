@@ -17,36 +17,11 @@ export default async function CampaignPage({
   // 등록되어 있으면 [campaign_name]/[quizset_path]로 이동
   // 등록되어 있지 않으면 [campaign_name]/register로 이동
 
-  // const { data: session } = useSession();
-  // // const { routeToPage } = usePathNavigator();
-
-  // // console.log("CampaignPage session", session);
-
-  // if (!session) {
-  //   routeToPage("/login");
-  //   return;
-  // }
-  // const { campaign } = useCampaign();
-  // const { data: session } = useSession();
   const session = await auth();
 
   if (!session?.user) {
     redirect("/login");
   }
-
-  // const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${params.campaign_name}`;
-  // const response = await fetch(url, {
-  //   method: "GET",
-  //   // cache: "force-cache",
-  //   cache: "no-cache",
-  // });
-
-  // const data = await response.json();
-  // if (!data.item) {
-  //   redirect("error-notfound");
-  // }
-
-  // // console.log("CampaignPage campaign", data);
 
   const historyResponse = await fetch(
     // `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,

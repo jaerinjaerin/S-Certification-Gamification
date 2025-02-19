@@ -56,6 +56,10 @@ class QuizQuestionLogManager {
     // console.log(`[QuizLogManager] Stage ${stageIndex} started. Logs reset.`);
   }
 
+  clear() {
+    this.logs = [];
+  }
+
   reset(): void {
     this.stageIndex = null;
     this.logs = [];

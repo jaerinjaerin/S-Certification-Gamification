@@ -7,10 +7,10 @@ import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef } from "react";
 
 export default function QuizMap() {
@@ -22,9 +22,9 @@ export default function QuizMap() {
     quizStageLogs,
   } = useQuiz();
   const translation = useTranslations();
-  const { routeToPage } = usePathNavigator();
   const { loading, setLoading, renderLoader } = useLoader();
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const targetStage = itemsRef.current[currentQuizStageIndex];
@@ -39,7 +39,7 @@ export default function QuizMap() {
 
   const routeNextQuizStage = async () => {
     setLoading(true);
-    routeToPage("/quiz");
+    router.push("quiz");
   };
 
   return (
@@ -72,6 +72,7 @@ export default function QuizMap() {
                 currentQuizStageIndex={currentQuizStageIndex}
                 routeNextQuizStage={routeNextQuizStage}
                 stage={quizStage}
+                // isCompleted={index < currentQuizStageIndex}
                 isCompleted={quizStageLogs.some(
                   (log) => log.quizStageId === quizStage.id
                 )}

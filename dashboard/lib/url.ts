@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { serializeJsonToQuery } from '@/app/(system)/dashboard/_lib/search-params';
+import { serializeJsonToQuery } from '@/lib/search-params';
 
 export const updateSearchParamsOnUrl = (data: Record<string, any>) => {
   try {
