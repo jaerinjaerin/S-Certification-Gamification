@@ -99,7 +99,7 @@ export default function SetQuizPage() {
         <DownloadFileListPopoverButton type="template" />
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center gap-6">
           <span>Domain List</span>
           <Tabs
             defaultValue="s"
@@ -109,8 +109,12 @@ export default function SetQuizPage() {
             }}
           >
             <TabsList>
-              <TabsTrigger value="s">S+ Users</TabsTrigger>
-              <TabsTrigger value="non-s">Non S+ Users</TabsTrigger>
+              <TabsTrigger className="min-w-[148px]" value="s">
+                S+ Users
+              </TabsTrigger>
+              <TabsTrigger className="min-w-[148px]" value="non-s">
+                Non S+ Users
+              </TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -118,7 +122,7 @@ export default function SetQuizPage() {
         {/* TODO: Need Tab component  */}
         {/* TODO: Tab의 상태에 따라 버튼 변경  */}
 
-        <div>
+        <div className="flex gap-3">
           <DownloadFileListPopoverButton type="data" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

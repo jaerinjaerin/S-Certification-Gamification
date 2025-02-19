@@ -25,7 +25,7 @@ export function PopoverWithButton(props: PopoverWithButtonProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent align="end" className="w-fit">
+      <PopoverContent align="end" className="w-fit p-6">
         {content}
       </PopoverContent>
     </Popover>
@@ -85,21 +85,27 @@ export function DownloadFileListPopoverButton({
           <Button variant={buttonVariant}>{downloadConfig[type].title}</Button>
         ),
         content: (
-          <div className="grid gap-4">
+          <div className="grid gap-6">
             <div className="space-y-2">
-              <h3>{downloadConfig[type].title}</h3>
-              <span>{downloadConfig[type].description}</span>
+              <h3 className="text-base">{downloadConfig[type].title}</h3>
+              <span className="text-[14px] text-sidebar-icon">
+                {downloadConfig[type].description}
+              </span>
             </div>
-            <div>
+            <div className="flex flex-col gap-2 pl-2">
               {downloadConfig[type].items.map((item) => (
-                <div key={item.label}>
+                <div
+                  className="flex justify-between items-center"
+                  key={item.label}
+                >
                   <span>{item.name}</span>
                   <Button
+                    className="size-[32px] shadow-none"
                     size="icon"
                     variant="download"
                     onClick={handleDownloadeFile}
                   >
-                    <DownloadIcon />
+                    <DownloadIcon className="!w-3 !h-3" />
                   </Button>
                 </div>
               ))}

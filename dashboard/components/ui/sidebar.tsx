@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
+import { IconPanelArrow } from '@/components/icons/bien';
 
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -24,7 +25,7 @@ const SIDEBAR_COOKIE_NAME = 'sidebar:state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_MOBILE = '18rem';
-const SIDEBAR_WIDTH_ICON = '3rem';
+const SIDEBAR_WIDTH_ICON = '5rem';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 
 type SidebarContext = {
@@ -133,7 +134,7 @@ const SidebarProvider = React.forwardRef<
     return (
       <SidebarContext.Provider value={contextValue}>
         <TooltipProvider delayDuration={0}>
-          <Topbar className="bg-zinc-950 h-14 flex items-center justify-between flex-shrink-0 px-[1.875rem] fixed w-full z-10" />
+          <Topbar className="bg-zinc-950 h-14 flex items-center justify-between flex-shrink-0 px-[1.875rem] fixed w-full z-20" />
           <div
             style={
               {
@@ -282,7 +283,13 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      <i className="relative">
+        <PanelLeft
+          className="text-sidebar-icon"
+          style={{ width: '100%', height: '100%' }}
+        />
+        <IconPanelArrow className="text-active-icon absolute top-1/2 -translate-y-1/2 left-[49%] !w-[5px] transition-transform duration-200 group-data-[collapsible=icon]:rotate-180" />
+      </i>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
