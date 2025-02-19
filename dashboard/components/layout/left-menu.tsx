@@ -8,7 +8,6 @@ import {
   Languages,
   Goal,
   ChevronRight,
-  FileBadge2,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -56,7 +55,6 @@ const menuItems: MenuItems = [
       { label: 'Media Library', icon: Images, href: '/cms/media-library' },
       { label: 'UI Language', icon: Languages, href: '/cms/ui-language' },
       { label: 'Target', icon: Goal, href: '/cms/target' },
-      { label: 'Policies & Terms', icon: FileBadge2, href: '/cms/policies' },
     ],
   },
 ];

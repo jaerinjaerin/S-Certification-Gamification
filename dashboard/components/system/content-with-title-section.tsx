@@ -13,7 +13,6 @@ const subtitles = {
     'media-library': 'You can manage the media library.',
     'ui-language': 'You can manage the UI language.',
     target: 'You can manage the target.',
-    'policies-terms': 'You can manage the policies and terms.',
   },
 } as const;
 
