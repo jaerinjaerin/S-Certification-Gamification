@@ -1,5 +1,4 @@
-import CurrentBreadCrumb from '@/components/system/current-bread-crumb';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import React from 'react';
 import { ModalProvider } from '@/components/provider/modal-provider';
 import { auth } from '@/auth';
@@ -8,8 +7,6 @@ import NotPermission from '@/components/not-permission';
 import { getUserFromDB, getUserPermissions } from '@/model/qureries';
 import { StateVariablesProvider } from '@/components/provider/state-provider';
 import { Role } from '@prisma/client';
-import ContentWithTitleSection from '@/components/system/content-with-title-section';
-import LeftMenu from '@/components/layout/left-menu';
 
 type Props = { children: React.ReactNode };
 
@@ -17,7 +14,7 @@ const ManagementLayout = async ({ children }: Props) => {
   const session = (await auth()) as Session;
   const { user } = session;
   const userFromDB = await getUserFromDB(user.id);
-  let permit = false;
+  let permit = true;
   let role: Role | null = null;
   if (userFromDB) {
     role = await getUserPermissions(userFromDB);
@@ -35,17 +32,7 @@ const ManagementLayout = async ({ children }: Props) => {
         <StateVariablesProvider session={session} role={role}>
           <ModalProvider>
             <SidebarProvider className="pt-[3.5rem]">
-              <LeftMenu />
-              <SidebarInset>
-                <div className="w-full p-5 space-y-5 ">
-                  <CurrentBreadCrumb />
-                  <div className="relative h-full w-full">
-                    <ContentWithTitleSection>
-                      {children}
-                    </ContentWithTitleSection>
-                  </div>
-                </div>
-              </SidebarInset>
+              {children}
             </SidebarProvider>
           </ModalProvider>
         </StateVariablesProvider>
@@ -57,27 +44,3 @@ const ManagementLayout = async ({ children }: Props) => {
 };
 
 export default ManagementLayout;
-
-// <StateVariablesProvider session={session} role={role}>
-// <ModalProvider>
-//   <SidebarProvider className="flex flex-col overflow-x-auto overflow-y-hidden">
-//     <Topbar className="bg-zinc-950 h-14 w-full flex items-center justify-between flex-shrink-0 px-[1.875rem]" />
-//     <div className="flex flex-1 h-full">
-//       {/* Sidebar hide left menu for temperately open  */}
-//       <aside className="relative w-[16.5rem] bg-zinc-50">
-//         <LeftMenu />
-//       </aside>
-
-//       {/* Main Content */}
-//       <div className="w-full p-5 space-y-5">
-//         <CurrentBreadCrumb />
-//         <div className="relative h-full w-full">
-//           <ContentWithTitleSection>
-//             {children}
-//           </ContentWithTitleSection>
-//         </div>
-//       </div>
-//     </div>
-//   </SidebarProvider>
-// </ModalProvider>
-// </StateVariablesProvider>

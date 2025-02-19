@@ -1,6 +1,5 @@
 'use client';
 
-import { DownloadFileListPopoverButton } from '../../cms/_components/custom-popover';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CalendarIcon, Pen, RotateCw } from 'lucide-react';
@@ -41,6 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 
 export default function CertificationClientComponent() {
   const [isCreateCertification, setIsCreateCertification] = useState(false);
