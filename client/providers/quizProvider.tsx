@@ -458,6 +458,7 @@ export const QuizProvider = ({
       }
 
       const result = await new QuizBadgeHandler().issueBadge(
+        userId,
         activityId,
         elapsedSeconds
       );
@@ -548,6 +549,8 @@ export const QuizProvider = ({
       channelId: _quizLog?.channelId,
       channelName: _quizLog?.channelName,
       channelSegmentId: _quizLog?.channelSegmentId,
+      originalQuestionId: question.originalQuestionId,
+      originalIndex: question.originalIndex,
     });
   };
 

@@ -8,6 +8,12 @@ const subtitles = {
     user: 'You can analyze user engagement and performance.',
     quiz: 'It analyzes the performance of each quiz.',
   },
+  cms: {
+    'set-quiz': 'You can download and upload the data needed for the quiz.',
+    'media-library': 'You can manage the media library.',
+    'ui-language': 'You can manage the UI language.',
+    target: 'You can manage the target.',
+  },
 } as const;
 
 type Categories = keyof typeof subtitles;

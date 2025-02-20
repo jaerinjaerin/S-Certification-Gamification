@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-function IconKakao({ className, ...props }: React.ComponentProps<"svg">) {
+function IconKakao({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
       role="img"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
-      className={cn("h-4 w-4", className)}
+      className={cn('h-4 w-4', className)}
       {...props}
     >
       <path d="M255.5 48C299.345 48 339.897 56.5332 377.156 73.5996C414.415 90.666 443.871 113.873 465.522 143.22C487.174 172.566 498 204.577 498 239.252C498 273.926 487.174 305.982 465.522 335.42C443.871 364.857 414.46 388.109 377.291 405.175C340.122 422.241 299.525 430.775 255.5 430.775C241.607 430.775 227.262 429.781 212.467 427.795C148.233 472.402 114.042 494.977 109.892 495.518C107.907 496.241 106.012 496.15 104.208 495.248C103.486 494.706 102.945 493.983 102.584 493.08C102.223 492.177 102.043 491.365 102.043 490.642V489.559C103.126 482.515 111.335 453.169 126.672 401.518C91.8486 384.181 64.1974 361.2 43.7185 332.575C23.2395 303.951 13 272.843 13 239.252C13 204.577 23.8259 172.566 45.4777 143.22C67.1295 113.873 96.5849 90.666 133.844 73.5996C171.103 56.5332 211.655 48 255.5 48Z"></path>
@@ -23,7 +23,7 @@ function IconSplus({
   className,
   inverted,
   ...props
-}: React.ComponentProps<"svg"> & { inverted?: boolean }) {
+}: React.ComponentProps<'svg'> & { inverted?: boolean }) {
   return (
     <svg
       width="64"
@@ -31,17 +31,17 @@ function IconSplus({
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("h-4 w-4", className)}
+      className={cn('h-4 w-4', className)}
       {...props}
     >
-      <rect width="64" height="64" fill={inverted ? "white" : "black"} />
+      <rect width="64" height="64" fill={inverted ? 'white' : 'black'} />
       <path
         d="M37.6309 34.784V29.264H43.8229V23.168H49.2469V29.264H55.3909V34.784H49.2469V40.928H43.8229V34.784H37.6309Z"
-        fill={inverted ? "black" : "white"}
+        fill={inverted ? 'black' : 'white'}
       />
       <path
         d="M22.68 50C16.344 50 12.168 47.312 9 43.712L14.952 39.008C16.728 42.032 19.464 43.76 22.632 43.76C26.088 43.76 27.96 41.504 27.96 39.056C27.96 36.08 24.408 35.168 20.664 34.016C15.96 32.528 10.728 30.704 10.728 24.032C10.728 18.416 15.624 14 22.344 14C28.008 14 31.272 16.16 34.104 19.088L28.728 23.168C27.24 20.96 25.176 19.808 22.392 19.808C19.224 19.808 17.496 21.536 17.496 23.792C17.496 26.576 20.856 27.488 24.648 28.736C29.4 30.272 34.776 32.384 34.776 39.104C34.776 44.624 30.36 50 22.68 50Z"
-        fill={inverted ? "black" : "white"}
+        fill={inverted ? 'black' : 'white'}
       />
     </svg>
   );
@@ -51,7 +51,7 @@ function IconSplusMsg({
   className,
   inverted,
   ...props
-}: React.ComponentProps<"svg"> & { inverted?: boolean }) {
+}: React.ComponentProps<'svg'> & { inverted?: boolean }) {
   return (
     <svg
       width="64"
@@ -59,17 +59,17 @@ function IconSplusMsg({
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("h-5 w-5", className)}
+      className={cn('h-5 w-5', className)}
       {...props}
     >
       <rect width="64" height="64" fill="none" />
       <path
         d="M37.6309 34.784V29.264H43.8229V23.168H49.2469V29.264H55.3909V34.784H49.2469V40.928H43.8229V34.784H37.6309Z"
-        fill={inverted ? "white" : "black"}
+        fill={inverted ? 'white' : 'black'}
       />
       <path
         d="M22.68 50C16.344 50 12.168 47.312 9 43.712L14.952 39.008C16.728 42.032 19.464 43.76 22.632 43.76C26.088 43.76 27.96 41.504 27.96 39.056C27.96 36.08 24.408 35.168 20.664 34.016C15.96 32.528 10.728 30.704 10.728 24.032C10.728 18.416 15.624 14 22.344 14C28.008 14 31.272 16.16 34.104 19.088L28.728 23.168C27.24 20.96 25.176 19.808 22.392 19.808C19.224 19.808 17.496 21.536 17.496 23.792C17.496 26.576 20.856 27.488 24.648 28.736C29.4 30.272 34.776 32.384 34.776 39.104C34.776 44.624 30.36 50 22.68 50Z"
-        fill={inverted ? "white" : "black"}
+        fill={inverted ? 'white' : 'black'}
       />
     </svg>
   );
@@ -79,35 +79,35 @@ function IconBien({
   className,
   inverted,
   ...props
-}: React.ComponentProps<"svg"> & { inverted?: boolean }) {
+}: React.ComponentProps<'svg'> & { inverted?: boolean }) {
   return (
     <svg
       viewBox="0 0 75 75"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("h-4 w-4", className)}
+      className={cn('h-4 w-4', className)}
       {...props}
     >
       <path
         d="M49 69V7H61V10.6813H52.9844V65.3187H61V69H49Z"
-        fill={inverted ? "black" : "white"}
+        fill={inverted ? 'black' : 'white'}
       />
       <path
         d="M32 37.6852V40.2039C29.2054 40.2039 27.2707 40.7448 26.1958 41.8266C25.1375 42.9083 24.6084 44.7974 24.6084 47.4937V56.8906C24.6084 58.9573 24.4017 60.7495 23.9883 62.2672C23.5748 63.801 22.9134 65.0604 22.0039 66.0453C21.0944 67.0463 19.8956 67.7891 18.4073 68.2734C16.9356 68.7578 15.1332 69 13 69V65.3187C14.852 65.3187 16.3238 65.02 17.4151 64.4227C18.5231 63.8253 19.3085 62.9049 19.7715 61.6617C20.2511 60.4346 20.4909 58.8443 20.4909 56.8906V46.2102C20.4909 44.8378 20.6562 43.6268 20.9869 42.5773C21.3177 41.5117 21.9047 40.6156 22.748 39.8891C23.5914 39.1625 24.7572 38.6135 26.2454 38.2422C27.7502 37.8708 29.6684 37.6852 32 37.6852ZM13 7C15.1332 7 16.9356 7.24219 18.4073 7.72656C19.8956 8.21094 21.0944 8.95365 22.0039 9.95469C22.9134 10.9396 23.5748 12.199 23.9883 13.7328C24.4017 15.2505 24.6084 17.0427 24.6084 19.1094V28.5062C24.6084 31.2026 25.1375 33.0917 26.1958 34.1734C27.2707 35.2552 29.2054 35.7961 32 35.7961V38.3148C29.6684 38.3148 27.7502 38.1292 26.2454 37.7578C24.7572 37.3865 23.5914 36.8375 22.748 36.1109C21.9047 35.3844 21.3177 34.4964 20.9869 33.4469C20.6562 32.3813 20.4909 31.1622 20.4909 29.7898V19.1094C20.4909 17.1557 20.2511 15.5573 19.7715 14.3141C19.3085 13.0708 18.5231 12.1586 17.4151 11.5773C16.3238 10.9799 14.852 10.6813 13 10.6813V7ZM32 35.7961V40.2039H26.3198V35.7961H32Z"
-        fill={inverted ? "black" : "white"}
+        fill={inverted ? 'black' : 'white'}
       />
     </svg>
   );
 }
 
-function IconBienMsg({ className, ...props }: React.ComponentProps<"svg">) {
+function IconBienMsg({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
       fill="currentColor"
       viewBox="0 0 75 75"
       role="img"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("h-4 w-4", className)}
+      className={cn('h-4 w-4', className)}
       {...props}
     >
       <path d="M49 69V7H61V10.6813H52.9844V65.3187H61V69H49Z" />
@@ -116,7 +116,7 @@ function IconBienMsg({ className, ...props }: React.ComponentProps<"svg">) {
   );
 }
 
-function IconGoogle({ className, ...props }: React.ComponentProps<"svg">) {
+function IconGoogle({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
       width="800px"
@@ -124,7 +124,7 @@ function IconGoogle({ className, ...props }: React.ComponentProps<"svg">) {
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
-      className={cn("h-4 w-4", className)}
+      className={cn('h-4 w-4', className)}
       {...props}
     >
       <title>ionicons-v5_logos</title>
@@ -133,13 +133,13 @@ function IconGoogle({ className, ...props }: React.ComponentProps<"svg">) {
   );
 }
 
-function IconSpinner({ className, ...props }: React.ComponentProps<"svg">) {
+function IconSpinner({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 256"
       fill="currentColor"
-      className={cn("h-4 w-4 animate-spin", className)}
+      className={cn('h-4 w-4 animate-spin', className)}
       {...props}
     >
       <path d="M232 128a104 104 0 0 1-208 0c0-41 23.81-78.36 60.66-95.27a8 8 0 0 1 6.68 14.54C60.15 61.59 40 93.27 40 128a88 88 0 0 0 176 0c0-34.73-20.15-66.41-51.34-80.73a8 8 0 0 1 6.68-14.54C208.19 49.64 232 87 232 128Z" />
@@ -151,7 +151,7 @@ function IconExit({
   className,
   inverted,
   ...props
-}: React.ComponentProps<"svg"> & { inverted?: boolean }) {
+}: React.ComponentProps<'svg'> & { inverted?: boolean }) {
   return (
     <svg
       width="20"
@@ -164,8 +164,30 @@ function IconExit({
     >
       <path
         d="M13.3333 14.1667L17.5 10M17.5 10L13.3333 5.83333M17.5 10H7.5M7.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86502 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86502C2.5 4.3998 2.5 5.09987 2.5 6.5V13.5C2.5 14.9001 2.5 15.6002 2.77248 16.135C3.01217 16.6054 3.39462 16.9878 3.86502 17.2275C4.3998 17.5 5.09987 17.5 6.5 17.5H7.5"
-        stroke={inverted ? "white" : "black"}
+        stroke={inverted ? 'white' : 'black'}
         strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconPanelArrow({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      width="5"
+      height="8"
+      viewBox="0 0 5 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
+      {...props}
+    >
+      <path
+        d="M4 7L1 4L4 1"
+        stroke="#71717A"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -182,4 +204,5 @@ export {
   IconGoogle,
   IconSpinner,
   IconExit,
+  IconPanelArrow,
 };

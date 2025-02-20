@@ -1,7 +1,7 @@
-import { Loader2 } from "lucide-react";
-import React, { HTMLAttributes } from "react";
+import { Loader2 } from 'lucide-react';
+import React, { HTMLAttributes } from 'react';
 
-const Loader = (props: React.HTMLAttributes<HTMLDivElement>) => {
+export const Loader = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div {...props}>
       <Loader2 className="animate-spin text-zinc-600" />
