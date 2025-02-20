@@ -79,6 +79,7 @@ export default {
       },
       fontSize: {
         'size-10px': '0.625rem',
+        'size-11px': '0.6875rem',
         'size-12px': '0.75rem',
         'size-14px': '0.875rem',
         'size-15px': '0.9375rem',

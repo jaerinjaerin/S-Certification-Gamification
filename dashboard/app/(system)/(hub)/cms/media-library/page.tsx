@@ -1,48 +1,31 @@
-import {
-  MediaAssetListContainer,
-  MediaAssetItem,
-} from './_components/media-asset-list';
+import { serializeJsonToQuery } from '@/lib/search-params';
+import axios from 'axios';
+import MediaAssetGroup from './_components/media-asset-group';
+import { MediaDataProvider } from './_provider/media-data-provider';
 
-export default function MediaLibraryPage() {
-  // TODO: 미디어라이브러리 이미지 가져오기
+export default async function MediaLibraryPage({
+  searchParams,
+}: {
+  searchParams: JsonObject;
+}) {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/cms/media?${serializeJsonToQuery(searchParams)}`
+  );
+  const { badge, character, background } = response.data
+    .result as MediaDataProps;
 
   return (
-    <div>
-      <div className="text-zinc-950 font-semibold text-size-17px mb-4">
-        Media Asset List
+    <MediaDataProvider>
+      <div>
+        <div className="text-zinc-950 font-semibold text-size-17px mb-4">
+          Media Asset List
+        </div>
+        <div className="flex flex-col space-y-8">
+          <MediaAssetGroup group="badge" data={badge} />
+          <MediaAssetGroup group="character" data={character} />
+          <MediaAssetGroup group="background" data={background} />
+        </div>
       </div>
-      <div className="flex flex-col space-y-8">
-        <MediaAssetListContainer title="Badge">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
-        </MediaAssetListContainer>
-        <MediaAssetListContainer title="Character">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
-        </MediaAssetListContainer>
-        <MediaAssetListContainer title="Background">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
-        </MediaAssetListContainer>
-      </div>
-    </div>
+    </MediaDataProvider>
   );
 }
