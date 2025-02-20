@@ -1,0 +1,167 @@
+'use client';
+
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { DropzoneView } from '../_components/upload-files-dialog';
+import { FileWithExtraInfo } from '../_types/type';
+import { useDropzone } from 'react-dropzone';
+import { useState } from 'react';
+import { isEmpty } from '../_utils/utils';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { cn } from '@/lib/utils';
+import {
+  processExcelFile,
+  getValidFiles,
+  clearFiles,
+} from './process-excel-file';
+
+export default function UploadButton({
+  title,
+  buttonText,
+}: {
+  title: string;
+  buttonText: string;
+}) {
+  return (
+    <UploadExcelFileModal title={title}>
+      <Button variant="action">{buttonText}</Button>
+    </UploadExcelFileModal>
+  );
+}
+
+function UploadExcelFileModal({
+  children,
+  title,
+}: {
+  children: React.ReactNode;
+  title: string;
+}) {
+  const [files, setFiles] = useState<FileWithExtraInfo[]>([]);
+  const [isConverting, setIsConverting] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const uploadFileNameValidator = (file: File) => {
+    if (!file.name.startsWith('target_')) {
+      return {
+        code: 'invalid-file-name',
+        message: 'Invalid file name',
+      };
+    }
+
+    return null;
+  };
+
+  const {
+    getRootProps,
+    getInputProps,
+    open,
+    isDragActive,
+    acceptedFiles,
+    fileRejections,
+  } = useDropzone({
+    accept: {
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
+      'application/vnd.ms-excel': [],
+    },
+    onDrop: async (acceptedFiles) => {
+      const processed = await Promise.all(
+        acceptedFiles.map((file) => processExcelFile(file, setIsConverting))
+      );
+      setFiles(processed);
+    },
+    noClick: true,
+    noKeyboard: false,
+    validator: uploadFileNameValidator,
+  });
+
+  const handleSubmit = async () => {
+    // hasError가 true인 파일은 업로드하지 않음
+    const validFiles = files.filter((file) => !file.hasError);
+    const formData = new FormData();
+    validFiles.forEach((file) => {
+      formData.append('files', file);
+    });
+
+    try {
+      const response = await fetch('/api/cms/target', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload files');
+      }
+
+      const result = await response.json();
+      console.log('업로드 성공', result);
+    } catch (error) {
+      console.error('업로드 실패', error);
+    }
+  };
+
+  const dialogOpenHandler = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (!open) {
+      clearFiles(setFiles);
+    }
+  };
+
+  console.log('🥕 acceptedFiles', acceptedFiles);
+  console.log('🥕 fileRejections', fileRejections); //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
+
+  return (
+    <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        {isEmpty(files) && (
+          <DropzoneView
+            getRootProps={getRootProps}
+            getInputProps={getInputProps}
+            isDragActive={isDragActive}
+            open={open}
+          />
+        )}
+        {!isEmpty(files) && (
+          <div>
+            {isConverting && <div>Converting...</div>}
+            {!isConverting &&
+              files.map((file, index) => (
+                <div key={index} className={cn('flex gap-5')}>
+                  <span>{file.name}</span>
+                  {file.hasError && (
+                    <span className="text-red-500">{file.errorMessage}</span>
+                  )}
+                </div>
+              ))}
+          </div>
+        )}
+        {!isEmpty(files) && (
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary" onClick={() => clearFiles(setFiles)}>
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              variant="action"
+              onClick={handleSubmit}
+              disabled={isConverting || isEmpty(getValidFiles(files))}
+            >
+              Upload
+            </Button>
+          </DialogFooter>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
