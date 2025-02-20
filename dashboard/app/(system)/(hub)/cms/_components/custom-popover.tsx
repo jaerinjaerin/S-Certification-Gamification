@@ -87,7 +87,9 @@ export function DownloadFileListPopoverButton({
         content: (
           <div className="grid gap-6">
             <div className="space-y-2">
-              <h3 className="text-base">{downloadConfig[type].title}</h3>
+              <h3 className="text-base font-medium">
+                {downloadConfig[type].title}
+              </h3>
               <span className="text-[14px] text-sidebar-icon">
                 {downloadConfig[type].description}
               </span>
@@ -98,7 +100,7 @@ export function DownloadFileListPopoverButton({
                   className="flex justify-between items-center"
                   key={item.label}
                 >
-                  <span>{item.name}</span>
+                  <span className="font-medium">{item.name}</span>
                   <Button
                     className="size-[32px] shadow-none"
                     size="icon"
