@@ -1,12 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon, Pen, RotateCw } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { formSchema, FormValues } from '../formSchema';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -15,16 +9,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CalendarIcon, Pen, RotateCw } from 'lucide-react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { formSchema, FormValues } from '../formSchema';
 
+import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar';
 import {
   Select,
   SelectContent,
@@ -40,6 +38,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 
 type CertificationFormState = {
@@ -54,6 +54,32 @@ export default function CertificationClientComponent() {
       type: 'create',
     });
 
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`
+        );
+
+        if (!response.ok) {
+          console.error('Failed to fetch campaigns');
+          return;
+        }
+
+        const data = await response.json();
+        setCampaigns(data.campaigns);
+        console.log('Campaigns:', data);
+      } catch (error) {
+        console.error('Error get campaigns: ', error);
+        alert('Failed to fetch campaigns');
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
+
   if (
     isCreateCertification.isFormOpen &&
     isCreateCertification.type === 'create'
@@ -62,9 +88,11 @@ export default function CertificationClientComponent() {
       <CertificationForm
         isCreateCertification={isCreateCertification}
         setIsCreateCertification={setIsCreateCertification}
+        campaigns={campaigns}
       />
     );
   }
+
   return (
     <div>
       <div className="flex justify-between">
@@ -86,12 +114,14 @@ export default function CertificationClientComponent() {
         </div>
       </div>
       <div className="flex flex-wrap gap-4">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <CertificationListItem
-            key={index}
-            setIsCreateCertification={setIsCreateCertification}
-          />
-        ))}
+        {campaigns &&
+          campaigns.map((campaign) => (
+            <CertificationListItem
+              key={campaign.id}
+              campaign={campaign}
+              setIsCreateCertification={setIsCreateCertification}
+            />
+          ))}
       </div>
     </div>
   );
@@ -99,14 +129,18 @@ export default function CertificationClientComponent() {
 
 function CertificationListItem({
   setIsCreateCertification,
+  campaign,
 }: {
   setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
+  campaign: Campaign;
 }) {
   return (
     <div className="flex items-center border border-zinc-200 rounded-md">
       <div>
-        <h3>Galaxy S25 Expert: certification.name</h3>
-        <time>2025.02.08</time>
+        <h3>{campaign.name}</h3>
+        <time>
+          {campaign.startedAt} ~ {campaign.endedAt}
+        </time>
       </div>
       <Button
         variant="ghost"
@@ -126,9 +160,11 @@ function CertificationListItem({
 function CertificationForm({
   isCreateCertification,
   setIsCreateCertification,
+  campaigns,
 }: {
   isCreateCertification: CertificationFormState;
   setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
+  campaigns: Campaign[];
 }) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -147,10 +183,94 @@ function CertificationForm({
       secondBadgeName: '',
       ffSecondBadgeStage: undefined,
       fsmSecondBadgeStage: undefined,
+      targetSourceCampaignId: undefined,
+      imageSourceCampaignId: undefined,
     },
   });
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log('Form Data:', data);
+
+    console.warn('loading start');
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.certificationName,
+          slug: data.slug,
+          // description: 'description',
+          startedAt: data.startDate,
+          endedAt: data.endDate,
+          totalStages: Number(data.numberOfStages),
+          firstBadgeName: data.firstBadgeName,
+          secondBadgeName: data.secondBadgeName,
+          ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
+          ffSecondBadgeStageIndex: Number(data.ffSecondBadgeStage),
+          fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
+          fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
+        }),
+      }
+    );
+
+    const campaignData = await response.json();
+    if (!response.ok) {
+      console.error('Failed to create campaign', campaignData);
+      return;
+    }
+
+    console.warn('complete campaign');
+
+    const campaign = campaignData.campaign;
+    const campaignSettings = campaignData.campaignSettings;
+
+    console.warn('campaign:', campaign);
+    console.warn('campaignSettings:', campaignSettings);
+
+    if (data.targetSourceCampaignId) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/target/copy`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sourceCampaignId: data.targetSourceCampaignId,
+            destinationCampaignId: campaign.id,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        console.warn('complete copy target');
+      }
+    }
+
+    if (data.imageSourceCampaignId) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/image/copy`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sourceCampaignId: data.targetSourceCampaignId,
+            destinationCampaignId: campaign.id,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        console.warn('complete copy images');
+      }
+    }
+
+    console.warn('loading end');
+    alert('Certification created successfully');
   };
 
   console.log('🥕 errors', form.formState.errors);
@@ -293,7 +413,7 @@ function CertificationForm({
           />
           <FormField
             control={form.control}
-            name="copyMedia"
+            name="imageSourceCampaignId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Media to Copy (Optional)</FormLabel>
@@ -308,8 +428,15 @@ function CertificationForm({
                     <SelectContent>
                       {/* TODO: 이전 인증제 목록 */}
                       <SelectItem value="none">None</SelectItem>
+                      {campaigns &&
+                        campaigns.map((campaign) => (
+                          <SelectItem value={campaign.id} key={campaign.id}>
+                            {campaign.name}
+                          </SelectItem>
+                        ))}
+                      {/* <SelectItem value="none">None</SelectItem>
                       <SelectItem value="est">Galaxy AI Expert</SelectItem>
-                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem>
+                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem> */}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -319,7 +446,7 @@ function CertificationForm({
           />
           <FormField
             control={form.control}
-            name="copyTarget"
+            name="targetSourceCampaignId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Target to Copy (Optional)</FormLabel>
@@ -334,8 +461,15 @@ function CertificationForm({
                     <SelectContent>
                       {/* TODO: 이전 인증제 목록 */}
                       <SelectItem value="none">None</SelectItem>
+                      {campaigns &&
+                        campaigns.map((campaign) => (
+                          <SelectItem value={campaign.id} key={campaign.id}>
+                            {campaign.name}
+                          </SelectItem>
+                        ))}
+                      {/* <SelectItem value="none">None</SelectItem>
                       <SelectItem value="est">Galaxy AI Expert</SelectItem>
-                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem>
+                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem> */}
                     </SelectContent>
                   </Select>
                 </FormControl>
