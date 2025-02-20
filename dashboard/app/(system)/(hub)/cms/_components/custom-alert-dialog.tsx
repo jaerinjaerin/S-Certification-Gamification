@@ -36,7 +36,7 @@ export function CustomAlertDialog({
   return (
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
-      <AlertDialogContent className="p-4 gap-[34px]">
+      <AlertDialogContent className="p-4 gap-[34px] sm:rounded-md border border-zinc-200">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-base font-medium text-left">
             {title ?? 'Alert'}
