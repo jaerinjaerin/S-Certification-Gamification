@@ -60,16 +60,20 @@ const processExcel = (filePath, outputPath) => {
     let rows = data.slice(headerIndex + 1);
 
     // 데이터 매핑
-    let jsonData = rows.map((row) => {
+    let jsonData = rows.map((row, rowIndex) => {
       let obj = {};
-      headers.forEach((colName, index) => {
-        if (colName)
+      headers.forEach((colName, colIndex) => {
+        if (colName) {
           obj[colName] =
-            row[index] ||
+            row[colIndex] ||
             mergedData[
-              xlsx.utils.encode_cell({ r: headerIndex + 1 + index, c: index })
+              xlsx.utils.encode_cell({
+                r: headerIndex + 1 + rowIndex,
+                c: colIndex,
+              })
             ] ||
             null;
+        }
       });
       return obj;
     });
@@ -79,6 +83,8 @@ const processExcel = (filePath, outputPath) => {
     jsonData.forEach((row) => {
       if (!row["No"]) return;
       let no = row["No"];
+
+      // 각 질문을 고유하게 분류
       if (!groupedData[no]) {
         groupedData[no] = {
           originQuestionIndex: Number(no),
@@ -92,16 +98,37 @@ const processExcel = (filePath, outputPath) => {
           timeLimitSeconds: row["TimeLimitSeconds"] || null,
           text: row["Question"] || null,
           questionType: row["QuestionType"] || null,
-          options: [],
+          options: [], // 각 문제별로 options을 따로 저장
         };
       }
 
-      // 옵션 추가
+      // 옵션 데이터 올바르게 매칭
       if (row["Answer"]) {
         groupedData[no].options.push({
           text: row["Answer"],
-          answerStatus: row["AnswerStatus"] || null,
+          answerStatus: row["AnswerStatus"] || "0",
         });
+      }
+    });
+
+    // 각 질문의 옵션 중복 제거
+    Object.values(groupedData).forEach((question) => {
+      let uniqueOptions = new Map();
+      question.options.forEach((opt) => {
+        if (!uniqueOptions.has(opt.text)) {
+          uniqueOptions.set(opt.text, opt);
+        }
+      });
+      question.options = Array.from(uniqueOptions.values());
+
+      // ❗️ 정답(answerStatus: "1")이 하나도 없는 문제 체크
+      let hasCorrectAnswer = question.options.some(
+        (opt) => opt.answerStatus === "1"
+      );
+      if (!hasCorrectAnswer) {
+        console.log(
+          `⚠️ Warning: Question ${question.originQuestionIndex} has no correct answer!`
+        );
       }
     });
 
@@ -112,10 +139,22 @@ const processExcel = (filePath, outputPath) => {
       "utf-8"
     );
     console.log(
-      `Processed: ${path.basename(filePath)} -> ${path.basename(outputPath)}`
+      `✅ Processed: ${path.basename(filePath)} -> ${path.basename(outputPath)}`
     );
+
+    // ✅ 스테이지별 문제 개수 출력
+    let stageCount = {};
+    Object.values(groupedData).forEach((question) => {
+      let stage = question.stage || "Unknown";
+      stageCount[stage] = (stageCount[stage] || 0) + 1;
+    });
+
+    console.log("📊 Stage-wise question count:");
+    Object.keys(stageCount).forEach((stage) => {
+      console.log(`  - Stage ${stage}: ${stageCount[stage]} questions`);
+    });
   } catch (error) {
-    console.error(`Error processing ${filePath}:`, error);
+    console.error(`❌ Error processing ${filePath}:`, error);
   }
 };
 
@@ -135,4 +174,4 @@ fs.readdirSync(inputDir).forEach((fileName) => {
   }
 });
 
-console.log("모든 파일이 변환되었습니다.");
+console.log("🎉 모든 파일이 변환되었습니다.");

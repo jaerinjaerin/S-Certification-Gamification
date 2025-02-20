@@ -121,7 +121,8 @@ model Language {
 
 model Campaign {
   id          String    @id @default(uuid())
-  name        String // slug로 사용
+  name        String
+  slug        String    @unique @default("s25")
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -131,6 +132,21 @@ model Campaign {
   updaterId   String?
   domainId    String?
   quizSets    QuizSet[]
+  settingsId  String?   @unique
+  settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
+}
+
+model CampaignSettings {
+  id                        String   @id @default(uuid())
+  campaignId                String
+  totalStages               Int?
+  firstBadgeName            String?
+  secondBadgeName           String?
+  ffFirstBadgeStageIndex    Int?
+  ffSecondBadgeStageIndex   Int?
+  fsmFirstBadgeStageIndex   Int?
+  fsmSecondBadgeStageIndex  Int?
+  campaign                  Campaign?
 }
 
 model Hq {
@@ -667,20 +683,22 @@ model BadgeLog {
   updatedAt       DateTime @updatedAt
 }
 
-model BadgeStage {
-  id              String   @id @default(uuid())
-  campaignId      String
-  badgeType       BadgeType
-  quizStageIndex  Int
+// model BadgeStage {
+//   id              String   @id @default(uuid())
+//   campaignId      String
+//   jobCode         String
+//   badgeType       BadgeType
+//   quizStageIndex  Int
+//   name            String
   
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+// }
 
-enum BadgeType {
-  EXPERT
-  ADVANCED
-}
+// enum BadgeType {
+//   EXPERT
+//   ADVANCED
+// }
 
 enum BadgeApiType {
   REGISTER
