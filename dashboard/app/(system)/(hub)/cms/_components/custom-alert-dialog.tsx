@@ -3,6 +3,7 @@
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -18,18 +19,21 @@ interface AlertDialogProps {
   trigger?: React.ReactNode;
   title?: string;
   description: string;
-  buttons: {
-    label: string;
-    variant: ButtonProps['variant'];
-    onClick?: () => void;
-  }[];
+  buttons: AlertButtonProps[];
+}
+
+interface AlertButtonProps {
+  label: string;
+  variant: ButtonProps['variant'];
+  onClick?: () => void;
+  type: 'cancel' | 'delete' | 'save' | 'ok';
 }
 
 export function CustomAlertDialog({
   onOpenChange,
   open,
   trigger,
-  title,
+  title = 'Alert',
   description,
   buttons,
 }: AlertDialogProps) {
@@ -39,7 +43,7 @@ export function CustomAlertDialog({
       <AlertDialogContent className="p-4 gap-[34px] sm:rounded-md border border-zinc-200">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-base font-medium text-left">
-            {title ?? 'Alert'}
+            {title}
           </AlertDialogTitle>
           <AlertDialogDescription className="text-[14px] text-zinc-500 text-left">
             {description}
@@ -47,8 +51,16 @@ export function CustomAlertDialog({
         </AlertDialogHeader>
         <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">
           {buttons.map((button, index) => {
-            const { variant, onClick, label } = button;
-            return (
+            const { variant, onClick, label, type } = button;
+            return type === 'cancel' ? (
+              <AlertDialogCancel
+                className={buttonVariants({ variant: variant })}
+                onClick={onClick}
+                key={index}
+              >
+                {label}
+              </AlertDialogCancel>
+            ) : (
               <AlertDialogAction
                 className={buttonVariants({ variant: variant })}
                 onClick={onClick}
