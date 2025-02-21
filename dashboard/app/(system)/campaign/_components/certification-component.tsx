@@ -258,7 +258,7 @@ function CertificationForm({
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            sourceCampaignId: data.targetSourceCampaignId,
+            sourceCampaignId: data.imageSourceCampaignId,
             destinationCampaignId: campaign.id,
           }),
         }

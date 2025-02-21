@@ -1,3 +1,4 @@
+import { ERROR_CODES } from '@/app/constants/error-codes';
 import { prisma } from '@/model/prisma';
 import {
   CopyObjectCommand,
@@ -28,21 +29,31 @@ export async function POST(request: NextRequest) {
     if (!soruceCampaign) {
       console.log('원본 캠페인을 찾을 수 없습니다.');
       return NextResponse.json(
-        { success: false, message: '원본 캠페인을 찾을 수 없습니다.' },
+        {
+          success: false,
+          error: {
+            message: '원본 캠페인을 찾을 수 없습니다.',
+          },
+        },
         { status: 400 }
       );
     }
 
     const destinationCampaign = await prisma.campaign.findFirst({
       where: {
-        id: validatedData.sourceCampaignId,
+        id: validatedData.destinationCampaignId,
       },
     });
 
     if (!destinationCampaign) {
       console.log('대상 캠페인을 찾을 수 없습니다.');
       return NextResponse.json(
-        { success: false, message: '대상 캠페인을 찾을 수 없습니다.' },
+        {
+          success: false,
+          error: {
+            message: '대상 캠페인을 찾을 수 없습니다.',
+          },
+        },
         { status: 400 }
       );
     }
@@ -63,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     const bucketName = process.env.ASSETS_S3_BUCKET_NAME;
     const sourcePrefix = `certification/${soruceCampaign.slug}/`; // 원본 디렉토리
-    const destinationPrefix = `certification//${destinationCampaign.slug}/`; // 이동할 디렉토리
+    const destinationPrefix = `certification/${destinationCampaign.slug}/`; // 이동할 디렉토리
 
     // 1. 원본 디렉토리의 파일 목록 가져오기
     const listCommand = new ListObjectsV2Command({
@@ -74,12 +85,16 @@ export async function POST(request: NextRequest) {
     console.log('listCommand: ', listCommand);
 
     const { Contents } = await s3Client.send(listCommand);
-    console.log('Contents: ', Contents);
 
     if (!Contents || Contents.length === 0) {
       console.log('이동할 파일이 없습니다.');
       return NextResponse.json(
-        { success: false, message: '이동할 파일이 없습니다.' },
+        {
+          success: false,
+          error: {
+            message: '이동할 파일이 없습니다.',
+          },
+        },
         { status: 400 }
       );
     }
@@ -90,20 +105,27 @@ export async function POST(request: NextRequest) {
       if (!sourceKey) {
         continue;
       }
-      const destinationKey = sourceKey.replace(sourcePrefix, destinationPrefix); // 대상 디렉토리로 변경
+      try {
+        const destinationKey = sourceKey.replace(
+          sourcePrefix,
+          destinationPrefix
+        ); // 대상 디렉토리로 변경
 
-      console.log(`Moving ${sourceKey} -> ${destinationKey}`);
+        console.log(`Moving ${sourceKey} -> ${destinationKey}`);
 
-      // 2. 파일 복사
-      await s3Client.send(
-        new CopyObjectCommand({
-          Bucket: bucketName,
-          CopySource: `${bucketName}/${sourceKey}`,
-          Key: destinationKey,
-        })
-      );
+        // 2. 파일 복사
+        await s3Client.send(
+          new CopyObjectCommand({
+            Bucket: bucketName,
+            CopySource: `${bucketName}/${sourceKey}`,
+            Key: destinationKey,
+          })
+        );
 
-      destinationKeys.push(destinationKey);
+        destinationKeys.push(destinationKey);
+      } catch (error: unknown) {
+        console.error('Error copy images: ', error);
+      }
     }
 
     console.log('파일 복사 완료');
@@ -120,10 +142,25 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const uniqueImages = Array.from(
-      new Map(images.map((image) => [image.title, image])).values()
+    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
+    const uniqueImagesCharacter = Array.from(
+      new Map(
+        images
+          .filter((image) => image.alt === 'character')
+          .map((image) => [image.title, image])
+      ).values()
     );
 
+    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
+    const uniqueImagesBackground = Array.from(
+      new Map(
+        images
+          .filter((image) => image.alt === 'background')
+          .map((image) => [image.title, image])
+      ).values()
+    );
+
+    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
     const uniqueQuizBadges = Array.from(
       new Map(quizBadges.map((badge) => [badge.name, badge])).values()
     );
@@ -131,21 +168,44 @@ export async function POST(request: NextRequest) {
     for (const destinationKey of destinationKeys) {
       const fileName = destinationKey.split('/').pop();
 
-      // 이미지 저장
-      const sourceImage = uniqueImages.find(
+      // 캐릭터 이미지 저장
+      const sourceCharacterImage = uniqueImagesCharacter.find(
         (image) => image.imagePath.split('/').pop() === fileName
       );
-      if (sourceImage) {
+
+      console.log('sourceImage: ', sourceCharacterImage, `/${destinationKey}`);
+      if (sourceCharacterImage) {
         await prisma.image.create({
           data: {
             campaignId: destinationCampaign.id,
-            imagePath: destinationKey,
-            alt: sourceImage.alt,
-            title: sourceImage.title,
-            caption: sourceImage.caption,
-            format: sourceImage.format,
-            thumbnailPath: sourceImage.thumbnailPath,
-            domainId: sourceImage.domainId,
+            imagePath: `/${destinationKey}`,
+            alt: sourceCharacterImage.alt,
+            title: sourceCharacterImage.title,
+            caption: sourceCharacterImage.caption,
+            format: sourceCharacterImage.format,
+            thumbnailPath: sourceCharacterImage.thumbnailPath,
+            domainId: sourceCharacterImage.domainId,
+          },
+        });
+      }
+
+      // 백그라운드 이미지 저장
+      const sourceBackgroundImage = uniqueImagesBackground.find(
+        (image) => image.imagePath.split('/').pop() === fileName
+      );
+
+      console.log('sourceImage: ', sourceBackgroundImage, `/${destinationKey}`);
+      if (sourceBackgroundImage) {
+        await prisma.image.create({
+          data: {
+            campaignId: destinationCampaign.id,
+            imagePath: `/${destinationKey}`,
+            alt: sourceBackgroundImage.alt,
+            title: sourceBackgroundImage.title,
+            caption: sourceBackgroundImage.caption,
+            format: sourceBackgroundImage.format,
+            thumbnailPath: sourceBackgroundImage.thumbnailPath,
+            domainId: sourceBackgroundImage.domainId,
           },
         });
       }
@@ -158,7 +218,7 @@ export async function POST(request: NextRequest) {
         await prisma.quizBadge.create({
           data: {
             campaignId: destinationCampaign.id,
-            imagePath: destinationKey,
+            imagePath: `/${destinationKey}`,
             name: sourceQuizBadge.name,
             description: sourceQuizBadge.description,
             domainId: sourceQuizBadge.domainId,
@@ -169,10 +229,19 @@ export async function POST(request: NextRequest) {
 
     console.log('데이타 생성 완료');
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error copy images: ', error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: '이미지 복사 중 오류가 발생했습니다.',
+          code: ERROR_CODES.UNKNOWN,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

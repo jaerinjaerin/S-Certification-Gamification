@@ -117,6 +117,7 @@ model Language {
   id   String @id @default(uuid())
   code String @unique
   name String
+  quizSets QuizSet[]
 }
 
 model Campaign {
@@ -188,6 +189,8 @@ model Domain {
   permissionId String?
   Permission   Permission? @relation(fields: [permissionId], references: [id])
   subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
+
+  quizSets      QuizSet[]
 }
 
 model DomainGoal {
@@ -208,7 +211,9 @@ model QuizSet {
   id           String      @id @default(uuid())
   campaignId   String
   domainId     String?
+  domain       Domain?     @relation(fields: [domainId], references: [id])
   languageId   String?
+  language     Language?    @relation(fields: [languageId], references: [id])
   subsidiaryId String?
   jobCodes     String[]
   createrId    String
@@ -217,6 +222,18 @@ model QuizSet {
   updatedAt    DateTime    @updatedAt
   campaign     Campaign    @relation(fields: [campaignId], references: [id])
   quizStages   QuizStage[]
+}
+
+model QuizSetFile {
+  id            String   @id @default(uuid())
+  campaignId    String
+  domainId      String
+  languageId    String
+  quizSetId     String
+  jobCodes      String[]
+  path          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model QuizBadge {
@@ -266,6 +283,7 @@ model QuizStage {
   languageId      String?
   badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id])
   quizSet         QuizSet    @relation(fields: [quizSetId], references: [id])
+  questions       Question[]
 }
 
 model Question {
@@ -291,6 +309,8 @@ model Question {
   backgroundImage    Image?           @relation("BackgroundImage", fields: [backgroundImageId], references: [id])
   characterImage     Image?           @relation("CharacterImage", fields: [characterImageId], references: [id])
   options            QuestionOption[]
+  quizStageId        String?
+  quizStage          QuizStage?       @relation(fields: [quizStageId], references: [id])
 }
 
 model QuestionOption {
