@@ -22,3 +22,5 @@ export type DropzoneProps = {
   open: () => void;
   isDragActive?: boolean;
 };
+
+export type UploadExcelFileVariant = 'quiz' | 'ui' | 'target';

@@ -1,8 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from './data-table';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
-
-import UploadButton from './upload-button';
+import UploadButton from '../_components/upload-button';
 
 // 테이블데이터 예시
 export type Payment = {
@@ -93,7 +92,11 @@ export default async function TargetPage() {
         <span>Set Target</span>
         <div>
           <DownloadFileListPopoverButton type="data" />
-          <UploadButton title="Upload Target" buttonText="Upload" />
+          <UploadButton
+            title="Upload Target"
+            buttonText="Upload"
+            variant="target"
+          />
         </div>
       </div>
       <DataTable columns={columns} data={data} />

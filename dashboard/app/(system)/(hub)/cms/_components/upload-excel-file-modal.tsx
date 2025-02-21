@@ -1,6 +1,3 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -9,54 +6,35 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { DropzoneView } from '../_components/upload-files-dialog';
-import { FileWithExtraInfo } from '../_types/type';
+import { DropzoneView } from './upload-files-dialog';
 import { useDropzone } from 'react-dropzone';
 import { useState } from 'react';
-import { isEmpty } from '../_utils/utils';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { cn } from '@/lib/utils';
 import {
   processExcelFile,
   getValidFiles,
   clearFiles,
-} from './process-excel-file';
+} from '../_utils/process-excel-file';
+import { isEmpty } from '../_utils/utils';
+import { FileWithExtraInfo, UploadExcelFileVariant } from '../_types/type';
+import { Button } from '@/components/ui/button';
+import { uploadFileNameValidator } from '../_utils/upload-file-name-validator';
 
-export default function UploadButton({
-  title,
-  buttonText,
-}: {
-  title: string;
-  buttonText: string;
-}) {
-  return (
-    <UploadExcelFileModal title={title}>
-      <Button variant="action">{buttonText}</Button>
-    </UploadExcelFileModal>
-  );
-}
-
-function UploadExcelFileModal({
-  children,
-  title,
-}: {
+type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
-}) {
+  variant: UploadExcelFileVariant;
+};
+
+export default function UploadExcelFileModal({
+  children,
+  title,
+  variant,
+}: UploadExcelFileModalProps) {
   const [files, setFiles] = useState<FileWithExtraInfo[]>([]);
   const [isConverting, setIsConverting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const uploadFileNameValidator = (file: File) => {
-    if (!file.name.startsWith('target_')) {
-      return {
-        code: 'invalid-file-name',
-        message: 'Invalid file name',
-      };
-    }
-
-    return null;
-  };
 
   const {
     getRootProps,
@@ -70,15 +48,17 @@ function UploadExcelFileModal({
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
       'application/vnd.ms-excel': [],
     },
+    validator: (file) => uploadFileNameValidator(file, variant),
     onDrop: async (acceptedFiles) => {
       const processed = await Promise.all(
-        acceptedFiles.map((file) => processExcelFile(file, setIsConverting))
+        acceptedFiles.map((file) =>
+          processExcelFile(file, setIsConverting, variant)
+        )
       );
       setFiles(processed);
     },
     noClick: true,
     noKeyboard: false,
-    validator: uploadFileNameValidator,
   });
 
   const handleSubmit = async () => {
@@ -113,8 +93,13 @@ function UploadExcelFileModal({
     }
   };
 
-  console.log('🥕 acceptedFiles', acceptedFiles);
-  console.log('🥕 fileRejections', fileRejections); //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
+  console.log(
+    '🥕 acceptedFiles',
+    acceptedFiles,
+    'acceptedFiles',
+    fileRejections
+  );
+  //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>

@@ -1,12 +1,17 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FileWithExtraInfo } from '../_types/type';
-import { convertExcelToJson } from './convert-excel';
+import { FileWithExtraInfo, UploadExcelFileVariant } from '../_types/type';
+import { convertUi, convertQuizSet, convertTarget } from './convert-excel-json';
 
-// ! 파일객체와 관련된 함수
+const convertExcelToJsonByVariant = {
+  quiz: convertQuizSet,
+  ui: convertUi,
+  target: convertTarget,
+};
 
 export const processExcelFile = async (
   file: File,
-  setIsConverting: Dispatch<SetStateAction<boolean>>
+  setIsConverting: Dispatch<SetStateAction<boolean>>,
+  variant: UploadExcelFileVariant
 ): Promise<FileWithExtraInfo> => {
   const originalFile = {
     ...file,
@@ -19,7 +24,7 @@ export const processExcelFile = async (
   setIsConverting(true);
 
   try {
-    const result = await convertExcelToJson(file);
+    const result = await convertExcelToJsonByVariant[variant](file);
 
     if (!result.success) {
       return {
@@ -52,7 +57,6 @@ export const getErrorFiles = (files: FileWithExtraInfo[]) => {
 export const getValidFiles = (files: FileWithExtraInfo[]) => {
   return files.filter((file) => !file.hasError);
 };
-
 export const clearFiles = (
   setFiles: Dispatch<SetStateAction<FileWithExtraInfo[]>>
 ) => {

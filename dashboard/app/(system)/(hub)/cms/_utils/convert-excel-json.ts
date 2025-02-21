@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
  * @param file 엑셀 파일 (File 객체)
  * @returns 변환된 JSON 데이터 또는 오류 메시지 포함 객체
  */
-export const convertExcelToJson = async (
+export const convertUi = async (
   file: File
 ): Promise<
   | { success: true; data: Record<string, string> }
@@ -41,6 +41,43 @@ export const convertExcelToJson = async (
     );
 
     return { success: true, data: transformedData };
+  } catch (error) {
+    return {
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : '파일 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
+    };
+  }
+};
+
+export const convertQuizSet = async () => {
+  try {
+    // const data = await file.arrayBuffer();
+    // const workbook = XLSX.read(data);
+    // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    // const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+    return { success: true, data: { 'convertQuizSet Success': 'success' } };
+  } catch (error) {
+    return {
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : '파일 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
+    };
+  }
+};
+export const convertTarget = async () => {
+  try {
+    // const data = await file.arrayBuffer();
+    // const workbook = XLSX.read(data);
+    // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    // const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+    return { success: true, data: { 'convertQuizSet Success': 'success' } };
   } catch (error) {
     return {
       success: false,
