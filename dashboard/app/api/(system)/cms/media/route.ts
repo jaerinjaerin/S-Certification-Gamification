@@ -1,0 +1,304 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { s3Client } from '@/lib/s3-client';
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = request.nextUrl;
+    const campaignId = searchParams.get('campaign');
+
+    await prisma.$connect();
+
+    const images = await prisma.image.findMany({
+      //   where: { campaignId },
+      select: { id: true, imagePath: true, alt: true, updatedAt: true },
+      orderBy: { createdAt: 'asc' },
+    });
+    const badges = await prisma.quizBadge.findMany({
+      //   where: { campaignId },
+      select: { id: true, imagePath: true, name: true, updatedAt: true },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    const result = {
+      badge: badges.map((image, index) => ({
+        index,
+        id: image.id,
+        type: image.name,
+        url: image.imagePath,
+        date: image.updatedAt,
+      })),
+      character: images
+        .filter((image) => image.alt === 'character')
+        .map((image, index) => ({
+          index,
+          id: image.id,
+          type: image.alt,
+          url: image.imagePath,
+          date: image.updatedAt,
+        })),
+      background: images
+        .filter((image) => image.alt === 'background')
+        .map((image, index) => ({
+          index,
+          id: image.id,
+          type: image.alt,
+          url: image.imagePath,
+          date: image.updatedAt,
+        })),
+    };
+
+    return NextResponse.json({ result }, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
+  } finally {
+    prisma.$disconnect();
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    await prisma.$connect();
+
+    const formData = await request.formData();
+    const file = formData.get('file') as File;
+    const group = formData.get('group') as string;
+    const campaignId = formData.get('campaign') as string;
+
+    if (!file) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+    }
+
+    const campaign = await prisma.campaign.findUnique({
+      where: { id: campaignId },
+    });
+    //
+
+    const count =
+      group === 'badge'
+        ? await prisma.quizBadge.count({ where: { campaignId } })
+        : await prisma.image.count({ where: { campaignId, alt: group } });
+    const format = file.type.split('/')[1];
+
+    let imagePath = `images/${group}/${count + 1}.${format}`;
+    const folderName = campaign?.name;
+    if (folderName) {
+      imagePath = `certification/${folderName.toLowerCase()}/${imagePath}`;
+    }
+
+    // 파일 버퍼를 읽고 저장
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // 저장할 경로
+    const command = new PutObjectCommand({
+      Bucket: process.env.ASSETS_S3_BUCKET_NAME,
+      Key: imagePath,
+      Body: buffer,
+      ContentType: file.type,
+      CacheControl: 'no-store, no-cache, must-revalidate', // 캐시 제거
+    });
+
+    await s3Client.send(command);
+
+    let result = {};
+    let uploadedFile = null;
+    if (group === 'badge') {
+      // 데이터베이스에 업로드된 파일 정보 저장 (예제)
+      uploadedFile = await prisma.quizBadge.create({
+        data: {
+          name: group,
+          imagePath: `/${imagePath}`,
+          campaignId,
+        },
+      });
+      //
+      result = {
+        id: uploadedFile.id,
+        type: uploadedFile.name,
+        url: uploadedFile.imagePath,
+        date: uploadedFile.createdAt,
+      };
+    } else {
+      // 데이터베이스에 업로드된 파일 정보 저장 (예제)
+      uploadedFile = await prisma.image.create({
+        data: {
+          alt: group,
+          caption: group,
+          format: format,
+          imagePath: `/${imagePath}`,
+          campaignId,
+        },
+      });
+      //
+      result = {
+        id: uploadedFile.id,
+        type: uploadedFile.alt,
+        url: uploadedFile.imagePath,
+        date: uploadedFile.createdAt,
+      };
+    }
+
+    return NextResponse.json({ result }, { status: 200 });
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    return NextResponse.json({ message: 'Upload failed' }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    await prisma.$connect();
+
+    const formData = await request.formData();
+    const id = formData.get('id') as string;
+    const group = formData.get('group') as string;
+    const file = formData.get('file') as File;
+
+    // 기존 파일이 DB에 존재하는지 확인
+    let existingFile = null;
+    if (group === 'badge') {
+      existingFile = await prisma.quizBadge.findUnique({
+        where: { id },
+      });
+    } else {
+      existingFile = await prisma.image.findUnique({
+        where: { id },
+      });
+    }
+
+    if (!existingFile) {
+      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    }
+
+    // 파일 버퍼를 읽고 저장
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const Key = existingFile.imagePath.replace(/^\/+/, '');
+
+    // 저장할 경로
+    const command = new PutObjectCommand({
+      Bucket: process.env.ASSETS_S3_BUCKET_NAME,
+      Key,
+      Body: buffer,
+      ContentType: file.type,
+      CacheControl: 'no-store, no-cache, must-revalidate', // 캐시 제거
+    });
+
+    await s3Client.send(command);
+
+    let updatedFile = null;
+    let result = {};
+    //
+    if (group === 'badge') {
+      updatedFile = await prisma.quizBadge.update({
+        where: { id },
+        data: { updatedAt: new Date() },
+      });
+      //
+      result = {
+        id: updatedFile.id,
+        type: updatedFile.name,
+        url: updatedFile.imagePath,
+        date: updatedFile.updatedAt,
+      };
+    } else {
+      updatedFile = await prisma.image.update({
+        where: { id },
+        data: { updatedAt: new Date() },
+      });
+      //
+      result = {
+        id: updatedFile.id,
+        type: updatedFile.alt,
+        url: updatedFile.imagePath,
+        date: updatedFile.updatedAt,
+      };
+    }
+    return NextResponse.json({ result }, { status: 200 });
+  } catch (error) {
+    console.error('Error updating file:', error);
+    return NextResponse.json({ message: 'Update failed' }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+// export async function DELETE(request: NextRequest) {
+//   try {
+//     await prisma.$connect();
+
+//     const { id, group } = await request.json();
+
+//     if (!id || !category) {
+//       return NextResponse.json(
+//         { error: 'Missing required parameters' },
+//         { status: 400 }
+//       );
+//     }
+
+//     // 기존 파일 정보 확인
+//     let existingFile = null;
+//     if (group === 'badge') {
+//       existingFile = await prisma.quizBadge.findUnique({
+//         where: { id },
+//       });
+//     } else {
+//       existingFile = await prisma.image.findUnique({
+//         where: { id },
+//       });
+//     }
+
+//     if (!existingFile) {
+//       return NextResponse.json({ error: 'File not found' }, { status: 404 });
+//     }
+
+//     // 파일 경로
+//     const filePath = existingFile.imagePath
+//       ? path.join(process.cwd(), 'public', existingFile.imagePath)
+//       : null;
+
+//     // 파일 삭제
+//     if (filePath) {
+//       try {
+//         await unlink(filePath);
+//         console.log(`File deleted: ${filePath}`);
+//       } catch (error) {
+//         console.warn('Failed to delete file:', error);
+//       }
+//     }
+
+//     // DB 데이터 삭제
+//     if (group === 'badge') {
+//       await prisma.quizBadge.delete({
+//         where: { id },
+//       });
+//     } else {
+//       await prisma.image.delete({
+//         where: { id },
+//       });
+//     }
+
+//     console.log(`Deleted from database: ${id}`);
+
+//     return NextResponse.json(
+//       { message: 'File deleted successfully' },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     console.error('Error deleting file:', error);
+//     return NextResponse.json({ message: 'Delete failed' }, { status: 500 });
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }

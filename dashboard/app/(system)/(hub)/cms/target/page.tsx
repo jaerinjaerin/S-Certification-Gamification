@@ -1,8 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from './data-table';
-import { sleep } from '@/utils/utils';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
-import { Button } from '@/components/ui/button';
+import UploadButton from '../_components/upload-button';
 
 // 테이블데이터 예시
 export type Payment = {
@@ -38,8 +37,6 @@ const columns: ColumnDef<Payment>[] = [
 ];
 
 async function getData(): Promise<Payment[]> {
-  await sleep(3000);
-
   return [
     {
       id: '728ed52f',
@@ -84,7 +81,7 @@ async function getData(): Promise<Payment[]> {
   ];
 }
 
-export default async function SetQuizPage() {
+export default async function TargetPage() {
   const data = await getData();
   return (
     <div className="flex flex-col">
@@ -95,7 +92,11 @@ export default async function SetQuizPage() {
         <span>Set Target</span>
         <div>
           <DownloadFileListPopoverButton type="data" />
-          <Button variant="action">Upload</Button>
+          <UploadButton
+            title="Upload Target"
+            buttonText="Upload"
+            variant="target"
+          />
         </div>
       </div>
       <DataTable columns={columns} data={data} />
