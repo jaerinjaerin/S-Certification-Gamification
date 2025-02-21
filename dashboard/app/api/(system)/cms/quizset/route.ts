@@ -542,9 +542,16 @@ export async function POST(request: NextRequest) {
     const timestamp = new Date()
       .toISOString()
       .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식으로 변환
-    // const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${file.name}`;
-    const fileNameWithTimestamp = `${file.name.replace(/\.[^/.]+$/, '')}_${timestamp}${file.name.match(/\.[^/.]+$/)?.[0] || ''}`;
+      .slice(0, 12); // YYYYMMDDHHMM 형식
+
+    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    const baseFileName = file.name
+      .replace(/(_\d{12})+/, '')
+      .replace(/\.[^/.]+$/, '');
+    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+
+    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
 
     const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
 
@@ -628,6 +635,15 @@ export async function GET(request: Request) {
     );
   }
 
+  const activityBadges = await prisma.activityBadge.findMany({
+    where: {
+      campaignId: campaignId,
+    },
+    include: {
+      badgeImage: true,
+    },
+  });
+
   try {
     const campaign = await prisma.campaign.findFirst({
       where: {
@@ -704,7 +720,7 @@ export async function GET(request: Request) {
     console.log('groupedQuizSets: ', groupedQuizSets);
 
     return NextResponse.json(
-      { success: true, result: { groupedQuizSets } },
+      { success: true, result: { groupedQuizSets, activityBadges } },
       { status: 200 }
     );
   } catch (error) {

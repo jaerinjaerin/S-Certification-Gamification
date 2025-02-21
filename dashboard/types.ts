@@ -1,4 +1,5 @@
 import {
+  ActivityBadge,
   Image,
   Language,
   Question,
@@ -14,6 +15,10 @@ export interface QuizSetEx extends QuizSet {
   language: Language;
   subsidiary: Subsidiary | null;
   quizStages: QuizStageEx[];
+}
+
+export interface ActivityBadgeEx extends ActivityBadge {
+  badgeImage: QuizBadge | null;
 }
 
 export interface QuizSetWithFile {

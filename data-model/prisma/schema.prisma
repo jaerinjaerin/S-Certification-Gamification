@@ -674,7 +674,9 @@ model ActivityBadge {
   activityId      String
 
   campaignId      String
-  jobCodes        String[]
+  // jobCodes        String[]
+  jobCode         String
+  badgeType       BadgeType
   domainId        String
   languageId      String
 
@@ -685,6 +687,27 @@ model ActivityBadge {
   updatedAt       DateTime @updatedAt
 }
 
+model UploadedFile {
+  id            String   @id @default(uuid())
+  campaignId    String
+  domainId      String?
+  languageId    String?
+  originId      String?
+  jobCode       String?
+  uploadedBy    String
+  path          String
+  fileType      FileType
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum FileType {
+  QUIZSET
+  ACTIVITYID
+  TARGET
+  UI_LANGUAGE
+  NON_SPLUS_DOMAINS
+}
 model BadgeLog {
   id              String   @id @default(uuid())
   apiType         BadgeApiType
@@ -723,4 +746,9 @@ model BadgeLog {
 enum BadgeApiType {
   REGISTER
   PROGRESS
+}
+
+enum BadgeType {
+  FIRST
+  SECOND
 }
