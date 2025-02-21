@@ -15,25 +15,57 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
+import { useLanguageData } from '../_provider/language-data-provider';
+import { useEffect } from 'react';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+export const columns: ColumnDef<LanguageProps>[] = [
+  {
+    accessorKey: 'name',
+    header: 'Language',
+  },
+  {
+    accessorKey: 'code',
+    header: 'UI Code',
+  },
+  {
+    accessorKey: 'excelUrl',
+    header: 'File Name',
+    cell: ({ getValue }) => {
+      const fileName = (getValue() as string)?.split('/').pop();
+      //
+      if (!fileName) return null;
+      return (
+        <div className="space-x-10">
+          <span>{fileName}</span>
+          <Button variant="download" className="size-8">
+            <Download />
+          </Button>
+        </div>
+      );
+    },
+  },
+];
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable({ data }: { data: LanguageProps[] }) {
+  const { state, dispatch } = useLanguageData();
+
+  useEffect(() => {
+    if (data) {
+      dispatch({ type: 'SET_LANGUAGE_LIST', payload: data });
+    }
+  }, []);
+
   const table = useReactTable({
-    data,
+    data: state.languages || data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <div className="rounded-md border">
-      <Table>
+      <Table className="rounded-md">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -58,6 +90,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                className="h-16"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

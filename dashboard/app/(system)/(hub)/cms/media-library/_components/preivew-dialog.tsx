@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Dialog } from '@/components/ui/dialog';
-import { FileWithPreview } from '../../_types/type';
+import { FileWithExtraInfo } from '../../_types/type';
 import { DropzoneProps } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
@@ -22,7 +22,7 @@ type PreviewDialogProps = OptionalDropzoneProps & {
   children: React.ReactNode;
   modalOpen?: boolean;
   type: 'add' | 'edit';
-  files: FileWithPreview[];
+  files: FileWithExtraInfo[];
   loading: boolean;
   onSave: () => void;
   onClear: () => void;
@@ -95,7 +95,7 @@ export function PreviewDialog({
 }
 
 type AssetPreviewViewProps = {
-  files: FileWithPreview[];
+  files: FileWithExtraInfo[];
   open: () => void;
   extraContent?: React.ReactNode;
 } & Pick<DropzoneProps, 'getInputProps'>;

@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { useMediaData } from '../_provider/media-data-provider';
 import { LoaderWithBackground } from '@/components/loader';
 
-type Props = { group: MediaGroupName; data: MediaPros[] };
+type Props = { group: MediaGroupName; data: MediaProps[] };
 
 const MediaAssetGroup = ({ group, data }: Props) => {
   const { state, dispatch } = useMediaData();

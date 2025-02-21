@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { s3Client } from '@/lib/s3-client';
+import { uploadToS3 } from '@/lib/s3-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -100,20 +99,8 @@ export async function POST(request: NextRequest) {
       imagePath = `certification/${folderName.toLowerCase()}/${imagePath}`;
     }
 
-    // 파일 버퍼를 읽고 저장
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // 저장할 경로
-    const command = new PutObjectCommand({
-      Bucket: process.env.ASSETS_S3_BUCKET_NAME,
-      Key: imagePath,
-      Body: buffer,
-      ContentType: file.type,
-      CacheControl: 'no-store, no-cache, must-revalidate', // 캐시 제거
-    });
-
-    await s3Client.send(command);
+    // 파일 업로드드
+    await uploadToS3({ key: imagePath, file, isNoCache: true });
 
     let result = {};
     let uploadedFile = null;
@@ -197,22 +184,9 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
-    // 파일 버퍼를 읽고 저장
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
+    // 파일 업로드
     const Key = existingFile.imagePath.replace(/^\/+/, '');
-
-    // 저장할 경로
-    const command = new PutObjectCommand({
-      Bucket: process.env.ASSETS_S3_BUCKET_NAME,
-      Key,
-      Body: buffer,
-      ContentType: file.type,
-      CacheControl: 'no-store, no-cache, must-revalidate', // 캐시 제거
-    });
-
-    await s3Client.send(command);
+    await uploadToS3({ key: Key, file, isNoCache: true });
 
     let updatedFile = null;
     let result = {};
