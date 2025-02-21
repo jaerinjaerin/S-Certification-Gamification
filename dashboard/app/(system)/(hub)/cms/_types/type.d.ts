@@ -23,4 +23,9 @@ export type DropzoneProps = {
   isDragActive?: boolean;
 };
 
-export type UploadExcelFileVariant = 'quiz' | 'ui' | 'target';
+export type UploadExcelFileVariant =
+  | 'quiz'
+  | 'ui'
+  | 'target'
+  | 'activityId'
+  | 'non-s';
