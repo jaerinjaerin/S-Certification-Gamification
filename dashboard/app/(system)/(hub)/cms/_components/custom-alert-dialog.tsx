@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { ButtonProps, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/utils/utils';
 
 interface AlertDialogProps {
   onOpenChange?: () => void;
@@ -20,6 +21,7 @@ interface AlertDialogProps {
   title?: string;
   description: string;
   buttons: AlertButtonProps[];
+  className?: string;
 }
 
 interface AlertButtonProps {
@@ -36,16 +38,22 @@ export function CustomAlertDialog({
   title = 'Alert',
   description,
   buttons,
+  className,
 }: AlertDialogProps) {
   return (
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
-      <AlertDialogContent className="p-4 gap-[34px] sm:rounded-md border border-zinc-200">
+      <AlertDialogContent
+        className={cn(
+          'p-4 gap-[2.125rem] sm:rounded-md border border-zinc-200 max-w-[27.063rem]',
+          className
+        )}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle className="text-base font-medium text-left">
             {title}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-[14px] text-zinc-500 text-left">
+          <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>

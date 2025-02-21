@@ -12,15 +12,15 @@ function MediaAssetListContainer({
 }) {
   return (
     <ChartContainer>
-      <div className="flex justify-between mb-5">
+      <div className="flex justify-between mb-[1.063rem]">
         <div className="mb-4 font-bold text-size-14px text-zinc-950 capitalize">
           {group}
         </div>
         <UploadImageFileModal group={group}>
-          <Button className="bg-blue-600 hover:bg-blue-800 capitalize">{`Add ${group}`}</Button>
+          <Button className="bg-blue-600 hover:bg-blue-800 capitalize shadow-none">{`Add ${group}`}</Button>
         </UploadImageFileModal>
       </div>
-      <div className="flex gap-4 flex-wrap">{children}</div>
+      <div className="flex gap-x-3 gap-y-[1.063rem] flex-wrap">{children}</div>
     </ChartContainer>
   );
 }

@@ -3,7 +3,9 @@ type Props = {
 };
 
 const ChartContainer = ({ children }: Props) => {
-  return <div className="relative p-6 border rounded-xl">{children}</div>;
+  return (
+    <div className="relative p-6 border rounded-xl shadow-sm">{children}</div>
+  );
 };
 
 export default ChartContainer;

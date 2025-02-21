@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { isEmpty } from '../../_utils/utils';
 import { useMediaData } from '../_provider/media-data-provider';
+import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 
 export function UploadImageFileModal({
   children,
@@ -30,6 +31,7 @@ export function UploadImageFileModal({
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   // 기존 이미지가 있을 경우 files 상태에 추가
   useEffect(() => {
@@ -59,12 +61,19 @@ export function UploadImageFileModal({
     );
   }, []);
 
-  const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
-    accept: { 'image/jpeg': [], 'image/png': [] },
-    onDrop,
-    multiple: false,
-    noClick: true,
-  });
+  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
+    useDropzone({
+      accept: { 'image/jpeg': [], 'image/png': [] },
+      onDrop,
+      multiple: false,
+      noClick: true,
+    });
+
+  useEffect(() => {
+    if (fileRejections.length > 0) {
+      setIsOpen(true);
+    }
+  }, [fileRejections]);
 
   useEffect(() => {
     return () =>
@@ -194,6 +203,20 @@ export function UploadImageFileModal({
           {children}
         </PreviewDialog>
       )}
+
+      <CustomAlertDialog
+        open={isOpen}
+        className="max-w-[20rem]"
+        description="The uploaded file does not match the required format."
+        buttons={[
+          {
+            label: 'OK',
+            type: 'ok',
+            variant: 'secondary',
+            onClick: () => setIsOpen(false),
+          },
+        ]}
+      />
     </>
   );
 }
