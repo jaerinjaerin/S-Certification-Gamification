@@ -1,76 +1,31 @@
-'use client';
-import { Button } from '@/components/ui/button';
+import { serializeJsonToQuery } from '@/lib/search-params';
+import axios from 'axios';
+import MediaAssetGroup from './_components/media-asset-group';
+import { MediaDataProvider } from './_provider/media-data-provider';
 
-import {
-  MediaAssetListContainer,
-  MediaAssetItem,
-} from './_components/media-asset-list';
-import { UploadImageFileModal } from './_components/upload-image-file-modal';
-
-export default function MediaLibraryPage() {
-  // TODO: 미디어라이브러리 이미지 가져오기
+export default async function MediaLibraryPage({
+  searchParams,
+}: {
+  searchParams: JsonObject;
+}) {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/cms/media?${serializeJsonToQuery(searchParams)}`
+  );
+  const { badge, character, background } = response.data
+    .result as MediaDataProps;
 
   return (
-    <div className="flex flex-col">
-      <span>Media Asset List</span>
-      <div>Badge</div>
-      <MediaAssetListContainer>
-        <h4>Badge</h4>
-        <div className="flex">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
+    <MediaDataProvider>
+      <div>
+        <div className="text-zinc-950 font-semibold text-size-17px mb-4">
+          Media Asset List
         </div>
-        <div>Character</div>
-        <UploadImageFileModal type="add">
-          <Button variant="action" className="absolute top-0 right-0">
-            Add Badge
-          </Button>
-        </UploadImageFileModal>
-      </MediaAssetListContainer>
-      <div>Character</div>
-      <MediaAssetListContainer>
-        <h4>Character</h4>
-        <div className="flex">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
+        <div className="flex flex-col space-y-8">
+          <MediaAssetGroup group="badge" data={badge} />
+          <MediaAssetGroup group="character" data={character} />
+          <MediaAssetGroup group="background" data={background} />
         </div>
-        <UploadImageFileModal type="add">
-          <Button variant="action" className="absolute top-0 right-0">
-            Add Character
-          </Button>
-        </UploadImageFileModal>
-      </MediaAssetListContainer>
-      <div>Background</div>
-      <MediaAssetListContainer>
-        <h4>Background</h4>
-        <div className="flex">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <MediaAssetItem
-              key={index}
-              imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg`}
-              fileName={`image-${index + 1}`}
-              updatedAt={`${new Date().toLocaleDateString()}`}
-            />
-          ))}
-        </div>
-        <UploadImageFileModal type="add">
-          <Button variant="action" className="absolute top-0 right-0">
-            Add Background
-          </Button>
-        </UploadImageFileModal>
-      </MediaAssetListContainer>
-    </div>
+      </div>
+    </MediaDataProvider>
   );
 }
