@@ -16,12 +16,12 @@ export const convertUi = async (
     const workbook = XLSX.read(data);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(worksheet) as Array<{
-      Main: string;
-      Revised: string;
+      ID: string;
+      Translated: string;
     }>;
 
     // 데이터 누락 여부 확인
-    const hasMissingValues = jsonData.some((row) => !row.Revised);
+    const hasMissingValues = jsonData.some((row) => !row.Translated);
     if (hasMissingValues) {
       return {
         success: false,
@@ -32,8 +32,8 @@ export const convertUi = async (
     // JSON 변환
     const transformedData = jsonData.reduce(
       (acc, curr) => {
-        if (curr.Main && curr.Revised) {
-          acc[curr.Main] = curr.Revised;
+        if (curr.ID && curr.Translated) {
+          acc[curr.ID] = curr.Translated;
         }
         return acc;
       },
