@@ -9,8 +9,11 @@ export type ButtonVariant =
   | null
   | undefined;
 
-export type FileWithPreview = File & {
+export type FileWithExtraInfo = File & {
   preview?: string;
+  hasError?: boolean;
+  errorMessage?: string;
+  transformedData?: Record<string, string>;
 };
 
 export type DropzoneProps = {
@@ -19,3 +22,5 @@ export type DropzoneProps = {
   open: () => void;
   isDragActive?: boolean;
 };
+
+export type UploadExcelFileVariant = 'quiz' | 'ui' | 'target';

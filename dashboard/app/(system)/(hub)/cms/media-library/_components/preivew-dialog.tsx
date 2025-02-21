@@ -11,6 +11,8 @@ import { FileWithPreview } from '../../_types/type';
 import { DropzoneProps } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
+import { useState } from 'react';
+import { LoaderWithBackground } from '@/components/loader';
 
 type OptionalDropzoneProps = Omit<
   DropzoneProps,
@@ -18,26 +20,39 @@ type OptionalDropzoneProps = Omit<
 >;
 type PreviewDialogProps = OptionalDropzoneProps & {
   children: React.ReactNode;
-  clearFiles: () => void;
   modalOpen?: boolean;
   type: 'add' | 'edit';
   files: FileWithPreview[];
+  loading: boolean;
+  onSave: () => void;
+  onClear: () => void;
 };
 
 export function PreviewDialog({
   children,
-  clearFiles,
   modalOpen,
   type,
   files,
   open,
   getInputProps,
+  loading,
+  onSave,
+  onClear,
 }: PreviewDialogProps) {
-  console.log('🥕 files', files);
+  const [status, setStatus] = useState(modalOpen);
   return (
-    <Dialog open={modalOpen}>
+    <Dialog
+      open={status}
+      onOpenChange={(open) => {
+        setStatus(open);
+        if (!open) {
+          onClear();
+        }
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+        {loading && <LoaderWithBackground />}
         <DialogHeader>
           <DialogTitle>
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}
@@ -59,14 +74,11 @@ export function PreviewDialog({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary" onClick={clearFiles}>
+            <Button variant="secondary" onClick={onClear}>
               Cancel
             </Button>
           </DialogClose>
-          <Button
-            variant="action"
-            onClick={() => console.log('TODO: 이미지 폼데이터로 전송')}
-          >
+          <Button variant="action" onClick={onSave}>
             Save
           </Button>
         </DialogFooter>

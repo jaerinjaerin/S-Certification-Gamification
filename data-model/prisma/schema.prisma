@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider      = "prisma-client-js"
   output        = env("PRISMA_CLIENT_OUTPUT")
@@ -116,6 +122,7 @@ model Language {
 model Campaign {
   id          String    @id @default(uuid())
   name        String
+  slug        String    @unique @default("s25")
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -125,6 +132,21 @@ model Campaign {
   updaterId   String?
   domainId    String?
   quizSets    QuizSet[]
+  settingsId  String?   @unique
+  settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
+}
+
+model CampaignSettings {
+  id                        String   @id @default(uuid())
+  campaignId                String
+  totalStages               Int?
+  firstBadgeName            String?
+  secondBadgeName           String?
+  ffFirstBadgeStageIndex    Int?
+  ffSecondBadgeStageIndex   Int?
+  fsmFirstBadgeStageIndex   Int?
+  fsmSecondBadgeStageIndex  Int?
+  campaign                  Campaign?
 }
 
 model Hq {
@@ -661,20 +683,22 @@ model BadgeLog {
   updatedAt       DateTime @updatedAt
 }
 
-model BadgeStage {
-  id              String   @id @default(uuid())
-  campaignId      String
-  badgeType       BadgeType
-  quizStageIndex  Int
+// model BadgeStage {
+//   id              String   @id @default(uuid())
+//   campaignId      String
+//   jobCode         String
+//   badgeType       BadgeType
+//   quizStageIndex  Int
+//   name            String
   
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+// }
 
-enum BadgeType {
-  EXPERT
-  ADVANCED
-}
+// enum BadgeType {
+//   EXPERT
+//   ADVANCED
+// }
 
 enum BadgeApiType {
   REGISTER
