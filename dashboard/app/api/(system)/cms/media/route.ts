@@ -51,11 +51,18 @@ export async function GET(request: NextRequest) {
         })),
     };
 
-    return NextResponse.json({ result }, { status: 200 });
-  } catch (error) {
+    return NextResponse.json({ success: true, result }, { status: 200 });
+  } catch (error: any) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      {
+        success: false,
+        error: {
+          code: error.code || 'UNKNOWN_ERROR',
+          message: 'Internal server error',
+          details: error.message,
+        },
+      },
       { status: 500 }
     );
   } finally {
@@ -146,10 +153,20 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    return NextResponse.json({ result }, { status: 200 });
-  } catch (error) {
+    return NextResponse.json({ success: true, result }, { status: 200 });
+  } catch (error: any) {
     console.error('Error uploading file:', error);
-    return NextResponse.json({ message: 'Upload failed' }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          code: error.code || 'UNKNOWN_ERROR',
+          message: 'Upload failed',
+          details: error.message,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }
@@ -225,10 +242,20 @@ export async function PUT(request: NextRequest) {
         date: updatedFile.updatedAt,
       };
     }
-    return NextResponse.json({ result }, { status: 200 });
-  } catch (error) {
+    return NextResponse.json({ success: true, result }, { status: 200 });
+  } catch (error: any) {
     console.error('Error updating file:', error);
-    return NextResponse.json({ message: 'Update failed' }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          code: error.code || 'UNKNOWN_ERROR',
+          message: 'Update failed',
+          details: error.message,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

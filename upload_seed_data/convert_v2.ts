@@ -88,7 +88,7 @@ const processExcel = (filePath, outputPath) => {
       if (!groupedData[no]) {
         groupedData[no] = {
           originQuestionIndex: Number(no),
-          orderInStage: row["New No"] || null,
+          orderInStage: row["NewOrder"] || null,
           enabled: row["Enabled"] || null,
           stage: row["Stage"] || null,
           product: row["Product"] || null,

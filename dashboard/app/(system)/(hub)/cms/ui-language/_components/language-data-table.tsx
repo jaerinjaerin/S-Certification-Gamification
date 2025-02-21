@@ -10,7 +10,6 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function LanguageDataTable() {
   const { data, isLoading } = useSWR('/api/cms/languages', fetcher);
-  console.log('🥕 data', data?.result);
 
   if (isLoading) return <Loading />;
 

@@ -1,3 +1,4 @@
+import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
@@ -40,7 +41,12 @@ export async function POST(request: NextRequest) {
 
     if (!campaign) {
       return NextResponse.json(
-        { error: 'Campaign already exists' },
+        {
+          success: false,
+          error: {
+            message: '캠페인 생성에 실패했습니다.',
+          },
+        },
         { status: 400 }
       );
     }
@@ -58,10 +64,22 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ campaign, campaignSettings }, { status: 200 });
+    return NextResponse.json(
+      { success: true, result: { campaign, campaignSettings } },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: '캠페인 생성에 실패했습니다.',
+          code: ERROR_CODES.UNKNOWN,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }
@@ -71,10 +89,22 @@ export async function GET() {
   try {
     const campaigns = await prisma.campaign.findMany();
 
-    return NextResponse.json({ campaigns }, { status: 200 });
+    return NextResponse.json(
+      { success: true, result: { campaigns } },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     console.error('Error get campaigns: ', error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: '캠페인 목록을 불러오는 중 오류가 발생했습니다.',
+          code: ERROR_CODES.UNKNOWN,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

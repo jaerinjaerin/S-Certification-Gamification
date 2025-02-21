@@ -21,7 +21,15 @@ export async function POST(request: NextRequest) {
 
     if (!soruceCampaign) {
       console.log('원본 캠페인을 찾을 수 없습니다.');
-      return;
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: '원본 캠페인을 찾을 수 없습니다.',
+          },
+        },
+        { status: 400 }
+      );
     }
 
     const destinationCampaign = await prisma.campaign.findFirst({
@@ -32,7 +40,15 @@ export async function POST(request: NextRequest) {
 
     if (!destinationCampaign) {
       console.log('대상 캠페인을 찾을 수 없습니다.');
-      return;
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: '대상 캠페인을 찾을 수 없습니다',
+          },
+        },
+        { status: 400 }
+      );
     }
 
     const domainGoals = await prisma.domainGoal.findMany({
@@ -57,10 +73,18 @@ export async function POST(request: NextRequest) {
 
     console.log('데이타 생성 완료');
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: '이미지 복사 중 오류가 발생했습니다.',
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }
