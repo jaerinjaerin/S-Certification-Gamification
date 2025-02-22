@@ -17,10 +17,10 @@ import { Button } from '@/components/ui/button';
 import { UploadExcelFileVariant } from '@/app/(system)/(hub)/cms/_types/type';
 import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
 import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
-import { useLanguageData } from '../_provider/language-data-provider';
+import { useTargetData } from '../_provider/target-data-provider';
 import axios from 'axios';
 import { LoaderWithBackground } from '@/components/loader';
-import { processAndExportExcelAndJson } from '../_lib/file-converter';
+import { processAndExportExcelAndJsonObject } from '../_lib/file-converter';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -33,8 +33,8 @@ export default function UploadExcelFileModal({
   title,
   variant,
 }: UploadExcelFileModalProps) {
-  const { state, dispatch } = useLanguageData();
-  const [files, setFiles] = useState<LanguageConvertedProps[]>([]);
+  const { state, dispatch } = useTargetData();
+  const [files, setFiles] = useState<TargetConvertedProps[]>([]);
   const [isConverting, setIsConverting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,18 +55,19 @@ export default function UploadExcelFileModal({
     onDrop: async (acceptedFiles) => {
       const processed = await Promise.all(
         acceptedFiles.map(async (file) =>
-          processAndExportExcelAndJson(file, setIsConverting)
+          processAndExportExcelAndJsonObject(file, setIsConverting)
         )
       );
 
       setFiles(processed);
     },
+    multiple: false,
     noClick: true,
     noKeyboard: false,
   });
 
-  const updateData = (updatedItems: LanguageProps[]) => {
-    const data = state.languages || [];
+  const updateData = (updatedItems: TargetProps[]) => {
+    const data = state.targets || [];
 
     // 특정 `id`를 가진 항목만 업데이트하고 나머지는 그대로 유지
     const updatedData = data.map((item) => {
@@ -76,27 +77,34 @@ export default function UploadExcelFileModal({
       return updatedItem ? { ...item, ...updatedItem } : item;
     });
 
-    dispatch({ type: 'SET_LANGUAGE_LIST', payload: updatedData });
+    dispatch({ type: 'SET_TARGET_LIST', payload: updatedData });
   };
 
-  const dataFilterNoHasError = (files: LanguageConvertedProps[]) => {
+  const dataFilterNoHasError = (files: TargetConvertedProps[]) => {
     return files.filter(({ metadata }) => !metadata.hasError);
   };
 
   const handleSubmit = async () => {
-    // hasError가 true인 파일은 업로드하지 않음
-    const validFiles = dataFilterNoHasError(files);
+    if (files.length === 0) return console.warn('No file selected for upload');
+
+    const { file, json, metadata } = files[0];
+    if (metadata.hasError) {
+      return console.warn('File has error');
+    }
+
+    if (!json) {
+      return console.warn('Json is empty');
+    }
+
     const formData = new FormData();
-    validFiles.forEach(({ file, json }) => {
-      formData.append('files', file);
-      if (json) formData.append('jsons', json);
-    });
+    formData.append('file', file);
+    formData.append('json', JSON.stringify(json));
     formData.append('campaign', 'ac2fb618-384f-41aa-ab06-51546aeacd32');
 
     try {
       setLoading(true);
 
-      const response = await axios.post('/api/cms/language', formData, {
+      const response = await axios.post('/api/cms/target', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       // console.log('🚀 File uploaded:', response.data);

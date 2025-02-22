@@ -5,8 +5,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { DropzoneProps } from '../../_types/type';
+import { Button } from '@/components/ui/button';
 
 type DataUploadDialogProps = DropzoneProps & {
   children: React.ReactNode;

@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { getPath } from '@/lib/file';
 import { getFromS3, uploadToS3 } from '@/lib/s3-client';
 import { extractLanguageCode } from '@/lib/text';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-
-const getPath = (folderName: string) => {
-  return `certification/${folderName}/ui_language`;
-};
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,8 +20,8 @@ export async function GET(request: NextRequest) {
 
     const languages = await prisma.language.findMany({});
 
-    const folderName = (campaign?.name || 'unknown').toLowerCase();
-    const path = getPath(folderName);
+    const campaignName = (campaign?.name || 'unknown').toLowerCase();
+    const path = getPath(campaignName, 'ui_language');
 
     const result = await Promise.all(
       languages.map(async (language: LanguageProps) => {
@@ -95,8 +92,8 @@ export async function POST(request: NextRequest) {
       where: { code: { in: codes } },
     });
 
-    const folderName = (campaign?.name || 'unknown').toLowerCase();
-    const path = getPath(folderName);
+    const campaignName = (campaign?.name || 'unknown').toLowerCase();
+    const path = getPath(campaignName, 'ui_language');
     // excel 파일 업로드
     await Promise.all(
       files.map((file) => {
