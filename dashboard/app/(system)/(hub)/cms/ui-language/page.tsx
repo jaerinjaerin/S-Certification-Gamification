@@ -6,6 +6,7 @@ import { LanguageDataProvider } from './_provider/language-data-provider';
 import UploadExcelFileModal from './_components/upload-excel-file-modal';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
 import SectionTitle from '../_components/section-title-container';
+import DownloadLanguages from './_components/download-files';
 
 export default async function UILanguagePage({
   searchParams,
@@ -26,13 +27,13 @@ export default async function UILanguagePage({
         <div className="flex items-center justify-between">
           <SectionTitle>UI Language List</SectionTitle>
           <div className="flex space-x-3">
-            <Button variant="secondary">Download All Data</Button>
+            <DownloadLanguages />
             <UploadExcelFileModal title="Upload UI Language" variant="ui">
               <Button variant="action">Upload</Button>
             </UploadExcelFileModal>
           </div>
         </div>
-        <div>
+        <div className="border rounded-md">
           <DataTable data={data} />
         </div>
       </div>

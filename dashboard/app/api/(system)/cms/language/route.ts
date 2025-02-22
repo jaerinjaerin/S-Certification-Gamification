@@ -32,12 +32,16 @@ export async function GET(request: NextRequest) {
           excelUrl: undefined,
           jsonUrl: undefined,
         };
-        const key = `/${path}/ui_${language.code}`;
-        const response = await getFromS3({ key, isNoCache: true });
+        const dir = `${path}/ui_${language.code}`;
+        // 엑셀만 체크
+        const response = await getFromS3({
+          key: `${dir}.xlsx`,
+          isNoCache: true,
+        });
         if (response) {
           urls = {
-            excelUrl: `${key}.xlsx`,
-            jsonUrl: `${key}.json`,
+            excelUrl: `/${dir}.xlsx`,
+            jsonUrl: `/${dir}.json`,
           };
         }
 
@@ -86,6 +90,7 @@ export async function POST(request: NextRequest) {
     const codes = files
       .map((file) => extractLanguageCode(file.name))
       .filter(Boolean) as string[];
+
     const languages = await prisma.language.findMany({
       where: { code: { in: codes } },
     });
@@ -96,15 +101,24 @@ export async function POST(request: NextRequest) {
     await Promise.all(
       files.map((file) => {
         const code = extractLanguageCode(file.name);
+        if (!code) {
+          return Promise.resolve(null);
+        }
+
         const key = `${path}/ui_${code}.xlsx`;
         return uploadToS3({ key, file, isNoCache: true });
       })
     );
+
     //
     // json 파일 업로드
     await Promise.all(
       jsons.map((file) => {
         const code = extractLanguageCode(file.name);
+        if (!code) {
+          return Promise.resolve(null);
+        }
+
         const key = `${path}/ui_${code}.json`;
         return uploadToS3({ key, file, isNoCache: true });
       })

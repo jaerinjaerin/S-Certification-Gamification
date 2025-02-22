@@ -12,7 +12,8 @@ export const formatSnakeToTitleCase = (value: string) => {
     .replace(/\b\w/g, (char) => char.toUpperCase()); // 각 단어의 첫 글자를 대문자로 변환
 };
 
+// code 추출 최대 5개까지 허용
 export function extractLanguageCode(filename: string): string | null {
-  const match = filename.match(/_(\w{2}(?:-\w{2})?)\./);
+  const match = filename.match(/_(\w{2}(?:-\w{2,3}){0,4})\./); // 최대 5개까지 허용
   return match ? match[1] : null;
 }

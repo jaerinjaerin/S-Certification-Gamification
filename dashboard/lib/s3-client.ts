@@ -86,7 +86,7 @@ const getFromS3 = async ({
     return response;
   } catch (error: any) {
     if (error.Code === 'NoSuchKey' || error.Code === 'AccessDenied') {
-      console.warn(`🔍 S3 파일 없음: ${key}`);
+      // console.warn(`S3 파일 없음: ${key}`);
       return null; // 파일이 없을 경우 `null` 반환
     }
 
