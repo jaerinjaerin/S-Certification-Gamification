@@ -10,11 +10,11 @@ import { useDropzone } from 'react-dropzone';
 import { UploadFilesDialog } from '../../_components/upload-files-dialog';
 import { PreviewDialog } from './preivew-dialog';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
 import { isEmpty } from '../../_utils/utils';
 import { useMediaData } from '../_provider/media-data-provider';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { FileWithExtraInfo } from '../../_types/type';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 export function UploadImageFileModal({
   children,
@@ -27,8 +27,8 @@ export function UploadImageFileModal({
   id?: string | null;
   preview?: [string | null, Dispatch<SetStateAction<string | null>>];
 }) {
+  const { campaign } = useStateVariables();
   const { state, dispatch } = useMediaData();
-  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<FileWithExtraInfo[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -127,7 +127,6 @@ export function UploadImageFileModal({
 
     setLoading(true);
 
-    const campaign = searchParams.get('campaign');
     const formData = new FormData();
     formData.append('group', group);
 
@@ -137,7 +136,7 @@ export function UploadImageFileModal({
         return console.warn('No file selected for upload');
 
       formData.append('file', files[0]);
-      if (campaign) formData.append('campaign', campaign);
+      formData.append('campaign', JSON.stringify(campaign));
 
       try {
         const response = await axios.post('/api/cms/media', formData, {

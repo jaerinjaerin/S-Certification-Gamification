@@ -18,8 +18,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useLanguageData } from '../_provider/language-data-provider';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { handleDownload } from '../../_utils/utils';
+import { useAbortController } from '@/components/hook/use-abort-controller';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { fetchData } from '@/lib/fetch';
+import { LoaderWithBackground } from '@/components/loader';
 
 export const columns: ColumnDef<LanguageProps>[] = [
   {
@@ -56,64 +60,84 @@ export const columns: ColumnDef<LanguageProps>[] = [
   },
 ];
 
-export function DataTable({ data }: { data: LanguageProps[] }) {
+export function DataTable() {
+  const { abort, createController } = useAbortController();
+  const { campaign } = useStateVariables();
   const { state, dispatch } = useLanguageData();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (data) {
-      dispatch({ type: 'SET_LANGUAGE_LIST', payload: data });
+    if (campaign) {
+      setLoading(true);
+      fetchData(
+        { campaignName: campaign.name },
+        'cms/language',
+        (data) => {
+          dispatch({ type: 'SET_LANGUAGE_LIST', payload: data.result });
+          setLoading(false);
+        },
+        createController()
+      );
     }
-  }, []);
+
+    return () => {
+      abort();
+      setLoading(false);
+    };
+  }, [campaign]);
 
   const table = useReactTable({
-    data: state.languages || data,
+    data: state.languages || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
-              return (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </TableHead>
-              );
-            })}
-          </TableRow>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && 'selected'}
-              className="h-16"
-            >
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
+    <>
+      {loading && <LoaderWithBackground />}
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                );
+              })}
             </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={columns.length} className="h-24 text-center">
-              No results.
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                className="h-16"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </>
   );
 }

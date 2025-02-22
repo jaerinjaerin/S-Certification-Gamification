@@ -14,5 +14,5 @@ export const jsonToFile = ({
 
 // 기준 키 경로
 export const getPath = (campaignName: string, folderName: string) => {
-  return `certification/${campaignName}/${folderName}`;
+  return `certification/${campaignName.toLowerCase()}/${folderName}`;
 };

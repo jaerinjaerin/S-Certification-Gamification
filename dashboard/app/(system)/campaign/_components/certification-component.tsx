@@ -41,6 +41,8 @@ import {
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
+import { useRouter } from 'next/navigation';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 type CertificationFormState = {
   isFormOpen: boolean;
@@ -69,7 +71,7 @@ export default function CertificationClientComponent() {
         }
 
         const data = await response.json();
-        setCampaigns(data.campaigns);
+        setCampaigns(data.result.campaigns);
         console.log('Campaigns:', data);
       } catch (error) {
         console.error('Error get campaigns: ', error);
@@ -134,8 +136,17 @@ function CertificationListItem({
   setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
   campaign: Campaign;
 }) {
+  const { setCampaign } = useStateVariables();
+  const router = useRouter();
+
   return (
-    <div className="flex items-center border border-zinc-200 rounded-md">
+    <div
+      className="flex items-center border border-zinc-200 rounded-md"
+      onClick={() => {
+        setCampaign(campaign);
+        router.push(`/dashboard/overview`);
+      }}
+    >
       <div>
         <h3>{campaign.name}</h3>
         <time>
@@ -144,12 +155,13 @@ function CertificationListItem({
       </div>
       <Button
         variant="ghost"
-        onClick={() =>
+        onClick={(e) => {
+          e.stopPropagation();
           setIsCreateCertification({
             isFormOpen: true,
             type: 'edit',
-          })
-        }
+          });
+        }}
       >
         <Pen />
       </Button>

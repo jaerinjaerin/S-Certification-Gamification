@@ -8,17 +8,10 @@ import { prisma } from '@/model/prisma';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaignId = (searchParams.get('campaign') ||
-      'ac2fb618-384f-41aa-ab06-51546aeacd32') as string;
-    console.log('🚀 ~ GET ~ campaignId:', campaignId);
+    const campaignName = searchParams.get('campaignName') as string;
 
     await prisma.$connect();
 
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: campaignId },
-    });
-
-    const campaignName = (campaign?.name || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'target');
     const key = `${path}/target_${campaignName}.xlsx`;
 
