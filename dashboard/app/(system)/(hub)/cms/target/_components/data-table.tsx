@@ -1,12 +1,10 @@
 'use client';
-
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
 import {
   Table,
   TableBody,
@@ -15,24 +13,75 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useTargetData } from '../_provider/target-data-provider';
+import { useEffect, useState } from 'react';
+import { fetchData } from '@/lib/fetch';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { useAbortController } from '@/components/hook/use-abort-controller';
+import { LoaderWithBackground } from '@/components/loader';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+export const columns: ColumnDef<TargetProps>[] = [
+  {
+    accessorKey: 'domain',
+    header: 'Domain',
+  },
+  {
+    accessorKey: 'total',
+    header: 'Total',
+  },
+  {
+    accessorKey: 'ff',
+    header: 'FF Target',
+  },
+  {
+    accessorKey: 'ffSes',
+    header: 'FF(SES) Target',
+  },
+  {
+    accessorKey: 'fsm',
+    header: 'FSM Target',
+  },
+  {
+    accessorKey: 'fsmSes',
+    header: 'FSM(SES) Target',
+  },
+];
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable() {
+  const { abort, createController } = useAbortController();
+  const { campaign } = useStateVariables();
+  const { state, dispatch } = useTargetData();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (campaign) {
+      setLoading(true);
+      fetchData(
+        { campaignId: campaign.id },
+        'cms/target',
+        (data) => {
+          dispatch({ type: 'SET_TARGET_LIST', payload: data.result });
+          setLoading(false);
+        },
+        createController()
+      );
+    }
+
+    return () => {
+      abort();
+      setLoading(false);
+    };
+  }, [campaign]);
+
   const table = useReactTable({
-    data,
+    data: state.targets || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="rounded-md border">
+    <>
+      {loading && <LoaderWithBackground />}
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -58,6 +107,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                className="h-16"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -75,6 +125,6 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-    </div>
+    </>
   );
 }
