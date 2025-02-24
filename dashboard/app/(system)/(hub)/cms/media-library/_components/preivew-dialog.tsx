@@ -7,8 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Dialog } from '@/components/ui/dialog';
-import { FileWithExtraInfo } from '../../_types/type';
-import { DropzoneProps } from '../../_types/type';
+import { DropzoneProps, FileWithExtraInfo } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useState } from 'react';
