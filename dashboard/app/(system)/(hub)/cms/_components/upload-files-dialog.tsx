@@ -2,7 +2,6 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
-  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
