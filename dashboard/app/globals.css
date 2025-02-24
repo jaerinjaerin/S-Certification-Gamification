@@ -55,6 +55,8 @@ body {
     --sidebar-text: 240 5% 65%;
     --sidebar-active-text: 240 5% 34%;
     --sidebar-icon: 240 4% 46%;
+    --icon-success: 214 56% 47%;
+    --icon-error: 0 51% 50%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -93,6 +95,8 @@ body {
     --sidebar-text: 240 5% 65%;
     --sidebar-active-text: 240 5% 34%;
     --sidebar-icon: 240 4% 46%;
+    --icon-success: 214 56% 47%;
+    --icon-error: 0 51% 50%;
   }
 }
 
