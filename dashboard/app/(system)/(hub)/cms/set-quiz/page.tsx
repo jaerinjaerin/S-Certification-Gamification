@@ -389,16 +389,17 @@ const ExcelUploader = () => {
 
       const formData = new FormData();
       formData.append('file', file); // 📂 파일 추가
-      formData.append(
-        'jsonData',
-        JSON.stringify({
-          campaignId: 'c903fec8-56f8-42fe-aa06-464148d4e0a5',
-          domainCode,
-          languageCode,
-          jobGroup,
-          questions,
-        })
-      );
+      formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5');
+      // formData.append(
+      //   'jsonData',
+      //   JSON.stringify({
+      //     campaignId: 'c903fec8-56f8-42fe-aa06-464148d4e0a5',
+      //     domainCode,
+      //     languageCode,
+      //     jobGroup,
+      //     questions,
+      //   })
+      // );
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset`,
@@ -419,14 +420,14 @@ const ExcelUploader = () => {
       const result = await response.json();
       console.error(result);
 
-      if (result.errorCode === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {
+      if (result.error.code === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {
         alert('HQ 퀴즈 질문이 등록되지 않았습니다.');
-      } else if (result.errorCode === ERROR_CODES.FILE_NAME_MISMATCH) {
+      } else if (result.error.code === ERROR_CODES.FILE_NAME_MISMATCH) {
         alert('최신 버전의 파일을 다운받아 수정하여 업로드해주세요.');
       } else {
         // ..... result.errorCode === ERROR_CODES 참조하여 기타 오류 처리
-        if (result.errorCode) {
-          alert(result.errorCode);
+        if (result.error.code) {
+          alert(result.error.code);
         } else {
           alert('알 수 없는 오류가 발생했습니다.');
         }
