@@ -7,15 +7,15 @@ interface QuizOption {
 
 interface QuizData {
   originQuestionIndex: number;
-  orderInStage?: number | null;
-  enabled?: boolean;
-  stage?: number | null;
+  orderInStage: number;
+  enabled: boolean;
+  stage: number;
   product?: string | null;
   category?: string | null;
   specificFeature?: string | null;
   importance?: string | null;
-  timeLimitSeconds?: number | null;
-  text?: string | null;
+  timeLimitSeconds: number;
+  text: string;
   questionType?: string | null;
   backgroundImageId?: string | null;
   characterImageId?: string | null;
@@ -140,13 +140,13 @@ export const processExcelBuffer = (
       if (!groupedData[no]) {
         groupedData[no] = {
           originQuestionIndex: Number(no),
-          orderInStage: row['NewOrder'] ? Number(row['NewOrder']) : null,
+          orderInStage: row['NewOrder'] ? Number(row['NewOrder']) : 0,
           enabled: row['Enabled']
             ? Number(row['Enabled']) === 1
               ? true
               : false
             : false,
-          stage: row['Stage'] ? Number(row['Stage']) : null,
+          stage: row['Stage'] ? Number(row['Stage']) : 0,
           product: row['Product'] || null,
           category: row['Category'] || null,
           specificFeature: row['SpecificFeature'] || null,
@@ -154,12 +154,39 @@ export const processExcelBuffer = (
           timeLimitSeconds: row['TimeLimitSeconds']
             ? Number(row['TimeLimitSeconds'])
             : null,
-          text: row['Question'] || null,
+          text: row['Question'] ?? '',
           questionType: row['QuestionType'] || null,
           backgroundImageId: row['ImageBackground'] || null,
           characterImageId: row['ImageCharactor'] || null,
           options: [], // 각 문제별로 options을 따로 저장
         };
+
+        if (groupedData[no].enabled) {
+          if (groupedData[no].text == null) {
+            errors.push({
+              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no text!`,
+            });
+          }
+          if (groupedData[no].stage == null) {
+            errors.push({
+              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no stage!`,
+            });
+          }
+          if (groupedData[no].originQuestionIndex == null) {
+            errors.push({
+              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order!`,
+            });
+          }
+          if (groupedData[no].orderInStage == null) {
+            errors.push({
+              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order in stage!`,
+            });
+          }
+        }
       }
 
       // 옵션 데이터 올바르게 매칭

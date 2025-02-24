@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
@@ -50,6 +51,20 @@ export async function POST(request: NextRequest) {
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
     const body = await request.formData();
+    const campaignId = body.get('campaignId') as string;
+
+    if (!campaignId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Missing required parameter: campaign_id',
+            code: ERROR_CODES.MISSING_REQUIRED_PARAMETER,
+          },
+        },
+        { status: 400 }
+      );
+    }
 
     // Get the file from the form data
     const file: File = body.get('file') as File;
@@ -70,15 +85,61 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const jsonData = body.get('jsonData');
-    console.log('jsonData: ');
+    // const jsonData = body.get('jsonData');
+    // console.log('jsonData: ');
+
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    const result: ProcessResult = processExcelBuffer(
+      Buffer.from(fileBuffer),
+      file.name
+    );
+    if (!result.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message:
+              result.errors != null && result.errors.length > 0
+                ? result.errors[0]
+                : 'Unknown error',
+            code: ERROR_CODES.UNKNOWN,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!result.data) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'No data found',
+            code: ERROR_CODES.NO_DATA_FOUND,
+          },
+        },
+        { status: 400 }
+      );
+    }
 
     // ✅ Zod 검증 수행
-    const validatedData = updateQuizSetScheme.parse(
-      JSON.parse(jsonData as string)
-    );
-    const { campaignId, domainCode, languageCode, jobGroup, questions } =
-      validatedData;
+    // const validatedData = updateQuizSetScheme.parse(
+    //   JSON.parse(jsonData as string)
+    // );
+
+    const { domainCode, languageCode, jobGroup, questions } = result.data;
+    if (!domainCode || !languageCode || !jobGroup) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: '파일명이 올바르지 않습니다.',
+            code: ERROR_CODES.INVALID_FILE_NAME,
+          },
+        },
+        { status: 400 }
+      );
+    }
 
     const campaign = await prisma.campaign.findFirst({
       where: {
@@ -222,7 +283,7 @@ export async function POST(request: NextRequest) {
         domainId: domain.id,
         languageId: language.id,
         jobCodes: {
-          hasEvery: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
+          equals: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
         },
       },
     });
@@ -234,6 +295,9 @@ export async function POST(request: NextRequest) {
           languageId: language.id,
           domainId: domain.id,
           quizSetId: quizSet.id,
+          jobCodes: {
+            equals: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
+          },
         },
       });
 
@@ -285,8 +349,12 @@ export async function POST(request: NextRequest) {
     // =============================================
     // 2. stages 생성
     // =============================================
-    const stageNums = [
-      ...new Set(questions.map((question) => question.stage)),
+    const stageNums: number[] = [
+      ...new Set(
+        questions
+          .map((question) => question.stage)
+          .filter((stage) => stage != null)
+      ),
     ].sort();
 
     const createdStages = [];
@@ -537,7 +605,7 @@ export async function POST(request: NextRequest) {
     // if (file) {
 
     // const fileContent = await fs.readFile(file.filepath);
-    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    // const fileBuffer = Buffer.from(await file.arrayBuffer());
 
     const timestamp = new Date()
       .toISOString()
