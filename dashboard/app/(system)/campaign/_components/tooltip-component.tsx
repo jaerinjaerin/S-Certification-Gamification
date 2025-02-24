@@ -13,7 +13,7 @@ export function TooltipComponent({
   side = 'top',
 }: {
   trigger?: React.ReactNode;
-  description: string;
+  description: string | undefined;
   onOpenChange?: () => void;
   open?: boolean;
   side?: 'top' | 'left' | 'right' | 'bottom';
