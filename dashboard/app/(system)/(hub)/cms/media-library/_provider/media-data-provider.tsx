@@ -9,16 +9,16 @@ import React, {
 
 // 초기 상태
 const initialState: MediaDataProps = {
-  badge: [],
-  character: [],
-  background: [],
+  badge: null,
+  character: null,
+  background: null,
 };
 
 // 액션 타입 정의
 type Action =
-  | { type: 'SET_BADGE'; payload: MediaPros[] }
-  | { type: 'SET_CHARACTER'; payload: MediaPros[] }
-  | { type: 'SET_BACKGROUND'; payload: MediaPros[] }
+  | { type: 'SET_BADGE'; payload: MediaProps[] }
+  | { type: 'SET_CHARACTER'; payload: MediaProps[] }
+  | { type: 'SET_BACKGROUND'; payload: MediaProps[] }
   | { type: 'RESET' };
 
 // 리듀서 함수

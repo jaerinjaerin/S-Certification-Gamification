@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { Role } from '@prisma/client';
+import { Campaign, Role } from '@prisma/client';
 import axios from 'axios';
 import { Session } from 'next-auth';
+import { redirect, usePathname } from 'next/navigation';
 import {
   createContext,
   useContext,
@@ -15,6 +16,8 @@ type StateVariables = {
   filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
+  campaign: Campaign | null;
+  setCampaign: React.Dispatch<React.SetStateAction<Campaign | null>>;
 };
 
 const StateVariablesContext = createContext<StateVariables | undefined>(
@@ -30,7 +33,16 @@ export const StateVariablesProvider = ({
   session: Session | null;
   role: (Role & any) | null;
 }) => {
+  const pathname = usePathname();
   const [filter, setFilter] = useState<AllFilterData | null>(null);
+  const [campaign, setCampaign] = useState<Campaign | null>(() => {
+    // sessionStorage에 저장된 캠페인 데이터 가져오기 (새로고침 유지)
+    if (typeof window !== 'undefined') {
+      const storedCampaign = sessionStorage.getItem('campaign');
+      return storedCampaign ? JSON.parse(storedCampaign) : null;
+    }
+    return null;
+  });
 
   useEffect(() => {
     axios.get('/api/dashboard/filter').then((res) => {
@@ -38,8 +50,26 @@ export const StateVariablesProvider = ({
     });
   }, []);
 
+  // campaign 변경 시 sessionStorage업데이트
+  useEffect(() => {
+    if (campaign) {
+      sessionStorage.setItem('campaign', JSON.stringify(campaign));
+    } else {
+      sessionStorage.removeItem('campaign'); // 값이 없으면 제거
+    }
+  }, [campaign]);
+
+  // 캠페인 데이터 없으면 캠페인으로 리다이렉트
+  useEffect(() => {
+    if (!campaign && pathname !== '/campaign') {
+      redirect('/campaign');
+    }
+  }, [campaign, pathname]);
+
   return (
-    <StateVariablesContext.Provider value={{ filter, session, role }}>
+    <StateVariablesContext.Provider
+      value={{ filter, session, role, campaign, setCampaign }}
+    >
       {children}
     </StateVariablesContext.Provider>
   );

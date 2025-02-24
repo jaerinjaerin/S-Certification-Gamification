@@ -1,27 +1,31 @@
 import { Button } from '@/components/ui/button';
+import { DataTable } from './_components/data-table';
+import { LanguageDataProvider } from './_provider/language-data-provider';
+import UploadExcelFileModal from './_components/upload-excel-file-modal';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
-import UploadButton from '../_components/upload-button';
-import LanguageDataTable from './_components/language-data-table';
+import SectionTitle from '../_components/section-title-container';
+import DownloadLanguages from './_components/download-files';
 
-export default function UILanguagePage() {
+export default async function UILanguagePage() {
   return (
-    <div className="flex flex-col">
+    <LanguageDataProvider>
       <div className="absolute top-0 right-0 ">
         <DownloadFileListPopoverButton type="template" />
       </div>
-      <div className="flex items-center justify-between">
-        <span>UI Language List</span>
-        <div className="flex gap-3">
-          <Button variant="secondary">Download All Data</Button>
-          <UploadButton
-            title="Upload UI Language"
-            buttonText="Upload"
-            variant="ui"
-          />
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <SectionTitle>UI Language List</SectionTitle>
+          <div className="flex space-x-3">
+            <DownloadLanguages />
+            <UploadExcelFileModal title="Upload UI Language" variant="ui">
+              <Button variant="action">Upload</Button>
+            </UploadExcelFileModal>
+          </div>
+        </div>
+        <div className="border rounded-md">
+          <DataTable />
         </div>
       </div>
-
-      <LanguageDataTable />
-    </div>
+    </LanguageDataProvider>
   );
 }

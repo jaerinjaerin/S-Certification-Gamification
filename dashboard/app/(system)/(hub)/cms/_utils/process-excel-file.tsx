@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, SetStateAction } from 'react';
 import { FileWithExtraInfo, UploadExcelFileVariant } from '../_types/type';
 import { convertUi, convertQuizSet, convertTarget } from './convert-excel-json';
@@ -6,7 +7,7 @@ const convertExcelToJsonByVariant = {
   quiz: convertQuizSet,
   ui: convertUi,
   target: convertTarget,
-};
+} as Record<string, (file: File) => Promise<any>>;
 
 export const processExcelFile = async (
   file: File,
@@ -24,7 +25,8 @@ export const processExcelFile = async (
   setIsConverting(true);
 
   try {
-    const result = await convertExcelToJsonByVariant[variant](file);
+    const convert = convertExcelToJsonByVariant[variant];
+    const result = await convert(file);
 
     if (!result.success) {
       return {

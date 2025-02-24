@@ -1,10 +1,10 @@
 type MediaDataProps = {
-  badge: MediaPros[];
-  character: MediaPros[];
-  background: MediaPros[];
+  badge: MediaProps[] | null;
+  character: MediaProps[] | null;
+  background: MediaProps[] | null;
 };
 
-type MediaPros = {
+type MediaProps = {
   index: number;
   id: string;
   name: string;

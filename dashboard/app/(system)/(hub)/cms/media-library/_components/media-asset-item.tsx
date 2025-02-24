@@ -20,15 +20,15 @@ export function MediaAssetItem({
 }) {
   const preview = useState<string | null>(null);
   return (
-    <div className="border border-zinc-200 rounded-md p-2 w-[9.375rem]">
-      <div className="relative rounded-md overflow-hidden w-[8.25rem] max-h-[8.25rem]">
-        <img src={imageUrl} className="object-contain h-full" alt={fileName} />
+    <div className="w-[9.375rem]">
+      <div className="relative aspect-square rounded-md overflow-hidden w-full max-h-[9.375rem] border border-zinc-200">
+        <img src={imageUrl} className="object-cover size-full" alt={fileName} />
       </div>
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-3">
         <span className="inline-block font-medium text-size-14px truncate">
           {fileName}
         </span>
-        <div className="space-x-0.5 flex">
+        <div className="flex space-x-[5px]">
           <UploadImageFileModal id={id} group={group} preview={preview}>
             <Button
               size="icon"
@@ -49,7 +49,7 @@ export function MediaAssetItem({
           </Button>
         </div>
       </div>
-      <span className="text-size-11px text-zinc-500">
+      <span className="text-size-12px mt-1 text-zinc-500">
         Last Updated: {updatedAt}
       </span>
     </div>

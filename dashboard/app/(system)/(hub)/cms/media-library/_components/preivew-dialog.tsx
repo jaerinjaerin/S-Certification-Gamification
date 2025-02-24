@@ -1,18 +1,19 @@
 import {
+  CustomDialogContent,
   DialogClose,
-  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Dialog } from '@/components/ui/dialog';
-import { FileWithPreview } from '../../_types/type';
+import { FileWithExtraInfo } from '../../_types/type';
 import { DropzoneProps } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
+import dayjs from 'dayjs';
 
 type OptionalDropzoneProps = Omit<
   DropzoneProps,
@@ -22,7 +23,7 @@ type PreviewDialogProps = OptionalDropzoneProps & {
   children: React.ReactNode;
   modalOpen?: boolean;
   type: 'add' | 'edit';
-  files: FileWithPreview[];
+  files: FileWithExtraInfo[];
   loading: boolean;
   onSave: () => void;
   onClear: () => void;
@@ -51,10 +52,13 @@ export function PreviewDialog({
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+      <CustomDialogContent
+        className="p-10 gap-[2.625rem]"
+        onInteractOutside={(e) => e.preventDefault()}
+      >
         {loading && <LoaderWithBackground />}
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-size-24px font-medium">
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}
           </DialogTitle>
         </DialogHeader>
@@ -72,23 +76,27 @@ export function PreviewDialog({
           />
         )}
 
-        <DialogFooter>
+        <DialogFooter className="sm:items-center sm:justify-center gap-5">
           <DialogClose asChild>
             <Button variant="secondary" onClick={onClear}>
               Cancel
             </Button>
           </DialogClose>
-          <Button variant="action" onClick={onSave}>
+          <Button
+            className="!m-0 shadow-none"
+            variant="action"
+            onClick={onSave}
+          >
             Save
           </Button>
         </DialogFooter>
-      </DialogContent>
+      </CustomDialogContent>
     </Dialog>
   );
 }
 
 type AssetPreviewViewProps = {
-  files: FileWithPreview[];
+  files: FileWithExtraInfo[];
   open: () => void;
   extraContent?: React.ReactNode;
 } & Pick<DropzoneProps, 'getInputProps'>;
@@ -100,23 +108,37 @@ function AssetPreviewView({
   open,
 }: AssetPreviewViewProps) {
   return (
-    <div>
-      <div>
-        <input {...getInputProps()} />
-        <Button onClick={open}>Upload</Button>
-      </div>
-      {extraContent && <div>{extraContent}</div>}
-      <div>
+    <div className="mx-auto w-full max-w-[25rem]">
+      <p className="text-secondary">Quiz Set File</p>
+      <div className="mt-2 flex justify-center">
         {files?.map((file) => (
-          <div key={file.name}>
-            <div>
-              <input
-                value={file.name}
-                readOnly
-                className="border border-zinc-200 rounded-lg overflow-hidden py-2 "
-              />
+          <div key={file.name} className="w-full">
+            <div className="mb-[2.625rem] flex flex-col gap-3">
+              <div className="flex justify-center gap-2 max-h-10">
+                <div>
+                  <input {...getInputProps()} />
+                  <Button
+                    variant={'secondary'}
+                    className="h-full border-zinc-200 shadow-none text-zinc-950"
+                    onClick={open}
+                  >
+                    Upload
+                  </Button>
+                </div>
+
+                <div className="grow w-full">
+                  <input
+                    value={file.name}
+                    readOnly
+                    className="size-full border border-zinc-200 rounded-md overflow-hidden p-3 font-medium text-size-14px text-zinc-950"
+                  />
+                </div>
+              </div>
+
+              {extraContent && <div className="ml-auto">{extraContent}</div>}
             </div>
-            <div className="aspect-video bg-red-400">
+
+            <div className="w-full rounded-md border border-zinc-600 aspect-video bg-[url(https://assets-stage.samsungplus.net/certification/common/images/bg_transparent_grid.png)] bg-cover">
               <img
                 src={file.preview}
                 alt={file.name}
@@ -139,13 +161,16 @@ function AddAssetPreviewView(
 function EditAssetPreviewView(
   props: Omit<AssetPreviewViewProps, 'extraContent'>
 ) {
+  const timestamp = props.files[0].lastModified;
+  const date = dayjs(timestamp).format('YY.MM.DD HH:mm:ss');
+
   return (
     <AssetPreviewView
       {...props}
       extraContent={
-        <div>
-          <span>version: 25.02.05 23:55:23</span>
-          <Button variant="download" size="icon">
+        <div className="flex items-center gap-2">
+          <span>{date}</span>
+          <Button variant="download" className="shadow-none" size="icon">
             <Download />
           </Button>
         </div>
