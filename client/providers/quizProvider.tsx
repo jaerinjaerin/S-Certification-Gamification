@@ -219,6 +219,7 @@ export const QuizProvider = ({
       const isBadgeAcquired = isBadgeStage()
         ? await processBadgeAcquisition(stageElapsedSeconds)
         : false;
+      console.log("isBadgeAcquired", isBadgeAcquired);
 
       // 랭킹 및 그래프 데이터 가져오기
       let scoreData: ScoreData | null = null;
@@ -459,6 +460,8 @@ export const QuizProvider = ({
 
       const result = await new QuizBadgeHandler().issueBadge(
         userId,
+        campaign.id,
+        quizSet.domainId ?? "",
         activityId,
         elapsedSeconds
       );

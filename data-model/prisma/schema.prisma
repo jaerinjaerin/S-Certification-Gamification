@@ -724,6 +724,9 @@ model BadgeLog {
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  campaignId      String?
+  domainId        String?
 }
 
 // model BadgeStage {

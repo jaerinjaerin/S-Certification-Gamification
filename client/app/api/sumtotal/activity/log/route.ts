@@ -11,6 +11,8 @@ const badgeLogSchema = z.object({
   userId: z.string().optional(),
   accountUserId: z.string().optional(),
   activityId: z.string(),
+  campaignId: z.string(),
+  domainId: z.string(),
   accessToken: z.string().optional(),
   rawLog: z.string().optional(),
 });
@@ -29,6 +31,8 @@ export async function POST(req: Request) {
         status: validatedData.status,
         message: validatedData.message,
         userId: validatedData.userId,
+        campaignId: validatedData.campaignId,
+        domainId: validatedData.domainId,
         accountUserId: validatedData.accountUserId ?? "",
         activityId: validatedData.activityId,
         accessToken: validatedData.accessToken ?? "",
