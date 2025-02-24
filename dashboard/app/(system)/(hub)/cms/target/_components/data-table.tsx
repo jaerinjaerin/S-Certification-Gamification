@@ -60,6 +60,7 @@ export function DataTable() {
         { campaignId: campaign.id },
         'cms/target',
         (data) => {
+          console.log('🚀 ~ useEffect ~ data:', data);
           dispatch({ type: 'SET_TARGET_LIST', payload: data.result });
           setLoading(false);
         },

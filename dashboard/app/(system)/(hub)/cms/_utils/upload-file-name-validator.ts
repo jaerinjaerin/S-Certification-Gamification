@@ -2,9 +2,11 @@ import { UploadExcelFileVariant } from '../_types/type';
 
 export const uploadFileNameValidator = (
   file: File,
-  variant: UploadExcelFileVariant
+  variant: UploadExcelFileVariant,
+  campaign?: string
 ) => {
-  const fileName = file.name.replace(/\.[^/.]+$/, '');
+  const fileName = file.name?.replace(/\.[^/.]+$/, '');
+
   // variant에 따라 파일 이름 검증 로직 추가
   if (variant === 'quiz') {
     const quizRegex =
@@ -29,10 +31,13 @@ export const uploadFileNameValidator = (
     }
   }
   if (variant === 'target') {
-    if (!file.name.startsWith('target')) {
+    if (
+      !file.name.toLowerCase().includes(`target_${campaign?.toLowerCase()}`)
+    ) {
       return {
         code: 'invalid-file-name',
-        message: 'Invalid file name',
+        message:
+          'Invalid Target file name. Format: target_{campaignName}_{version}',
       };
     }
   }

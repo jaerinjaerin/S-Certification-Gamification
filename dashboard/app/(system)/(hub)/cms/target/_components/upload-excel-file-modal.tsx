@@ -53,7 +53,12 @@ export default function UploadExcelFileModal({
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
       'application/vnd.ms-excel': [],
     },
-    validator: (file) => uploadFileNameValidator(file, variant),
+    validator: (file) =>
+      uploadFileNameValidator(
+        file,
+        variant,
+        variant === 'target' ? campaign?.name : undefined
+      ),
     onDrop: async (acceptedFiles) => {
       const processed = await Promise.all(
         acceptedFiles.map(async (file) =>

@@ -13,10 +13,35 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const goals = await prisma.domainGoal.findMany({
+    const domains = await prisma.domain.findMany({
+      include: { subsidiary: { include: { domains: true } } },
+    });
+
+    let goals = await prisma.domainGoal.findMany({
       where: { campaignId },
     });
-    const domains = await prisma.domain.findMany({});
+
+    // 만약 골이 없다면 골의 데이터를 생성해야함.
+    if (goals.length === 0) {
+      const goalData = domains.map((d) => ({
+        campaignId,
+        domainId: d.id,
+        ff: 0,
+        ffSes: 0,
+        fsm: 0,
+        fsmSes: 0,
+        subsidiaryId: d.subsidiaryId,
+        regionId: d.subsidiary?.regionId,
+      }));
+
+      // 데이터 생성 (createMany는 반환값으로 { count: number }을 제공하므로 조회가 따로 필요)
+      await prisma.domainGoal.createMany({ data: goalData });
+      //
+      // 데이터 조회
+      goals = await prisma.domainGoal.findMany({
+        where: { campaignId },
+      });
+    }
 
     const goalMap = new Map(goals.map((g) => [g.domainId, g]));
     const result = domains.map((domain) => {

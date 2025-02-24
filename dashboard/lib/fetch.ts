@@ -30,3 +30,5 @@ export const fetchData = async (
     console.error('Error fetching data:', error);
   }
 };
+
+export const swrFetcher = (url: string) => fetch(url).then((res) => res.json());
