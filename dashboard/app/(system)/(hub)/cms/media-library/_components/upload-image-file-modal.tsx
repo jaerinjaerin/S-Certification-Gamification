@@ -25,7 +25,10 @@ export function UploadImageFileModal({
   children: React.ReactNode;
   group: MediaGroupName;
   id?: string | null;
-  preview?: [string | null, Dispatch<SetStateAction<string | null>>];
+  preview?: [
+    MediaPreviewProps | null,
+    Dispatch<SetStateAction<MediaPreviewProps | null>>,
+  ];
 }) {
   const { campaign } = useStateVariables();
   const { state, dispatch } = useMediaData();
@@ -33,15 +36,15 @@ export function UploadImageFileModal({
   const [files, setFiles] = useState<FileWithExtraInfo[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // 기존 이미지가 있을 경우 files 상태에 추가
+  // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
   useEffect(() => {
     if (preview && preview[0] && id) {
       const previewFile: FileWithExtraInfo = {
-        name: 'Preview Image',
-        preview: preview[0],
+        name: preview[0].fileName,
+        preview: preview[0].imageUrl,
         size: 0,
-        type: 'image/jpeg',
-        lastModified: Date.now(),
+        type: 'image/png',
+        lastModified: new Date(preview[0].updatedAt).getTime(),
       } as FileWithExtraInfo;
       setFiles([previewFile]);
     }

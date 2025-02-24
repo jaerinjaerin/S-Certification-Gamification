@@ -1,7 +1,6 @@
 'use client';
 import { MediaAssetItem } from './media-asset-item';
 import MediaAssetListContainer from './media-asset-list-container';
-import { format } from 'date-fns';
 import { useMediaData } from '../_provider/media-data-provider';
 import { LoaderWithBackground } from '@/components/loader';
 
@@ -24,7 +23,7 @@ const MediaAssetGroup = ({ group }: Props) => {
             group={group}
             imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${image.url}`}
             fileName={fileName}
-            updatedAt={format(image.date, 'yy.MM.dd')}
+            updatedAt={image.date}
           />
         );
       })}

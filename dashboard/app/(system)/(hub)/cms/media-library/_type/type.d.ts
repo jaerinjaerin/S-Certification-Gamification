@@ -12,4 +12,10 @@ type MediaProps = {
   date: Date;
 };
 
+type MediaPreviewProps = {
+  imageUrl: string;
+  fileName: string;
+  updatedAt: Date;
+};
+
 type MediaGroupName = 'badge' | 'character' | 'background';

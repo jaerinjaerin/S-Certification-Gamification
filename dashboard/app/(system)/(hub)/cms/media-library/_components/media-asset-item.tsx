@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { handleDownload } from '../../_utils/utils';
 import { UploadImageFileModal } from './upload-image-file-modal';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 export function MediaAssetItem({
   id,
@@ -11,14 +12,8 @@ export function MediaAssetItem({
   imageUrl,
   fileName,
   updatedAt,
-}: {
-  id: string;
-  group: MediaGroupName;
-  imageUrl: string;
-  fileName: string;
-  updatedAt: string;
-}) {
-  const preview = useState<string | null>(null);
+}: MediaPreviewProps & { id: string; group: MediaGroupName }) {
+  const preview = useState<MediaPreviewProps | null>(null);
   return (
     <div className="w-[9.375rem]">
       <div className="relative aspect-square rounded-md overflow-hidden w-full max-h-[9.375rem] border border-zinc-200">
@@ -34,7 +29,7 @@ export function MediaAssetItem({
               size="icon"
               className="size-6 bg-zinc-50 hover:bg-zinc-200 shadow-none"
               onClick={() => {
-                preview[1](imageUrl);
+                preview[1]({ fileName, imageUrl, updatedAt });
               }}
             >
               <Pen className="text-blue-500" />
@@ -50,7 +45,7 @@ export function MediaAssetItem({
         </div>
       </div>
       <span className="text-size-12px mt-1 text-zinc-500">
-        Last Updated: {updatedAt}
+        Last Updated: {format(updatedAt, 'yy.MM.dd')}
       </span>
     </div>
   );
