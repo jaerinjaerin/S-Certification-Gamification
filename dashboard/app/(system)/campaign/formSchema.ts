@@ -40,6 +40,7 @@ export const formSchema = z
     }),
     copyMedia: z.string().optional(),
     copyTarget: z.string().optional(),
+    copyUiLanguage: z.string().optional(),
     numberOfStages: z.string({
       required_error: 'Please select Number of Stages',
     }),

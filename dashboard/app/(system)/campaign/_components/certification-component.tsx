@@ -1,48 +1,27 @@
 'use client';
 
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { CircleHelp, Pen, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon, Pen, RotateCw } from 'lucide-react';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { formSchema, FormValues } from '../formSchema';
-
-import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form } from '@/components/ui/form';
+import { SelectContent, SelectItem } from '@/components/ui/select';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 import { useRouter } from 'next/navigation';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
+import FormComponent from './create-certification/form-component';
+import {
+  CustomInput,
+  CustomPopover,
+  CustomSelect,
+} from './create-certification/custom-form-items';
+import Container from './create-certification/container';
+import TableComponent from './create-certification/table-component';
+import dayjs from 'dayjs';
 
 type CertificationFormState = {
   isFormOpen: boolean;
@@ -97,9 +76,12 @@ export default function CertificationClientComponent() {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <h2>Certification List</h2>
-        <div>
+      <div
+        style={{ width: 'calc(100vw - 48px)' }}
+        className="flex justify-between items-center"
+      >
+        <h2 className="text-size-17px font-semibold">Certification List</h2>
+        <div className="flex gap-3">
           <DownloadFileListPopoverButton type="template" />
 
           <Button
@@ -115,7 +97,7 @@ export default function CertificationClientComponent() {
           </Button>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-3 gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
           campaigns.map((campaign) => (
             <CertificationListItem
@@ -141,30 +123,60 @@ function CertificationListItem({
 
   return (
     <div
-      className="flex items-center border border-zinc-200 rounded-md"
+      className="flex gap-2 items-center border border-zinc-200 rounded-lg justify-between p-6 shadow-sm"
       onClick={() => {
         setCampaign(campaign);
         router.push(`/dashboard/overview`);
       }}
     >
-      <div>
-        <h3>{campaign.name}</h3>
-        <time>
-          {campaign.startedAt} ~ {campaign.endedAt}
+      <div className="px-3 grow min-w-0">
+        <h3 className="text-size-24px font-semibold break-words">
+          {campaign.name}
+        </h3>
+        <time className="text-zinc-500 text-size-14px">
+          {`${dayjs(campaign.startedAt).format('YYYY.MM.DD')} ~ 
+          ${dayjs(campaign.endedAt).format('YYYY.MM.DD')}`}
         </time>
       </div>
-      <Button
-        variant="ghost"
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsCreateCertification({
-            isFormOpen: true,
-            type: 'edit',
-          });
-        }}
-      >
-        <Pen />
-      </Button>
+      <div className="flex gap-3">
+        <CustomAlertDialog
+          trigger={
+            <Button
+              variant="ghost"
+              className="p-0 aspect-square size-[1.875rem] rounded-sm bg-zinc-50"
+              onClick={() =>
+                setIsCreateCertification({
+                  isFormOpen: true,
+                  type: 'edit',
+                })
+              }
+            >
+              <Trash2
+                style={{ width: '1.25rem', height: '1.25rem' }}
+                className="text-red-500"
+              />
+            </Button>
+          }
+          description="Once deleted, the registered data cannot be restored. Are you sure you want to delete?"
+          buttons={[
+            { label: 'Cancel', variant: 'secondary', type: 'cancel' },
+            { label: 'Delete', variant: 'delete', type: 'delete' },
+          ]}
+        />
+
+        <Button
+          variant="ghost"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsCreateCertification({
+              isFormOpen: true,
+              type: 'edit',
+            });
+          }}
+        >
+          <Pen />
+        </Button>
+      </div>
     </div>
   );
 }
@@ -188,6 +200,7 @@ function CertificationForm({
       endDate: undefined,
       copyMedia: undefined,
       copyTarget: undefined,
+      copyUiLanguage: undefined,
       numberOfStages: undefined,
       firstBadgeName: '',
       ffFirstBadgeStage: undefined,
@@ -199,6 +212,7 @@ function CertificationForm({
       imageSourceCampaignId: undefined,
     },
   });
+
   const onSubmit = async (data: FormValues) => {
     console.log('Form Data:', data);
 
@@ -283,16 +297,21 @@ function CertificationForm({
 
     console.warn('loading end');
     alert('Certification created successfully');
-  };
 
-  console.log('🥕 errors', form.formState.errors);
-  const resetValue = (value: string) => {
-    form.setValue(value as keyof FormValues, '');
+    console.log('🥕 errors', form.formState.errors);
+    // const resetValue = (value: string) => {
+    //   form.setValue(value as keyof FormValues, '');
+    // };
+
+    setIsCreateCertification({
+      isFormOpen: false,
+      type: 'create',
+    });
   };
 
   return (
-    <div className="w-full">
-      <h2 className="text-2xl font-bold">
+    <div className="w-full mb-6">
+      <h2 className="text-size-17px font-semibold">
         {isCreateCertification.type === 'create'
           ? 'Create Certification'
           : 'Edit Certification'}
@@ -302,141 +321,115 @@ function CertificationForm({
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           id="certification-form"
-          className="space-y-8 px-[205px]"
+          className="space-y-8 mx-auto w-full max-w-[52.375rem] pt-16"
         >
-          <FormField
-            control={form.control}
-            name="certificationName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Certification Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
+          <span className="font-semibold">Basic Info</span>
+          <div className="grid grid-rows-3 min-[880px]:grid-rows-4 gap-8">
+            <Container>
+              {/* certification name */}
+              <FormComponent
+                className="max-w-[20rem]"
+                form={form}
+                label="Certification Name"
+                name="certificationName"
+                render={(field) => (
+                  <CustomInput placeholder="Enter Name" {...field} />
+                )}
+              />
+              {/* slug */}
+              <FormComponent
+                form={form}
+                label="Slug"
+                name="slug"
+                render={(field) => (
                   <div className="flex">
-                    <span>https://www.samsungplus.net/</span>
-                    <Input placeholder="Enter Slug" {...field} />
+                    <div className="flex items-center  max-w-[20rem]">
+                      <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
+                        https://www.samsungplus.net/
+                      </p>
+                      <CustomInput
+                        className="rounded-s-none "
+                        placeholder="enter-name"
+                        {...field}
+                      />
+
+                      {/* <Button
+                          variant="ghost"
+                          size="icon"
+                          className="shrink-0"
+                          type="button"
+                          onClick={() => resetValue(field.name)}
+                        >
+                          <RotateCw />
+                        </Button> */}
+                    </div>
                     <Button
-                      variant="ghost"
-                      size="icon"
-                      className="shrink-0"
-                      type="button"
-                      onClick={() => resetValue(field.name)}
+                      variant={'secondary'}
+                      className="border-zinc-200 shadow-none ml-5 text-size-14px h-10 font-normal text-zinc-500"
                     >
-                      <RotateCw />
+                      Check
                     </Button>
                   </div>
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Start Date</FormLabel>
-                <FormControl>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={'outline'}
-                        className={cn(
-                          'w-[240px] justify-start text-left font-normal',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        <CalendarIcon />
-                        {field.value ? (
-                          format(field.value, 'PPP')
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-auto p-0 "
-                      align="start"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>End Date</FormLabel>
-                <FormControl>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={'outline'}
-                        className={cn(
-                          'w-[240px] justify-start text-left font-normal',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        <CalendarIcon />
-                        {field.value ? (
-                          format(field.value, 'PPP')
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 " align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="imageSourceCampaignId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Media to Copy (Optional)</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="None" />
-                    </SelectTrigger>
+                )}
+              />
+            </Container>
+            <Container>
+              {/* start date */}
+              <FormComponent
+                className="flex flex-col w-full max-w-[20rem]"
+                form={form}
+                label="Start Date"
+                name="startDate"
+                render={(field) => <CustomPopover field={field} />}
+              />
+              {/* end date */}
+              <FormComponent
+                className="w-full flex flex-col"
+                form={form}
+                label="End Date"
+                name="endDate"
+                render={(field) => <CustomPopover field={field} />}
+              />
+            </Container>
+            <Container>
+              {/* copy media */}
+              <FormComponent
+                form={form}
+                className="max-w-[20rem]"
+                label="Media to Copy (Optional)"
+                name="imageSourceCampaignId"
+                type="tooltip"
+                render={(field) => (
+                  <CustomSelect field={field} selectDefaultValue="None">
+                    <SelectContent>
+                      {/* TODO: 이전 인증제 목록 */}
+                      <SelectItem value="none">None</SelectItem>
+                      {campaigns &&
+                        campaigns.map((campaign) => {
+                          // console.log(campaign);
+                          return (
+                            <SelectItem value={campaign.id} key={campaign.id}>
+                              {campaign.name}
+                            </SelectItem>
+                          );
+                        })}
+                    </SelectContent>
+                  </CustomSelect>
+                )}
+              />
+              {/* copy target */}
+              <FormComponent
+                form={form}
+                className="max-w-[20rem]"
+                label="Target to Copy (Optional)"
+                name="targetSourceCampaignId"
+                type="tooltip"
+                description="The Target data used in the selected certification will be copied."
+                trigger={
+                  <CircleHelp className="size-3 text-secondary cursor-pointer" />
+                }
+                render={(field) => (
+                  <CustomSelect field={field} selectDefaultValue="None">
                     <SelectContent>
                       {/* TODO: 이전 인증제 목록 */}
                       <SelectItem value="none">None</SelectItem>
@@ -446,238 +439,79 @@ function CertificationForm({
                             {campaign.name}
                           </SelectItem>
                         ))}
-                      {/* <SelectItem value="none">None</SelectItem>
-                      <SelectItem value="est">Galaxy AI Expert</SelectItem>
-                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem> */}
                     </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="targetSourceCampaignId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Target to Copy (Optional)</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="None" />
-                    </SelectTrigger>
+                  </CustomSelect>
+                )}
+              />
+            </Container>
+            <div className="h-fit">
+              {/* copy ui language */}
+              <FormComponent
+                className="max-w-[20rem]"
+                form={form}
+                label="UI Language to Copy (Optional)"
+                name="copyUiLanguage"
+                type="tooltip"
+                render={(field) => (
+                  <CustomSelect field={field} selectDefaultValue="None">
                     <SelectContent>
                       {/* TODO: 이전 인증제 목록 */}
                       <SelectItem value="none">None</SelectItem>
-                      {campaigns &&
-                        campaigns.map((campaign) => (
-                          <SelectItem value={campaign.id} key={campaign.id}>
-                            {campaign.name}
-                          </SelectItem>
-                        ))}
-                      {/* <SelectItem value="none">None</SelectItem>
                       <SelectItem value="est">Galaxy AI Expert</SelectItem>
-                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem> */}
+                      <SelectItem value="cst">Galaxy A10 Expert</SelectItem>
                     </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  </CustomSelect>
+                )}
+              />
+            </div>
+          </div>
+
           <Separator />
-          <div>Stage Setting</div>
-          <FormField
-            control={form.control}
+          <p className="font-semibold">Stage Setting</p>
+          <FormComponent
+            className="max-w-[20rem]"
+            form={form}
+            label="Number of Stages"
             name="numberOfStages"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Stages</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Array.from({ length: 10 }).map((_, index) => (
-                        <SelectItem value={`${index}`} key={index}>
-                          {index + 1}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+            render={(field) => (
+              <CustomSelect field={field} selectDefaultValue="Select">
+                <SelectContent>
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <SelectItem value={`${index}`} key={index}>
+                      {index + 1}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </CustomSelect>
             )}
           />
+
           <Separator />
-          <div>Badge Setting</div>
-          <FormField
-            control={form.control}
-            name="firstBadgeName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Badge Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Expert" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="secondBadgeName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Second Badge Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Advanced" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Job Group</TableHead>
-                <TableHead>First Badge Stage</TableHead>
-                <TableHead>Second Badge Stage</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>FF</TableCell>
-                <TableCell>
-                  <FormField
-                    control={form.control}
-                    name="ffFirstBadgeStage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.from({ length: 10 }).map((_, index) => (
-                                <SelectItem value={`${index}`} key={index}>
-                                  {index + 1}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-                <TableCell>
-                  <FormField
-                    control={form.control}
-                    name="ffSecondBadgeStage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.from({ length: 10 }).map((_, index) => (
-                                <SelectItem value={`${index}`} key={index}>
-                                  {index + 1}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>FSM</TableCell>
-                <TableCell>
-                  <FormField
-                    control={form.control}
-                    name="fsmFirstBadgeStage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.from({ length: 10 }).map((_, index) => (
-                                <SelectItem value={`${index}`} key={index}>
-                                  {index + 1}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-                <TableCell>
-                  <FormField
-                    control={form.control}
-                    name="fsmSecondBadgeStage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.from({ length: 10 }).map((_, index) => (
-                                <SelectItem value={`${index}`} key={index}>
-                                  {index + 1}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <p className="font-medium">Badge Setting</p>
+          <Container>
+            <FormComponent
+              className="max-w-[20rem]"
+              form={form}
+              label="First Badge Name"
+              name="firstBadgeName"
+              render={(field) => (
+                <CustomInput placeholder="Expert" {...field} />
+              )}
+            />
+            <FormComponent
+              className="max-w-[20rem]"
+              form={form}
+              label="Second Badge Name"
+              name="secondBadgeName"
+              render={(field) => (
+                <CustomInput placeholder="Advanced" {...field} />
+              )}
+            />
+          </Container>
+          <TableComponent form={form} />
         </form>
       </Form>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-16 gap-3">
         <Button
           variant="secondary"
           onClick={() =>
@@ -689,10 +523,29 @@ function CertificationForm({
         >
           Cancel
         </Button>
-
-        <Button variant="action" type="submit" form="certification-form">
-          Save
-        </Button>
+        {!form.formState.isValid ? (
+          <Button variant="action" form="certification-form">
+            Save
+          </Button>
+        ) : (
+          <CustomAlertDialog
+            description="Once you create a certification, you cannot change the Slug, Media to Copy, Target to Copy, or UI Language to Copy. Are you sure you want to save?"
+            buttons={[
+              { label: 'Cancel', type: 'cancel', variant: 'secondary' },
+              {
+                label: 'Save',
+                type: 'save',
+                variant: 'action',
+                onClick: form.handleSubmit(onSubmit),
+              },
+            ]}
+            trigger={
+              <Button variant="action" form="certification-form">
+                Save
+              </Button>
+            }
+          />
+        )}
       </div>
     </div>
   );
