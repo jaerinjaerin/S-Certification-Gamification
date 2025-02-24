@@ -6,7 +6,7 @@ import { UploadExcelFileVariant } from '../_type/type';
 import { handleNonSFileUpload } from '../_lib/handle-nonS-file-upload';
 
 type VariantHandlers<T> = {
-  handleUpload: (file: File) => Promise<T>;
+  handleUpload: (file: File) => Promise<T> | T;
   setData: (data: { data: T[]; files: File[] }) => void;
 };
 

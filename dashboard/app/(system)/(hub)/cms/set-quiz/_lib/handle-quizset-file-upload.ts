@@ -1,23 +1,31 @@
-import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
+import { extractFileInfo } from '@/lib/quiz-excel-parser';
 
-export async function handleQuizSetFileUpload(
-  file: File
-): Promise<ProcessResult> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    console.log('🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑 ');
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      if (!event.target) return reject(new Error('Failed to read file'));
-      const bufferArray = event.target.result;
-      if (!(bufferArray instanceof ArrayBuffer)) {
-        return reject(new Error('Failed to read file as ArrayBuffer'));
-      }
+interface ProcessResult {
+  success: boolean;
+  data?: {
+    domainCode: string | null;
+    languageCode: string | null;
+    jobGroup: string | null;
+  };
+  errors?: { line: number; message: string }[];
+}
 
-      const result = processExcelBuffer(bufferArray, file.name);
-      resolve(result);
+export function handleQuizSetFileUpload(file: File): ProcessResult {
+  const { domainCode, languageCode, jobGroup } = extractFileInfo(file.name);
+
+  if (!domainCode || !languageCode || !jobGroup) {
+    return {
+      success: false,
+      errors: [{ line: 0, message: 'Please check the file name format' }],
     };
+  }
 
-    reader.onerror = () => reject(new Error('Failed to read file'));
-  });
+  return {
+    success: true,
+    data: {
+      domainCode,
+      languageCode,
+      jobGroup,
+    },
+  };
 }

@@ -1,4 +1,9 @@
+// React & Types
+import { forwardRef, useState } from 'react';
+import { UploadExcelFileModalProps } from '../_type/type';
+
 // UI Components
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -8,28 +13,28 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { Button } from '@/components/ui/button';
 import { DropzoneView } from '../../_components/upload-files-dialog';
-import { forwardRef } from 'react';
 
-// Utils & Types
+// Utils
 import { cn } from '@/lib/utils';
 import { isEmpty } from '../../_utils/utils';
 
-// Custom Hooks
+// Hooks & State
 import useFileDropZone from '../hooks/useFileDropZone';
 import useQuizSetState from '../store/quizset-state';
-import { ProcessResult } from '@/lib/quiz-excel-parser';
+import { useStateVariables } from '@/components/provider/state-provider';
+
+// API Functions
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { submitActivityId } from '../_lib/submit-activityId';
-import { ActivityIdProcessResult } from '@/lib/activityid-excel-parser';
-import { UploadExcelFileModalProps } from '../_type/type';
 import { submitNonS } from '../_lib/submit-nonS';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
 >(({ children, title, variant }, ref) => {
+  const { campaign } = useStateVariables();
+
   const {
     quizSet,
     activityId,
@@ -38,14 +43,10 @@ const UploadExcelFileModal = forwardRef<
     nonS,
     clearNonS,
   } = useQuizSetState();
-
-  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
-    useFileDropZone({
-      variant,
-    });
-
-  console.log('🥕 fileRejections', fileRejections);
-  // variant에 따라 사용할 상태 결정
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { getRootProps, getInputProps, open, isDragActive } = useFileDropZone({
+    variant,
+  });
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -64,27 +65,23 @@ const UploadExcelFileModal = forwardRef<
     'non-s': clearNonS,
   };
 
+  const getValidFiles = () => {
+    const validIndices = uploadData[variant]
+      .map((data, index) => (data.success ? index : -1))
+      .filter((index) => index !== -1);
+
+    return validIndices.map((index) => uploadFiles[variant][index]);
+  };
+
   const handleSumbit = {
-    quiz: () =>
-      submitQuizSet(uploadData.quiz as ProcessResult[], uploadFiles.quiz),
+    quiz: () => submitQuizSet(getValidFiles(), campaign!.id, setIsDialogOpen),
     activityId: () => submitActivityId(uploadFiles.activityId),
     'non-s': () => submitNonS(uploadFiles['non-s']),
   };
 
-  const getValidFiles = (
-    uploadData: ProcessResult[] | ActivityIdProcessResult[]
-  ) => {
-    return uploadData.filter((data) => data.success);
-  };
-
-  // const getInvalidFiles = (data: ProcessResult[]) => {
-  //   return data.filter((data) => !data.success);
-  // };
-
   return (
     <div ref={ref}>
-      {/* <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}> */}
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -122,7 +119,7 @@ const UploadExcelFileModal = forwardRef<
               <Button
                 variant="action"
                 onClick={handleSumbit[variant]}
-                disabled={isEmpty(getValidFiles(uploadData[variant]))}
+                disabled={isEmpty(getValidFiles())}
               >
                 Upload
               </Button>

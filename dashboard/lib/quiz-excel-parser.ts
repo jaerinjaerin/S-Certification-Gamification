@@ -52,8 +52,9 @@ const getMergedCellValues = (sheet: XLSX.WorkSheet): Record<string, any> => {
   return mergedData;
 };
 
+// processExcelBuffer 대신 호출(handle-quizset-file-upload.ts)
 // 파일명에서 domainCode, languageCode, jobGroup 추출하는 함수
-const extractFileInfo = (fileName: string) => {
+export const extractFileInfo = (fileName: string) => {
   const parts = fileName.split('.');
   console.log('parts:', parts);
   if (parts.length < 4) {
