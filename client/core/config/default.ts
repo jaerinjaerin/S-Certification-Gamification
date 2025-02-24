@@ -1,5 +1,6 @@
 export const defaultLanguageCode = "en-US";
 export const sumtotalUserOthersJobId = "7";
+export const sumtotalUserOthersJobCode = "fsm";
 export const defaultLanguages = [
   { code: "ar-AE", name: "Language for AR AE" },
   { code: "az", name: "Language for AZ" },

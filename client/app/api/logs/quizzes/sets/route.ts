@@ -19,14 +19,9 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { userId, quizSetPath } = body;
+  const { userId, quizSetPath, campaignId } = body;
 
   try {
-    // const url = request.url;
-    // const { searchParams } = new URL(url);
-    // const quizsetPath = searchParams.get("quizset_path");
-    // // console.log("quizSet post", quizsetPath);
-
     if (!quizSetPath) {
       Sentry.captureMessage("Quiz set path is required");
       return NextResponse.json(
@@ -43,9 +38,6 @@ export async function POST(request: NextRequest) {
     }
 
     const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
-
-    // console.log("domainCode", domainCode);
-    // console.log("languageCode", languageCode);
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -161,17 +153,18 @@ export async function POST(request: NextRequest) {
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: domain?.id,
+        campaignId,
         jobCodes: {
           has: job?.code,
         },
       },
-      include: {
-        quizStages: {
-          include: {
-            badgeImage: true, // Include badgeImage relation in quizStages
-          },
-        },
-      },
+      // include: {
+      //   quizStages: {
+      //     include: {
+      //       badgeImage: true, // Include badgeImage relation in quizStages
+      //     },
+      //   },
+      // },
     });
 
     // // console.log("quizSet:", quizsetPath, quizSet);
@@ -197,7 +190,7 @@ export async function POST(request: NextRequest) {
         data: {
           userId: userId,
           authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
+          campaignId: campaignId,
           isCompleted: false,
           isBadgeAcquired: false,
 
@@ -279,13 +272,6 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  // export async function GET(request: NextRequest) {
-  // console.log("GET - QuizSet Log");
-  // const session = await auth();
-  // if (!session) {
-  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  // }
-
   const url = request.url;
   const { searchParams } = new URL(url);
   const userId = searchParams.get("user_id");
@@ -353,36 +339,6 @@ export async function GET(request: NextRequest) {
         quizSetId: userQuizLog.quizSetId,
       },
     });
-
-    // // console.log("userQuizStageLogs:", userQuizStageLogs);
-
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     userId: userId,
-    //     quizSetId: userQuizLog.quizSetId,
-    //   },
-    //   orderBy: {
-    //     createdAt: "asc",
-    //   },
-    // });
-
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     userId: userId,
-    //     quizSetId: userQuizLog.quizSetId,
-    //   },
-    //   orderBy: [
-    //     {
-    //       questionId: "asc", // questionId를 기준으로 정렬
-    //     },
-    //     {
-    //       createdAt: "desc", // 최신 항목을 우선 정렬
-    //     },
-    //   ],
-    //   distinct: ["questionId"], // questionId별로 중복 제거
-    // });
-
-    // console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
 
     return NextResponse.json(
       {

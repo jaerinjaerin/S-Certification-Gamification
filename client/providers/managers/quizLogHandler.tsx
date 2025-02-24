@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 
 interface CreateQuizLogParams {
   userId: string;
+  campaignId: string;
   quizSetPath: string;
 }
 
@@ -20,7 +21,7 @@ export class QuizLogHandler {
     params: CreateQuizLogParams,
     tryNumber: number = 3
   ): Promise<UserQuizLog | null> => {
-    const { userId, quizSetPath } = params;
+    const { userId, quizSetPath, campaignId } = params;
     let attempts = 0;
 
     while (attempts < tryNumber) {
@@ -31,7 +32,7 @@ export class QuizLogHandler {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId, quizSetPath }),
+            body: JSON.stringify({ userId, quizSetPath, campaignId }),
           }
         );
 

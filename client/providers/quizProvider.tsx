@@ -68,6 +68,8 @@ export const QuizProvider = ({
 }) => {
   const translation = useTranslations();
 
+  console.log("QuizProvider", quizSet);
+
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
 
@@ -185,6 +187,7 @@ export const QuizProvider = ({
     const quizLogHandler = new QuizLogHandler();
     const newQuizLog = await quizLogHandler.create({
       userId,
+      campaignId: campaign.id,
       quizSetPath: quizSetPath,
     });
 
@@ -217,7 +220,7 @@ export const QuizProvider = ({
 
       // 뱃지 스테이지 여부 확인
       const isBadgeAcquired = isBadgeStage()
-        ? await processBadgeAcquisition(stageElapsedSeconds)
+        ? await processBadgeAcquisition(stageElapsedSeconds, campaignName)
         : false;
       console.log("isBadgeAcquired", isBadgeAcquired);
 
@@ -257,7 +260,7 @@ export const QuizProvider = ({
         isBadgeAcquired,
         badgeActivityId:
           authType === AuthType.SUMTOTAL
-            ? getCurrentStageBadgeActivityId()
+            ? getCurrentStageBadgeActivityId(campaignName)
             : null,
         quizLog: _quizLog,
       });
@@ -381,7 +384,15 @@ export const QuizProvider = ({
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const getCurrentStageBadgeActivityId = (): string | null => {
+  const getCurrentStageBadgeActivityId = (
+    campaignSlug: string
+  ): string | null => {
+    if (campaignSlug.toLowerCase() !== "s25") {
+      return currentQuizStage?.badgeActivityId ?? null;
+    }
+
+    // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.
+    // 대체 로직은 위의 로직을 사용
     if (
       _quizLog?.quizSetPath?.toLocaleLowerCase() ===
       "NAT_2756_de-DE"?.toLocaleLowerCase()
@@ -443,11 +454,12 @@ export const QuizProvider = ({
   };
 
   const processBadgeAcquisition = async (
-    elapsedSeconds: number
+    elapsedSeconds: number,
+    campaignSlug: string
   ): Promise<boolean> => {
     // 썸토탈 뱃지 발급
     if (authType === AuthType.SUMTOTAL) {
-      const activityId = getCurrentStageBadgeActivityId();
+      const activityId = getCurrentStageBadgeActivityId(campaignSlug);
 
       // await new Promise((resolve) => setTimeout(resolve, 3000));
       // console.log("activityId", activityId, _quizLog?.quizSetPath);

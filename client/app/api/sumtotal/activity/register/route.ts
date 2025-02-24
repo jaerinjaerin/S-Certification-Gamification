@@ -69,8 +69,6 @@ export async function POST(request: Request) {
     let accessToken = account.access_token;
     let isTokenRefreshed = false;
 
-    console.log("account", account);
-
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const response = await fetch(
