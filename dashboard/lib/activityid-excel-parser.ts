@@ -16,11 +16,11 @@ export interface ParsedExcelData {
 export interface ActivityIdProcessResult {
   success: boolean;
   data?: ParsedExcelData[];
-  error?: string;
+  errors?: { line: number; message: string }[];
 }
 
 export const processActivityExcelBuffer = (
-  fileBuffer: Buffer
+  fileBuffer: Buffer | ArrayBuffer
 ): ActivityIdProcessResult => {
   try {
     // 엑셀 파일 읽기
@@ -54,7 +54,15 @@ export const processActivityExcelBuffer = (
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      errors: [
+        {
+          line: 0,
+          message:
+            error instanceof Error
+              ? error.message
+              : `Processing error: ${error}`,
+        },
+      ],
     };
   }
 };

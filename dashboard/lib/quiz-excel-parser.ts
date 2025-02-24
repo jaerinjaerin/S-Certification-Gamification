@@ -69,7 +69,7 @@ const extractFileInfo = (fileName: string) => {
 
 // 엑셀 데이터 처리 함수
 export const processExcelBuffer = (
-  fileBuffer: Buffer,
+  fileBuffer: Buffer | ArrayBuffer,
   fileName: string
 ): ProcessResult => {
   try {
