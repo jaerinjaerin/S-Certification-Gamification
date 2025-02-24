@@ -67,6 +67,10 @@ export default {
           'active-text': 'hsl(var(--sidebar-active-text))',
           icon: 'hsl(var(--sidebar-icon))',
         },
+        icon: {
+          success: 'hsl(var(--icon-success))',
+          error: 'hsl(var(--icon-error))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
