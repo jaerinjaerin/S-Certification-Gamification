@@ -393,6 +393,7 @@ export async function POST(request: NextRequest) {
             domainId: domain.id,
             // questionIds,
             lifeCount: 5,
+            languageId: language.id,
             quizSetId: quizSet.id,
           },
         });

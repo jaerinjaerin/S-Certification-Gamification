@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     console.log('file: ', file);
 
     if (!campaignId) {
+      console.error('Missing required parameter: campaign_id');
       return NextResponse.json(
         {
           success: false,
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!campaign) {
+      console.error('Campaign not found');
       return NextResponse.json(
         {
           success: false,
@@ -84,6 +86,7 @@ export async function POST(request: NextRequest) {
 
     if (uploadedFile) {
       if (file.name !== uploadedFile.path.split('/').pop()) {
+        console.error('Different file name');
         return NextResponse.json(
           {
             success: false,
@@ -103,6 +106,7 @@ export async function POST(request: NextRequest) {
       Buffer.from(fileBuffer)
     );
     if (!result.success || !result.data) {
+      console.error('Error processing activity id excel: ', result.error);
       return NextResponse.json(
         {
           success: false,
@@ -337,7 +341,7 @@ export async function POST(request: NextRequest) {
             domainId: domain.id,
             languageId: language.id,
             jobCode: 'fsm',
-            badgeType: BadgeType.FIRST,
+            badgeType: BadgeType.SECOND,
             badgeImageId: badgeImage.id,
           },
         });
@@ -350,7 +354,7 @@ export async function POST(request: NextRequest) {
               domainId: domain.id,
               languageId: language.id,
               jobCode: 'fsm',
-              badgeType: BadgeType.FIRST,
+              badgeType: BadgeType.SECOND,
               badgeImageId: badgeImage.id,
             },
           });
@@ -365,7 +369,7 @@ export async function POST(request: NextRequest) {
               domainId: domain.id,
               languageId: language.id,
               jobCode: 'fsm',
-              badgeType: BadgeType.FIRST,
+              badgeType: BadgeType.SECOND,
               badgeImageId: badgeImage.id,
             },
           });

@@ -134,6 +134,9 @@ export async function GET(request: NextRequest, props: Props) {
           domainId: domain.id,
           languageId: language.id,
         },
+        include: {
+          badgeImage: true,
+        },
       });
 
       const firstBadgeIndex =
@@ -147,10 +150,15 @@ export async function GET(request: NextRequest, props: Props) {
         );
         if (firstBadge) {
           if (quizSet.quizStages.length > firstBadgeIndex) {
+            quizSet.quizStages[firstBadgeIndex].isBadgeStage = true;
             quizSet.quizStages[firstBadgeIndex].badgeImageId =
               firstBadge.badgeImageId;
+            quizSet.quizStages[firstBadgeIndex].badgeImage =
+              firstBadge.badgeImage;
             quizSet.quizStages[firstBadgeIndex].badgeActivityId =
               firstBadge.activityId;
+            quizSet.quizStages[firstBadgeIndex].badgeType =
+              firstBadge.badgeType;
           }
         }
       }
@@ -166,10 +174,15 @@ export async function GET(request: NextRequest, props: Props) {
         );
         if (secondBadge) {
           if (quizSet.quizStages.length > secondBadgeIndex) {
+            quizSet.quizStages[secondBadgeIndex].isBadgeStage = true;
             quizSet.quizStages[secondBadgeIndex].badgeImageId =
               secondBadge.badgeImageId;
+            quizSet.quizStages[secondBadgeIndex].badgeImage =
+              secondBadge.badgeImage;
             quizSet.quizStages[secondBadgeIndex].badgeActivityId =
               secondBadge.activityId;
+            quizSet.quizStages[secondBadgeIndex].badgeType =
+              secondBadge.badgeType;
           }
         }
       }

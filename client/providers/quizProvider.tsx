@@ -262,6 +262,7 @@ export const QuizProvider = ({
           authType === AuthType.SUMTOTAL
             ? getCurrentStageBadgeActivityId(campaignName)
             : null,
+        badgeType: currentQuizStage?.badgeType || null,
         quizLog: _quizLog,
       });
 
