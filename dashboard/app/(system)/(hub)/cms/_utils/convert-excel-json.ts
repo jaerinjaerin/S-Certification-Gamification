@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 export const convertUi = async (
   file: File
 ): Promise<
-  | { success: true; data: Record<string, string> }
+  | { success: true; result: Record<string, string> }
   | { success: false; errorMessage: string }
 > => {
   try {
@@ -41,7 +41,7 @@ export const convertUi = async (
       {} as Record<string, string>
     );
 
-    return { success: true, data: transformedData };
+    return { success: true, result: transformedData };
   } catch (error) {
     return {
       success: false,
@@ -60,7 +60,7 @@ export const convertQuizSet = async () => {
     // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     // const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-    return { success: true, data: { 'convertQuizSet Success': 'success' } };
+    return { success: true, result: { 'convertQuizSet Success': 'success' } };
   } catch (error) {
     return {
       success: false,
@@ -71,24 +71,6 @@ export const convertQuizSet = async () => {
     };
   }
 };
-// export const convertTarget = async () => {
-//   try {
-//     // const data = await file.arrayBuffer();
-//     // const workbook = XLSX.read(data);
-//     // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-//     // const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-//     return { success: true, data: { 'convertQuizSet Success': 'success' } };
-//   } catch (error) {
-//     return {
-//       success: false,
-//       errorMessage:
-//         error instanceof Error
-//           ? error.message
-//           : '파일 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
-//     };
-//   }
-// };
 
 export const convertTarget = async (
   file: File
