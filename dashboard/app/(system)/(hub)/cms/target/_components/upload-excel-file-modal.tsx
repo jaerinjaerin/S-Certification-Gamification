@@ -21,6 +21,7 @@ import { useTargetData } from '../_provider/target-data-provider';
 import axios from 'axios';
 import { LoaderWithBackground } from '@/components/loader';
 import { processAndExportExcelAndJsonObject } from '../_lib/file-converter';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ export default function UploadExcelFileModal({
   title,
   variant,
 }: UploadExcelFileModalProps) {
+  const { campaign } = useStateVariables();
   const { state, dispatch } = useTargetData();
   const [files, setFiles] = useState<TargetConvertedProps[]>([]);
   const [isConverting, setIsConverting] = useState(false);
@@ -99,7 +101,7 @@ export default function UploadExcelFileModal({
     const formData = new FormData();
     formData.append('file', file);
     formData.append('json', JSON.stringify(json));
-    formData.append('campaign', 'ac2fb618-384f-41aa-ab06-51546aeacd32');
+    formData.append('campaign', JSON.stringify(campaign));
 
     try {
       setLoading(true);

@@ -3,13 +3,13 @@
 import { getPath } from '@/lib/file';
 import { uploadToS3 } from '@/lib/s3-client';
 import { prisma } from '@/model/prisma';
+import { Campaign } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaignId = (searchParams.get('campaign') ||
-      'ac2fb618-384f-41aa-ab06-51546aeacd32') as string;
+    const campaignId = searchParams.get('campaignId') as string;
 
     await prisma.$connect();
 
@@ -66,8 +66,7 @@ export async function POST(request: NextRequest) {
     const json = JSON.parse(
       formData.get('json') as string
     ) as TargetFromExcelProps[];
-    const campaignId = (formData.get('campaign') ||
-      'ac2fb618-384f-41aa-ab06-51546aeacd32') as string;
+    const campaign = JSON.parse(formData.get('campaign') as string) as Campaign;
 
     if (!file) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
@@ -75,14 +74,10 @@ export async function POST(request: NextRequest) {
 
     await prisma.$connect();
 
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: campaignId },
-    });
     //
     // excel 파일 업로드
-    const campaignName = (campaign?.name || 'unknown').toLowerCase();
-    const path = getPath(campaignName, 'target');
-    const key = `${path}/target_${campaignName}.xlsx`;
+    const path = getPath(campaign.name, 'target');
+    const key = `${path}/target_${campaign.name}.xlsx`;
     await uploadToS3({ key, file, isNoCache: true });
     //
     const codes = json.map((j) => j.code);
@@ -92,7 +87,10 @@ export async function POST(request: NextRequest) {
     const domainMap = new Map(domains.map((d) => [d.code, d.id]));
 
     const goals = await prisma.domainGoal.findMany({
-      where: { campaignId, domainId: { in: [...domainMap.values()] } },
+      where: {
+        campaignId: campaign.id,
+        domainId: { in: [...domainMap.values()] },
+      },
     });
 
     const goalMap = new Map(goals.map((g) => [g.domainId, g.id]));

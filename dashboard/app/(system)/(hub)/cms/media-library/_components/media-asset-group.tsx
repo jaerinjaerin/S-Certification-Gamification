@@ -1,40 +1,20 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { MediaAssetItem } from './media-asset-item';
 import MediaAssetListContainer from './media-asset-list-container';
 import { format } from 'date-fns';
 import { useMediaData } from '../_provider/media-data-provider';
 import { LoaderWithBackground } from '@/components/loader';
 
-type Props = { group: MediaGroupName; data: MediaProps[] };
+type Props = { group: MediaGroupName };
 
-const MediaAssetGroup = ({ group, data }: Props) => {
-  const { state, dispatch } = useMediaData();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    if (data) {
-      //
-      switch (group) {
-        case 'badge':
-          dispatch({ type: 'SET_BADGE', payload: data });
-          break;
-        case 'character':
-          dispatch({ type: 'SET_CHARACTER', payload: data });
-          break;
-        case 'background':
-          dispatch({ type: 'SET_BACKGROUND', payload: data });
-          break;
-      }
-      setLoading(false);
-    }
-  }, []);
+const MediaAssetGroup = ({ group }: Props) => {
+  const { state } = useMediaData();
+  const data = state[group];
 
   return (
     <MediaAssetListContainer group={group}>
-      {loading && <LoaderWithBackground />}
-      {(state[group] || data).map((image) => {
+      {data?.length === 0 && <LoaderWithBackground />}
+      {data?.map((image) => {
         const fileName = (image.index + 1).toString();
         const key = `${image.id}_${image.date}`;
         return (

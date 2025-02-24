@@ -4,23 +4,19 @@ import { getPath } from '@/lib/file';
 import { getFromS3, uploadToS3 } from '@/lib/s3-client';
 import { extractLanguageCode } from '@/lib/text';
 import { prisma } from '@/model/prisma';
+import { Campaign } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaignId =
-      searchParams.get('campaign') || 'ac2fb618-384f-41aa-ab06-51546aeacd32';
+    const campaign = searchParams.get('campaignName') as string;
 
     await prisma.$connect();
 
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: campaignId },
-    });
-
     const languages = await prisma.language.findMany({});
 
-    const campaignName = (campaign?.name || 'unknown').toLowerCase();
+    const campaignName = (campaign || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'ui_language');
 
     const result = await Promise.all(
@@ -71,18 +67,13 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const files = formData.getAll('files') as File[];
     const jsons = formData.getAll('jsons') as File[];
-    const campaignId = formData.get('campaign') as string;
+    const campaign = JSON.parse(formData.get('campaign') as string) as Campaign;
 
     if (!files || !jsons) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
     await prisma.$connect();
-
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: campaignId },
-    });
-    //
 
     const codes = files
       .map((file) => extractLanguageCode(file.name))
@@ -92,7 +83,7 @@ export async function POST(request: NextRequest) {
       where: { code: { in: codes } },
     });
 
-    const campaignName = (campaign?.name || 'unknown').toLowerCase();
+    const campaignName = (campaign.name || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'ui_language');
     // excel 파일 업로드
     await Promise.all(

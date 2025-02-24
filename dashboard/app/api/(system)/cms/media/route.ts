@@ -3,21 +3,23 @@
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadToS3 } from '@/lib/s3-client';
+import { Campaign } from '@prisma/client';
+import { getPath } from '@/lib/file';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaignId = searchParams.get('campaign');
+    const campaignId = searchParams.get('campaignId') as string;
 
     await prisma.$connect();
 
     const images = await prisma.image.findMany({
-      //   where: { campaignId },
+      // where: { campaignId },
       select: { id: true, imagePath: true, alt: true, updatedAt: true },
       orderBy: { createdAt: 'asc' },
     });
     const badges = await prisma.quizBadge.findMany({
-      //   where: { campaignId },
+      // where: { campaignId },
       select: { id: true, imagePath: true, name: true, updatedAt: true },
       orderBy: { createdAt: 'asc' },
     });
@@ -76,28 +78,22 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const group = formData.get('group') as string;
-    const campaignId = formData.get('campaign') as string;
+    const campaign = JSON.parse(formData.get('campaign') as string) as Campaign;
 
     if (!file) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: campaignId },
-    });
-    //
-
     const count =
       group === 'badge'
-        ? await prisma.quizBadge.count({ where: { campaignId } })
-        : await prisma.image.count({ where: { campaignId, alt: group } });
+        ? await prisma.quizBadge.count({ where: { campaignId: campaign.id } })
+        : await prisma.image.count({
+            where: { campaignId: campaign.id, alt: group },
+          });
     const format = file.type.split('/')[1];
 
-    let imagePath = `images/${group}/${count + 1}.${format}`;
-    const folderName = campaign?.name;
-    if (folderName) {
-      imagePath = `certification/${folderName.toLowerCase()}/${imagePath}`;
-    }
+    let imagePath = getPath(campaign.name, `images/${group}`);
+    imagePath = `${imagePath}/${count + 1}.${format}`;
 
     // 파일 업로드드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
@@ -110,7 +106,7 @@ export async function POST(request: NextRequest) {
         data: {
           name: group,
           imagePath: `/${imagePath}`,
-          campaignId,
+          campaignId: campaign.id,
         },
       });
       //
@@ -128,7 +124,7 @@ export async function POST(request: NextRequest) {
           caption: group,
           format: format,
           imagePath: `/${imagePath}`,
-          campaignId,
+          campaignId: campaign.id,
         },
       });
       //

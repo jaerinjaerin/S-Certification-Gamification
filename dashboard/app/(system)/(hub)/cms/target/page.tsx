@@ -1,6 +1,4 @@
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
-import { serializeJsonToQuery } from '@/lib/search-params';
 import { DataTable } from './_components/data-table';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
 import SectionTitle from '../_components/section-title-container';
@@ -8,16 +6,7 @@ import DownloadTarget from './_components/download-files';
 import UploadExcelFileModal from './_components/upload-excel-file-modal';
 import { TargetDataProvider } from './_provider/target-data-provider';
 
-export default async function TargetPage({
-  searchParams,
-}: {
-  searchParams: JsonObject;
-}) {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/cms/target?${serializeJsonToQuery(searchParams)}`
-  );
-  const data = response.data.result as TargetProps[];
-
+export default async function TargetPage() {
   return (
     <TargetDataProvider>
       <div className="absolute top-0 right-0 ">
@@ -34,7 +23,7 @@ export default async function TargetPage({
           </div>
         </div>
         <div className="border rounded-md">
-          <DataTable data={data} />
+          <DataTable />
         </div>
       </div>
     </TargetDataProvider>

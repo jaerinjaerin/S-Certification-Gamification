@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
+import dayjs from 'dayjs';
 
 type OptionalDropzoneProps = Omit<
   DropzoneProps,
@@ -159,12 +160,15 @@ function AddAssetPreviewView(
 function EditAssetPreviewView(
   props: Omit<AssetPreviewViewProps, 'extraContent'>
 ) {
+  const timestamp = props.files[0].lastModified;
+  const date = dayjs(timestamp).format('YY.MM.DD HH:mm:ss');
+
   return (
     <AssetPreviewView
       {...props}
       extraContent={
         <div className="flex items-center gap-2">
-          <span>version: 25.02.05 23:55:23</span>
+          <span>{date}</span>
           <Button variant="download" className="shadow-none" size="icon">
             <Download />
           </Button>

@@ -21,6 +21,7 @@ import { useLanguageData } from '../_provider/language-data-provider';
 import axios from 'axios';
 import { LoaderWithBackground } from '@/components/loader';
 import { processAndExportExcelAndJson } from '../_lib/file-converter';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ export default function UploadExcelFileModal({
   title,
   variant,
 }: UploadExcelFileModalProps) {
+  const { campaign } = useStateVariables();
   const { state, dispatch } = useLanguageData();
   const [files, setFiles] = useState<LanguageConvertedProps[]>([]);
   const [isConverting, setIsConverting] = useState(false);
@@ -91,7 +93,7 @@ export default function UploadExcelFileModal({
       formData.append('files', file);
       if (json) formData.append('jsons', json);
     });
-    formData.append('campaign', 'ac2fb618-384f-41aa-ab06-51546aeacd32');
+    formData.append('campaign', JSON.stringify(campaign));
 
     try {
       setLoading(true);

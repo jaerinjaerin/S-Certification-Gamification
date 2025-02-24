@@ -54,16 +54,17 @@ const getMergedCellValues = (sheet: XLSX.WorkSheet): Record<string, any> => {
 
 // 파일명에서 domainCode, languageCode, jobGroup 추출하는 함수
 const extractFileInfo = (fileName: string) => {
-  const name = fileName.split('_')[0]; // 날짜 부분제거
-  const parts = name.split('.');
+  const parts = fileName.split('.');
+  console.log('parts:', parts);
   if (parts.length < 4) {
     return { domainCode: null, languageCode: null, jobGroup: null };
   }
 
+  const jobGroup = parts[3].split('_')[0]; // 날짜 부분제거
   return {
     domainCode: parts[1],
     languageCode: parts[2],
-    jobGroup: parts[3],
+    jobGroup: jobGroup,
   };
 };
 
