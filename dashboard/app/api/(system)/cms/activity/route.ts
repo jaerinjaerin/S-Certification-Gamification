@@ -106,12 +106,12 @@ export async function POST(request: NextRequest) {
       Buffer.from(fileBuffer)
     );
     if (!result.success || !result.data) {
-      console.error('Error processing activity id excel: ', result.error);
+      console.error('Error processing activity id excel: ', result.errors);
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: result.error,
+            message: result.errors,
             errorCode: ERROR_CODES.UNKNOWN,
           },
         },
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     }
 
     const activityBadges = [];
-    const errors = [];
+    const failures = [];
 
     for (const data of result.data) {
       const domainCode = data.domainCode;
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (!domain) {
-        errors.push({
+        failures.push({
           message: `Domain not found: ${domainCode}`,
           code: ERROR_CODES.DOMAIN_NOT_FOUND,
         });
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (!language) {
-        errors.push({
+        failures.push({
           message: `Language not found: ${languageCode}`,
           code: ERROR_CODES.LANGUAGE_NOT_FOUND,
         });
@@ -161,7 +161,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (!badgeImage) {
-          errors.push({
+          failures.push({
             message: `Badge image not found: ${data.domainCode}, ${data.FF_FirstBadgeImage}`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
@@ -214,7 +214,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (!badgeImage) {
-          errors.push({
+          failures.push({
             message: `Badge image not found: ${data.domainCode}, ${data.FF_SecondBadgeImage}`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
@@ -271,7 +271,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (!badgeImage) {
-          errors.push({
+          failures.push({
             message: `Badge image not found: ${data.domainCode}, ${data.FSM_FirstBadgeImage}`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
@@ -328,7 +328,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (!badgeImage) {
-          errors.push({
+          failures.push({
             message: `Badge image not found: ${data.domainCode}, ${data.FSM_SecondBadgeImage}`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
@@ -446,9 +446,9 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         result: {
-          activityBadges,
+          data: activityBadges,
           uploadedFile,
-          errors,
+          failures,
         },
       },
       { status: 200 }
