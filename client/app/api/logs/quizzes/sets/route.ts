@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,
@@ -237,7 +237,7 @@ export async function POST(request: NextRequest) {
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,
@@ -274,7 +274,7 @@ export async function POST(request: NextRequest) {
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,
@@ -299,7 +299,7 @@ export async function POST(request: NextRequest) {
 
           domainId: domain?.id,
           regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
           storeId: user?.storeId,
           storeSegmentText: user?.storeSegmentText,
@@ -326,7 +326,7 @@ export async function POST(request: NextRequest) {
 
     //       domainId: domain?.id,
     //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-    //       subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+    //       subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
     //       storeId: user?.storeId,
     //       storeSegmentText: user?.storeSegmentText,
@@ -352,7 +352,7 @@ export async function POST(request: NextRequest) {
 
     //       domainId: domain?.id,
     //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-    //       subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+    //       subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
 
     //       storeId: user?.storeId,
     //       storeSegmentText: user?.storeSegmentText,
