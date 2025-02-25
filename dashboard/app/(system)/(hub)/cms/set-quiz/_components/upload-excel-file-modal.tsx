@@ -5,9 +5,9 @@ import { UploadExcelFileModalProps } from '../_type/type';
 // UI Components
 import { Button } from '@/components/ui/button';
 import {
+  CustomDialogContent,
   Dialog,
   DialogClose,
-  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -28,6 +28,8 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { submitActivityId } from '../_lib/submit-activityId';
 import { submitNonS } from '../_lib/submit-nonS';
+import InformationInputDialog from '../../_components/information-input-dialog';
+import { FilesTableComponent, Td } from './files-table-component';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
@@ -43,10 +45,14 @@ const UploadExcelFileModal = forwardRef<
     nonS,
     clearNonS,
   } = useQuizSetState();
+
+  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
+    useFileDropZone({
+      variant,
+    });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { getRootProps, getInputProps, open, isDragActive } = useFileDropZone({
-    variant,
-  });
+
+  // variant에 따라 사용할 상태 결정
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -73,6 +79,26 @@ const UploadExcelFileModal = forwardRef<
     return validIndices.map((index) => uploadFiles[variant][index]);
   };
 
+  const getInvalidFiles = () => {
+    const validIndices = uploadData[variant]
+      .map((data, index) => (!data.success ? index : -1))
+      .filter((index) => index !== -1);
+
+    return validIndices.map((index) => uploadFiles[variant][index]);
+  };
+
+  // const handleDialogOpen = () => {
+  //   if (!isEmpty(getValidFiles())) {
+  //     setIsDialogOpen(!isDialogOpen);
+  //   }
+  // };
+
+  // const getInvalidFiles = (
+  //   uploadData: ProcessResult[] | ActivityIdProcessResult[]
+  // ) => {
+  //   return uploadData.filter((data) => !data.success);
+  // };
+
   const handleSumbit = {
     quiz: () => submitQuizSet(getValidFiles(), campaign!.id, setIsDialogOpen),
     activityId: () => submitActivityId(uploadFiles.activityId),
@@ -83,9 +109,11 @@ const UploadExcelFileModal = forwardRef<
     <div ref={ref}>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <CustomDialogContent className="gap-16">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className="text-size-17px font-semibold">
+              {title}
+            </DialogTitle>
           </DialogHeader>
           {isEmpty(uploadFiles[variant]) && (
             <DropzoneView
@@ -96,36 +124,93 @@ const UploadExcelFileModal = forwardRef<
             />
           )}
           {!isEmpty(uploadFiles[variant]) && (
-            <div>
-              {uploadFiles[variant].map((file, index) => (
-                <div key={index} className={cn('flex gap-5')}>
-                  <span>{file.name}</span>
-                  {!uploadData[variant][index].success && (
-                    <span className="text-red-500">
-                      {uploadData[variant][index].errors?.[0].message}
-                    </span>
-                  )}
-                </div>
-              ))}
+            <div className="flex flex-col gap-5">
+              <span className="text-size-14px font-semibold">
+                Total : {uploadFiles[variant].length}
+              </span>
+              <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
+                <FilesTableComponent>
+                  {uploadFiles[variant].map((file, index) => (
+                    <tr key={index} className="border-t border-t-zinc-200">
+                      <Td>{index + 1}</Td>
+                      <Td>{file.name}</Td>
+                      <Td>
+                        {!uploadData[variant][index].success && (
+                          <span className="text-red-500">
+                            {uploadData[variant][index].errors?.[0].message}
+                          </span>
+                        )}
+                      </Td>
+                    </tr>
+                  ))}
+                </FilesTableComponent>
+              </div>
             </div>
           )}
           {!isEmpty(uploadFiles[variant]) && (
-            <DialogFooter>
+            <DialogFooter className="!justify-center !flex-row">
               <DialogClose asChild>
                 <Button variant="secondary" onClick={clearUploadFile[variant]}>
                   Cancel
                 </Button>
               </DialogClose>
               <Button
+                className={cn('!ml-3')}
                 variant="action"
-                onClick={handleSumbit[variant]}
+                // onClick={handleSumbit[variant]}
+                onClick={() => {
+                  handleSumbit[variant]();
+                  // handleDialogOpen();
+                }}
                 disabled={isEmpty(getValidFiles())}
               >
                 Upload
               </Button>
+              <InformationInputDialog
+                state={getValidFiles().length > 0 ? 'success' : 'error'}
+                type="multi"
+                tableContent={
+                  <FilesTableComponent>
+                    {uploadFiles[variant]
+                      .reduce<{ file: File; index: number }[]>(
+                        (acc, file, index) => {
+                          if (!uploadData[variant][index].success) {
+                            acc.push({ file, index });
+                          }
+                          return acc;
+                        },
+                        []
+                      )
+                      .map(({ file, index }) => {
+                        return (
+                          <tr
+                            key={index}
+                            className="border-t border-t-zinc-200"
+                          >
+                            <Td>{index + 1}</Td>
+                            <Td>{file.name}</Td>
+                            <Td>
+                              <span className="text-red-500">
+                                {uploadData[variant][index]?.errors &&
+                                  uploadData[variant][index]?.errors[0]
+                                    ?.message}
+                              </span>
+                            </Td>
+                          </tr>
+                        );
+                      })}
+                  </FilesTableComponent>
+                }
+                uploadData={[
+                  {
+                    totalLength: uploadFiles[variant].length,
+                    invalidLength: getInvalidFiles().length,
+                  },
+                ]}
+              />
             </DialogFooter>
           )}
-        </DialogContent>
+        </CustomDialogContent>
       </Dialog>
     </div>
   );

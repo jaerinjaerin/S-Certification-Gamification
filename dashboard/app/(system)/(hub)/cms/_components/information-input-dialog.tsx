@@ -13,28 +13,41 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/utils/utils';
 import { X, Check, CircleX } from 'lucide-react';
-import { useState } from 'react';
+
+interface uploadData {
+  totalLength: number;
+  invalidLength: number;
+}
 
 export default function InformationInputDialog({
   trigger,
   onOpenChange,
   open,
   type,
+  onClick,
+  state,
+  uploadData,
+  tableContent,
 }: {
   trigger?: React.ReactNode;
   onOpenChange?: () => void;
   open?: boolean;
   type: 'single' | 'multi';
+  onClick?: () => void;
+  state: 'error' | 'success';
+  uploadData: uploadData[];
+  tableContent?: React.ReactNode;
 }) {
-  const [isSuccess, setIsSuccess] = useState(false);
+  // console.log('🍕uploadData', uploadData);
+  const { totalLength, invalidLength } = uploadData[0];
 
   const getResultMessage = () => {
-    if (!isSuccess) {
+    if (state === 'error') {
       return 'The file upload has failed.';
     } else if (type === 'single') {
       return 'The file has been uploaded successfully.';
     } else if (type === 'multi') {
-      return `Out of a total of ${32} files, ${27} files were successfully uploaded.`;
+      return `Out of a total of ${totalLength} files, ${totalLength - invalidLength} files were successfully uploaded.`;
     }
   };
 
@@ -54,10 +67,10 @@ export default function InformationInputDialog({
               <div
                 className={cn(
                   `rounded-full size-11 flex items-center justify-center`,
-                  isSuccess ? 'bg-blue-100' : 'bg-red-100'
+                  state === 'success' ? 'bg-blue-100' : 'bg-red-100'
                 )}
               >
-                {isSuccess ? (
+                {state === 'success' ? (
                   <Check className="text-icon-success" />
                 ) : (
                   <X className="text-icon-error" />
@@ -73,36 +86,22 @@ export default function InformationInputDialog({
             <div className="flex gap-2 items-center">
               <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
               <span className="text-size-14px font-semibold">
-                5 files failed to upload.
+                {invalidLength} files failed to upload.
               </span>
             </div>
-            <div className="overflow-y-scroll max-h-[373px]">
-              {/* <table className="border border-zinc-200 w-full">
-                <thead className="border border-zinc-200">
-                  <td>hi</td>
-                  <td>hi</td>
-                  <td>hi</td>
-                </thead>
-                <tbody className="border border-zinc-200 ">
-                  <tr className="h-60">
-                    <td>hello</td>
-                    <td>hello</td>
-                    <td>hello</td>
-                  </tr>
-                  <tr className="h-60">
-                    <td>yellow</td>
-                    <td>green</td>
-                    <td>red</td>
-                  </tr>
-                </tbody>
-              </table> */}
+            <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+              {tableContent}
             </div>
           </div>
         )}
 
         <DialogFooter className="!justify-center">
           <DialogClose asChild>
-            <Button className="shadow-none" variant={'action'}>
+            <Button
+              className="shadow-none"
+              variant={'action'}
+              onClick={onClick}
+            >
               Confirm
             </Button>
           </DialogClose>
