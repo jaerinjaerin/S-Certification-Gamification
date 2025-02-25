@@ -185,60 +185,185 @@ export async function POST(request: NextRequest) {
 
     // // console.log("user:", user);
 
-    const result = await prisma.$transaction(async (tx) => {
-      const userQuizLog = await tx.userQuizLog.create({
-        data: {
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: confirmedQuizSetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      const userQuizStatistics = await tx.userQuizStatistics.create({
-        data: {
-          id: userQuizLog.id,
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: confirmedQuizSetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      return { userQuizLog, userQuizStatistics };
+    let userQuizLog = await prisma.userQuizLog.findFirst({
+      where: {
+        userId: userId,
+        campaignId: quizSet.campaignId,
+      },
     });
+
+    if (userQuizLog) {
+      console.warn("Warn already exists user quiz log:", userQuizLog);
+      userQuizLog = await prisma.userQuizLog.update({
+        where: {
+          id: userQuizLog.id,
+        },
+        data: {
+          // userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    } else {
+      userQuizLog = await prisma.userQuizLog.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    }
+
+    let userQuizStatistics = await prisma.userQuizStatistics.findFirst({
+      where: {
+        userId: userId,
+        campaignId: quizSet.campaignId,
+      },
+    });
+
+    if (userQuizStatistics) {
+      userQuizStatistics = await prisma.userQuizStatistics.update({
+        where: {
+          id: userQuizStatistics.id,
+        },
+        data: {
+          // userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    } else {
+      userQuizStatistics = await prisma.userQuizStatistics.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    }
+
+    // const result = await prisma.$transaction(async (tx) => {
+    //   const userQuizLog = await tx.userQuizLog.create({
+    //     data: {
+    //       userId: userId,
+    //       authType: user?.authType || AuthType.UNKNOWN,
+    //       campaignId: campaignId,
+    //       isCompleted: false,
+    //       isBadgeAcquired: false,
+
+    //       jobId: job?.id,
+    //       quizSetId: quizSet.id,
+    //       languageId: language?.id,
+    //       quizSetPath: confirmedQuizSetPath,
+
+    //       domainId: domain?.id,
+    //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+    //       subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+    //       storeId: user?.storeId,
+    //       storeSegmentText: user?.storeSegmentText,
+    //       channelId: user?.channelId,
+    //       channelName: user?.channelName,
+    //       channelSegmentId: user?.channelSegmentId,
+    //     },
+    //   });
+
+    //   const userQuizStatistics = await tx.userQuizStatistics.create({
+    //     data: {
+    //       id: userQuizLog.id,
+    //       userId: userId,
+    //       authType: user?.authType || AuthType.UNKNOWN,
+    //       campaignId: quizSet.campaignId,
+    //       isCompleted: false,
+    //       isBadgeAcquired: false,
+
+    //       jobId: job?.id,
+    //       quizSetId: quizSet.id,
+    //       languageId: language?.id,
+    //       quizSetPath: confirmedQuizSetPath,
+
+    //       domainId: domain?.id,
+    //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+    //       subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
+
+    //       storeId: user?.storeId,
+    //       storeSegmentText: user?.storeSegmentText,
+    //       channelId: user?.channelId,
+    //       channelName: user?.channelName,
+    //       channelSegmentId: user?.channelSegmentId,
+    //     },
+    //   });
+
+    //   return { userQuizLog, userQuizStatistics };
+    // });
 
     // // console.log("userQuizLog:", result.userQuizLog);
     // // console.log("userQuizStatistics:", result.userQuizStatistics);
@@ -246,7 +371,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         item: {
-          quizLog: result.userQuizLog,
+          quizLog: userQuizLog,
         },
       },
       { status: 200 }
