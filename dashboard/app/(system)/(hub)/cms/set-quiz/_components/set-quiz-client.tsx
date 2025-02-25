@@ -1,8 +1,5 @@
 'use client';
 
-// import useSWR from 'swr';
-// import { fetcher } from '../../lib/fetcher';
-
 import { DomainData } from '@/lib/nomember-excel-parser';
 import { useState } from 'react';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
@@ -12,6 +9,12 @@ import {
   SPlusUserUploadButton,
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { fetcher } from '../../lib/fetcher';
+import useSWR from 'swr';
+import { LoaderWithBackground } from '@/components/loader';
+import { QuizSet } from '../_type/type';
+
 // import { DataTable } from './data-table';
 // import { sUserColumns } from '../columns';
 
@@ -35,8 +38,28 @@ export function SetQuizClient() {
         {tabState === 's' && <SPlusUserUploadButton />}
         {tabState === 'non-s' && <NonSPlusUserUploadButton />}
       </div>
-      {/* <div>{tabState === 's' && <SUserTable />}</div> */}
+      <div>{tabState === 's' && <SUserTable />}</div>
       {/* <div>{tabState === 'non-s' && <NonSUserTable />}</div> */}
+    </div>
+  );
+}
+
+function SUserTable() {
+  const { campaign } = useStateVariables();
+  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
+  const { data, isLoading } = useSWR<QuizSet>(QUIZSET_DATA_URL, fetcher);
+  console.log('🥕 data', data);
+
+  if (isLoading) {
+    return <LoaderWithBackground />;
+  }
+  return (
+    <div>
+      {data?.result.groupedQuizSets.map((quizSet) => {
+        return (
+          <div key={quizSet.quizSet.id}>{quizSet.quizSet.domain.code}</div>
+        );
+      })}
     </div>
   );
 }

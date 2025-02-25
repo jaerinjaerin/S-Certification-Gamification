@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { Dispatch, SetStateAction } from 'react';
+import { mutate } from 'swr';
 
 type QuizSetError = {
   result: {
@@ -38,6 +39,7 @@ export const submitQuizSet = async (
 
     try {
       await Promise.all(uploadPromises);
+      mutate(campaignId);
       alert('엑셀 파일 업로드가 완료되었습니다.');
     } catch (error: unknown) {
       const err = error as QuizSetError;

@@ -48,8 +48,6 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
     items: [
       { label: 'quizset', name: 'QuizSet' },
       { label: 'activity-id', name: 'Activity ID' },
-      { label: 'pp', name: 'PP' },
-      { label: 'term', name: 'Term' },
       { label: 'non-user', name: 'Non S+ Users' },
       { label: 'target', name: 'Target' },
     ],

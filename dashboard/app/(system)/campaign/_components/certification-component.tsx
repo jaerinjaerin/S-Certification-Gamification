@@ -1,17 +1,25 @@
 'use client';
+// React and Next.js
+import React, { Dispatch, SetStateAction } from 'react';
+import { useRouter } from 'next/navigation';
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { CircleHelp, Pen, Trash2 } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { formSchema, FormValues } from '../formSchema';
+// Third party libraries
+import useSWR from 'swr';
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+// UI Components
+import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
 import { SelectContent, SelectItem } from '@/components/ui/select';
+
+// Icons
+import { CircleHelp, Pen, Trash2 } from 'lucide-react';
+
+// Local Components
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
-import { useRouter } from 'next/navigation';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
 import FormComponent from './create-certification/form-component';
 import {
@@ -21,57 +29,35 @@ import {
 } from './create-certification/custom-form-items';
 import Container from './create-certification/container';
 import TableComponent from './create-certification/table-component';
-import dayjs from 'dayjs';
+
+// Utils and Helpers
+import { fetcher } from '../../(hub)/cms/lib/fetcher';
+import { formSchema, FormValues } from '../formSchema';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { LoaderWithBackground } from '@/components/loader';
 
 type CertificationFormState = {
   isFormOpen: boolean;
   type: 'create' | 'edit';
 };
 
+type CampaignList = {
+  success: boolean;
+  result: { campaigns: Campaign[] };
+};
+
 export default function CertificationClientComponent() {
-  const [isCreateCertification, setIsCreateCertification] =
-    useState<CertificationFormState>({
-      isFormOpen: false,
-      type: 'create',
-    });
+  const { data, isLoading, error } = useSWR<CampaignList>(
+    `/api/cms/campaign`,
+    fetcher
+  );
+  const campaigns = data?.result.campaigns;
 
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`
-        );
-
-        if (!response.ok) {
-          console.error('Failed to fetch campaigns');
-          return;
-        }
-
-        const data = await response.json();
-        setCampaigns(data.result.campaigns);
-        console.log('Campaigns:', data);
-      } catch (error) {
-        console.error('Error get campaigns: ', error);
-        alert('Failed to fetch campaigns');
-      }
-    };
-
-    fetchCampaigns();
-  }, []);
-
-  if (
-    isCreateCertification.isFormOpen &&
-    isCreateCertification.type === 'create'
-  ) {
-    return (
-      <CertificationForm
-        isCreateCertification={isCreateCertification}
-        setIsCreateCertification={setIsCreateCertification}
-        campaigns={campaigns}
-      />
-    );
+  if (error) {
+    throw error;
+  }
+  if (isLoading) {
+    return <LoaderWithBackground />;
   }
 
   return (
@@ -83,41 +69,20 @@ export default function CertificationClientComponent() {
         <h2 className="text-size-17px font-semibold">Certification List</h2>
         <div className="flex gap-3">
           <DownloadFileListPopoverButton type="template" />
-
-          <Button
-            variant="action"
-            onClick={() =>
-              setIsCreateCertification({
-                isFormOpen: true,
-                type: 'create',
-              })
-            }
-          >
-            Create Certification
-          </Button>
+          <Button variant="action">Create Certification</Button>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
           campaigns.map((campaign) => (
-            <CertificationListItem
-              key={campaign.id}
-              campaign={campaign}
-              setIsCreateCertification={setIsCreateCertification}
-            />
+            <CertificationListItem key={campaign.id} campaign={campaign} />
           ))}
       </div>
     </div>
   );
 }
 
-function CertificationListItem({
-  setIsCreateCertification,
-  campaign,
-}: {
-  setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
-  campaign: Campaign;
-}) {
+function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { setCampaign } = useStateVariables();
   const router = useRouter();
 
