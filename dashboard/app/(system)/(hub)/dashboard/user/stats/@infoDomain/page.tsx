@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 export const dynamic = 'force-dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import ChartContainer from '@/components/system/chart-container';
 import {
@@ -30,9 +30,10 @@ import {
 } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import { updateSearchParamsOnUrl } from '@/lib/url';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import { useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -142,15 +143,20 @@ const columns: ColumnDef<DomainProps>[] = [
 ];
 
 const UserDomain = () => {
-  const { createController, abort } = useAbortController();
+  const searchParams = useSearchParams();
+  const page = (searchParams.get('domainPageIndex') as string | null) ?? '1';
   const { state } = useUserContext();
-  const [data, setData] = useState<DomainProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const total = useRef<number>(0);
-
-  // 페이지 상태 관리
-  const [pageIndex, setPageIndex] = useState(1); // 현재 페이지
+  const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 10; // 페이지당 데이터 개수
+  const { data: domainData, isLoading: loading } = useSWR(
+    `/api/dashboard/user/info/domain?${searchParamsToQuery({ ...state.fieldValues, take: pageSize, page: pageIndex })}`,
+    swrFetcher
+  );
+  const { result: data, total }: { result: DomainProps[]; total: 0 } =
+    domainData || {
+      result: [],
+      total: 0,
+    };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -158,7 +164,7 @@ const UserDomain = () => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // 페이지네이션 모델 추가
     manualPagination: true, // 페이지네이션을 수동으로 처리
-    pageCount: Math.ceil(total.current / pageSize), // 총 페이지 수 계산
+    pageCount: Math.ceil(total / pageSize), // 총 페이지 수 계산
     state: {
       pagination: {
         pageIndex: pageIndex - 1, // 0 기반 인덱스 적용
@@ -167,64 +173,14 @@ const UserDomain = () => {
     },
   });
 
-  // 이전 fieldValues를 추적하기 위한 함수
-  const prevFieldValues = useRef(state.fieldValues);
-
-  function fieldValuesChanged() {
-    const isChanged =
-      JSON.stringify(prevFieldValues.current) !==
-      JSON.stringify(state.fieldValues);
-    prevFieldValues.current = state.fieldValues; // 현재 값을 업데이트
-    return isChanged;
-  }
-
   useEffect(() => {
     if (state.fieldValues) {
-      const { domainPageIndex, ...fieldValues } = state.fieldValues;
-      if (fieldValuesChanged() && 1 < pageIndex) {
-        setPageIndex(1);
-        return;
-      }
-
-      fetchData(
-        {
-          ...fieldValues,
-          take: pageSize,
-          page: pageIndex,
-        },
-        'dashboard/user/info/domain',
-        (data) => {
-          updateSearchParamsOnUrl({
-            ...fieldValues,
-            domainPageIndex: pageIndex,
-          });
-          //
-          total.current = data.total;
-          setData(data.result);
-          setLoading(false);
-        },
-        createController()
-      );
+      updateSearchParamsOnUrl({
+        ...state.fieldValues,
+        domainPageIndex: pageIndex,
+      });
     }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues, pageIndex, pageSize]);
-
-  // 서치파람으로 페이지 지정
-  useEffect(() => {
-    if (state.fieldValues) {
-      const { domainPageIndex } = state.fieldValues;
-
-      if (domainPageIndex && /^\d+$/.test(domainPageIndex)) {
-        setPageIndex(parseInt(domainPageIndex, 10));
-      } else {
-        setPageIndex(1);
-      }
-    }
-  }, [state.fieldValues]);
+  }, [state.fieldValues, pageIndex]);
 
   return (
     <ChartContainer>
@@ -291,7 +247,7 @@ const UserDomain = () => {
       {table.getRowModel().rows?.length ? (
         <div className="py-5">
           <Pagination
-            totalItems={total.current}
+            totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
             onPageChange={(page) => setPageIndex(page)}

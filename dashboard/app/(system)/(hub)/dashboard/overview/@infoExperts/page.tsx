@@ -1,39 +1,23 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import InfoCardStyleContent from '@/app/(system)/(hub)/dashboard/overview/_components/card-content';
 import InfoCardStyleContainer from '@/app/(system)/(hub)/dashboard/overview/_components/card-with-title';
 import { useOverviewContext } from '@/app/(system)/(hub)/dashboard/overview/_provider/provider';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import useSWR from 'swr';
 
 const OverviewExpertsInfo = () => {
-  const { createController, abort } = useAbortController();
-
   const { state } = useOverviewContext();
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/info/experts',
-        (data) => {
-          setCount(data.result.count ?? 0);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setCount(null);
-    };
-  }, [state.fieldValues]);
+  const { data } = useSWR(
+    `/api/dashboard/overview/info/experts?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
 
   return (
     <InfoCardStyleContainer title="Experts" iconName="userCheck">
-      <InfoCardStyleContent info={count} caption="Total expert users" />
+      <InfoCardStyleContent
+        info={data ? data.result.count : null}
+        caption="Total expert users"
+      />
     </InfoCardStyleContainer>
   );
 };

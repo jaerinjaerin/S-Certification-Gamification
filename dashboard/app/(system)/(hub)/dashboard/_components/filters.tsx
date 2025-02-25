@@ -73,9 +73,8 @@ const Filters = ({
   onDownload?: (data: FieldValues) => void;
   onSubmit: (data: FieldValues, action?: boolean) => void;
 }) => {
-  const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { filter, role } = useStateVariables();
+  const { filter, role, campaign } = useStateVariables();
   const [filterData, setFilterData] = useState<AllFilterData | null>(null);
   const form = useForm();
   const formValues = useWatch({ control: form.control });
@@ -92,6 +91,7 @@ const Filters = ({
         from: new Date(campaign.startedAt),
         to: new Date(campaign.endedAt),
       };
+      // form.setValue('campaign', campaign.id);
       form.setValue('date', date);
       form.setValue('userGroup', 'all');
 

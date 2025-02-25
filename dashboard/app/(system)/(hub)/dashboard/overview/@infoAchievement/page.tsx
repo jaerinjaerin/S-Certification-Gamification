@@ -1,38 +1,21 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import InfoCardStyleContent from '../_components/card-content';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import { useOverviewContext } from '../_provider/provider';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import useSWR from 'swr';
 
 const OverviewAchievementInfo = () => {
-  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/info/achievement',
-        (data) => {
-          setCount(data.result.count.toFixed(2) ?? 0);
-        },
-        createController()
-      );
-    }
-    return () => {
-      abort();
-      setCount(null);
-    };
-  }, [state.fieldValues]);
+  const { data } = useSWR(
+    `/api/dashboard/overview/info/achievement?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
 
   return (
     <InfoCardStyleContainer title="Achievement" iconName="badgeCheck">
       <InfoCardStyleContent
-        info={count}
+        info={data ? data.result.count.toFixed(2) : null}
         unit="%"
         caption="Achievement of a goal"
       />

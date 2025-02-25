@@ -1,43 +1,23 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import { useOverviewContext } from '../_provider/provider';
 import { initialExpertsData } from './_lib/state';
 import { LoaderWithBackground } from '@/components/loader';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import useSWR from 'swr';
 
 const OverviewExpertsByGroupInfo = () => {
-  const { createController, abort } = useAbortController();
-
   const { state } = useOverviewContext();
-  const [expertData, setExpertData] =
-    useState<ImprovedDataStructure>(initialExpertsData);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/info/experts-by-group',
-        (data) => {
-          setExpertData(data.result ?? initialExpertsData);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
+  const { data, isLoading: loading } = useSWR(
+    `/api/dashboard/overview/info/experts-by-group?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
+  const { result: improvedData } = data || { result: initialExpertsData };
 
   return (
     <InfoCardStyleContainer title="Experts by group" iconName="users">
       {loading && <LoaderWithBackground />}
-      {expertData.map((groupData) => {
+      {(improvedData as ImprovedDataStructure).map((groupData) => {
         const groupSuffix =
           groupData.group === 'plus' ? '' : `(${groupData.group})`;
         return (

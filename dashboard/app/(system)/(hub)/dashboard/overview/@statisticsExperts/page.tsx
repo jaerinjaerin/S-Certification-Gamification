@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-
 import {
   Bar,
   BarChart,
@@ -17,8 +16,7 @@ import {
 } from 'recharts';
 import CardCustomHeader from '@/components/system/chart-header';
 import { useOverviewContext } from '../_provider/provider';
-import { useEffect, useState } from 'react';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import {
@@ -30,36 +28,20 @@ import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   ExpertsTooltip,
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useAbortController } from '@/components/hook/use-abort-controller';
+import useSWR from 'swr';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExperts = () => {
-  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
-  const [data, setData] = useState({ pie: [], bar: [] });
-  const [count, setCount] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/statistics/experts',
-        (data) => {
-          setData(data.result);
-          setCount(data.count);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
+  const { data: dataycount, isLoading: loading } = useSWR(
+    `/api/dashboard/overview/statistics/experts?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
+  const { result: data, count } = dataycount || {
+    result: { pie: [], bar: [] },
+    count: 0,
+  };
 
   return (
     <ChartContainer>

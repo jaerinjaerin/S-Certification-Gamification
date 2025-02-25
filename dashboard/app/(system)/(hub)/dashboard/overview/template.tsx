@@ -5,8 +5,8 @@ import OverviewParticipantsInfo from './@infoParticipants/page';
 import OverviewAchievementRate from './@statisticsAchievementRate/page';
 import OverviewExperts from './@statisticsExperts/page';
 import OverviewGoalAchievement from './@statisticsProgressOfGoalAchievement/page';
-import OverviewFilterForm from './@filters/page';
 import { OverviewProvider } from './_provider/provider';
+import OverviewFilterForm from './@filters/page';
 
 const OverviewTemplete = () => {
   return (

@@ -1,7 +1,5 @@
 'use client';
 export const dynamic = 'force-dynamic';
-
-import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import {
   Area,
@@ -24,53 +22,30 @@ import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
+import useSWR from 'swr';
 
 const UserOutcome = () => {
-  const { createController, abort } = useAbortController();
-  const { createController: createControllerTime, abort: abortTime } =
-    useAbortController();
   const { state } = useUserContext();
-  const [data, setData] = useState({ score: [], time: [] });
-  const [loading, setLoading] = useState({ score: true, time: true });
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/user/statistics/outcome/average-score',
-        (data) => {
-          setData((v) => ({ ...v, score: data.result }));
-          setLoading((v) => ({ ...v, score: false }));
-        },
-        createController()
-      );
-      //
-      fetchData(
-        state.fieldValues,
-        'dashboard/user/statistics/outcome/total-quiz-completion-time',
-        (data) => {
-          setData((v) => ({ ...v, time: data.result }));
-          setLoading((v) => ({ ...v, time: false }));
-        },
-        createControllerTime()
-      );
-      //
-    }
-
-    return () => {
-      abort();
-      abortTime();
-      setLoading({ score: true, time: true });
-    };
-  }, [state.fieldValues]);
+  const { data: outcomeData, isLoading: loading } = useSWR(
+    [
+      `/api/dashboard/user/statistics/outcome/average-score?${searchParamsToQuery(state.fieldValues)}`,
+      `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParamsToQuery(state.fieldValues)}`,
+    ],
+    swrFetcher
+  );
+  const data = outcomeData
+    ? {
+        score: outcomeData[0]?.result ?? [],
+        time: outcomeData[1]?.result ?? [],
+      }
+    : { score: [], time: [] };
 
   return (
     <ChartContainer>
-      {loading.score && loading.time && <LoaderWithBackground />}
+      {loading && <LoaderWithBackground />}
       <CardCustomHeaderWithoutDesc title="Outcome" />
       <div className="flex w-full">
         <div className="relative w-1/2 flex items-center flex-col space-y-5">
