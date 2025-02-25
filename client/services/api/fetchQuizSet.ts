@@ -9,6 +9,7 @@ import * as Sentry from "@sentry/nextjs";
 // const QUIZ_SET_CACHE_TTL = 30 * 60 * 1000; // 30분 후 캐시 삭제
 
 export async function fetchQuizSet(
+  campaignSlug: string,
   quizsetPath: string,
   userId: string
 ): Promise<ApiResponse<QuizSetEx>> {
@@ -49,8 +50,9 @@ export async function fetchQuizSet(
   // }
 
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${quizsetPath}?user_id=${userId}`;
-    const response = await fetch(url, { method: "GET", cache: "force-cache" });
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${quizsetPath}?user_id=${userId}&campaign_slug=${campaignSlug}`;
+    // const response = await fetch(url, { method: "GET", cache: "force-cache" });
+    const response = await fetch(url, { method: "GET" });
 
     if (!response.ok) {
       console.warn(`⚠️ 데이터 없음: ${quizsetPath}, ${response}, ${url}`);

@@ -141,6 +141,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // if (!['all', 'ff', 'fsm'].includes(jobGroup)) {
+    if (!['ff', 'fsm'].includes(jobGroup)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Invalid job code. Must be "ff" or "fsm"',
+            code: ERROR_CODES.INVALID_JOB_GROUP,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    // const jobCodes = jobGroup === 'all' ? ['ff', 'fsm'] : [jobGroup];
+    const jobCodes = [jobGroup];
+
     const campaign = await prisma.campaign.findFirst({
       where: {
         id: campaignId,
@@ -197,21 +214,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    if (!['all', 'ff', 'fsm'].includes(jobGroup)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            message: 'Invalid job group',
-            code: ERROR_CODES.INVALID_JOB_GROUP,
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    const jobCodes = jobGroup === 'all' ? ['ff', 'fsm'] : [jobGroup];
 
     // HQ 문제 불러오기
     const hqDomainCode = 'OrgCode-7';
@@ -393,6 +395,7 @@ export async function POST(request: NextRequest) {
             domainId: domain.id,
             // questionIds,
             lifeCount: 5,
+            languageId: language.id,
             quizSetId: quizSet.id,
           },
         });

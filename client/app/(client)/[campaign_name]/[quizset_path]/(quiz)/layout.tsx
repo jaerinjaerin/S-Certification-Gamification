@@ -30,6 +30,7 @@ export default async function QuizLayout({
 
   // ================== Quiz Setup ==================
   const quizResponse: ApiResponse<QuizSetEx> = await fetchQuizSet(
+    params.campaign_name,
     params.quizset_path,
     userId
   );

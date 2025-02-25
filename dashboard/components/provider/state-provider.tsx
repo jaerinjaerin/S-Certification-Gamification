@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import { swrFetcher } from '@/lib/fetch';
 import { Campaign, Role } from '@prisma/client';
-import axios from 'axios';
 import { Session } from 'next-auth';
 import { redirect, usePathname } from 'next/navigation';
 import {
@@ -11,11 +11,13 @@ import {
   ReactNode,
   useEffect,
 } from 'react';
+import useSWR from 'swr';
 
 type StateVariables = {
   filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
+  campaigns: Campaign[] | null;
   campaign: Campaign | null;
   setCampaign: React.Dispatch<React.SetStateAction<Campaign | null>>;
 };
@@ -33,8 +35,10 @@ export const StateVariablesProvider = ({
   session: Session | null;
   role: (Role & any) | null;
 }) => {
+  const { data: filter } = useSWR('/api/dashboard/filter', swrFetcher);
+  const { data: { result: { campaigns } } = { result: { campaigns: [] } } } =
+    useSWR('/api/cms/campaign', swrFetcher);
   const pathname = usePathname();
-  const [filter, setFilter] = useState<AllFilterData | null>(null);
   const [campaign, setCampaign] = useState<Campaign | null>(() => {
     // sessionStorage에 저장된 캠페인 데이터 가져오기 (새로고침 유지)
     if (typeof window !== 'undefined') {
@@ -43,12 +47,6 @@ export const StateVariablesProvider = ({
     }
     return null;
   });
-
-  useEffect(() => {
-    axios.get('/api/dashboard/filter').then((res) => {
-      setFilter(res.data);
-    });
-  }, []);
 
   // campaign 변경 시 sessionStorage업데이트
   useEffect(() => {
@@ -68,7 +66,7 @@ export const StateVariablesProvider = ({
 
   return (
     <StateVariablesContext.Provider
-      value={{ filter, session, role, campaign, setCampaign }}
+      value={{ filter, session, role, campaigns, campaign, setCampaign }}
     >
       {children}
     </StateVariablesContext.Provider>

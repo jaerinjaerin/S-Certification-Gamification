@@ -24,6 +24,7 @@ export async function refreshToken(accountId: string, refreshToken: string) {
     });
 
     if (!response.ok) {
+      // const data = await response.json();
       console.error("Refreshed tokens:", response);
       throw new Error("Failed to refresh token");
     }

@@ -1,12 +1,14 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { prisma } from '@/model/prisma';
+import { FileType } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const campaignId = searchParams.get('campaignId');
+  const fileType = searchParams.get('fileType');
 
-  if (!campaignId) {
+  if (!campaignId || !fileType) {
     return NextResponse.json(
       {
         success: false,
@@ -15,6 +17,14 @@ export async function GET(request: Request) {
           code: ERROR_CODES.MISSING_REQUIRED_PARAMETER,
         },
       },
+      { status: 400 }
+    );
+  }
+
+  // fileType이 enum에 포함되는지 확인
+  if (!Object.values(FileType).includes(fileType as FileType)) {
+    return NextResponse.json(
+      { success: false, message: '지원하지 않는 fileType입니다.' },
       { status: 400 }
     );
   }
@@ -41,7 +51,8 @@ export async function GET(request: Request) {
 
     const uploadedFiles = await prisma.uploadedFile.findMany({
       where: {
-        campaignId: campaignId,
+        campaignId,
+        fileType: fileType as FileType,
       },
     });
 

@@ -4,13 +4,22 @@ import * as Sentry from "@sentry/nextjs";
 export class QuizBadgeHandler {
   issueBadge = async (
     userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      const registered = await this.postActivityRegister(userId, activityId);
+      const registered = await this.postActivityRegister(
+        userId,
+        campaignId,
+        domainId,
+        activityId
+      );
       const attended = await this.postActivityEnd(
         userId,
+        campaignId,
+        domainId,
         activityId,
         elapsedSeconds
       );
@@ -90,6 +99,8 @@ export class QuizBadgeHandler {
 
   postActivityRegister = async (
     userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string
   ): Promise<boolean> => {
     try {
@@ -101,6 +112,8 @@ export class QuizBadgeHandler {
           body: JSON.stringify({
             userId,
             activityId,
+            campaignId,
+            domainId,
           }),
         }
       );
@@ -130,6 +143,8 @@ export class QuizBadgeHandler {
 
   postActivityEnd = async (
     userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -142,6 +157,8 @@ export class QuizBadgeHandler {
           body: JSON.stringify({
             userId,
             activityId,
+            campaignId,
+            domainId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
             elapsedSeconds: 120,

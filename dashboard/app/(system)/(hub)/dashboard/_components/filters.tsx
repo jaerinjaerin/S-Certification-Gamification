@@ -1,32 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import SelectForm from '@/components/system/select-with-title';
 import { Button } from '@/components/ui/button';
 import FiltersContainer from '@/components/system/filters-container';
-import {
-  ControllerRenderProps,
-  FieldValues,
-  useForm,
-  UseFormReturn,
-  useWatch,
-} from 'react-hook-form';
+import { FieldValues, useForm, UseFormReturn, useWatch } from 'react-hook-form';
 import { Form, FormField } from '@/components/ui/form';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { formatCamelCaseToTitleCase } from '@/lib/text';
 import { CalendarForm } from '@/components/system/calendar-with-title';
 import { ToggleUserButtons } from '@/components/system/toggle-buttons';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
 import Loader from '@/components/loader';
 import { useSearchParams } from 'next/navigation';
 import { useStateVariables } from '@/components/provider/state-provider';
+import SelectForm from '@/components/system/select-with-title';
 
 // 데이터 초기화 인터페이스
 type InitializeFiltersPros = (
@@ -87,6 +73,7 @@ const Filters = ({
   onDownload?: (data: FieldValues) => void;
   onSubmit: (data: FieldValues, action?: boolean) => void;
 }) => {
+  const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
   const { filter, role } = useStateVariables();
   const [filterData, setFilterData] = useState<AllFilterData | null>(null);
@@ -98,6 +85,28 @@ const Filters = ({
   const [filteredDomains, setFilteredDomains] = useState<Domain[]>([]);
   const defaultValues = useRef<FieldValues | null>(null);
   const [applyButtonDisabled, setApplyButtonDisabled] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (campaign && filterData) {
+      const date = {
+        from: new Date(campaign.startedAt),
+        to: new Date(campaign.endedAt),
+      };
+      form.setValue('date', date);
+      form.setValue('userGroup', 'all');
+
+      // 필터 초기화 호출
+      initializeFilters(
+        filterData.filters,
+        form,
+        setFilteredSubsidiaries,
+        setFilteredDomains
+      );
+
+      defaultValues.current = form.getValues();
+      onSubmit(form.getValues());
+    }
+  }, [campaign, filterData]);
 
   useEffect(() => {
     if (filter) {
@@ -189,15 +198,6 @@ const Filters = ({
           setFilteredDomains
         );
 
-        // 캠페인 초기화
-        if (filterData.campaign.length > 0) {
-          const campaign = filterData.campaign[0];
-          form.setValue('campaign', campaign.id);
-          form.setValue('date', {
-            from: new Date(campaign.startedAt),
-            to: new Date(campaign.endedAt),
-          });
-        }
         //
         // 유저 선택 초기화
         form.setValue('userGroup', 'all');
@@ -297,30 +297,6 @@ const Filters = ({
     }
   };
 
-  const selectCampaign = (id: string | number) => {
-    if (!filterData) return;
-
-    const found = filterData.campaign.find((campaign) => campaign.id === id);
-
-    const date = {
-      from: new Date(found.startedAt),
-      to: new Date(found.endedAt),
-    };
-    form.setValue('date', date);
-    form.setValue('userGroup', 'all');
-
-    // 필터 초기화 호출
-    initializeFilters(
-      filterData.filters,
-      form,
-      setFilteredSubsidiaries,
-      setFilteredDomains
-    );
-
-    defaultValues.current = form.getValues();
-    onSubmit(form.getValues());
-  };
-
   if (!filterData)
     return (
       <FiltersContainer>
@@ -340,23 +316,7 @@ const Filters = ({
         className="space-y-5"
       >
         <div className="flex items-center justify-between">
-          <FormField
-            control={form.control}
-            name="campaign"
-            defaultValue={
-              searchParams.get('campaign') || filterData.campaign[0].id
-            }
-            render={({ field }) => (
-              <CampaignSelectForm
-                field={field}
-                items={filterData.campaign.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
-                onChange={selectCampaign}
-              />
-            )}
-          />
+          <div className="text-size-20px font-bold">{campaign?.name}</div>
           {onDownload && (
             <Button
               variant="outline"
@@ -380,10 +340,11 @@ const Filters = ({
               defaultValue={{
                 from: new Date(
                   searchParams.get('date.from') ||
-                    filterData.campaign[0].startedAt
+                    campaign?.startedAt ||
+                    new Date()
                 ),
                 to: new Date(
-                  searchParams.get('date.to') || filterData.campaign[0].endedAt
+                  searchParams.get('date.to') || campaign?.endedAt || new Date()
                 ),
               }}
               render={({ field }) => {
@@ -393,13 +354,15 @@ const Filters = ({
                     minDate={
                       new Date(
                         searchParams.get('date.from') ||
-                          filterData.campaign[0].startedAt
+                          campaign?.startedAt ||
+                          new Date()
                       )
                     }
                     maxDate={
                       new Date(
                         searchParams.get('date.to') ||
-                          filterData.campaign[0].endedAt
+                          campaign?.endedAt ||
+                          new Date()
                       )
                     }
                   />
@@ -532,39 +495,3 @@ const Filters = ({
 };
 
 export default Filters;
-
-const CampaignSelectForm = ({
-  field,
-  items,
-  onChange,
-}: {
-  field: ControllerRenderProps<FieldValues, string>;
-  items: { label: string; value: string | number }[];
-  onChange?: (value: string | number) => void;
-}) => {
-  return (
-    <Select
-      onValueChange={(value) => {
-        field.onChange(value);
-        onChange?.(value);
-      }}
-      defaultValue={field.value}
-    >
-      <SelectTrigger
-        className={cn(
-          'w-auto space-x-3 shadow-none bg-white hover:bg-zinc-100 border-0 hover:bg-transparent focus:bg-transparent focus:ring-0 focus:outline-none !text-size-20px font-bold',
-          !field.value && 'text-muted-foreground'
-        )}
-      >
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {items.map((item) => (
-          <SelectItem key={item.value} value={item.value.toString()}>
-            {item.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-};

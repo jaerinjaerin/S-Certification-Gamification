@@ -17,7 +17,6 @@ const MediaAssetGroupContainer = () => {
         { campaignId: campaign.id },
         'cms/media',
         (data) => {
-          console.log('🚀 ~ useEffect ~ data:', data);
           const { badge, character, background } =
             data.result as MediaDataProps;
           dispatch({ type: 'SET_BADGE', payload: badge || [] });

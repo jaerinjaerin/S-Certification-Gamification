@@ -9,8 +9,6 @@ import {
 import { usePathname } from 'next/navigation';
 import { Slash } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import useSWR from 'swr';
-import { swrFetcher } from '@/lib/fetch';
 import {
   Select,
   SelectContent,
@@ -23,9 +21,7 @@ import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
 
 const CurrentBreadCrumb = () => {
-  const { campaign, setCampaign } = useStateVariables();
-  const { data } = useSWR('/api/cms/campaign', swrFetcher);
-  const campaigns = data?.result.campaigns;
+  const { campaigns, campaign, setCampaign } = useStateVariables();
   const pathname = usePathname();
   const paths = pathname
     .split('/')
@@ -33,8 +29,10 @@ const CurrentBreadCrumb = () => {
     .map((name) => name.replaceAll('-', ' '));
 
   const handleChangeCampaign = (value: string) => {
+    if (!campaigns) return;
+    //
     const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
-    setCampaign(selectedCampaign);
+    if (selectedCampaign) setCampaign(selectedCampaign);
   };
 
   return (
@@ -45,7 +43,7 @@ const CurrentBreadCrumb = () => {
             value={campaign?.id || ''}
             onValueChange={handleChangeCampaign}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full focus:ring-0">
               <SelectValue placeholder={campaign?.name || ''} />
             </SelectTrigger>
             <SelectContent>

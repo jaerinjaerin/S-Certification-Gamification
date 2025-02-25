@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "local": "cp -f .env.loc .env && next dev -p 3000",
+    "local": "cp -f .env.loc .env && next dev -p 3001",
     "stage": "cp -f .env.stage .env && next dev -p 3000",
     "build": " rm -rf .next && next build",
     "build:local": "cp -f .env.loc.production .env && next build",

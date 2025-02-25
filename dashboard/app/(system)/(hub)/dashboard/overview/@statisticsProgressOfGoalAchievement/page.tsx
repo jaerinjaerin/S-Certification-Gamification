@@ -27,8 +27,10 @@ import { ProgressTooltip } from '@/app/(system)/(hub)/dashboard/_components/char
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 export function OverviewGoalAchievement() {
+  const { campaign } = useStateVariables();
   const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
   const [data, setData] = useState([]);
@@ -37,9 +39,9 @@ export function OverviewGoalAchievement() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (state.fieldValues) {
+    if (state.fieldValues && campaign) {
       fetchData(
-        state.fieldValues,
+        { ...state.fieldValues, campaign: campaign.id },
         'dashboard/overview/statistics/progress-of-goal-achievement',
         (data) => {
           const { jobData, goalTotalScore, cumulativeRate } = data.result;
@@ -56,7 +58,7 @@ export function OverviewGoalAchievement() {
       abort();
       setLoading(true);
     };
-  }, [state.fieldValues]);
+  }, [state.fieldValues, campaign]);
 
   return (
     <ChartContainer>
