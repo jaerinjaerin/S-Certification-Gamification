@@ -14,12 +14,12 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     const images = await prisma.image.findMany({
-      // where: { campaignId },
+      where: { campaignId },
       select: { id: true, imagePath: true, alt: true, updatedAt: true },
       orderBy: { createdAt: 'asc' },
     });
     const badges = await prisma.quizBadge.findMany({
-      // where: { campaignId },
+      where: { campaignId },
       select: { id: true, imagePath: true, name: true, updatedAt: true },
       orderBy: { createdAt: 'asc' },
     });

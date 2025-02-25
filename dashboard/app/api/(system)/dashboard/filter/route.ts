@@ -80,7 +80,6 @@ export async function GET() {
     // const { searchParams } = request.nextUrl;
 
     const data: AllFilterData = {
-      campaign: [],
       userGroup: {
         all: {
           name: 'All',
@@ -102,7 +101,6 @@ export async function GET() {
       },
     };
 
-    data.campaign = await prisma.campaign.findMany();
     // Fetch regions (always fetch all regions)
     const regions = await fetchDependentFilters();
     data.filters = { ...data.filters, ...regions };
