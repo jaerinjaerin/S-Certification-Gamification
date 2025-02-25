@@ -1,6 +1,7 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
+import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -92,9 +93,39 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const campaigns = await prisma.campaign.findMany();
+    const { searchParams } = request.nextUrl;
+    const role = searchParams.get('role') as string;
+
+    await prisma.$connect();
+
+    let where = {} as Prisma.CampaignWhereInput;
+    if (role !== 'admin') {
+      const roles = await prisma.role.findUnique({
+        where: { id: role },
+        include: {
+          permissions: {
+            select: { permission: { select: { domains: true } } },
+          },
+        },
+      });
+
+      let domainIds: string[] = [];
+      if (roles) {
+        domainIds = roles.permissions.flatMap((p) =>
+          p.permission.domains.map((d) => d.id)
+        );
+      }
+
+      where = {
+        quizSets: { some: { domain: { id: { in: domainIds } } } },
+      };
+    }
+
+    const campaigns = await prisma.campaign.findMany({
+      where,
+    });
 
     return NextResponse.json(
       { success: true, result: { campaigns } },
