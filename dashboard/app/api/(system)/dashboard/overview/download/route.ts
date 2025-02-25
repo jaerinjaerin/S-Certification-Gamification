@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       transformDataToRegion(domain)
     );
 
-    regions = [...domainsIntoRegion, ...regions];
+    regions = [...domainsIntoRegion, ...regions] as typeof regions;
 
     const jobs = await prisma.job.findMany({});
     const jobFF = jobs.filter((job) => job.code === 'ff').map((job) => job.id);

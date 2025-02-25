@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import UploadExcelFileModal from './upload-excel-file-modal';
+import { ChevronDown } from 'lucide-react';
 
 export function SPlusUserUploadButton() {
   return (
@@ -15,7 +16,10 @@ export function SPlusUserUploadButton() {
       <DownloadFileListPopoverButton type="data" />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="action">Upload</Button>
+          <Button variant="action">
+            <span>Upload</span>
+            <ChevronDown />
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
@@ -47,7 +51,8 @@ export function NonSPlusUserUploadButton() {
       <Button variant="secondary">Download Data</Button>
       <UploadExcelFileModal variant="non-s" title="Upload Non S+ User">
         <Button className="w-full justify-start" variant="action">
-          Upload
+          <span>Upload</span>
+          <ChevronDown />
         </Button>
       </UploadExcelFileModal>
     </div>

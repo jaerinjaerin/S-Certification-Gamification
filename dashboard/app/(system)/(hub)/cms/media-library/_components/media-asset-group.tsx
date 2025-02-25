@@ -12,7 +12,7 @@ const MediaAssetGroup = ({ group }: Props) => {
 
   return (
     <MediaAssetListContainer group={group}>
-      {data?.length === 0 && <LoaderWithBackground />}
+      {!data && <LoaderWithBackground />}
       {data?.map((image) => {
         const fileName = (image.index + 1).toString();
         const key = `${image.id}_${image.date}`;

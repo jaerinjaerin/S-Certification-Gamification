@@ -1,3 +1,18 @@
+type JsonValue = string | number | boolean | Date | JsonObject;
+
+interface JsonObject {
+  [key: string]: JsonValue | JsonValue[];
+}
+
+interface QueryParams {
+  [key: string]: string | undefined;
+}
+
+interface ParsedDateRange {
+  from: Date;
+  to: Date;
+}
+
 // Prisma 기반 타입 정의
 type Campaign = Prisma.CampaignGetPayload<{
   select: { id: true; name: true };
@@ -42,7 +57,6 @@ interface UserGroup {
 }
 
 interface AllFilterData {
-  campaign: Campaign[];
   userGroup: UserGroup;
   filters: FilterData;
 }
