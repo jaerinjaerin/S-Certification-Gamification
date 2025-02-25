@@ -7,12 +7,15 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { activityId, status, elapsedSeconds, userId } = body as {
-    userId: string;
-    activityId: string;
-    status: string;
-    elapsedSeconds: number;
-  };
+  const { activityId, status, elapsedSeconds, userId, campaignId, domainId } =
+    body as {
+      userId: string;
+      campaignId: string;
+      domainId: string;
+      activityId: string;
+      status: string;
+      elapsedSeconds: number;
+    };
 
   try {
     const session = await auth();
@@ -27,6 +30,8 @@ export async function POST(request: Request) {
           apiType: BadgeApiType.PROGRESS,
           activityId,
           userId,
+          campaignId,
+          domainId,
           status: 401,
           message: "Unauthorized",
         }),
@@ -54,6 +59,8 @@ export async function POST(request: Request) {
           apiType: BadgeApiType.PROGRESS,
           activityId,
           userId,
+          campaignId,
+          domainId,
           status: 404,
           message: "Account not found",
         }),
@@ -92,7 +99,7 @@ export async function POST(request: Request) {
     // console.log("activity/progress response", response);
 
     if (!response.ok) {
-      const errorData = await response.json();
+      // const errorData = await response.json();
       console.error(
         "activity/progress response",
         response,
@@ -110,11 +117,13 @@ export async function POST(request: Request) {
           apiType: BadgeApiType.PROGRESS,
           activityId,
           userId,
+          campaignId,
+          domainId,
           accountUserId: account.providerAccountId,
           accessToken: account.access_token,
           status: response.status,
           message: response.statusText || "Failed to update activity/progress",
-          rawLog: JSON.stringify(errorData),
+          rawLog: JSON.stringify(response),
         }),
       });
 
@@ -139,6 +148,8 @@ export async function POST(request: Request) {
         apiType: BadgeApiType.PROGRESS,
         activityId,
         userId,
+        campaignId,
+        domainId,
         accountUserId: account.providerAccountId,
         accessToken: account.access_token,
         status: response.status,
@@ -179,6 +190,8 @@ export async function POST(request: Request) {
         status: 500,
         userId,
         activityId,
+        campaignId,
+        domainId,
         message: "An unexpected error occurred",
         rawLog: JSON.stringify({
           message: errorMessage,

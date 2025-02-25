@@ -278,6 +278,7 @@ model QuizStage {
   isBadgeStage    Boolean?
   badgeActivityId String?
   badgeImageId    String?
+  badgeType       BadgeType?
   campaignId      String?
   domainId        String?
   languageId      String?
@@ -405,6 +406,7 @@ model UserQuizBadgeStageLog {
   channelId        String?
   channelSegmentId String?
   channelName      String?
+  badgeType        BadgeType?
 
   @@unique([userId, campaignId, quizStageId])
 }
@@ -438,6 +440,7 @@ model UserQuizStageLog {
   channelId        String?
   channelSegmentId String?
   channelName      String?
+  badgeType        BadgeType?
 }
 
 model UserQuizQuestionLog {
@@ -526,6 +529,7 @@ model UserQuizBadgeStageStatistics {
   channelId        String?
   channelSegmentId String?
   channelName      String?
+  badgeType        BadgeType?
 
   @@unique([userId, campaignId, quizStageId])
 }
@@ -559,6 +563,7 @@ model UserQuizStageStatistics {
   channelId        String?
   channelSegmentId String?
   channelName      String?
+  badgeType        BadgeType?
 }
 
 model UserQuizQuestionStatistics {
@@ -724,6 +729,9 @@ model BadgeLog {
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  campaignId      String?
+  domainId        String?
 }
 
 // model BadgeStage {

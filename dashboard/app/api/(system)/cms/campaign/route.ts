@@ -64,6 +64,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    await prisma.campaign.update({
+      where: { id: campaign.id },
+      data: {
+        settingsId: campaignSettings.id,
+      },
+    });
+
     return NextResponse.json(
       { success: true, result: { campaign, campaignSettings } },
       { status: 200 }
