@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
     await prisma.$connect();
 
     let where = {} as Prisma.CampaignWhereInput;
-    if (role !== 'admin') {
+    if (role !== 'ADMIN') {
       const roles = await prisma.role.findUnique({
         where: { id: role },
         include: {

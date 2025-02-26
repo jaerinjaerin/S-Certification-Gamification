@@ -37,7 +37,7 @@ export const StateVariablesProvider = ({
 }) => {
   const { data: filter } = useSWR('/api/dashboard/filter', swrFetcher);
   const { data: { result: { campaigns } } = { result: { campaigns: [] } } } =
-    useSWR(`/api/cms/campaign?role=${role?.id || 'admin'}`, swrFetcher);
+    useSWR(`/api/cms/campaign?role=${role?.id || 'ADMIN'}`, swrFetcher);
   const pathname = usePathname();
   const [campaign, setCampaign] = useState<Campaign | null>(() => {
     // sessionStorage에 저장된 캠페인 데이터 가져오기 (새로고침 유지)

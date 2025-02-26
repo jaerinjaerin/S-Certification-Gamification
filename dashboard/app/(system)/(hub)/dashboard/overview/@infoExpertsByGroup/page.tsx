@@ -5,11 +5,13 @@ import { initialExpertsData } from './_lib/state';
 import { LoaderWithBackground } from '@/components/loader';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const OverviewExpertsByGroupInfo = () => {
+  const { campaign } = useStateVariables();
   const { state } = useOverviewContext();
   const { data, isLoading: loading } = useSWR(
-    `/api/dashboard/overview/info/experts-by-group?${searchParamsToQuery(state.fieldValues)}`,
+    `/api/dashboard/overview/info/experts-by-group?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     swrFetcher
   );
   const { result: improvedData } = data || { result: initialExpertsData };

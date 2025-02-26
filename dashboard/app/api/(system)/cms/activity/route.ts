@@ -10,12 +10,6 @@ import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { BadgeType, FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
 export async function POST(request: NextRequest) {
   const sesstion = await auth();
 

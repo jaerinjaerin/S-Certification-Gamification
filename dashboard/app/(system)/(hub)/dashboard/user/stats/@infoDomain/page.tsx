@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import ChartContainer from '@/components/system/chart-container';
@@ -34,6 +34,7 @@ import { updateSearchParamsOnUrl } from '@/lib/url';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -143,13 +144,14 @@ const columns: ColumnDef<DomainProps>[] = [
 ];
 
 const UserDomain = () => {
+  const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
   const page = (searchParams.get('domainPageIndex') as string | null) ?? '1';
   const { state } = useUserContext();
   const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 10; // 페이지당 데이터 개수
   const { data: domainData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/info/domain?${searchParamsToQuery({ ...state.fieldValues, take: pageSize, page: pageIndex })}`,
+    `/api/dashboard/user/info/domain?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
     swrFetcher
   );
   const { result: data, total }: { result: DomainProps[]; total: 0 } =

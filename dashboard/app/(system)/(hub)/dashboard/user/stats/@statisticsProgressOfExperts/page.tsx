@@ -1,5 +1,5 @@
 'use client';
-export const dynamic = 'force-dynamic';
+
 import {
   Bar,
   Brush,
@@ -26,11 +26,13 @@ import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 export function UserProgressExperts() {
+  const { campaign } = useStateVariables();
   const { state } = useUserContext();
   const { data: expertData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/statistics/progress-of-experts?${searchParamsToQuery(state.fieldValues)}`,
+    `/api/dashboard/user/statistics/progress-of-experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     swrFetcher
   );
   const { result: data } = expertData || { result: [] };

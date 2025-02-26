@@ -22,18 +22,18 @@ import { legendCapitalizeFormatter } from '@/app/(system)/(hub)/dashboard/_lib/t
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 function OverviewAchievementRate() {
-  useAbortController();
+  const { campaign } = useStateVariables();
   const { state } = useOverviewContext();
   const { data: dataycount, isLoading: loading } = useSWR(
     [
-      `/api/dashboard/overview/statistics/achievement?${searchParamsToQuery(state.fieldValues)}`,
-      `/api/dashboard/overview/info/achievement?${searchParamsToQuery(state.fieldValues)}`,
+      `/api/dashboard/overview/statistics/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+      `/api/dashboard/overview/info/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     ],
     (urls) => Promise.all(urls.map(swrFetcher))
   );
