@@ -1,5 +1,5 @@
 'use client';
-export const dynamic = 'force-dynamic';
+
 import { useUserContext } from '../../_provider/provider';
 import {
   Area,
@@ -26,15 +26,17 @@ import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const UserOutcome = () => {
+  const { campaign } = useStateVariables();
   const { state } = useUserContext();
   const { data: outcomeData, isLoading: loading } = useSWR(
     [
-      `/api/dashboard/user/statistics/outcome/average-score?${searchParamsToQuery(state.fieldValues)}`,
-      `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParamsToQuery(state.fieldValues)}`,
+      `/api/dashboard/user/statistics/outcome/average-score?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+      `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     ],
-    swrFetcher
+    (urls) => Promise.all(urls.map(swrFetcher))
   );
   const data = outcomeData
     ? {

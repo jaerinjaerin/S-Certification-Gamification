@@ -14,11 +14,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useTargetData } from '../_provider/target-data-provider';
-import { useEffect, useState } from 'react';
-import { fetchData } from '@/lib/fetch';
+import { useEffect } from 'react';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import { LoaderWithBackground } from '@/components/loader';
+import useSWR from 'swr';
 
 export const columns: ColumnDef<TargetProps>[] = [
   {
@@ -48,34 +48,22 @@ export const columns: ColumnDef<TargetProps>[] = [
 ];
 
 export function DataTable() {
-  const { abort, createController } = useAbortController();
   const { campaign } = useStateVariables();
+  const { data: targetData, isLoading: loading } = useSWR(
+    `/api/cms/target?${searchParamsToQuery({ campaignId: campaign?.id })}`,
+    swrFetcher
+  );
   const { state, dispatch } = useTargetData();
-  const [loading, setLoading] = useState(false);
+  const { result: data } = targetData || { result: [] };
 
   useEffect(() => {
-    if (campaign) {
-      setLoading(true);
-      fetchData(
-        { campaignId: campaign.id },
-        'cms/target',
-        (data) => {
-          console.log('🚀 ~ useEffect ~ data:', data);
-          dispatch({ type: 'SET_TARGET_LIST', payload: data.result });
-          setLoading(false);
-        },
-        createController()
-      );
+    if (data.length > 0) {
+      dispatch({ type: 'SET_TARGET_LIST', payload: data.result });
     }
-
-    return () => {
-      abort();
-      setLoading(false);
-    };
-  }, [campaign]);
+  }, [data]);
 
   const table = useReactTable({
-    data: state.targets || [],
+    data: state.targets || data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

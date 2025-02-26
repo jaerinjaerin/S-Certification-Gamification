@@ -42,7 +42,7 @@ type CertificationFormState = {
 // };
 
 export default function CertificationClientComponent() {
-  const { role, campaigns } = useStateVariables(); //role이 null이면 admin
+  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
 
   if (campaigns?.length === 0) {
     return (

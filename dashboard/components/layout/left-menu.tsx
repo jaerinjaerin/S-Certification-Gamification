@@ -33,13 +33,19 @@ import {
   CollapsibleTrigger,
 } from '../ui/collapsible';
 import { cn } from '@/lib/utils';
+import { useStateVariables } from '../provider/state-provider';
+import { Role } from '@prisma/client';
 
 // 메뉴 데이터를 배열로 정의
-const menuItems: MenuItems = [
-  {
+const getMenuItems = (role: Role): MenuItems => {
+  const dashboard = {
     title: 'Dashboard',
     items: [
-      { label: 'Overview', icon: LayoutDashboard, href: '/dashboard/overview' },
+      {
+        label: 'Overview',
+        icon: LayoutDashboard,
+        href: '/dashboard/overview',
+      },
       {
         label: 'User',
         icon: Users,
@@ -47,8 +53,9 @@ const menuItems: MenuItems = [
       },
       { label: 'Quiz', icon: Sheet, href: '/dashboard/quiz' },
     ],
-  },
-  {
+  };
+
+  const cms = {
     title: 'CMS',
     items: [
       { label: 'Set Quiz', icon: NotebookPen, href: '/cms/set-quiz' },
@@ -56,12 +63,14 @@ const menuItems: MenuItems = [
       { label: 'UI Language', icon: Languages, href: '/cms/ui-language' },
       { label: 'Target', icon: Goal, href: '/cms/target' },
     ],
-  },
-];
+  };
+  //
+  return role ? [dashboard] : [dashboard, cms];
+};
 
 // Menu 컴포넌트
 const LeftMenu = () => {
-  // const router = useRouter();
+  const { role } = useStateVariables();
   const pathname = usePathname();
   const { setOpen } = useSidebar();
   // const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
@@ -75,7 +84,7 @@ const LeftMenu = () => {
       <SidebarTrigger className="group-data-[collapsible=icon]:mx-auto my-[10px] ml-auto mr-5" />
       <Separator />
       <SidebarContent className="!gap-0 px-3 pb-3">
-        {menuItems.map((group, groupIndex) => (
+        {getMenuItems(role).map((group, groupIndex) => (
           <SidebarGroup key={groupIndex} className="px-0 pb-0 pt-4 gap-3">
             <SidebarGroupLabel className="mx-5 my-[5px] h-[27px] p-0" asChild>
               <div className="!text-size-14px text-sidebar-text">
