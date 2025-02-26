@@ -1,5 +1,4 @@
 'use client';
-
 import { useUserContext } from '../../_provider/provider';
 import {
   Area,
@@ -22,28 +21,63 @@ import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip, {
   CustomTimeTooltip,
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import {
+  getUserAverageScore,
+  getUserCompletionTime,
+} from '@/app/actions/dashboard/user/action';
 
 const UserOutcome = () => {
   const { campaign } = useStateVariables();
   const { state } = useUserContext();
+
   const { data: outcomeData, isLoading: loading } = useSWR(
     [
-      `/api/dashboard/user/statistics/outcome/average-score?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-      `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+      {
+        key: 'getUserAverageScore',
+        ...state.fieldValues,
+        campaign: campaign?.id,
+      },
+      {
+        key: 'getUserCompletionTime',
+        ...state.fieldValues,
+        campaign: campaign?.id,
+      },
     ],
-    (urls) => Promise.all(urls.map(swrFetcher))
+    (params) =>
+      Promise.all(
+        params.map((param) => {
+          if (param.key === 'getUserAverageScore') {
+            return getUserAverageScore(param);
+          }
+          return getUserCompletionTime(param);
+        })
+      )
   );
+
   const data = outcomeData
     ? {
-        score: outcomeData[0]?.result ?? [],
-        time: outcomeData[1]?.result ?? [],
+        score: outcomeData[0] ?? [],
+        time: outcomeData[1] ?? [],
       }
     : { score: [], time: [] };
+
+  // const { data: outcomeData, isLoading: loading } = useSWR(
+  //   [
+  //     `/api/dashboard/user/statistics/outcome/average-score?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //     `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   ],
+  //   (urls) => Promise.all(urls.map(swrFetcher))
+  // );
+  // const data = outcomeData
+  //   ? {
+  //       score: outcomeData[0]?.result ?? [],
+  //       time: outcomeData[1]?.result ?? [],
+  //     }
+  //   : { score: [], time: [] };
 
   return (
     <ChartContainer>

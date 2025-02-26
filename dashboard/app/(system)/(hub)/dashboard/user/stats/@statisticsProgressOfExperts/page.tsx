@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Bar,
   Brush,
@@ -22,20 +21,30 @@ import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable'
 import { useUserContext } from '../../_provider/provider';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getUserExpertsProgress } from '@/app/actions/dashboard/user/action';
 
 export function UserProgressExperts() {
   const { campaign } = useStateVariables();
   const { state } = useUserContext();
   const { data: expertData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/statistics/progress-of-experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-    swrFetcher
+    {
+      key: 'getUserExpertsProgress',
+      ...state.fieldValues,
+      campaign: campaign?.id,
+    },
+    getUserExpertsProgress
   );
-  const { result: data } = expertData || { result: [] };
+  const data = expertData || [];
+  //
+  // const { data: expertData, isLoading: loading } = useSWR(
+  //   `/api/dashboard/user/statistics/progress-of-experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   swrFetcher
+  // );
+  // const { result: data } = expertData || { result: [] };
 
   return (
     <ChartContainer>

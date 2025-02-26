@@ -7,6 +7,8 @@ import NotPermission from '@/components/not-permission';
 import { getUserFromDB, getUserPermissions } from '@/model/qureries';
 import { StateVariablesProvider } from '@/components/provider/state-provider';
 import { Role } from '@prisma/client';
+import { getCampaigns } from '../actions/campaign-action';
+import { getFilter } from '../actions/dashboard/filter-action';
 
 type Props = { children: React.ReactNode };
 
@@ -25,11 +27,21 @@ const ManagementLayout = async ({ children }: Props) => {
       role = null;
     }
   }
+  const { result: campaigns = [] } = permit
+    ? await getCampaigns(role?.name || 'ADMIN')
+    : { result: [] };
+
+  const filter = permit ? await getFilter() : null;
 
   return (
     <>
       {permit && (
-        <StateVariablesProvider session={session} role={role}>
+        <StateVariablesProvider
+          filter={filter}
+          session={session}
+          role={role}
+          campaigns={campaigns as Campaign[]}
+        >
           <ModalProvider>
             <SidebarProvider className="pt-[3.5rem]">
               {children}

@@ -1,6 +1,5 @@
 'use client';
 import { useQuizContext } from '../_provider/provider';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import { DefaultHeatMapDatum, ResponsiveHeatMapCanvas } from '@nivo/heatmap';
@@ -9,15 +8,25 @@ import { useModal } from '@/components/provider/modal-provider';
 import DetailIncorrectTable from './_components/detail-table';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getQuizRankByCategory } from '@/app/actions/dashboard/quiz/action';
 
 const QuizIncorrectAnswerRate = () => {
   const { campaign } = useStateVariables();
   const { state } = useQuizContext();
   const { data: incorrects, isLoading: loading } = useSWR(
-    `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-    swrFetcher
+    {
+      key: 'getQuizRankByCategory',
+      ...state.fieldValues,
+      campaign: campaign?.id,
+    },
+    getQuizRankByCategory
   );
-  const { result: data } = incorrects || { result: [] };
+  const data = incorrects || [];
+  // const { data: incorrects, isLoading: loading } = useSWR(
+  //   `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   swrFetcher
+  // );
+  // const { result: data } = incorrects || { result: [] };
   const { setContent } = useModal();
 
   return (

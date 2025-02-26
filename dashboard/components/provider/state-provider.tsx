@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { swrFetcher } from '@/lib/fetch';
 import { Campaign, Role } from '@prisma/client';
 import { Session } from 'next-auth';
 import { redirect, usePathname } from 'next/navigation';
@@ -11,7 +10,6 @@ import {
   ReactNode,
   useEffect,
 } from 'react';
-import useSWR from 'swr';
 
 type StateVariables = {
   filter: AllFilterData | null;
@@ -28,16 +26,17 @@ const StateVariablesContext = createContext<StateVariables | undefined>(
 
 export const StateVariablesProvider = ({
   children,
+  filter,
   session,
   role,
+  campaigns,
 }: {
   children: ReactNode;
+  filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
+  campaigns: Campaign[];
 }) => {
-  const { data: filter } = useSWR('/api/dashboard/filter', swrFetcher);
-  const { data: { result: { campaigns } } = { result: { campaigns: [] } } } =
-    useSWR(`/api/cms/campaign?role=${role?.id || 'ADMIN'}`, swrFetcher);
   const pathname = usePathname();
   const [campaign, setCampaign] = useState<Campaign | null>(() => {
     // sessionStorage에 저장된 캠페인 데이터 가져오기 (새로고침 유지)
