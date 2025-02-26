@@ -10,7 +10,12 @@ const UserFilterForm = () => {
     // 서치파람 업데이트
     updateSearchParamsOnUrl(
       action
-        ? { ...formData, domainPageIndex: 1, progressPageIndex: 1 }
+        ? {
+            ...formData,
+            domainPageIndex: 1,
+            progressPageIndex: 1,
+            usersPageIndex: 1,
+          }
         : formData
     );
     //

@@ -11,8 +11,8 @@ export const fetchData = async (
   if (!fieldValues) return;
 
   try {
-    const searchParams = serializeJsonToQuery(fieldValues);
-    const url = `/api/${urlIdentifier}?${searchParams.toString()}`;
+    const searchParams = searchParamsToQuery(fieldValues);
+    const url = `/api/${urlIdentifier}?${searchParams}`;
 
     const response = await axios.get(url, {
       signal: controller.signal, // AbortController 적용
@@ -32,3 +32,8 @@ export const fetchData = async (
 };
 
 export const swrFetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export const searchParamsToQuery = (params: Record<string, any> | null) => {
+  if (!params) return '';
+  return serializeJsonToQuery(params).toString();
+};

@@ -1,6 +1,5 @@
 'use client';
 export const dynamic = 'force-dynamic';
-
 import {
   Bar,
   Brush,
@@ -21,38 +20,20 @@ import {
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { useUserContext } from '../../_provider/provider';
-import { useEffect, useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
 import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
+import useSWR from 'swr';
 
 export function UserProgressExperts() {
-  const { createController, abort } = useAbortController();
   const { state } = useUserContext();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/user/statistics/progress-of-experts',
-        (data) => {
-          setData(data.result);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
+  const { data: expertData, isLoading: loading } = useSWR(
+    `/api/dashboard/user/statistics/progress-of-experts?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
+  const { result: data } = expertData || { result: [] };
 
   return (
     <ChartContainer>

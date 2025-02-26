@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Button } from '@/components/ui/button';
 import { CircleHelp, Pen, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { formSchema, FormValues } from '../formSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+// UI Components
 import { Form } from '@/components/ui/form';
 import { SelectContent, SelectItem } from '@/components/ui/select';
+
+// Icons
+
+// Local Components
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
-import { useRouter } from 'next/navigation';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
 import FormComponent from './create-certification/form-component';
 import {
@@ -21,6 +25,10 @@ import {
 } from './create-certification/custom-form-items';
 import Container from './create-certification/container';
 import TableComponent from './create-certification/table-component';
+
+// Utils and Helpers
+import { useStateVariables } from '@/components/provider/state-provider';
+import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 
 type CertificationFormState = {
@@ -28,49 +36,21 @@ type CertificationFormState = {
   type: 'create' | 'edit';
 };
 
+// type CampaignList = {
+//   success: boolean;
+//   result: { campaigns: Campaign[] };
+// };
+
 export default function CertificationClientComponent() {
-  const [isCreateCertification, setIsCreateCertification] =
-    useState<CertificationFormState>({
-      isFormOpen: false,
-      type: 'create',
-    });
+  const { role, campaigns } = useStateVariables(); //role이 null이면 admin
 
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`
-        );
-
-        if (!response.ok) {
-          console.error('Failed to fetch campaigns');
-          return;
-        }
-
-        const data = await response.json();
-        setCampaigns(data.result.campaigns);
-        console.log('Campaigns:', data);
-      } catch (error) {
-        console.error('Error get campaigns: ', error);
-        alert('Failed to fetch campaigns');
-      }
-    };
-
-    fetchCampaigns();
-  }, []);
-
-  if (
-    isCreateCertification.isFormOpen &&
-    isCreateCertification.type === 'create'
-  ) {
+  if (campaigns?.length === 0) {
     return (
-      <CertificationForm
-        isCreateCertification={isCreateCertification}
-        setIsCreateCertification={setIsCreateCertification}
-        campaigns={campaigns}
-      />
+      <div className="text-size-24px font-bold h-full flex items-center justify-center whitespace-pre-line text-center">
+        {
+          'You have no ongoing campaigns.\n로그인 했지만 인증제에 참여하지 않는 도메인 권한자에게 보여지는 메시지 필요.'
+        }
+      </div>
     );
   }
 
@@ -81,43 +61,24 @@ export default function CertificationClientComponent() {
         className="flex justify-between items-center"
       >
         <h2 className="text-size-17px font-semibold">Certification List</h2>
-        <div className="flex gap-3">
-          <DownloadFileListPopoverButton type="template" />
-
-          <Button
-            variant="action"
-            onClick={() =>
-              setIsCreateCertification({
-                isFormOpen: true,
-                type: 'create',
-              })
-            }
-          >
-            Create Certification
-          </Button>
-        </div>
+        {!role && (
+          <div className="flex gap-3">
+            <DownloadFileListPopoverButton type="template" />
+            <Button variant="action">Create Certification</Button>
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-3 gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
           campaigns.map((campaign) => (
-            <CertificationListItem
-              key={campaign.id}
-              campaign={campaign}
-              setIsCreateCertification={setIsCreateCertification}
-            />
+            <CertificationListItem key={campaign.id} campaign={campaign} />
           ))}
       </div>
     </div>
   );
 }
 
-function CertificationListItem({
-  setIsCreateCertification,
-  campaign,
-}: {
-  setIsCreateCertification: Dispatch<SetStateAction<CertificationFormState>>;
-  campaign: Campaign;
-}) {
+function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { setCampaign } = useStateVariables();
   const router = useRouter();
 
@@ -144,12 +105,12 @@ function CertificationListItem({
             <Button
               variant="ghost"
               className="p-0 aspect-square size-[1.875rem] rounded-sm bg-zinc-50"
-              onClick={() =>
-                setIsCreateCertification({
-                  isFormOpen: true,
-                  type: 'edit',
-                })
-              }
+              onClick={() => {
+                // setIsCreateCertification({
+                //   isFormOpen: true,
+                //   type: 'edit',
+                // })
+              }}
             >
               <Trash2
                 style={{ width: '1.25rem', height: '1.25rem' }}
@@ -168,10 +129,10 @@ function CertificationListItem({
           variant="ghost"
           onClick={(e) => {
             e.stopPropagation();
-            setIsCreateCertification({
-              isFormOpen: true,
-              type: 'edit',
-            });
+            // setIsCreateCertification({
+            //   isFormOpen: true,
+            //   type: 'edit',
+            // });
           }}
         >
           <Pen />

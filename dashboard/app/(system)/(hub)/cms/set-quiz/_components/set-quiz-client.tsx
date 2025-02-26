@@ -1,20 +1,21 @@
 'use client';
 
-// import useSWR from 'swr';
-// import { fetcher } from '../../lib/fetcher';
-
+import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
 import { DomainData } from '@/lib/nomember-excel-parser';
 import { QuizStageEx } from '@/types';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
 import { fetcher } from '../../lib/fetcher';
+import { QuizSet } from '../_type/type';
 import useQuizSetState from '../store/quizset-state';
 import {
   NonSPlusUserUploadButton,
   SPlusUserUploadButton,
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
+
 // import { DataTable } from './data-table';
 
 export function SetQuizClient() {
@@ -37,16 +38,37 @@ export function SetQuizClient() {
         {tabState === 's' && <SPlusUserUploadButton />}
         {tabState === 'non-s' && <NonSPlusUserUploadButton />}
       </div>
-      <SUserTable />
+      <div>{tabState === 's' && <SUserTable />}</div>
       {/* <div>{tabState === 'non-s' && <NonSUserTable />}</div> */}
     </div>
   );
 }
 
 function SUserTable() {
+  const { campaign } = useStateVariables();
+  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
+  const { data, isLoading } = useSWR<QuizSet>(QUIZSET_DATA_URL, fetcher);
+  console.log('🥕 data', data);
+
+  if (isLoading) {
+    return <LoaderWithBackground />;
+  }
+  return (
+    <div>
+      {data?.result.groupedQuizSets.map((quizSet) => {
+        return (
+          <div key={quizSet.quizSet.id}>{quizSet.quizSet.domain.code}</div>
+        );
+      })}
+    </div>
+  );
+}
+
+function SUserTableTest() {
   // 캠페인의 전체 데이터 가져오기
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=c903fec8-56f8-42fe-aa06-464148d4e0a5`;
   const { data, isLoading } = useSWR(QUIZSET_DATA_URL, fetcher);
+  console.log('🥕 data', data);
 
   return (
     <div className="mt-4">

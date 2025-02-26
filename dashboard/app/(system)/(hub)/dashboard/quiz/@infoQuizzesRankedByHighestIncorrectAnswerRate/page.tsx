@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { fetchData } from '@/lib/fetch';
+import { useState } from 'react';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import {
   getCoreRowModel,
@@ -12,13 +12,16 @@ import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { useQuizContext } from '../_provider/provider';
 import IncorrectTable, { columns } from '../_components/incorrect-table';
-import { useAbortController } from '@/components/hook/use-abort-controller';
+import useSWR from 'swr';
 
 const QuizQuizzesRanked = () => {
-  const { createController, abort } = useAbortController();
   const { state } = useQuizContext();
-  const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: incorrects, isLoading: loading } = useSWR(
+    `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParamsToQuery({ ...state.fieldValues })}`,
+    swrFetcher
+  );
+  const { result: data }: { result: QuizRankedIncorrectAnswerRateProps[] } =
+    incorrects || { result: [] };
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -31,25 +34,6 @@ const QuizQuizzesRanked = () => {
       sorting,
     },
   });
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        { ...state.fieldValues },
-        'dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate',
-        (data) => {
-          setData(data.result);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
 
   return (
     <ChartContainer>

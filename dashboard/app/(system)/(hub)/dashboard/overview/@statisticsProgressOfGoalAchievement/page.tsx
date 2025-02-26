@@ -20,52 +20,37 @@ import {
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { useOverviewContext } from '../_provider/provider';
-import { useEffect, useRef, useState } from 'react';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
 import { ProgressTooltip } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import { useStateVariables } from '@/components/provider/state-provider';
+import useSWR from 'swr';
 
 export function OverviewGoalAchievement() {
   const { campaign } = useStateVariables();
-  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
-  const [data, setData] = useState([]);
-  const count = useRef(0);
-  const expertRange = useRef(0);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (state.fieldValues && campaign) {
-      fetchData(
-        { ...state.fieldValues, campaign: campaign.id },
-        'dashboard/overview/statistics/progress-of-goal-achievement',
-        (data) => {
-          const { jobData, goalTotalScore, cumulativeRate } = data.result;
-          count.current = cumulativeRate;
-          expertRange.current = goalTotalScore;
-          setData(jobData);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues, campaign]);
+  const { data: progressData, isLoading: loading } = useSWR(
+    `/api/dashboard/overview/statistics/progress-of-goal-achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+    swrFetcher
+  );
+  const {
+    result: {
+      jobData: data,
+      goalTotalScore: expertRange,
+      cumulativeRate: count,
+    },
+  } = progressData || {
+    result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
+  };
 
   return (
     <ChartContainer>
       {loading && <LoaderWithBackground />}
       <CardCustomHeader
         title="Progress of goal achievement"
-        numbers={`${count.current?.toFixed(2) || '0.00'}%`}
+        numbers={`${count.toFixed(2) || '0.00'}%`}
         description="Cumulative number of experts over time"
       />
       <ResponsiveContainer width="100%" height={chartHeight}>
@@ -87,10 +72,10 @@ export function OverviewGoalAchievement() {
             orientation="right"
             tickFormatter={(value) => `${value}%`}
           />
-          <YAxis type="number" domain={[0, expertRange.current]} />
+          <YAxis type="number" domain={[0, expertRange]} />
           <Tooltip
             cursor={{ fill: chartColorHoverBackground }}
-            content={<ProgressTooltip goal={expertRange.current} />}
+            content={<ProgressTooltip goal={expertRange} />}
           />
           <Legend iconSize={8} />
           {/* Job 데이터의 모든 Bar를 생성 */}

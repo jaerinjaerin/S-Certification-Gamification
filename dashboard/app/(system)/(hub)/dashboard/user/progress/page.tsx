@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 export const dynamic = 'force-dynamic';
-
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserContext } from '../_provider/provider';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import {
   Table,
@@ -25,10 +24,11 @@ import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
 import Pagination from '@/components/pagenation';
 import { serializeJsonToQuery } from '@/lib/search-params';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import { updateSearchParamsOnUrl } from '@/lib/url';
+import useSWR from 'swr';
+import { useSearchParams } from 'next/navigation';
 
-const columns: ColumnDef<DomainProps>[] = [
+const columns: ColumnDef<UserListProps>[] = [
   {
     id: 'no',
     header: 'No',
@@ -48,15 +48,21 @@ const columns: ColumnDef<DomainProps>[] = [
 ];
 
 const UserProgress = () => {
-  const { createController, abort } = useAbortController();
+  const searchParams = useSearchParams();
+  const page = (searchParams.get('progressPageIndex') as string | null) ?? '1';
   const { state } = useUserContext();
-  const [data, setData] = useState<DomainProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const total = useRef<number>(0);
-
-  // 페이지 상태 관리
-  const [pageIndex, setPageIndex] = useState(1); // 현재 페이지
+  const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 50; // 페이지당 데이터 개수
+  const { data: progressData, isLoading: loading } = useSWR(
+    `/api/dashboard/user/progress?${searchParamsToQuery({ ...state.fieldValues, take: pageSize, page: pageIndex })}`,
+    swrFetcher
+  );
+
+  const { result: data, total }: { result: UserListProps[]; total: 0 } =
+    progressData || {
+      result: [],
+      total: 0,
+    };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -64,7 +70,7 @@ const UserProgress = () => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // 페이지네이션 모델 추가
     manualPagination: true, // 페이지네이션을 수동으로 처리
-    pageCount: Math.ceil(total.current / pageSize), // 총 페이지 수 계산
+    pageCount: Math.ceil(total / pageSize), // 총 페이지 수 계산
     state: {
       pagination: {
         pageIndex: pageIndex - 1, // 0 기반 인덱스 적용
@@ -73,60 +79,14 @@ const UserProgress = () => {
     },
   });
 
-  // 이전 fieldValues를 추적하기 위한 함수
-  const prevFieldValues = useRef(state.fieldValues);
-
-  function fieldValuesChanged() {
-    const isChanged =
-      JSON.stringify(prevFieldValues.current) !==
-      JSON.stringify(state.fieldValues);
-    prevFieldValues.current = state.fieldValues; // 현재 값을 업데이트
-    return isChanged;
-  }
-
   useEffect(() => {
     if (state.fieldValues) {
-      const { progressPageIndex, ...fieldValues } = state.fieldValues;
-      if (fieldValuesChanged() && 1 < pageIndex) {
-        setPageIndex(1);
-        return;
-      }
-
-      fetchData(
-        { ...state.fieldValues, take: pageSize, page: pageIndex },
-        'dashboard/user/progress',
-        (data) => {
-          updateSearchParamsOnUrl({
-            ...fieldValues,
-            progressPageIndex: pageIndex,
-          });
-          //
-          total.current = data.total;
-          setData(data.result);
-          setLoading(false);
-        },
-        createController()
-      );
+      updateSearchParamsOnUrl({
+        ...state.fieldValues,
+        progressPageIndex: pageIndex,
+      });
     }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues, pageIndex, pageSize]);
-
-  // 서치파람으로 페이지 지정
-  useEffect(() => {
-    if (state.fieldValues) {
-      const { progressPageIndex } = state.fieldValues;
-
-      if (progressPageIndex && /^\d+$/.test(progressPageIndex)) {
-        setPageIndex(parseInt(progressPageIndex, 10));
-      } else {
-        setPageIndex(1);
-      }
-    }
-  }, [state.fieldValues]);
+  }, [state.fieldValues, pageIndex]);
 
   const onDownload = () => {
     if (state.fieldValues) {
@@ -204,7 +164,7 @@ const UserProgress = () => {
       {table.getRowModel().rows?.length ? (
         <div className="py-5">
           <Pagination
-            totalItems={total.current}
+            totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
             onPageChange={(page) => setPageIndex(page)}

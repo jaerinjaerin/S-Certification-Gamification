@@ -98,7 +98,7 @@ export const {
         }
 
         return {
-          // id: encrypt(profile.userId, true),
+          id: encrypt(profile.userId, true),
           emailId:
             profile.businessAddress.email1 != null
               ? encrypt(profile.businessAddress.email1, true)
