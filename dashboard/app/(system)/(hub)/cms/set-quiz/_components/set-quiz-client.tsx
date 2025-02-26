@@ -4,8 +4,11 @@
 // import { fetcher } from '../../lib/fetcher';
 
 import { DomainData } from '@/lib/nomember-excel-parser';
+import { QuizStageEx } from '@/types';
 import { useState } from 'react';
+import useSWR from 'swr';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
+import { fetcher } from '../../lib/fetcher';
 import useQuizSetState from '../store/quizset-state';
 import {
   NonSPlusUserUploadButton,
@@ -13,7 +16,6 @@ import {
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
 // import { DataTable } from './data-table';
-// import { sUserColumns } from '../columns';
 
 export function SetQuizClient() {
   const {
@@ -35,25 +37,56 @@ export function SetQuizClient() {
         {tabState === 's' && <SPlusUserUploadButton />}
         {tabState === 'non-s' && <NonSPlusUserUploadButton />}
       </div>
-      {/* <div>{tabState === 's' && <SUserTable />}</div> */}
+      <SUserTable />
       {/* <div>{tabState === 'non-s' && <NonSUserTable />}</div> */}
     </div>
   );
 }
 
-// function SUserTable() {
-//   // 캠페인의 전체 데이터 가져오기
-//   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=c903fec8-56f8-42fe-aa06-464148d4e0a5`;
-//   const { data, isLoading } = useSWR(QUIZSET_DATA_URL, fetcher);
-//   console.log('🥕 data', data);
+function SUserTable() {
+  // 캠페인의 전체 데이터 가져오기
+  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=c903fec8-56f8-42fe-aa06-464148d4e0a5`;
+  const { data, isLoading } = useSWR(QUIZSET_DATA_URL, fetcher);
 
-//   return (
-//     <>
-//       {JSON.stringify(data)}
-//       <DataTable data={[]} columns={sUserColumns} />
-//     </>
-//   );
-// }
+  return (
+    <div className="mt-4">
+      <>Test Table</>
+      {data &&
+        data.success &&
+        data.result.groupedQuizSets &&
+        data.result.groupedQuizSets.length > 0 &&
+        // <DataTable data={data.quizSets} columns={sUserColumns} />
+        data.result.groupedQuizSets.map((groupedQuizSet: any) => {
+          return (
+            <div key={groupedQuizSet.quizSet.id}>
+              <p>
+                {groupedQuizSet.quizSet.domain.name}:{' '}
+                {groupedQuizSet.quizSet.language.code}, stages:{' '}
+                {groupedQuizSet.quizSet.quizStages.length}
+                {groupedQuizSet.quizSet.quizStages.length > 0 && (
+                  <div>
+                    {groupedQuizSet.quizSet.quizStages.map(
+                      (quizStage: QuizStageEx) => {
+                        return (
+                          <div key={quizStage.id}>
+                            <p>
+                              stage {quizStage.name}:{' '}
+                              {quizStage.questions.length}
+                            </p>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                )}
+              </p>
+              {/* <DataTable data={quizSet.data} columns={sUserColumns} /> */}
+            </div>
+          );
+        })}
+    </div>
+  );
+}
 
 const NoMemberDomainExcelUploader = () => {
   const [data, setData] = useState<DomainData[] | null>(null);
@@ -95,7 +128,7 @@ const NoMemberDomainExcelUploader = () => {
       formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5'); // 📂 파일 추가
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_member_country`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel`,
         {
           method: 'POST',
           body: formData,

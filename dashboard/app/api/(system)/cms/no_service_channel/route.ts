@@ -5,6 +5,10 @@ import {
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
+import {
+  CloudFrontClient,
+  CreateInvalidationCommand,
+} from '@aws-sdk/client-cloudfront';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
@@ -84,21 +88,21 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (uploadedFile) {
-      if (file.name !== uploadedFile.path.split('/').pop()) {
-        console.error('Different file name');
-        return NextResponse.json(
-          {
-            success: false,
-            error: {
-              message: 'Different file name',
-              errorCode: ERROR_CODES.FILE_NAME_MISMATCH,
-            },
-          },
-          { status: 400 }
-        );
-      }
-    }
+    // if (uploadedFile) {
+    //   if (file.name !== uploadedFile.path.split('/').pop()) {
+    //     console.error('Different file name');
+    //     return NextResponse.json(
+    //       {
+    //         success: false,
+    //         error: {
+    //           message: 'Different file name',
+    //           errorCode: ERROR_CODES.FILE_NAME_MISMATCH,
+    //         },
+    //       },
+    //       { status: 400 }
+    //     );
+    //   }
+    // }
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     const result: ProcessResult = parseExcelBufferToDomainJson(
@@ -148,6 +152,34 @@ export async function POST(request: NextRequest) {
 
     const filteredDomainDatas = domainDatas.filter((domainData) => {
       return domainData.id !== '';
+    });
+
+    const domainIds = filteredDomainDatas.map((domainData) => domainData.id);
+    const quizSets = await prisma.quizSet.findMany({
+      where: {
+        domainId: {
+          in: domainIds,
+        },
+        campaignId: campaign.id,
+      },
+      include: {
+        language: true,
+      },
+    });
+
+    filteredDomainDatas.forEach((domainData) => {
+      const quizSet = quizSets.find((q) => q.domainId === domainData.id);
+      if (quizSet) {
+        if (quizSet.language) {
+          if (!domainData.languages) {
+            domainData.languages = [];
+          }
+          domainData.languages.push(quizSet.language);
+          domainData.isReady = true;
+        }
+      } else {
+        domainData.isReady = false;
+      }
     });
 
     // JSON 객체를 문자열로 변환 (예쁘게 출력)
@@ -223,6 +255,46 @@ export async function POST(request: NextRequest) {
         },
       });
     }
+
+    async function invalidateCache(distributionId: string, paths: string[]) {
+      try {
+        const command = new CreateInvalidationCommand({
+          DistributionId: distributionId,
+          InvalidationBatch: {
+            Paths: {
+              Quantity: paths.length,
+              Items: paths,
+            },
+            CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
+          },
+        });
+
+        const response = await cloudFrontClient.send(command);
+        console.log('Invalidation successful:', response);
+      } catch (error) {
+        console.error('Error invalidating CloudFront cache:', error);
+      }
+    }
+
+    const cloudFrontClient =
+      process.env.ENV === 'local'
+        ? new CloudFrontClient({
+            region: 'us-east-1',
+            credentials: fromIni({
+              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
+            }),
+          })
+        : new CloudFrontClient({
+            region: 'us-east-1',
+          });
+
+    // 사용 예제
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    const pathsToInvalidate = [
+      `/certification/${campaign.slug}/jsons/channels.json`,
+    ]; // 무효화할 경로
+
+    invalidateCache(distributionId, pathsToInvalidate);
 
     return NextResponse.json(
       {
