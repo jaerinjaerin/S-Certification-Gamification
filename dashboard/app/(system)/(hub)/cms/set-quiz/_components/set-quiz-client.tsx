@@ -4,6 +4,8 @@ import { LoaderWithBackground } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { DomainData } from '@/lib/nomember-excel-parser';
 import { QuizStageEx } from '@/types';
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
@@ -15,7 +17,6 @@ import {
   SPlusUserUploadButton,
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
-
 // import { DataTable } from './data-table';
 
 export function SetQuizClient() {
@@ -27,7 +28,6 @@ export function SetQuizClient() {
   return (
     <div className="flex flex-col">
       <NoMemberDomainExcelUploader />
-      <DownloadZipButton />
       <div className="absolute top-0 right-0 ">
         <DownloadFileListPopoverButton type="template" />
       </div>
@@ -51,11 +51,47 @@ function SUserTable() {
   const { data, isLoading } = useSWR<QuizSet>(QUIZSET_DATA_URL, fetcher);
   console.log('🥕 data', data);
 
+  const handleDownloadZip = async () => {
+    const zip = new JSZip();
+
+    if (!data?.result.groupedQuizSets) {
+      return;
+    }
+
+    const files: { name: string; url: string }[] = data?.result.groupedQuizSets
+      .filter((groupedQuizSet) => groupedQuizSet.quizSetFile != null)
+      .map((groupedQuizSet) => {
+        const name = groupedQuizSet.quizSetFile!.path.split('/').pop();
+        return name
+          ? {
+              name,
+              url: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${groupedQuizSet.quizSetFile!.path}`,
+            }
+          : null;
+      })
+      .filter((file): file is { name: string; url: string } => file !== null);
+
+    console.log('🥕 files', files);
+
+    // 파일들을 ZIP에 추가
+    for (const file of files) {
+      const response = await fetch(file.url);
+      const blob = await response.blob();
+      zip.file(file.name, blob);
+    }
+
+    // ZIP 파일 생성 및 다운로드
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'download.zip');
+    });
+  };
+
   if (isLoading) {
     return <LoaderWithBackground />;
   }
   return (
     <div>
+      <button onClick={handleDownloadZip}>ZIP 다운로드</button>;
       {data?.result.groupedQuizSets.map((quizSet) => {
         return (
           <div key={quizSet.quizSet.id}>{quizSet.quizSet.domain.code}</div>
@@ -194,40 +230,3 @@ const NoMemberDomainExcelUploader = () => {
     </div>
   );
 };
-
-export default function DownloadZipButton() {
-  const handleDownload = async () => {
-    try {
-      // 예시: S3 파일 키 목록을 쉼표로 구분하여 전달합니다.
-      // const files = 'file1.jpg,file2.pdf';
-      const response = await fetch(`/api/cms/resource/download/quizset`, {
-        method: 'GET',
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      // 응답을 Blob으로 변환
-      const blob = await response.blob();
-
-      // Blob URL 생성
-      const url = window.URL.createObjectURL(blob);
-
-      // 다운로드 링크 생성 및 클릭 이벤트 트리거
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'files.zip';
-      document.body.appendChild(a);
-      a.click();
-
-      // 임시 링크 제거 및 URL 해제
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Download error:', error);
-    }
-  };
-
-  return <button onClick={handleDownload}>Download ZIP</button>;
-}
