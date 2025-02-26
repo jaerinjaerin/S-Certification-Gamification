@@ -47,7 +47,6 @@ function SUserTable() {
   // 캠페인의 전체 데이터 가져오기
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=c903fec8-56f8-42fe-aa06-464148d4e0a5`;
   const { data, isLoading } = useSWR(QUIZSET_DATA_URL, fetcher);
-  console.log('🥕 data', data, data?.result?.groupedQuizSets?.length);
 
   return (
     <div className="mt-4">
@@ -129,7 +128,7 @@ const NoMemberDomainExcelUploader = () => {
       formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5'); // 📂 파일 추가
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_member_country`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel`,
         {
           method: 'POST',
           body: formData,

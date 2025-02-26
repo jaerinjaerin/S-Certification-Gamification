@@ -1,9 +1,9 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { getS3Client } from '@/lib/aws/s3-client';
 import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { fromIni } from '@aws-sdk/credential-provider-ini';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
@@ -596,17 +596,7 @@ export async function POST(request: NextRequest) {
     // =============================================
 
     // const file = files.file?.[0];
-    const s3Client =
-      process.env.ENV === 'local'
-        ? new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-          });
+    const s3Client = getS3Client();
 
     // if (file) {
 
@@ -790,8 +780,6 @@ export async function GET(request: Request) {
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
     }));
-
-    console.log('groupedQuizSets: ', groupedQuizSets);
 
     return NextResponse.json(
       { success: true, result: { groupedQuizSets, activityBadges } },
