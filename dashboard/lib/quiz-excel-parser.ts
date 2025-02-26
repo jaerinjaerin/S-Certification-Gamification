@@ -166,7 +166,7 @@ export const processExcelBuffer = (
           timeLimitSeconds: row['TimeLimitSeconds']
             ? Number(row['TimeLimitSeconds'])
             : null,
-          text: row['Question'] ?? '',
+          text: row['Question'],
           questionType: row['QuestionType'] || null,
           backgroundImageId: row['ImageBackground'] || null,
           characterImageId: row['ImageCharactor'] || null,
@@ -174,7 +174,7 @@ export const processExcelBuffer = (
         };
 
         if (groupedData[no].enabled) {
-          if (groupedData[no].text == null) {
+          if (groupedData[no].text == null || groupedData[no].text === '') {
             errors.push({
               line: headerIndex + groupedData[no].originQuestionIndex,
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no text!`,
