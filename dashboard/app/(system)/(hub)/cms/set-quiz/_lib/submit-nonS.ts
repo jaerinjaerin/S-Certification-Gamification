@@ -22,7 +22,7 @@ export const submitNonS = async (files: File[], campaignId: string) => {
       formData.append('campaignId', campaignId); // 📂 파일 추가
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_member_country`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel`,
         {
           method: 'POST',
           body: formData,
@@ -45,7 +45,39 @@ export const submitNonS = async (files: File[], campaignId: string) => {
       }
     }
   } catch (error) {
-    console.error('Activity ID 업로드 중 오류가 발생했습니다:', error);
-    alert('Activity ID 업로드에 실패했습니다. 관리자에게 문의해주세요.');
+    console.error('Non S+ User 파일 업로드 중 오류가 발생했습니다:', error);
+    alert('Non S+ User 업로드에 실패했습니다. 관리자에게 문의해주세요.');
   }
 };
+
+//   const handleUpload = async () => {
+//     console.log('엑셀 파일 업로드');
+//     if (!file) {
+//       alert('업로드할 데이터가 없습니다.');
+//       return;
+//     }
+
+//     try {
+//       const formData = new FormData();
+//       formData.append('file', file); // 📂 파일 추가
+//       formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5'); // 📂 파일 추가
+
+//       const response = await fetch(
+//         `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel`,
+//         {
+//           method: 'POST',
+//           body: formData,
+//         }
+//       );
+
+//       if (response.ok) {
+//         alert('엑셀 파일 업로드가 완료되었습니다.');
+//       }
+
+//       const result = await response.json();
+//       console.log(result);
+//       setData(result.result?.data);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };

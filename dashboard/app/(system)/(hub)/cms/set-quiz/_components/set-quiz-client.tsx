@@ -1,8 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { DomainData } from '@/lib/nomember-excel-parser';
-
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
 
 import useQuizSetState from '../_store/quizset-state';
@@ -13,6 +10,7 @@ import {
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
 import SplusDataTable from './data-table/s-plus/data-table';
+import NonSplusDataTable from './data-table/non-s-plus/data-table';
 
 export function SetQuizClient() {
   const {
@@ -22,7 +20,6 @@ export function SetQuizClient() {
 
   return (
     <div className="flex flex-col">
-      <NoMemberDomainExcelUploader />
       <div className="absolute top-0 right-0 ">
         <DownloadFileListPopoverButton type="template" />
       </div>
@@ -35,90 +32,7 @@ export function SetQuizClient() {
         {tabState === 'non-s' && <NonSPlusUserUploadButton />}
       </div>
       <div>{tabState === 's' && <SplusDataTable />}</div>
+      <div>{tabState === 'non-s' && <NonSplusDataTable />}</div>
     </div>
   );
 }
-
-const NoMemberDomainExcelUploader = () => {
-  const [data, setData] = useState<DomainData[] | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-
-  const handleFileUpload = (event: any) => {
-    const file = event.target.files[0]; // 선택한 파일 가져오기
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-
-    reader.onload = (e: any) => {
-      // const bufferArray = e.target.result;
-      // const result: ProcessResult = parseExcelBufferToDomainJson(bufferArray);
-      // console.log(result);
-
-      // if (result.result?.domainDatas) {
-      //   setData(result.result?.domainDatas);
-      // }
-      setFile(file);
-    };
-
-    reader.onerror = () => {
-      alert('파일을 읽는 중 오류가 발생했습니다.');
-    };
-  };
-
-  const handleUpload = async () => {
-    console.log('엑셀 파일 업로드');
-    if (!file) {
-      alert('업로드할 데이터가 없습니다.');
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append('file', file); // 📂 파일 추가
-      formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5'); // 📂 파일 추가
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
-
-      if (response.ok) {
-        alert('엑셀 파일 업로드가 완료되었습니다.');
-      }
-
-      const result = await response.json();
-      console.log(result);
-      setData(result.result?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <div className="p-4">
-      <h2 className="text-lg font-semibold mb-2">엑셀 파일 업로드 & 분석</h2>
-      <input
-        type="file"
-        accept=".xlsx, .xls"
-        onChange={handleFileUpload}
-        className="mb-4"
-      />
-      <button disabled={!file} className="mt-4" onClick={() => handleUpload()}>
-        Activity 엑셀 파일 업로드
-      </button>
-
-      {data && (
-        <div className="border p-2 bg-gray-100 mt-2">
-          <h3 className="font-semibold">📊 분석 결과 (JSON)</h3>
-          <pre className="text-sm bg-white p-2 rounded overflow-x-auto">
-            {JSON.stringify(data, null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
-  );
-};

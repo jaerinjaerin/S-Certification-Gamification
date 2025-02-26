@@ -1,3 +1,4 @@
+import { DomainData } from '@/lib/nomember-excel-parser';
 import type {
   QuizSet,
   Domain,
@@ -47,4 +48,10 @@ export interface QuizSetResponse {
     groupedQuizSets: GroupedQuizSet[];
     activityBadges: ActivityBadgeWithImage[];
   };
+}
+
+export interface NonSProcessResult {
+  success: boolean;
+  data?: DomainData[];
+  errors?: { line: number; message: string }[];
 }

@@ -12,7 +12,8 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FormValues } from '../../formSchema';
+import { FormValues } from '../../create/_type/formSchema';
+import { forwardRef } from 'react';
 
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -20,16 +21,16 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const CustomInput = ({
-  placeholder,
-  className,
-  ...props
-}: {
-  placeholder: string;
-  className?: string;
-}) => {
+const CustomInput = forwardRef<
+  HTMLInputElement,
+  {
+    placeholder: string;
+    className?: string;
+  }
+>(({ placeholder, className, ...props }, ref) => {
   return (
     <Input
+      ref={ref}
       className={cn(
         'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
         className
@@ -38,7 +39,9 @@ const CustomInput = ({
       {...props}
     />
   );
-};
+});
+
+CustomInput.displayName = 'CustomInput';
 
 const CustomPopover = ({
   field,

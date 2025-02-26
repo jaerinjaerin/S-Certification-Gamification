@@ -1,5 +1,5 @@
 import { ControllerRenderProps, UseFormReturn } from 'react-hook-form';
-import { FormValues } from '../../formSchema';
+import { FormValues } from '../../create/_type/formSchema';
 import {
   FormControl,
   FormField,

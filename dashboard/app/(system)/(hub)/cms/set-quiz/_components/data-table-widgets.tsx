@@ -19,6 +19,17 @@ function ActiveToggle({
   );
 }
 
+function StatusCircle({ label }: { label: 'Ready' | 'Not Ready' }) {
+  return (
+    <div
+      className={cn(
+        'size-4 rounded-full',
+        label === 'Ready' ? 'bg-red-300' : 'bg-green-300'
+      )}
+    />
+  );
+}
+
 // TODO: label props로 받아야 함
 function StatusBadge({ label }: { label: 'Ready' | 'Not Ready' }) {
   return (
@@ -76,4 +87,10 @@ function ActivityIdBadge({
   );
 }
 
-export { ActiveToggle, StatusBadge, QuizSetLink, ActivityIdBadge };
+export {
+  ActiveToggle,
+  StatusCircle,
+  StatusBadge,
+  QuizSetLink,
+  ActivityIdBadge,
+};

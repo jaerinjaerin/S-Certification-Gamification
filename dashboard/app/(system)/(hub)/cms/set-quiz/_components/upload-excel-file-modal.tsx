@@ -33,6 +33,7 @@ import { submitActivityId } from '../_lib/submit-activityId';
 // import { submitNonS } from '../_lib/submit-nonS';
 import useFileDropZone from '../_hooks/useFileDropZone';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
+import { submitNonS } from '../_lib/submit-nonS';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
@@ -122,7 +123,12 @@ const UploadExcelFileModal = forwardRef<
         setUploadResult(result);
       }
     },
-    'non-s': () => console.log('🥕 non-s'),
+    'non-s': async () => {
+      const result = await submitNonS(uploadFiles['non-s'], campaign!.id);
+      if (result) {
+        setUploadResult(result);
+      }
+    },
   };
 
   // TODO: 테이블 결과창 다시 수정
