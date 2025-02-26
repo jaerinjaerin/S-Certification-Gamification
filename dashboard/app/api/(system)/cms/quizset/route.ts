@@ -100,9 +100,10 @@ export async function POST(request: NextRequest) {
           error: {
             message:
               result.errors != null && result.errors.length > 0
-                ? result.errors[0]
-                : 'Unknown error',
-            code: ERROR_CODES.UNKNOWN,
+                ? `${file.name}: ${result.errors[0].line} - ${result.errors[0].message}`
+                : // result.errors[0]
+                  `${file.name}: Unknown error`,
+            code: ERROR_CODES.EXCEL_PROCESSING_ERROR,
           },
         },
         { status: 400 }
@@ -133,7 +134,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: '파일명이 올바르지 않습니다.',
+            message: `${file.name}: 파일명이 올바르지 않습니다.`,
             code: ERROR_CODES.INVALID_FILE_NAME,
           },
         },
@@ -147,7 +148,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'Invalid job code. Must be "ff" or "fsm"',
+            message: `${file.name}: Invalid job code. Must be "ff" or "fsm"`,
             code: ERROR_CODES.INVALID_JOB_GROUP,
           },
         },
@@ -169,7 +170,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'Campaign not found',
+            message: `${file.name}: Campaign not found`,
             code: ERROR_CODES.CAMPAIGN_NOT_FOUND,
           },
         },
@@ -188,7 +189,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'Domain not found',
+            message: `${file.name}: Domain not found`,
             code: ERROR_CODES.DOMAIN_NOT_FOUND,
           },
         },
@@ -207,7 +208,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'Language not found',
+            message: `${file.name}: Language not found`,
             code: ERROR_CODES.LANGUAGE_NOT_FOUND,
           },
         },
@@ -228,7 +229,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'HQ Domain not found',
+            message: `${file.name}: HQ Domain not found`,
             code: ERROR_CODES.HQ_DOMAIN_NOT_FOUND,
           },
         },
@@ -251,7 +252,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: 'HQ Questions not registered',
+            message: `${file.name}: HQ Questions not registered`,
             code: ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED,
           },
         },
@@ -303,25 +304,25 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      if (savedQuizSetFile) {
-        console.log(
-          'savedQuizSetFile: ',
-          savedQuizSetFile.path.split('/').pop(),
-          file.name
-        );
-        if (savedQuizSetFile.path.split('/').pop() !== file.name) {
-          return NextResponse.json(
-            {
-              success: false,
-              error: {
-                message: 'File name does not match the existing file',
-                code: ERROR_CODES.FILE_NAME_MISMATCH,
-              },
-            },
-            { status: 400 }
-          );
-        }
-      }
+      // if (savedQuizSetFile) {
+      //   console.log(
+      //     'savedQuizSetFile: ',
+      //     savedQuizSetFile.path.split('/').pop(),
+      //     file.name
+      //   );
+      //   if (savedQuizSetFile.path.split('/').pop() !== file.name) {
+      //     return NextResponse.json(
+      //       {
+      //         success: false,
+      //         error: {
+      //           message: `${file.name}: File name does not match the existing file`,
+      //           code: ERROR_CODES.FILE_NAME_MISMATCH,
+      //         },
+      //       },
+      //       { status: 400 }
+      //     );
+      //   }
+      // }
     }
 
     if (!quizSet) {
@@ -433,7 +434,7 @@ export async function POST(request: NextRequest) {
           {
             success: false,
             error: {
-              message: 'Original question not found',
+              message: `${file.name}: (${i})Original question not found or For each domain, additional questions should be entered starting from number 101.`,
               code: ERROR_CODES.HQ_QUESTION_NOT_FOUND,
             },
           },
@@ -446,6 +447,8 @@ export async function POST(request: NextRequest) {
           originalQuestionId: originalQuestionId,
           originalIndex: questionJson.originQuestionIndex,
           languageId: language.id,
+          campaignId: campaignId,
+          domainId: domain.id,
         },
       });
 
@@ -467,11 +470,11 @@ export async function POST(request: NextRequest) {
             id: questionId,
             campaignId: campaignId,
             domainId: domain.id,
-            text: questionJson.text.toString(),
-            timeLimitSeconds: questionJson.timeLimitSeconds,
             languageId: language.id,
             originalQuestionId: originalQuestionId,
             originalIndex: questionJson.originQuestionIndex,
+            text: questionJson.text.toString(),
+            timeLimitSeconds: questionJson.timeLimitSeconds,
             category: questionJson.category,
             specificFeature: questionJson.specificFeature ?? '',
             importance: questionJson.importance,
