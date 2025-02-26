@@ -782,7 +782,10 @@ export async function GET(request: Request) {
     }));
 
     return NextResponse.json(
-      { success: true, result: { groupedQuizSets, activityBadges } },
+      {
+        success: true,
+        result: { groupedQuizSets, activityBadges },
+      },
       { status: 200 }
     );
   } catch (error) {

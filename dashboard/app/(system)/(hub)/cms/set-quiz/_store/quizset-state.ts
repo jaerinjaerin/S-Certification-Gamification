@@ -36,9 +36,12 @@ const initialState = {
     data: [] as ProcessResult[],
     files: [] as File[],
   } as NonS,
-  // UI states
   ui: {
     tabState: 's' as UserTabState,
+    alert: {
+      isOpen: false,
+      message: '',
+    },
   },
 };
 
@@ -98,6 +101,26 @@ const useQuizSetState = create(
         ui: {
           ...state.ui,
           tabState,
+        },
+      })),
+    setAlert: (message: string) =>
+      set((state) => ({
+        ui: {
+          ...state.ui,
+          alert: {
+            isOpen: true,
+            message,
+          },
+        },
+      })),
+    closeAlert: () =>
+      set((state) => ({
+        ui: {
+          ...state.ui,
+          alert: {
+            isOpen: false,
+            message: '',
+          },
         },
       })),
   }))

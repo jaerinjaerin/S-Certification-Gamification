@@ -1,6 +1,7 @@
 // React & Types
 import { forwardRef, useState } from 'react';
 import { UploadExcelFileModalProps } from '../_type/type';
+import { ProcessResult } from '@/lib/quiz-excel-parser';
 
 // UI Components
 import { Button } from '@/components/ui/button';
@@ -14,29 +15,30 @@ import {
 } from '@/components/ui/dialog';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { DropzoneView } from '../../_components/upload-files-dialog';
+import { FilesTableComponent, Td } from './files-table-component';
+// import InformationInputDialog from '../../_components/information-input-dialog';
 
 // Utils
 import { cn } from '@/lib/utils';
 import { isEmpty } from '../../_utils/utils';
 
 // Hooks & State
-import useFileDropZone from '../hooks/useFileDropZone';
-import useQuizSetState from '../store/quizset-state';
+
+import useQuizSetState from '../_store/quizset-state';
 import { useStateVariables } from '@/components/provider/state-provider';
 
 // API Functions
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { submitActivityId } from '../_lib/submit-activityId';
-import { submitNonS } from '../_lib/submit-nonS';
-import InformationInputDialog from '../../_components/information-input-dialog';
-import { FilesTableComponent, Td } from './files-table-component';
+// import { submitNonS } from '../_lib/submit-nonS';
+import useFileDropZone from '../_hooks/useFileDropZone';
+import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
 >(({ children, title, variant }, ref) => {
   const { campaign } = useStateVariables();
-
   const {
     quizSet,
     activityId,
@@ -44,15 +46,15 @@ const UploadExcelFileModal = forwardRef<
     clearActivityId,
     nonS,
     clearNonS,
+    ui: { alert },
+    closeAlert,
   } = useQuizSetState();
 
-  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
-    useFileDropZone({
-      variant,
-    });
+  const { getRootProps, getInputProps, open, isDragActive } = useFileDropZone({
+    variant,
+  });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // variant에 따라 사용할 상태 결정
+  const [uploadResult, setUploadResult] = useState<ProcessResult[]>([]);
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -71,6 +73,7 @@ const UploadExcelFileModal = forwardRef<
     'non-s': clearNonS,
   };
 
+  // file 객체 배열
   const getValidFiles = () => {
     const validIndices = uploadData[variant]
       .map((data, index) => (data.success ? index : -1))
@@ -79,37 +82,67 @@ const UploadExcelFileModal = forwardRef<
     return validIndices.map((index) => uploadFiles[variant][index]);
   };
 
+  // @types {fileName: string, success: boolean, errors: {message: string}[]
   const getInvalidFiles = () => {
-    const validIndices = uploadData[variant]
-      .map((data, index) => (!data.success ? index : -1))
-      .filter((index) => index !== -1);
+    const uploadDataVariant = uploadData[variant];
+    const uploadFilesVariant = uploadFiles[variant];
 
-    return validIndices.map((index) => uploadFiles[variant][index]);
+    return uploadDataVariant
+      .map((data, index) => ({
+        ...data,
+        fileName: uploadFilesVariant[index].name,
+      }))
+      .filter((data) => !data.success);
   };
 
-  // const handleDialogOpen = () => {
-  //   if (!isEmpty(getValidFiles())) {
-  //     setIsDialogOpen(!isDialogOpen);
-  //   }
-  // };
-
-  // const getInvalidFiles = (
-  //   uploadData: ProcessResult[] | ActivityIdProcessResult[]
-  // ) => {
-  //   return uploadData.filter((data) => !data.success);
-  // };
+  const handleDialogOpen = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (!open) {
+      clearUploadFile[variant]();
+    }
+  };
 
   const handleSumbit = {
-    quiz: () => submitQuizSet(getValidFiles(), campaign!.id, setIsDialogOpen),
-    activityId: () => submitActivityId(uploadFiles.activityId),
-    'non-s': () => submitNonS(uploadFiles['non-s']),
+    quiz: async () => {
+      const result = await submitQuizSet(
+        getValidFiles(),
+        campaign!.id,
+        setIsDialogOpen
+      );
+      if (result) {
+        setUploadResult(result);
+      }
+    },
+    activityId: async () => {
+      const result = await submitActivityId(
+        uploadFiles.activityId,
+        campaign!.id
+      );
+      if (result) {
+        setUploadResult(result);
+      }
+    },
+    'non-s': () => console.log('🥕 non-s'),
   };
+
+  // TODO: 테이블 결과창 다시 수정
+  const test = [...uploadResult, ...getInvalidFiles()];
+  console.log('🥕 test', test);
+  console.log(
+    '🥕 activityFiles',
+    uploadFiles.activityId,
+    'activityData',
+    uploadData.activityId
+  );
 
   return (
     <div ref={ref}>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog open={isDialogOpen} onOpenChange={handleDialogOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <CustomDialogContent className="gap-16">
+        <CustomDialogContent
+          className="gap-16"
+          onCloseAutoFocus={() => handleDialogOpen(false)}
+        >
           <DialogHeader>
             <DialogTitle className="text-size-17px font-semibold">
               {title}
@@ -158,15 +191,12 @@ const UploadExcelFileModal = forwardRef<
                 className={cn('!ml-3')}
                 variant="action"
                 // onClick={handleSumbit[variant]}
-                onClick={() => {
-                  handleSumbit[variant]();
-                  // handleDialogOpen();
-                }}
+                onClick={handleSumbit[variant]}
                 disabled={isEmpty(getValidFiles())}
               >
                 Upload
               </Button>
-              <InformationInputDialog
+              {/* <InformationInputDialog
                 state={getValidFiles().length > 0 ? 'success' : 'error'}
                 type="multi"
                 tableContent={
@@ -207,11 +237,25 @@ const UploadExcelFileModal = forwardRef<
                     invalidLength: getInvalidFiles().length,
                   },
                 ]}
-              />
+              /> */}
             </DialogFooter>
           )}
         </CustomDialogContent>
       </Dialog>
+      <CustomAlertDialog
+        open={alert.isOpen}
+        description={alert.message}
+        buttons={[
+          {
+            label: '확인',
+            variant: 'action',
+            type: 'ok',
+            onClick: () => {
+              closeAlert();
+            },
+          },
+        ]}
+      />
     </div>
   );
 });

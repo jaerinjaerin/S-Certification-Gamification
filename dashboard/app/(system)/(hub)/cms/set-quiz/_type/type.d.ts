@@ -1,3 +1,15 @@
+import type {
+  QuizSet,
+  Domain,
+  Subsidiary,
+  Region,
+  Language,
+  QuizStage,
+  Question,
+  QuestionOption,
+  Image,
+} from '@prisma/client';
+
 export type UploadExcelFileVariant = 'quiz' | 'activityId' | 'non-s';
 
 export type UploadExcelFileModalProps = {
@@ -5,77 +17,34 @@ export type UploadExcelFileModalProps = {
   title: string;
   variant: UploadExcelFileVariant;
 };
+export interface GroupedQuizSet {
+  quizSet: QuizSet & {
+    domain: Domain & {
+      subsidiary: Subsidiary & {
+        region: Region;
+      };
+    };
+    language: Language;
+    quizStages: (QuizStage & {
+      badgeImage: Image | null;
+      questions: (Question & {
+        options: QuestionOption[];
+        backgroundImage: Image | null;
+        characterImage: Image | null;
+      })[];
+    })[];
+  };
+  quizSetFile: QuizSetFile | undefined;
+}
 
-// quizSet data type =============================================
-export type QuizSet = {
+export interface ActivityBadgeWithImage extends ActivityBadge {
+  badgeImage: Image | null;
+}
+
+export interface QuizSetResponse {
   success: boolean;
   result: {
-    groupedQuizSets: Array<{
-      quizSet: {
-        id: string;
-        campaignId: string;
-        domainId: string;
-        languageId: string;
-        jobCodes: string[];
-        domain: {
-          id: string;
-          code: string;
-          subsidiary: {
-            id: string;
-            region: {
-              id: string;
-              name: string;
-            };
-          };
-        };
-        language: {
-          id: string;
-          code: string;
-        };
-        quizStages: Array<{
-          id: string;
-          name: string;
-          order: number;
-          badgeImage: {
-            id: string;
-            url: string;
-          } | null;
-          questions: Array<{
-            id: string;
-            text: string;
-            order: number;
-            options: Array<{
-              id: string;
-              text: string;
-              order: number;
-              isCorrect: boolean;
-            }>;
-            backgroundImage: {
-              id: string;
-              url: string;
-            } | null;
-            characterImage: {
-              id: string;
-              url: string;
-            } | null;
-          }>;
-        }>;
-      };
-      quizSetFile:
-        | {
-            id: string;
-            quizSetId: string;
-            path: string;
-            jobCodes: string[];
-          }
-        | undefined;
-    }>;
-    activityBadges: Array<{
-      id: string;
-      badgeImage: {
-        id: string;
-        url: string;
-      } | null;
-    }>;
+    groupedQuizSets: GroupedQuizSet[];
+    activityBadges: ActivityBadgeWithImage[];
   };
-};
+}

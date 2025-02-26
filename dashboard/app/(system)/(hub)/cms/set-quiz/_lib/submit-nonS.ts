@@ -1,5 +1,5 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
-
+import { mutate } from 'swr';
 type NonSError = {
   result: {
     errorCode: string;
@@ -7,7 +7,7 @@ type NonSError = {
   };
 };
 
-export const submitNonS = async (files: File[]) => {
+export const submitNonS = async (files: File[], campaignId: string) => {
   try {
     for (const file of files) {
       if (!file) {
@@ -19,28 +19,23 @@ export const submitNonS = async (files: File[]) => {
     const uploadPromises = files.map(async (file) => {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('campaignId', 'c903fec8-56f8-42fe-aa06-464148d4e0a5'); // 📂 파일 추가
+      formData.append('campaignId', campaignId); // 📂 파일 추가
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/non-s`, // TODO: API 경로 확인 필요
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_member_country`,
         {
           method: 'POST',
           body: formData,
         }
       );
 
-      if (response.ok) {
-        alert('엑셀 파일 업로드가 완료되었습니다.');
-        return;
-      } else {
-        const result = await response.json();
-        console.error(result);
-      }
+      return response.json();
     });
 
     try {
-      await Promise.all(uploadPromises);
-      alert('엑셀 파일 업로드가 완료되었습니다.');
+      const result = await Promise.all(uploadPromises);
+      mutate(`no_member_country?campaignId=${campaignId}`);
+      return result;
     } catch (error) {
       const err = error as NonSError;
       if (err.result?.errorCode === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {
