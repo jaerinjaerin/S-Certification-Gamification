@@ -15,7 +15,7 @@ export function LoginButton({
     <Button
       onClick={() => {
         setIsLoading(true);
-        signIn('sumtotal', { callbackUrl: `/dashboard/overview` });
+        signIn('sumtotal', { callbackUrl: `/campaign` });
       }}
       disabled={isLoading}
       className="w-full"

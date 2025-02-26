@@ -1,4 +1,5 @@
 import { ERROR_CODES, ErrorCode } from '@/app/constants/error-codes';
+import { Language } from '@prisma/client';
 import * as XLSX from 'xlsx';
 
 interface ExcelRow {
@@ -32,7 +33,9 @@ export interface DomainData {
   code: string;
   regionId: string;
   subsidiaryId: string;
+  isReady: boolean;
   channels: ChannelData[];
+  languages: Language[];
 }
 
 export interface ProcessResult {

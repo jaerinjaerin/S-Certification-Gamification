@@ -16,8 +16,7 @@ import {
   chartColorPrimary,
   chartColorSecondary,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
-import { useEffect, useState } from 'react';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useOverviewContext } from '../_provider/provider';
 import { legendCapitalizeFormatter } from '@/app/(system)/(hub)/dashboard/_lib/text';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
@@ -26,45 +25,25 @@ import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/cha
 import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
+import useSWR from 'swr';
 
 function OverviewAchievementRate() {
-  const { createController, abort } = useAbortController();
-  const { createController: createControllerInfo, abort: abortInfo } =
-    useAbortController();
+  useAbortController();
   const { state } = useOverviewContext();
-  const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const { data: dataycount, isLoading: loading } = useSWR(
+    [
+      `/api/dashboard/overview/statistics/achievement?${searchParamsToQuery(state.fieldValues)}`,
+      `/api/dashboard/overview/info/achievement?${searchParamsToQuery(state.fieldValues)}`,
+    ],
+    (urls) => Promise.all(urls.map(swrFetcher))
+  );
 
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/statistics/achievement',
-        (data) => {
-          console.log('🚀 ~ useEffect ~ data.result:', data.result);
-          setData(data.result);
-          setLoading(false);
-        },
-        createController()
-      );
-      //
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/info/achievement',
-        (data) => {
-          setCount(data.result.count.toFixed(2) ?? 0);
-        },
-        createControllerInfo()
-      );
-    }
-
-    return () => {
-      abort();
-      abortInfo();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
+  const [
+    { result: data },
+    {
+      result: { count },
+    },
+  ] = dataycount || [{ result: [] }, { result: { count: 0 } }];
 
   return (
     <ChartContainer>

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type PaginationProps = {
   totalItems: number; // 전체 아이템 개수
@@ -33,7 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({
       ? `${endItem} of ${totalItems} items`
       : `${startItem}-${endItem} of ${totalItems} items`;
 
-  const buttonOptions = "w-[1.875rem] h-[1.875rem] text-zinc-500";
+  const buttonOptions = 'w-[1.875rem] h-[1.875rem] text-zinc-500';
 
   return (
     <div className="flex items-center justify-between px-5">
@@ -76,8 +76,8 @@ const Pagination: React.FC<PaginationProps> = ({
               onClick={() => onPageChange(page)}
               className={`${buttonOptions} ${
                 page === currentPage
-                  ? "text-zinc-950 font-medium bg-zinc-200 pointer-events-none"
-                  : ""
+                  ? 'text-zinc-950 font-medium bg-zinc-200 pointer-events-none border-2'
+                  : ''
               }`}
             >
               {page}

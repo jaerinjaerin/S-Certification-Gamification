@@ -1,38 +1,23 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import InfoCardStyleContent from '../_components/card-content';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import { useOverviewContext } from '../_provider/provider';
-import { fetchData } from '@/lib/fetch';
-import { useAbortController } from '@/components/hook/use-abort-controller';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import useSWR from 'swr';
 
 const OverviewParticipantsInfo = () => {
-  const { createController, abort } = useAbortController();
   const { state } = useOverviewContext();
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/overview/info/participants',
-        (data) => {
-          setCount(data.result.count ?? 0);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setCount(null);
-    };
-  }, [state.fieldValues]);
+  const { data } = useSWR(
+    `/api/dashboard/overview/info/participants?${searchParamsToQuery(state.fieldValues)}`,
+    swrFetcher
+  );
 
   return (
     <InfoCardStyleContainer title="Participants" iconName="user">
-      <InfoCardStyleContent info={count} caption="Total paricipants" />
+      <InfoCardStyleContent
+        info={data ? data.result.count : null}
+        caption="Total paricipants"
+      />
     </InfoCardStyleContainer>
   );
 };

@@ -136,6 +136,17 @@ export const processExcelBuffer = (
     jsonData.forEach((row) => {
       if (!row['No']) return;
       let no = row['No'];
+      if (typeof no === 'string') {
+        no = row['No'].replace(/\s+/g, '');
+      }
+
+      // JSON.stringify로 출력하면 특수문자가 escape 시퀀스로 표현됩니다.
+      console.log('row:', JSON.stringify(no));
+
+      // 각 문자의 유니코드 값을 출력하는 방법
+      for (let i = 0; i < no.length; i++) {
+        console.log(`Index ${i}: '${no[i]}' (Code: ${no.charCodeAt(i)})`);
+      }
 
       // 각 질문을 고유하게 분류
       if (!groupedData[no]) {
@@ -165,26 +176,36 @@ export const processExcelBuffer = (
         if (groupedData[no].enabled) {
           if (groupedData[no].text == null) {
             errors.push({
-              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              line: headerIndex + groupedData[no].originQuestionIndex,
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no text!`,
             });
           }
           if (groupedData[no].stage == null) {
             errors.push({
-              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              line: headerIndex + groupedData[no].originQuestionIndex,
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no stage!`,
             });
           }
           if (groupedData[no].originQuestionIndex == null) {
             errors.push({
-              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              line: headerIndex + groupedData[no].originQuestionIndex,
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order!`,
             });
           }
           if (groupedData[no].orderInStage == null) {
             errors.push({
-              line: headerIndex + 2 + groupedData[no].originQuestionIndex,
+              line: headerIndex + groupedData[no].originQuestionIndex,
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order in stage!`,
+            });
+          }
+          if (
+            !['SINGLE_CHOICE', 'MULTI_CHOICE', 'TRUE_FALSE'].includes(
+              groupedData[no].questionType
+            )
+          ) {
+            errors.push({
+              line: headerIndex + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].questionType} has invalid question type!`,
             });
           }
         }
@@ -218,12 +239,15 @@ export const processExcelBuffer = (
         (opt: any) => opt.answerStatus === true
       );
       if (!hasCorrectAnswer) {
+        console.log('Question.options:', question.options);
         errors.push({
-          line: headerIndex + 2 + question.originQuestionIndex,
-          message: `⚠️ Warning: Question ${question.originQuestionIndex} has no correct answer!`,
+          line: headerIndex + question.originQuestionIndex,
+          message: `⚠️ Warning: Question ${question.originQuestionIndex} ${question.text} has no correct answer!`,
         });
       }
     });
+
+    console.log('groupedData:', groupedData);
 
     return {
       success: errors.length === 0,

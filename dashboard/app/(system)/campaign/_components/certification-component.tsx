@@ -1,22 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-// React and Next.js
-import React, { Dispatch, SetStateAction } from 'react';
-import { useRouter } from 'next/navigation';
-
-// Third party libraries
-import useSWR from 'swr';
-import dayjs from 'dayjs';
+import { Dispatch, SetStateAction } from 'react';
+import { Button } from '@/components/ui/button';
+import { CircleHelp, Pen, Trash2 } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { formSchema, FormValues } from '../formSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // UI Components
-import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
 import { SelectContent, SelectItem } from '@/components/ui/select';
 
 // Icons
-import { CircleHelp, Pen, Trash2 } from 'lucide-react';
 
 // Local Components
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
@@ -31,33 +27,31 @@ import Container from './create-certification/container';
 import TableComponent from './create-certification/table-component';
 
 // Utils and Helpers
-import { fetcher } from '../../(hub)/cms/lib/fetcher';
-import { formSchema, FormValues } from '../formSchema';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { LoaderWithBackground } from '@/components/loader';
+import { useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 
 type CertificationFormState = {
   isFormOpen: boolean;
   type: 'create' | 'edit';
 };
 
-type CampaignList = {
-  success: boolean;
-  result: { campaigns: Campaign[] };
-};
+// type CampaignList = {
+//   success: boolean;
+//   result: { campaigns: Campaign[] };
+// };
 
 export default function CertificationClientComponent() {
-  const { data, isLoading, error } = useSWR<CampaignList>(
-    `/api/cms/campaign`,
-    fetcher
-  );
-  const campaigns = data?.result.campaigns;
+  const { role, campaigns } = useStateVariables(); //role이 null이면 admin
 
-  if (error) {
-    throw error;
-  }
-  if (isLoading) {
-    return <LoaderWithBackground />;
+  if (campaigns?.length === 0) {
+    return (
+      <div className="text-size-24px font-bold h-full flex items-center justify-center whitespace-pre-line text-center">
+        {
+          'You have no ongoing campaigns.\n로그인 했지만 인증제에 참여하지 않는 도메인 권한자에게 보여지는 메시지 필요.'
+        }
+      </div>
+    );
   }
 
   return (
@@ -67,10 +61,12 @@ export default function CertificationClientComponent() {
         className="flex justify-between items-center"
       >
         <h2 className="text-size-17px font-semibold">Certification List</h2>
-        <div className="flex gap-3">
-          <DownloadFileListPopoverButton type="template" />
-          <Button variant="action">Create Certification</Button>
-        </div>
+        {!role && (
+          <div className="flex gap-3">
+            <DownloadFileListPopoverButton type="template" />
+            <Button variant="action">Create Certification</Button>
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-3 gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
@@ -109,12 +105,12 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
             <Button
               variant="ghost"
               className="p-0 aspect-square size-[1.875rem] rounded-sm bg-zinc-50"
-              onClick={() =>
-                setIsCreateCertification({
-                  isFormOpen: true,
-                  type: 'edit',
-                })
-              }
+              onClick={() => {
+                // setIsCreateCertification({
+                //   isFormOpen: true,
+                //   type: 'edit',
+                // })
+              }}
             >
               <Trash2
                 style={{ width: '1.25rem', height: '1.25rem' }}
@@ -133,10 +129,10 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           variant="ghost"
           onClick={(e) => {
             e.stopPropagation();
-            setIsCreateCertification({
-              isFormOpen: true,
-              type: 'edit',
-            });
+            // setIsCreateCertification({
+            //   isFormOpen: true,
+            //   type: 'edit',
+            // });
           }}
         >
           <Pen />

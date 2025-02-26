@@ -1,40 +1,22 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useQuizContext } from '../_provider/provider';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import { DefaultHeatMapDatum, ResponsiveHeatMapCanvas } from '@nivo/heatmap';
 import { LoaderWithBackground } from '@/components/loader';
 import { useModal } from '@/components/provider/modal-provider';
 import DetailIncorrectTable from './_components/detail-table';
-import { useAbortController } from '@/components/hook/use-abort-controller';
+import useSWR from 'swr';
 
 const QuizIncorrectAnswerRate = () => {
-  const { createController, abort } = useAbortController();
   const { state } = useQuizContext();
+  const { data: incorrects, isLoading: loading } = useSWR(
+    `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParamsToQuery({ ...state.fieldValues })}`,
+    swrFetcher
+  );
+  const { result: data } = incorrects || { result: [] };
   const { setContent } = useModal();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      fetchData(
-        state.fieldValues,
-        'dashboard/quiz/statistics/incorrect-answer-rate-by-category',
-        (data) => {
-          setData(data.result || []);
-          setLoading(false);
-        },
-        createController()
-      );
-    }
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, [state.fieldValues]);
 
   return (
     <ChartContainer>
