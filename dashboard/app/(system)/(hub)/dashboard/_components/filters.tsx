@@ -46,11 +46,9 @@ const setRolePermission = (
 ) => {
   if (!role) return;
   //
-  const domainId = role.permissions[0].permission.domains[0].id;
-  //
   // 도메인 필터링
   const domain: Domain = filters.domain.find(
-    (fd: Domain) => fd.id === domainId
+    (fd: Domain) => fd.id === role.permissions[0].permission.domains[0].id
   );
   if (domain) {
     const region = domain?.region || { id: domain.id };
@@ -86,138 +84,124 @@ const Filters = ({
   const [applyButtonDisabled, setApplyButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    if (campaign && filterData) {
-      const date = {
-        from: new Date(campaign.startedAt),
-        to: new Date(campaign.endedAt),
-      };
-      // form.setValue('campaign', campaign.id);
-      form.setValue('date', date);
-      form.setValue('userGroup', 'all');
+    if (!campaign || !filterData) return;
 
-      // 필터 초기화 호출
+    // 필터 초기화
+    initializeFilters(
+      filterData.filters,
+      form,
+      setFilteredSubsidiaries,
+      setFilteredDomains
+    );
+
+    // 날짜 설정
+    form.setValue('date', {
+      from: new Date(campaign.startedAt),
+      to: new Date(campaign.endedAt),
+    });
+
+    // 유저 선택 초기화
+    form.setValue('userGroup', 'all');
+
+    // 기준 정보 저장
+    defaultValues.current = form.getValues();
+
+    // reducer에 알림
+    onSubmit(form.getValues());
+  }, [campaign, filterData]);
+
+  useEffect(() => {
+    if (!filter) return;
+
+    setFilterData(filter);
+
+    // role이 있을 경우 권한에 맞는 데이터 세팅
+    if (role) {
+      setRolePermission(form, filter.filters, role);
+    }
+  }, [filter, role]);
+
+  useEffect(() => {
+    if (!filterData || defaultValues.current) return;
+
+    if (searchParams) {
+      const priorities = ['domain', 'subsidiary', 'region']; // 필터 우선순위
+      let isUpdated = false;
+
+      searchParams.forEach((value, key) => {
+        if (!key.includes('date') && (!role || !priorities.includes(key))) {
+          form.setValue(key, value);
+        }
+      });
+
+      // 권한 내의 값 강제 적용 (외부 URL에서 변경 방지)
+      if (role) {
+        setRolePermission(form, filterData.filters, role);
+      }
+
+      // 날짜 설정
+      const fromDate = searchParams.get('date.from');
+      const toDate = searchParams.get('date.to');
+      if (fromDate && toDate) {
+        form.setValue('date', {
+          from: new Date(fromDate),
+          to: new Date(toDate),
+        });
+      }
+
+      // form 데이터 기반 필터 설정
+      for (const key of priorities) {
+        const value = form.watch(key);
+        if (value && value !== 'all') {
+          if (!isUpdated) updateFilters(key, value as string);
+          isUpdated = true;
+          break;
+        }
+      }
+
+      if (!isUpdated) {
+        if (role) {
+          Object.entries(filterData.filters).forEach(([key, value]) => {
+            if (priorities.includes(key)) {
+              form.setValue(key, value[0].id);
+            }
+          });
+
+          updateFilters('domain', role.permissions[0].permission.domains[0].id);
+        } else {
+          initializeFilters(
+            filterData.filters,
+            form,
+            setFilteredSubsidiaries,
+            setFilteredDomains
+          );
+        }
+      }
+
+      // 기준 정보 저장
+      defaultValues.current = form.getValues();
+      onSubmit(form.getValues());
+    } else {
       initializeFilters(
         filterData.filters,
         form,
         setFilteredSubsidiaries,
         setFilteredDomains
       );
+      form.setValue('userGroup', 'all');
 
+      // 기준 정보 저장
       defaultValues.current = form.getValues();
       onSubmit(form.getValues());
     }
-  }, [campaign, filterData]);
-
-  useEffect(() => {
-    if (filter) {
-      // role 없으면 admin
-      if (!!role) {
-        // form에 권한에 맞는 데이터 세팅
-        setRolePermission(form, filter.filters, role);
-      }
-      // 권한 필터링 된 데이터 갱신
-      setFilterData(filter);
-    }
-    //
-  }, [filter, role, form]);
-
-  useEffect(() => {
-    if (filterData && !defaultValues.current) {
-      if (searchParams) {
-        // 지역 셀렉트 박스 설정
-        const priorities = ['domain', 'subsidiary', 'region']; // 우선순위 설정
-        let isUpdated = false; // 플래그 변수 설정
-        //
-        searchParams.forEach((value, key) => {
-          if (!key.includes('date') && (!role || !priorities.includes(key))) {
-            form.setValue(key, value);
-          }
-        });
-
-        //
-        // 권한 필터링을 위해서 권한 내의 값 강제적용(외부 URL에서 변경해서 들어오는걸 방지)
-        if (!!role) setRolePermission(form, filterData.filters, role);
-        //
-        // date 설정
-        if (searchParams.get('date.from') && searchParams.get('date.to')) {
-          const fromDate = searchParams.get('date.from');
-          const toDate = searchParams.get('date.to');
-
-          if (fromDate && toDate) {
-            form.setValue('date', {
-              from: new Date(fromDate),
-              to: new Date(toDate),
-            });
-          }
-        }
-        //
-        //  form에 저장된 값으로 filter setting
-        for (const k of priorities) {
-          const v = form.watch(k);
-          if (v && v !== 'all') {
-            if (!isUpdated) updateFilters(k, v as string); // 조건을 만족하면 updateFilters 호출
-            isUpdated = true; // 플래그 설정
-            break; // 한 번 실행 후 루프 종료
-          }
-        }
-
-        // filter setting이 없으면 초기화
-        if (!isUpdated) {
-          if (!!role) {
-            Object.entries(filterData.filters).forEach(([key, value]) => {
-              if (priorities.includes(key)) {
-                form.setValue(key, value[0].id);
-              }
-            });
-
-            updateFilters(
-              'domain',
-              role.permissions[0].permission.domains[0].id
-            );
-          } else {
-            initializeFilters(
-              filterData.filters,
-              form,
-              setFilteredSubsidiaries,
-              setFilteredDomains
-            );
-          }
-        }
-
-        // 적용버튼 활성화 기능을 위한 기준정보 저장
-        defaultValues.current = form.getValues();
-
-        // reducer에 알림
-        onSubmit(form.getValues());
-      } else {
-        // 필터 초기화 호출
-        initializeFilters(
-          filterData.filters,
-          form,
-          setFilteredSubsidiaries,
-          setFilteredDomains
-        );
-
-        //
-        // 유저 선택 초기화
-        form.setValue('userGroup', 'all');
-        //
-        // 적용버튼 활성화 기능을 위한 기준정보 저장
-        defaultValues.current = form.getValues();
-
-        // reducer에 알림
-        onSubmit(form.getValues());
-      }
-    }
   }, [form, filterData, onSubmit, searchParams, role]);
 
-  // 폼 데이터 상태 확인 후 현재 기준 값과 비교 (Apply버튼 활성여부)
   useEffect(() => {
-    if (Object.keys(formValues).length > 0) {
-      const comparison =
-        JSON.stringify(formValues) === JSON.stringify(defaultValues.current);
-      setApplyButtonDisabled(comparison);
-    }
+    if (Object.keys(formValues).length === 0) return;
+
+    const comparison =
+      JSON.stringify(formValues) === JSON.stringify(defaultValues.current);
+    setApplyButtonDisabled(comparison);
   }, [formValues]);
 
   const updateFilters = (key: string, id: string | number) => {

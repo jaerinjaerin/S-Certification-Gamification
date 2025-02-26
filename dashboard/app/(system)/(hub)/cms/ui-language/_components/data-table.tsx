@@ -1,12 +1,10 @@
 'use client';
-
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
 import {
   Table,
   TableBody,
@@ -18,12 +16,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useLanguageData } from '../_provider/language-data-provider';
-import { useEffect, useState } from 'react';
 import { handleDownload } from '../../_utils/utils';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { LoaderWithBackground } from '@/components/loader';
+import useSWR from 'swr';
+import { useEffect } from 'react';
 
 export const columns: ColumnDef<LanguageProps>[] = [
   {
@@ -61,33 +59,23 @@ export const columns: ColumnDef<LanguageProps>[] = [
 ];
 
 export function DataTable() {
-  const { abort, createController } = useAbortController();
   const { campaign } = useStateVariables();
+  const { data: languageData, isLoading: loading } = useSWR(
+    `/api/cms/language?${searchParamsToQuery({ campaignName: campaign?.name })}`,
+    swrFetcher
+  );
+
   const { state, dispatch } = useLanguageData();
-  const [loading, setLoading] = useState(false);
+  const { result: data } = languageData || { result: [] };
 
   useEffect(() => {
-    if (campaign) {
-      setLoading(true);
-      fetchData(
-        { campaignName: campaign.name },
-        'cms/language',
-        (data) => {
-          dispatch({ type: 'SET_LANGUAGE_LIST', payload: data.result });
-          setLoading(false);
-        },
-        createController()
-      );
+    if (data.length > 0) {
+      dispatch({ type: 'SET_LANGUAGE_LIST', payload: data });
     }
-
-    return () => {
-      abort();
-      setLoading(false);
-    };
-  }, [campaign]);
+  }, [data]);
 
   const table = useReactTable({
-    data: state.languages || [],
+    data: state.languages || data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

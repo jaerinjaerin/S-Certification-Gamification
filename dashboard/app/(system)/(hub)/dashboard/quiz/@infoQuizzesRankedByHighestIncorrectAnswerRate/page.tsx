@@ -13,11 +13,13 @@ import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { useQuizContext } from '../_provider/provider';
 import IncorrectTable, { columns } from '../_components/incorrect-table';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const QuizQuizzesRanked = () => {
+  const { campaign } = useStateVariables();
   const { state } = useQuizContext();
   const { data: incorrects, isLoading: loading } = useSWR(
-    `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParamsToQuery({ ...state.fieldValues })}`,
+    `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     swrFetcher
   );
   const { result: data }: { result: QuizRankedIncorrectAnswerRateProps[] } =

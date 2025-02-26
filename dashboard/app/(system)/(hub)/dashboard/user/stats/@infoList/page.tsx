@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
@@ -26,6 +26,7 @@ import Pagination from '@/components/pagenation';
 import useSWR from 'swr';
 import { useSearchParams } from 'next/navigation';
 import { updateSearchParamsOnUrl } from '@/lib/url';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -144,13 +145,14 @@ const columns: ColumnDef<UserListProps>[] = [
 ];
 
 const UserList = () => {
+  const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
   const page = (searchParams.get('usersPageIndex') as string | null) ?? '1';
   const { state } = useUserContext();
   const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 10; // 페이지당 데이터 개수
   const { data: userData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/info/list?${searchParamsToQuery({ ...state.fieldValues, take: pageSize, page: pageIndex })}`,
+    `/api/dashboard/user/info/list?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
     swrFetcher
   );
   const { result: data, total }: { result: UserListProps[]; total: number } =

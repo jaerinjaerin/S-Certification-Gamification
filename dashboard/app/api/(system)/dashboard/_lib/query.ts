@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { buildWhereCondition } from "./where";
+import { buildWhereCondition } from './where';
 
 // search parameters로 들어오는 date값 Date로 변환
 export const parseDateFromQuery = (query: QueryParams): ParsedDateRange => {
-  const from = query["date.from"] ? new Date(query["date.from"]) : new Date();
-  const to = query["date.to"] ? new Date(query["date.to"]) : new Date();
+  const from = query['date.from'] ? new Date(query['date.from']) : new Date();
+  const to = query['date.to'] ? new Date(query['date.to']) : new Date();
 
   return { from, to };
 };

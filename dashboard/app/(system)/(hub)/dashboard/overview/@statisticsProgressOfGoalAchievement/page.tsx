@@ -50,7 +50,7 @@ export function OverviewGoalAchievement() {
       {loading && <LoaderWithBackground />}
       <CardCustomHeader
         title="Progress of goal achievement"
-        numbers={`${count.toFixed(2) || '0.00'}%`}
+        numbers={`${count?.toFixed(2) || '0.00'}%`}
         description="Cumulative number of experts over time"
       />
       <ResponsiveContainer width="100%" height={chartHeight}>
