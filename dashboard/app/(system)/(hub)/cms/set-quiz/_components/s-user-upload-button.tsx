@@ -52,7 +52,6 @@ export function NonSPlusUserUploadButton() {
       <UploadExcelFileModal variant="non-s" title="Upload Non S+ User">
         <Button className="w-full justify-start" variant="action">
           <span>Upload</span>
-          <ChevronDown />
         </Button>
       </UploadExcelFileModal>
     </div>
