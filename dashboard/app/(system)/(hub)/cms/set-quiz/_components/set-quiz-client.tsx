@@ -27,6 +27,7 @@ export function SetQuizClient() {
   return (
     <div className="flex flex-col">
       <NoMemberDomainExcelUploader />
+      <DownloadZipButton />
       <div className="absolute top-0 right-0 ">
         <DownloadFileListPopoverButton type="template" />
       </div>
@@ -193,3 +194,40 @@ const NoMemberDomainExcelUploader = () => {
     </div>
   );
 };
+
+export default function DownloadZipButton() {
+  const handleDownload = async () => {
+    try {
+      // 예시: S3 파일 키 목록을 쉼표로 구분하여 전달합니다.
+      // const files = 'file1.jpg,file2.pdf';
+      const response = await fetch(`/api/cms/resource/download/quizset`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      // 응답을 Blob으로 변환
+      const blob = await response.blob();
+
+      // Blob URL 생성
+      const url = window.URL.createObjectURL(blob);
+
+      // 다운로드 링크 생성 및 클릭 이벤트 트리거
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'files.zip';
+      document.body.appendChild(a);
+      a.click();
+
+      // 임시 링크 제거 및 URL 해제
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download error:', error);
+    }
+  };
+
+  return <button onClick={handleDownload}>Download ZIP</button>;
+}
