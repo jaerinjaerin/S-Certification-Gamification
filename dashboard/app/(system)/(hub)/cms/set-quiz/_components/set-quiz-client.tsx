@@ -179,7 +179,7 @@ const NoMemberDomainExcelUploader = () => {
         className="mb-4"
       />
       <button disabled={!file} className="mt-4" onClick={() => handleUpload()}>
-        Activity 엑셀 파일 업로드
+        미사용국가 엑셀 파일 업로드
       </button>
 
       {data && (

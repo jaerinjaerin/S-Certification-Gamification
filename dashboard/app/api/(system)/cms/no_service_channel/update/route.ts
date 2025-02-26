@@ -1,30 +1,20 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
-import { auth } from '@/auth';
-import {
-  parseExcelBufferToDomainJson,
-  ProcessResult,
-} from '@/lib/nomember-excel-parser';
+import { getS3Client } from '@/lib/aws/s3-client';
 import { prisma } from '@/model/prisma';
 import {
   CloudFrontClient,
   CreateInvalidationCommand,
 } from '@aws-sdk/client-cloudfront';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
-
   try {
-    // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
-    const body = await request.formData();
+    const body = await request.json();
 
-    // Get the file from the form data
-    const file: File = body.get('file') as File;
-    const campaignId = body.get('campaignId') as string;
-    console.log('file: ', file);
+    const { campaignId } = body;
 
     if (!campaignId) {
       console.error('Missing required parameter: campaign_id');
@@ -60,21 +50,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if a file is received
-    if (!file) {
-      // If no file is received, return a JSON response with an error and a 400 status code
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            message: 'No file received',
-            errorCode: ERROR_CODES.NO_FILE_RECEIVED,
-          },
-        },
-        { status: 400 }
-      );
-    }
-
     let uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         fileType: FileType.NON_SPLUS_DOMAINS,
@@ -82,41 +57,35 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // if (uploadedFile) {
-    //   if (file.name !== uploadedFile.path.split('/').pop()) {
-    //     console.error('Different file name');
-    //     return NextResponse.json(
-    //       {
-    //         success: false,
-    //         error: {
-    //           message: 'Different file name',
-    //           errorCode: ERROR_CODES.FILE_NAME_MISMATCH,
-    //         },
-    //       },
-    //       { status: 400 }
-    //     );
-    //   }
-    // }
-
-    const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const result: ProcessResult = parseExcelBufferToDomainJson(
-      Buffer.from(fileBuffer)
-    );
-    if (!result.success || !result.result) {
-      console.error('Error processing no member country: ', result.error);
+    if (!uploadedFile) {
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: result.error,
-            errorCode: ERROR_CODES.UNKNOWN,
+            message: 'No file uploaded',
+            code: ERROR_CODES.NO_DATA_FOUND,
           },
         },
         { status: 400 }
       );
     }
 
-    const domainDatas = result.result.domainDatas;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${uploadedFile.path}`
+    );
+    if (!response.ok) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Failed to fetch uploaded file',
+            code: ERROR_CODES.UNKNOWN,
+          },
+        },
+        { status: 500 }
+      );
+    }
+    const domainDatas = await response.json();
 
     const failures: string[] = [];
     const domains = await prisma.domain.findMany({
@@ -129,7 +98,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    domainDatas.forEach(async (domainData) => {
+    domainDatas.forEach(async (domainData: any) => {
       const domain = domains.find((d) => domainData.code === d.code);
       if (domain) {
         domainData.id = domain.id;
@@ -144,11 +113,13 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    const filteredDomainDatas = domainDatas.filter((domainData) => {
+    const filteredDomainDatas = domainDatas.filter((domainData: any) => {
       return domainData.id !== '';
     });
 
-    const domainIds = filteredDomainDatas.map((domainData) => domainData.id);
+    const domainIds = filteredDomainDatas.map(
+      (domainData: any) => domainData.id
+    );
     const quizSets = await prisma.quizSet.findMany({
       where: {
         domainId: {
@@ -161,7 +132,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    filteredDomainDatas.forEach((domainData) => {
+    filteredDomainDatas.forEach((domainData: any) => {
       const quizSet = quizSets.find((q) => q.domainId === domainData.id);
       if (quizSet) {
         if (quizSet.language) {
@@ -176,40 +147,13 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // JSON 객체를 문자열로 변환 (예쁘게 출력)
+    // JSON 객체를 문자열로 변환
     const jsonString = JSON.stringify(filteredDomainDatas, null, 2);
     // =============================================
     // file upload
     // =============================================
 
-    // const file = files.file?.[0];
-    const s3Client =
-      process.env.ENV === 'local'
-        ? new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-          });
-
-    // const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
-
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
-
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
-    const destinationKey = `certification/${campaign.slug}/cms/upload/activityid/${fileNameWithTimestamp}`;
+    const s3Client = getS3Client();
 
     const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -220,35 +164,6 @@ export async function POST(request: NextRequest) {
         Body: jsonString,
       })
     );
-
-    await s3Client.send(
-      new PutObjectCommand({
-        Bucket: process.env.ASSETS_S3_BUCKET_NAME,
-        Key: destinationKey,
-        Body: jsonString,
-      })
-    );
-
-    if (uploadedFile) {
-      uploadedFile = await prisma.uploadedFile.update({
-        where: {
-          id: uploadedFile.id,
-        },
-        data: {
-          uploadedBy: sesstion?.user?.id,
-          path: `/${destinationKey}`,
-        },
-      });
-    } else {
-      uploadedFile = await prisma.uploadedFile.create({
-        data: {
-          fileType: FileType.NON_SPLUS_DOMAINS,
-          campaignId: campaign.id,
-          uploadedBy: sesstion?.user?.id ?? '',
-          path: `/${destinationKey}`,
-        },
-      });
-    }
 
     async function invalidateCache(distributionId: string, paths: string[]) {
       try {
