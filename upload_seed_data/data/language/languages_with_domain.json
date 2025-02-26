@@ -1,0 +1,744 @@
+[
+  {
+    "languageCode": "en",
+    "name": "English(UnitedStates)",
+    "domains": [
+      {
+        "domainCode": "OrgCode-7",
+        "domainName": "KOREA"
+      },
+      {
+        "domainCode": "NAT_2840",
+        "domainName": "USA"
+      },
+      {
+        "domainCode": "NAT_7000",
+        "domainName": "Canada"
+      },
+      {
+        "domainCode": "NAT_021501",
+        "domainName": "Sweden"
+      },
+      {
+        "domainCode": "NAT_021504",
+        "domainName": "Denmark"
+      },
+      {
+        "domainCode": "NAT_051001",
+        "domainName": "Australia"
+      },
+      {
+        "domainCode": "NAT_2554",
+        "domainName": "NewZealand"
+      },
+      {
+        "domainCode": "NAT_2608",
+        "domainName": "Philippines"
+      },
+      {
+        "domainCode": "NAT_2702",
+        "domainName": "Singapore"
+      },
+      {
+        "domainCode": "NAT_2458",
+        "domainName": "Malaysia"
+      },
+      {
+        "domainCode": "NAT_060401",
+        "domainName": "Nepal"
+      },
+      {
+        "domainCode": "NAT_2356",
+        "domainName": "India"
+      },
+      {
+        "domainCode": "NAT_2144",
+        "domainName": "SriLanka"
+      },
+      {
+        "domainCode": "NAT_2422",
+        "domainName": "Lebanon"
+      },
+      {
+        "domainCode": "NAT_2586",
+        "domainName": "Pakistan"
+      },
+      {
+        "domainCode": "NAT_2784",
+        "domainName": "UnitedArabEmirates"
+      },
+      {
+        "domainCode": "NAT_2048",
+        "domainName": "Bahrain"
+      },
+      {
+        "domainCode": "NAT_2414",
+        "domainName": "Kuwait"
+      },
+      {
+        "domainCode": "NAT_2512",
+        "domainName": "Oman"
+      },
+      {
+        "domainCode": "NAT_2634",
+        "domainName": "Qatar"
+      },
+      {
+        "domainCode": "NAT_2780",
+        "domainName": "Trinidadandtobago"
+      },
+      {
+        "domainCode": "NAT_2630",
+        "domainName": "PuertoRico"
+      },
+      {
+        "domainCode": "NAT_2388",
+        "domainName": "Jamaica"
+      },
+      {
+        "domainCode": "NAT_2404",
+        "domainName": "Kenya"
+      },
+      {
+        "domainCode": "NAT_2834",
+        "domainName": "Tanzania"
+      },
+      {
+        "domainCode": "NAT_2566",
+        "domainName": "Nigeria"
+      },
+      {
+        "domainCode": "NAT_2288",
+        "domainName": "Ghana"
+      },
+      {
+        "domainCode": "NAT_3701",
+        "domainName": "Mauritius"
+      },
+      {
+        "domainCode": "NAT_2710",
+        "domainName": "SouthAfrica"
+      }
+    ]
+  },
+  {
+    "languageCode": "fr-CA",
+    "name": "French(Canada)",
+    "domains": [
+      {
+        "domainCode": "NAT_7000",
+        "domainName": "Canada"
+      }
+    ]
+  },
+  {
+    "languageCode": "sq",
+    "name": "Albanian",
+    "domains": [
+      {
+        "domainCode": "NAT_2008",
+        "domainName": "Albania"
+      }
+    ]
+  },
+  {
+    "languageCode": "bs",
+    "name": "Bosnian",
+    "domains": [
+      {
+        "domainCode": "NAT_2070",
+        "domainName": "BosniaandHerzegovina"
+      }
+    ]
+  },
+  {
+    "languageCode": "hr",
+    "name": "Croatian(Croatia)",
+    "domains": [
+      {
+        "domainCode": "NAT_2191",
+        "domainName": "Croatia"
+      }
+    ]
+  },
+  {
+    "languageCode": "mk",
+    "name": "Macedonian",
+    "domains": [
+      {
+        "domainCode": "NAT_2807",
+        "domainName": "Macedonia(FYROM)"
+      }
+    ]
+  },
+  {
+    "languageCode": "sr-Cyrl",
+    "name": "Serbian(Cyrillic)",
+    "domains": [
+      {
+        "domainCode": "NAT_2688",
+        "domainName": "Serbia"
+      }
+    ]
+  },
+  {
+    "languageCode": "sl",
+    "name": "Slovenian",
+    "domains": [
+      {
+        "domainCode": "NAT_2705",
+        "domainName": "Slovenia"
+      }
+    ]
+  },
+  {
+    "languageCode": "de",
+    "name": "German(Germany)",
+    "domains": [
+      {
+        "domainCode": "NAT_2756",
+        "domainName": "Switzerland"
+      },
+      {
+        "domainCode": "NAT_2040",
+        "domainName": "Austria"
+      },
+      {
+        "domainCode": "NAT_2276",
+        "domainName": "Germany"
+      }
+    ]
+  },
+  {
+    "languageCode": "fr",
+    "name": "French(France)",
+    "domains": [
+      {
+        "domainCode": "NAT_2756",
+        "domainName": "Switzerland"
+      },
+      {
+        "domainCode": "NAT_2250",
+        "domainName": "France"
+      },
+      {
+        "domainCode": "NAT_2504",
+        "domainName": "Morocco"
+      },
+      {
+        "domainCode": "NAT_2788",
+        "domainName": "Tunisia"
+      },
+      {
+        "domainCode": "NAT_2012",
+        "domainName": "Algeria"
+      },
+      {
+        "domainCode": "NAT_2686",
+        "domainName": "Senegal"
+      },
+      {
+        "domainCode": "NAT_120",
+        "domainName": "Cameroon"
+      },
+      {
+        "domainCode": "NAT_384",
+        "domainName": "IvoryCoast"
+      }
+    ]
+  },
+  {
+    "languageCode": "it",
+    "name": "Italian(Italy)",
+    "domains": [
+      {
+        "domainCode": "NAT_2756",
+        "domainName": "Switzerland"
+      },
+      {
+        "domainCode": "NAT_2380",
+        "domainName": "Italy"
+      }
+    ]
+  },
+  {
+    "languageCode": "et",
+    "name": "Estonian(Estonia)",
+    "domains": [
+      {
+        "domainCode": "NAT_2233",
+        "domainName": "Estonia"
+      }
+    ]
+  },
+  {
+    "languageCode": "lv",
+    "name": "Latvian(Latvia)",
+    "domains": [
+      {
+        "domainCode": "NAT_2428",
+        "domainName": "Latvia"
+      }
+    ]
+  },
+  {
+    "languageCode": "lt",
+    "name": "Lithuanian(Lithuania)",
+    "domains": [
+      {
+        "domainCode": "NAT_2440",
+        "domainName": "Lithuania"
+      }
+    ]
+  },
+  {
+    "languageCode": "cs",
+    "name": "Czech",
+    "domains": [
+      {
+        "domainCode": "NAT_2203",
+        "domainName": "CzechRepublic"
+      }
+    ]
+  },
+  {
+    "languageCode": "sk",
+    "name": "Slovakian(Slovakia)",
+    "domains": [
+      {
+        "domainCode": "NAT_2703",
+        "domainName": "Slovakia"
+      }
+    ]
+  },
+  {
+    "languageCode": "el",
+    "name": "Greek",
+    "domains": [
+      {
+        "domainCode": "NAT_2300",
+        "domainName": "Greece"
+      },
+      {
+        "domainCode": "NAT_19602",
+        "domainName": "Cyprus"
+      }
+    ]
+  },
+  {
+    "languageCode": "hu",
+    "name": "Hungarian",
+    "domains": [
+      {
+        "domainCode": "NAT_2348",
+        "domainName": "Hungary"
+      }
+    ]
+  },
+  {
+    "languageCode": "es",
+    "name": "Spanish(Spain)",
+    "domains": [
+      {
+        "domainCode": "NAT_2724",
+        "domainName": "Spain"
+      }
+    ]
+  },
+  {
+    "languageCode": "pt",
+    "name": "Portuguese(Portugal)",
+    "domains": [
+      {
+        "domainCode": "NAT_2620",
+        "domainName": "Portugal"
+      }
+    ]
+  },
+  {
+    "languageCode": "sv",
+    "name": "Swedish(Sweden)",
+    "domains": [
+      {
+        "domainCode": "NAT_021501",
+        "domainName": "Sweden"
+      }
+    ]
+  },
+  {
+    "languageCode": "fi",
+    "name": "Finnish",
+    "domains": [
+      {
+        "domainCode": "NAT_021502",
+        "domainName": "Finland"
+      }
+    ]
+  },
+  {
+    "languageCode": "nb",
+    "name": "Norwegian(Bokmal)",
+    "domains": [
+      {
+        "domainCode": "NAT_021503",
+        "domainName": "Norway"
+      }
+    ]
+  },
+  {
+    "languageCode": "da",
+    "name": "Danish",
+    "domains": [
+      {
+        "domainCode": "NAT_021504",
+        "domainName": "Denmark"
+      }
+    ]
+  },
+  {
+    "languageCode": "pl",
+    "name": "Polish",
+    "domains": [
+      {
+        "domainCode": "NAT_2616",
+        "domainName": "Poland"
+      }
+    ]
+  },
+  {
+    "languageCode": "bg",
+    "name": "Bulgarian",
+    "domains": [
+      {
+        "domainCode": "NAT_2100",
+        "domainName": "Bulgaria"
+      }
+    ]
+  },
+  {
+    "languageCode": "ro",
+    "name": "Romanian",
+    "domains": [
+      {
+        "domainCode": "NAT_2642",
+        "domainName": "Romania"
+      }
+    ]
+  },
+  {
+    "languageCode": "en-GB",
+    "name": "English(UnitedKingdom)",
+    "domains": [
+      {
+        "domainCode": "NAT_021505",
+        "domainName": "UnitedKingdom"
+      }
+    ]
+  },
+  {
+    "languageCode": "uk",
+    "name": "Ukrainan",
+    "domains": [
+      {
+        "domainCode": "NAT_2804",
+        "domainName": "Ukraine"
+      }
+    ]
+  },
+  {
+    "languageCode": "ru",
+    "name": "Russian",
+    "domains": [
+      {
+        "domainCode": "NAT_2398",
+        "domainName": "Kazakhstan"
+      },
+      {
+        "domainCode": "NAT_41702",
+        "domainName": "Kyrgyzstan"
+      },
+      {
+        "domainCode": "NAT_76202",
+        "domainName": "Tajikistan"
+      },
+      {
+        "domainCode": "NAT_2643",
+        "domainName": "Russia"
+      }
+    ]
+  },
+  {
+    "languageCode": "uz",
+    "name": "Uzbek(Cyrillic)",
+    "domains": [
+      {
+        "domainCode": "NAT_2860",
+        "domainName": "Uzbekistan"
+      }
+    ]
+  },
+  {
+    "languageCode": "az",
+    "name": "Azerbajiani",
+    "domains": [
+      {
+        "domainCode": "NAT_2645",
+        "domainName": "Azerbaijan"
+      }
+    ]
+  },
+  {
+    "languageCode": "ka",
+    "name": "Georgian",
+    "domains": [
+      {
+        "domainCode": "NAT_2644",
+        "domainName": "Georgia"
+      }
+    ]
+  },
+  {
+    "languageCode": "zh-CN",
+    "name": "Chinese(Simplified)",
+    "domains": [
+      {
+        "domainCode": "NAT_2156",
+        "domainName": "China"
+      }
+    ]
+  },
+  {
+    "languageCode": "zh-HK",
+    "name": "Chinese(Traditional)",
+    "domains": [
+      {
+        "domainCode": "NAT_2344",
+        "domainName": "Hongkong"
+      }
+    ]
+  },
+  {
+    "languageCode": "zh-TW",
+    "name": "Chinese(Traditional)",
+    "domains": [
+      {
+        "domainCode": "NAT_2158",
+        "domainName": "Taiwan"
+      }
+    ]
+  },
+  {
+    "languageCode": "vi",
+    "name": "Vietnamese",
+    "domains": [
+      {
+        "domainCode": "NAT_2704",
+        "domainName": "Vietnam"
+      }
+    ]
+  },
+  {
+    "languageCode": "id",
+    "name": "Indonesian",
+    "domains": [
+      {
+        "domainCode": "NAT_2360",
+        "domainName": "Indonesia"
+      }
+    ]
+  },
+  {
+    "languageCode": "th",
+    "name": "Thai",
+    "domains": [
+      {
+        "domainCode": "NAT_2764",
+        "domainName": "Thailand"
+      }
+    ]
+  },
+  {
+    "languageCode": "km",
+    "name": "Khmer(Cambodia)",
+    "domains": [
+      {
+        "domainCode": "NAT_2116",
+        "domainName": "Cambodia"
+      }
+    ]
+  },
+  {
+    "languageCode": "lo",
+    "name": "Lao(LaoP.D.R.)",
+    "domains": [
+      {
+        "domainCode": "NAT_2418",
+        "domainName": "Laos"
+      }
+    ]
+  },
+  {
+    "languageCode": "my",
+    "name": "Burmese(Myanmar)",
+    "domains": [
+      {
+        "domainCode": "NAT_3004",
+        "domainName": "Myanmar[Burma]"
+      }
+    ]
+  },
+  {
+    "languageCode": "bn",
+    "name": "Bengali(Bangladesh)",
+    "domains": [
+      {
+        "domainCode": "NAT_2050",
+        "domainName": "Bangladesh"
+      }
+    ]
+  },
+  {
+    "languageCode": "ar",
+    "name": "Arabic (United Arab Emirates)",
+    "domains": [
+      {
+        "domainCode": "NAT_2818",
+        "domainName": "Egypt"
+      },
+      {
+        "domainCode": "NAT_2275",
+        "domainName": "Palestine"
+      },
+      {
+        "domainCode": "NAT_2400",
+        "domainName": "Jordan"
+      },
+      {
+        "domainCode": "NAT_2368",
+        "domainName": "Iraq"
+      },
+      {
+        "domainCode": "NAT_2682",
+        "domainName": "SaudiArabia"
+      }
+    ]
+  },
+  {
+    "languageCode": "he",
+    "name": "Hebrew",
+    "domains": [
+      {
+        "domainCode": "NAT_37602",
+        "domainName": "Israel"
+      }
+    ]
+  },
+  {
+    "languageCode": "tr",
+    "name": "Turkish",
+    "domains": [
+      {
+        "domainCode": "NAT_2792",
+        "domainName": "Turkey"
+      }
+    ]
+  },
+  {
+    "languageCode": "es-419",
+    "name": "Spanish(LTN)",
+    "domains": [
+      {
+        "domainCode": "NAT_2170",
+        "domainName": "Colombia"
+      },
+      {
+        "domainCode": "NAT_2707",
+        "domainName": "Argentina"
+      },
+      {
+        "domainCode": "NAT_2152",
+        "domainName": "Chile"
+      },
+      {
+        "domainCode": "NAT_2068",
+        "domainName": "Bolivia"
+      },
+      {
+        "domainCode": "NAT_2591",
+        "domainName": "Panama"
+      },
+      {
+        "domainCode": "NAT_2218",
+        "domainName": "Ecuador"
+      },
+      {
+        "domainCode": "NAT_2188",
+        "domainName": "CostaRica"
+      },
+      {
+        "domainCode": "NAT_2212",
+        "domainName": "DominicanRepublic"
+      },
+      {
+        "domainCode": "NAT_2631",
+        "domainName": "Guatemala"
+      },
+      {
+        "domainCode": "NAT_2633",
+        "domainName": "Honduras"
+      },
+      {
+        "domainCode": "NAT_2635",
+        "domainName": "Nicaragua"
+      },
+      {
+        "domainCode": "NAT_2632",
+        "domainName": "ElSalvador"
+      },
+      {
+        "domainCode": "NAT_2600",
+        "domainName": "Paraguay"
+      },
+      {
+        "domainCode": "NAT_2858",
+        "domainName": "Uruguay"
+      },
+      {
+        "domainCode": "NAT_2862",
+        "domainName": "Venezuela"
+      },
+      {
+        "domainCode": "NAT_2484",
+        "domainName": "Mexico"
+      },
+      {
+        "domainCode": "NAT_2604",
+        "domainName": "Peru"
+      }
+    ]
+  },
+  {
+    "languageCode": "pt-BR",
+    "name": "Portuguese(Brazil)",
+    "domains": [
+      {
+        "domainCode": "NAT_2076",
+        "domainName": "Brazil"
+      }
+    ]
+  },
+  {
+    "languageCode": "ja",
+    "name": "Japanese",
+    "domains": [
+      {
+        "domainCode": "NAT_2392",
+        "domainName": "Japan"
+      },
+      {
+        "domainCode": "NAT_23961",
+        "domainName": "Japan_GalaxyHarajuku"
+      }
+    ]
+  }
+]

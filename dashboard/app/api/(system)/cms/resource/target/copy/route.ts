@@ -71,6 +71,21 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+      where: {
+        campaignId: soruceCampaign.id,
+      },
+    });
+    for (const domainWebLanguage of domainWebLanguages) {
+      await prisma.domainWebLanguage.create({
+        data: {
+          campaignId: destinationCampaign.id,
+          domainId: domainWebLanguage.domainId,
+          languageId: domainWebLanguage.languageId,
+        },
+      });
+    }
+
     console.log('데이타 생성 완료');
 
     return NextResponse.json({ success: true, result: {} }, { status: 200 });

@@ -118,6 +118,7 @@ model Language {
   code String @unique
   name String
   quizSets QuizSet[]
+  domainWebLanguages DomainWebLanguage[]
 }
 
 model Campaign {
@@ -135,6 +136,7 @@ model Campaign {
   quizSets    QuizSet[]
   settingsId  String?   @unique
   settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
+  domainWebLanguages DomainWebLanguage[]
 }
 
 model CampaignSettings {
@@ -191,6 +193,7 @@ model Domain {
   subsidiary   Subsidiary? @relation(fields: [subsidiaryId], references: [id])
 
   quizSets      QuizSet[]
+  domainWebLanguages DomainWebLanguage[]
 }
 
 model DomainGoal {
@@ -759,4 +762,16 @@ enum BadgeApiType {
 enum BadgeType {
   FIRST
   SECOND
+}
+
+model DomainWebLanguage {
+  id              String   @id @default(uuid())
+  campaignId      String?
+  campaign        Campaign? @relation(fields: [campaignId], references: [id])
+  domainId        String
+  domain          Domain @relation(fields: [domainId], references: [id])
+  languageId      String
+  language        Language @relation(fields: [languageId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
