@@ -25,7 +25,7 @@
         "answerStatus": 1
       },
       {
-        "text": "Snapdragon® 9 Elite for Galaxy",
+        "text": "Snapdragon® 8 Gen 3",
         "answerStatus": 0
       }
     ]
@@ -1224,7 +1224,7 @@
     ]
   },
   {
-    "originQuestionIndex": 41,
+    "originQuestionIndex": 56,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1255,7 +1255,7 @@
     ]
   },
   {
-    "originQuestionIndex": 42,
+    "originQuestionIndex": 57,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1286,7 +1286,7 @@
     ]
   },
   {
-    "originQuestionIndex": 43,
+    "originQuestionIndex": 58,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1317,7 +1317,7 @@
     ]
   },
   {
-    "originQuestionIndex": 44,
+    "originQuestionIndex": 59,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1348,7 +1348,7 @@
     ]
   },
   {
-    "originQuestionIndex": 45,
+    "originQuestionIndex": 60,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1379,7 +1379,7 @@
     ]
   },
   {
-    "originQuestionIndex": 46,
+    "originQuestionIndex": 61,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1410,7 +1410,7 @@
     ]
   },
   {
-    "originQuestionIndex": 47,
+    "originQuestionIndex": 62,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1441,7 +1441,7 @@
     ]
   },
   {
-    "originQuestionIndex": 48,
+    "originQuestionIndex": 63,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1472,7 +1472,7 @@
     ]
   },
   {
-    "originQuestionIndex": 49,
+    "originQuestionIndex": 64,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1503,7 +1503,7 @@
     ]
   },
   {
-    "originQuestionIndex": 50,
+    "originQuestionIndex": 65,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1534,7 +1534,7 @@
     ]
   },
   {
-    "originQuestionIndex": 51,
+    "originQuestionIndex": 66,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1557,7 +1557,7 @@
     ]
   },
   {
-    "originQuestionIndex": 52,
+    "originQuestionIndex": 67,
     "orderInStage": null,
     "enabled": null,
     "stage": 4,
@@ -1588,7 +1588,7 @@
     ]
   },
   {
-    "originQuestionIndex": 53,
+    "originQuestionIndex": 68,
     "orderInStage": 7,
     "enabled": 1,
     "stage": 1,
@@ -1619,7 +1619,7 @@
     ]
   },
   {
-    "originQuestionIndex": 54,
+    "originQuestionIndex": 69,
     "orderInStage": 8,
     "enabled": 1,
     "stage": 1,
@@ -1650,7 +1650,7 @@
     ]
   },
   {
-    "originQuestionIndex": 55,
+    "originQuestionIndex": 70,
     "orderInStage": 9,
     "enabled": 1,
     "stage": 1,
@@ -1681,7 +1681,7 @@
     ]
   },
   {
-    "originQuestionIndex": 56,
+    "originQuestionIndex": 71,
     "orderInStage": 10,
     "enabled": 1,
     "stage": 1,
@@ -1712,7 +1712,7 @@
     ]
   },
   {
-    "originQuestionIndex": 57,
+    "originQuestionIndex": 72,
     "orderInStage": 11,
     "enabled": 1,
     "stage": 2,
@@ -1743,7 +1743,7 @@
     ]
   },
   {
-    "originQuestionIndex": 58,
+    "originQuestionIndex": 73,
     "orderInStage": 12,
     "enabled": 1,
     "stage": 2,
@@ -1774,7 +1774,7 @@
     ]
   },
   {
-    "originQuestionIndex": 59,
+    "originQuestionIndex": 74,
     "orderInStage": 13,
     "enabled": 1,
     "stage": 2,
@@ -1805,7 +1805,7 @@
     ]
   },
   {
-    "originQuestionIndex": 60,
+    "originQuestionIndex": 75,
     "orderInStage": 14,
     "enabled": 1,
     "stage": 2,
@@ -1836,7 +1836,7 @@
     ]
   },
   {
-    "originQuestionIndex": 61,
+    "originQuestionIndex": 76,
     "orderInStage": 15,
     "enabled": 1,
     "stage": 2,
@@ -1867,7 +1867,7 @@
     ]
   },
   {
-    "originQuestionIndex": 62,
+    "originQuestionIndex": 77,
     "orderInStage": 16,
     "enabled": 1,
     "stage": 2,
@@ -1898,7 +1898,7 @@
     ]
   },
   {
-    "originQuestionIndex": 63,
+    "originQuestionIndex": 78,
     "orderInStage": 17,
     "enabled": 1,
     "stage": 2,
@@ -1929,7 +1929,7 @@
     ]
   },
   {
-    "originQuestionIndex": 64,
+    "originQuestionIndex": 79,
     "orderInStage": 18,
     "enabled": 1,
     "stage": 2,
@@ -1960,7 +1960,7 @@
     ]
   },
   {
-    "originQuestionIndex": 65,
+    "originQuestionIndex": 80,
     "orderInStage": 19,
     "enabled": 1,
     "stage": 2,
@@ -1991,7 +1991,7 @@
     ]
   },
   {
-    "originQuestionIndex": 66,
+    "originQuestionIndex": 81,
     "orderInStage": 20,
     "enabled": 1,
     "stage": 2,
@@ -2022,7 +2022,7 @@
     ]
   },
   {
-    "originQuestionIndex": 67,
+    "originQuestionIndex": 82,
     "orderInStage": 21,
     "enabled": 1,
     "stage": 3,
@@ -2053,7 +2053,7 @@
     ]
   },
   {
-    "originQuestionIndex": 68,
+    "originQuestionIndex": 83,
     "orderInStage": 22,
     "enabled": 1,
     "stage": 3,
@@ -2084,7 +2084,7 @@
     ]
   },
   {
-    "originQuestionIndex": 69,
+    "originQuestionIndex": 84,
     "orderInStage": 23,
     "enabled": 1,
     "stage": 3,
@@ -2115,7 +2115,7 @@
     ]
   },
   {
-    "originQuestionIndex": 70,
+    "originQuestionIndex": 85,
     "orderInStage": 24,
     "enabled": 1,
     "stage": 3,
@@ -2146,7 +2146,7 @@
     ]
   },
   {
-    "originQuestionIndex": 71,
+    "originQuestionIndex": 86,
     "orderInStage": 25,
     "enabled": 1,
     "stage": 3,
@@ -2177,7 +2177,7 @@
     ]
   },
   {
-    "originQuestionIndex": 72,
+    "originQuestionIndex": 87,
     "orderInStage": 26,
     "enabled": 1,
     "stage": 3,
@@ -2208,7 +2208,7 @@
     ]
   },
   {
-    "originQuestionIndex": 73,
+    "originQuestionIndex": 88,
     "orderInStage": 27,
     "enabled": 1,
     "stage": 3,
@@ -2239,7 +2239,7 @@
     ]
   },
   {
-    "originQuestionIndex": 74,
+    "originQuestionIndex": 89,
     "orderInStage": 28,
     "enabled": 1,
     "stage": 3,
@@ -2270,7 +2270,7 @@
     ]
   },
   {
-    "originQuestionIndex": 75,
+    "originQuestionIndex": 90,
     "orderInStage": 29,
     "enabled": 1,
     "stage": 3,
@@ -2301,7 +2301,7 @@
     ]
   },
   {
-    "originQuestionIndex": 76,
+    "originQuestionIndex": 91,
     "orderInStage": 30,
     "enabled": 1,
     "stage": 3,
@@ -2324,7 +2324,7 @@
     ]
   },
   {
-    "originQuestionIndex": 77,
+    "originQuestionIndex": 92,
     "orderInStage": 31,
     "enabled": 1,
     "stage": 4,
@@ -2355,7 +2355,7 @@
     ]
   },
   {
-    "originQuestionIndex": 78,
+    "originQuestionIndex": 93,
     "orderInStage": 32,
     "enabled": 1,
     "stage": 4,
@@ -2378,7 +2378,7 @@
     ]
   },
   {
-    "originQuestionIndex": 79,
+    "originQuestionIndex": 94,
     "orderInStage": 33,
     "enabled": 1,
     "stage": 4,
@@ -2409,7 +2409,7 @@
     ]
   },
   {
-    "originQuestionIndex": 80,
+    "originQuestionIndex": 95,
     "orderInStage": 34,
     "enabled": 1,
     "stage": 4,
@@ -2432,7 +2432,7 @@
     ]
   },
   {
-    "originQuestionIndex": 81,
+    "originQuestionIndex": 96,
     "orderInStage": 35,
     "enabled": 1,
     "stage": 4,
@@ -2463,7 +2463,7 @@
     ]
   },
   {
-    "originQuestionIndex": 82,
+    "originQuestionIndex": 97,
     "orderInStage": 36,
     "enabled": 1,
     "stage": 4,
@@ -2494,7 +2494,7 @@
     ]
   },
   {
-    "originQuestionIndex": 83,
+    "originQuestionIndex": 98,
     "orderInStage": 37,
     "enabled": 1,
     "stage": 4,
@@ -2525,7 +2525,7 @@
     ]
   },
   {
-    "originQuestionIndex": 84,
+    "originQuestionIndex": 99,
     "orderInStage": 38,
     "enabled": 1,
     "stage": 4,
@@ -2548,7 +2548,7 @@
     ]
   },
   {
-    "originQuestionIndex": 85,
+    "originQuestionIndex": 100,
     "orderInStage": 39,
     "enabled": 1,
     "stage": 4,
@@ -2579,7 +2579,7 @@
     ]
   },
   {
-    "originQuestionIndex": 86,
+    "originQuestionIndex": 101,
     "orderInStage": 40,
     "enabled": 1,
     "stage": 4,
