@@ -16,6 +16,7 @@ export default function InvalidAccessPage() {
           backgroundRepeat: "no-repeat",
         }}
       />
+      <h1 className="text-xl text-center text-[#2686F5]">Not-Ready</h1>
     </div>
   );
 }
