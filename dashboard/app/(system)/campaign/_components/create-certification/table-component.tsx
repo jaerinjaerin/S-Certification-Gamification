@@ -11,6 +11,7 @@ import { FormValues } from '../../create/_type/formSchema';
 import { SelectContent, SelectItem } from '@/components/ui/select';
 import { CustomSelect } from './custom-form-items';
 import FormComponent from './form-component';
+import useCampaignState from '../../store/campaign-state';
 
 export default function TableComponent({
   form,
@@ -83,6 +84,8 @@ const BadgeSettingRows = ({
   secondStage: 'ffSecondBadgeStage' | 'fsmSecondBadgeStage';
   form: UseFormReturn<FormValues>;
 }) => {
+  const { selectedNumberOfStages } = useCampaignState();
+
   return (
     <TableRow>
       <CustomTableCell>{label}</CustomTableCell>
@@ -92,13 +95,21 @@ const BadgeSettingRows = ({
           name={firstStage}
           className="max-w-[7.125rem]"
           render={(field) => (
-            <CustomSelect field={field} selectDefaultValue="Select">
+            <CustomSelect
+              field={field}
+              selectDefaultValue="Select"
+              disabled={selectedNumberOfStages === undefined}
+            >
               <SelectContent>
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <SelectItem value={`${index}`} key={index}>
-                    {index + 1}
-                  </SelectItem>
-                ))}
+                {Array.from({
+                  length: Number(selectedNumberOfStages) + 1,
+                }).map((_, index) => {
+                  return (
+                    <SelectItem value={`${index}`} key={index}>
+                      {index + 1}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </CustomSelect>
           )}
@@ -110,13 +121,19 @@ const BadgeSettingRows = ({
           name={secondStage}
           className="max-w-[7.125rem]"
           render={(field) => (
-            <CustomSelect field={field} selectDefaultValue="Select">
+            <CustomSelect
+              field={field}
+              selectDefaultValue="Select"
+              disabled={selectedNumberOfStages === undefined}
+            >
               <SelectContent>
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <SelectItem value={`${index}`} key={index}>
-                    {index + 1}
-                  </SelectItem>
-                ))}
+                {Array.from({ length: Number(selectedNumberOfStages) + 1 }).map(
+                  (_, index) => (
+                    <SelectItem value={`${index}`} key={index}>
+                      {index + 1}
+                    </SelectItem>
+                  )
+                )}
               </SelectContent>
             </CustomSelect>
           )}

@@ -2,13 +2,19 @@
 // External libraries
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CircleHelp } from 'lucide-react';
+import { Check, CircleHelp } from 'lucide-react';
 
 // UI Components
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Form, FormField } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
-import { SelectContent, SelectItem } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 // Custom Components
 import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
@@ -26,51 +32,54 @@ import { useNavigation } from '../../(hub)/cms/_hooks/useNavaigation';
 import { useStateVariables } from '@/components/provider/state-provider';
 
 // Types & Schema
-import { formSchema, FormValues } from './_type/formSchema';
+import { defaultValues, formSchema, FormValues } from './_type/formSchema';
+import { isEmpty } from '../../(hub)/cms/_utils/utils';
+import useCampaignState from '../store/campaign-state';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function CreateCampaignPage() {
   const { campaigns } = useStateVariables();
   const { routeToPage } = useNavigation();
+  const { selectedNumberOfStages, setSelectedNumberOfStages } =
+    useCampaignState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      certificationName: '',
-      slug: '',
-      startDate: undefined,
-      endDate: undefined,
-      copyMedia: undefined,
-      copyTarget: undefined,
-      copyUiLanguage: undefined,
-      numberOfStages: undefined,
-      firstBadgeName: '',
-      ffFirstBadgeStage: undefined,
-      fsmFirstBadgeStage: undefined,
-      secondBadgeName: '',
-      ffSecondBadgeStage: undefined,
-      fsmSecondBadgeStage: undefined,
-      targetSourceCampaignId: undefined,
-      imageSourceCampaignId: undefined,
-    },
+    defaultValues: defaultValues,
   });
 
-  const isFormValid = form.formState.isValid;
+  // API URL
+  const API_ENDPOINTS = {
+    CAMPAIGN: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`,
+    CHECK_SLUG: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/check-slug`,
+    COPY_TARGET: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/target/copy`,
+    COPY_IMAGE: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/image/copy`,
+  } as const;
 
-  const onSubmit = async (data: FormValues) => {
-    console.log('Form Data:', data);
-
-    console.warn('loading start');
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign`,
-      {
+  // API 서비스 함수들
+  const campaignService = {
+    async createCampaign(data: FormValues) {
+      const response = await fetch(API_ENDPOINTS.CAMPAIGN, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: data.certificationName,
           slug: data.slug,
-          // description: 'description',
           startedAt: data.startDate,
           endedAt: data.endDate,
           totalStages: Number(data.numberOfStages),
@@ -81,67 +90,128 @@ export default function CreateCampaignPage() {
           fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
           fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
         }),
+      });
+
+      // 응답이 성공이 아닌 경우 오류 출력 후 예외 발생
+      if (!response.ok) {
+        toast.error('Failed to create campaign');
+        throw new Error(
+          `Request failed createCampaign with status ${response.status}`
+        );
       }
-    );
 
-    const campaignData = await response.json();
-    if (!response.ok) {
-      console.error('Failed to create campaign', campaignData);
-      return;
-    }
+      return response.json();
+    },
 
-    console.warn('complete campaign');
+    async copyResources(
+      sourceCampaignId: string,
+      destinationCampaignId: string,
+      type: 'target' | 'image'
+    ) {
+      const endpoint =
+        type === 'target'
+          ? API_ENDPOINTS.COPY_TARGET
+          : API_ENDPOINTS.COPY_IMAGE;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sourceCampaignId, destinationCampaignId }),
+      });
+      if (!response.ok) {
+        toast.error(`Failed to copy ${type} resources`);
+      }
+      return response;
+    },
+  };
 
-    const campaign = campaignData.campaign;
-    const campaignSettings = campaignData.campaignSettings;
+  // slug 중복체크
+  const handleCheckSlug = async () => {
+    const isSlugValid = await form.trigger('slug');
 
-    console.warn('campaign:', campaign);
-    console.warn('campaignSettings:', campaignSettings);
+    if (!isSlugValid) return;
 
-    if (data.targetSourceCampaignId) {
+    try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/target/copy`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sourceCampaignId: data.targetSourceCampaignId,
-            destinationCampaignId: campaign.id,
-          }),
-        }
+        `${API_ENDPOINTS.CHECK_SLUG}?slug=${form.getValues('slug')}`
       );
+      const result = await response.json();
 
-      if (response.ok) {
-        console.warn('complete copy target');
+      if (result.result.available) {
+        form.setValue('isSlugChecked', true);
+        form.resetField('slug', {
+          defaultValue: form.getValues('slug'),
+        });
+      } else {
+        form.setError('slug', { message: 'Slug is already in use' });
       }
+    } catch (error) {
+      toast.error('Failed to check slug');
     }
+  };
 
-    if (data.imageSourceCampaignId) {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/image/copy`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sourceCampaignId: data.imageSourceCampaignId,
-            destinationCampaignId: campaign.id,
-          }),
+  const handleCopyResources = async (
+    campaignId: string,
+    destinationId: string,
+    type: 'target' | 'image'
+  ) => {
+    try {
+      await campaignService.copyResources(campaignId, destinationId, type);
+      toast.success(`Copied ${type} resources successfully`);
+    } catch (error) {
+      toast.error(`Failed to copy ${type} resources`);
+      throw error;
+    }
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setIsLoading(true);
+
+      const campaignData = await campaignService.createCampaign(data);
+      console.log('🥕 campaignData:', campaignData);
+      if (!campaignData?.success) {
+        console.error('Failed to create campaign', campaignData);
+        toast.error('Failed to create campaign');
+        return;
+      }
+
+      console.warn('complete campaign');
+      const campaign = campaignData.campaign;
+      const campaignSettings = campaignData.campaignSettings;
+      console.warn('campaign:', campaign);
+      console.warn('campaignSettings:', campaignSettings);
+
+      const copyPromises = [];
+      if (data.targetSourceCampaignId) {
+        copyPromises.push(
+          handleCopyResources(
+            data.targetSourceCampaignId,
+            campaign.id,
+            'target'
+          )
+        );
+        if (data.imageSourceCampaignId) {
+          copyPromises.push(
+            handleCopyResources(
+              data.targetSourceCampaignId,
+              campaign.id,
+              'image'
+            )
+          );
         }
-      );
-
-      if (response.ok) {
-        console.warn('complete copy images');
       }
+
+      await Promise.all(copyPromises);
+      toast.success('Certification created successfully!');
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error(' An error occurred while creating the campaign.');
+    } finally {
+      console.warn('loading end');
+      setIsLoading(false);
+      setIsDialogOpen(false);
+      routeToPage('/campaign');
     }
-
-    console.warn('loading end');
-    alert('Certification created successfully');
-
-    console.log('🥕 errors', form.formState.errors);
   };
 
   return (
@@ -163,7 +233,12 @@ export default function CreateCampaignPage() {
                   label="Certification Name"
                   name="certificationName"
                   render={(field) => (
-                    <CustomInput placeholder="Enter Name" {...field} />
+                    <CustomInput
+                      {...field}
+                      props={{
+                        placeholder: 'Enter Name',
+                      }}
+                    />
                   )}
                 />
                 <FormComponent
@@ -178,20 +253,29 @@ export default function CreateCampaignPage() {
                         </p>
                         <CustomInput
                           className="rounded-s-none"
-                          placeholder="enter-name"
                           {...field}
+                          props={{
+                            placeholder: 'enter-name',
+                            onChange: (e) => {
+                              field.onChange(e);
+                              if (form.getFieldState('slug').isDirty) {
+                                form.setValue('isSlugChecked', false);
+                              }
+                            },
+                          }}
                         />
                       </div>
+
                       <Button
                         variant={'secondary'}
                         className="border-zinc-200 shadow-none ml-5 text-size-14px h-10 font-normal text-zinc-500"
                         type="button"
-                        onClick={() => {
-                          console.log('🥕 slug', form.getValues('slug'));
-                          // TODO: slug 중복체크 로직 추가
-                        }}
+                        disabled={isEmpty(form.getValues('slug'))}
+                        onClick={handleCheckSlug}
                       >
                         Check
+                        {!form.getFieldState('slug').isDirty &&
+                          form.getValues('isSlugChecked') && <Check />}
                       </Button>
                     </div>
                   )}
@@ -223,17 +307,13 @@ export default function CreateCampaignPage() {
                   render={(field) => (
                     <CustomSelect field={field} selectDefaultValue="None">
                       <SelectContent>
-                        {/* TODO: 이전 인증제 목록 */}
                         <SelectItem value="none">None</SelectItem>
                         {campaigns &&
-                          campaigns.map((campaign) => {
-                            // console.log(campaign);
-                            return (
-                              <SelectItem value={campaign.id} key={campaign.id}>
-                                {campaign.name}
-                              </SelectItem>
-                            );
-                          })}
+                          campaigns.map((campaign) => (
+                            <SelectItem value={campaign.id} key={campaign.id}>
+                              {campaign.name}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </CustomSelect>
                   )}
@@ -273,10 +353,13 @@ export default function CreateCampaignPage() {
                   render={(field) => (
                     <CustomSelect field={field} selectDefaultValue="None">
                       <SelectContent>
-                        {/* TODO: 이전 인증제 목록 */}
                         <SelectItem value="none">None</SelectItem>
-                        <SelectItem value="est">Galaxy AI Expert</SelectItem>
-                        <SelectItem value="cst">Galaxy A10 Expert</SelectItem>
+                        {campaigns &&
+                          campaigns.map((campaign) => (
+                            <SelectItem value={campaign.id} key={campaign.id}>
+                              {campaign.name}
+                            </SelectItem>
+                          ))}
                       </SelectContent>
                     </CustomSelect>
                   )}
@@ -285,22 +368,30 @@ export default function CreateCampaignPage() {
             </div>
             <Separator />
             <p className="font-semibold">Stage Setting</p>
-            <FormComponent
-              className="max-w-[20rem]"
-              form={form}
-              label="Number of Stages"
+            <FormField
+              control={form.control}
               name="numberOfStages"
-              render={(field) => (
-                <CustomSelect field={field} selectDefaultValue="Select">
-                  <SelectContent>
-                    {Array.from({ length: 10 }).map((_, index) => (
-                      <SelectItem value={`${index}`} key={index}>
-                        {index + 1}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </CustomSelect>
-              )}
+              render={({ field }) => {
+                return (
+                  <Select
+                    onValueChange={(value) => {
+                      setSelectedNumberOfStages(value);
+                      field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 10 }).map((_, index) => (
+                        <SelectItem value={`${index}`} key={index}>
+                          {index + 1}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                );
+              }}
             />
             <Separator />
             <p className="font-medium">Badge Setting</p>
@@ -311,7 +402,13 @@ export default function CreateCampaignPage() {
                 label="First Badge Name"
                 name="firstBadgeName"
                 render={(field) => (
-                  <CustomInput placeholder="Expert" {...field} />
+                  <CustomInput
+                    {...field}
+                    props={{
+                      disabled: selectedNumberOfStages === undefined,
+                      placeholder: 'Expert',
+                    }}
+                  />
                 )}
               />
               <FormComponent
@@ -320,7 +417,13 @@ export default function CreateCampaignPage() {
                 label="Second Badge Name"
                 name="secondBadgeName"
                 render={(field) => (
-                  <CustomInput placeholder="Advanced" {...field} />
+                  <CustomInput
+                    {...field}
+                    props={{
+                      disabled: selectedNumberOfStages === undefined,
+                      placeholder: 'Advanced',
+                    }}
+                  />
                 )}
               />
             </Container>
@@ -332,20 +435,36 @@ export default function CreateCampaignPage() {
             Cancel
           </Button>
 
-          {isFormValid ? (
-            <CustomAlertDialog
-              description="Once you create a certification, you cannot change the Slug, Media to Copy, Target to Copy, or UI Language to Copy. Are you sure you want to save?"
-              buttons={[
-                { label: 'Cancel', type: 'cancel', variant: 'secondary' },
-                {
-                  label: 'Save',
-                  type: 'save',
-                  variant: 'action',
-                  onClick: form.handleSubmit(onSubmit),
-                },
-              ]}
-              trigger={<Button variant="action">Save</Button>}
-            />
+          {form.formState.isValid ? (
+            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <AlertDialogTrigger asChild>
+                <Button variant="action" form="certification-form">
+                  Save
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="p-4 gap-[2.125rem] sm:rounded-md border border-zinc-200 max-w-[27.063rem]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-base font-medium text-left">
+                    Alert
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
+                    Once you create a certification, you cannot change the Slug,
+                    Media to Copy, Target to Copy, or UI Language to Copy. Are
+                    you sure you want to save?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">
+                  <AlertDialogCancel
+                    className={cn(buttonVariants({ variant: 'secondary' }))}
+                  >
+                    Cancel
+                  </AlertDialogCancel>
+                  <Button variant="action" form="certification-form">
+                    {isLoading ? 'Saving...' : 'Save'}
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           ) : (
             <Button variant="action" form="certification-form">
               Save

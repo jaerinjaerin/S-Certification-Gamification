@@ -24,10 +24,10 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
 const CustomInput = forwardRef<
   HTMLInputElement,
   {
-    placeholder: string;
     className?: string;
+    props: React.InputHTMLAttributes<HTMLInputElement>;
   }
->(({ placeholder, className, ...props }, ref) => {
+>(({ className, ...props }, ref) => {
   return (
     <Input
       ref={ref}
@@ -35,12 +35,18 @@ const CustomInput = forwardRef<
         'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
         className
       )}
-      placeholder={placeholder}
+      placeholder={props.props.placeholder}
+      onChange={props.props.onChange}
+      onKeyDown={(e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+        }
+      }}
+      disabled={props.props.disabled}
       {...props}
     />
   );
 });
-
 CustomInput.displayName = 'CustomInput';
 
 const CustomPopover = ({
@@ -60,7 +66,7 @@ const CustomPopover = ({
         >
           <CalendarIcon />
           {field.value ? (
-            format(field.value, 'PPP')
+            format(field.value as Date, 'PPP')
           ) : (
             <span className="font-medium">Pick a date</span>
           )}
@@ -81,17 +87,24 @@ const CustomPopover = ({
   );
 };
 
+// TODO: 수정 필요
 const CustomSelect = ({
   field,
   children,
   selectDefaultValue,
+  disabled,
 }: {
   field: ControllerRenderProps<FormValues>;
   children: React.ReactNode;
   selectDefaultValue: string;
+  disabled?: boolean;
 }) => {
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+    <Select
+      onValueChange={field.onChange}
+      defaultValue={field.value as string}
+      disabled={disabled}
+    >
       <CustomSelectTrigger>
         <SelectValue placeholder={selectDefaultValue} />
       </CustomSelectTrigger>
