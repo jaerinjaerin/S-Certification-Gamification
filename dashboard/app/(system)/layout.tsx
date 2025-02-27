@@ -7,6 +7,7 @@ import NotPermission from '@/components/not-permission';
 import { getUserFromDB, getUserPermissions } from '@/model/qureries';
 import { StateVariablesProvider } from '@/components/provider/state-provider';
 import { Role } from '@prisma/client';
+import { Toaster } from '@/components/ui/sonner';
 
 type Props = { children: React.ReactNode };
 
@@ -28,6 +29,7 @@ const ManagementLayout = async ({ children }: Props) => {
 
   return (
     <>
+      <Toaster richColors />
       {permit && (
         <StateVariablesProvider session={session} role={role}>
           <ModalProvider>
