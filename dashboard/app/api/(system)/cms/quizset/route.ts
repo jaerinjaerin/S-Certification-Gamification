@@ -820,3 +820,56 @@ export async function GET(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const quizSetId = searchParams.get('quizSetId');
+
+  if (!quizSetId) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: 'Missing required parameter: quizSetId',
+          code: ERROR_CODES.MISSING_REQUIRED_PARAMETER,
+        },
+      },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const quizSet = await prisma.quizSet.findFirst({
+      where: {
+        id: quizSetId,
+      },
+    });
+
+    if (quizSet == null) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'QuizSet not found',
+            code: ERROR_CODES.NO_DATA_FOUND,
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    await prisma.quizSet.delete({
+      where: {
+        id: quizSetId,
+      },
+    });
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.error('Error delete quizSet:', error);
+    return NextResponse.json(
+      { success: false, message: 'An unexpected error occurred' },
+      { status: 500 }
+    );
+  }
+}
