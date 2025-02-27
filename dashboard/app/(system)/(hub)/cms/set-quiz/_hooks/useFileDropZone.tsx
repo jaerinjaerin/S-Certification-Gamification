@@ -1,5 +1,5 @@
 import { useDropzone } from 'react-dropzone';
-import useQuizSetState from '../store/quizset-state';
+import useQuizSetState from '../_store/quizset-state';
 import { handleQuizSetFileUpload } from '../_lib/handle-quizset-file-upload';
 import { handleActivityIdFileUpload } from '../_lib/handle-activityId-file-upload';
 import { UploadExcelFileVariant } from '../_type/type';
@@ -30,6 +30,7 @@ export default function useFileDropZone({
 }: {
   variant: UploadExcelFileVariant;
 }) {
+  const { setAlert } = useQuizSetState.getState();
   const onDropHandler = async (acceptedFiles: File[]) => {
     const handler = varinatHandlers[variant];
     if (!handler) {
@@ -55,6 +56,19 @@ export default function useFileDropZone({
       onDrop: onDropHandler,
       noClick: true,
       noKeyboard: false,
+      maxFiles: variant === 'quiz' ? undefined : 1,
+      multiple: variant === 'quiz' ? true : false,
+      onDropRejected: (rejectedFiles) => {
+        if (
+          variant !== 'quiz' &&
+          rejectedFiles.some((file) =>
+            file.errors.some((error) => error.code === 'too-many-files')
+          )
+        ) {
+          // 재사용되는 컴포넌트를 사용하려면?
+          setAlert('여러개의 파일을 업로드 할 수 없습니다.');
+        }
+      },
     });
 
   return {

@@ -9,6 +9,7 @@ import { StateVariablesProvider } from '@/components/provider/state-provider';
 import { Role } from '@prisma/client';
 import { getCampaigns } from '../actions/campaign-action';
 import { getFilter } from '../actions/dashboard/filter-action';
+import { Toaster } from '@/components/ui/sonner';
 
 type Props = { children: React.ReactNode };
 
@@ -35,6 +36,7 @@ const ManagementLayout = async ({ children }: Props) => {
 
   return (
     <>
+      <Toaster richColors />
       {permit && (
         <StateVariablesProvider
           filter={filter}

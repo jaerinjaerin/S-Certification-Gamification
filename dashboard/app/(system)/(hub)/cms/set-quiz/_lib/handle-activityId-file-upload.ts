@@ -18,7 +18,6 @@ export async function handleActivityIdFileUpload(
       }
 
       const result = processActivityExcelBuffer(bufferArray);
-      console.log('🥑 result', result);
       resolve(result);
     };
 

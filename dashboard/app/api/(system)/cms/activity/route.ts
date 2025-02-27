@@ -92,21 +92,21 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (uploadedFile) {
-      if (file.name !== uploadedFile.path.split('/').pop()) {
-        console.error('Different file name');
-        return NextResponse.json(
-          {
-            success: false,
-            error: {
-              message: 'Different file name',
-              errorCode: ERROR_CODES.FILE_NAME_MISMATCH,
-            },
-          },
-          { status: 400 }
-        );
-      }
-    }
+    // if (uploadedFile) {
+    //   if (file.name !== uploadedFile.path.split('/').pop()) {
+    //     console.error('Different file name');
+    //     return NextResponse.json(
+    //       {
+    //         success: false,
+    //         error: {
+    //           message: 'Different file name',
+    //           errorCode: ERROR_CODES.FILE_NAME_MISMATCH,
+    //         },
+    //       },
+    //       { status: 400 }
+    //     );
+    //   }
+    // }
 
     // const fileBuffer = await file.arrayBuffer();
     const fileBuffer = Buffer.from(await file.arrayBuffer());

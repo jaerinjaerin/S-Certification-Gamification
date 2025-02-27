@@ -1,4 +1,5 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
+import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { Dispatch, SetStateAction } from 'react';
 import { mutate } from 'swr';
 
@@ -13,7 +14,7 @@ export const submitQuizSet = async (
   files: File[],
   campaignId: string,
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>
-) => {
+): Promise<ProcessResult[] | undefined> => {
   try {
     // 모든 파일 업로드를 병렬로 처리
     const uploadPromises = files.map(async (file: File) => {
@@ -29,18 +30,13 @@ export const submitQuizSet = async (
         }
       );
 
-      console.log('🥑 response', response);
-      if (!response.ok) {
-        const result = await response.json();
-        console.error(result);
-        throw new Error(result.errorCode);
-      }
+      return response.json();
     });
 
     try {
-      await Promise.all(uploadPromises);
-      mutate(campaignId);
-      alert('엑셀 파일 업로드가 완료되었습니다.');
+      const result = await Promise.all(uploadPromises);
+      mutate(`quizset?campaignId=${campaignId}`);
+      return result;
     } catch (error: unknown) {
       const err = error as QuizSetError;
       if (err.result?.errorCode === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {

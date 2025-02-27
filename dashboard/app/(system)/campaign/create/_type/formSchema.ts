@@ -32,6 +32,12 @@ export const formSchema = z
         message: 'Slug는 영문 소문자, 숫자, 하이픈(-)만 사용할 수 있습니다.',
       })
       .min(1, 'Slug는 최소 1자 이상이어야 합니다.'),
+    isSlugChecked: z
+      .boolean()
+      .default(false)
+      .refine((value) => value === true, {
+        message: 'Slug availability must be checked before submitting.',
+      }),
     startDate: z.date({
       required_error: 'Please select a date Start Date',
     }),
@@ -116,3 +122,23 @@ export const formSchema = z
       }
     }
   });
+
+export const defaultValues = {
+  certificationName: '',
+  slug: '',
+  isSlugChecked: false,
+  startDate: undefined,
+  endDate: undefined,
+  copyMedia: undefined,
+  copyTarget: undefined,
+  copyUiLanguage: undefined,
+  numberOfStages: undefined,
+  firstBadgeName: '',
+  ffFirstBadgeStage: undefined,
+  fsmFirstBadgeStage: undefined,
+  secondBadgeName: '',
+  ffSecondBadgeStage: undefined,
+  fsmSecondBadgeStage: undefined,
+  targetSourceCampaignId: undefined,
+  imageSourceCampaignId: undefined,
+};

@@ -12,7 +12,8 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FormValues } from '../../formSchema';
+import { FormValues } from '../../create/_type/formSchema';
+import { forwardRef } from 'react';
 
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -20,25 +21,33 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const CustomInput = ({
-  placeholder,
-  className,
-  ...props
-}: {
-  placeholder: string;
-  className?: string;
-}) => {
+const CustomInput = forwardRef<
+  HTMLInputElement,
+  {
+    className?: string;
+    props: React.InputHTMLAttributes<HTMLInputElement>;
+  }
+>(({ className, ...props }, ref) => {
   return (
     <Input
+      ref={ref}
       className={cn(
         'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
         className
       )}
-      placeholder={placeholder}
+      placeholder={props.props.placeholder}
+      onChange={props.props.onChange}
+      onKeyDown={(e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+        }
+      }}
+      disabled={props.props.disabled}
       {...props}
     />
   );
-};
+});
+CustomInput.displayName = 'CustomInput';
 
 const CustomPopover = ({
   field,
@@ -57,7 +66,7 @@ const CustomPopover = ({
         >
           <CalendarIcon />
           {field.value ? (
-            format(field.value, 'PPP')
+            format(field.value as Date, 'PPP')
           ) : (
             <span className="font-medium">Pick a date</span>
           )}
@@ -78,17 +87,24 @@ const CustomPopover = ({
   );
 };
 
+// TODO: 수정 필요
 const CustomSelect = ({
   field,
   children,
   selectDefaultValue,
+  disabled,
 }: {
   field: ControllerRenderProps<FormValues>;
   children: React.ReactNode;
   selectDefaultValue: string;
+  disabled?: boolean;
 }) => {
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+    <Select
+      onValueChange={field.onChange}
+      defaultValue={field.value as string}
+      disabled={disabled}
+    >
       <CustomSelectTrigger>
         <SelectValue placeholder={selectDefaultValue} />
       </CustomSelectTrigger>
