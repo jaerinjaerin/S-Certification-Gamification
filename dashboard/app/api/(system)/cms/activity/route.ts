@@ -10,12 +10,6 @@ import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { BadgeType, FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(request: NextRequest) {
   const sesstion = await auth();
 
@@ -71,6 +65,20 @@ export async function POST(request: NextRequest) {
           error: {
             message: 'No file received',
             errorCode: ERROR_CODES.NO_FILE_RECEIVED,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!file.name.includes('ActivityID')) {
+      console.error('Invalid file name');
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Invalid file name',
+            errorCode: ERROR_CODES.INVALID_FILE_NAME,
           },
         },
         { status: 400 }

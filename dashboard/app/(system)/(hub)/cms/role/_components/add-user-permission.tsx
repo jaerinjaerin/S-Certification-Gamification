@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-export const dynamic = 'force-dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import { LoaderWithBackground } from '@/components/loader';
 import {
   Table,
@@ -19,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { fetchData } from '@/lib/fetch';
+import { swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { ShowPermissionList } from './ui/select';
@@ -44,6 +42,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import axios from 'axios';
+import useSWR from 'swr';
 
 const columns: ColumnDef<UserPermission>[] = [
   {
@@ -94,12 +93,19 @@ const columns: ColumnDef<UserPermission>[] = [
 ];
 
 const AddUserPermission = () => {
-  const { createController, abort } = useAbortController();
-  const [data, setData] = useState<UserPermission[]>([]);
-  const [loading, setLoading] = useState(true);
-  const roles = useRef<
-    { id: string; name: string; domainName: string }[] | null
-  >(null);
+  const {
+    data: permissionData,
+    isLoading: loading,
+    mutate,
+  } = useSWR('/api/cms/role/user-permission', swrFetcher);
+
+  const {
+    result: data,
+    roles,
+  }: {
+    result: UserPermission[];
+    roles: { id: string; name: string; domainName: string }[] | null;
+  } = permissionData || { result: [], roles: null };
   const [openAlert, setOpenAlert] = useState(false);
 
   const table = useReactTable({
@@ -122,9 +128,7 @@ const AddUserPermission = () => {
                   );
                   //   console.log('Delete success:', response.data);
                   //   mutation
-                  setData((prevData) =>
-                    prevData.filter((item) => item.id !== id)
-                  );
+                  mutate();
                 } catch (error) {
                   console.error('Error deleting user:', error);
                 }
@@ -137,24 +141,6 @@ const AddUserPermission = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  useEffect(() => {
-    fetchData(
-      {},
-      'cms/role/user-permission',
-      (data) => {
-        roles.current = data.roles;
-        setData(data.result);
-        setLoading(false);
-      },
-      createController()
-    );
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, []);
-
   const onAddRole = async (values: { loginName: string; roleId: string }) => {
     values = { ...values, loginName: values.loginName.trim() };
     try {
@@ -164,8 +150,7 @@ const AddUserPermission = () => {
       );
       //   console.log('Add success:', response);
       //   mutation
-      const newData = response.data.result;
-      setData((prevData) => [...prevData, newData]);
+      mutate();
     } catch (error: any) {
       if (error.status === 400) {
         // 중복값 확인
@@ -185,7 +170,7 @@ const AddUserPermission = () => {
         title="Already Registered Data"
         description="The user is already registered. Please delete and re-register if you want to make changes."
       />
-      <AddPermission items={roles.current} onSubmit={onAddRole} />
+      <AddPermission items={roles} onSubmit={onAddRole} />
       <ChartContainer>
         <CardCustomHeaderWithoutDesc title="User Permission" />
         <div className="border rounded-md border-zinc-200">

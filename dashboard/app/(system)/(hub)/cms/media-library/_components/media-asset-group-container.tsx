@@ -1,36 +1,31 @@
 'use client';
 import { useEffect } from 'react';
 import { useMediaData } from '../_provider/media-data-provider';
-import { useAbortController } from '@/components/hook/use-abort-controller';
-import { fetchData } from '@/lib/fetch';
+import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import MediaAssetGroup from './media-asset-group';
 import { useStateVariables } from '@/components/provider/state-provider';
+import useSWR from 'swr';
 
 const MediaAssetGroupContainer = () => {
   const { campaign } = useStateVariables();
   const { dispatch } = useMediaData();
-  const { abort, createController } = useAbortController();
+  const { data } = useSWR(
+    `/api/cms/media?${searchParamsToQuery({ campaignId: campaign?.id })}`,
+    swrFetcher
+  );
+  const {
+    result: { badge, character, background },
+  }: { result: MediaDataProps } = data || {
+    result: { badge: [], character: [], background: [] },
+  };
 
   useEffect(() => {
-    if (campaign) {
-      fetchData(
-        { campaignId: campaign.id },
-        'cms/media',
-        (data) => {
-          const { badge, character, background } =
-            data.result as MediaDataProps;
-          dispatch({ type: 'SET_BADGE', payload: badge || [] });
-          dispatch({ type: 'SET_CHARACTER', payload: character || [] });
-          dispatch({ type: 'SET_BACKGROUND', payload: background || [] });
-        },
-        createController()
-      );
+    if (data) {
+      dispatch({ type: 'SET_BADGE', payload: badge! });
+      dispatch({ type: 'SET_CHARACTER', payload: character! });
+      dispatch({ type: 'SET_BACKGROUND', payload: background! });
     }
-
-    return () => {
-      abort();
-    };
-  }, [campaign]);
+  }, [data]);
 
   return (
     <div className="flex flex-col space-y-8">

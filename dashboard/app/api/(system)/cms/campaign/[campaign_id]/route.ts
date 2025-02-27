@@ -24,7 +24,10 @@ export async function PUT(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ item: campaign }, { status: 200 });
+    return NextResponse.json(
+      { success: true, result: { campaign } },
+      { status: 200 }
+    );
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });

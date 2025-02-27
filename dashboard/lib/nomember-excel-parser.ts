@@ -83,6 +83,8 @@ export function parseExcelBufferToDomainJson(
           code: domainCode,
           regionId: row.RegionId,
           subsidiaryId: row.SubsidiaryId,
+          isReady: false, // or true, depending on your logic
+          languages: [], // or populate with actual languages if available
           channels: [],
         };
       }
@@ -104,7 +106,8 @@ export function parseExcelBufferToDomainJson(
       const channel: ChannelData = {
         name: row.ChannelName,
         job: {
-          id: (row.JobId ?? '').toString(),
+          id:
+            (row.JobGroup ?? '').toString().toLowerCase() === 'ff' ? '9' : '8',
           name: row.JobGroup,
           group: row.JobGroup,
         },
@@ -112,7 +115,9 @@ export function parseExcelBufferToDomainJson(
         channelSegmentId: channelSegmentId,
       };
 
-      domainMap[domainCode].channels.push(channel);
+      if (channel.name) {
+        domainMap[domainCode].channels.push(channel);
+      }
     });
 
     return {

@@ -7,43 +7,36 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
-import { z } from 'zod';
-const quizOptionSchema = z.object({
-  text: z.string(),
-  answerStatus: z.boolean(),
-});
+// const quizOptionSchema = z.object({
+//   text: z.string(),
+//   answerStatus: z.boolean(),
+// });
 
-const quizQuestionSchema = z.object({
-  originQuestionIndex: z.number(),
-  orderInStage: z.number(),
-  enabled: z.boolean(),
-  stage: z.number(),
-  product: z.string().nullable().optional(),
-  category: z.string().nullable().optional(),
-  specificFeature: z.string().nullable().optional(),
-  importance: z.string().nullable().optional(),
-  timeLimitSeconds: z.number(),
-  text: z.string(),
-  questionType: z.string(),
-  options: z.array(quizOptionSchema),
-  backgroundImageId: z.string(),
-  characterImageId: z.string(),
-});
+// const quizQuestionSchema = z.object({
+//   originQuestionIndex: z.number(),
+//   orderInStage: z.number(),
+//   enabled: z.boolean(),
+//   stage: z.number(),
+//   product: z.string().nullable().optional(),
+//   category: z.string().nullable().optional(),
+//   specificFeature: z.string().nullable().optional(),
+//   importance: z.string().nullable().optional(),
+//   timeLimitSeconds: z.number(),
+//   text: z.string(),
+//   questionType: z.string(),
+//   options: z.array(quizOptionSchema),
+//   backgroundImageId: z.string(),
+//   characterImageId: z.string(),
+// });
 
 // Zod를 사용한 입력 데이터 검증
-const updateQuizSetScheme = z.object({
-  campaignId: z.string(),
-  domainCode: z.string(),
-  languageCode: z.string(),
-  jobGroup: z.string(),
-  questions: z.array(quizQuestionSchema),
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// const updateQuizSetScheme = z.object({
+//   campaignId: z.string(),
+//   domainCode: z.string(),
+//   languageCode: z.string(),
+//   jobGroup: z.string(),
+//   questions: z.array(quizQuestionSchema),
+// });
 
 export async function POST(request: NextRequest) {
   const sesstion = await auth();
@@ -597,6 +590,17 @@ export async function POST(request: NextRequest) {
 
     // const file = files.file?.[0];
     const s3Client = getS3Client();
+    // const s3Client =
+    //   process.env.ENV === 'local'
+    //     ? new S3Client({
+    //         region: process.env.ASSETS_S3_BUCKET_REGION,
+    //         credentials: fromIni({
+    //           profile: process.env.ASSETS_S3_BUCKET_PROFILE,
+    //         }),
+    //       })
+    //     : new S3Client({
+    //         region: process.env.ASSETS_S3_BUCKET_REGION,
+    //       });
 
     // if (file) {
 

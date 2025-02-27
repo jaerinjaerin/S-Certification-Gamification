@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';

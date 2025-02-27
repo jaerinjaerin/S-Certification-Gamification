@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { createOverviewExcelBlob, OverviewExcelDataProps } from '@/lib/excel';

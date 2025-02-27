@@ -9,9 +9,8 @@ import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
 
 export default function CertificationClientComponent() {
-  const { role, campaigns } = useStateVariables(); //role이 null이면 admin
+  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
   const { routeToPage } = useNavigation();
-  console.log('🥕 role', role, campaigns);
 
   if (campaigns?.length === 0) {
     return (

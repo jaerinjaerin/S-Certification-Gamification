@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-export const dynamic = 'force-dynamic';
-import { useEffect, useState } from 'react';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useAbortController } from '@/components/hook/use-abort-controller';
 import ChartContainer from '@/components/system/chart-container';
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
@@ -24,7 +21,8 @@ import {
 import { ShowPermissionList } from './ui/select';
 import { Delete } from '@/components/dialog';
 import axios from 'axios';
-import { fetchData } from '@/lib/fetch';
+import { swrFetcher } from '@/lib/fetch';
+import useSWR from 'swr';
 
 const columns: ColumnDef<UserRole>[] = [
   {
@@ -75,9 +73,12 @@ const columns: ColumnDef<UserRole>[] = [
 ];
 
 const UserRole = () => {
-  const { createController, abort } = useAbortController();
-  const [data, setData] = useState<UserRole[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: roleData,
+    isLoading: loading,
+    mutate,
+  } = useSWR('/api/cms/role/user-role', swrFetcher);
+  const { result: data }: { result: UserRole[] } = roleData || { result: [] };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -101,9 +102,7 @@ const UserRole = () => {
                   );
                   // console.log('Delete success:', response.data);
                   // 기존 데이터에서 삭제된 항목만 제거 (mutation)
-                  setData((prevData) =>
-                    prevData.filter((item) => item.id !== id)
-                  );
+                  mutate();
                 } catch (error) {
                   console.error('Error deleting user:', error);
                 }
@@ -115,23 +114,6 @@ const UserRole = () => {
     ], // 테이블 컬럼 정의
     getCoreRowModel: getCoreRowModel(),
   });
-
-  useEffect(() => {
-    fetchData(
-      {},
-      'cms/role/user-role',
-      (data) => {
-        setData(data.result);
-        setLoading(false);
-      },
-      createController()
-    );
-
-    return () => {
-      abort();
-      setLoading(true);
-    };
-  }, []);
 
   return (
     <ChartContainer>

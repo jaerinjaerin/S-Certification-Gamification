@@ -29,13 +29,15 @@ import CustomTooltip, {
   ExpertsTooltip,
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import useSWR from 'swr';
+import { useStateVariables } from '@/components/provider/state-provider';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExperts = () => {
+  const { campaign } = useStateVariables();
   const { state } = useOverviewContext();
   const { data: dataycount, isLoading: loading } = useSWR(
-    `/api/dashboard/overview/statistics/experts?${searchParamsToQuery(state.fieldValues)}`,
+    `/api/dashboard/overview/statistics/experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
     swrFetcher
   );
   const { result: data, count } = dataycount || {
