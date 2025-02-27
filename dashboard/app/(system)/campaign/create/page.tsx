@@ -1,13 +1,12 @@
 'use client';
 // External libraries
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, CircleHelp } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 
 // UI Components
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
 import {
   Select,
   SelectContent,
@@ -15,29 +14,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 
 // Custom Components
-import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
 import Container from '../_components/create-certification/container';
-import FormComponent from '../_components/create-certification/form-component';
 import {
   CustomInput,
   CustomPopover,
   CustomSelect,
 } from '../_components/create-certification/custom-form-items';
+import FormComponent from '../_components/create-certification/form-component';
 import TableComponent from '../_components/create-certification/table-component';
 
 // Hooks & State
-import { useNavigation } from '../../(hub)/cms/_hooks/useNavaigation';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavaigation';
 
 // Types & Schema
-import { defaultValues, formSchema, FormValues } from './_type/formSchema';
-import { isEmpty } from '../../(hub)/cms/_utils/utils';
-import useCampaignState from '../store/campaign-state';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -49,6 +44,9 @@ import {
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { isEmpty } from '../../(hub)/cms/_utils/utils';
+import useCampaignState from '../store/campaign-state';
+import { defaultValues, formSchema, FormValues } from './_type/formSchema';
 
 export default function CreateCampaignPage() {
   const { campaigns } = useStateVariables();
@@ -69,6 +67,7 @@ export default function CreateCampaignPage() {
     CHECK_SLUG: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/check-slug`,
     COPY_TARGET: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/target/copy`,
     COPY_IMAGE: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/image/copy`,
+    COPY_UI_LANG: `${process.env.NEXT_PUBLIC_API_URL}/api/cms/resource/web_translation/copy`,
   } as const;
 
   // API 서비스 함수들
@@ -106,12 +105,13 @@ export default function CreateCampaignPage() {
     async copyResources(
       sourceCampaignId: string,
       destinationCampaignId: string,
-      type: 'target' | 'image'
+      type: 'target' | 'image' | 'uiLanguage'
     ) {
-      const endpoint =
-        type === 'target'
-          ? API_ENDPOINTS.COPY_TARGET
-          : API_ENDPOINTS.COPY_IMAGE;
+      const endpoint = getCopyResourceEndpoint(type);
+      if (endpoint === null) {
+        alert('Invalid type');
+        return;
+      }
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -122,6 +122,15 @@ export default function CreateCampaignPage() {
       }
       return response;
     },
+  };
+
+  const getCopyResourceEndpoint = (
+    type: 'target' | 'image' | 'uiLanguage'
+  ): string | null => {
+    if (type === 'target') return API_ENDPOINTS.COPY_TARGET;
+    if (type === 'image') return API_ENDPOINTS.COPY_IMAGE;
+    if (type === 'uiLanguage') return API_ENDPOINTS.COPY_UI_LANG;
+    return null;
   };
 
   // slug 중복체크
@@ -152,7 +161,7 @@ export default function CreateCampaignPage() {
   const handleCopyResources = async (
     campaignId: string,
     destinationId: string,
-    type: 'target' | 'image'
+    type: 'target' | 'image' | 'uiLanguage'
   ) => {
     try {
       await campaignService.copyResources(campaignId, destinationId, type);
@@ -176,8 +185,8 @@ export default function CreateCampaignPage() {
       }
 
       console.warn('complete campaign');
-      const campaign = campaignData.campaign;
-      const campaignSettings = campaignData.campaignSettings;
+      const campaign = campaignData.result.campaign;
+      const campaignSettings = campaignData.result.campaignSettings;
       console.warn('campaign:', campaign);
       console.warn('campaignSettings:', campaignSettings);
 
@@ -190,15 +199,20 @@ export default function CreateCampaignPage() {
             'target'
           )
         );
-        if (data.imageSourceCampaignId) {
-          copyPromises.push(
-            handleCopyResources(
-              data.targetSourceCampaignId,
-              campaign.id,
-              'image'
-            )
-          );
-        }
+      }
+      if (data.imageSourceCampaignId) {
+        copyPromises.push(
+          handleCopyResources(data.imageSourceCampaignId, campaign.id, 'image')
+        );
+      }
+      if (data.uiLanguageSourceCampaignId) {
+        copyPromises.push(
+          handleCopyResources(
+            data.uiLanguageSourceCampaignId,
+            campaign.id,
+            'uiLanguage'
+          )
+        );
       }
 
       await Promise.all(copyPromises);
@@ -348,7 +362,7 @@ export default function CreateCampaignPage() {
                   className="max-w-[20rem]"
                   form={form}
                   label="UI Language to Copy (Optional)"
-                  name="copyUiLanguage"
+                  name="uiLanguageSourceCampaignId"
                   type="tooltip"
                   render={(field) => (
                     <CustomSelect field={field} selectDefaultValue="None">

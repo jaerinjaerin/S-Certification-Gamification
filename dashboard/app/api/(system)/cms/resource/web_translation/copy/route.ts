@@ -73,8 +73,8 @@ export async function POST(request: NextRequest) {
           });
 
     const bucketName = process.env.ASSETS_S3_BUCKET_NAME;
-    const sourcePrefix = `certification/${soruceCampaign.slug}/images/`; // 원본 디렉토리
-    const destinationPrefix = `certification/${destinationCampaign.slug}/images/`; // 이동할 디렉토리
+    const sourcePrefix = `certification/${soruceCampaign.slug}/messages/`; // 원본 디렉토리
+    const destinationPrefix = `certification/${destinationCampaign.slug}/messages/`; // 이동할 디렉토리
 
     // 1. 원본 디렉토리의 파일 목록 가져오기
     const listCommand = new ListObjectsV2Command({
@@ -130,101 +130,20 @@ export async function POST(request: NextRequest) {
 
     console.log('파일 복사 완료');
 
-    const images = await prisma.image.findMany({
+    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
       where: {
         campaignId: soruceCampaign.id,
       },
     });
 
-    const quizBadges = await prisma.quizBadge.findMany({
-      where: {
-        campaignId: soruceCampaign.id,
-      },
-    });
-
-    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
-    const uniqueImagesCharacter = Array.from(
-      new Map(
-        images
-          .filter((image) => image.alt === 'character')
-          .map((image) => [image.title, image])
-      ).values()
-    );
-
-    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
-    const uniqueImagesBackground = Array.from(
-      new Map(
-        images
-          .filter((image) => image.alt === 'background')
-          .map((image) => [image.title, image])
-      ).values()
-    );
-
-    // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
-    const uniqueQuizBadges = Array.from(
-      new Map(quizBadges.map((badge) => [badge.name, badge])).values()
-    );
-
-    for (const destinationKey of destinationKeys) {
-      const fileName = destinationKey.split('/').pop();
-
-      // 캐릭터 이미지 저장
-      const sourceCharacterImage = uniqueImagesCharacter.find(
-        (image) => image.imagePath.split('/').pop() === fileName
-      );
-
-      console.log('sourceImage: ', sourceCharacterImage, `/${destinationKey}`);
-      if (sourceCharacterImage) {
-        await prisma.image.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            imagePath: `/${destinationKey}`,
-            alt: sourceCharacterImage.alt,
-            title: sourceCharacterImage.title,
-            caption: sourceCharacterImage.caption,
-            format: sourceCharacterImage.format,
-            thumbnailPath: sourceCharacterImage.thumbnailPath,
-            domainId: sourceCharacterImage.domainId,
-          },
-        });
-      }
-
-      // 백그라운드 이미지 저장
-      const sourceBackgroundImage = uniqueImagesBackground.find(
-        (image) => image.imagePath.split('/').pop() === fileName
-      );
-
-      console.log('sourceImage: ', sourceBackgroundImage, `/${destinationKey}`);
-      if (sourceBackgroundImage) {
-        await prisma.image.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            imagePath: `/${destinationKey}`,
-            alt: sourceBackgroundImage.alt,
-            title: sourceBackgroundImage.title,
-            caption: sourceBackgroundImage.caption,
-            format: sourceBackgroundImage.format,
-            thumbnailPath: sourceBackgroundImage.thumbnailPath,
-            domainId: sourceBackgroundImage.domainId,
-          },
-        });
-      }
-
-      // 퀴즈 배지 저장
-      const sourceQuizBadge = uniqueQuizBadges.find(
-        (badge) => badge.imagePath.split('/').pop() === fileName
-      );
-      if (sourceQuizBadge) {
-        await prisma.quizBadge.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            imagePath: `/${destinationKey}`,
-            name: sourceQuizBadge.name,
-            description: sourceQuizBadge.description,
-            domainId: sourceQuizBadge.domainId,
-          },
-        });
-      }
+    for (const domainWebLanguage of domainWebLanguages) {
+      await prisma.domainWebLanguage.create({
+        data: {
+          campaignId: destinationCampaign.id,
+          domainId: domainWebLanguage.domainId,
+          languageId: domainWebLanguage.languageId,
+        },
+      });
     }
 
     console.log('데이타 생성 완료');

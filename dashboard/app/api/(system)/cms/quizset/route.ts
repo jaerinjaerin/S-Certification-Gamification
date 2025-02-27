@@ -778,17 +778,37 @@ export async function GET(request: Request) {
       },
     });
 
+    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+      where: {
+        campaignId: campaignId,
+      },
+      include: {
+        language: true,
+      },
+    });
+
     const groupedQuizSets = quizSets.map((quizSet) => ({
       quizSet,
       quizSetFile: quizSetFiles
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
+      activityBadge: activityBadges.filter(
+        (badge) =>
+          badge.jobCode === quizSet.jobCodes[0] &&
+          badge.languageId === quizSet.languageId &&
+          badge.domainId === quizSet.domainId
+      )[0],
+      webLanguage: domainWebLanguages.find(
+        (dwl) =>
+          dwl.domainId === quizSet.domainId &&
+          dwl.languageId === quizSet.languageId
+      ),
     }));
 
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets, activityBadges },
+        result: { groupedQuizSets },
       },
       { status: 200 }
     );

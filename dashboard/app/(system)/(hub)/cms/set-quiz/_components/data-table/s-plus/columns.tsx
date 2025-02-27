@@ -1,7 +1,7 @@
-import { ColumnDef } from '@tanstack/react-table';
-import { GroupedQuizSet } from '../../../_type/type';
-import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
+import { GroupedQuizSet } from '../../../_type/type';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
@@ -56,12 +56,18 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'activityId',
     header: 'Activity ID',
-    cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
+    // cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
+    cell: ({ row }) => (
+      <div>{row.original.activityBadge?.activityId ?? '-'}</div>
+    ),
   },
   {
     accessorKey: 'uiLanguage',
     header: 'UI Language',
-    cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
+    // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
+    cell: ({ row }) => (
+      <div>{row.original.webLanguage?.language?.code ?? '-'}</div>
+    ),
   },
   {
     accessorKey: 'delete',

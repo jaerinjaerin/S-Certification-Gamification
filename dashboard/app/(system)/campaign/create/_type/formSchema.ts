@@ -72,6 +72,7 @@ export const formSchema = z
       .optional(),
     targetSourceCampaignId: z.string().optional(),
     imageSourceCampaignId: z.string().optional(),
+    uiLanguageSourceCampaignId: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     // ✅ startDate와 endDate가 존재하는 경우만 비교 (undefined 방지)

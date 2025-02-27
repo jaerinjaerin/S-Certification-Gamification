@@ -134,6 +134,8 @@ model Campaign {
   updaterId   String?
   domainId    String?
   quizSets    QuizSet[]
+  // deleted     Boolean?   @default(false)
+  // deletedAt   DateTime
   settingsId  String?   @unique
   settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
   domainWebLanguages DomainWebLanguage[]
