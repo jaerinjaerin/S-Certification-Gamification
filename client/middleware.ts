@@ -2,7 +2,6 @@
 import { auth } from "@/auth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { isValidCampaignQuizSetId } from "./utils/validationUtils";
 
 export async function middleware(request: NextRequest) {
   const session = await auth();
@@ -35,11 +34,12 @@ export async function middleware(request: NextRequest) {
 
   // const certificationPath = segments[0];
   const campaignName = segments[0];
-  const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
-    segments[1]
-  )
-    ? segments[1]
-    : null;
+  const campaignQuizSetPath = segments[1];
+  // const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
+  //   segments[1]
+  // )
+  //   ? segments[1]
+  //   : null;
 
   // console.log("middleware: campaignName:", campaignName);
   // console.log("middleware: campaignQuizSetPath:", campaignQuizSetPath);
@@ -61,15 +61,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(url, request.url));
   }
 
-  // if (session && pathname.includes("/login")) {
-  //   const url = campaignQuizSetPath
-  //     ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
-  //     : `${basePath}/${campaignName}${search}`;
+  if (session && pathname.includes("/login")) {
+    const url = campaignQuizSetPath
+      ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
+      : `${basePath}/${campaignName}${search}`;
 
-  //   // console.log("middleware: url:", url);
+    // console.log("middleware: url:", url);
 
-  //   return NextResponse.redirect(new URL(url, request.url));
-  // }
+    return NextResponse.redirect(new URL(url, request.url));
+  }
 
   if (session && campaignQuizSetPath && segments.length === 2) {
     const url = `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`;
