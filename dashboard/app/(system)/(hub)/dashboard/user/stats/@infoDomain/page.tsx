@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUserContext } from '../../_provider/provider';
 import ChartContainer from '@/components/system/chart-container';
 import {
@@ -30,11 +29,10 @@ import {
 } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { updateSearchParamsOnUrl } from '@/lib/url';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getUserDomain } from '@/app/actions/dashboard/user/action';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -151,14 +149,40 @@ const UserDomain = () => {
   const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 10; // 페이지당 데이터 개수
   const { data: domainData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/info/domain?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
-    swrFetcher
+    {
+      key: 'getUserDomain',
+      ...state.fieldValues,
+      campaign: campaign?.id,
+      take: pageSize,
+      page: pageIndex,
+    },
+    getUserDomain
   );
-  const { result: data, total }: { result: DomainProps[]; total: 0 } =
-    domainData || {
-      result: [],
-      total: 0,
-    };
+
+  const { result: data, total } = (domainData || {
+    result: [],
+    total: 0,
+  }) as { result: any[]; total: number };
+
+  // const { data: domainData, isLoading: loading } = useSWR(
+  //   `/api/dashboard/user/info/domain?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
+  //   swrFetcher
+  // );
+  // const { result: data, total }: { result: DomainProps[]; total: number } =
+  //   domainData || {
+  //     result: [],
+  //     total: 0,
+  //   };
+
+  // 이부분 수정해야함, 원인을 아직 모르겠음. swr에서 데이터 갱신이 안되고 있음음
+  // useEffect(() => {
+  //   if (state.fieldValues) {
+  //     updateSearchParamsOnUrl({
+  //       ...state.fieldValues,
+  //       domainPageIndex: pageIndex,
+  //     });
+  //   }
+  // }, [state.fieldValues, pageIndex]);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -174,15 +198,6 @@ const UserDomain = () => {
       },
     },
   });
-
-  useEffect(() => {
-    if (state.fieldValues) {
-      updateSearchParamsOnUrl({
-        ...state.fieldValues,
-        domainPageIndex: pageIndex,
-      });
-    }
-  }, [state.fieldValues, pageIndex]);
 
   return (
     <ChartContainer>

@@ -1,8 +1,8 @@
-import { LoaderWithBackground } from "@/components/loader";
+import { LoaderWithBackground } from '@/components/loader';
 
-type Props = { info: number | null; caption: string; unit?: "%" | "" };
+type Props = { info: string | number | null; caption: string; unit?: '%' | '' };
 
-const InfoCardStyleContent = ({ info, caption, unit = "" }: Props) => {
+const InfoCardStyleContent = ({ info, caption, unit = '' }: Props) => {
   return (
     <>
       {info === null && <LoaderWithBackground />}

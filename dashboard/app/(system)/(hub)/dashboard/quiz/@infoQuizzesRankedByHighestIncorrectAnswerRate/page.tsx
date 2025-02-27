@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import {
   getCoreRowModel,
@@ -14,16 +13,28 @@ import { useQuizContext } from '../_provider/provider';
 import IncorrectTable, { columns } from '../_components/incorrect-table';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getQuizRankByIncorrectAnswer } from '@/app/actions/dashboard/quiz/action';
 
 const QuizQuizzesRanked = () => {
   const { campaign } = useStateVariables();
   const { state } = useQuizContext();
   const { data: incorrects, isLoading: loading } = useSWR(
-    `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-    swrFetcher
+    {
+      key: 'getQuizRankByIncorrectAnswer',
+      ...state.fieldValues,
+      campaign: campaign?.id,
+    },
+    getQuizRankByIncorrectAnswer
   );
-  const { result: data }: { result: QuizRankedIncorrectAnswerRateProps[] } =
-    incorrects || { result: [] };
+  const data: QuizRankedIncorrectAnswerRateProps[] = incorrects || [];
+  //
+  // const { data: incorrects, isLoading: loading } = useSWR(
+  //   `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   swrFetcher
+  // );
+  // const { result: data }: { result: QuizRankedIncorrectAnswerRateProps[] } =
+  //   incorrects || { result: [] };
+  //
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({

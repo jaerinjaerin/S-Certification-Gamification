@@ -16,7 +16,6 @@ import {
 } from 'recharts';
 import CardCustomHeader from '@/components/system/chart-header';
 import { useOverviewContext } from '../_provider/provider';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import {
@@ -30,6 +29,7 @@ import CustomTooltip, {
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -37,13 +37,21 @@ const OverviewExperts = () => {
   const { campaign } = useStateVariables();
   const { state } = useOverviewContext();
   const { data: dataycount, isLoading: loading } = useSWR(
-    `/api/dashboard/overview/statistics/experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-    swrFetcher
+    { key: 'getExpertsData', ...state.fieldValues, campaign: campaign?.id },
+    getExpertsData
   );
   const { result: data, count } = dataycount || {
     result: { pie: [], bar: [] },
     count: 0,
   };
+  // const { data: dataycount, isLoading: loading } = useSWR(
+  //   `/api/dashboard/overview/statistics/experts?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   swrFetcher
+  // );
+  // const { result: data, count } = dataycount || {
+  //   result: { pie: [], bar: [] },
+  //   count: 0,
+  // };
 
   return (
     <ChartContainer>

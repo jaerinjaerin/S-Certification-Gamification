@@ -3,6 +3,7 @@ import { combine } from 'zustand/middleware';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { QuizSetWithFile } from '@/types';
 import { ActivityIdProcessResult } from '@/lib/activityid-excel-parser';
+import { NonSProcessResult } from '../_type/type';
 
 type UserTabState = 's' | 'non-s';
 
@@ -18,27 +19,30 @@ export type ActivityId = {
 };
 
 export type NonS = {
-  data: ProcessResult[];
+  data: NonSProcessResult[];
   files: File[];
 };
 
 const initialState = {
   quizSet: {
-    data: [] as ProcessResult[],
-    files: [] as File[],
-    quizSetWithFiles: [] as QuizSetWithFile[],
+    data: [],
+    files: [],
+    quizSetWithFiles: [],
   } as QuizSet,
   activityId: {
-    data: [] as ActivityIdProcessResult[],
-    files: [] as File[],
+    data: [],
+    files: [],
   } as ActivityId,
   nonS: {
-    data: [] as ProcessResult[],
-    files: [] as File[],
+    data: [],
+    files: [],
   } as NonS,
-  // UI states
   ui: {
     tabState: 's' as UserTabState,
+    alert: {
+      isOpen: false,
+      message: '',
+    },
   },
 };
 
@@ -98,6 +102,26 @@ const useQuizSetState = create(
         ui: {
           ...state.ui,
           tabState,
+        },
+      })),
+    setAlert: (message: string) =>
+      set((state) => ({
+        ui: {
+          ...state.ui,
+          alert: {
+            isOpen: true,
+            message,
+          },
+        },
+      })),
+    closeAlert: () =>
+      set((state) => ({
+        ui: {
+          ...state.ui,
+          alert: {
+            isOpen: false,
+            message: '',
+          },
         },
       })),
   }))

@@ -27,3 +27,18 @@ export const querySearchParams = (searchParams: URLSearchParams) => {
 
   return { params, period, where, take, skip };
 };
+
+export const paramsToQueries = (params: Record<string, any>) => {
+  if (params?.key) delete params.key;
+  //
+  const take = Number(params?.take) ?? 10;
+  const skip = take * (Number(params?.page || 1) - 1);
+
+  // Parse period from params
+  const period = params?.date || { from: new Date(), to: new Date() };
+
+  // Build where condition
+  const where = buildWhereCondition(params, period);
+
+  return { params, period, where, take, skip };
+};

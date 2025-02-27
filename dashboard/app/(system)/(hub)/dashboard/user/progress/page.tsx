@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../_provider/provider';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import {
   Table,
@@ -28,6 +26,7 @@ import { updateSearchParamsOnUrl } from '@/lib/url';
 import useSWR from 'swr';
 import { useSearchParams } from 'next/navigation';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { getUserProgress } from '@/app/actions/dashboard/user/action';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -56,15 +55,31 @@ const UserProgress = () => {
   const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 50; // 페이지당 데이터 개수
   const { data: progressData, isLoading: loading } = useSWR(
-    `/api/dashboard/user/progress?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
-    swrFetcher
+    {
+      key: 'getUserProgress',
+      ...state.fieldValues,
+      campaign: campaign?.id,
+      take: pageSize,
+      page: pageIndex,
+    },
+    getUserProgress
   );
 
-  const { result: data, total }: { result: UserListProps[]; total: 0 } =
-    progressData || {
-      result: [],
-      total: 0,
-    };
+  const { result: data, total } = (progressData || {
+    result: [],
+    total: 0,
+  }) as { result: UserListProps[]; total: number };
+  //
+  // const { data: progressData, isLoading: loading } = useSWR(
+  //   `/api/dashboard/user/progress?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
+  //   swrFetcher
+  // );
+
+  // const { result: data, total }: { result: UserListProps[]; total: 0 } =
+  //   progressData || {
+  //     result: [],
+  //     total: 0,
+  //   };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터

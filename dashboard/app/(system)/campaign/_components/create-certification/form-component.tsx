@@ -1,5 +1,5 @@
 import { ControllerRenderProps, UseFormReturn } from 'react-hook-form';
-import { FormValues } from '../../formSchema';
+import { FormValues } from '../../create/_type/formSchema';
 import {
   FormControl,
   FormField,
@@ -11,7 +11,7 @@ import { TooltipComponent } from '../tooltip-component';
 
 interface FlexibleControllerRenderProps
   extends ControllerRenderProps<FormValues> {
-  value: string | Date | undefined;
+  value: FormValues[keyof FormValues];
 }
 
 const FormComponent = ({
@@ -49,7 +49,13 @@ const FormComponent = ({
           )}
 
           <FormControl>{render(field)}</FormControl>
-          <FormMessage />
+          {name === 'slug' && !form.getValues('isSlugChecked') ? (
+            <FormMessage>
+              {form.formState.errors.isSlugChecked?.message}
+            </FormMessage>
+          ) : (
+            <FormMessage />
+          )}
         </FormItem>
       )}
     />

@@ -16,7 +16,6 @@ import {
   chartColorPrimary,
   chartColorSecondary,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
-import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useOverviewContext } from '../_provider/provider';
 import { legendCapitalizeFormatter } from '@/app/(system)/(hub)/dashboard/_lib/text';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
@@ -26,24 +25,57 @@ import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
+import {
+  getAchievementProgress,
+  getAchievementRate,
+} from '@/app/actions/dashboard/overview/achievement-action';
 
 function OverviewAchievementRate() {
   const { campaign } = useStateVariables();
   const { state } = useOverviewContext();
   const { data: dataycount, isLoading: loading } = useSWR(
     [
-      `/api/dashboard/overview/statistics/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
-      `/api/dashboard/overview/info/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+      {
+        key: 'getAchievementProgress',
+        ...state.fieldValues,
+        campaign: campaign?.id,
+      },
+      {
+        key: 'getAchievementRate',
+        ...state.fieldValues,
+        campaign: campaign?.id,
+      },
     ],
-    (urls) => Promise.all(urls.map(swrFetcher))
+    (params) =>
+      Promise.all(
+        params.map((param) => {
+          if (param.key === 'getAchievementProgress') {
+            return getAchievementProgress(param);
+          }
+          return getAchievementRate(param);
+        })
+      )
   );
 
-  const [
-    { result: data },
-    {
-      result: { count },
-    },
-  ] = dataycount || [{ result: [] }, { result: { count: 0 } }];
+  const [data, count] = (dataycount || [[], 0]) as [
+    Record<string, any>[],
+    number,
+  ];
+  //
+  // const { data: dataycount, isLoading: loading } = useSWR(
+  //   [
+  //     `/api/dashboard/overview/statistics/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //     `/api/dashboard/overview/info/achievement?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id })}`,
+  //   ],
+  //   (urls) => Promise.all(urls.map(swrFetcher))
+  // );
+
+  // const [
+  //   { result: data },
+  //   {
+  //     result: { count },
+  //   },
+  // ] = dataycount || [{ result: [] }, { result: { count: 0 } }];
 
   return (
     <ChartContainer>
