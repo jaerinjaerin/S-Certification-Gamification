@@ -12,7 +12,6 @@
     "prisma:db:push": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma db push --schema=../data-model/prisma/schema.prisma",
     "prisma:studio": "npx prisma studio --schema=../data-model/prisma/schema.prisma",
     "prisma:seed": "ts-node ./seed.ts --schema=../data-model/prisma/schema.prisma",
-    "prisma:update": "ts-node ./update.ts --schema=../data-model/prisma/schema.prisma",
     "prisma:new": "ts-node ./update_new.ts --schema=../data-model/prisma/schema.prisma",
     "prisma:dbreset": "PRISMA_CLIENT_OUTPUT=../../upload_seed_data/node_modules/.prisma/client npx prisma db push --force-reset --schema=../data-model/prisma/schema.prisma"
   },

@@ -1,0 +1,2612 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズに搭載されたAPは何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Snapdragon® 8 Gen 3 Mobile Platform for Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Snapdragon® 8 Elite",
+        "answerStatus": 0
+      },
+      {
+        "text": "Snapdragon® 8 Elite for Galaxy",
+        "answerStatus": 1
+      },
+      {
+        "text": "Snapdragon® 9 Elite for Galaxy",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraのカメラの進化点は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "100倍ズーム",
+        "answerStatus": 0
+      },
+      {
+        "text": "広角200MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "光学ズーム(3倍、5倍)",
+        "answerStatus": 0
+      },
+      {
+        "text": "超広角50MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズのRAMはいくつでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S25: 8GB , S25 Ultra:8GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 8GB , S25 Ultra:12GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 12GB , S25 Ultra:12GB",
+        "answerStatus": 1
+      },
+      {
+        "text": "S25: 12GB , S25 Ultra:16GB",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraの説明で正しいのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "アーマーアルミニウムフレームを採用し、耐久性が向上した",
+        "answerStatus": 0
+      },
+      {
+        "text": "前作と同様の6.8インチ大型ディスプレイを採用した",
+        "answerStatus": 0
+      },
+      {
+        "text": "前作より重量が約15g軽くなった",
+        "answerStatus": 1
+      },
+      {
+        "text": "UDCカメラを搭載した",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "動画の話し声や音楽、風の音といったさまざまな種類の音を調整し、サウンドを最適化する機能は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AI消しゴム",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI生成編集",
+        "answerStatus": 0
+      },
+      {
+        "text": "オーディオ消しゴム",
+        "answerStatus": 1
+      },
+      {
+        "text": "オーディオ編集",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature of New Watch that should be highlighted as the connected experience when providing lifestyle use case demo? (select all correcct answers)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Race",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature of Buds3 Pro and Buds3 that should be highlighted as the connected experience when providing lifestyle use case demo?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitive UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sound Optimization (Optimized Sound)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multi-buy Offer",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is the feature NOT supported in Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Overlay PDF translation",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcribe & Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Real time translate while voice recording",
+        "answerStatus": 1
+      },
+      {
+        "text": "Summarize & Auto format",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AIを使うには何をすればよいですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Samsungのアカウントにログインする必要がある",
+        "answerStatus": 1
+      },
+      {
+        "text": "一定のサブスクリプション料を支払う必要がある",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI専用アプリをダウンロードする必要がある",
+        "answerStatus": 0
+      },
+      {
+        "text": "何もする必要はない",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "なぜGalaxyをOne UI 7.0にアップグレードする必要があるのですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1と比べて大きな変更はない",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0なら、以前のソフトウェアと比較して、より優れたAIスマホを体験できる",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "オーディオ・イレイザーを使うと何を消去できますか？(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "音楽",
+        "answerStatus": 0
+      },
+      {
+        "text": "風",
+        "answerStatus": 0
+      },
+      {
+        "text": "ノイズ",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 1,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25で体験できる主な機能は何ですか？(すべて選択してください)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "チャット・アシスト",
+        "answerStatus": 0
+      },
+      {
+        "text": "クロスアプリ・アクション",
+        "answerStatus": 1
+      },
+      {
+        "text": "ポートレートとマイフィルター",
+        "answerStatus": 1
+      },
+      {
+        "text": "オーディオ・イレイザー",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25の主な改良点は何ですか？(3つ選択してください)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "クロスアプリ・アクション",
+        "answerStatus": 1
+      },
+      {
+        "text": "マルチモダリティ",
+        "answerStatus": 1
+      },
+      {
+        "text": "バッテリー",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズに搭載されているAPは何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraの改良点は何ですか？(3つ選択)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "超広角50MPカメラ",
+        "answerStatus": 1
+      },
+      {
+        "text": "重さ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (フロントディスプレイ用)",
+        "answerStatus": 1
+      },
+      {
+        "text": "プロセッサ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is NOT a Key CXP of New Watch? (select one)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Next-level Essential (performance)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-powered Sleep",
+        "answerStatus": 0
+      },
+      {
+        "text": "Display Size",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalized Exercise Experience",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is a key feature that should be highlighed when introducing Buds3 Pro and Buds3 to customers who are new to earbuds(1st buyer)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptive ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Fit",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is the new feature in Tab S10 supporting vivid outdoor viewing?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-reflection",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Large Display",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "撮った写真や動画を、特定のアプリやシステムを使わずに、素早く友達の共有できる機能は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "かこって検索",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Quick Shareを使っている間、その人の側にいる必要がありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "必要ありません、クラウド経由で機能します",
+        "answerStatus": 1
+      },
+      {
+        "text": "はい、残念ながら最後までその場合にいなければなりません",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "体験できる主な機能をお勧めしてもらえますか？(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "クロスアプリ・アクション",
+        "answerStatus": 0
+      },
+      {
+        "text": "ポートレートとマイフィルター",
+        "answerStatus": 0
+      },
+      {
+        "text": "オーディオ・イレイザー",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズでクロスアプリを体験したいのですが、何と言えばいいですか？(一例として)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "近くの中華レストランを検索してトニーに送って",
+        "answerStatus": 1
+      },
+      {
+        "text": "やぁ、Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "今日の天気情報を教えて",
+        "answerStatus": 0
+      },
+      {
+        "text": "やぁ、Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "撮影時にどのようにフィルターを適用すればいいですか？(2つ選択してください)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "カメラアプリのプリセットフィルターを使用する",
+        "answerStatus": 1
+      },
+      {
+        "text": "カメラアプリのナイトモードを使用する",
+        "answerStatus": 0
+      },
+      {
+        "text": "ギャラリーの写真のマイフィルターを使用する",
+        "answerStatus": 1
+      },
+      {
+        "text": "カメラアプリのスローモーションを使用する",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Sペンが大好きです。何かお勧めはありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Now Briefではどのような情報/知見を得ることができますか？(3つ選択してください)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "エナジースコア",
+        "answerStatus": 1
+      },
+      {
+        "text": "スケジュール",
+        "answerStatus": 1
+      },
+      {
+        "text": "アラーム",
+        "answerStatus": 1
+      },
+      {
+        "text": "自宅の住所",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Select a feature related to Health/Sleep in New Watch (select all correcct answers)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personazlied Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Self Motivatio & Improvement",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Select the most suitable feature of Buds3 that can be utilized in a meeting with a foreigner who speaks other language.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Fit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Crytal Clear Sound",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is new about the new Book Cover Keyboard of Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Back Light ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dedicated AI Key",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note launcher",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 2,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "エナジースコアの基準は何ですか？(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "睡眠",
+        "answerStatus": 0
+      },
+      {
+        "text": "アクティビティ",
+        "answerStatus": 0
+      },
+      {
+        "text": "心拍数",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "下取りの主なメリットは何ですか？ ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "月々の分割払いプランを利用できる",
+        "answerStatus": 0
+      },
+      {
+        "text": "最新のスマートフォンを購入する際の負担やコストをすぐに減らすことができる",
+        "answerStatus": 1
+      },
+      {
+        "text": "同じ価格で2倍のストレージ容量を利用できる",
+        "answerStatus": 0
+      },
+      {
+        "text": "1つ買うと1つ無料になる",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "私はS22のユーザーです。Galaxy S25の主な改良点は何ですか？(2つ選択してください)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "画質",
+        "answerStatus": 1
+      },
+      {
+        "text": "カメラ数",
+        "answerStatus": 0
+      },
+      {
+        "text": "サイズ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra独自の機能について教えてください。(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "付属のSペン",
+        "answerStatus": 0
+      },
+      {
+        "text": "100倍ズームと200MPのカメラ",
+        "answerStatus": 0
+      },
+      {
+        "text": "大画面/バッテリー",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Android以外のデバイスとファイルを共有する方法はありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Cross-sell",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25のGalaxy Watch Ultraを探しています。その主な特徴を教えてくれますか？(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "睡眠トラッキング",
+        "answerStatus": 0
+      },
+      {
+        "text": "エナジースコア",
+        "answerStatus": 0
+      },
+      {
+        "text": "ランニング",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "他社製品と比較した場合、AI機能以外のGalaxy製品の強みは何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "カメラ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ディスプレイとバッテリー",
+        "answerStatus": 0
+      },
+      {
+        "text": "パフォーマンス",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "正確で自然なポートレートを撮影できるGalaxy S25のカメラの特徴は何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "HDRビデオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "オブジェクト認識エンジン",
+        "answerStatus": 1
+      },
+      {
+        "text": "マイフィルター",
+        "answerStatus": 0
+      },
+      {
+        "text": "サードパーティアプリ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25で「かこって検索」を使うメリットは何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "音楽検索",
+        "answerStatus": 0
+      },
+      {
+        "text": "AIによるサマリー",
+        "answerStatus": 0
+      },
+      {
+        "text": "翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "屋外の写真から人を消したいと思っています。この場合、どのような機能をお勧めしますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "生成AI編集",
+        "answerStatus": 1
+      },
+      {
+        "text": "インスタントスローモーション",
+        "answerStatus": 0
+      },
+      {
+        "text": "高解像度",
+        "answerStatus": 0
+      },
+      {
+        "text": "オートトリム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "私はよく携帯電話をなくしたり落としたりします。壊れたからといって高いものを買わないといけないのは困ります。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "「Samsung Care+」をお勧めします",
+        "answerStatus": 1
+      },
+      {
+        "text": "「Samsung Wallet」をお勧めします",
+        "answerStatus": 0
+      },
+      {
+        "text": "「Quick Share」をお勧めします",
+        "answerStatus": 0
+      },
+      {
+        "text": "「より安いモデル」をお勧めします",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+で対象でないのは何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "スマートフォン",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "デスクトップPC",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 41,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "If the Ring gets stuck on my finger, what should I do?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Immerse your finger in cold water to constrict blood vessels temporarily and shrink the finger. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce swelling by elevating your hand for more than 5 minutes.",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 42,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 43,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is Key CXP of Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Wear 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 44,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "録画した動画をスローモーションで表示する機能とは何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ナイトグラフィービデオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "オーディオ・イレイザー",
+        "answerStatus": 0
+      },
+      {
+        "text": "インスタントスローモーション",
+        "answerStatus": 1
+      },
+      {
+        "text": "オートトリム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 45,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "普段から電話で通話することがとても多いのですが、何を話したか忘れてしまうことがよくあります。このような場合にお勧めの機能はありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "文字起こしアシスト",
+        "answerStatus": 1
+      },
+      {
+        "text": "ライブ翻訳",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "マルチモーダル検索",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 46,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25に搭載されているAPの名前は何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy用Snapdragon 7第3世代",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy用Snapdragon 7 Elite",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy用Snapdragon 8第3世代",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy用Snapdragon 8 Elite",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 47,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxyには、パーソナライズされた通知をしてくれる機能があると聞きました。その機能の名前は何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "編集提案",
+        "answerStatus": 0
+      },
+      {
+        "text": "モードとルーチン",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 1
+      },
+      {
+        "text": "Now Bar",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 48,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "AIによる動画編集機能は、オーディオ・イレイザー以外に何がありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ポートレート",
+        "answerStatus": 0
+      },
+      {
+        "text": "かこって検索",
+        "answerStatus": 0
+      },
+      {
+        "text": "生成AI編集",
+        "answerStatus": 0
+      },
+      {
+        "text": "オートトリム",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 49,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "他社製品と比べて、新しいGalaxy S25 Ultraのカメラの主な改良点は何ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "超広角50MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "超広角12MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "広角200MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "広角50MP",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 50,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Wallet",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Walletには何を登録できますか？(すべて選択してください)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "クレジットカード",
+        "answerStatus": 0
+      },
+      {
+        "text": "航空券",
+        "answerStatus": 0
+      },
+      {
+        "text": "モバイル・カー・キー",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 51,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Wallet",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Walletは海外で使えますか？",
+    "questionType": "TRUE_FALSE",
+    "options": [
+      {
+        "text": "はい",
+        "answerStatus": 1
+      },
+      {
+        "text": "いいえ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 52,
+    "orderInStage": null,
+    "enabled": null,
+    "stage": 4,
+    "product": "S25",
+    "category": "Assurance",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "S23を使用していますが、Galaxy S25にも興味があります。すぐに割引を受けられる方法はありますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "大容量ストレージのバリエーション",
+        "answerStatus": 0
+      },
+      {
+        "text": "下取り",
+        "answerStatus": 1
+      },
+      {
+        "text": "リッチ・コミュニケーション・スイート (RCS)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 53,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ロック画面のまま、進行中のアプリや重要な情報などを表示してくれる機能は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now View",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Check",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Bar",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 54,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "友達と話すような日常会話で、様々な情報を得たりタスクを解決することが出来る機能はなんでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AI Live",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini mini",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 1
+      },
+      {
+        "text": "通話アシスト",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 55,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズの進化点ではないのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ベイパーチャンバーのサイズUP",
+        "answerStatus": 0
+      },
+      {
+        "text": "重量の減少による持ち運びさのUP",
+        "answerStatus": 0
+      },
+      {
+        "text": "より明るくてノイズが少ないナイトグラフィービデオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "バッテリー容量のUP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 56,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Now Briefで提供されない情報はなんでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "LINEの通知",
+        "answerStatus": 1
+      },
+      {
+        "text": "ニュース",
+        "answerStatus": 0
+      },
+      {
+        "text": "天気情報",
+        "answerStatus": 0
+      },
+      {
+        "text": "音楽 ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 57,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズのバッテリー容量はいくつでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S25: 4,000mAh , S25 Ultra:4,400mAh",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 4,400mAh , S25 Ultra:4,400mAh",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 4,000mAh , S25 Ultra:5,000mAh",
+        "answerStatus": 1
+      },
+      {
+        "text": "S25: 5,000mAh , S25 Ultra:5,000mAh",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 58,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25の説明で正しいのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "12GBのRAMを搭載した",
+        "answerStatus": 1
+      },
+      {
+        "text": "前作よりバッテリー容量が大きくなった",
+        "answerStatus": 0
+      },
+      {
+        "text": "最大100倍ズーム撮影が可能になった",
+        "answerStatus": 0
+      },
+      {
+        "text": "48～120Hzの適応型リフレッシュレート",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 59,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraのディスプレイ素材は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Corning® Gorilla® Glass Victus2",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor2",
+        "answerStatus": 1
+      },
+      {
+        "text": "Corning® Gorilla® Glass Victus3",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 60,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "写真の傾き調整や被写体の移動・サイズを変更することが出来る機能は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ポートレートスタジオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "生成AI編集",
+        "answerStatus": 1
+      },
+      {
+        "text": "AIスケッチ",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI消しゴム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 61,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズのピーク輝度はいくつでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1,600ニット",
+        "answerStatus": 0
+      },
+      {
+        "text": "1,800ニット",
+        "answerStatus": 0
+      },
+      {
+        "text": "2,300ニット",
+        "answerStatus": 0
+      },
+      {
+        "text": "2,600ニット",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 62,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraならではのメリットではないのは何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1～120Hz適応型リフレッシュレート",
+        "answerStatus": 1
+      },
+      {
+        "text": "収納可能なSペン",
+        "answerStatus": 0
+      },
+      {
+        "text": "100倍ズーム撮影",
+        "answerStatus": 0
+      },
+      {
+        "text": "最大2億画素撮影",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 63,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25の説明で間違えているものはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pro Scalerにより、鮮明度を最大化したディスプレイ体験ができる",
+        "answerStatus": 1
+      },
+      {
+        "text": "アーマーアルミニウムフレームを採用した",
+        "answerStatus": 0
+      },
+      {
+        "text": "前作より15％大きくなったベイパーチャンバーを搭載した",
+        "answerStatus": 0
+      },
+      {
+        "text": "ディスプレイ素材でCorning® Gorilla® Glass Victus2を採用した",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 64,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "オーディオ消しゴムで編集できる音はどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "風",
+        "answerStatus": 0
+      },
+      {
+        "text": "音楽 ",
+        "answerStatus": 0
+      },
+      {
+        "text": "音声",
+        "answerStatus": 0
+      },
+      {
+        "text": "上記すべて",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 65,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズのディスプレイサイズを答えてください。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S25: 6.1インチ , S25 Ultra:6.7インチ",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 6.2インチ , S25 Ultra:6.7インチ",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25: 6.2インチ , S25 Ultra:6.9インチ",
+        "answerStatus": 1
+      },
+      {
+        "text": "S25: 6.4インチ , S25 Ultra:7.6インチ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 66,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraならではのカメラメリットではないのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "超広角50MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "マクロ撮影",
+        "answerStatus": 0
+      },
+      {
+        "text": "ズームロック",
+        "answerStatus": 1
+      },
+      {
+        "text": "100倍ズーム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 67,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "かこって検索で検索できないのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "人物",
+        "answerStatus": 1
+      },
+      {
+        "text": "音楽 ",
+        "answerStatus": 0
+      },
+      {
+        "text": "場所",
+        "answerStatus": 0
+      },
+      {
+        "text": "洋服",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 68,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraの耐久性の説明で間違えているものはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "前面素材：Corning® Gorilla® Armor2",
+        "answerStatus": 0
+      },
+      {
+        "text": "背面素材：Corning® Gorilla® Glass Victus2",
+        "answerStatus": 0
+      },
+      {
+        "text": "チタニウムフレーム",
+        "answerStatus": 0
+      },
+      {
+        "text": "IP67の防水・防塵",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 69,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraの説明で正しいのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "最大30倍のズーム撮影が可能",
+        "answerStatus": 0
+      },
+      {
+        "text": "前作よりベゼルが薄くなった",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sペンは防水・防塵に対応しない",
+        "answerStatus": 0
+      },
+      {
+        "text": "前作よりベイパーチャンバーが60％大きくなった",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 70,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "__________を使えば手書きスケッチをAIが素敵なイラストに変換してくれますので、\n自分のアイディアをうまく伝えることができます。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AIスケッチ",
+        "answerStatus": 1
+      },
+      {
+        "text": "自動トリミング",
+        "answerStatus": 0
+      },
+      {
+        "text": "ポートレートスタジオ",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI消しゴム",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 71,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズの生体認証は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "顔",
+        "answerStatus": 0
+      },
+      {
+        "text": "顔 + 指紋(サイドボタン)",
+        "answerStatus": 0
+      },
+      {
+        "text": "顔 + 指紋(画面内)",
+        "answerStatus": 1
+      },
+      {
+        "text": "虹彩＋顔",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 72,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25のカラーオプションではないのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "アイシー ブルー",
+        "answerStatus": 0
+      },
+      {
+        "text": "ネイビー",
+        "answerStatus": 0
+      },
+      {
+        "text": "ブラック",
+        "answerStatus": 1
+      },
+      {
+        "text": "シルバー シャドウ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 73,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraのカラーオプションではないのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "チタニウム シルバーブルー",
+        "answerStatus": 0
+      },
+      {
+        "text": "チタニウム ホワイトシルバー",
+        "answerStatus": 0
+      },
+      {
+        "text": "チタニウム ホワイト",
+        "answerStatus": 1
+      },
+      {
+        "text": "チタニウム ブラック",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 74,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "GalaxyのAI機能は＿＿＿＿まで無料で使用可能です。その以降の計画は未定です。",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "2025年末",
+        "answerStatus": 1
+      },
+      {
+        "text": "2026年末",
+        "answerStatus": 0
+      },
+      {
+        "text": "2027年末",
+        "answerStatus": 0
+      },
+      {
+        "text": "2028年末",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 75,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズの内側カメラの画素数をいくらでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1,000万画素",
+        "answerStatus": 0
+      },
+      {
+        "text": "1,200万画素",
+        "answerStatus": 1
+      },
+      {
+        "text": "2,000万画素",
+        "answerStatus": 0
+      },
+      {
+        "text": "5,000万画素",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 76,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズはMicro SDの内蔵が可能ですか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "可能",
+        "answerStatus": 0
+      },
+      {
+        "text": "不可能",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 77,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Gemini Liveの利用方法は何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "サイドボタン2回押し & 音声命令",
+        "answerStatus": 0
+      },
+      {
+        "text": "サイドボタン5回押し & 音声命令",
+        "answerStatus": 0
+      },
+      {
+        "text": "ホームボタン長押し & 音声命令",
+        "answerStatus": 0
+      },
+      {
+        "text": "サイドボタン長押し & 音声命令",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 78,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "「リアルタイム通訳」はLINE通話などのサードパーティーアプリで使用できますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "使用可能",
+        "answerStatus": 1
+      },
+      {
+        "text": "使用不可能",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 79,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ズームロック機能は何倍のズームから使用可能でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "5倍",
+        "answerStatus": 0
+      },
+      {
+        "text": "10倍",
+        "answerStatus": 0
+      },
+      {
+        "text": "20倍",
+        "answerStatus": 1
+      },
+      {
+        "text": "30倍",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 80,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "AIスケッチを使用するときは、必ずSペンが必要でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "正しい",
+        "answerStatus": 0
+      },
+      {
+        "text": "誤り",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 81,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraで光学/光学品質のズーム撮影ができる正しい倍率の組み合わせは何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "3倍・5倍 / 2倍・10倍",
+        "answerStatus": 1
+      },
+      {
+        "text": "3倍・10倍 / 2倍・5倍",
+        "answerStatus": 0
+      },
+      {
+        "text": "2倍・3倍 / 5倍・10倍",
+        "answerStatus": 0
+      },
+      {
+        "text": "2倍・10倍 / 3倍・5倍",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 82,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ポートレートスタジオで利用できないスタイルは、何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "コミック",
+        "answerStatus": 0
+      },
+      {
+        "text": "水彩画",
+        "answerStatus": 0
+      },
+      {
+        "text": "ポスター",
+        "answerStatus": 1
+      },
+      {
+        "text": "スケッチ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 83,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズに搭載されるOne UIのバージョンは何でしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 6.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7",
+        "answerStatus": 1
+      },
+      {
+        "text": "One UI 8",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 84,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズでDeXは使えますか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "はい",
+        "answerStatus": 1
+      },
+      {
+        "text": "いいえ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 85,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultraの説明で正しいのはどれでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "前作よりカメラのレンズ数が１つ増えた",
+        "answerStatus": 0
+      },
+      {
+        "text": "マルチウィンドウが3画面までできる",
+        "answerStatus": 0
+      },
+      {
+        "text": "最大4Kの動画撮影ができる",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pro Scalerにより、鮮明度を最大化したディスプレイ体験ができる",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 86,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": null,
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25シリーズの日本発売日はいつでしょうか？",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "2025-02-07",
+        "answerStatus": 0
+      },
+      {
+        "text": "2025-02-14",
+        "answerStatus": 1
+      },
+      {
+        "text": "2025-02-21",
+        "answerStatus": 0
+      },
+      {
+        "text": "2025-02-28",
+        "answerStatus": 0
+      }
+    ]
+  }
+]
