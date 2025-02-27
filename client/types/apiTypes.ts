@@ -9,7 +9,6 @@ import {
   QuizBadge,
   QuizSet,
   QuizStage,
-  Subsidiary,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -17,7 +16,8 @@ import {
 
 export interface QuizSetEx extends QuizSet {
   domain: Domain;
-  subsidiary: Subsidiary | null;
+  // subsidiary: Subsidiary | null;
+  language: Language | null;
   quizStages: QuizStageEx[];
 }
 
@@ -59,6 +59,18 @@ export interface ApiResponse<T> {
   success: boolean;
   message?: string;
   status?: number;
+}
+
+export interface ApiResponseV2<T> {
+  success: boolean;
+  status: number | null;
+  result?: {
+    item: T | null;
+  };
+  error?: {
+    message: string;
+    code: string;
+  };
 }
 
 export interface ApiListResponse<T> {
