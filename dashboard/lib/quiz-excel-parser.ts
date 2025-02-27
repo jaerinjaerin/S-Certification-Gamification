@@ -247,7 +247,7 @@ export const processExcelBuffer = (
       }
     });
 
-    console.log('groupedData:', groupedData);
+    // console.log('groupedData:', groupedData);
 
     return {
       success: errors.length === 0,

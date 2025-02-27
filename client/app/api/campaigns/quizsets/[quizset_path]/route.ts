@@ -105,6 +105,9 @@ export async function GET(request: NextRequest, props: Props) {
                 orderBy: {
                   order: "asc",
                 },
+                where: {
+                  enabled: true,
+                },
                 include: {
                   options: {
                     orderBy: {
