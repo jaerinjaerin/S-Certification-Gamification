@@ -20,6 +20,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/logout") ||
     pathname.includes("/test") ||
     pathname.includes("/home") ||
+    pathname.includes("/register") ||
     pathname.includes("/site")
   ) {
     return NextResponse.next();
