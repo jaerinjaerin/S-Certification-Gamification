@@ -146,6 +146,7 @@ export async function GET(request: NextRequest) {
 
       where = {
         quizSets: { some: { domain: { id: { in: domainIds } } } },
+        deleted: false,
       };
     }
 
