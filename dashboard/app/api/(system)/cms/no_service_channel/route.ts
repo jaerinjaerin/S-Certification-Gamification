@@ -5,6 +5,7 @@ import {
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
+import { DomainChannel } from '@/types/apiTypes';
 import {
   CloudFrontClient,
   CreateInvalidationCommand,
@@ -209,7 +210,7 @@ export async function POST(request: NextRequest) {
 
     // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
     const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
-    const destinationKey = `certification/${campaign.slug}/cms/upload/activityid/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${fileNameWithTimestamp}`;
 
     const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -315,5 +316,98 @@ export async function POST(request: NextRequest) {
     );
   } finally {
     await prisma.$disconnect();
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const url = request.url;
+    const { searchParams } = new URL(url);
+    const campaignId = searchParams.get('campaignId');
+    // Validate required fields
+    if (!campaignId) {
+      return NextResponse.json(
+        { message: 'Campaign ID isrequired' },
+        { status: 400 }
+      );
+    }
+
+    const uploadedFile = await prisma.uploadedFile.findFirst({
+      where: {
+        campaignId: campaignId,
+        fileType: FileType.NON_SPLUS_DOMAINS,
+      },
+    });
+
+    console.log('uploadedFile: ', uploadedFile);
+
+    if (!uploadedFile) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'No file found',
+            code: ERROR_CODES.NO_DATA_FOUND,
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    console.log(
+      'url: ',
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`
+    );
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`,
+      { method: 'GET' }
+    );
+    console.log('response: ', response);
+    if (!response.ok) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'No file found',
+            code: ERROR_CODES.NO_DATA_FOUND,
+          },
+        },
+        { status: response.status }
+      );
+    }
+
+    const data: DomainChannel[] = await response.json();
+    const subsidiaries = await prisma.subsidiary.findMany();
+    const regions = await prisma.region.findMany();
+
+    data.map((country) => {
+      if (country.subsidiaryId) {
+        const subsidiary = subsidiaries.find(
+          (subsidiary) => subsidiary.id === country.subsidiaryId
+        );
+        console.log('subsidiary: ', subsidiary);
+        if (subsidiary) {
+          country.subsidiary = subsidiary;
+        }
+      }
+      if (country.regionId) {
+        const region = regions.find((region) => region.id === country.regionId);
+        if (region) {
+          country.region = region;
+        }
+      }
+    });
+
+    return NextResponse.json(
+      { success: true, result: { channels: data } },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
