@@ -26,7 +26,7 @@ export default function CertificationClientComponent() {
   return (
     <div>
       <div
-        style={{ width: 'calc(100vw - 48px)' }}
+        style={{ width: 'calc(100vw - 62px)' }}
         className="flex justify-between items-center"
       >
         <h2 className="text-size-17px font-semibold">Certification List</h2>
@@ -44,7 +44,7 @@ export default function CertificationClientComponent() {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-x-[1.125rem] gap-y-6 mt-8">
+      <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
           campaigns.map((campaign) => (
             <CertificationListItem key={campaign.id} campaign={campaign} />
@@ -59,28 +59,29 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const router = useRouter();
 
   return (
-    <div className="flex gap-2 items-center border border-zinc-200 rounded-lg justify-between p-6 shadow-sm">
-      <div className="px-3 grow min-w-0">
-        <h3
-          className="text-size-24px font-semibold break-words cursor-pointer"
-          onClick={() => {
-            setCampaign(campaign);
-            router.push(`/dashboard/overview`);
-          }}
-        >
+    <div className="h-[100px] flex px-6 gap-[2.625rem] items-center border border-zinc-200 rounded-lg justify-between shadow-sm">
+      <button
+        type="button"
+        className=" grow min-w-0 cursor-pointer h-full text-left px-3 flex flex-col justify-center"
+        onClick={() => {
+          setCampaign(campaign);
+          router.push(`/dashboard/overview`);
+        }}
+      >
+        <h3 className="text-size-24px font-semibold break-words">
           {campaign.name}
         </h3>
         <time className="text-zinc-500 text-size-14px">
           {`${dayjs(campaign.startedAt).format('YYYY.MM.DD')} ~ 
           ${dayjs(campaign.endedAt).format('YYYY.MM.DD')}`}
         </time>
-      </div>
+      </button>
       <div className="flex gap-3">
         <CustomAlertDialog
           trigger={
             <Button
               variant="ghost"
-              className="p-0 aspect-square size-[1.875rem] rounded-sm bg-zinc-50"
+              className="p-0 aspect-square size-[1.875rem] rounded-sm "
             >
               <Trash2
                 style={{ width: '1.25rem', height: '1.25rem' }}
@@ -90,19 +91,28 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           }
           description="Once deleted, the registered data cannot be restored. Are you sure you want to delete?"
           buttons={[
-            { label: 'Cancel', variant: 'secondary', type: 'cancel' },
-            { label: 'Delete', variant: 'delete', type: 'delete' },
+            {
+              label: 'Cancel',
+              variant: 'secondary',
+              type: 'cancel',
+            },
+            {
+              label: 'Delete',
+              variant: 'delete',
+              type: 'delete',
+            },
           ]}
         />
 
         <Button
+          className="p-0 aspect-square size-[1.875rem] rounded-sm"
           variant="ghost"
           onClick={() => {
             setCampaign(campaign);
             router.push(`/campaign/edit/${campaign.id}`);
           }}
         >
-          <Pen />
+          <Pen className="text-blue-600" />
         </Button>
       </div>
     </div>
