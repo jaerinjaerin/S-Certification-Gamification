@@ -12,7 +12,7 @@ import {
 import { defaultValues, formSchema, FormValues } from '../_type/formSchema';
 import Container from './container';
 import FormComponent from './form-component';
-import { CustomPopover, CustomSelect } from './custom-form-items';
+import { DatePickerPopover, CustomSelect } from './custom-form-items';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Check, CircleHelp } from 'lucide-react';
 import {
@@ -279,13 +279,13 @@ export default function CampaignForm({
                   <FormItem className="">
                     <FormLabel>Slug</FormLabel>
                     <FormControl>
-                      <div className="flex">
-                        <div className="flex items-center  max-w-[20rem]">
+                      <div className="flex relative w-fit">
+                        <div className="max-w-[20rem] flex items-center">
                           <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
                             https://www.samsungplus.net/
                           </p>
                           <Input
-                            className="rounded-s-none border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px"
+                            className="rounded-s-none border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px flex-grow"
                             {...field}
                             readOnly={isEditMode ? true : false}
                             value={isEditMode ? initialData?.slug : field.value} // TODO: 수정 필
@@ -301,7 +301,7 @@ export default function CampaignForm({
                         </div>
                         <Button
                           variant={'secondary'}
-                          className="border-zinc-200 shadow-none ml-5 text-size-14px h-10 font-normal text-zinc-500"
+                          className="absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px h-10 font-normal text-zinc-500"
                           type="button"
                           disabled={isEmpty(form.getValues('slug'))}
                           onClick={handleCheckSlug}
@@ -325,7 +325,7 @@ export default function CampaignForm({
                   <FormItem className="flex flex-col w-full max-w-[20rem]">
                     <FormLabel>Start Date</FormLabel>
                     <FormControl>
-                      <CustomPopover field={field} />
+                      <DatePickerPopover field={field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -338,7 +338,7 @@ export default function CampaignForm({
                   <FormItem className="w-full flex flex-col">
                     <FormLabel>End Date</FormLabel>
                     <FormControl>
-                      <CustomPopover field={field} />
+                      <DatePickerPopover field={field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -352,6 +352,10 @@ export default function CampaignForm({
                 label="Media to Copy (Optional)"
                 name="imageSourceCampaignId"
                 type="tooltip"
+                description="The media data used in the selected certification will be copied."
+                trigger={
+                  <CircleHelp className="size-3 text-secondary cursor-pointer" />
+                }
                 render={(field) => (
                   <CustomSelect field={field} selectDefaultValue="None">
                     <SelectContent>
@@ -398,6 +402,10 @@ export default function CampaignForm({
                 label="UI Language to Copy (Optional)"
                 name="uiLanguageSourceCampaignId"
                 type="tooltip"
+                description="The UI Language data used in the selected certification will be copied."
+                trigger={
+                  <CircleHelp className="size-3 text-secondary cursor-pointer" />
+                }
                 render={(field) => (
                   <CustomSelect field={field} selectDefaultValue="None">
                     <SelectContent>

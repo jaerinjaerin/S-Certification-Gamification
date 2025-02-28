@@ -2,19 +2,46 @@ import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { GroupedQuizSet } from '../../../_type/type';
+import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
+import { ActiveToggle } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Active',
-    header: 'Active',
-    cell: () => <div>Active</div>,
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Active</span>
+        <TooltipComponent
+          side="right"
+          trigger={
+            <CircleHelp className="size-3 text-secondary cursor-pointer" />
+          }
+          description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
+        />
+      </div>
+    ),
+    cell: () => <ActiveToggle />,
   },
   {
     accessorKey: 'status',
     header: () => (
-      <div>
+      <div className="flex gap-1 items-center">
         <span>Status</span>
-        <CircleHelp />
+        <TooltipComponent
+          side="right"
+          trigger={
+            <CircleHelp className="size-3 text-secondary cursor-pointer" />
+          }
+          description={
+            <p>
+              <span className="font-bold">Not Ready:</span> The quiz cannot be
+              started because not all data has been uploaded yet. <br />
+              <span className="font-bold">Ready:</span> All data has been
+              uploaded, and the quiz can now be started. In this case, the quiz
+              URL will be generated.
+            </p>
+          }
+        />
       </div>
     ),
     cell: ({ row }) => <div> {row.getValue('status') ?? '-'}</div>,

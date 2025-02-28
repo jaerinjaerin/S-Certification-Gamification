@@ -9,10 +9,16 @@ import {
 import { UseFormReturn } from 'react-hook-form';
 
 import { SelectContent, SelectItem } from '@/components/ui/select';
-import { CustomSelect } from './custom-form-items';
-import FormComponent from './form-component';
+import { CustomFormLabel, CustomSelect } from './custom-form-items';
 import { FormValues } from '../_type/formSchema';
 import useCampaignState from '../store/campaign-state';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { cn } from '@/utils/utils';
 
 export default function TableComponent({
   form,
@@ -55,7 +61,7 @@ export default function TableComponent({
             })}
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="table-fixed">
           {TableConfig.map((data) => {
             const { label, firstStage, secondStage } = data;
             return (
@@ -74,6 +80,8 @@ export default function TableComponent({
   );
 }
 
+const TableCellClass = 'px-4 py-3 w-[17.125rem] !align-top';
+
 const BadgeSettingRows = ({
   label,
   firstStage,
@@ -89,61 +97,69 @@ const BadgeSettingRows = ({
 
   return (
     <TableRow>
-      <CustomTableCell>{label}</CustomTableCell>
-      <CustomTableCell>
-        <FormComponent
-          form={form}
+      <TableCell className={cn(TableCellClass, '')}>{label}</TableCell>
+      <TableCell className={cn(TableCellClass, '')}>
+        <FormField
+          control={form.control}
           name={firstStage}
-          className="max-w-[7.125rem]"
-          render={(field) => (
-            <CustomSelect
-              field={field}
-              selectDefaultValue="Select"
-              disabled={selectedNumberOfStages === undefined}
-            >
-              <SelectContent>
-                {Array.from({
-                  length: Number(selectedNumberOfStages) + 1,
-                }).map((_, index) => {
-                  return (
-                    <SelectItem value={`${index}`} key={index}>
-                      {index + 1}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </CustomSelect>
+          render={({ field }) => (
+            <FormItem>
+              <CustomFormLabel>{label}</CustomFormLabel>
+              <FormControl>
+                <CustomSelect
+                  field={field}
+                  selectDefaultValue="Select"
+                  disabled={selectedNumberOfStages === undefined}
+                  className="max-w-[7.125rem]"
+                >
+                  <SelectContent>
+                    {Array.from({
+                      length: Number(selectedNumberOfStages) + 1,
+                    }).map((_, index) => {
+                      return (
+                        <SelectItem value={`${index}`} key={index}>
+                          {index + 1}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </CustomSelect>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
-      </CustomTableCell>
-      <CustomTableCell>
-        <FormComponent
-          form={form}
+      </TableCell>
+      <TableCell className={cn(TableCellClass, '')}>
+        <FormField
+          control={form.control}
           name={secondStage}
-          className="max-w-[7.125rem]"
-          render={(field) => (
-            <CustomSelect
-              field={field}
-              selectDefaultValue="Select"
-              disabled={selectedNumberOfStages === undefined}
-            >
-              <SelectContent>
-                {Array.from({ length: Number(selectedNumberOfStages) + 1 }).map(
-                  (_, index) => (
-                    <SelectItem value={`${index}`} key={index}>
-                      {index + 1}
-                    </SelectItem>
-                  )
-                )}
-              </SelectContent>
-            </CustomSelect>
+          render={({ field }) => (
+            <FormItem>
+              <CustomFormLabel>{label}</CustomFormLabel>
+              <FormControl>
+                <CustomSelect
+                  field={field}
+                  selectDefaultValue="Select"
+                  disabled={selectedNumberOfStages === undefined}
+                  className="max-w-[7.125rem]"
+                >
+                  <SelectContent>
+                    {Array.from({
+                      length: Number(selectedNumberOfStages) + 1,
+                    }).map((_, index) => (
+                      <SelectItem value={`${index}`} key={index}>
+                        {index + 1}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </CustomSelect>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
-      </CustomTableCell>
+      </TableCell>
     </TableRow>
   );
-};
-
-const CustomTableCell = ({ children }: { children: React.ReactNode }) => {
-  return <TableCell className="px-4 py-3">{children}</TableCell>;
 };

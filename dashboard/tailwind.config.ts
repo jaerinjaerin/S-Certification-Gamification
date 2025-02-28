@@ -31,6 +31,10 @@ export default {
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
+          hover: 'hsl(var(--secondary-hover))',
+        },
+        action: {
+          hover: 'hsl(var(--action-hover))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',

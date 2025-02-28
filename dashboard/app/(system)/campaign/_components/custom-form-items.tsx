@@ -42,7 +42,7 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
 // );
 // CustomInput.displayName = 'CustomInput';
 
-const CustomPopover = ({
+const DatePickerPopover = ({
   field,
 }: {
   field: ControllerRenderProps<FormValues>;
@@ -86,11 +86,13 @@ const CustomSelect = ({
   children,
   selectDefaultValue,
   disabled,
+  className,
 }: {
   field: ControllerRenderProps<FormValues>;
   children: React.ReactNode;
   selectDefaultValue: string;
   disabled?: boolean;
+  className?: string;
 }) => {
   return (
     <Select
@@ -98,7 +100,7 @@ const CustomSelect = ({
       defaultValue={field.value as string}
       disabled={disabled}
     >
-      <CustomSelectTrigger>
+      <CustomSelectTrigger className={className}>
         <SelectValue placeholder={selectDefaultValue} />
       </CustomSelectTrigger>
       {children}
@@ -130,5 +132,5 @@ export {
   // CustomInput,
   CustomSelect,
   CustomSelectTrigger,
-  CustomPopover,
+  DatePickerPopover,
 };
