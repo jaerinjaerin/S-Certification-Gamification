@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
     const campaignId = body.get('campaignId') as string;
 
     if (!campaignId) {
+      console.error('Missing required parameter: campaign_id');
       return NextResponse.json(
         {
           success: false,
@@ -61,11 +62,11 @@ export async function POST(request: NextRequest) {
 
     // Get the file from the form data
     const file: File = body.get('file') as File;
-    console.log('file: ', file);
 
     // Check if a file is received
     if (!file) {
       // If no file is received, return a JSON response with an error and a 400 status code
+      console.error('No file received');
       return NextResponse.json(
         {
           success: false,
@@ -87,6 +88,7 @@ export async function POST(request: NextRequest) {
       file.name
     );
     if (!result.success) {
+      console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
         {
           success: false,
@@ -104,6 +106,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!result.data) {
+      console.error('No data found');
       return NextResponse.json(
         {
           success: false,
@@ -123,6 +126,7 @@ export async function POST(request: NextRequest) {
 
     const { domainCode, languageCode, jobGroup, questions } = result.data;
     if (!domainCode || !languageCode || !jobGroup) {
+      console.error('Invalid file name');
       return NextResponse.json(
         {
           success: false,
@@ -137,6 +141,7 @@ export async function POST(request: NextRequest) {
 
     // if (!['all', 'ff', 'fsm'].includes(jobGroup)) {
     if (!['ff', 'fsm'].includes(jobGroup)) {
+      console.error('Invalid job code');
       return NextResponse.json(
         {
           success: false,
@@ -159,6 +164,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!campaign) {
+      console.error('Campaign not found');
       return NextResponse.json(
         {
           success: false,
@@ -178,6 +184,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!domain) {
+      console.error('Domain not found');
       return NextResponse.json(
         {
           success: false,
@@ -197,6 +204,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!language) {
+      console.error('Language not found');
       return NextResponse.json(
         {
           success: false,
@@ -218,6 +226,7 @@ export async function POST(request: NextRequest) {
       },
     });
     if (!hqDomain) {
+      console.error('HQ Domain not found');
       return NextResponse.json(
         {
           success: false,
@@ -241,6 +250,7 @@ export async function POST(request: NextRequest) {
       domainCode !== hqDomainCode &&
       (!hqQuestions || hqQuestions.length === 0)
     ) {
+      console.error('HQ Questions not registered');
       return NextResponse.json(
         {
           success: false,
@@ -405,11 +415,14 @@ export async function POST(request: NextRequest) {
     for (let i = 0; i < questions.length; i++) {
       const questionJson = questions[i];
       const questionId = uuid.v4();
+
+      // 이마 HQ 문제가 등록되어 있을 수 있으니, HQ 문제를 우선 찾아본다.
       let originalQuestionId =
         hqQuestions.find(
           (hqQ) => hqQ.originalIndex === questionJson.originQuestionIndex
         )?.id || null;
 
+      // HQ 문제면 HQ 문제 아이디로 설정
       if (originalQuestionId == null && domainCode === hqDomainCode) {
         originalQuestionId = questionId;
       }
@@ -419,7 +432,22 @@ export async function POST(request: NextRequest) {
         originalQuestionId == null &&
         questionJson.originQuestionIndex > hqMaxQuestionIndex
       ) {
-        originalQuestionId = questionId;
+        // 국가별로 추가된 문제가 먼저 등록되어 있는지 확인
+        const originalQuestion = await prisma.question.findFirst({
+          where: {
+            originalIndex: questionJson.originQuestionIndex,
+            languageId: language.id,
+            campaignId: campaignId,
+            domainId: domain.id,
+            quizSetId: quizSet.id,
+          },
+        });
+
+        if (originalQuestion) {
+          originalQuestionId = originalQuestion.id;
+        } else {
+          originalQuestionId = questionId;
+        }
       }
 
       if (originalQuestionId == null) {
@@ -438,10 +466,11 @@ export async function POST(request: NextRequest) {
       let question = await prisma.question.findFirst({
         where: {
           originalQuestionId: originalQuestionId,
-          originalIndex: questionJson.originQuestionIndex,
+          // originalIndex: questionJson.originQuestionIndex,
           languageId: language.id,
-          campaignId: campaignId,
-          domainId: domain.id,
+          // campaignId: campaignId,
+          // domainId: domain.id,
+          quizSetId: quizSet.id,
         },
       });
 
@@ -456,6 +485,9 @@ export async function POST(request: NextRequest) {
       const backImageId = backImage != null ? backImage.id : null;
       const charImageId = charImage != null ? charImage.id : null;
 
+      const quizStageId = createdStages.find(
+        (stage) => stage.order === questionJson.stage
+      )?.id;
       // 질문 생성
       if (!question) {
         question = await prisma.question.create({
@@ -477,9 +509,8 @@ export async function POST(request: NextRequest) {
             order: questionJson.orderInStage,
             backgroundImageId: backImageId,
             characterImageId: charImageId,
-            quizStageId: createdStages.find(
-              (stage) => stage.order === questionJson.stage
-            )?.id,
+            quizStageId,
+            quizSetId: quizSet.id,
           },
         });
 
@@ -490,6 +521,7 @@ export async function POST(request: NextRequest) {
               questionId,
               order: j,
               languageId: language.id,
+              quizSetId: quizSet.id,
             },
           });
           await prisma.questionOption.create({
@@ -499,6 +531,8 @@ export async function POST(request: NextRequest) {
               questionId,
               isCorrect: option.answerStatus,
               languageId: language.id,
+              campaignId,
+              quizSetId: quizSet.id,
             },
           });
         }
@@ -520,9 +554,8 @@ export async function POST(request: NextRequest) {
             order: questionJson.orderInStage,
             backgroundImageId: backImageId,
             characterImageId: charImageId,
-            quizStageId: createdStages.find(
-              (stage) => stage.order === questionJson.stage
-            )?.id,
+            quizStageId,
+            quizSetId: quizSet.id,
           },
         });
 
@@ -542,23 +575,43 @@ export async function POST(request: NextRequest) {
           });
 
           for (let j = 0; j < questionJson.options.length; j++) {
-            const option = questionJson.options[j];
-            await prisma.questionOption.findFirst({
+            const optionJson = questionJson.options[j];
+            const option = await prisma.questionOption.findFirst({
               where: {
                 questionId,
                 order: j,
                 languageId: language.id,
               },
             });
-            await prisma.questionOption.create({
-              data: {
-                text: option.text.toString(),
-                order: j,
-                questionId,
-                isCorrect: option.answerStatus,
-                languageId: language.id,
-              },
-            });
+
+            if (!option) {
+              await prisma.questionOption.create({
+                data: {
+                  text: optionJson.text.toString(),
+                  order: j,
+                  questionId,
+                  isCorrect: optionJson.answerStatus,
+                  languageId: language.id,
+                  campaignId: campaignId,
+                  quizSetId: quizSet.id,
+                },
+              });
+            } else {
+              await prisma.questionOption.update({
+                where: {
+                  id: option.id,
+                },
+                data: {
+                  text: optionJson.text.toString(),
+                  order: j,
+                  questionId,
+                  isCorrect: optionJson.answerStatus,
+                  languageId: language.id,
+                  campaignId: campaignId,
+                  quizSetId: quizSet.id,
+                },
+              });
+            }
           }
         } else {
           // 기존 옵션에 변경 사항이 있으면 업데이트
@@ -576,6 +629,7 @@ export async function POST(request: NextRequest) {
                 data: {
                   text: questionJson.options[index].text.toString(),
                   isCorrect: questionJson.options[index].answerStatus,
+                  campaignId: campaignId,
                 },
               });
             }
@@ -799,9 +853,7 @@ export async function GET(request: Request) {
           badge.domainId === quizSet.domainId
       )[0],
       webLanguage: domainWebLanguages.find(
-        (dwl) =>
-          dwl.domainId === quizSet.domainId &&
-          dwl.languageId === quizSet.languageId
+        (dwl) => dwl.domainId === quizSet.domainId
       ),
     }));
 

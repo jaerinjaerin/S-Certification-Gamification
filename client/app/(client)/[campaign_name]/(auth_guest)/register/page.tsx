@@ -238,6 +238,8 @@ export default function GuestRegisterPage() {
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
+        campaignId: campaign.id,
+        campaignSlug: campaign.name,
       },
     });
   };
