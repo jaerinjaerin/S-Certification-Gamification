@@ -1,4 +1,5 @@
 import { DomainData } from '@/lib/nomember-excel-parser';
+import { DomainChannel } from '@/types/apiTypes';
 import type {
   ActivityBadge,
   Domain,
@@ -53,6 +54,13 @@ export interface QuizSetResponse {
   success: boolean;
   result: {
     groupedQuizSets: GroupedQuizSet[];
+  };
+}
+
+export interface NoServiceChannelsResponse {
+  success: boolean;
+  result: {
+    channels: DomainChannel[];
   };
 }
 
