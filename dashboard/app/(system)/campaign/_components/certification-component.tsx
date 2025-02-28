@@ -3,14 +3,15 @@ import { Button } from '@/components/ui/button';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useRouter } from 'next/navigation';
-import { useNavigation } from '../../(hub)/cms/_hooks/useNavaigation';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
 import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
 
 export default function CertificationClientComponent() {
-  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
+  const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
   const { routeToPage } = useNavigation();
+  console.log('🥕 campaigns', campaigns);
 
   if (campaigns?.length === 0) {
     return (
@@ -34,7 +35,9 @@ export default function CertificationClientComponent() {
             <DownloadFileListPopoverButton type="template" />
             <Button
               variant="action"
-              onClick={() => routeToPage('/campaign/create')}
+              onClick={() => {
+                routeToPage('/campaign/create');
+              }}
             >
               Create Certification
             </Button>
@@ -56,15 +59,15 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const router = useRouter();
 
   return (
-    <div
-      className="flex gap-2 items-center border border-zinc-200 rounded-lg justify-between p-6 shadow-sm"
-      onClick={() => {
-        setCampaign(campaign);
-        router.push(`/dashboard/overview`);
-      }}
-    >
+    <div className="flex gap-2 items-center border border-zinc-200 rounded-lg justify-between p-6 shadow-sm">
       <div className="px-3 grow min-w-0">
-        <h3 className="text-size-24px font-semibold break-words">
+        <h3
+          className="text-size-24px font-semibold break-words cursor-pointer"
+          onClick={() => {
+            setCampaign(campaign);
+            router.push(`/dashboard/overview`);
+          }}
+        >
           {campaign.name}
         </h3>
         <time className="text-zinc-500 text-size-14px">
@@ -92,7 +95,13 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           ]}
         />
 
-        <Button variant="ghost">
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setCampaign(campaign);
+            router.push(`/campaign/edit/${campaign.id}`);
+          }}
+        >
           <Pen />
         </Button>
       </div>

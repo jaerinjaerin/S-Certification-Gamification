@@ -12,7 +12,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FormValues } from '../../create/_type/formSchema';
+import { FormValues } from '../_type/formSchema';
 import { forwardRef } from 'react';
 
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
@@ -21,33 +21,26 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const CustomInput = forwardRef<
-  HTMLInputElement,
-  {
-    className?: string;
-    props: React.InputHTMLAttributes<HTMLInputElement>;
-  }
->(({ className, ...props }, ref) => {
-  return (
-    <Input
-      ref={ref}
-      className={cn(
-        'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
-        className
-      )}
-      placeholder={props.props.placeholder}
-      onChange={props.props.onChange}
-      onKeyDown={(e) => {
-        if (e.key === ' ') {
-          e.preventDefault();
-        }
-      }}
-      disabled={props.props.disabled}
-      {...props}
-    />
-  );
-});
-CustomInput.displayName = 'CustomInput';
+// const CustomInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+//   ({ className, ...props }, ref) => {
+//     return (
+//       <Input
+//         ref={ref}
+//         className={cn(
+//           'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
+//           className
+//         )}
+//         onKeyDown={(e) => {
+//           if (e.key === ' ') {
+//             e.preventDefault();
+//           }
+//         }}
+//         {...props}
+//       />
+//     );
+//   }
+// );
+// CustomInput.displayName = 'CustomInput';
 
 const CustomPopover = ({
   field,
@@ -134,7 +127,7 @@ const CustomSelectTrigger = ({
 
 export {
   CustomFormLabel,
-  CustomInput,
+  // CustomInput,
   CustomSelect,
   CustomSelectTrigger,
   CustomPopover,

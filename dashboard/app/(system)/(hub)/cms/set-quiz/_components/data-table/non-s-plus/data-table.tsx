@@ -38,19 +38,18 @@ interface NoServiceChannelDataTableProps {
 // TODO: 데이터 반환 확인 필요
 export default function NonSplusDataTable() {
   const { campaign } = useStateVariables();
-  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel?campaignId=${campaign?.id}`;
-  const { data, isLoading } = useSWR<QuizSetResponse>(
-    QUIZSET_DATA_URL,
-    fetcher
-  );
-  console.log('🥕 data', data);
+  // const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel?campaignId=${campaign?.id}`;
+  // const { data, isLoading } = useSWR<QuizSetResponse>(
+  //   QUIZSET_DATA_URL,
+  //   fetcher
+  // );
 
-  if (isLoading) {
-    return <LoaderWithBackground />;
-  }
+  // if (isLoading) {
+  //   return <LoaderWithBackground />;
+  // }
   return (
     <>
-      <DataTable data={data?.result.groupedQuizSets} columns={columns} />
+      <DataTable data={[]} columns={[]} />
     </>
   );
 }

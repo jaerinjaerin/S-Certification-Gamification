@@ -7,11 +7,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { UseFormReturn } from 'react-hook-form';
-import { FormValues } from '../../create/_type/formSchema';
+
 import { SelectContent, SelectItem } from '@/components/ui/select';
 import { CustomSelect } from './custom-form-items';
 import FormComponent from './form-component';
-import useCampaignState from '../../store/campaign-state';
+import { FormValues } from '../_type/formSchema';
+import useCampaignState from '../store/campaign-state';
 
 export default function TableComponent({
   form,
