@@ -40,6 +40,16 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => <div>{row.original.quizSet.domain.code ?? '-'}</div>,
   },
   {
+    accessorKey: 'Job',
+    header: 'Job',
+    cell: ({ row }) => <div>{row.original.quizSet.jobCodes[0] ?? '-'}</div>,
+  },
+  {
+    accessorKey: 'Quiz Language',
+    header: 'Quiz Language',
+    cell: ({ row }) => <div>{row.original.quizSet.language.code ?? '-'}</div>,
+  },
+  {
     accessorKey: 'url',
     header: 'URL',
     cell: () => <div>URL</div>,
