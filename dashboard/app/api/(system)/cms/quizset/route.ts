@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
     const campaignId = body.get('campaignId') as string;
 
     if (!campaignId) {
+      console.error('Missing required parameter: campaign_id');
       return NextResponse.json(
         {
           success: false,
@@ -65,6 +66,7 @@ export async function POST(request: NextRequest) {
     // Check if a file is received
     if (!file) {
       // If no file is received, return a JSON response with an error and a 400 status code
+      console.error('No file received');
       return NextResponse.json(
         {
           success: false,
@@ -86,6 +88,7 @@ export async function POST(request: NextRequest) {
       file.name
     );
     if (!result.success) {
+      console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
         {
           success: false,
@@ -103,6 +106,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!result.data) {
+      console.error('No data found');
       return NextResponse.json(
         {
           success: false,
@@ -122,6 +126,7 @@ export async function POST(request: NextRequest) {
 
     const { domainCode, languageCode, jobGroup, questions } = result.data;
     if (!domainCode || !languageCode || !jobGroup) {
+      console.error('Invalid file name');
       return NextResponse.json(
         {
           success: false,
@@ -136,6 +141,7 @@ export async function POST(request: NextRequest) {
 
     // if (!['all', 'ff', 'fsm'].includes(jobGroup)) {
     if (!['ff', 'fsm'].includes(jobGroup)) {
+      console.error('Invalid job code');
       return NextResponse.json(
         {
           success: false,
@@ -158,6 +164,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!campaign) {
+      console.error('Campaign not found');
       return NextResponse.json(
         {
           success: false,
@@ -177,6 +184,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!domain) {
+      console.error('Domain not found');
       return NextResponse.json(
         {
           success: false,
@@ -196,6 +204,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!language) {
+      console.error('Language not found');
       return NextResponse.json(
         {
           success: false,
@@ -217,6 +226,7 @@ export async function POST(request: NextRequest) {
       },
     });
     if (!hqDomain) {
+      console.error('HQ Domain not found');
       return NextResponse.json(
         {
           success: false,
@@ -240,6 +250,7 @@ export async function POST(request: NextRequest) {
       domainCode !== hqDomainCode &&
       (!hqQuestions || hqQuestions.length === 0)
     ) {
+      console.error('HQ Questions not registered');
       return NextResponse.json(
         {
           success: false,

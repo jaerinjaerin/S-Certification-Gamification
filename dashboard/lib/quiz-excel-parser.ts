@@ -141,12 +141,12 @@ export const processExcelBuffer = (
       }
 
       // JSON.stringify로 출력하면 특수문자가 escape 시퀀스로 표현됩니다.
-      console.log('row:', JSON.stringify(no));
+      // console.log('row:', JSON.stringify(no));
 
       // 각 문자의 유니코드 값을 출력하는 방법
-      for (let i = 0; i < no.length; i++) {
-        console.log(`Index ${i}: '${no[i]}' (Code: ${no.charCodeAt(i)})`);
-      }
+      // for (let i = 0; i < no.length; i++) {
+      //   console.log(`Index ${i}: '${no[i]}' (Code: ${no.charCodeAt(i)})`);
+      // }
 
       // 각 질문을 고유하게 분류
       if (!groupedData[no]) {
