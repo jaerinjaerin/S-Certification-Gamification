@@ -47,7 +47,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Quiz Language',
     header: 'Quiz Language',
-    cell: ({ row }) => <div>{row.original.quizSet.language.code ?? '-'}</div>,
+    cell: ({ row }) => <div>{row.original.quizSet.language?.code ?? '-'}</div>,
   },
   {
     accessorKey: 'url',
