@@ -1,3 +1,4 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -134,8 +135,8 @@ model Campaign {
   updaterId   String?
   domainId    String?
   quizSets    QuizSet[]
-  // deleted     Boolean?   @default(false)
-  // deletedAt   DateTime
+  deleted     Boolean?   @default(false)
+  deletedAt   DateTime?
   settingsId  String?   @unique
   settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
   domainWebLanguages DomainWebLanguage[]
@@ -227,6 +228,9 @@ model QuizSet {
   updatedAt    DateTime    @updatedAt
   campaign     Campaign    @relation(fields: [campaignId], references: [id])
   quizStages   QuizStage[]
+  questions    Question[]
+  questionOptions    QuestionOption[]
+  quizSetFiles  QuizSetFile[]
 }
 
 model QuizSetFile {
@@ -235,6 +239,7 @@ model QuizSetFile {
   domainId      String
   languageId    String
   quizSetId     String
+  quizSet       QuizSet  @relation(fields: [quizSetId], references: [id], onDelete: Cascade)
   jobCodes      String[]
   path          String
   createdAt     DateTime @default(now())
@@ -288,7 +293,7 @@ model QuizStage {
   domainId        String?
   languageId      String?
   badgeImage      QuizBadge? @relation(fields: [badgeImageId], references: [id])
-  quizSet         QuizSet    @relation(fields: [quizSetId], references: [id])
+  quizSet         QuizSet    @relation(fields: [quizSetId], references: [id], onDelete: Cascade)
   questions       Question[]
 }
 
@@ -316,7 +321,9 @@ model Question {
   characterImage     Image?           @relation("CharacterImage", fields: [characterImageId], references: [id])
   options            QuestionOption[]
   quizStageId        String?
-  quizStage          QuizStage?       @relation(fields: [quizStageId], references: [id])
+  quizStage          QuizStage?       @relation(fields: [quizStageId], references: [id], onDelete: Cascade)
+  quizSetId          String?
+  quizSet            QuizSet?         @relation(fields: [quizSetId], references: [id])
 }
 
 model QuestionOption {
@@ -329,7 +336,10 @@ model QuestionOption {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   domainId   String?
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  campaignId String?
+  quizSetId  String?
+  quizSet    QuizSet? @relation(fields: [quizSetId], references: [id])
 }
 
 model Job {

@@ -1,5 +1,6 @@
 // src/types/apiTypes.ts
 
+import { ErrorCode } from '@/app/constants/error-codes';
 import {
   Domain,
   Image,
@@ -12,7 +13,7 @@ import {
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
-} from "@prisma/client";
+} from '@prisma/client';
 
 export interface QuizSetEx extends QuizSet {
   domain: Domain;
@@ -55,21 +56,13 @@ export interface LanguagesResponse {
 }
 
 export interface ApiResponse<T> {
-  item: T | null;
   success: boolean;
-  message?: string;
-  status?: number;
-}
-
-export interface ApiResponseV2<T> {
-  success: boolean;
-  status: number | null;
-  result?: {
+  result: {
     item: T | null;
   };
   error?: {
     message: string;
-    code: string;
+    code: ErrorCode;
   };
 }
 

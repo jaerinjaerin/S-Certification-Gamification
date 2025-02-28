@@ -1,32 +1,20 @@
+"use server";
+
 import {
   defaultLanguageCode,
   sumtotalUserOthersJobId,
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
+import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { BadgeType, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
-import { NextRequest, NextResponse } from "next/server";
-
-type Props = {
-  params: {
-    quizset_path: string;
-  };
-};
-
-export async function GET(request: NextRequest, props: Props) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("user_id");
-  const campaignSlug = searchParams.get("campaign_slug");
-  const quizsetPath = props.params.quizset_path;
-
-  console.log("GET /api/campaigns/quizsets/[quizset_path]", {
-    userId,
-    campaignSlug,
-    quizsetPath,
-  });
-
+export async function getQuizSet(
+  quizsetPath: string,
+  userId: string,
+  campaignSlug: string
+): Promise<ApiResponseV2<QuizSetEx>> {
   try {
     if (!quizsetPath || !userId || !campaignSlug) {
       throw new ApiError(
@@ -193,12 +181,13 @@ export async function GET(request: NextRequest, props: Props) {
       console.log("campaign:", campaign.settings);
       console.log("quizSet:", quizSet);
 
-      return NextResponse.json(
-        {
-          item: quizSet,
+      return {
+        success: true,
+        status: 200,
+        result: {
+          item: quizSet as QuizSetEx,
         },
-        { status: 200 }
-      );
+      };
     }
 
     // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.
@@ -291,8 +280,10 @@ export async function GET(request: NextRequest, props: Props) {
 
     // console.log("quizStagesWithQuestions:", quizStagesWithQuestions);
 
-    return NextResponse.json(
-      {
+    return {
+      success: true,
+      status: 200,
+      result: {
         item: {
           ...quizSet,
           quizStages: quizStagesWithQuestions,
@@ -300,8 +291,7 @@ export async function GET(request: NextRequest, props: Props) {
           domain,
         },
       },
-      { status: 200 }
-    );
+    };
   } catch (error) {
     console.error("Error fetching question data:", error);
 
@@ -319,33 +309,22 @@ export async function GET(request: NextRequest, props: Props) {
 
     // ApiError 처리
     if (error instanceof ApiError) {
-      return NextResponse.json(
-        {
-          status: error.statusCode,
-          message: error.message,
-          error: {
-            code: error.code,
-            details: error.message,
-          },
-        },
-        { status: error.statusCode }
-      );
+      return {
+        success: false,
+        status: error.statusCode,
+        error: { code: error.code, message: error.message },
+      };
     }
 
     // 예상치 못한 에러 처리
-    return NextResponse.json(
-      {
-        status: 500,
-        message: "Internal server error",
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          details:
-            error instanceof Error
-              ? error.message
-              : "An unknown error occurred",
-        },
+    return {
+      success: false,
+      status: 500,
+      error: {
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error ? error.message : "An unknown error occurred",
       },
-      { status: 500 }
-    );
+    };
   }
 }

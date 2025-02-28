@@ -118,6 +118,10 @@
       {
         "domainCode": "NAT_2710",
         "domainName": "SouthAfrica"
+      },
+      {
+        "domainCode": "NAT_2410",
+        "domainName": "KOREA"
       }
     ]
   },
@@ -738,6 +742,16 @@
       {
         "domainCode": "NAT_23961",
         "domainName": "Japan_GalaxyHarajuku"
+      }
+    ]
+  },
+  {
+    "languageCode": "ko",
+    "name": "Korean",
+    "domains": [
+      {
+        "domainCode": "NAT_2410",
+        "domainName": "KOREA"
       }
     ]
   }
