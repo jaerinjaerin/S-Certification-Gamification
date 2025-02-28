@@ -342,15 +342,19 @@ export async function GET(request: Request) {
     console.log('uploadedFile: ', uploadedFile);
 
     if (!uploadedFile) {
+      // return NextResponse.json(
+      //   {
+      //     success: false,
+      //     error: {
+      //       message: 'No file found',
+      //       code: ERROR_CODES.NO_DATA_FOUND,
+      //     },
+      //   },
+      //   { status: 404 }
+      // );
       return NextResponse.json(
-        {
-          success: false,
-          error: {
-            message: 'No file found',
-            code: ERROR_CODES.NO_DATA_FOUND,
-          },
-        },
-        { status: 404 }
+        { success: true, result: { channels: [] } },
+        { status: 200 }
       );
     }
 
