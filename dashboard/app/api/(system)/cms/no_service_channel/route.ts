@@ -5,6 +5,7 @@ import {
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
+import { DomainChannel } from '@/types/apiTypes';
 import {
   CloudFrontClient,
   CreateInvalidationCommand,
@@ -376,7 +377,28 @@ export async function GET(request: Request) {
       );
     }
 
-    const data = await response.json();
+    const data: DomainChannel[] = await response.json();
+    const subsidiaries = await prisma.subsidiary.findMany();
+    const regions = await prisma.region.findMany();
+
+    data.map((country) => {
+      if (country.subsidiaryId) {
+        const subsidiary = subsidiaries.find(
+          (subsidiary) => subsidiary.id === country.subsidiaryId
+        );
+        console.log('subsidiary: ', subsidiary);
+        if (subsidiary) {
+          country.subsidiary = subsidiary;
+        }
+      }
+      if (country.regionId) {
+        const region = regions.find((region) => region.id === country.regionId);
+        if (region) {
+          country.region = region;
+        }
+      }
+    });
+
     return NextResponse.json(
       { success: true, result: { channels: data } },
       { status: 200 }
