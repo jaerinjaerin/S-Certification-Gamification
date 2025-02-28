@@ -276,7 +276,7 @@ export default function CampaignForm({
                 control={form.control}
                 name="slug"
                 render={({ field }) => (
-                  <FormItem className="max-w-[20rem]">
+                  <FormItem className="">
                     <FormLabel>Slug</FormLabel>
                     <FormControl>
                       <div className="flex">
