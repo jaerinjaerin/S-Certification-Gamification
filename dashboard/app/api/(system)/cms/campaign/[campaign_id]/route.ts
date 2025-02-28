@@ -125,61 +125,61 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// const deleteCampaignScheme = z.object({
-//   campaignId: z.string(),
-// });
+const deleteCampaignScheme = z.object({
+  campaignId: z.string(),
+});
 
-// export async function DELETE(request: NextRequest) {
-//   const body = await request.json();
-//   const validatedData = deleteCampaignScheme.parse(body);
+export async function DELETE(request: NextRequest) {
+  const body = await request.json();
+  const validatedData = deleteCampaignScheme.parse(body);
 
-//   try {
-//     let campaign = await prisma.campaign.findFirst({
-//       where: {
-//         id: validatedData.campaignId,
-//       },
-//     });
+  try {
+    let campaign = await prisma.campaign.findFirst({
+      where: {
+        id: validatedData.campaignId,
+      },
+    });
 
-//     if (!campaign) {
-//       return NextResponse.json(
-//         {
-//           success: false,
-//           error: {
-//             message: '캠페인 삭제에 실패했습니다.',
-//           },
-//         },
-//         { status: 400 }
-//       );
-//     }
+    if (!campaign) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: '캠페인 삭제에 실패했습니다.',
+          },
+        },
+        { status: 400 }
+      );
+    }
 
-//     // 이미 시작한 캠페인이면 수정 불가
-//     if (campaign.startedAt < new Date()) {
-//       return NextResponse.json(
-//         {
-//           success: false,
-//           error: {
-//             message: '이미 시작된 캠페인은 삭제할 수 없습니다.',
-//           },
-//         },
-//         { status: 400 }
-//       );
-//     }
+    // 이미 시작한 캠페인이면 수정 불가
+    if (campaign.startedAt < new Date()) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: '이미 시작된 캠페인은 삭제할 수 없습니다.',
+          },
+        },
+        { status: 400 }
+      );
+    }
 
-//     await prisma.campaign.update({
-//       where: {
-//         id: campaign.id,
-//       },
-//       data: {
-//         deleted: true,
-//         deletedAt: new Date(),
-//       },
-//     });
+    await prisma.campaign.update({
+      where: {
+        id: campaign.id,
+      },
+      data: {
+        deleted: true,
+        deletedAt: new Date(),
+      },
+    });
 
-//     return NextResponse.json({ success: true }, { status: 200 });
-//   } catch (error: unknown) {
-//     console.error('Error delete campaign: ', error);
-//     return NextResponse.json({ error: error }, { status: 500 });
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error: unknown) {
+    console.error('Error delete campaign: ', error);
+    return NextResponse.json({ error: error }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}

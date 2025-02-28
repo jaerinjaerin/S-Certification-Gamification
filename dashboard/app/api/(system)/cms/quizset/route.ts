@@ -853,9 +853,7 @@ export async function GET(request: Request) {
           badge.domainId === quizSet.domainId
       )[0],
       webLanguage: domainWebLanguages.find(
-        (dwl) =>
-          dwl.domainId === quizSet.domainId &&
-          dwl.languageId === quizSet.languageId
+        (dwl) => dwl.domainId === quizSet.domainId
       ),
     }));
 
