@@ -24,6 +24,10 @@ const varinatHandlers: Record<UploadExcelFileVariant, VariantHandlers<any>> = {
     handleUpload: handleNonSFileUpload,
     setData: useQuizSetState.getState().setNonS,
   },
+  hq: {
+    handleUpload: handleQuizSetFileUpload,
+    setData: useQuizSetState.getState().setQuizSet,
+  },
 };
 export default function useFileDropZone({
   variant,
@@ -65,8 +69,7 @@ export default function useFileDropZone({
             file.errors.some((error) => error.code === 'too-many-files')
           )
         ) {
-          // 재사용되는 컴포넌트를 사용하려면?
-          setAlert('여러개의 파일을 업로드 할 수 없습니다.');
+          setAlert('Only one file can be uploaded.');
         }
       },
     });

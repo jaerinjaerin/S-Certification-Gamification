@@ -57,3 +57,13 @@ export function NonSPlusUserUploadButton() {
     </div>
   );
 }
+
+export function HQUploadButton() {
+  return (
+    <div>
+      <UploadExcelFileModal variant="hq" title="Upload HQ Quiz Set">
+        <Button>HQ 업로드</Button>
+      </UploadExcelFileModal>
+    </div>
+  );
+}

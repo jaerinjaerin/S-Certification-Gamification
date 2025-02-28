@@ -12,7 +12,7 @@ import type {
   Subsidiary,
 } from '@prisma/client';
 
-export type UploadExcelFileVariant = 'quiz' | 'activityId' | 'non-s';
+export type UploadExcelFileVariant = 'quiz' | 'activityId' | 'non-s' | 'hq';
 
 export type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -53,7 +53,6 @@ export interface QuizSetResponse {
   success: boolean;
   result: {
     groupedQuizSets: GroupedQuizSet[];
-    activityBadges: ActivityBadgeWithImage[];
   };
 }
 

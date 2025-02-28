@@ -23,14 +23,15 @@ export const formSchema = z
     slug: z
       .string()
       .regex(/^[a-z0-9-]+$/, {
-        message: 'Slug는 영문 소문자, 숫자, 하이픈(-)만 사용할 수 있습니다.',
+        message:
+          'Only lowercase English letters, numbers, and hyphens (-) are allowed.',
       })
-      .min(1, 'Slug는 최소 1자 이상이어야 합니다.'),
+      .min(1, 'Slug must be at least 1 character.'),
     isSlugChecked: z
       .boolean()
       .default(false)
       .refine((value) => value === true, {
-        message: 'Slug availability must be checked before submitting.',
+        message: 'Slug availability must be verified before submission.',
       }),
     startDate: z.date({
       required_error: 'Please select a date Start Date',

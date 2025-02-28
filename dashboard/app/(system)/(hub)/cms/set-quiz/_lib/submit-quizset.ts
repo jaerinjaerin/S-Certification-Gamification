@@ -44,7 +44,12 @@ export const submitQuizSet = async (
 
     try {
       const result = await Promise.all(uploadPromises);
-      mutate(`quizset?campaignId=${campaignId}`);
+      // mutate(`quizset?campaignId=${campaignId}`);
+      mutate(
+        (key) =>
+          typeof key === 'string' &&
+          (key.includes('quizset') || key.includes('activity'))
+      );
       return result;
     } catch (error: unknown) {
       const err = error as QuizSetError;

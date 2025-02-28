@@ -44,22 +44,8 @@ interface QuizSetDataTableProps {
   columns: ColumnDef<GroupedQuizSet>[];
 }
 
-export default function SplusDataTable() {
-  const { campaign } = useStateVariables();
-  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
-  const { data, isLoading } = useSWR<QuizSetResponse>(
-    QUIZSET_DATA_URL,
-    fetcher
-  );
-
-  if (isLoading) {
-    return <LoaderWithBackground />;
-  }
-  return (
-    <>
-      <DataTable data={data?.result.groupedQuizSets} columns={columns} />
-    </>
-  );
+export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
+  return <DataTable data={data.result.groupedQuizSets} columns={columns} />;
 }
 
 function DataTable({ data = [], columns }: QuizSetDataTableProps) {

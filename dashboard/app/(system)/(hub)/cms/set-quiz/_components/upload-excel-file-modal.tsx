@@ -23,14 +23,12 @@ import { cn } from '@/lib/utils';
 import { isEmpty } from '../../_utils/utils';
 
 // Hooks & State
-
 import useQuizSetState from '../_store/quizset-state';
 import { useStateVariables } from '@/components/provider/state-provider';
 
 // API Functions
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { submitActivityId } from '../_lib/submit-activityId';
-// import { submitNonS } from '../_lib/submit-nonS';
 import useFileDropZone from '../_hooks/useFileDropZone';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { submitNonS } from '../_lib/submit-nonS';
@@ -61,17 +59,20 @@ const UploadExcelFileModal = forwardRef<
     quiz: quizSet.files,
     activityId: activityId.files,
     'non-s': nonS.files,
+    hq: quizSet.files,
   };
   const uploadData = {
     quiz: quizSet.data,
     activityId: activityId.data,
     'non-s': nonS.data,
+    hq: quizSet.data,
   };
 
   const clearUploadFile = {
     quiz: clearQuizSet,
     activityId: clearActivityId,
     'non-s': clearNonS,
+    hq: clearQuizSet,
   };
 
   // file 객체 배열
@@ -83,7 +84,7 @@ const UploadExcelFileModal = forwardRef<
     return validIndices.map((index) => uploadFiles[variant][index]);
   };
 
-  // @types {fileName: string, success: boolean, errors: {message: string}[]
+  /* @return types {fileName: string, success: boolean, errors: {message: string}[]*/
   const getInvalidFiles = () => {
     const uploadDataVariant = uploadData[variant];
     const uploadFilesVariant = uploadFiles[variant];
@@ -103,17 +104,17 @@ const UploadExcelFileModal = forwardRef<
     }
   };
 
+  const submitQuiz = async () => {
+    const result = await submitQuizSet(
+      getValidFiles(),
+      campaign!.id,
+      setIsDialogOpen
+    );
+    if (result) setUploadResult(result);
+  };
+
   const handleSumbit = {
-    quiz: async () => {
-      const result = await submitQuizSet(
-        getValidFiles(),
-        campaign!.id,
-        setIsDialogOpen
-      );
-      if (result) {
-        setUploadResult(result);
-      }
-    },
+    quiz: submitQuiz,
     activityId: async () => {
       const result = await submitActivityId(
         uploadFiles.activityId,
@@ -129,6 +130,7 @@ const UploadExcelFileModal = forwardRef<
         setUploadResult(result);
       }
     },
+    hq: submitQuiz,
   };
 
   // TODO: 테이블 결과창 다시 수정
