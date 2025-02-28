@@ -13,6 +13,7 @@ interface ExcelRow {
   JobName: string;
   JobGroup: string;
   ChannelId: string;
+  ChannelSegment: string;
   ChannelSegmentId: string;
 }
 
@@ -24,6 +25,7 @@ interface ChannelData {
     group: string;
   };
   channelId: string;
+  channelSegment: string;
   channelSegmentId: string;
 }
 
@@ -112,6 +114,7 @@ export function parseExcelBufferToDomainJson(
           group: row.JobGroup,
         },
         channelId: channelId ?? '',
+        channelSegment: row.ChannelSegment,
         channelSegmentId: channelSegmentId,
       };
 

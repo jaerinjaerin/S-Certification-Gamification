@@ -88,6 +88,7 @@ export interface Channel {
   name: string;
   job: ChannelJob;
   channelId: string;
+  channelSegment: string;
   channelSegmentId: string;
 }
 

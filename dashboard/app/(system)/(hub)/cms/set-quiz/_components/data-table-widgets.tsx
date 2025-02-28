@@ -24,7 +24,7 @@ function StatusCircle({ label }: { label: 'Ready' | 'Not Ready' }) {
     <div
       className={cn(
         'size-4 rounded-full',
-        label === 'Ready' ? 'bg-red-300' : 'bg-green-300'
+        label === 'Ready' ? 'bg-green-300' : 'bg-red-300'
       )}
     />
   );
@@ -89,8 +89,8 @@ function ActivityIdBadge({
 
 export {
   ActiveToggle,
-  StatusCircle,
-  StatusBadge,
-  QuizSetLink,
   ActivityIdBadge,
+  QuizSetLink,
+  StatusBadge,
+  StatusCircle,
 };

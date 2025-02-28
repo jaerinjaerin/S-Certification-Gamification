@@ -1,14 +1,15 @@
 'use client';
+import { LoaderWithBackground } from '@/components/loader';
+import { useMediaData } from '../_provider/media-data-provider';
 import { MediaAssetItem } from './media-asset-item';
 import MediaAssetListContainer from './media-asset-list-container';
-import { useMediaData } from '../_provider/media-data-provider';
-import { LoaderWithBackground } from '@/components/loader';
 
 type Props = { group: MediaGroupName };
 
 const MediaAssetGroup = ({ group }: Props) => {
   const { state } = useMediaData();
   const data = state[group];
+  console.log('data', data);
 
   return (
     <MediaAssetListContainer group={group}>

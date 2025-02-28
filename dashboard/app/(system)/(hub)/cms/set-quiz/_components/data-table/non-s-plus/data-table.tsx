@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { useState } from 'react';
 import useSWR from 'swr';
 
@@ -15,9 +14,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { fetcher } from '../../../../lib/fetcher';
-import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
-import { columns } from './columns';
+import { DomainChannel } from '@/types/apiTypes';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -29,17 +26,20 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { fetcher } from '../../../../lib/fetcher';
+import { NoServiceChannelsResponse } from '../../../_type/type';
+import { columns } from './columns';
 
 interface NoServiceChannelDataTableProps {
-  data: GroupedQuizSet[] | undefined;
-  columns: ColumnDef<GroupedQuizSet>[];
+  data: DomainChannel[] | undefined;
+  columns: ColumnDef<DomainChannel>[];
 }
 
 // TODO: 데이터 반환 확인 필요
 export default function NonSplusDataTable() {
   const { campaign } = useStateVariables();
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel?campaignId=${campaign?.id}`;
-  const { data, isLoading } = useSWR<QuizSetResponse>(
+  const { data, isLoading } = useSWR<NoServiceChannelsResponse>(
     QUIZSET_DATA_URL,
     fetcher
   );
@@ -50,7 +50,7 @@ export default function NonSplusDataTable() {
   }
   return (
     <>
-      <DataTable data={data?.result.groupedQuizSets} columns={columns} />
+      <DataTable data={data?.result.channels ?? []} columns={columns} />
     </>
   );
 }
