@@ -6,26 +6,50 @@
 
 */
 -- CreateEnum
+CREATE TYPE "FileType" AS ENUM ('QUIZSET', 'ACTIVITYID', 'TARGET', 'UI_LANGUAGE', 'NON_SPLUS_DOMAINS');
+
+-- CreateEnum
 CREATE TYPE "BadgeApiType" AS ENUM ('REGISTER', 'PROGRESS');
 
+-- CreateEnum
+CREATE TYPE "BadgeType" AS ENUM ('FIRST', 'SECOND');
+
+-- DropForeignKey
+ALTER TABLE "QuestionOption" DROP CONSTRAINT "QuestionOption_questionId_fkey";
+
+-- DropForeignKey
+ALTER TABLE "QuizStage" DROP CONSTRAINT "QuizStage_quizSetId_fkey";
+
 -- AlterTable
-ALTER TABLE "Campaign" ADD COLUMN     "settingsId" TEXT,
+ALTER TABLE "Campaign" ADD COLUMN     "deleted" BOOLEAN DEFAULT false,
+ADD COLUMN     "deletedAt" TIMESTAMP(3),
+ADD COLUMN     "settingsId" TEXT,
 ADD COLUMN     "slug" TEXT NOT NULL DEFAULT 's25';
 
 -- AlterTable
 ALTER TABLE "Domain" ADD COLUMN     "permissionId" TEXT;
 
 -- AlterTable
-ALTER TABLE "Question" ADD COLUMN     "quizStageId" TEXT;
+ALTER TABLE "Question" ADD COLUMN     "quizSetId" TEXT,
+ADD COLUMN     "quizStageId" TEXT;
 
 -- AlterTable
-ALTER TABLE "QuestionOption" ADD COLUMN     "domainId" TEXT;
+ALTER TABLE "QuestionOption" ADD COLUMN     "campaignId" TEXT,
+ADD COLUMN     "domainId" TEXT,
+ADD COLUMN     "quizSetId" TEXT;
 
 -- AlterTable
 ALTER TABLE "QuizSet" ADD COLUMN     "languageId" TEXT;
 
 -- AlterTable
-ALTER TABLE "QuizStage" ADD COLUMN     "languageId" TEXT;
+ALTER TABLE "QuizStage" ADD COLUMN     "badgeType" "BadgeType",
+ADD COLUMN     "languageId" TEXT;
+
+-- AlterTable
+ALTER TABLE "UserQuizBadgeStageLog" ADD COLUMN     "badgeType" "BadgeType";
+
+-- AlterTable
+ALTER TABLE "UserQuizBadgeStageStatistics" ADD COLUMN     "badgeType" "BadgeType";
 
 -- AlterTable
 ALTER TABLE "UserQuizQuestionLog" ADD COLUMN     "originalIndex" INTEGER,
@@ -34,6 +58,12 @@ ADD COLUMN     "originalQuestionId" TEXT;
 -- AlterTable
 ALTER TABLE "UserQuizQuestionStatistics" ADD COLUMN     "originalIndex" INTEGER,
 ADD COLUMN     "originalQuestionId" TEXT;
+
+-- AlterTable
+ALTER TABLE "UserQuizStageLog" ADD COLUMN     "badgeType" "BadgeType";
+
+-- AlterTable
+ALTER TABLE "UserQuizStageStatistics" ADD COLUMN     "badgeType" "BadgeType";
 
 -- AlterTable
 ALTER TABLE "users" ADD COLUMN     "loginName" TEXT;
@@ -128,7 +158,8 @@ CREATE TABLE "ActivityBadge" (
     "id" TEXT NOT NULL,
     "activityId" TEXT NOT NULL,
     "campaignId" TEXT NOT NULL,
-    "jobCodes" TEXT[],
+    "jobCode" TEXT NOT NULL,
+    "badgeType" "BadgeType" NOT NULL,
     "domainId" TEXT NOT NULL,
     "languageId" TEXT NOT NULL,
     "badgeImageId" TEXT,
@@ -136,6 +167,23 @@ CREATE TABLE "ActivityBadge" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ActivityBadge_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UploadedFile" (
+    "id" TEXT NOT NULL,
+    "campaignId" TEXT NOT NULL,
+    "domainId" TEXT,
+    "languageId" TEXT,
+    "originId" TEXT,
+    "jobCode" TEXT,
+    "uploadedBy" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
+    "fileType" "FileType" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "UploadedFile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -151,8 +199,22 @@ CREATE TABLE "BadgeLog" (
     "rawLog" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "campaignId" TEXT,
+    "domainId" TEXT,
 
     CONSTRAINT "BadgeLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "DomainWebLanguage" (
+    "id" TEXT NOT NULL,
+    "campaignId" TEXT,
+    "domainId" TEXT NOT NULL,
+    "languageId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "DomainWebLanguage_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -204,7 +266,22 @@ ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_domainId_fkey" FOREIGN KEY ("domai
 ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question_quizStageId_fkey" FOREIGN KEY ("quizStageId") REFERENCES "QuizStage"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "QuizSetFile" ADD CONSTRAINT "QuizSetFile_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuizStage" ADD CONSTRAINT "QuizStage_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Question" ADD CONSTRAINT "Question_quizStageId_fkey" FOREIGN KEY ("quizStageId") REFERENCES "QuizStage"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Question" ADD CONSTRAINT "Question_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuestionOption" ADD CONSTRAINT "QuestionOption_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuestionOption" ADD CONSTRAINT "QuestionOption_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -223,3 +300,12 @@ ALTER TABLE "UserRoleMapping" ADD CONSTRAINT "UserRoleMapping_roleId_fkey" FOREI
 
 -- AddForeignKey
 ALTER TABLE "ActivityBadge" ADD CONSTRAINT "ActivityBadge_badgeImageId_fkey" FOREIGN KEY ("badgeImageId") REFERENCES "QuizBadge"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     const destinationCampaign = await prisma.campaign.findFirst({
       where: {
-        id: validatedData.sourceCampaignId,
+        id: validatedData.destinationCampaignId,
       },
     });
 
@@ -56,8 +56,20 @@ export async function POST(request: NextRequest) {
         campaignId: soruceCampaign.id,
       },
     });
+    const domains = await prisma.domain.findMany({
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
     for (const domainGoal of domainGoals) {
-      await prisma.domainGoal.create({
+      const foundDomain = domains.find(
+        (domain) => domain.id === domainGoal.domainId
+      );
+      const newDomainGoal = await prisma.domainGoal.create({
         data: {
           campaignId: destinationCampaign.id,
           ff: domainGoal.ff,
@@ -65,28 +77,29 @@ export async function POST(request: NextRequest) {
           ffSes: domainGoal.ffSes,
           fsmSes: domainGoal.fsmSes,
           domainId: domainGoal.domainId,
-          regionId: domainGoal.regionId,
-          subsidiaryId: domainGoal.subsidiaryId,
+          regionId: foundDomain?.subsidiaryId ?? domainGoal.regionId,
+          subsidiaryId:
+            foundDomain?.subsidiary?.regionId ?? domainGoal.subsidiaryId,
         },
       });
     }
 
-    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
-      where: {
-        campaignId: soruceCampaign.id,
-      },
-    });
-    for (const domainWebLanguage of domainWebLanguages) {
-      await prisma.domainWebLanguage.create({
-        data: {
-          campaignId: destinationCampaign.id,
-          domainId: domainWebLanguage.domainId,
-          languageId: domainWebLanguage.languageId,
-        },
-      });
-    }
+    // const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+    //   where: {
+    //     campaignId: soruceCampaign.id,
+    //   },
+    // });
+    // for (const domainWebLanguage of domainWebLanguages) {
+    //   await prisma.domainWebLanguage.create({
+    //     data: {
+    //       campaignId: destinationCampaign.id,
+    //       domainId: domainWebLanguage.domainId,
+    //       languageId: domainWebLanguage.languageId,
+    //     },
+    //   });
+    // }
 
-    console.log('데이타 생성 완료');
+    console.log('도메인 목표 복사 완료');
 
     return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {

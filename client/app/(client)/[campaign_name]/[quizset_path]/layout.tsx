@@ -1,5 +1,6 @@
+import { getLanguageCodes } from "@/app/actions/language-actions";
+import { defaultLanguages } from "@/core/config/default";
 import { PolicyProvider } from "@/providers/policyProvider";
-import { fetchSupportedLanguageCodes } from "@/services/api/fetchSupportedLanguageCodes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
@@ -15,7 +16,11 @@ export default async function SumtotalUserLayout({
   const timeZone = "Seoul/Asia";
   const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
   // const supportedLanguages = await fetchSupportedLanguages();
-  const supportedLanguages = await fetchSupportedLanguageCodes();
+  // const supportedLanguages = await fetchSupportedLanguageCodes();
+  const supportedLanguages =
+    (await getLanguageCodes())?.result?.item ??
+    defaultLanguages.map((lang) => lang.code);
+
   const locale = supportedLanguages.find((lang) => {
     const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
     return pattern.test(languageCode);
