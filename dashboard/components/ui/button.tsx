@@ -16,11 +16,11 @@ const buttonVariants = cva(
         outline:
           ' border-sidebar-border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'border-secondary bg-white border text-secondary shadow-sm hover:bg-secondary/80',
+          'border-zinc-200 bg-white border text-secondary shadow-sm hover:bg-black/5',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         action:
-          'bg-blue-600 text-primary-foreground shadow hover:bg-blue-100 transition-colors duration-200',
+          'bg-blue-600 text-primary-foreground shadow hover:bg-action-hover transition-colors duration-200',
         download:
           'bg-secondary-foreground text-secondary shadow hover:bg-secondary/80 transition-colors duration-200',
         delete:
