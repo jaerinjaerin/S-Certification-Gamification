@@ -49,13 +49,8 @@ const FormComponent = ({
           )}
 
           <FormControl>{render(field)}</FormControl>
-          {name === 'slug' && !form.getValues('isSlugChecked') ? (
-            <FormMessage>
-              {form.formState.errors.isSlugChecked?.message}
-            </FormMessage>
-          ) : (
-            <FormMessage />
-          )}
+
+          <FormMessage />
         </FormItem>
       )}
     />
