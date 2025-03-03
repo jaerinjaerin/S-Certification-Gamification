@@ -1,13 +1,33 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { ExternalLink, Trash2 } from 'lucide-react';
+import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StatusCircle } from '../../data-table-widgets';
+import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 
 // TODO: 타입 변경
 export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'status',
-    header: () => <div>Status</div>,
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Status</span>
+        <TooltipComponent
+          side="right"
+          trigger={
+            <CircleHelp className="size-3 text-secondary cursor-pointer" />
+          }
+          description={
+            <p>
+              <span className="font-bold">Not Ready:</span> The quiz cannot be
+              started because not all data has been uploaded yet. <br />
+              <span className="font-bold">Ready:</span> All data has been
+              uploaded, and the quiz can now be started. In this case, the quiz
+              URL will be generated.
+            </p>
+          }
+        />
+      </div>
+    ),
     cell: ({ row }) => (
       <div>
         {/* TODO: status 값 확인 필요 */}

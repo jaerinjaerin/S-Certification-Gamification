@@ -45,21 +45,22 @@ function StatusBadge({ label }: { label: 'Ready' | 'Not Ready' }) {
 }
 
 // TODO: title이랑 type props로 받아야 함
-function QuizSetLink({
-  title,
-  type,
-}: {
-  title: string;
-  type: 'All' | 'FSM' | 'FF';
-}) {
+function QuizSetLink() {
+//   {
+//   title,
+//   type,
+// }: {
+//   title: string;
+//   type: 'All' | 'FSM' | 'FF';
+// }
   return (
     <Button
       variant={'secondary'}
       className="w-fit h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
     >
       <div className="text-size-12px leading-tight font-semibold">
-        <p className="text-zinc-950">Arabic (United Arab Emirates){title}</p>
-        <p className="text-description">All{type}</p>
+        <p className="text-zinc-950">Arabic (United Arab Emirates)</p>
+        <p className="text-description">All</p>
       </div>
       <div>
         <ExternalLink className="text-zinc-950" />
