@@ -57,6 +57,8 @@ export default function CertificationClientComponent() {
 function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { setCampaign } = useStateVariables();
   const router = useRouter();
+  const currentDate = dayjs();
+  const isEditable = currentDate < campaign?.startedAt;
 
   return (
     <div className="h-[100px] flex px-6 gap-[2.625rem] items-center border border-zinc-200 rounded-lg justify-between shadow-sm">
@@ -77,43 +79,48 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
         </time>
       </button>
       <div className="flex gap-3">
-        <CustomAlertDialog
-          trigger={
+        {isEditable ? (
+          <>
+            <CustomAlertDialog
+              trigger={
+                <Button
+                  variant="ghost"
+                  className="p-0 aspect-square size-[1.875rem] rounded-sm "
+                >
+                  <Trash2
+                    style={{ width: '1.25rem', height: '1.25rem' }}
+                    className="text-red-500"
+                  />
+                </Button>
+              }
+              description="Once deleted, the registered data cannot be restored. Are you sure you want to delete?"
+              buttons={[
+                {
+                  label: 'Cancel',
+                  variant: 'secondary',
+                  type: 'cancel',
+                },
+                {
+                  label: 'Delete',
+                  variant: 'delete',
+                  type: 'delete',
+                },
+              ]}
+            />
             <Button
+              className="p-0 aspect-square size-[1.875rem] rounded-sm"
               variant="ghost"
-              className="p-0 aspect-square size-[1.875rem] rounded-sm "
+              onClick={() => {
+                setCampaign(campaign);
+                router.push(`/campaign/edit/${campaign.id}`);
+              }}
             >
-              <Trash2
-                style={{ width: '1.25rem', height: '1.25rem' }}
-                className="text-red-500"
-              />
+              <Pen className="text-blue-600" />
             </Button>
-          }
-          description="Once deleted, the registered data cannot be restored. Are you sure you want to delete?"
-          buttons={[
-            {
-              label: 'Cancel',
-              variant: 'secondary',
-              type: 'cancel',
-            },
-            {
-              label: 'Delete',
-              variant: 'delete',
-              type: 'delete',
-            },
-          ]}
-        />
-
-        <Button
-          className="p-0 aspect-square size-[1.875rem] rounded-sm"
-          variant="ghost"
-          onClick={() => {
-            setCampaign(campaign);
-            router.push(`/campaign/edit/${campaign.id}`);
-          }}
-        >
-          <Pen className="text-blue-600" />
-        </Button>
+          </>
+        ) : (
+          <div className="w-[4.5rem]" />
+        )}
       </div>
     </div>
   );
