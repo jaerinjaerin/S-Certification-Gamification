@@ -32,16 +32,15 @@ function StatusCircle({ label }: { label: 'Ready' | 'Not Ready' }) {
   );
 }
 
-// TODO: label props로 받아야 함
-function StatusBadge({ label }: { label: 'Ready' | 'Not Ready' }) {
+function StatusBadge({ isReady }: { isReady: boolean }) {
   return (
     <span
       className={cn(
         'w-fit text-size-14px font-medium px-2 py-[3.5px] rounded-full leading-tight flex items-center justify-center',
-        label === 'Ready' ? 'bg-green-300' : 'bg-red-300'
+        isReady ? 'bg-green-300' : 'bg-red-300'
       )}
     >
-      Ready{label}
+      {isReady ? 'Ready' : 'Not Ready'}
     </span>
   );
 }
