@@ -6,7 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Slash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -21,6 +21,7 @@ import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
 
 const CurrentBreadCrumb = () => {
+  const router = useRouter();
   const { campaigns, campaign, setCampaign } = useStateVariables();
   const pathname = usePathname();
   const paths = pathname
@@ -30,6 +31,7 @@ const CurrentBreadCrumb = () => {
 
   const handleChangeCampaign = (value: string) => {
     if (!campaigns) return;
+    if (value === '/campaign') router.push(value);
     //
     const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
     if (selectedCampaign) setCampaign(selectedCampaign);
@@ -47,6 +49,9 @@ const CurrentBreadCrumb = () => {
               <SelectValue placeholder={campaign?.name || ''} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="/campaign" className="font-bold border-b">
+                Certification List
+              </SelectItem>
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}

@@ -15,6 +15,7 @@ type TargetTransformProps = TargetFromExcelProps & {
 
 type TargetProps = {
   id: string;
+  domainId: string;
   domain: string;
   total: string;
   ff: number;
