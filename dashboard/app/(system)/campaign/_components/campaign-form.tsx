@@ -8,11 +8,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from '@/components/ui/form';
 import { defaultValues, formSchema, FormValues } from '../_type/formSchema';
 import Container from './container';
 import FormComponent from './form-component';
-import { DatePickerPopover, CustomSelect } from './custom-form-items';
+import {
+  CustomSelectTrigger,
+  DatePickerPopover,
+  SelectComponent,
+} from './custom-form-items';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Check, CircleHelp } from 'lucide-react';
 import {
@@ -241,8 +246,13 @@ export default function CampaignForm({
       routeToPage('/campaign');
     }
   };
+
+  // console.log(error);
+  const inputStyle =
+    'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px text-zinc-500 disabled:bg-zinc-200 placeholder:text-zinc-500';
+
   return (
-    <div className="w-full mb-6">
+    <div className="w-full m-6">
       <h2 className="text-size-17px font-semibold">
         {isEditMode ? 'Edit' : 'Create'} Certification
       </h2>
@@ -250,7 +260,7 @@ export default function CampaignForm({
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           id="certification-form"
-          className="space-y-8 mx-auto w-full max-w-[52.375rem] pt-16"
+          className="space-y-8 mx-auto w-full max-w-[46.25rem] pt-16"
         >
           <span className="font-semibold">Basic Info</span>
           <div className="grid grid-rows-3 min-[880px]:grid-rows-4 gap-8">
@@ -263,7 +273,7 @@ export default function CampaignForm({
                     <FormLabel>Certification Name</FormLabel>
                     <FormControl>
                       <Input
-                        className="border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px"
+                        className={cn(inputStyle)}
                         {...field}
                         onKeyDown={handlePreventSpace}
                       />
@@ -285,7 +295,10 @@ export default function CampaignForm({
                             https://www.samsungplus.net/
                           </p>
                           <Input
-                            className="rounded-s-none border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px flex-grow"
+                            className={cn(
+                              'rounded-s-none flex-grow read-only:bg-zinc-200',
+                              inputStyle
+                            )}
                             {...field}
                             readOnly={isEditMode ? true : false}
                             value={isEditMode ? initialData?.slug : field.value} // TODO: 수정 필
@@ -299,17 +312,26 @@ export default function CampaignForm({
                             }}
                           />
                         </div>
-                        <Button
-                          variant={'secondary'}
-                          className="absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px h-10 font-normal text-zinc-500"
-                          type="button"
-                          disabled={isEmpty(form.getValues('slug'))}
-                          onClick={handleCheckSlug}
-                        >
-                          Check
-                          {!form.getFieldState('slug').isDirty &&
-                            form.getValues('isSlugChecked') && <Check />}
-                        </Button>
+                        {!isEditMode && (
+                          <Button
+                            variant={'secondary'}
+                            className={cn(
+                              'absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px w-[7.125rem] h-10 font-normal text-zinc-500 text-center',
+                              !form.getFieldState('slug').isDirty &&
+                                form.getValues('isSlugChecked') &&
+                                'text-green-600 border-green-600'
+                            )}
+                            type="button"
+                            disabled={isEmpty(form.getValues('slug'))}
+                            onClick={handleCheckSlug}
+                          >
+                            Check
+                            {!form.getFieldState('slug').isDirty &&
+                              form.getValues('isSlugChecked') && (
+                                <Check className="text-green-600" />
+                              )}
+                          </Button>
+                        )}
                       </div>
                     </FormControl>
                     {form.getValues('slug') &&
@@ -364,7 +386,11 @@ export default function CampaignForm({
                   <CircleHelp className="size-3 text-secondary cursor-pointer" />
                 }
                 render={(field) => (
-                  <CustomSelect field={field} selectDefaultValue="None">
+                  <SelectComponent
+                    field={field}
+                    selectDefaultValue="None"
+                    disabled={isEditMode ? true : false}
+                  >
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
                       {campaigns &&
@@ -374,7 +400,7 @@ export default function CampaignForm({
                           </SelectItem>
                         ))}
                     </SelectContent>
-                  </CustomSelect>
+                  </SelectComponent>
                 )}
               />
               <FormComponent
@@ -388,7 +414,11 @@ export default function CampaignForm({
                   <CircleHelp className="size-3 text-secondary cursor-pointer" />
                 }
                 render={(field) => (
-                  <CustomSelect field={field} selectDefaultValue="None">
+                  <SelectComponent
+                    field={field}
+                    selectDefaultValue="None"
+                    disabled={isEditMode ? true : false}
+                  >
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
                       {campaigns &&
@@ -398,7 +428,7 @@ export default function CampaignForm({
                           </SelectItem>
                         ))}
                     </SelectContent>
-                  </CustomSelect>
+                  </SelectComponent>
                 )}
               />
             </Container>
@@ -414,7 +444,11 @@ export default function CampaignForm({
                   <CircleHelp className="size-3 text-secondary cursor-pointer" />
                 }
                 render={(field) => (
-                  <CustomSelect field={field} selectDefaultValue="None">
+                  <SelectComponent
+                    field={field}
+                    selectDefaultValue="None"
+                    disabled={isEditMode ? true : false}
+                  >
                     <SelectContent>
                       <SelectItem value="none">None</SelectItem>
                       {campaigns &&
@@ -424,7 +458,7 @@ export default function CampaignForm({
                           </SelectItem>
                         ))}
                     </SelectContent>
-                  </CustomSelect>
+                  </SelectComponent>
                 )}
               />
             </div>
@@ -442,9 +476,13 @@ export default function CampaignForm({
                     field.onChange(value);
                   }}
                 >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
+                  <CustomSelectTrigger className="w-[20rem]">
+                    <SelectValue
+                      placeholder={
+                        isEditMode ? initialData?.numberOfStages : 'Select'
+                      }
+                    />
+                  </CustomSelectTrigger>
                   <SelectContent>
                     {Array.from({ length: 10 }).map((_, index) => (
                       <SelectItem value={`${index}`} key={index}>
@@ -458,7 +496,7 @@ export default function CampaignForm({
           />
           <Separator />
           <p className="font-medium">Badge Setting</p>
-          <Container>
+          <Container className="space-x-0 min-[880px]:space-x-[3.125rem]">
             <FormComponent
               className="max-w-[20rem]"
               form={form}
@@ -469,6 +507,8 @@ export default function CampaignForm({
                   {...field}
                   disabled={selectedNumberOfStages === undefined}
                   placeholder="Expert"
+                  value={isEditMode ? initialData?.firstBadgeName : field.value}
+                  className={cn(inputStyle)}
                 />
               )}
             />
@@ -482,11 +522,19 @@ export default function CampaignForm({
                   {...field}
                   disabled={selectedNumberOfStages === undefined}
                   placeholder="Advanced"
+                  value={
+                    isEditMode ? initialData?.secondBadgeName : field.value
+                  }
+                  className={cn(inputStyle)}
                 />
               )}
             />
           </Container>
-          <TableComponent form={form} />
+          <TableComponent
+            form={form}
+            isEditMode={isEditMode}
+            initialData={initialData}
+          />
         </form>
       </Form>
       <div className="flex justify-center mt-16 gap-3">
