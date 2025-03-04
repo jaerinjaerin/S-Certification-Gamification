@@ -129,19 +129,19 @@ export async function POST(request: Request, props: Props) {
       });
 
       // if (user.domain == null || user.job == null) {
-      if (domain == null || job == null) {
-        return NextResponse.json(
-          {
-            status: 404,
-            message: "Not found",
-            error: {
-              code: "NOT_FOUND",
-              details: "Fail create quiz path",
-            },
-          },
-          { status: 404 }
-        );
-      }
+      // if (domain == null || job == null) {
+      //   return NextResponse.json(
+      //     {
+      //       status: 404,
+      //       message: "Not found",
+      //       error: {
+      //         code: "NOT_FOUND",
+      //         details: "Fail create quiz path",
+      //       },
+      //     },
+      //     { status: 404 }
+      //   );
+      // }
 
       const quizSet = await prisma.quizSet.findMany({
         where: {
