@@ -32,16 +32,15 @@ function StatusCircle({ label }: { label: 'Ready' | 'Not Ready' }) {
   );
 }
 
-// TODO: label props로 받아야 함
-function StatusBadge({ label }: { label: 'Ready' | 'Not Ready' }) {
+function StatusBadge({ isReady }: { isReady: boolean }) {
   return (
     <span
       className={cn(
         'w-fit text-size-14px font-medium px-2 py-[3.5px] rounded-full leading-tight flex items-center justify-center',
-        label === 'Ready' ? 'bg-green-300' : 'bg-red-300'
+        isReady ? 'bg-green-300' : 'bg-red-300'
       )}
     >
-      Ready{label}
+      {isReady ? 'Ready' : 'Not Ready'}
     </span>
   );
 }
@@ -54,7 +53,7 @@ function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
       variant={'secondary'}
       className="min-w-[242px] justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
       onClick={() =>
-        routeToPage(`/cms/set-quiz/upload-quiz-set?id=${props.id}`)
+        routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
       }
     >
       <div className="text-size-12px leading-tight font-semibold">
