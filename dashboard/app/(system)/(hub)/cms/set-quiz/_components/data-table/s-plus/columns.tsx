@@ -3,7 +3,11 @@ import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { GroupedQuizSet } from '../../../_type/type';
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
-import { ActiveToggle, QuizSetLink } from '../../data-table-widgets';
+import {
+  ActiveToggle,
+  QuizSetLink,
+  StatusBadge,
+} from '../../data-table-widgets';
 import {
   Select,
   SelectContent,
@@ -11,24 +15,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { mutate } from 'swr';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
-  {
-    accessorKey: 'Active',
-    header: () => (
-      <div className="flex gap-1 items-center">
-        <span>Active</span>
-        <TooltipComponent
-          side="right"
-          trigger={
-            <CircleHelp className="size-3 text-secondary cursor-pointer" />
-          }
-          description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
-        />
-      </div>
-    ),
-    cell: () => <ActiveToggle />,
-  },
+  // {
+  //   accessorKey: 'Active',
+  //   header: () => (
+  //     <div className="flex gap-1 items-center">
+  //       <span>Active</span>
+  //       <TooltipComponent
+  //         side="right"
+  //         trigger={
+  //           <CircleHelp className="size-3 text-secondary cursor-pointer" />
+  //         }
+  //         description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
+  //       />
+  //     </div>
+  //   ),
+  //   cell: () => <ActiveToggle />,
+  // },
   {
     accessorKey: 'status',
     header: () => (
@@ -51,7 +59,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
         />
       </div>
     ),
-    cell: ({ row }) => <div> {row.getValue('status') ?? '-'}</div>,
+    cell: ({ row }) => {
+      const { quizSetFile, activityBadge } = row.original;
+      const isReady = quizSetFile?.id && activityBadge?.activityId;
+      return <StatusBadge isReady={isReady} />;
+    },
   },
   {
     accessorKey: 'subsidiary',
@@ -81,7 +93,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Quiz Language',
     header: 'Quiz Language',
-    cell: ({ row }) => <div>{row.original.quizSet.language?.code ?? '-'}</div>,
+    cell: ({ row }) => {
+      // console.log(
+      //   '🥕 row.original.quizSet.language',
+      //   row.original.quizSet.language
+      // );
+      return <div>{row.original.quizSet.language?.code ?? '-'}</div>;
+    },
   },
   {
     accessorKey: 'url',
@@ -91,7 +109,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'quizSet',
     header: 'Quiz Set',
-    cell: ({ row }) => <QuizSetLink props={row.original.quizSet} />,
+    cell: ({ row }) => {
+      const { quizSet, quizSetFile } = row.original;
+      if (!quizSetFile) {
+        return;
+      }
+      return <QuizSetLink props={quizSet} />;
+    },
   },
   {
     accessorKey: 'activityId',
@@ -120,12 +144,70 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'delete',
     header: 'Delete',
-    cell: () => (
-      <div className="flex items-center justify-center text-center">
-        <button>
-          <Trash2 className="text-red-500" />
-        </button>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const HQ = row.original.quizSet.domain.code === 'OrgCode-7';
+      if (HQ) {
+        return;
+      }
+
+      return (
+        <div className="flex items-center justify-center text-center">
+          <CustomAlertDialog
+            trigger={
+              <Button variant={'ghost'} size={'icon'}>
+                <Trash2 className="text-red-500 !size-6" />
+              </Button>
+            }
+            description={
+              'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
+            }
+            buttons={[
+              {
+                label: 'Cancel',
+                variant: 'secondary',
+                type: 'cancel',
+                onClick: () => {},
+              },
+              {
+                label: 'Delete',
+                variant: 'destructive',
+                type: 'delete',
+                onClick: async () =>
+                  await handleQuizSetDelete(
+                    row.original.quizSet.id,
+                    row.original.quizSet.campaignId
+                  ),
+              },
+            ]}
+          />
+        </div>
+      );
+    },
   },
 ];
+
+const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
+  console.log('TODO: 퀴즈 세트 삭제', quizSetId, campaignId);
+  // 완료되었을 때 toast
+  // mutate(`quizset?campaignId=${campaignId}`);
+  try {
+    const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
+      method: 'DELETE',
+    });
+    console.log('🥕 response', response);
+    if (!response.ok) {
+      toast.error(`Error deleting quiz set: ${response.statusText}`);
+      return;
+    }
+
+    mutate(
+      (key) =>
+        typeof key === 'string' &&
+        key.includes(`quizset?campaignId=${campaignId}`)
+    );
+    toast.success('Quiz set deleted successfully');
+  } catch (error: any) {
+    toast.error('Error deleting quiz set:', error);
+    console.error('Error deleting quiz set:', error);
+  }
+};
