@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { GroupedQuizSet } from '../../../_type/type';
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
-import { ActiveToggle } from '../../data-table-widgets';
+import { ActiveToggle, QuizSetLink } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
@@ -84,11 +84,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'quizSet',
     header: 'Quiz Set',
-    cell: () => (
-      <Button variant="outline" size="sm">
-        <ExternalLink />
-      </Button>
-    ),
+    cell: ({ row }) => <QuizSetLink props={row.original.quizSet} />,
   },
   {
     accessorKey: 'activityId',

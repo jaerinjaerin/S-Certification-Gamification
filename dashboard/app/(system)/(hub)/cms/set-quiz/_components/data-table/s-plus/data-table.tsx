@@ -2,11 +2,8 @@
 
 import * as React from 'react';
 import { useState } from 'react';
-import useSWR from 'swr';
 import { ChevronDown } from 'lucide-react';
 
-import { LoaderWithBackground } from '@/components/loader';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -24,7 +21,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { fetcher } from '../../../../lib/fetcher';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
 import {

@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/utils/utils';
 import { ExternalLink } from 'lucide-react';
+import { useNavigation } from '../../_hooks/useNavigation';
+import { GroupedQuizSet } from '../_type/type';
 
 function ActiveToggle({
   checked,
@@ -44,22 +46,22 @@ function StatusBadge({ label }: { label: 'Ready' | 'Not Ready' }) {
   );
 }
 
-// TODO: title이랑 type props로 받아야 함
-function QuizSetLink({
-  title,
-  type,
-}: {
-  title: string;
-  type: 'All' | 'FSM' | 'FF';
-}) {
+function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
+  const { routeToPage } = useNavigation();
+
   return (
     <Button
       variant={'secondary'}
       className="w-fit h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
+      onClick={() =>
+        routeToPage(`/cms/set-quiz/upload-quiz-set?id=${props.id}`)
+      }
     >
       <div className="text-size-12px leading-tight font-semibold">
-        <p className="text-zinc-950">Arabic (United Arab Emirates){title}</p>
-        <p className="text-description">All{type}</p>
+        <p className="text-zinc-950">
+          {props.domain.name}({props.language.name})
+        </p>
+        <p className="text-description">{props.jobCodes[0]}</p>
       </div>
       <div>
         <ExternalLink className="text-zinc-950" />
