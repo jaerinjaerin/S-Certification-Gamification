@@ -841,6 +841,23 @@ export async function GET(request: Request) {
       },
     });
 
+    // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
+    // 🔹 region → subsidiary → domain 순서로 정렬
+    quizSets.sort((a: any, b: any) => {
+      const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
+      const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
+      if (regionOrderA !== regionOrderB) return regionOrderA - regionOrderB;
+
+      const subsidiaryOrderA = a.domain?.subsidiary?.order ?? Infinity;
+      const subsidiaryOrderB = b.domain?.subsidiary?.order ?? Infinity;
+      if (subsidiaryOrderA !== subsidiaryOrderB)
+        return subsidiaryOrderA - subsidiaryOrderB;
+
+      const domainOrderA = a.domain?.order ?? Infinity;
+      const domainOrderB = b.domain?.order ?? Infinity;
+      return domainOrderA - domainOrderB;
+    });
+
     const groupedQuizSets = quizSets.map((quizSet) => ({
       quizSet,
       quizSetFile: quizSetFiles

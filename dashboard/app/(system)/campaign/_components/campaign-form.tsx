@@ -312,7 +312,14 @@ export default function CampaignForm({
                         </Button>
                       </div>
                     </FormControl>
-                    <FormMessage />
+                    {form.getValues('slug') &&
+                    !form.getValues('isSlugChecked') ? (
+                      <FormMessage>
+                        {form.formState.errors.isSlugChecked?.message}
+                      </FormMessage>
+                    ) : (
+                      <FormMessage />
+                    )}
                   </FormItem>
                 )}
               />

@@ -91,7 +91,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'quizSet',
     header: 'Quiz Set',
-    cell: () => <QuizSetLink />,
+    cell: ({ row }) => <QuizSetLink props={row.original.quizSet} />,
   },
   {
     accessorKey: 'activityId',

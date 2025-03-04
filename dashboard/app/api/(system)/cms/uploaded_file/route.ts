@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const campaignId = searchParams.get('campaignId');
   const fileType = searchParams.get('fileType');
 
-  if (!campaignId || !fileType) {
+  if (!campaignId) {
     return NextResponse.json(
       {
         success: false,
@@ -21,8 +21,8 @@ export async function GET(request: Request) {
     );
   }
 
-  // fileType이 enum에 포함되는지 확인
-  if (!Object.values(FileType).includes(fileType as FileType)) {
+  // fileType이 존재하고 enum에 포함되는지 확인
+  if (fileType && !Object.values(FileType).includes(fileType as FileType)) {
     return NextResponse.json(
       { success: false, message: '지원하지 않는 fileType입니다.' },
       { status: 400 }
@@ -49,11 +49,13 @@ export async function GET(request: Request) {
       );
     }
 
+    const whereCondition: any = { campaignId };
+    if (fileType) {
+      whereCondition.fileType = fileType as FileType;
+    }
+
     const uploadedFiles = await prisma.uploadedFile.findMany({
-      where: {
-        campaignId,
-        fileType: fileType as FileType,
-      },
+      where: whereCondition,
     });
 
     return NextResponse.json(

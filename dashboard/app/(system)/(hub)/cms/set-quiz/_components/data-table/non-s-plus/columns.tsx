@@ -1,3 +1,4 @@
+import { DomainChannel } from '@/types/apiTypes';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { StatusCircle } from '../../data-table-widgets';
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 
 // TODO: 타입 변경
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<DomainChannel>[] = [
   {
     accessorKey: 'status',
     header: () => (
@@ -31,33 +32,58 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <div>
         {/* TODO: status 값 확인 필요 */}
-        <StatusCircle label="Ready" />
+        {/* <StatusCircle label="Ready" /> */}
+        {row.original.isReady ? (
+          <StatusCircle label="Ready" />
+        ) : (
+          <StatusCircle label="Not Ready" />
+        )}
       </div>
     ),
   },
   {
     accessorKey: 'subsidiary',
     header: 'Subsidiary',
-    cell: ({ row }) => <div className="uppercase">Subsidiary</div>,
+    cell: ({ row }) => (
+      <div className="uppercase">{row.original.subsidiary?.name}</div>
+    ),
   },
   {
     accessorKey: 'domain',
     header: 'Domain',
-    cell: ({ row }) => <div>Domain</div>,
+    cell: ({ row }) => <div>{row.original.name}</div>,
   },
   {
     accessorKey: 'channel',
     header: 'Channel Name',
-    cell: ({ row }) => <div>Channel Name</div>,
+    cell: ({ row }) => (
+      <div>
+        {row.original.channels.map((channel, index) => (
+          <div key={index}>{channel.name}</div>
+        ))}
+      </div>
+    ),
   },
   {
     accessorKey: 'channelSegment',
     header: 'Channel Segment',
-    cell: () => <div>Channel Segment</div>,
+    cell: ({ row }) => (
+      <div>
+        {row.original.channels.map((channel, index) => (
+          <div key={index}>{channel.channelSegment}</div>
+        ))}
+      </div>
+    ),
   },
   {
     accessorKey: 'jobGroup',
     header: 'Jop Group',
-    cell: () => <div>Job Group</div>,
+    cell: ({ row }) => (
+      <div>
+        {row.original.channels.map((channel, index) => (
+          <div key={index}>{channel.job.group}</div>
+        ))}
+      </div>
+    ),
   },
 ];

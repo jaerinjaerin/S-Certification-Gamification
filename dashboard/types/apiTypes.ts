@@ -71,3 +71,36 @@ export interface ApiListResponse<T> {
   success: boolean;
   message?: string;
 }
+
+export interface ChannelLanguage {
+  id: string;
+  code: string;
+  name: string;
+}
+
+export interface ChannelJob {
+  id: string;
+  name: string;
+  group: string;
+}
+
+export interface Channel {
+  name: string;
+  job: ChannelJob;
+  channelId: string;
+  channelSegment: string;
+  channelSegmentId: string;
+}
+
+export interface DomainChannel {
+  id: string;
+  name: string;
+  code: string;
+  regionId: string;
+  region: Region;
+  subsidiary: Subsidiary;
+  subsidiaryId: string;
+  isReady: boolean;
+  languages: Language[];
+  channels: Channel[];
+}
