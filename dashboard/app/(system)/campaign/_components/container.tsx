@@ -10,7 +10,7 @@ const Container = ({
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-8 items-end min-[880px]:gap-0 min-[880px]:grid-cols-2',
+        'grid grid-cols-1 gap-8 min-[880px]:gap-0 min-[880px]:grid-cols-2 items-start',
         className
       )}
     >

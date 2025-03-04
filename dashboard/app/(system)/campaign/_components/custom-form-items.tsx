@@ -12,8 +12,8 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FormValues } from '../../create/_type/formSchema';
-import { forwardRef } from 'react';
+import { FormValues } from '../_type/formSchema';
+import { SelectProps } from '@radix-ui/react-select';
 
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -21,35 +21,28 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const CustomInput = forwardRef<
-  HTMLInputElement,
-  {
-    className?: string;
-    props: React.InputHTMLAttributes<HTMLInputElement>;
-  }
->(({ className, ...props }, ref) => {
-  return (
-    <Input
-      ref={ref}
-      className={cn(
-        'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
-        className
-      )}
-      placeholder={props.props.placeholder}
-      onChange={props.props.onChange}
-      onKeyDown={(e) => {
-        if (e.key === ' ') {
-          e.preventDefault();
-        }
-      }}
-      disabled={props.props.disabled}
-      {...props}
-    />
-  );
-});
-CustomInput.displayName = 'CustomInput';
+// const CustomInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+//   ({ className, ...props }, ref) => {
+//     return (
+//       <Input
+//         ref={ref}
+//         className={cn(
+//           'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
+//           className
+//         )}
+//         onKeyDown={(e) => {
+//           if (e.key === ' ') {
+//             e.preventDefault();
+//           }
+//         }}
+//         {...props}
+//       />
+//     );
+//   }
+// );
+// CustomInput.displayName = 'CustomInput';
 
-const CustomPopover = ({
+const DatePickerPopover = ({
   field,
 }: {
   field: ControllerRenderProps<FormValues>;
@@ -60,7 +53,7 @@ const CustomPopover = ({
         <Button
           variant={'secondary'}
           className={cn(
-            'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal border-zinc-200',
+            'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
             !field.value && 'text-muted-foreground'
           )}
         >
@@ -88,24 +81,32 @@ const CustomPopover = ({
 };
 
 // TODO: 수정 필요
-const CustomSelect = ({
+const SelectComponent = ({
   field,
   children,
   selectDefaultValue,
   disabled,
+  className,
+  isEditMode,
+  initialData,
+  ...props
 }: {
   field: ControllerRenderProps<FormValues>;
   children: React.ReactNode;
   selectDefaultValue: string;
   disabled?: boolean;
-}) => {
+  className?: string;
+  isEditMode?: boolean;
+  initialData?: any;
+} & SelectProps) => {
   return (
     <Select
       onValueChange={field.onChange}
       defaultValue={field.value as string}
       disabled={disabled}
+      {...props}
     >
-      <CustomSelectTrigger>
+      <CustomSelectTrigger className={cn('', className)}>
         <SelectValue placeholder={selectDefaultValue} />
       </CustomSelectTrigger>
       {children}
@@ -123,7 +124,7 @@ const CustomSelectTrigger = ({
   return (
     <SelectTrigger
       className={cn(
-        'shadow-none h-full max-h-10 p-3 text-zinc-500 border-zinc-200',
+        'shadow-none h-full max-h-10 p-3 text-zinc-500 border-zinc-200 disabled:bg-zinc-200',
         className
       )}
     >
@@ -134,8 +135,8 @@ const CustomSelectTrigger = ({
 
 export {
   CustomFormLabel,
-  CustomInput,
-  CustomSelect,
+  // CustomInput,
+  SelectComponent,
   CustomSelectTrigger,
-  CustomPopover,
+  DatePickerPopover,
 };

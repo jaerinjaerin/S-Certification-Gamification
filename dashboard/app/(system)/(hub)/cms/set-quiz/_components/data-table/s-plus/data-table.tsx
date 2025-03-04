@@ -3,10 +3,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 
-import { LoaderWithBackground } from '@/components/loader';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -24,7 +22,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { fetcher } from '../../../../lib/fetcher';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
 import {
@@ -44,22 +41,8 @@ interface QuizSetDataTableProps {
   columns: ColumnDef<GroupedQuizSet>[];
 }
 
-export default function SplusDataTable() {
-  const { campaign } = useStateVariables();
-  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
-  const { data, isLoading } = useSWR<QuizSetResponse>(
-    QUIZSET_DATA_URL,
-    fetcher
-  );
-
-  if (isLoading) {
-    return <LoaderWithBackground />;
-  }
-  return (
-    <>
-      <DataTable data={data?.result.groupedQuizSets} columns={columns} />
-    </>
-  );
+export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
+  return <DataTable data={data.result.groupedQuizSets} columns={columns} />;
 }
 
 function DataTable({ data = [], columns }: QuizSetDataTableProps) {
@@ -85,21 +68,27 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   });
 
   return (
-    <div className="w-full">
+    <div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total: {table.getFilteredRowModel().rows.length}
         </div>
       </div>
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Search Domain"
-          value={(table.getColumn('domain')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('domain')?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <div className="relative w-[13.625rem]">
+          <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
+          <Input
+            placeholder="Search"
+            value={
+              (table.getColumn('domain')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('domain')?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm pl-9 placeholder:text-zinc-500 text-size-14px"
+          />
+        </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -128,14 +117,17 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
         </DropdownMenu>
       </div>
 
-      <div className="rounded-md border">
+      <div
+        style={{ width: 'calc(100vw - 296px)' }}
+        className="rounded-md border"
+      >
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead className="p-4 text-nowrap" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -156,7 +148,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell className="px-4 py-6" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

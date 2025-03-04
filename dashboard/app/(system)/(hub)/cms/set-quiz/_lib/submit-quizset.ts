@@ -18,24 +18,38 @@ export const submitQuizSet = async (
   try {
     // 모든 파일 업로드를 병렬로 처리
     const uploadPromises = files.map(async (file: File) => {
-      const formData = new FormData();
-      formData.append('file', file); // 📂  파일 추가
-      formData.append('campaignId', campaignId);
+      try {
+        const formData = new FormData();
+        formData.append('file', file); // 📂  파일 추가
+        formData.append('campaignId', campaignId);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
 
-      return response.json();
+        return response.json();
+      } catch (error) {
+        console.error(`파일 "${file.name}" 업로드 중 오류 발생:`, error);
+        return {
+          error: true,
+          fileName: file.name,
+          message: '파일 업로드 중 오류가 발생했습니다.',
+        };
+      }
     });
 
     try {
       const result = await Promise.all(uploadPromises);
-      mutate(`quizset?campaignId=${campaignId}`);
+      // mutate(`quizset?campaignId=${campaignId}`);
+      mutate(
+        (key) =>
+          typeof key === 'string' &&
+          (key.includes('quizset') || key.includes('activity'))
+      );
       return result;
     } catch (error: unknown) {
       const err = error as QuizSetError;

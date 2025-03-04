@@ -35,7 +35,11 @@ export const submitActivityId = async (files: File[], campaignId: string) => {
 
     try {
       const result = await Promise.all(uploadPromises);
-      mutate(`activity?campaignId=${campaignId}`);
+      mutate(
+        (key) =>
+          typeof key === 'string' &&
+          (key.includes('quizset') || key.includes('activity'))
+      );
       return result;
     } catch (error) {
       const err = error as ActivityIdError;

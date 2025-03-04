@@ -57,3 +57,22 @@ export function NonSPlusUserUploadButton() {
     </div>
   );
 }
+
+export function HQUploadComponent() {
+  return (
+    <div className="bg-zinc-50 border border-zinc-200 rounded-xl">
+      <UploadExcelFileModal variant="hq" title="Upload HQ Quiz Set">
+        <div className="flex flex-col gap-6 justify-center items-center py-10">
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold">Upload HQ Quiz Set first</h1>
+            <span className="text-sm text-zinc-500">
+              You must upload the HQ quiz set before configuring the quiz.
+            </span>
+          </div>
+
+          <Button className="w-[16rem]">Upload</Button>
+        </div>
+      </UploadExcelFileModal>
+    </div>
+  );
+}
