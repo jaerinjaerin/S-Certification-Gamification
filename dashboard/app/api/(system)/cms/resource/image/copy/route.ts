@@ -170,7 +170,9 @@ export async function POST(request: NextRequest) {
 
       // 캐릭터 이미지 저장
       const sourceCharacterImage = uniqueImagesCharacter.find(
-        (image) => image.imagePath.split('/').pop() === fileName
+        (image) =>
+          image.imagePath.includes('images/character/') &&
+          image.imagePath.split('/').pop() === fileName
       );
 
       console.log('sourceImage: ', sourceCharacterImage, `/${destinationKey}`);
@@ -191,7 +193,9 @@ export async function POST(request: NextRequest) {
 
       // 백그라운드 이미지 저장
       const sourceBackgroundImage = uniqueImagesBackground.find(
-        (image) => image.imagePath.split('/').pop() === fileName
+        (image) =>
+          image.imagePath.includes('images/background/') &&
+          image.imagePath.split('/').pop() === fileName
       );
 
       console.log('sourceImage: ', sourceBackgroundImage, `/${destinationKey}`);
@@ -212,7 +216,9 @@ export async function POST(request: NextRequest) {
 
       // 퀴즈 배지 저장
       const sourceQuizBadge = uniqueQuizBadges.find(
-        (badge) => badge.imagePath.split('/').pop() === fileName
+        (badge) =>
+          badge.imagePath.includes('images/badge/') &&
+          badge.imagePath.split('/').pop() === fileName
       );
       if (sourceQuizBadge) {
         await prisma.quizBadge.create({
