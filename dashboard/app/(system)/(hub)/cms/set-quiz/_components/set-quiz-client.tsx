@@ -8,7 +8,7 @@ import useQuizSetState from '../_store/quizset-state';
 import NonSplusDataTable from './data-table/non-s-plus/data-table';
 import SplusDataTable from './data-table/s-plus/data-table';
 import {
-  HQUploadButton,
+  HQUploadComponent,
   NonSPlusUserUploadButton,
   SPlusUserUploadButton,
 } from './s-user-upload-button';
@@ -43,7 +43,7 @@ export function SetQuizClient() {
     data?.result?.groupedQuizSets &&
     isEmpty(data.result.groupedQuizSets)
   ) {
-    return <HQUploadButton />;
+    return <HQUploadComponent />;
   }
 
   return (

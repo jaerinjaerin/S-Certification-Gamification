@@ -4,6 +4,13 @@ import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
 import { GroupedQuizSet } from '../../../_type/type';
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { ActiveToggle, QuizSetLink } from '../../data-table-widgets';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
@@ -99,16 +106,26 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'UI Language',
     // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
     cell: ({ row }) => (
-      <div>{row.original.webLanguage?.language?.code ?? '-'}</div>
+      <Select>
+        <SelectTrigger>
+          <SelectValue placeholder="Select">Select</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="none">none</SelectItem>
+        </SelectContent>
+      </Select>
+      // <div>{row.original.webLanguage?.language?.code ?? '-'}</div>
     ),
   },
   {
     accessorKey: 'delete',
     header: 'Delete',
     cell: () => (
-      <Button variant="outline" size="sm">
-        <Trash2 />
-      </Button>
+      <div className="flex items-center justify-center text-center">
+        <button>
+          <Trash2 className="text-red-500" />
+        </button>
+      </div>
     ),
   },
 ];
