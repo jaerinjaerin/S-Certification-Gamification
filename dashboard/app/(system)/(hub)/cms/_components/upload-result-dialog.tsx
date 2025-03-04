@@ -73,7 +73,6 @@ export default function UploadResultDialog({
       </span>
     );
   };
-  console.log('🥕 onOpenChange', onOpenChange);
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
@@ -108,18 +107,20 @@ export default function UploadResultDialog({
               {uploadFilesResult.map((item, index) => {
                 console.log('🫠🫠 item', item);
 
-                return (
-                  <tr key={index} className="border-t border-t-zinc-200">
-                    <Td>{index + 1}</Td>
-                    <Td>{item.error.message}</Td>
-                    {/* <Td>
+                if (!item.success) {
+                  return (
+                    <tr key={index} className="border-t border-t-zinc-200">
+                      <Td>{index + 1}</Td>
+                      <Td>{item.error.message}</Td>
+                      {/* <Td>
                     <span className="text-red-500">
                       {uploadData[variant][index]?.errors &&
                         uploadData[variant][index]?.errors[0]?.message}
                     </span>
                   </Td> */}
-                  </tr>
-                );
+                    </tr>
+                  );
+                }
               })}
             </FilesTableComponent>
           </div>

@@ -54,7 +54,7 @@ function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
       variant={'secondary'}
       className="w-fit h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
       onClick={() =>
-        routeToPage(`/cms/set-quiz/upload-quiz-set?id=${props.id}`)
+        routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
       }
     >
       <div className="text-size-12px leading-tight font-semibold">

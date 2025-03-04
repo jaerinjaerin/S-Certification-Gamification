@@ -10,6 +10,8 @@ const subtitles = {
   },
   cms: {
     'set-quiz': 'You can download and upload the data needed for the quiz.',
+    'quiz-set-details':
+      'You can check the detailed information of t he selected quiz set.',
     'media-library': 'You can manage the media library.',
     'ui-language': 'You can register and manage UI language files.',
     target: 'You can manage the target.',
