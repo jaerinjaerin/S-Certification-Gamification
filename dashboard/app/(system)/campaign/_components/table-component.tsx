@@ -8,8 +8,17 @@ import {
 } from '@/components/ui/table';
 import { UseFormReturn } from 'react-hook-form';
 
-import { SelectContent, SelectItem } from '@/components/ui/select';
-import { CustomFormLabel, CustomSelect } from './custom-form-items';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  CustomFormLabel,
+  CustomSelectTrigger,
+  SelectComponent,
+} from './custom-form-items';
 import { FormValues } from '../_type/formSchema';
 import useCampaignState from '../store/campaign-state';
 import {
@@ -22,8 +31,12 @@ import { cn } from '@/utils/utils';
 
 export default function TableComponent({
   form,
+  isEditMode,
+  initialData,
 }: {
   form: UseFormReturn<FormValues>;
+  isEditMode: boolean;
+  initialData: any;
 }) {
   const TableHeadData = [
     { label: 'Job Group' },
@@ -71,6 +84,8 @@ export default function TableComponent({
                 label={label}
                 firstStage={firstStage}
                 secondStage={secondStage}
+                isEditMode={isEditMode}
+                initialData={initialData}
               />
             );
           })}
@@ -87,11 +102,15 @@ const BadgeSettingRows = ({
   firstStage,
   secondStage,
   form,
+  isEditMode,
+  initialData,
 }: {
   label: 'FF' | 'FSM';
   firstStage: 'ffFirstBadgeStage' | 'fsmFirstBadgeStage';
   secondStage: 'ffSecondBadgeStage' | 'fsmSecondBadgeStage';
   form: UseFormReturn<FormValues>;
+  isEditMode: boolean;
+  initialData: any;
 }) => {
   const { selectedNumberOfStages } = useCampaignState();
 
@@ -102,32 +121,45 @@ const BadgeSettingRows = ({
         <FormField
           control={form.control}
           name={firstStage}
-          render={({ field }) => (
-            <FormItem>
-              <CustomFormLabel>{label}</CustomFormLabel>
-              <FormControl>
-                <CustomSelect
-                  field={field}
-                  selectDefaultValue="Select"
-                  disabled={selectedNumberOfStages === undefined}
-                  className="max-w-[7.125rem]"
-                >
-                  <SelectContent>
-                    {Array.from({
-                      length: Number(selectedNumberOfStages) + 1,
-                    }).map((_, index) => {
-                      return (
-                        <SelectItem value={`${index}`} key={index}>
-                          {index + 1}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </CustomSelect>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <CustomFormLabel>{label}</CustomFormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
+                    disabled={selectedNumberOfStages === undefined}
+                  >
+                    <CustomSelectTrigger className={'max-w-[7.125rem]'}>
+                      <SelectValue
+                        placeholder={
+                          isEditMode
+                            ? initialData[firstStage]
+                              ? initialData[firstStage]
+                              : 'Select'
+                            : 'Select'
+                        }
+                      />
+                    </CustomSelectTrigger>
+                    <SelectContent>
+                      {Array.from({
+                        length: Number(selectedNumberOfStages) + 1,
+                      }).map((_, index) => {
+                        return (
+                          <SelectItem value={`${index}`} key={index}>
+                            {index + 1}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
       </TableCell>
       <TableCell className={cn(TableCellClass, '')}>
@@ -138,12 +170,23 @@ const BadgeSettingRows = ({
             <FormItem>
               <CustomFormLabel>{label}</CustomFormLabel>
               <FormControl>
-                <CustomSelect
-                  field={field}
-                  selectDefaultValue="Select"
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   disabled={selectedNumberOfStages === undefined}
-                  className="max-w-[7.125rem]"
                 >
+                  <CustomSelectTrigger className={'max-w-[7.125rem]'}>
+                    <SelectValue
+                      placeholder={
+                        isEditMode
+                          ? initialData[secondStage]
+                            ? initialData[secondStage]
+                            : 'Select'
+                          : 'Select'
+                      }
+                    />
+                  </CustomSelectTrigger>
                   <SelectContent>
                     {Array.from({
                       length: Number(selectedNumberOfStages) + 1,
@@ -153,7 +196,7 @@ const BadgeSettingRows = ({
                       </SelectItem>
                     ))}
                   </SelectContent>
-                </CustomSelect>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

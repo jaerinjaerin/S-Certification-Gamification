@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
 import { FormValues } from '../_type/formSchema';
-import { forwardRef } from 'react';
+import { SelectProps } from '@radix-ui/react-select';
 
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -53,7 +53,7 @@ const DatePickerPopover = ({
         <Button
           variant={'secondary'}
           className={cn(
-            'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal border-zinc-200',
+            'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
             !field.value && 'text-muted-foreground'
           )}
         >
@@ -81,26 +81,32 @@ const DatePickerPopover = ({
 };
 
 // TODO: 수정 필요
-const CustomSelect = ({
+const SelectComponent = ({
   field,
   children,
   selectDefaultValue,
   disabled,
   className,
+  isEditMode,
+  initialData,
+  ...props
 }: {
   field: ControllerRenderProps<FormValues>;
   children: React.ReactNode;
   selectDefaultValue: string;
   disabled?: boolean;
   className?: string;
-}) => {
+  isEditMode?: boolean;
+  initialData?: any;
+} & SelectProps) => {
   return (
     <Select
       onValueChange={field.onChange}
       defaultValue={field.value as string}
       disabled={disabled}
+      {...props}
     >
-      <CustomSelectTrigger className={className}>
+      <CustomSelectTrigger className={cn('', className)}>
         <SelectValue placeholder={selectDefaultValue} />
       </CustomSelectTrigger>
       {children}
@@ -118,7 +124,7 @@ const CustomSelectTrigger = ({
   return (
     <SelectTrigger
       className={cn(
-        'shadow-none h-full max-h-10 p-3 text-zinc-500 border-zinc-200',
+        'shadow-none h-full max-h-10 p-3 text-zinc-500 border-zinc-200 disabled:bg-zinc-200',
         className
       )}
     >
@@ -130,7 +136,7 @@ const CustomSelectTrigger = ({
 export {
   CustomFormLabel,
   // CustomInput,
-  CustomSelect,
+  SelectComponent,
   CustomSelectTrigger,
   DatePickerPopover,
 };
