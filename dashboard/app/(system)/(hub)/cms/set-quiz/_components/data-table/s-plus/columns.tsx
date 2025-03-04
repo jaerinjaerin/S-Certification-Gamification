@@ -187,9 +187,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
 ];
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
-  console.log('TODO: 퀴즈 세트 삭제', quizSetId, campaignId);
-  // 완료되었을 때 toast
-  // mutate(`quizset?campaignId=${campaignId}`);
   try {
     const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
       method: 'DELETE',
