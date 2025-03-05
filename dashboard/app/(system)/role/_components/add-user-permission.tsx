@@ -17,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { swrFetcher } from '@/lib/fetch';
 import ChartContainer from '@/components/system/chart-container';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import { ShowPermissionList } from './ui/select';
@@ -43,6 +42,7 @@ import {
 } from '@/components/ui/form';
 import axios from 'axios';
 import useSWR from 'swr';
+import { swrFetcher } from '@/lib/fetch';
 
 const columns: ColumnDef<UserPermission>[] = [
   {
@@ -93,11 +93,12 @@ const columns: ColumnDef<UserPermission>[] = [
 ];
 
 const AddUserPermission = () => {
+  const [openAlert, setOpenAlert] = useState(false);
   const {
     data: permissionData,
     isLoading: loading,
-    mutate,
-  } = useSWR('/api/cms/role/user-permission', swrFetcher);
+    // mutate,
+  } = useSWR('/api/cms/role/user-permission', swrFetcher, { suspense: false });
 
   const {
     result: data,
@@ -106,7 +107,6 @@ const AddUserPermission = () => {
     result: UserPermission[];
     roles: { id: string; name: string; domainName: string }[] | null;
   } = permissionData || { result: [], roles: null };
-  const [openAlert, setOpenAlert] = useState(false);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -128,7 +128,7 @@ const AddUserPermission = () => {
                   );
                   //   console.log('Delete success:', response.data);
                   //   mutation
-                  mutate();
+                  // mutate();
                 } catch (error) {
                   console.error('Error deleting user:', error);
                 }
@@ -150,7 +150,7 @@ const AddUserPermission = () => {
       );
       //   console.log('Add success:', response);
       //   mutation
-      mutate();
+      // mutate();
     } catch (error: any) {
       if (error.status === 400) {
         // 중복값 확인
@@ -183,12 +183,10 @@ const AddUserPermission = () => {
                       key={header.id}
                       className="font-medium text-center text-size-14px text-zinc-500"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -219,7 +217,7 @@ const AddUserPermission = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={columns.length}
+                    colSpan={columns.length + 1}
                     className="h-24 text-center"
                   >
                     {loading ? '' : 'No results.'}
