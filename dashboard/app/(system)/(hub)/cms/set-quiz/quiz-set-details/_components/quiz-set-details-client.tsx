@@ -1,16 +1,16 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import useSWR from 'swr';
-import { fetcher } from '../../../lib/fetcher';
-import { QuizSetResponse } from '../../_type/type';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { Download } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
 import { handleDownload } from '../../../_utils/utils';
+import { fetcher } from '../../../lib/fetcher';
+import { QuizSetResponse } from '../../_type/type';
 
 export default function QuizSetDetailsClient() {
   const searchParams = useSearchParams();
@@ -71,30 +71,33 @@ export default function QuizSetDetailsClient() {
                     return (
                       <div key={question.id}>
                         <div>Order:{question.order}</div>
-                        <div>HQ: {question.originalIndex}</div>
+                        {/* <div>HQ: {question.originalIndex}</div>
                         <div>Imp.: {question.importance}</div>
                         <div>Product: {question.product}</div>
-                        <div>Category: {question.category}</div>
+                        <div>Category: {question.category}</div> */}
                         <div>Question Type: {question.questionType}</div>
-                        <div>
-                          Character Image:
+                        <div className="flex gap-4">
+                          Character:
                           <img
                             src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImage?.imagePath}`}
                             alt={question.characterImage?.alt ?? ''}
                             className="size-16 bg-zinc-200 rounded-md"
                           />
-                        </div>
-                        <div>
-                          Background Image:
+                          Background:
                           <img
                             src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImage?.imagePath}`}
                             alt={question.backgroundImage?.alt ?? ''}
                             className="size-16 bg-zinc-200 rounded-md"
                           />
                         </div>
-                        <div>Question:{question.text}</div>
+                        <div
+                          className={
+                            question.enabled ? 'bg-blue-200' : 'bg-gray-500'
+                          }
+                        >
+                          Question: {question.text}
+                        </div>
                         <div>
-                          Answer
                           <div>
                             {question.options.map((option) => {
                               return (
