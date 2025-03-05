@@ -201,8 +201,14 @@ export async function GET(request: NextRequest, props: Props) {
       },
     });
 
+    const campaignSettings = await prisma.campaignSettings.findFirst({
+      where: {
+        campaignId: campaignId,
+      },
+    });
+
     return NextResponse.json(
-      { success: true, result: { campaign } },
+      { success: true, result: { campaign, campaignSettings } },
       { status: 200 }
     );
   } catch (error: unknown) {
