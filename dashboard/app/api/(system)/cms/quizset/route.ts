@@ -4,39 +4,9 @@ import { getS3Client } from '@/lib/aws/s3-client';
 import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { QuestionType } from '@prisma/client';
+import { FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
-// const quizOptionSchema = z.object({
-//   text: z.string(),
-//   answerStatus: z.boolean(),
-// });
-
-// const quizQuestionSchema = z.object({
-//   originQuestionIndex: z.number(),
-//   orderInStage: z.number(),
-//   enabled: z.boolean(),
-//   stage: z.number(),
-//   product: z.string().nullable().optional(),
-//   category: z.string().nullable().optional(),
-//   specificFeature: z.string().nullable().optional(),
-//   importance: z.string().nullable().optional(),
-//   timeLimitSeconds: z.number(),
-//   text: z.string(),
-//   questionType: z.string(),
-//   options: z.array(quizOptionSchema),
-//   backgroundImageId: z.string(),
-//   characterImageId: z.string(),
-// });
-
-// Zod를 사용한 입력 데이터 검증
-// const updateQuizSetScheme = z.object({
-//   campaignId: z.string(),
-//   domainCode: z.string(),
-//   languageCode: z.string(),
-//   jobGroup: z.string(),
-//   questions: z.array(quizQuestionSchema),
-// });
 
 export async function POST(request: NextRequest) {
   const sesstion = await auth();
@@ -734,10 +704,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
-  // });
 }
 
 export async function GET(request: Request) {
@@ -832,14 +799,27 @@ export async function GET(request: Request) {
       },
     });
 
-    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+    // const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+    //   where: {
+    //     campaignId: campaignId,
+    //   },
+    //   include: {
+    //     language: true,
+    //   },
+    // });
+
+    const uploadedFiles = await prisma.uploadedFile.findMany({
       where: {
         campaignId: campaignId,
-      },
-      include: {
-        language: true,
+        fileType: FileType.UI_LANGUAGE,
       },
     });
+
+    const languages = await prisma.language.findMany();
+    const uiLanguages = languages.filter(
+      (lang) =>
+        uploadedFiles.find((file) => file.languageId === lang.id) != null
+    );
 
     // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
     // 🔹 region → subsidiary → domain 순서로 정렬
@@ -869,9 +849,10 @@ export async function GET(request: Request) {
           badge.languageId === quizSet.languageId &&
           badge.domainId === quizSet.domainId
       )[0],
-      webLanguage: domainWebLanguages.find(
-        (dwl) => dwl.domainId === quizSet.domainId
-      ),
+      uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
+      // webLanguage: domainWebLanguages.find(
+      //   (dwl) => dwl.domainId === quizSet.domainId
+      // ),
     }));
 
     return NextResponse.json(
