@@ -1,5 +1,17 @@
 'use client';
 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
+} from '@/components/ui/form';
+import { formSchema, FormValues } from '../_type/formSchema';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { useStateVariables } from '@/components/provider/state-provider';
 import {
   AlertDialog,
@@ -11,15 +23,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button, buttonVariants } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -36,7 +39,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 import { isEmpty } from '../../(hub)/cms/_utils/utils';
-import { formSchema, FormValues } from '../_type/formSchema';
 import { API_ENDPOINTS } from '../constant/contant';
 import useCampaignState from '../store/campaign-state';
 import Container from './container';
@@ -256,82 +258,95 @@ export default function CampaignForm({
               <FormField
                 control={form.control}
                 name="certificationName"
-                render={({ field }) => (
-                  <FormItem className="max-w-[20rem]">
-                    <FormLabel>Certification Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        className={cn(inputStyle)}
-                        {...field}
-                        onKeyDown={handlePreventSpace}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                render={({ field }) => {
+                  return (
+                    <FormItem className="max-w-[20rem]">
+                      <FormLabel>Certification Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          className={cn(
+                            inputStyle,
+                            form.formState.errors.certificationName?.message &&
+                              'border-destructive'
+                          )}
+                          {...field}
+                          onKeyDown={handlePreventSpace}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
               <FormField
                 control={form.control}
                 name="slug"
-                render={({ field }) => (
-                  <FormItem className="">
-                    <FormLabel>Slug</FormLabel>
-                    <FormControl>
-                      <div className="flex relative w-fit">
-                        <div className="max-w-[20rem] flex items-center">
-                          <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
-                            https://www.samsungplus.net/
-                          </p>
-                          <Input
-                            className={cn(
-                              'rounded-s-none flex-grow read-only:bg-zinc-200',
-                              inputStyle
-                            )}
-                            {...field}
-                            readOnly={isEditMode ? true : false}
-                            value={isEditMode ? initialData?.slug : field.value} // TODO: 수정 필
-                            placeholder={isEditMode ? 'enter-name' : ''}
-                            onKeyDown={handlePreventSpace}
-                            onChange={(e) => {
-                              field.onChange(e);
-                              if (form.getFieldState('slug').isDirty) {
-                                form.setValue('isSlugChecked', false);
-                              }
-                            }}
-                          />
-                        </div>
-                        {!isEditMode && (
-                          <Button
-                            variant={'secondary'}
-                            className={cn(
-                              'absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px w-[7.125rem] h-10 font-normal text-zinc-500 text-center',
-                              !form.getFieldState('slug').isDirty &&
-                                form.getValues('isSlugChecked') &&
-                                'text-green-600 border-green-600'
-                            )}
-                            type="button"
-                            disabled={isEmpty(form.getValues('slug'))}
-                            onClick={handleCheckSlug}
-                          >
-                            Check
-                            {!form.getFieldState('slug').isDirty &&
-                              form.getValues('isSlugChecked') && (
-                                <Check className="text-green-600" />
+                render={({ field }) => {
+                  console.log(form.getFieldState('slug').error?.message);
+                  return (
+                    <FormItem className="">
+                      <FormLabel>Slug</FormLabel>
+                      <FormControl>
+                        <div className="flex relative w-fit">
+                          <div className="max-w-[20rem] flex items-center">
+                            <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
+                              https://www.samsungplus.net/
+                            </p>
+                            <Input
+                              className={cn(
+                                'rounded-s-none flex-grow read-only:bg-zinc-200',
+                                inputStyle,
+                                form.formState.errors.slug?.message &&
+                                  'border-destructive'
                               )}
-                          </Button>
-                        )}
-                      </div>
-                    </FormControl>
-                    {form.getValues('slug') &&
-                    !form.getValues('isSlugChecked') ? (
-                      <FormMessage>
-                        {form.formState.errors.isSlugChecked?.message}
-                      </FormMessage>
-                    ) : (
-                      <FormMessage />
-                    )}
-                  </FormItem>
-                )}
+                              {...field}
+                              readOnly={isEditMode ? true : false}
+                              value={
+                                isEditMode ? initialData?.slug : field.value
+                              } // TODO: 수정 필
+                              placeholder={isEditMode ? 'enter-name' : ''}
+                              onKeyDown={handlePreventSpace}
+                              onChange={(e) => {
+                                field.onChange(e);
+                                if (form.getFieldState('slug').isDirty) {
+                                  form.setValue('isSlugChecked', false);
+                                }
+                              }}
+                            />
+                          </div>
+                          {!isEditMode && (
+                            <Button
+                              variant={'secondary'}
+                              className={cn(
+                                'absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px w-[7.125rem] h-10 font-normal text-zinc-500 text-center',
+                                !form.getFieldState('slug').isDirty &&
+                                  form.getValues('isSlugChecked') &&
+                                  'text-green-600 border-green-600'
+                              )}
+                              type="button"
+                              disabled={isEmpty(form.getValues('slug'))}
+                              onClick={handleCheckSlug}
+                            >
+                              Check
+                              {!form.getFieldState('slug').isDirty &&
+                                form.getValues('isSlugChecked') && (
+                                  <Check className="text-green-600" />
+                                )}
+                            </Button>
+                          )}
+                        </div>
+                      </FormControl>
+                      {form.getValues('slug') &&
+                      !form.getValues('isSlugChecked') ? (
+                        <FormMessage>
+                          {form.formState.errors.isSlugChecked?.message}
+                        </FormMessage>
+                      ) : (
+                        <FormMessage />
+                      )}
+                    </FormItem>
+                  );
+                }}
               />
             </Container>
             <Container>
@@ -339,10 +354,13 @@ export default function CampaignForm({
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col w-full max-w-[20rem]">
+                  <FormItem className="flex flex-col w-full max-w-[20rem] ">
                     <FormLabel>Start Date</FormLabel>
                     <FormControl>
-                      <DatePickerPopover field={field} />
+                      <DatePickerPopover
+                        error={form.formState.errors.startDate?.message}
+                        field={field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -355,7 +373,10 @@ export default function CampaignForm({
                   <FormItem className="w-full flex flex-col">
                     <FormLabel>End Date</FormLabel>
                     <FormControl>
-                      <DatePickerPopover field={field} />
+                      <DatePickerPopover
+                        error={form.formState.errors.endDate?.message}
+                        field={field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -453,35 +474,42 @@ export default function CampaignForm({
           </div>
           <Separator />
           <p className="font-semibold">Stage Setting</p>
-          <FormField
-            control={form.control}
+          <FormComponent
+            form={form}
+            label="Number of Stages"
             name="numberOfStages"
-            render={({ field }) => {
-              return (
-                <Select
-                  onValueChange={(value) => {
-                    setSelectedNumberOfStages(value);
-                    field.onChange(value);
-                  }}
+            render={(field) => (
+              <Select
+                defaultValue={field.value as string}
+                onValueChange={(value) => {
+                  setSelectedNumberOfStages(value);
+                  field.onChange(value);
+                }}
+              >
+                <CustomSelectTrigger
+                  className={cn(
+                    'w-[20rem]',
+                    form.formState.errors.numberOfStages?.message &&
+                      'border-destructive'
+                  )}
                 >
-                  <CustomSelectTrigger className="w-[20rem]">
-                    <SelectValue
-                      placeholder={
-                        isEditMode ? initialData?.numberOfStages : 'Select'
-                      }
-                    />
-                  </CustomSelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 10 }).map((_, index) => (
-                      <SelectItem value={`${index}`} key={index}>
-                        {index + 1}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              );
-            }}
+                  <SelectValue
+                    placeholder={
+                      isEditMode ? initialData?.numberOfStages : 'Select'
+                    }
+                  />
+                </CustomSelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <SelectItem value={`${index}`} key={index}>
+                      {index + 1}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           />
+
           <Separator />
           <p className="font-medium">Badge Setting</p>
           <Container className="space-x-0 min-[880px]:space-x-[3.125rem]">
@@ -496,7 +524,11 @@ export default function CampaignForm({
                   disabled={selectedNumberOfStages === undefined}
                   placeholder="Expert"
                   value={isEditMode ? initialData?.firstBadgeName : field.value}
-                  className={cn(inputStyle)}
+                  className={cn(
+                    inputStyle,
+                    form.formState.errors.firstBadgeName?.message &&
+                      'border-destructive'
+                  )}
                 />
               )}
             />

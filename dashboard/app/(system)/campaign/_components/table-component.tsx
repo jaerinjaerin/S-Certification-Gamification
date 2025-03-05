@@ -127,12 +127,19 @@ const BadgeSettingRows = ({
                 <CustomFormLabel>{label}</CustomFormLabel>
                 <FormControl>
                   <Select
+                    defaultValue={field.value as string}
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}
                     disabled={selectedNumberOfStages === undefined}
                   >
-                    <CustomSelectTrigger className={'max-w-[7.125rem]'}>
+                    <CustomSelectTrigger
+                      className={cn(
+                        'max-w-[7.125rem]',
+                        form.formState.errors[firstStage]?.message &&
+                          'border-destructive'
+                      )}
+                    >
                       <SelectValue
                         placeholder={
                           isEditMode
@@ -171,6 +178,7 @@ const BadgeSettingRows = ({
               <CustomFormLabel>{label}</CustomFormLabel>
               <FormControl>
                 <Select
+                  defaultValue={field.value as string}
                   onValueChange={(value) => {
                     field.onChange(value);
                   }}

@@ -44,8 +44,10 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
 
 const DatePickerPopover = ({
   field,
+  error,
 }: {
   field: ControllerRenderProps<FormValues>;
+  error?: string;
 }) => {
   return (
     <Popover>
@@ -54,7 +56,8 @@ const DatePickerPopover = ({
           variant={'secondary'}
           className={cn(
             'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
-            !field.value && 'text-muted-foreground'
+            !field.value && 'text-muted-foreground',
+            error && 'border-destructive'
           )}
         >
           <CalendarIcon />
@@ -124,7 +127,7 @@ const CustomSelectTrigger = ({
   return (
     <SelectTrigger
       className={cn(
-        'shadow-none h-full max-h-10 p-3 text-zinc-500 border-zinc-200 disabled:bg-zinc-200',
+        'shadow-none h-full max-h-10 p-3 text-zinc-500 disabled:bg-zinc-200',
         className
       )}
     >
