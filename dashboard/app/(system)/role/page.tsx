@@ -4,6 +4,7 @@ import UserRole from './_components/user-role';
 import AddUserPermission from './_components/add-user-permission';
 import { useState } from 'react';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { notFound } from 'next/navigation';
 
 const RoleManagement = () => {
   const [tab, setTab] = useState<string | undefined>(undefined);
@@ -11,7 +12,7 @@ const RoleManagement = () => {
 
   // 어드민 권한이 아니면 빈페이지 반환
   if (role) {
-    return <></>;
+    notFound();
   }
 
   return (
