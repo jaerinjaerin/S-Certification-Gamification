@@ -1,24 +1,12 @@
+import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
-import { GroupedQuizSet } from '../../../_type/type';
-import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
-import {
-  ActiveToggle,
-  QuizSetLink,
-  StatusBadge,
-} from '../../data-table-widgets';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
-import axios from 'axios';
+import { CircleHelp, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
+import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
+import { GroupedQuizSet } from '../../../_type/type';
+import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -130,15 +118,15 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'UI Language',
     // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
     cell: ({ row }) => (
-      <Select>
-        <SelectTrigger>
-          <SelectValue placeholder="Select">Select</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="none">none</SelectItem>
-        </SelectContent>
-      </Select>
-      // <div>{row.original.webLanguage?.language?.code ?? '-'}</div>
+      // <Select>
+      //   <SelectTrigger>
+      //     <SelectValue placeholder="Select">Select</SelectValue>
+      //   </SelectTrigger>
+      //   <SelectContent>
+      //     <SelectItem value="none">none</SelectItem>
+      //   </SelectContent>
+      // </Select>
+      <div>{row.original.uiLanguage?.code ?? '-'}</div>
     ),
   },
   {
