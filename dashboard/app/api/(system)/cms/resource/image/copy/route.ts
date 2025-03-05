@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const validatedData = copyResourceScheme.parse(body);
 
+  console.log('COPY');
+
   try {
     const soruceCampaign = await prisma.campaign.findFirst({
       where: {
@@ -111,7 +113,7 @@ export async function POST(request: NextRequest) {
           destinationPrefix
         ); // 대상 디렉토리로 변경
 
-        console.log(`Moving ${sourceKey} -> ${destinationKey}`);
+        // console.log(`Moving ${sourceKey} -> ${destinationKey}`);
 
         // 2. 파일 복사
         await s3Client.send(
@@ -143,7 +145,7 @@ export async function POST(request: NextRequest) {
     });
 
     // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
-    const uniqueImagesCharacter = Array.from(
+    const uniqueImagesCharacters = Array.from(
       new Map(
         images
           .filter((image) => image.alt === 'character')
@@ -152,7 +154,7 @@ export async function POST(request: NextRequest) {
     );
 
     // 초기에 중복으로 저장된 이미지가 있어서 중복 제거
-    const uniqueImagesBackground = Array.from(
+    const uniqueImagesBackgrounds = Array.from(
       new Map(
         images
           .filter((image) => image.alt === 'background')
@@ -165,73 +167,162 @@ export async function POST(request: NextRequest) {
       new Map(quizBadges.map((badge) => [badge.name, badge])).values()
     );
 
-    for (const destinationKey of destinationKeys) {
-      const fileName = destinationKey.split('/').pop();
+    console.log('uniqueQuizBadges: ', uniqueQuizBadges);
 
-      // 캐릭터 이미지 저장
-      const sourceCharacterImage = uniqueImagesCharacter.find(
-        (image) =>
-          image.imagePath.includes('images/character/') &&
-          image.imagePath.split('/').pop() === fileName
-      );
+    for (const image of uniqueImagesCharacters) {
+      const destinationKey = destinationKeys.find((key) => {
+        const fileName = key.split('/').pop();
+        if (image.imagePath.includes('images/character/')) {
+          return image.imagePath.split('/').pop() === fileName;
+        }
+      });
 
-      console.log('sourceImage: ', sourceCharacterImage, `/${destinationKey}`);
-      if (sourceCharacterImage) {
+      if (destinationKey) {
         await prisma.image.create({
           data: {
             campaignId: destinationCampaign.id,
             imagePath: `/${destinationKey}`,
-            alt: sourceCharacterImage.alt,
-            title: sourceCharacterImage.title,
-            caption: sourceCharacterImage.caption,
-            format: sourceCharacterImage.format,
-            thumbnailPath: sourceCharacterImage.thumbnailPath,
-            domainId: sourceCharacterImage.domainId,
-          },
-        });
-      }
-
-      // 백그라운드 이미지 저장
-      const sourceBackgroundImage = uniqueImagesBackground.find(
-        (image) =>
-          image.imagePath.includes('images/background/') &&
-          image.imagePath.split('/').pop() === fileName
-      );
-
-      console.log('sourceImage: ', sourceBackgroundImage, `/${destinationKey}`);
-      if (sourceBackgroundImage) {
-        await prisma.image.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            imagePath: `/${destinationKey}`,
-            alt: sourceBackgroundImage.alt,
-            title: sourceBackgroundImage.title,
-            caption: sourceBackgroundImage.caption,
-            format: sourceBackgroundImage.format,
-            thumbnailPath: sourceBackgroundImage.thumbnailPath,
-            domainId: sourceBackgroundImage.domainId,
-          },
-        });
-      }
-
-      // 퀴즈 배지 저장
-      const sourceQuizBadge = uniqueQuizBadges.find(
-        (badge) =>
-          badge.imagePath.includes('images/badge/') &&
-          badge.imagePath.split('/').pop() === fileName
-      );
-      if (sourceQuizBadge) {
-        await prisma.quizBadge.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            imagePath: `/${destinationKey}`,
-            name: sourceQuizBadge.name,
-            description: sourceQuizBadge.description,
-            domainId: sourceQuizBadge.domainId,
+            alt: image.alt,
+            title: image.title,
+            caption: image.caption,
+            format: image.format,
+            thumbnailPath: image.thumbnailPath,
+            domainId: image.domainId,
           },
         });
       }
     }
+
+    for (const image of uniqueImagesBackgrounds) {
+      const destinationKey = destinationKeys.find((key) => {
+        const fileName = key.split('/').pop();
+        if (image.imagePath.includes('images/background/')) {
+          return image.imagePath.split('/').pop() === fileName;
+        }
+      });
+
+      if (destinationKey) {
+        await prisma.image.create({
+          data: {
+            campaignId: destinationCampaign.id,
+            imagePath: `/${destinationKey}`,
+            alt: image.alt,
+            title: image.title,
+            caption: image.caption,
+            format: image.format,
+            thumbnailPath: image.thumbnailPath,
+            domainId: image.domainId,
+          },
+        });
+      }
+    }
+
+    for (const image of uniqueQuizBadges) {
+      const destinationKey = destinationKeys.find((key) => {
+        const fileName = key.split('/').pop();
+        if (image.imagePath.includes('images/badge/')) {
+          return image.imagePath.split('/').pop() === fileName;
+        }
+      });
+
+      if (destinationKey) {
+        await prisma.quizBadge.create({
+          data: {
+            campaignId: destinationCampaign.id,
+            imagePath: `/${destinationKey}`,
+            name: image.name,
+            description: image.description,
+            domainId: image.domainId,
+          },
+        });
+      }
+    }
+
+    // const uniqueDestinationKeys = Array.from(
+    //   new Map(destinationKeys.map((key) => [key, key])).values()
+    // );
+
+    // for (const destinationKey of uniqueDestinationKeys) {
+    //   const fileName = destinationKey.split('/').pop();
+
+    //   // 캐릭터 이미지 저장
+    //   const sourceCharacterImageIndex = uniqueImagesCharacter.findIndex(
+    //     (image) =>
+    //       image.imagePath.includes('images/character/') &&
+    //       image.imagePath.split('/').pop() === fileName
+    //   );
+
+    //   if (sourceCharacterImageIndex !== -1) {
+    //     const sourceCharacterImage =
+    //       uniqueImagesCharacter[sourceCharacterImageIndex];
+    //     uniqueImagesCharacter.splice(sourceCharacterImageIndex, 1); // 찾은 항목 삭제
+
+    //     await prisma.image.create({
+    //       data: {
+    //         campaignId: destinationCampaign.id,
+    //         imagePath: `/${destinationKey}`,
+    //         alt: sourceCharacterImage.alt,
+    //         title: sourceCharacterImage.title,
+    //         caption: sourceCharacterImage.caption,
+    //         format: sourceCharacterImage.format,
+    //         thumbnailPath: sourceCharacterImage.thumbnailPath,
+    //         domainId: sourceCharacterImage.domainId,
+    //       },
+    //     });
+    //   }
+
+    //   // 백그라운드 이미지 저장
+    //   const sourceBackgroundImageIndex = uniqueImagesBackground.findIndex(
+    //     (image) =>
+    //       image.imagePath.includes('images/background/') &&
+    //       image.imagePath.split('/').pop() === fileName
+    //   );
+
+    //   // console.log('sourceImage: ', sourceBackgroundImage, `/${destinationKey}`);
+    //   if (sourceBackgroundImageIndex !== -1) {
+    //     const sourceBackgroundImage =
+    //       uniqueImagesBackground[sourceBackgroundImageIndex];
+    //     uniqueImagesBackground.splice(sourceBackgroundImageIndex, 1); // 찾은 항목 삭제
+
+    //     await prisma.image.create({
+    //       data: {
+    //         campaignId: destinationCampaign.id,
+    //         imagePath: `/${destinationKey}`,
+    //         alt: sourceBackgroundImage.alt,
+    //         title: sourceBackgroundImage.title,
+    //         caption: sourceBackgroundImage.caption,
+    //         format: sourceBackgroundImage.format,
+    //         thumbnailPath: sourceBackgroundImage.thumbnailPath,
+    //         domainId: sourceBackgroundImage.domainId,
+    //       },
+    //     });
+    //   }
+
+    //   // 퀴즈 배지 저장
+    //   const sourceQuizBadgeIndex = uniqueQuizBadges.findIndex(
+    //     (badge) =>
+    //       badge.imagePath.includes('images/badge/') &&
+    //       badge.imagePath.split('/').pop() === fileName
+    //   );
+
+    //   console.log('uniqueQuizBadges', uniqueQuizBadges);
+    //   console.log('sourceImage: ', sourceQuizBadgeIndex, `/${destinationKey}`);
+
+    //   if (sourceQuizBadgeIndex !== -1) {
+    //     const sourceQuizBadge = uniqueQuizBadges[sourceQuizBadgeIndex];
+    //     uniqueQuizBadges.splice(sourceQuizBadgeIndex, 1); // 찾은 항목 삭제
+
+    //     await prisma.quizBadge.create({
+    //       data: {
+    //         campaignId: destinationCampaign.id,
+    //         imagePath: `/${destinationKey}`,
+    //         name: sourceQuizBadge.name,
+    //         description: sourceQuizBadge.description,
+    //         domainId: sourceQuizBadge.domainId,
+    //       },
+    //     });
+    //   }
+    // }
 
     console.log('데이타 생성 완료');
 
