@@ -1,4 +1,5 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
+import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -7,17 +8,16 @@ import { z } from 'zod';
 const editCampaignScheme = z.object({
   campaignId: z.string(),
   name: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
   startedAt: z.string(),
   endedAt: z.string(),
-  userId: z.string(),
   totalStages: z.number(),
-  firstBadgeName: z.string().optional(),
-  secondBadgeName: z.string().optional(),
-  ffFirstBadgeStageIndex: z.number().optional(),
-  ffSecondBadgeStageIndex: z.number().optional(),
-  fsmFirstBadgeStageIndex: z.number().optional(),
-  fsmSecondBadgeStageIndex: z.number().optional(),
+  firstBadgeName: z.string().optional().nullable(),
+  secondBadgeName: z.string().optional().nullable(),
+  ffFirstBadgeStageIndex: z.number().optional().nullable(),
+  ffSecondBadgeStageIndex: z.number().optional().nullable(),
+  fsmFirstBadgeStageIndex: z.number().optional().nullable(),
+  fsmSecondBadgeStageIndex: z.number().optional().nullable(),
 });
 
 // 유틸 함수: null, undefined, false 값을 제거
@@ -27,6 +27,7 @@ const filterNullish = (obj: Record<string, any>) => {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json();
+  const sesstion = await auth();
   const validatedData = editCampaignScheme.parse(body);
 
   try {
@@ -65,7 +66,7 @@ export async function PUT(request: NextRequest) {
     const campaignUpdateData = filterNullish({
       description: validatedData.description,
       name: validatedData.name,
-      updaterId: validatedData.userId,
+      updaterId: sesstion?.user?.id,
       startedAt: validatedData.startedAt
         ? new Date(validatedData.startedAt)
         : null,

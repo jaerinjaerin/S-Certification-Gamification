@@ -8,7 +8,10 @@ export default async function EditCampaignPage({
 }) {
   const getCampaign = async (campaignId: string) => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
+      {
+        cache: 'no-cache',
+      }
     );
     if (!response.ok) {
       toast.error('Failed to fetch campaign');
