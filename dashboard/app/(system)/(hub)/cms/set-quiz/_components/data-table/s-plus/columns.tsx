@@ -49,9 +49,12 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const { quizSetFile, activityBadge, uiLanguage } = row.original;
+      const { quizSetFile, activityBadges, uiLanguage } = row.original;
       const isReady =
-        quizSetFile?.id && activityBadge?.activityId && uiLanguage?.code;
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0 &&
+        uiLanguage?.code;
       // const isReady = quizSetFile?.id && uiLanguage?.code;
       return <StatusBadge isReady={isReady} />;
     },
@@ -125,9 +128,21 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'activityId',
     header: 'Activity ID',
     // cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
-    cell: ({ row }) => (
-      <div>{row.original.activityBadge?.activityId ?? '-'}</div>
-    ),
+    cell: ({ row }) => {
+      // <div>{row.original.activityBadges?.activityId ?? '-'}</div>
+      if (row.original.activityBadges) {
+        return (
+          <>
+            {row.original.activityBadges.map((badge, index) => (
+              <div key={index}>
+                {badge.badgeType}-{badge.activityId}
+              </div>
+            ))}
+          </>
+        );
+      }
+      return <div>-</div>;
+    },
   },
   {
     accessorKey: 'uiLanguage',
@@ -141,7 +156,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       return (
         <Button
           variant={'secondary'}
-          className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-blue-200"
+          className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
           onClick={() =>
             // routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
             router.push(`/cms/ui-language`)
