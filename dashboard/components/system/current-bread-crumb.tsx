@@ -19,9 +19,12 @@ import {
 import { useStateVariables } from '../provider/state-provider';
 import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
+import { Separator } from '../ui/separator';
+import { useNavigation } from '@/app/(system)/(hub)/cms/_hooks/useNavigation';
 
 const CurrentBreadCrumb = () => {
   const { campaigns, campaign, setCampaign } = useStateVariables();
+  const { routeToPage } = useNavigation();
   const pathname = usePathname();
   const paths = pathname
     .split('/')
@@ -31,6 +34,10 @@ const CurrentBreadCrumb = () => {
   const handleChangeCampaign = (value: string) => {
     if (!campaigns) return;
     //
+    if (value === 'certification-list') {
+      routeToPage('/');
+      return;
+    }
     const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
     if (selectedCampaign) setCampaign(selectedCampaign);
   };
@@ -47,6 +54,13 @@ const CurrentBreadCrumb = () => {
               <SelectValue placeholder={campaign?.name || ''} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem
+                value="certification-list"
+                className="text-base font-bold"
+              >
+                Certification List
+              </SelectItem>
+              <Separator className="my-1" />
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}
