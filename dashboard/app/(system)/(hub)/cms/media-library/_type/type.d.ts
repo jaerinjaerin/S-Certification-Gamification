@@ -4,10 +4,13 @@ type MediaDataProps = {
   background: MediaProps[] | null;
 };
 
+type MediaGroupName = 'badge' | 'character' | 'background';
+
 type MediaProps = {
   index: number;
   id: string;
   name: string;
+  type: MediaGroupName;
   url: string;
   date: Date;
 };
@@ -17,5 +20,3 @@ type MediaPreviewProps = {
   fileName: string;
   updatedAt: Date;
 };
-
-type MediaGroupName = 'badge' | 'character' | 'background';

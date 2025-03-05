@@ -13,22 +13,60 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const images = await prisma.image.findMany({
-      where: { campaignId },
-      select: { id: true, imagePath: true, alt: true, updatedAt: true },
-      orderBy: { createdAt: 'asc' },
-    });
-    const badges = await prisma.quizBadge.findMany({
-      where: { campaignId },
-      select: { id: true, imagePath: true, name: true, updatedAt: true },
-      orderBy: { createdAt: 'asc' },
-    });
+    // const images = await prisma.image.findMany({
+    //   where: { campaignId },
+    //   select: {
+    //     id: true,
+    //     title: true,
+    //     alt: true,
+    //     imagePath: true,
+    //     updatedAt: true,
+    //   },
+    //   orderBy: { title: { sort: 'asc' } },
+    // });
+
+    // const badges = await prisma.quizBadge.findMany({
+    //   where: { campaignId },
+    //   select: {
+    //     id: true,
+    //     name: true,
+    //     imagePath: true,
+    //     updatedAt: true,
+    //   },
+    //   orderBy: { name: 'asc' },
+    // });
+
+    const images: {
+      id: string;
+      title: string;
+      alt: string;
+      imagePath: string;
+      updatedAt: Date;
+    }[] = await prisma.$queryRaw`
+      SELECT id, title, alt, "imagePath", "updatedAt"
+      FROM "Image"
+      WHERE "campaignId" = ${campaignId}
+      ORDER BY CAST(REGEXP_REPLACE("title", '[^0-9]', '', 'g') AS INTEGER) ASC
+    `;
+
+    const badges: {
+      id: string;
+      name: string;
+      imagePath: string;
+      updatedAt: Date;
+    }[] = await prisma.$queryRaw`
+      SELECT id, name, "imagePath", "updatedAt"
+      FROM "QuizBadge"
+      WHERE "campaignId" = ${campaignId}
+      ORDER BY CAST(REGEXP_REPLACE("name", '[^0-9]', '', 'g') AS INTEGER) ASC
+    `;
 
     const result = {
       badge: badges.map((image, index) => ({
         index,
         id: image.id,
-        type: image.name,
+        name: image.name,
+        type: 'badge',
         url: image.imagePath,
         date: image.updatedAt,
       })),
@@ -37,6 +75,7 @@ export async function GET(request: NextRequest) {
         .map((image, index) => ({
           index,
           id: image.id,
+          name: image.title,
           type: image.alt,
           url: image.imagePath,
           date: image.updatedAt,
@@ -46,6 +85,7 @@ export async function GET(request: NextRequest) {
         .map((image, index) => ({
           index,
           id: image.id,
+          name: image.title,
           type: image.alt,
           url: image.imagePath,
           date: image.updatedAt,
@@ -73,8 +113,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    await prisma.$connect();
-
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const group = formData.get('group') as string;
@@ -84,16 +122,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
+    await prisma.$connect();
+
     const count =
       group === 'badge'
         ? await prisma.quizBadge.count({ where: { campaignId: campaign.id } })
         : await prisma.image.count({
             where: { campaignId: campaign.id, alt: group },
           });
-    const format = file.type.split('/')[1];
 
+    const index = `${count + 1}`;
+    const format = file.type.split('/')[1];
     let imagePath = getPath(campaign.name, `images/${group}`);
-    imagePath = `${imagePath}/${count + 1}.${format}`;
+    imagePath = `${imagePath}/${group}_${index}.${format}`;
 
     // 파일 업로드드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
@@ -104,7 +145,7 @@ export async function POST(request: NextRequest) {
       // 데이터베이스에 업로드된 파일 정보 저장 (예제)
       uploadedFile = await prisma.quizBadge.create({
         data: {
-          name: group,
+          name: index,
           imagePath: `/${imagePath}`,
           campaignId: campaign.id,
         },
@@ -112,7 +153,8 @@ export async function POST(request: NextRequest) {
       //
       result = {
         id: uploadedFile.id,
-        type: uploadedFile.name,
+        name: uploadedFile.name,
+        type: group,
         url: uploadedFile.imagePath,
         date: uploadedFile.createdAt,
       };
@@ -120,8 +162,8 @@ export async function POST(request: NextRequest) {
       // 데이터베이스에 업로드된 파일 정보 저장 (예제)
       uploadedFile = await prisma.image.create({
         data: {
-          alt: group,
-          caption: group,
+          alt: index,
+          caption: index,
           format: format,
           imagePath: `/${imagePath}`,
           campaignId: campaign.id,
@@ -130,7 +172,8 @@ export async function POST(request: NextRequest) {
       //
       result = {
         id: uploadedFile.id,
-        type: uploadedFile.alt,
+        name: uploadedFile.title,
+        type: group,
         url: uploadedFile.imagePath,
         date: uploadedFile.createdAt,
       };
@@ -195,7 +238,8 @@ export async function PUT(request: NextRequest) {
       //
       result = {
         id: updatedFile.id,
-        type: updatedFile.name,
+        name: updatedFile.name,
+        type: group,
         url: updatedFile.imagePath,
         date: updatedFile.updatedAt,
       };
@@ -207,7 +251,8 @@ export async function PUT(request: NextRequest) {
       //
       result = {
         id: updatedFile.id,
-        type: updatedFile.alt,
+        name: updatedFile.title,
+        type: group,
         url: updatedFile.imagePath,
         date: updatedFile.updatedAt,
       };
@@ -230,72 +275,3 @@ export async function PUT(request: NextRequest) {
     await prisma.$disconnect();
   }
 }
-
-// export async function DELETE(request: NextRequest) {
-//   try {
-//     await prisma.$connect();
-
-//     const { id, group } = await request.json();
-
-//     if (!id || !category) {
-//       return NextResponse.json(
-//         { error: 'Missing required parameters' },
-//         { status: 400 }
-//       );
-//     }
-
-//     // 기존 파일 정보 확인
-//     let existingFile = null;
-//     if (group === 'badge') {
-//       existingFile = await prisma.quizBadge.findUnique({
-//         where: { id },
-//       });
-//     } else {
-//       existingFile = await prisma.image.findUnique({
-//         where: { id },
-//       });
-//     }
-
-//     if (!existingFile) {
-//       return NextResponse.json({ error: 'File not found' }, { status: 404 });
-//     }
-
-//     // 파일 경로
-//     const filePath = existingFile.imagePath
-//       ? path.join(process.cwd(), 'public', existingFile.imagePath)
-//       : null;
-
-//     // 파일 삭제
-//     if (filePath) {
-//       try {
-//         await unlink(filePath);
-//         console.log(`File deleted: ${filePath}`);
-//       } catch (error) {
-//         console.warn('Failed to delete file:', error);
-//       }
-//     }
-
-//     // DB 데이터 삭제
-//     if (group === 'badge') {
-//       await prisma.quizBadge.delete({
-//         where: { id },
-//       });
-//     } else {
-//       await prisma.image.delete({
-//         where: { id },
-//       });
-//     }
-
-//     console.log(`Deleted from database: ${id}`);
-
-//     return NextResponse.json(
-//       { message: 'File deleted successfully' },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error('Error deleting file:', error);
-//     return NextResponse.json({ message: 'Delete failed' }, { status: 500 });
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
