@@ -14,7 +14,6 @@ const MediaAssetGroup = ({ group }: Props) => {
     <MediaAssetListContainer group={group}>
       {!data && <LoaderWithBackground />}
       {data?.map((image) => {
-        const fileName = (image.index + 1).toString();
         const key = `${image.id}_${image.date}`;
         return (
           <MediaAssetItem
@@ -22,7 +21,7 @@ const MediaAssetGroup = ({ group }: Props) => {
             id={image.id}
             group={group}
             imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${image.url}`}
-            fileName={fileName}
+            fileName={image.name}
             updatedAt={image.date}
           />
         );

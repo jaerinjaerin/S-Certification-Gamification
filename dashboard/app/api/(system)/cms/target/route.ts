@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const campaignId = searchParams.get('campaignId') as string;
+    console.log('🚀 ~ GET ~ campaignId:', campaignId);
 
     await prisma.$connect();
 
@@ -17,44 +18,26 @@ export async function GET(request: NextRequest) {
       include: { subsidiary: { include: { domains: true } } },
     });
 
-    let goals = await prisma.domainGoal.findMany({
+    const goals = await prisma.domainGoal.findMany({
       where: { campaignId },
     });
 
-    // 만약 골이 없다면 골의 데이터를 생성해야함.
     if (goals.length === 0) {
-      const goalData = domains.map((d) => ({
-        campaignId,
-        domainId: d.id,
-        ff: 0,
-        ffSes: 0,
-        fsm: 0,
-        fsmSes: 0,
-        subsidiaryId: d.subsidiaryId,
-        regionId: d.subsidiary?.regionId,
-      }));
-
-      // 데이터 생성 (createMany는 반환값으로 { count: number }을 제공하므로 조회가 따로 필요)
-      await prisma.domainGoal.createMany({ data: goalData });
-      //
-      // 데이터 조회
-      goals = await prisma.domainGoal.findMany({
-        where: { campaignId },
-      });
+      return NextResponse.json({ success: true, result: [] }, { status: 200 });
     }
 
     const goalMap = new Map(goals.map((g) => [g.domainId, g]));
-    const result = domains.map((domain) => {
-      const goal = goalMap.get(domain.id);
-      const { id, ff, ffSes, fsm, fsmSes } = goal || {
-        ff: 0,
-        ffSes: 0,
-        fsm: 0,
-        fsmSes: 0,
+
+    const result = Array.from(goalMap.values()).map((goal) => {
+      const domain = domains.find((d) => d.id === goal.domainId) || {
+        name: 'Unknown Domain',
       };
+      const { id, ff = 0, ffSes = 0, fsm = 0, fsmSes = 0 } = goal;
       const total = ff + ffSes + fsm + fsmSes;
+
       return {
         id,
+        domainId: goal.domainId,
         domain: domain.name,
         total,
         ff,
@@ -108,31 +91,51 @@ export async function POST(request: NextRequest) {
     const codes = json.map((j) => j.code);
     const domains = await prisma.domain.findMany({
       where: { code: { in: codes } },
+      include: { subsidiary: true },
     });
-    const domainMap = new Map(domains.map((d) => [d.code, d.id]));
+    const domainMap = new Map(
+      domains.map((d) => [
+        d.code,
+        {
+          id: d.id,
+          subsidiaryId: d.subsidiaryId,
+          regionId: d.subsidiary?.regionId,
+        },
+      ])
+    );
 
     const goals = await prisma.domainGoal.findMany({
       where: {
         campaignId: campaign.id,
-        domainId: { in: [...domainMap.values()] },
+        domainId: { in: [...domainMap.values()].map((d) => d.id) },
       },
     });
 
     const goalMap = new Map(goals.map((g) => [g.domainId, g.id]));
-
     const jsonData = json
       .map((row) => {
-        const domainId = domainMap.get(row.code);
+        const domainId = domainMap.get(row.code)?.id;
         const targetId = domainId ? goalMap.get(domainId) : undefined;
-        return targetId ? { ...row, domainId, targetId } : null;
+        return { ...row, domainId, targetId };
       })
       .filter(Boolean) as TargetTransformProps[];
 
     let result = await prisma.$transaction(
-      jsonData.map((row) =>
-        prisma.domainGoal.update({
-          where: { id: row.targetId },
-          data: {
+      jsonData.map((row) => {
+        const domain = domainMap.get(row.code);
+        return prisma.domainGoal.upsert({
+          where: { id: row?.targetId ?? '' },
+          create: {
+            campaignId: campaign.id,
+            domainId: row.domainId,
+            ff: row.ff,
+            ffSes: row.ffSes,
+            fsm: row.fsm,
+            fsmSes: row.fsmSes,
+            subsidiaryId: domain?.subsidiaryId,
+            regionId: domain?.regionId,
+          },
+          update: {
             ff: row.ff,
             ffSes: row.ffSes,
             fsm: row.fsm,
@@ -146,15 +149,15 @@ export async function POST(request: NextRequest) {
             fsm: true,
             fsmSes: true,
           },
-        })
-      )
+        });
+      })
     );
 
     const domainNameMap = new Map(domains.map((d) => [d.id, d.name]));
     result = result.map((g) => {
       const total = g.ff + g.ffSes + g.fsm + g.fsmSes;
-      const name = domainNameMap.get(g.domainId);
-      return { ...g, total, name };
+      const domain = domainNameMap.get(g.domainId);
+      return { ...g, total, domain };
     });
 
     return NextResponse.json({ success: true, result }, { status: 200 });

@@ -39,7 +39,5 @@ export async function DELETE(request: NextRequest) {
   } catch (error: unknown) {
     console.error('Error delete quizset: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

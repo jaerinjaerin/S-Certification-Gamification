@@ -6,6 +6,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
+import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -125,6 +126,29 @@ export async function POST(request: NextRequest) {
         destinationKeys.push(destinationKey);
       } catch (error: unknown) {
         console.error('Error copy images: ', error);
+      }
+    }
+
+    for (const destinationKey of destinationKeys) {
+      console.log(`destinationKey: ${destinationKey}`);
+      const fileName = destinationKey.split('/').pop();
+      const lanbguageCode = fileName?.split('.')[0];
+      const language = await prisma.language.findFirst({
+        where: {
+          code: lanbguageCode,
+        },
+      });
+
+      if (language) {
+        await prisma.uploadedFile.create({
+          data: {
+            campaignId: destinationCampaign.id,
+            languageId: language.id,
+            path: `/${destinationKey}`,
+            fileType: FileType.UI_LANGUAGE,
+            uploadedBy: 'seed',
+          },
+        });
       }
     }
 

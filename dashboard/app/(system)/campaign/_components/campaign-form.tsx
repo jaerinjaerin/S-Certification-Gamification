@@ -10,24 +10,9 @@ import {
   FormMessage,
   useFormField,
 } from '@/components/ui/form';
-import { defaultValues, formSchema, FormValues } from '../_type/formSchema';
-import Container from './container';
-import FormComponent from './form-component';
-import {
-  CustomSelectTrigger,
-  DatePickerPopover,
-  SelectComponent,
-} from './custom-form-items';
+import { formSchema, FormValues } from '../_type/formSchema';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Check, CircleHelp } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import TableComponent from './table-component';
+import { useStateVariables } from '@/components/provider/state-provider';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -38,17 +23,32 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { cn } from '@/utils/utils';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Check, CircleHelp } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
+import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
 import useCampaignState from '../store/campaign-state';
-import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-import { useStateVariables } from '@/components/provider/state-provider';
-import { useState } from 'react';
-import { isEmpty } from '../../(hub)/cms/_utils/utils';
-import { toast } from 'sonner';
-import { Input } from '@/components/ui/input';
+import Container from './container';
+import {
+  CustomSelectTrigger,
+  DatePickerPopover,
+  SelectComponent,
+} from './custom-form-items';
+import FormComponent from './form-component';
+import TableComponent from './table-component';
 
 interface CampaignFormProps {
   initialData: any;
@@ -170,6 +170,7 @@ export default function CampaignForm({
     destinationId: string,
     type: 'target' | 'image' | 'uiLanguage'
   ) => {
+    console.log('🥕 handleCopyResources:', campaignId, destinationId, type);
     try {
       await campaignService.copyResources(campaignId, destinationId, type);
       toast.success(`Copied ${type} resources successfully`);
@@ -207,17 +208,7 @@ export default function CampaignForm({
             'target'
           )
         );
-        if (data.imageSourceCampaignId) {
-          copyPromises.push(
-            handleCopyResources(
-              data.targetSourceCampaignId,
-              campaign.id,
-              'image'
-            )
-          );
-        }
       }
-
       if (data.imageSourceCampaignId) {
         copyPromises.push(
           handleCopyResources(data.imageSourceCampaignId, campaign.id, 'image')

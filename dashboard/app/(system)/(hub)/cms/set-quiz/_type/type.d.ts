@@ -39,7 +39,8 @@ export interface GroupedQuizSet {
   };
   quizSetFile: QuizSetFile | undefined;
   activityBadge: ActivityBadge | undefined;
-  webLanguage: DomainWebLanguageEx | undefined;
+  // webLanguage: DomainWebLanguageEx | undefined;
+  uiLanguage: Language | null;
 }
 
 export interface DomainWebLanguageEx extends DomainWebLanguage {

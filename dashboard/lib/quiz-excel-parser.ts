@@ -65,7 +65,7 @@ export const extractFileInfo = (fileName: string) => {
   return {
     domainCode: parts[1],
     languageCode: parts[2],
-    jobGroup: jobGroup,
+    jobGroup: jobGroup.toLowerCase(),
   };
 };
 

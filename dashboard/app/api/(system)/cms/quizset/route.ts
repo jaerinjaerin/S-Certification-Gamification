@@ -4,39 +4,9 @@ import { getS3Client } from '@/lib/aws/s3-client';
 import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { QuestionType } from '@prisma/client';
+import { FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
-// const quizOptionSchema = z.object({
-//   text: z.string(),
-//   answerStatus: z.boolean(),
-// });
-
-// const quizQuestionSchema = z.object({
-//   originQuestionIndex: z.number(),
-//   orderInStage: z.number(),
-//   enabled: z.boolean(),
-//   stage: z.number(),
-//   product: z.string().nullable().optional(),
-//   category: z.string().nullable().optional(),
-//   specificFeature: z.string().nullable().optional(),
-//   importance: z.string().nullable().optional(),
-//   timeLimitSeconds: z.number(),
-//   text: z.string(),
-//   questionType: z.string(),
-//   options: z.array(quizOptionSchema),
-//   backgroundImageId: z.string(),
-//   characterImageId: z.string(),
-// });
-
-// Zod를 사용한 입력 데이터 검증
-// const updateQuizSetScheme = z.object({
-//   campaignId: z.string(),
-//   domainCode: z.string(),
-//   languageCode: z.string(),
-//   jobGroup: z.string(),
-//   questions: z.array(quizQuestionSchema),
-// });
 
 export async function POST(request: NextRequest) {
   const sesstion = await auth();
@@ -231,7 +201,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: `${file.name}: HQ Domain not found`,
+            message: `${file.name}: HQ Domain not registered`,
             code: ERROR_CODES.HQ_DOMAIN_NOT_FOUND,
           },
         },
@@ -246,10 +216,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (
-      domainCode !== hqDomainCode &&
-      (!hqQuestions || hqQuestions.length === 0)
-    ) {
+    const isHqQuestions = domainCode === hqDomainCode;
+    const isHqQuestionsRegistered = hqQuestions && hqQuestions.length > 0;
+    if (!isHqQuestions && !isHqQuestionsRegistered) {
       console.error('HQ Questions not registered');
       return NextResponse.json(
         {
@@ -261,6 +230,59 @@ export async function POST(request: NextRequest) {
         },
         { status: 409 }
       );
+    }
+
+    // HQ 문제인 경우, 추가된 문제가 1번부터 100번까지만 가능
+    if (isHqQuestions) {
+      const hasHqQuestionsIndex = questions.some(
+        (question) => question.originQuestionIndex > hqMaxQuestionIndex
+      );
+
+      if (hasHqQuestionsIndex) {
+        console.error(
+          'HQ Questions should be entered starting from number 1 to 100'
+        );
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: For each domain, HQ Questions should be entered starting from number 1 to 100.`,
+              code: ERROR_CODES.INVALID_QUESTION_INDEX,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+    // HQ 문제가 아닌 경우, 추가된 문제가 101번부터 시작되어야 함
+    else {
+      const lastHqQuestionIndex = hqQuestions.reduce(
+        (maxIndex, question) =>
+          question.originalIndex > maxIndex ? question.originalIndex : maxIndex,
+        0
+      );
+
+      const hasHqQuestionsIndex = questions.some(
+        (question) =>
+          question.originQuestionIndex <= hqMaxQuestionIndex &&
+          question.originQuestionIndex > lastHqQuestionIndex
+      );
+
+      if (hasHqQuestionsIndex) {
+        console.error(
+          'Additional questions should be entered starting from number 101'
+        );
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: For each domain, additional questions should be entered starting from number 101.`,
+              code: ERROR_CODES.INVALID_QUESTION_INDEX,
+            },
+          },
+          { status: 400 }
+        );
+      }
     }
 
     // 이미지 불러오기
@@ -280,6 +302,40 @@ export async function POST(request: NextRequest) {
         },
       })) ?? [];
 
+    // if (quizSet) {
+    //   const savedQuizSetFile = await prisma.quizSetFile.findFirst({
+    //     where: {
+    //       campaignId: campaignId,
+    //       languageId: language.id,
+    //       domainId: domain.id,
+    //       quizSetId: quizSet.id,
+    //       jobCodes: {
+    //         equals: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
+    //       },
+    //     },
+    //   });
+
+    // if (savedQuizSetFile) {
+    //   console.log(
+    //     'savedQuizSetFile: ',
+    //     savedQuizSetFile.path.split('/').pop(),
+    //     file.name
+    //   );
+    //   if (savedQuizSetFile.path.split('/').pop() !== file.name) {
+    //     return NextResponse.json(
+    //       {
+    //         success: false,
+    //         error: {
+    //           message: `${file.name}: File name does not match the existing file`,
+    //           code: ERROR_CODES.FILE_NAME_MISMATCH,
+    //         },
+    //       },
+    //       { status: 400 }
+    //     );
+    //   }
+    // }
+    // }
+
     // =============================================
     // 1. quiz set 생성
     // =============================================
@@ -293,40 +349,6 @@ export async function POST(request: NextRequest) {
         },
       },
     });
-
-    if (quizSet) {
-      const savedQuizSetFile = await prisma.quizSetFile.findFirst({
-        where: {
-          campaignId: campaignId,
-          languageId: language.id,
-          domainId: domain.id,
-          quizSetId: quizSet.id,
-          jobCodes: {
-            equals: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
-          },
-        },
-      });
-
-      // if (savedQuizSetFile) {
-      //   console.log(
-      //     'savedQuizSetFile: ',
-      //     savedQuizSetFile.path.split('/').pop(),
-      //     file.name
-      //   );
-      //   if (savedQuizSetFile.path.split('/').pop() !== file.name) {
-      //     return NextResponse.json(
-      //       {
-      //         success: false,
-      //         error: {
-      //           message: `${file.name}: File name does not match the existing file`,
-      //           code: ERROR_CODES.FILE_NAME_MISMATCH,
-      //         },
-      //       },
-      //       { status: 400 }
-      //     );
-      //   }
-      // }
-    }
 
     if (!quizSet) {
       quizSet = await prisma.quizSet.create({
@@ -414,7 +436,7 @@ export async function POST(request: NextRequest) {
     // const createdQuestions: Question[] = [];
     for (let i = 0; i < questions.length; i++) {
       const questionJson = questions[i];
-      const questionId = uuid.v4();
+      const newQuestionId = uuid.v4();
 
       // 이마 HQ 문제가 등록되어 있을 수 있으니, HQ 문제를 우선 찾아본다.
       let originalQuestionId =
@@ -424,7 +446,7 @@ export async function POST(request: NextRequest) {
 
       // HQ 문제면 HQ 문제 아이디로 설정
       if (originalQuestionId == null && domainCode === hqDomainCode) {
-        originalQuestionId = questionId;
+        originalQuestionId = newQuestionId;
       }
 
       // 국가별로 추가된 문제는 추가된 문제 자체가 베이스 퀴즈가 됨.
@@ -446,7 +468,7 @@ export async function POST(request: NextRequest) {
         if (originalQuestion) {
           originalQuestionId = originalQuestion.id;
         } else {
-          originalQuestionId = questionId;
+          originalQuestionId = newQuestionId;
         }
       }
 
@@ -492,7 +514,7 @@ export async function POST(request: NextRequest) {
       if (!question) {
         question = await prisma.question.create({
           data: {
-            id: questionId,
+            id: newQuestionId,
             campaignId: campaignId,
             domainId: domain.id,
             languageId: language.id,
@@ -518,7 +540,7 @@ export async function POST(request: NextRequest) {
           const option = questionJson.options[j];
           await prisma.questionOption.findFirst({
             where: {
-              questionId,
+              questionId: question.id,
               order: j,
               languageId: language.id,
               quizSetId: quizSet.id,
@@ -528,7 +550,7 @@ export async function POST(request: NextRequest) {
             data: {
               text: option.text.toString(),
               order: j,
-              questionId,
+              questionId: question.id,
               isCorrect: option.answerStatus,
               languageId: language.id,
               campaignId,
@@ -576,42 +598,42 @@ export async function POST(request: NextRequest) {
 
           for (let j = 0; j < questionJson.options.length; j++) {
             const optionJson = questionJson.options[j];
-            const option = await prisma.questionOption.findFirst({
-              where: {
-                questionId,
+            // const option = await prisma.questionOption.findFirst({
+            //   where: {
+            //     questionId,
+            //     order: j,
+            //     languageId: language.id,
+            //   },
+            // });
+
+            // if (!option) {
+            await prisma.questionOption.create({
+              data: {
+                text: optionJson.text.toString(),
                 order: j,
+                questionId: question.id,
+                isCorrect: optionJson.answerStatus,
                 languageId: language.id,
+                campaignId: campaignId,
+                quizSetId: quizSet.id,
               },
             });
-
-            if (!option) {
-              await prisma.questionOption.create({
-                data: {
-                  text: optionJson.text.toString(),
-                  order: j,
-                  questionId,
-                  isCorrect: optionJson.answerStatus,
-                  languageId: language.id,
-                  campaignId: campaignId,
-                  quizSetId: quizSet.id,
-                },
-              });
-            } else {
-              await prisma.questionOption.update({
-                where: {
-                  id: option.id,
-                },
-                data: {
-                  text: optionJson.text.toString(),
-                  order: j,
-                  questionId,
-                  isCorrect: optionJson.answerStatus,
-                  languageId: language.id,
-                  campaignId: campaignId,
-                  quizSetId: quizSet.id,
-                },
-              });
-            }
+            // } else {
+            //   await prisma.questionOption.update({
+            //     where: {
+            //       id: option.id,
+            //     },
+            //     data: {
+            //       text: optionJson.text.toString(),
+            //       order: j,
+            //       questionId,
+            //       isCorrect: optionJson.answerStatus,
+            //       languageId: language.id,
+            //       campaignId: campaignId,
+            //       quizSetId: quizSet.id,
+            //     },
+            //   });
+            // }
           }
         } else {
           // 기존 옵션에 변경 사항이 있으면 업데이트
@@ -641,25 +663,7 @@ export async function POST(request: NextRequest) {
     // =============================================
     // file upload
     // =============================================
-
-    // const file = files.file?.[0];
     const s3Client = getS3Client();
-    // const s3Client =
-    //   process.env.ENV === 'local'
-    //     ? new S3Client({
-    //         region: process.env.ASSETS_S3_BUCKET_REGION,
-    //         credentials: fromIni({
-    //           profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-    //         }),
-    //       })
-    //     : new S3Client({
-    //         region: process.env.ASSETS_S3_BUCKET_REGION,
-    //       });
-
-    // if (file) {
-
-    // const fileContent = await fs.readFile(file.filepath);
-    // const fileBuffer = Buffer.from(await file.arrayBuffer());
 
     const timestamp = new Date()
       .toISOString()
@@ -723,7 +727,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('Error create campaign: ', error);
+    console.error('Error create QuizSet: ', error);
     return NextResponse.json(
       {
         success: false,
@@ -734,10 +738,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
-  // });
 }
 
 export async function GET(request: Request) {
@@ -832,14 +833,27 @@ export async function GET(request: Request) {
       },
     });
 
-    const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+    // const domainWebLanguages = await prisma.domainWebLanguage.findMany({
+    //   where: {
+    //     campaignId: campaignId,
+    //   },
+    //   include: {
+    //     language: true,
+    //   },
+    // });
+
+    const uploadedFiles = await prisma.uploadedFile.findMany({
       where: {
         campaignId: campaignId,
-      },
-      include: {
-        language: true,
+        fileType: FileType.UI_LANGUAGE,
       },
     });
+
+    const languages = await prisma.language.findMany();
+    const uiLanguages = languages.filter(
+      (lang) =>
+        uploadedFiles.find((file) => file.languageId === lang.id) != null
+    );
 
     // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
     // 🔹 region → subsidiary → domain 순서로 정렬
@@ -869,9 +883,10 @@ export async function GET(request: Request) {
           badge.languageId === quizSet.languageId &&
           badge.domainId === quizSet.domainId
       )[0],
-      webLanguage: domainWebLanguages.find(
-        (dwl) => dwl.domainId === quizSet.domainId
-      ),
+      uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
+      // webLanguage: domainWebLanguages.find(
+      //   (dwl) => dwl.domainId === quizSet.domainId
+      // ),
     }));
 
     return NextResponse.json(
