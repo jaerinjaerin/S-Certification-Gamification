@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const campaignId = searchParams.get('campaignId') as string;
+    console.log('🚀 ~ GET ~ campaignId:', campaignId);
 
     await prisma.$connect();
 

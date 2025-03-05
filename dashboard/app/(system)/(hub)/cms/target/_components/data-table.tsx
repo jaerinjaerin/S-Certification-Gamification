@@ -58,7 +58,7 @@ export function DataTable() {
 
   useEffect(() => {
     if (data.length > 0) {
-      dispatch({ type: 'SET_TARGET_LIST', payload: data.result });
+      dispatch({ type: 'SET_TARGET_LIST', payload: data });
     }
   }, [data]);
 
