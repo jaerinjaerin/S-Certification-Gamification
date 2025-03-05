@@ -1,5 +1,3 @@
-
-
 Kushtet e përdorimit të certifikimit të ekspertit të Galaxy AI për 2025
 
 Këto Kushte përdorimi, së bashku me Politikën për Privatësinë të përcaktuar më poshtë (“Kushtet”) lidhet midis Samsung Electronics Co., Ltd., një korporatë koreane me seli në 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republika e Koresë (duke përfshirë filialet e saj, “Samsung”, “ne”, ose “neve”) dhe jush, dhe rregullon aksesin ose përdorimin tuaj të faqes së internetit, aplikacionit celular, materialeve dhe shërbimeve (siç përkufizohet më poshtë). Ju lutemi të lexoni me kujdes kushtet para se të aksesoni ose përdorni SamsungPlus(“faqja e internetit” ose “aplikacioni celular”). Nëse nuk jeni dakord me ndonjë prej Kushteve, mos e aksesoni ose mos e përdorni faqen e internetit dhe aplikacionin celular. Përdorimi i faqes së internetit dhe aplikacionit celular përbën pranimin e këtyre Kushteve nga ana juaj.
@@ -63,4 +61,3 @@ Nëse Samsung nuk ushtron ndonjë të drejtë ose masë në këto Kushte, kjo nu
 nga gjykata me juridiksion kompetent se është e pavlefshme, pjesa e mbetur e masave do të mbetet në fuqi dhe në efekt të plotë.
 
 Data [22-01-2025]
-

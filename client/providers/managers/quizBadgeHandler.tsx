@@ -3,12 +3,26 @@ import * as Sentry from "@sentry/nextjs";
 
 export class QuizBadgeHandler {
   issueBadge = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      const registered = await this.postActivityRegister(activityId);
-      const attended = await this.postActivityEnd(activityId, elapsedSeconds);
+      const registered = await this.postActivityRegister(
+        userId,
+        campaignId,
+        domainId,
+        activityId
+      );
+      const attended = await this.postActivityEnd(
+        userId,
+        campaignId,
+        domainId,
+        activityId,
+        elapsedSeconds
+      );
 
       console.log("issueBadge registered", registered);
       console.log("issueBadge attended", attended);
@@ -83,7 +97,12 @@ export class QuizBadgeHandler {
     }
   };
 
-  postActivityRegister = async (activityId: string): Promise<boolean> => {
+  postActivityRegister = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
@@ -91,7 +110,10 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
           }),
         }
       );
@@ -120,6 +142,9 @@ export class QuizBadgeHandler {
   };
 
   postActivityEnd = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -130,7 +155,10 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
             elapsedSeconds: 120,

@@ -70,7 +70,7 @@ RUN npm install
 
 # 1-5. client 앱 빌드
 RUN npm run prisma:generate
-RUN npm run build:stg
+RUN npm run build:prd
 
 #
 # 2) Run Stage
@@ -123,6 +123,9 @@ ENV NEXT_PUBLIC_ENV=${NEXT_PUBLIC_ENV}
 
 WORKDIR /app
 
+# 전역 pm2 설치
+RUN npm install -g pm2
+
 # 빌드 산출물 복사
 COPY --from=builder /app ./
 
@@ -132,4 +135,4 @@ WORKDIR /app/client
 EXPOSE 3000
 
 # admin 앱 실행
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:pm2"]

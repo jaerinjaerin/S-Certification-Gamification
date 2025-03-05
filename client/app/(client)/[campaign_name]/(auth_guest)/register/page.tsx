@@ -23,13 +23,13 @@ import useCheckLocale from "@/hooks/useCheckLocale";
 import useCreateItem from "@/hooks/useCreateItem";
 import useGetContents from "@/hooks/useGetContents";
 import { useCampaign } from "@/providers/campaignProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { fetchQuizLog } from "@/services/quizService";
 import { cn, isSheetLanguage } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Job {
@@ -57,7 +57,7 @@ interface DomainDetail {
 
 export default function GuestRegisterPage() {
   useGAPageView();
-  const { routeToPage } = usePathNavigator();
+  const router = useRouter();
 
   const { data: session } = useSession();
   const translation = useTranslations();
@@ -111,7 +111,7 @@ export default function GuestRegisterPage() {
       const res = await fetch(jsonUrl, {
         method: "GET",
         // cache: "force-cache",
-        cache: "no-cache",
+        // cache: "no-store",
       });
 
       const data = await res.json();
@@ -154,9 +154,9 @@ export default function GuestRegisterPage() {
 
   useEffect(() => {
     if (campaignPath) {
-      routeToPage(`${campaignPath}/map`);
+      router.push(`${campaignPath}/map`);
     }
-  }, [campaignPath, routeToPage]);
+  }, [campaignPath]);
 
   const checkRegistered = async (userId: string) => {
     try {
@@ -165,7 +165,7 @@ export default function GuestRegisterPage() {
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
       if (quizLog) {
-        routeToPage(`${quizLog.quizSetPath}/map`);
+        router.push(`${quizLog.quizSetPath}/map`);
       }
     } catch (error) {
       console.error("Failed to fetch data", error);
@@ -238,6 +238,8 @@ export default function GuestRegisterPage() {
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
+        campaignId: campaign.id,
+        campaignSlug: campaign.name,
       },
     });
   };

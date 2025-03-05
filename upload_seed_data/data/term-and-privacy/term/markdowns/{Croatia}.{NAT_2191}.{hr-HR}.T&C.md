@@ -1,5 +1,3 @@
-
-
 Pravila za korištenje usluge Samsung+ i dobivanje certifikata stručnjaka za Galaxy AI 2025.
 
 Ova Pravila, zajedno s našim Pravilima o privatnosti navedenim u nastavku („Pravila”) predstavljaju ugovor između Samsung Electronics Co., Ltd., korejske korporacije sa sjedištem na adresi 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republika Koreja (uključujući i njezine podružnice, u daljnjem teksu navedeni kao „Samsung”, „mi” ili „nas”) i vas i uređuju vaš pristup i korištenje web-mjesta, mobilne aplikacije, materijala i usluga, kako je definirano u nastavku. Pažljivo pročitajte ova Pravila prije nego pristupite ili počneke koristiti uslugu Samsung+ (u daljnjem tekstu navedena kao „web-mjesto” ili „Mobile”). Ako se ne slažete s ovim Pravilima, nemojte pristupati ni na drugi način koristiti web-mjesto ni Mobile. Vašim pristupanjem i korištenjem web-mjesta i Mobile-a dajete svoju suglasnost za primjenu ovih Pravila.
@@ -61,4 +59,3 @@ Opće
 Propust Samsunga da provede bilo koju odredbu ovih Pravila neće predstavljati odricanje od takve odredbe, osim ako Samsung ne donese pisanu odluku u tom smislu. Ova Pravila (uključujući i sve izmjene, ažuriranja i dopune istih) predstavljaju cjelokupan ugovor između vas i Samsunga i nadomještaju sve prethodne ili istovremene pregovore ili ugovore između vas i Samsunga u pogledu predmeta ovog ugovora. Slažete se da svoja prava i obveze iz ovih Pravila Samsung može prenijeti na treću stranu prema vlastitom nahođenju. Naslovi odjeljaka ovih Pravila služe samo u referentne svrhe i ni na koji način ne definiraju, ograničavaju ili tumače sadržaj pojedinog odjeljka. Ako bilo koja odredba ovih Pravila ili njena primjena bude od strane nadležnog suda ili drugog tijela proglašena ili smatrana nevažećom ili nezakonitom u bilo kojem pogledu, (i) takva odredba će se smatrati izmijenjenom kako bi se, u najvećoj mogućoj mjeri, postigla svrha zbog koje je odredba proglašena nevažećom ili nezakonitom (ii) to neće utjecati na valjanost, zakonitost i provedivost preostalih odredbi ili dijelova odredbi sadržanih u ovim Pravilima.
 
 Dana 22.01.2025.
-

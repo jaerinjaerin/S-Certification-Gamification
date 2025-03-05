@@ -1,35 +1,87 @@
-"use client";
-import React from "react";
+'use client';
 import {
   Breadcrumb,
   BreadcrumbItem,
   // BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "../ui/breadcrumb";
-import { usePathname } from "next/navigation";
-import { Slash } from "lucide-react";
-import { cn } from "@/lib/utils";
+} from '../ui/breadcrumb';
+import { usePathname, useRouter } from 'next/navigation';
+import { Slash } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
+import { useStateVariables } from '../provider/state-provider';
+import { Fragment } from 'react';
+import { Campaign } from '@prisma/client';
+import { Separator } from '../ui/separator';
+import { useNavigation } from '@/app/(system)/(hub)/cms/_hooks/useNavigation';
 
 const CurrentBreadCrumb = () => {
+  const router = useRouter();
+  const { campaigns, campaign, setCampaign } = useStateVariables();
+  const { routeToPage } = useNavigation();
   const pathname = usePathname();
   const paths = pathname
-    .split("/")
+    .split('/')
     .filter(Boolean)
-    .map((name) => name.replaceAll("-", " "));
+    .map((name) => name.replaceAll('-', ' '));
+
+  const handleChangeCampaign = (value: string) => {
+    if (!campaigns) return;
+    if (value === '/campaign') router.push(value);
+    //
+    if (value === 'certification-list') {
+      routeToPage('/');
+      return;
+    }
+    const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
+    if (selectedCampaign) setCampaign(selectedCampaign);
+  };
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
+        <BreadcrumbItem>
+          <Select
+            value={campaign?.id || ''}
+            onValueChange={handleChangeCampaign}
+          >
+            <SelectTrigger className="w-full focus:ring-0">
+              <SelectValue placeholder={campaign?.name || ''} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                value="/campaign"
+                className="font-bold border-b text-base"
+              >
+                Certification List
+              </SelectItem>
+              {campaigns?.map((c: Campaign) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator>
+          <Slash />
+        </BreadcrumbSeparator>
         {paths.map((item, index) => {
           return (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               <BreadcrumbItem
                 className={cn([
                   index !== paths.length - 1
-                    ? "text-zinc-500"
-                    : "text-zinc-950",
-                  item.toLowerCase() === "cms" ? "uppercase" : "capitalize",
+                    ? 'text-zinc-500'
+                    : 'text-zinc-950',
+                  item.toLowerCase() === 'cms' ? 'uppercase' : 'capitalize',
                 ])}
               >
                 {item}
@@ -39,7 +91,7 @@ const CurrentBreadCrumb = () => {
                   <Slash />
                 </BreadcrumbSeparator>
               )}
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </BreadcrumbList>

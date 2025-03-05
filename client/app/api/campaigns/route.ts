@@ -1,8 +1,9 @@
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
-import { NextResponse } from "next/dist/server/web/spec-extension/response";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  // console.warn("GET /api/campaigns");
   const { searchParams } = new URL(request.url);
   const campaignName = searchParams.get("campaign_name");
 

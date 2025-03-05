@@ -1,5 +1,6 @@
 export const defaultLanguageCode = "en-US";
 export const sumtotalUserOthersJobId = "7";
+export const sumtotalUserOthersJobCode = "fsm";
 export const defaultLanguages = [
   { code: "ar-AE", name: "Language for AR AE" },
   { code: "az", name: "Language for AZ" },
@@ -45,10 +46,26 @@ export const defaultLanguages = [
   { code: "tr", name: "Language for TR" },
   { code: "uz", name: "Language for UZ" },
   { code: "vi", name: "Language for VI" },
-  { code: "zh-HK", name: "Language for ZH HK" },
+  { code: "zh-CN", name: "Language for ZH CN" },
   { code: "zh-TW", name: "Language for ZH TW" },
-  { code: "lv", name: "Language for lv" },
-  { code: "uk", name: "Language for uk" },
+  { code: "zh-HK", name: "Language for ZH HK" },
+  { code: "lv", name: "Language for Latvia lv" },
+  { code: "ko", name: "Language for KR" },
+  { code: "en-US-my", name: "Language for Malaysia" },
+  { code: "en-US-au", name: "Language for Australia" },
+  { code: "fr-FR-cm", name: "Language for Cameroon" },
+  { code: "fr-FR-ci", name: "Language for Ivory Coast" },
+  { code: "fr-FR-dz", name: "Language for Algeria" },
+  { code: "es-LTN-co", name: "Language for Colombia" },
+  { code: "fr-FR-fr", name: "Language for France" },
+  { code: "es-LTN-mx", name: "Language for Mexico" },
+  { code: "fr-FR-ma", name: "Language for Morocco" },
+  { code: "es-LTN-pr", name: "Language for Peru" },
+  { code: "fr-FR-sn", name: "Language for Senegal" },
+  { code: "fr-FR-ch", name: "Language for Switzerland" },
+  { code: "fr-FR-TN", name: "Language for Tunisia" },
+  { code: "uk", name: "Ukraine" },
+  { code: "ar-TN", name: "Tunisia, Arabic" },
 ];
 export const defaultLanguagesByRegion = {
   EUROPE: [

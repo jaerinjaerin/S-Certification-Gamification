@@ -4,10 +4,11 @@ import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import { useQuizQuestionLogs } from "@/hooks/api/log/useQuizQuestionLogs";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
-import { QuestionOption } from "@prisma/client";
+import { QuestionOption, UserQuizQuestionLog } from "@prisma/client";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,23 +16,20 @@ import { useEffect, useState } from "react";
 
 export default function ReviewPage() {
   useGAPageView();
-  const { currentQuizStage, currentStageQuestions, quizQuestionLogs, quizSet } =
-    useQuiz();
+  const { userId, quizSet } = useQuiz();
 
   const router = useRouter();
 
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  const [errorMessage] = useState<string | undefined>(undefined);
   const [loading] = useState(false);
 
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const reviewQuizQuestionLogs = quizQuestionLogs.filter(
-    (log) => log.quizStageIndex + 1 === searchStage
-  );
+  // const reviewQuizQuestionLogs = quizQuestionLogs.filter(
+  //   (log) => log.quizStageIndex + 1 === searchStage
+  // );
 
   const { isArabic } = useCheckLocale();
 
@@ -40,27 +38,54 @@ export default function ReviewPage() {
   )[0].questions;
   const question = questions[currentQuestionIndex];
 
-  console.log("questions", questions);
-  console.log("reviewQuizQuestionLogs", reviewQuizQuestionLogs);
+  const {
+    data: quizQuestionLogs,
+    loading: logsLoading,
+    error,
+  } = useQuizQuestionLogs(userId, quizSet.id, searchStage - 1);
 
+  // useEffect(() => {
+  //   const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
+  //     (log) => log.questionId === question.id
+  //   );
+
+  //   if (!currentReviewQuizQuestionLogs) {
+  //     const correctOptionIds = question.options
+  //       .filter((option) => option.isCorrect)
+  //       .map((option) => option.id);
+
+  //     setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  //   } else {
+  //     setSelectedOptionIds([
+  //       ...currentReviewQuizQuestionLogs.correctOptionIds,
+  //       ...currentReviewQuizQuestionLogs.selectedOptionIds,
+  //     ]);
+  //   }
+  // }, [currentQuestionIndex]);
   useEffect(() => {
-    const currentReviewQuizQuestionLogs = reviewQuizQuestionLogs.find(
-      (log) => log.questionId === question.id
-    );
+    const reviewQuizQuestionLog: UserQuizQuestionLog | undefined =
+      quizQuestionLogs?.find((log) => log.questionId === question.id);
 
-    if (!currentReviewQuizQuestionLogs) {
-      const correctOptionIds = question.options
-        .filter((option) => option.isCorrect)
-        .map((option) => option.id);
+    const correctOptionIds = question.options
+      .filter((option) => option.isCorrect)
+      .map((option) => option.id);
 
+    if (!reviewQuizQuestionLog) {
       setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
     } else {
       setSelectedOptionIds([
-        ...currentReviewQuizQuestionLogs.correctOptionIds,
-        ...currentReviewQuizQuestionLogs.selectedOptionIds,
+        ...correctOptionIds,
+        ...reviewQuizQuestionLog.selectedOptionIds,
       ]);
     }
-  }, [currentQuestionIndex]);
+  }, [error, quizQuestionLogs, currentQuestionIndex]);
+
+  // useEffect(() => {
+  //   const correctOptionIds = question.options
+  //     .filter((option) => option.isCorrect)
+  //     .map((option) => option.id);
+  //   setSelectedOptionIds([...correctOptionIds, ...correctOptionIds]);
+  // }, [error, currentQuestionIndex]);
 
   const next = () => {
     if (currentQuestionIndex === questions.length - 1) return;
@@ -77,12 +102,6 @@ export default function ReviewPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
     return;
   };
-
-  useEffect(() => {
-    if (!currentQuizStage || !currentStageQuestions) {
-      setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
-    }
-  }, [currentQuizStage, currentStageQuestions]);
 
   return (
     <div className="min-h-svh bg-slate-200/20">
@@ -180,7 +199,7 @@ export default function ReviewPage() {
             })}
       </div>
       <ErrorAlertDialog error={errorMessage} />
-      {loading && <Spinner />}
+      {(loading || logsLoading) && <Spinner />}
     </div>
   );
 }

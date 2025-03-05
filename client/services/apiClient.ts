@@ -9,7 +9,7 @@ export const apiClient = {
    */
   get: async <T>(
     url: string,
-    cachePolicy: RequestCache = "no-cache"
+    cachePolicy: RequestCache = "no-store"
   ): Promise<T> => {
     const response = await fetch(url, {
       method: "GET",
@@ -33,7 +33,7 @@ export const apiClient = {
   post: async <T, U>(
     url: string,
     body: T,
-    cachePolicy: RequestCache = "no-cache"
+    cachePolicy: RequestCache = "no-store"
   ): Promise<U> => {
     const response = await fetch(url, {
       method: "POST",
@@ -59,7 +59,7 @@ export const apiClient = {
   put: async <T, U>(
     url: string,
     body: T,
-    cachePolicy: RequestCache = "no-cache"
+    cachePolicy: RequestCache = "no-store"
   ): Promise<U> => {
     const response = await fetch(url, {
       method: "PUT",
@@ -83,7 +83,7 @@ export const apiClient = {
    */
   delete: async <T>(
     url: string,
-    cachePolicy: RequestCache = "no-cache"
+    cachePolicy: RequestCache = "no-store"
   ): Promise<T> => {
     const response = await fetch(url, {
       method: "DELETE",

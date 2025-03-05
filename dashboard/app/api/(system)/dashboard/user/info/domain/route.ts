@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
+import { domainCheckOnly } from '@/lib/data';
 import { AuthType } from '@prisma/client';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
-import { removeDuplicateUsers } from '@/lib/data';
 
 // UserQuizStatistics, DomainGoal사용
 // DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
@@ -19,70 +18,20 @@ export async function GET(request: NextRequest) {
 
     await prisma.$connect();
 
-    const defaultJobData = {
-      ff: 0,
-      fsm: 0,
-      'ff(ses)': 0,
-      'fsm(ses)': 0,
-      ff_advanced: 0,
-      fsm_advanced: 0,
-      'ff(ses)_advanced': 0,
-      'fsm(ses)_advanced': 0,
-    };
-
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { code: jobId } : {},
       select: { id: true, code: true },
     });
 
+    // domainId만 확인해서 필터링 생성성
+    const whereForGoal = (await domainCheckOnly(where)) as any;
     const count = await prisma.domainGoal.count({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
     });
 
     const domainsGoals = await prisma.domainGoal.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
-      take,
-      skip,
+      where: whereForGoal,
     });
-
-    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subsidiaryId',
-          'domainId',
-          'authType',
-          'channelSegmentId',
-          'createdAt',
-        ]),
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-    });
-
-    experts = removeDuplicateUsers(experts);
 
     const domains = await prisma.domain.findMany({
       where: {
@@ -92,133 +41,146 @@ export async function GET(request: NextRequest) {
             .filter((id): id is string => id !== null),
         },
       },
+      include: { subsidiary: { include: { region: true } } },
+      orderBy: { order: 'asc' },
+      take,
+      skip,
     });
 
-    const subsidiaries = await prisma.subsidiary.findMany({
+    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
+      by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
       where: {
-        id: {
-          in: domains
-            .map((domain) => domain.subsidiaryId)
-            .filter((id): id is string => id !== null),
-        },
+        ...buildWhereWithValidKeys(where, [
+          'campaignId',
+          'authType',
+          'channelSegmentId',
+          'createdAt',
+        ]),
+        domainId: { in: domains.map((domain) => domain.id) },
+        quizStageIndex: { in: [2, 3] },
+        jobId: { in: jobGroup.map((job) => job.id) },
+        ...(storeId
+          ? storeId === '4'
+            ? { storeId }
+            : { OR: [{ storeId }, { storeId: null }] }
+          : {}),
       },
+      _count: { quizStageIndex: true },
     });
 
-    const regions = await prisma.region.findMany({
-      where: {
-        id: {
-          in: subsidiaries
-            .map((subsidiary) => subsidiary.regionId)
-            .filter((id): id is string => id !== null),
-        },
+    const expertData = domains.reduce(
+      (acc: any, domain: any) => {
+        const expert = experts.find((expert) => expert.domainId === domain.id);
+        if (!expert) {
+          acc[domain.id] = {
+            goal: 0,
+            plusExpert: 0,
+            plusAdvanced: 0,
+            noneExpert: 0,
+            noneAdvanced: 0,
+            ffExpert: 0,
+            ffAdvanced: 0,
+            fsmExpert: 0,
+            fsmAdvanced: 0,
+            ffSesExpert: 0,
+            ffSesAdvanced: 0,
+            fsmSesExpert: 0,
+            fsmSesAdvanced: 0,
+          };
+          return acc;
+        }
+
+        const {
+          _count,
+          domainId,
+          authType: auth,
+          quizStageIndex,
+          jobId,
+          storeId,
+        } = expert;
+
+        //
+        if (!domainId) return acc;
+
+        //
+        const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
+        const expertType = quizStageIndex === 2 ? 'Expert' : 'Advanced';
+        const storeType = storeId === '4' ? 'Ses' : '';
+        const jobName = jobGroup.find((job) => job.id === jobId)?.code;
+
+        //goal
+        const { ff, fsm, ffSes, fsmSes } = domainsGoals.find(
+          (goal) => goal.domainId === domainId
+        ) || { ff: 0, fsm: 0, ffSes: 0, fsmSes: 0 };
+        const goal = ff + fsm + ffSes + fsmSes;
+        //
+
+        if (!acc[domainId]) {
+          acc[domainId] = {
+            goal: 0,
+            plusExpert: 0,
+            plusAdvanced: 0,
+            noneExpert: 0,
+            noneAdvanced: 0,
+            ffExpert: 0,
+            ffAdvanced: 0,
+            fsmExpert: 0,
+            fsmAdvanced: 0,
+            ffSesExpert: 0,
+            ffSesAdvanced: 0,
+            fsmSesExpert: 0,
+            fsmSesAdvanced: 0,
+          };
+        }
+
+        const entry = acc[domainId];
+        entry.goal += goal;
+        entry[`${authType}${expertType}`] += _count.quizStageIndex;
+        entry[`${jobName}${storeType}${expertType}`] += _count.quizStageIndex;
+
+        return acc;
       },
-    });
+      {} as Record<string, any>
+    );
 
-    // Step 4: 데이터 매핑
-    const result = domains.map((domain) => {
-      const domainGoal = domainsGoals.find(
-        (goal) => goal.domainId === domain.id
-      );
-      const goalTotal =
-        (domainGoal?.ff || 0) +
-        (domainGoal?.fsm || 0) +
-        (domainGoal?.ffSes || 0) +
-        (domainGoal?.fsmSes || 0);
+    const result = Object.entries(expertData)
+      .map(([domainId, value]: any) => {
+        const domain = domains.find((domain) => domain.id === domainId);
+        if (!domain) return;
 
-      const subsidiary = subsidiaries.find(
-        (sub) => sub.id === domain.subsidiaryId
-      );
-      const region = regions.find((reg) => reg.id === subsidiary?.regionId);
+        const expertTotal = value.plusExpert + value.noneExpert;
+        const advancedTotal = value.plusAdvanced + value.noneAdvanced;
+        const achievement =
+          value.goal > 0 ? (expertTotal / value.goal) * 100 : 0;
 
-      const expertByDomain = experts.filter(
-        (exp) => exp.domainId === domain.id
-      );
-      const advancedByDomain = expertByDomain.filter(
-        (exp) => exp.quizStageIndex === 3
-      );
-
-      //   expers data
-      const jobData = JSON.parse(JSON.stringify(defaultJobData));
-      const plusUsers = experts.filter(
-        (exp) =>
-          (exp.storeId !== '4' || !exp.storeId) && exp.domainId === domain.id
-      );
-
-      // userId 중복제거
-      plusUsers.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
-        if (jobName) {
-          const lowJobName =
-            jobName.toLowerCase() as keyof typeof jobData as string;
-          if (lowJobName in jobData) {
-            if (user.quizStageIndex === 3) {
-              jobData[`${lowJobName}_advanced`] += 1;
-            }
-            jobData[lowJobName] += 1;
-          }
-        }
-      });
-
-      const sesUsers = experts.filter(
-        (exp) => exp.storeId === '4' && exp.domainId === domain.id
-      );
-
-      // userId 중복제거
-      sesUsers.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
-        if (jobName) {
-          const lowJobName =
-            `${jobName.toLowerCase()}(ses)` as keyof typeof jobData as string;
-          if (lowJobName in jobData) {
-            if (user.quizStageIndex === 3) {
-              jobData[`${lowJobName}_advanced`] += 1;
-            }
-            jobData[lowJobName] += 1;
-          }
-        }
-      });
-
-      const plusExperts = experts.filter(
-        (exp) =>
-          exp.authType === AuthType.SUMTOTAL && exp.domainId === domain.id
-      );
-
-      const plusExpertsAdvanced = plusExperts.filter(
-        (exp) => exp.quizStageIndex === 3
-      );
-
-      const noneExperts = experts.filter(
-        (exp) =>
-          exp.authType !== AuthType.SUMTOTAL && exp.domainId === domain.id
-      );
-
-      const noneExpertsAdvanced = noneExperts.filter(
-        (exp) => exp.quizStageIndex === 3
-      );
-
-      return {
-        domain: { id: domain.id, name: domain.name },
-        subsidiary: subsidiary
-          ? { id: subsidiary.id, name: subsidiary.name }
-          : null,
-        region: region ? { id: region.id, name: region.name } : null,
-        goal: goalTotal,
-        expert: `${expertByDomain.length}(${advancedByDomain.length})`,
-        achievement: (expertByDomain.length / goalTotal) * 100,
-        expertDetail: {
-          date: domain.updatedAt,
-          country: domain.name,
-          plus: `${plusExperts.length} (${plusExpertsAdvanced.length})`,
-          none: `${noneExperts.length} (${noneExpertsAdvanced.length})`,
-          ff: `${jobData.ff} (${jobData.ff_advanced})`,
-          fsm: `${jobData.fsm} (${jobData.fsm_advanced})`,
-          'ff(ses)': `${jobData['ff(ses)']} (${jobData['ff(ses)_advanced']})`,
-          'fsm(ses)': `${jobData['fsm(ses)']} (${
-            jobData['fsm(ses)_advanced']
-          })`,
-        },
-      };
-    });
+        return {
+          order: domain.order,
+          domain: { id: domain.id, name: domain.name },
+          subsidiary: domain.subsidiary
+            ? { id: domain.subsidiary.id, name: domain.subsidiary.name }
+            : null,
+          region: domain.subsidiary?.region
+            ? {
+                id: domain.subsidiary.region.id,
+                name: domain.subsidiary.region.name,
+              }
+            : null,
+          goal: value.goal,
+          expert: `${expertTotal}(${advancedTotal})`,
+          achievement,
+          expertDetail: {
+            date: domain.updatedAt,
+            country: domain.name,
+            plus: `${value.plusExpert} (${value.plusAdvanced})`,
+            none: `${value.noneExpert} (${value.noneAdvanced})`,
+            ff: `${value.ffExpert} (${value.ffAdvanced})`,
+            fsm: `${value.fsmExpert} (${value.fsmAdvanced})`,
+            'ff(ses)': `${value.ffSesExpert} (${value.ffSesAdvanced})`,
+            'fsm(ses)': `${value.fsmSesExpert} (${value.fsmSesAdvanced})`,
+          },
+        };
+      })
+      .sort((a, b) => (a?.order || 0) - (b?.order || 0));
 
     return NextResponse.json({ result, total: count });
   } catch (error) {

@@ -1,8 +1,10 @@
-export const dynamic = 'force-dynamic';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { domainCheckOnly } from '@/lib/data';
 
 export async function GET(request: NextRequest) {
   try {
@@ -45,16 +47,10 @@ export async function GET(request: NextRequest) {
 
     const expertCount = userGroupByUserId.length;
 
+    // domainId만 확인해서 필터링 생성성
+    const whereForGoal = await domainCheckOnly(where);
     const domain_goal = await prisma.domainGoal.findMany({
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'regionId',
-          'subidiaryId',
-          'domainId',
-          'createdAt',
-        ]),
-      },
+      where: whereForGoal,
     });
     //
     const total = domain_goal.reduce((sum, item) => {
@@ -67,7 +63,7 @@ export async function GET(request: NextRequest) {
       );
     }, 0);
 
-    const count = (expertCount / total) * 100;
+    const count = total > 0 ? (expertCount / total) * 100 : 0;
 
     return NextResponse.json({ result: { count } });
   } catch (error) {

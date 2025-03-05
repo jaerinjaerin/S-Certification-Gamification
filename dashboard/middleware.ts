@@ -21,5 +21,9 @@ export async function middleware(request: NextRequest) {
   } else if (session && pathname.includes('/login')) {
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  // 헤더에 pathname 추가
+  response.headers.set('x-current-path', pathname);
+
+  return response;
 }

@@ -2,6 +2,7 @@ import {
   ApiListResponse,
   ApiResponse,
   QuizLogResponse,
+  QuizQuestionLogsResponse,
   QuizSetEx,
 } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
@@ -49,6 +50,23 @@ export const fetchQuizLog = async (
   }
 };
 
+export const fetchQuizQuestionLogs = async (
+  quizSetId: string,
+  quizStageIndex: number
+): Promise<ApiResponse<QuizQuestionLogsResponse>> => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/questions?quizset_id=${quizSetId}&stage_index=${quizStageIndex}`;
+    const result = await apiClient.get<ApiResponse<QuizQuestionLogsResponse>>(
+      url
+    );
+    // console.log("Quiz log result:", result.item?.quizQuestionLogs);
+    return result;
+  } catch (error) {
+    console.error(`Failed to fetch quiz log: ${error}`);
+    throw new Error("퀴즈 로그를 가져오는 중 문제가 발생했습니다.");
+  }
+};
+
 export interface ValidationResult {
   validatedPath: string; // 수정된 또는 원래의 `quizSetPath`
   isValid: boolean; // 검증이 성공했는지 여부
@@ -66,8 +84,8 @@ export const validateAndCorrectQuizSetPath = async (
 
     // 도메인 검증
     const domainsResponse = await apiClient.get<ApiListResponse<Domain>>(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`
-      // "force-cache"
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains`,
+      "force-cache"
     );
 
     const isDomainValid = domainsResponse.items?.some(

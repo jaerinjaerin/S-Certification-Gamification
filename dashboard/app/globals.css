@@ -3,17 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --chart-primary:#8979FF;
-  --chart-secondary:#FF928A;
-  --chart-tertiary:#3CC3DF;
-  --chart-quaternary:#FFAE4C;
-  --chart-line-stroke:#FF7300;
+  --chart-primary: #8979ff;
+  --chart-secondary: #ff928a;
+  --chart-tertiary: #3cc3df;
+  --chart-quaternary: #ffae4c;
+  --chart-line-stroke: #ff7300;
 }
 
 body {
   font-family: sans-serif;
   font-weight: 400;
   font-size: 16px;
+  pointer-events: auto !important;
 }
 
 @layer base {
@@ -26,10 +27,13 @@ body {
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 31%;
+    --secondary-hover: 0 0% 85%;
+    --secondary-foreground: 240 5% 96%;
+    --action-hover: 221 83% 58%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
+    --description: 0 0% 52%;
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
@@ -51,6 +55,12 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-active: 240 6% 90%;
+    --sidebar-text: 240 5% 65%;
+    --sidebar-active-text: 240 5% 34%;
+    --sidebar-icon: 240 4% 46%;
+    --icon-success: 214 56% 47%;
+    --icon-error: 0 51% 50%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -61,10 +71,13 @@ body {
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 31%;
+    --secondary-hover: 0 0% 85%;
     --secondary-foreground: 0 0% 98%;
+    --action-hover: 221 83% 58%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
+    --description: 0 0% 52%;
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -85,6 +98,12 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-active: 240 6% 90%;
+    --sidebar-text: 240 5% 65%;
+    --sidebar-active-text: 240 5% 34%;
+    --sidebar-icon: 240 4% 46%;
+    --icon-success: 214 56% 47%;
+    --icon-error: 0 51% 50%;
   }
 }
 
@@ -100,5 +119,14 @@ body {
 @layer components {
   .menu-button {
     @apply flex items-center space-x-2;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

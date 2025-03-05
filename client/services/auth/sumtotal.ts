@@ -450,10 +450,19 @@ export async function fetchOrganizationDetails(
 
   console.log("fetchOrganizationDetails profile:", profile);
 
+  // const orgIds: string[] =
+  //   profile.personOrganization != null
+  //     ? profile.personOrganization
+  //         .filter((org) => org.deleted !== 1)
+  //         .map((org) => org.organizationId.toString())
+  //     : [];
+
   const orgIds: string[] =
-    profile.personOrganization != null
+    profile?.personOrganization && Array.isArray(profile.personOrganization)
       ? profile.personOrganization
-          .filter((org) => org.deleted !== 1)
+          .filter(
+            (org) => org && org.deleted !== 1 && org.organizationId != null
+          )
           .map((org) => org.organizationId.toString())
       : [];
 
@@ -462,7 +471,6 @@ export async function fetchOrganizationDetails(
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
         {
-          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
@@ -486,6 +494,7 @@ export async function fetchOrganizationDetails(
         scope.setTag("orgId", orgId);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
@@ -526,8 +535,9 @@ export async function fetchOrganizationDetails(
         scope.setTag("parentName", parentName);
         return scope;
       });
+      console.info("profile:", profile, "accessToken:", accessToken);
       console.error(
-        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}:`,
+        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
         error
       );
       return null;
@@ -541,14 +551,21 @@ export async function fetchOrganizationDetails(
 
   try {
     // Fetch organization data
-    const results = await Promise.all(orgIds.map(fetchOrganizationData));
-    console.log("fetchOrganizationDetails results:", results);
+    const results = (
+      await Promise.all(orgIds.map(fetchOrganizationData))
+    ).filter((result) => result != null);
+
+    console.log(
+      "fetchOrganizationDetails results:",
+      JSON.stringify(results, null, 2)
+    );
+
     const filteredResults = filterResultsByLatestDate(
       results,
       profile.personOrganization
     );
 
-    console.log("fetchOrganizationDetails filteredResults:", filteredResults);
+    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -595,16 +612,19 @@ export async function fetchOrganizationDetails(
           channelSegmentId = text8;
         }
       } else {
+        console.info("profile:", profile, "accessToken:", accessToken);
         console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
+    console.info("profile:", profile, "accessToken:", accessToken);
     console.error("Error processing organization details:", error);
   }
 
   console.log("fetchOrganizationDetails jobId:", jobId);
   console.log("fetchOrganizationDetails storeId:", storeId);
   console.log("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails channelName:", channelName);
 
   // Return the collected information
   return {
