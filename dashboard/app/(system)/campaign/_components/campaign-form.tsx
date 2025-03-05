@@ -1,10 +1,10 @@
 'use client';
 
 // React and hooks
-import { useEffect, useState } from 'react';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-import { useStateVariables } from '@/components/provider/state-provider';
 
 // Form related
 import {
@@ -19,15 +19,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from '../_type/formSchema';
 
 // UI Components
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -38,6 +29,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 
 // Custom Components
 import Container from './container';
@@ -54,9 +54,9 @@ import { Check, CircleHelp } from 'lucide-react';
 
 // Utils and Constants
 import { cn } from '@/utils/utils';
+import { toast } from 'sonner';
 import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
-import { toast } from 'sonner';
 
 // State Management
 import useCampaignState from '../store/campaign-state';
@@ -261,7 +261,19 @@ export default function CampaignForm({
       const response = await fetch(`/api/cms/campaign/${campaignId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          campaignId,
+          name: data.certificationName,
+          startedAt: data.startDate,
+          endedAt: data.endDate,
+          totalStages: Number(data.numberOfStages),
+          firstBadgeName: data.firstBadgeName,
+          secondBadgeName: data.secondBadgeName,
+          ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
+          ffSecondBadgeStageIndex: Number(data.ffSecondBadgeStage),
+          fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
+          fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
+        }),
       });
 
       console.log('🥕 response', response);
