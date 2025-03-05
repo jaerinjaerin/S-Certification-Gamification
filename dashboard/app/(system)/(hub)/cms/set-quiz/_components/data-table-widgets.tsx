@@ -21,12 +21,12 @@ function ActiveToggle({
   );
 }
 
-function StatusCircle({ label }: { label: 'Ready' | 'Not Ready' }) {
+function StatusCircle({ isReady }: { isReady: boolean }) {
   return (
     <div
       className={cn(
         'size-4 rounded-full',
-        label === 'Ready' ? 'bg-green-300' : 'bg-red-300'
+        isReady ? 'bg-green-300' : 'bg-red-300'
       )}
     />
   );

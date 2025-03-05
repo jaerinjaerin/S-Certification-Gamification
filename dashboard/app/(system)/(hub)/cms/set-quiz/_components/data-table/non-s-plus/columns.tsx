@@ -31,13 +31,7 @@ export const columns: ColumnDef<DomainChannel>[] = [
     ),
     cell: ({ row }) => (
       <div>
-        {/* TODO: status 값 확인 필요 */}
-        {/* <StatusCircle label="Ready" /> */}
-        {row.original.isReady ? (
-          <StatusCircle label="Ready" />
-        ) : (
-          <StatusCircle label="Not Ready" />
-        )}
+        <StatusCircle isReady={row.original.isReady} />
       </div>
     ),
   },

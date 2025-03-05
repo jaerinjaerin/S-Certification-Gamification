@@ -38,6 +38,7 @@ const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
 >(({ children, title, variant }, ref) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
     quizSet,
@@ -106,29 +107,44 @@ const UploadExcelFileModal = forwardRef<
   };
 
   const submitQuiz = async () => {
-    const result = await submitQuizSet(
-      getValidFiles(),
-      campaign!.id,
-      setIsDialogOpen
-    );
-    if (result) setProcessResult(result);
+    try {
+      setIsLoading(true);
+      const result = await submitQuizSet(
+        getValidFiles(),
+        campaign!.id,
+        setIsDialogOpen
+      );
+      if (result) setProcessResult(result);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSumbit = {
     quiz: submitQuiz,
     activityId: async () => {
-      const result = await submitActivityId(
-        uploadFiles.activityId,
-        campaign!.id
-      );
-      if (result) {
-        setProcessResult(result);
+      try {
+        setIsLoading(true);
+        const result = await submitActivityId(
+          uploadFiles.activityId,
+          campaign!.id
+        );
+        if (result) {
+          setProcessResult(result);
+        }
+      } finally {
+        setIsLoading(false);
       }
     },
     'non-s': async () => {
-      const result = await submitNonS(uploadFiles['non-s'], campaign!.id);
-      if (result) {
-        setProcessResult(result);
+      try {
+        setIsLoading(true);
+        const result = await submitNonS(uploadFiles['non-s'], campaign!.id);
+        if (result) {
+          setProcessResult(result);
+        }
+      } finally {
+        setIsLoading(false);
       }
     },
     hq: submitQuiz,
@@ -187,7 +203,11 @@ const UploadExcelFileModal = forwardRef<
           {!isEmpty(uploadFiles[variant]) && (
             <DialogFooter className="!justify-center !flex-row">
               <DialogClose asChild>
-                <Button variant="secondary" onClick={clearUploadFile[variant]}>
+                <Button
+                  variant="secondary"
+                  onClick={clearUploadFile[variant]}
+                  disabled={isLoading}
+                >
                   Cancel
                 </Button>
               </DialogClose>
@@ -195,7 +215,7 @@ const UploadExcelFileModal = forwardRef<
                 className={cn('!ml-3')}
                 variant="action"
                 onClick={handleSumbit[variant]}
-                disabled={isEmpty(getValidFiles())}
+                disabled={isEmpty(getValidFiles()) || isLoading}
               >
                 Upload
               </Button>
@@ -213,6 +233,7 @@ const UploadExcelFileModal = forwardRef<
           handleDialogOpen(false);
         }} // 다이얼로그가 닫힐 때 processResult를 초기화
       />
+
       <CustomAlertDialog
         open={alert.isOpen}
         description={alert.message}

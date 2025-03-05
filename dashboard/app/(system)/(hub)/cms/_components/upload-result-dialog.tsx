@@ -74,6 +74,21 @@ export default function UploadResultDialog({
     );
   };
 
+  const getErrorMessage = (item: any) => {
+    if (
+      'errors' in item &&
+      Array.isArray(item.errors) &&
+      item.errors.length > 0
+    ) {
+      return item.errors[0].message;
+    }
+    if ('error' in item && item.error?.message) {
+      return item.error.message.split(':')[1];
+    }
+    return 'Unknown error';
+  };
+  const failureFiles = uploadFilesResult.filter((item) => !item.success);
+  console.log('🥕 failureFiles', failureFiles);
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       {/* <DialogTrigger>{trigger}</DialogTrigger> */}
@@ -101,27 +116,31 @@ export default function UploadResultDialog({
             {uploadFilesResult.filter((item) => !item.success).length} files
             failed to upload.
           </div>
-          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-            {/* {tableContent} */}
-            <FilesTableComponent>
-              {uploadFilesResult.map((item, index) => {
-                console.log('🫠🫠 item', item);
 
-                if (!item.success) {
+          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+            <FilesTableComponent>
+              {variant === 'non-s' &&
+                uploadFilesResult.map((item, index) => (
+                  <tr key={index} className="border-t border-t-zinc-200">
+                    <Td>{index + 1}</Td>
+                    <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
+                    <Td>{item.result.failures[0]}</Td>
+                  </tr>
+                ))}
+
+              {variant !== 'non-s' &&
+                failureFiles.map((item, index) => {
                   return (
                     <tr key={index} className="border-t border-t-zinc-200">
                       <Td>{index + 1}</Td>
-                      <Td>{item.error.message}</Td>
-                      {/* <Td>
-                    <span className="text-red-500">
-                      {uploadData[variant][index]?.errors &&
-                        uploadData[variant][index]?.errors[0]?.message}
-                    </span>
-                  </Td> */}
+
+                      <Td>
+                        {item.fileName || item.error.message.split(':')[0]}
+                      </Td>
+                      <Td className="text-red-500">{getErrorMessage(item)}</Td>
                     </tr>
                   );
-                }
-              })}
+                })}
             </FilesTableComponent>
           </div>
         </div>
