@@ -1,9 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { useState } from 'react';
-import useSWR from 'swr';
 import { ChevronDown, Search } from 'lucide-react';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -22,8 +20,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
-import { columns } from './columns';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -35,6 +31,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
+import { columns } from './columns';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -71,7 +69,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     <div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          Total: {table.getFilteredRowModel().rows.length}
+          Total: {table.getFilteredRowModel().rows.length}, Domain:{' '}
+          {new Set(data.map((item) => item.quizSet.domain.id)).size}
         </div>
       </div>
       <div className="flex items-center py-4">

@@ -199,6 +199,9 @@ export async function GET(request: NextRequest, props: Props) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     return NextResponse.json(
