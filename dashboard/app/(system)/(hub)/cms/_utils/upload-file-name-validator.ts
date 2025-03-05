@@ -1,46 +1,48 @@
-import { UploadExcelFileVariant } from '../_types/type';
+type ValidatorResult = {
+  file: File;
+  metadata: { hasError: boolean; code?: string; errorMessage?: string };
+};
 
 export const uploadFileNameValidator = (
   file: File,
-  variant: UploadExcelFileVariant,
+  variant: 'ui' | 'target',
   campaign?: string
 ) => {
   const fileName = file.name?.replace(/\.[^/.]+$/, '');
 
-  // variant에 따라 파일 이름 검증 로직 추가
-  if (variant === 'quiz') {
-    const quizRegex =
-      /^qs_\{[a-zA-Z0-9_]+\}_\{[a-zA-Z0-9-]+\}_\{[a-zA-Z]+\}(_\{[a-zA-Z0-9_-]+\})?$/;
+  const errorResult = (message: string): ValidatorResult => ({
+    file,
+    metadata: {
+      hasError: true,
+      code: 'invalid-file-name',
+      errorMessage: message,
+    },
+  });
 
-    if (!quizRegex.test(fileName)) {
-      return {
-        code: 'invalid-file-name',
-        message:
-          'Invalid Quiz file name. Format: qs_{DomainCode}_{LanguageCode}_{JobGroup}_{version}',
-      };
-    }
-  }
+  const successResult: ValidatorResult = {
+    file,
+    metadata: {
+      hasError: false,
+    },
+  };
 
   if (variant === 'ui') {
     const uiRegex = /^ui_[a-zA-Z-]+(_[a-zA-Z0-9]+)?$/;
-    if (!uiRegex.test(fileName)) {
-      return {
-        code: 'invalid-file-name',
-        message: 'Invalid UI file name. Format: ui_{UiLanguageCode}_{version}',
-      };
-    }
-  }
-  if (variant === 'target') {
-    if (
-      !file.name.toLowerCase().includes(`target_${campaign?.toLowerCase()}`)
-    ) {
-      return {
-        code: 'invalid-file-name',
-        message:
-          'Invalid Target file name. Format: target_{campaignName}_{version}',
-      };
-    }
+    return uiRegex.test(fileName)
+      ? successResult
+      : errorResult(
+          'Invalid UI file name. Format: ui_{UiLanguageCode}_{version}'
+        );
   }
 
-  return null;
+  if (variant === 'target') {
+    return file.name.toLowerCase().includes(`target_${campaign?.toLowerCase()}`)
+      ? successResult
+      : errorResult(
+          'Invalid Target file name. Format: target_{campaignName}_{version}'
+        );
+  }
+
+  // This should never happen due to type safety, but TypeScript requires a return
+  return errorResult('Invalid variant type');
 };

@@ -9,12 +9,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { DropzoneView } from './upload-files-dialog';
-import { useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { useState } from 'react';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { UploadExcelFileVariant } from '@/app/(system)/(hub)/cms/_types/type';
 import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
 import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
 import { useLanguageData } from '../_provider/language-data-provider';
@@ -26,42 +25,45 @@ import { useStateVariables } from '@/components/provider/state-provider';
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
-  variant: UploadExcelFileVariant;
 };
 
 export default function UploadExcelFileModal({
   children,
   title,
-  variant,
 }: UploadExcelFileModalProps) {
   const { campaign } = useStateVariables();
   const { state, dispatch } = useLanguageData();
   const [files, setFiles] = useState<LanguageConvertedProps[]>([]);
+  const [processResult, setProcessResult] = useState<LanguageConvertedProps[]>(
+    []
+  );
+
   const [isConverting, setIsConverting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {
-    getRootProps,
-    getInputProps,
-    open,
-    isDragActive,
-    acceptedFiles,
-    fileRejections,
-  } = useDropzone({
+  const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     accept: {
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
       'application/vnd.ms-excel': [],
     },
-    validator: (file) => uploadFileNameValidator(file, variant),
     onDrop: async (acceptedFiles) => {
-      const processed = await Promise.all(
-        acceptedFiles.map(async (file) =>
-          processAndExportExcelAndJson(file, setIsConverting)
-        )
+      const fileNameValidationResults = acceptedFiles.map((file) =>
+        uploadFileNameValidator(file, 'ui')
+      );
+      const validFiles = fileNameValidationResults.filter(
+        ({ metadata }) => !metadata.hasError
+      );
+      const invalidFiles = fileNameValidationResults.filter(
+        ({ metadata }) => metadata.hasError
       );
 
-      setFiles(processed);
+      const processed = await Promise.all(
+        validFiles.map(async (file) =>
+          processAndExportExcelAndJson(file!.file, setIsConverting)
+        )
+      );
+      setFiles([...processed, ...invalidFiles]);
     },
     noClick: true,
     noKeyboard: false,
@@ -87,6 +89,7 @@ export default function UploadExcelFileModal({
 
   const handleSubmit = async () => {
     // hasError가 true인 파일은 업로드하지 않음
+
     const validFiles = dataFilterNoHasError(files);
     const formData = new FormData();
     validFiles.forEach(({ file, json }) => {
@@ -101,8 +104,9 @@ export default function UploadExcelFileModal({
       const response = await axios.post('/api/cms/language', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      // console.log('🚀 File uploaded:', response.data);
+      console.log('🚀 File uploaded:', response.data);
       updateData(response.data.result);
+      setProcessResult(response.data.result);
     } catch (error) {
       console.error('Upload failed:', error);
     } finally {
@@ -124,7 +128,7 @@ export default function UploadExcelFileModal({
   };
 
   //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
-
+  console.log('🥕 files', files);
   return (
     <>
       {loading && <LoaderWithBackground />}

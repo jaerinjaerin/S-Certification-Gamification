@@ -17,7 +17,7 @@ export default async function UILanguagePage() {
           <SectionTitle>UI Language List</SectionTitle>
           <div className="flex space-x-3">
             <DownloadLanguages />
-            <UploadExcelFileModal title="Upload UI Language" variant="ui">
+            <UploadExcelFileModal title="Upload UI Language">
               <Button variant="action">Upload</Button>
             </UploadExcelFileModal>
           </div>

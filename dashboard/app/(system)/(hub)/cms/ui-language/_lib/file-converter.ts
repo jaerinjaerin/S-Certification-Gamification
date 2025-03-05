@@ -21,7 +21,7 @@ export const processAndExportExcelAndJson = async (
 
     const lastDotIndex = file.name.lastIndexOf('.');
     const filename = `${lastDotIndex !== -1 ? file.name.slice(0, lastDotIndex) : file.name}.json`;
-    const json = jsonToFile({ filename, json: result.data });
+    const json = jsonToFile({ filename, json: result.result });
 
     return { file, json, metadata: { hasError: false } };
   } catch (error) {
