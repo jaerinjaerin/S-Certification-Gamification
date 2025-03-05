@@ -27,6 +27,7 @@ export interface GroupedQuizSet {
         region: Region;
       };
     };
+    campaign: Campaign;
     language: Language;
     quizStages: (QuizStage & {
       badgeImage: Image | null;

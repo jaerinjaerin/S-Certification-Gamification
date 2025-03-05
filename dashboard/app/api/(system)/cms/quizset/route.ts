@@ -801,6 +801,7 @@ export async function GET(request: Request) {
             },
           },
         },
+        campaign: true,
         language: true,
         quizStages: {
           include: {
