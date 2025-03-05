@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 export default function ContentManagementSystem() {
-  redirect("/cms/questions/question-bank");
+  redirect('/cms/set-quiz');
   return null;
 }

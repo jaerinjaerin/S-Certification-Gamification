@@ -199,16 +199,13 @@ export async function GET(request: NextRequest, props: Props) {
       where: {
         id: campaignId,
       },
-    });
-
-    const campaignSettings = await prisma.campaignSettings.findFirst({
-      where: {
-        campaignId: campaignId,
+      include: {
+        settings: true,
       },
     });
 
     return NextResponse.json(
-      { success: true, result: { campaign, campaignSettings } },
+      { success: true, result: { campaign } },
       { status: 200 }
     );
   } catch (error: unknown) {
