@@ -202,7 +202,7 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
     const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
       method: 'DELETE',
     });
-    console.log('🥕 response', response);
+
     if (!response.ok) {
       toast.error(`Error deleting quiz set: ${response.statusText}`);
       return;
