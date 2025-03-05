@@ -1,3 +1,4 @@
+import { ERROR_CODES } from '@/app/constants/error-codes';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -179,6 +180,43 @@ export async function DELETE(request: NextRequest) {
   } catch (error: unknown) {
     console.error('Error delete campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+type Props = {
+  params: {
+    campaign_id: string;
+  };
+};
+
+export async function GET(request: NextRequest, props: Props) {
+  try {
+    const campaignId = props.params.campaign_id;
+    console.log('campaignId: ', campaignId);
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    return NextResponse.json(
+      { success: true, result: { campaign } },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    console.error('Error get campaigns: ', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: 'An unexpected error occurred',
+          code: ERROR_CODES.UNKNOWN,
+        },
+      },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }
