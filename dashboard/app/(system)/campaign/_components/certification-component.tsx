@@ -7,6 +7,7 @@ import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dial
 import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
 import { LoaderWithBackground } from '@/components/loader';
+import { toast } from 'sonner';
 
 export default function CertificationClientComponent() {
   const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
@@ -45,9 +46,11 @@ export default function CertificationClientComponent() {
       </div>
       <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8">
         {campaigns &&
-          campaigns.map((campaign) => (
-            <CertificationListItem key={campaign.id} campaign={campaign} />
-          ))}
+          campaigns
+            .filter((campaign) => !campaign.deleted)
+            .map((campaign) => (
+              <CertificationListItem key={campaign.id} campaign={campaign} />
+            ))}
       </div>
       {isRouting && <LoaderWithBackground />}
     </div>
@@ -59,6 +62,27 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { routeToPage, isRouting } = useNavigation();
   const currentDate = dayjs();
   const isEditable = currentDate < campaign?.startedAt;
+
+  const handleDeleteCampaign = async () => {
+    try {
+      const response = await fetch(`/api/cms/campaign/${campaign.id}`, {
+        method: 'DELETE',
+        body: JSON.stringify({
+          campaignId: campaign.id,
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error('Failed to delete campaign');
+        return;
+      }
+
+      toast.success('Campaign deleted successfully');
+    } catch (error) {
+      toast.error(`Error deleting campaign: ${error}`);
+      console.error('Error deleting campaign:', error);
+    }
+  };
 
   return (
     <>
@@ -105,6 +129,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
                     label: 'Delete',
                     variant: 'delete',
                     type: 'delete',
+                    onClick: handleDeleteCampaign,
                   },
                 ]}
               />
