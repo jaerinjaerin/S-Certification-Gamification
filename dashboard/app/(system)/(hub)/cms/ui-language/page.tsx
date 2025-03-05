@@ -18,12 +18,13 @@ export default async function UILanguagePage() {
           <SectionTitle>UI Language List</SectionTitle>
           <div className="flex space-x-3">
             <DownloadLanguages />
-            <ExcelUploader />
             <UploadExcelFileModal title="Upload UI Language">
               <Button variant="action">Upload</Button>
             </UploadExcelFileModal>
           </div>
         </div>
+
+        <ExcelUploader />
         <div className="border rounded-md">
           <DataTable />
         </div>
