@@ -6,7 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Slash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -23,6 +23,7 @@ import { Separator } from '../ui/separator';
 import { useNavigation } from '@/app/(system)/(hub)/cms/_hooks/useNavigation';
 
 const CurrentBreadCrumb = () => {
+  const router = useRouter();
   const { campaigns, campaign, setCampaign } = useStateVariables();
   const { routeToPage } = useNavigation();
   const pathname = usePathname();
@@ -33,6 +34,7 @@ const CurrentBreadCrumb = () => {
 
   const handleChangeCampaign = (value: string) => {
     if (!campaigns) return;
+    if (value === '/campaign') router.push(value);
     //
     if (value === 'certification-list') {
       routeToPage('/');
@@ -55,12 +57,11 @@ const CurrentBreadCrumb = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem
-                value="certification-list"
-                className="text-base font-bold"
+                value="/campaign"
+                className="font-bold border-b text-base"
               >
                 Certification List
               </SelectItem>
-              <Separator className="my-1" />
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}

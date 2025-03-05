@@ -38,7 +38,7 @@ export function MediaAssetItem({
           <Button
             size="icon"
             className="size-6 bg-zinc-50 hover:bg-zinc-200 shadow-none"
-            onClick={() => handleDownload(fileName, imageUrl)}
+            onClick={() => handleDownload(`${group}_${fileName}`, imageUrl)}
           >
             <Download className="text-zinc-950" />
           </Button>

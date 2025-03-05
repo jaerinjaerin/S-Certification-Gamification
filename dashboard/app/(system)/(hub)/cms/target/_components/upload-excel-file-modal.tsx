@@ -76,13 +76,11 @@ export default function UploadExcelFileModal({
   const updateData = (updatedItems: TargetProps[]) => {
     const data = state.targets || [];
 
-    // 특정 `id`를 가진 항목만 업데이트하고 나머지는 그대로 유지
-    const updatedData = data.map((item) => {
-      const updatedItem = updatedItems.find(
-        (updateItem) => updateItem.id === item.id
-      );
-      return updatedItem ? { ...item, ...updatedItem } : item;
-    });
+    const updatedData = Array.from(
+      new Map(
+        [...data, ...updatedItems].map((item) => [item.domainId, item])
+      ).values()
+    );
 
     dispatch({ type: 'SET_TARGET_LIST', payload: updatedData });
   };
@@ -114,7 +112,6 @@ export default function UploadExcelFileModal({
       const response = await axios.post('/api/cms/target', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      // console.log('🚀 File uploaded:', response.data);
       updateData(response.data.result);
     } catch (error) {
       console.error('Upload failed:', error);
