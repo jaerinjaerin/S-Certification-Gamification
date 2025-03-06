@@ -1,3 +1,5 @@
+import { UploadExcelFileVariant } from '../_types/type';
+
 type ValidatorResult = {
   file: File;
   metadata: { hasError: boolean; code?: string; errorMessage?: string };
@@ -5,7 +7,8 @@ type ValidatorResult = {
 
 export const uploadFileNameValidator = (
   file: File,
-  variant: 'ui' | 'target',
+  variant: UploadExcelFileVariant,
+  // variant: 'ui' | 'target',
   campaign?: string
 ) => {
   const fileName = file.name?.replace(/\.[^/.]+$/, '');

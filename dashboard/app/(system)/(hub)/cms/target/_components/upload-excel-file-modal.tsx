@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
+import { UploadExcelFileVariant } from '@/app/(system)/(hub)/cms/_types/type';
+import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
+import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
+import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -8,20 +14,14 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { DropzoneView } from './upload-files-dialog';
-import { useDropzone } from 'react-dropzone';
-import { useState } from 'react';
-import { DialogTitle } from '@radix-ui/react-dialog';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { UploadExcelFileVariant } from '@/app/(system)/(hub)/cms/_types/type';
-import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
-import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
-import { useTargetData } from '../_provider/target-data-provider';
+import { DialogTitle } from '@radix-ui/react-dialog';
 import axios from 'axios';
-import { LoaderWithBackground } from '@/components/loader';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { processAndExportExcelAndJsonObject } from '../_lib/file-converter';
-import { useStateVariables } from '@/components/provider/state-provider';
+import { useTargetData } from '../_provider/target-data-provider';
+import { DropzoneView } from './upload-files-dialog';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -53,12 +53,14 @@ export default function UploadExcelFileModal({
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
       'application/vnd.ms-excel': [],
     },
-    validator: (file) =>
-      uploadFileNameValidator(
+    validator: (file) => {
+      const result = uploadFileNameValidator(
         file,
         variant,
         variant === 'target' ? campaign?.name : undefined
-      ),
+      );
+      return result as any;
+    },
     onDrop: async (acceptedFiles) => {
       const processed = await Promise.all(
         acceptedFiles.map(async (file) =>

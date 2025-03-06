@@ -3,8 +3,13 @@
 import { useStateVariables } from '@/components/provider/state-provider';
 import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
 
-import useQuizSetState from '../_store/quizset-state';
+import useQuizSetState, { UserTabState } from '../_store/quizset-state';
 
+import { LoaderWithBackground } from '@/components/loader';
+import useSWR from 'swr';
+import { isEmpty } from '../../_utils/utils';
+import { fetcher } from '../../lib/fetcher';
+import { QuizSetResponse } from '../_type/type';
 import NonSplusDataTable from './data-table/non-s-plus/data-table';
 import SplusDataTable from './data-table/s-plus/data-table';
 import {
@@ -13,11 +18,6 @@ import {
   SPlusUserUploadButton,
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
-import useSWR from 'swr';
-import { QuizSetResponse } from '../_type/type';
-import { fetcher } from '../../lib/fetcher';
-import { LoaderWithBackground } from '@/components/loader';
-import { isEmpty } from '../../_utils/utils';
 
 export function SetQuizClient() {
   const {
@@ -54,7 +54,9 @@ export function SetQuizClient() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <span>Domain List</span>
-          <UserTabList setTabState={setTabState} />
+          <UserTabList
+            setTabState={(state) => setTabState(state as UserTabState)}
+          />
         </div>
         {tabState === 's' && <SPlusUserUploadButton />}
         {tabState === 'non-s' && <NonSPlusUserUploadButton />}

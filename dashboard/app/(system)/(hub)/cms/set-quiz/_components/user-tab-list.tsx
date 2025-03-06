@@ -1,7 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SetStateAction } from 'react';
-import { Dispatch } from 'react';
-import { UserTabState } from './set-quiz-client';
+import { Dispatch, SetStateAction } from 'react';
+import { UserTabState } from '../_store/quizset-state';
 
 export function UserTabList({
   setTabState,
