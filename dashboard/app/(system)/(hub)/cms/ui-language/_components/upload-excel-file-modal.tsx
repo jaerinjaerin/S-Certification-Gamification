@@ -28,7 +28,7 @@ import { isEmpty } from '../../_utils/utils';
 // Hooks & State
 import { useStateVariables } from '@/components/provider/state-provider';
 
-import { X } from 'lucide-react';
+import { CircleAlert, X } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import UploadResultDialog from './upload-result-dialog';
 import { toast } from 'sonner';
@@ -262,9 +262,10 @@ const UploadExcelFileModal = forwardRef<
                       <Td>{file.name}</Td>
                       <Td>
                         {!uploadState.data[index].success && (
-                          <span className="text-red-500">
-                            {uploadState.data[index].data.name}
-                          </span>
+                          <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                            <CircleAlert className="size-4" />
+                            <span>{uploadState.data[index].data.name}</span>
+                          </div>
                         )}
                       </Td>
                     </tr>

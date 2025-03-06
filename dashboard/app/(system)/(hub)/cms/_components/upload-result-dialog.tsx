@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { X, Check, CircleX } from 'lucide-react';
+import { X, Check, CircleX, CircleAlert } from 'lucide-react';
 import { UploadExcelFileVariant } from '../set-quiz/_type/type';
 import {
   FilesTableComponent,
@@ -124,7 +124,13 @@ export default function UploadResultDialog({
                   <tr key={index} className="border-t border-t-zinc-200">
                     <Td>{index + 1}</Td>
                     <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-                    <Td>{item.result.failures[0]}</Td>
+                    <Td>
+                      {/* {item.result.failures[0]} */}
+                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                        <CircleAlert className="size-4" />
+                        <span>Some data is missing.</span>
+                      </div>
+                    </Td>
                   </tr>
                 ))}
 
@@ -137,7 +143,13 @@ export default function UploadResultDialog({
                       <Td>
                         {item.fileName || item.error.message.split(':')[0]}
                       </Td>
-                      <Td className="text-red-500">{getErrorMessage(item)}</Td>
+                      <Td>
+                        {/* {getErrorMessage(item)} */}
+                        <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                          <CircleAlert className="size-4" />
+                          <span>Some data is missing.</span>
+                        </div>
+                      </Td>
                     </tr>
                   );
                 })}

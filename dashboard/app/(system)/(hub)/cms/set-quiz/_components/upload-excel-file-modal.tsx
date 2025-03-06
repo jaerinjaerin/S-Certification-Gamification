@@ -32,7 +32,7 @@ import useFileDropZone from '../_hooks/useFileDropZone';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { submitNonS } from '../_lib/submit-nonS';
 import UploadResultDialog from '../../_components/upload-result-dialog';
-import { X } from 'lucide-react';
+import { CircleAlert, X } from 'lucide-react';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
@@ -56,6 +56,8 @@ const UploadExcelFileModal = forwardRef<
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
+
+  console.log(campaign);
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -164,7 +166,7 @@ const UploadExcelFileModal = forwardRef<
             <DialogTitle className="text-size-17px font-semibold">
               {title}
             </DialogTitle>
-            <DialogClose>
+            <DialogClose className={cn(isLoading && 'pointer-events-none')}>
               <X />
             </DialogClose>
           </DialogHeader>
@@ -183,19 +185,26 @@ const UploadExcelFileModal = forwardRef<
               </span>
               <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
                 <FilesTableComponent>
-                  {uploadFiles[variant].map((file, index) => (
-                    <tr key={index} className="border-t border-t-zinc-200">
-                      <Td>{index + 1}</Td>
-                      <Td>{file.name}</Td>
-                      <Td>
-                        {!uploadData[variant][index].success && (
-                          <span className="text-red-500">
-                            {uploadData[variant][index].errors?.[0].message}
-                          </span>
-                        )}
-                      </Td>
-                    </tr>
-                  ))}
+                  {uploadFiles[variant].map((file, index) => {
+                    return (
+                      <tr key={index} className="border-t border-t-zinc-200">
+                        <Td>{index + 1}</Td>
+                        <Td>{file.name}</Td>
+                        <Td>
+                          {!uploadData[variant][index].success ? (
+                            <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                              <CircleAlert className="size-4" />
+                              <span>
+                                {uploadData[variant][index].errors?.[0].message}
+                              </span>
+                            </div>
+                          ) : (
+                            <span>-</span>
+                          )}
+                        </Td>
+                      </tr>
+                    );
+                  })}
                 </FilesTableComponent>
               </div>
             </div>

@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { X, Check, CircleX } from 'lucide-react';
+import { X, Check, CircleX, CircleAlert } from 'lucide-react';
 
 import {
   FilesTableComponent,
@@ -122,7 +122,12 @@ export default function UploadResultDialog({
                     <Td>{index + 1}</Td>
 
                     <Td>{item.fileName || item.error.message.split(':')[0]}</Td>
-                    <Td className="text-red-500">{getErrorMessage(item)}</Td>
+                    <Td>
+                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                        <CircleAlert className="size-4" />
+                        <span>{getErrorMessage(item)}</span>
+                      </div>
+                    </Td>
                   </tr>
                 );
               })}

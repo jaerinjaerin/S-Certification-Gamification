@@ -21,6 +21,7 @@ import axios from 'axios';
 import { LoaderWithBackground } from '@/components/loader';
 import { processAndExportExcelAndJson } from '../_lib/file-converter';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { CircleAlert } from 'lucide-react';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -154,9 +155,10 @@ export default function UploadExcelFileModal({
                   <div key={index} className={cn('flex gap-5')}>
                     <span>{file.name}</span>
                     {metadata.hasError && (
-                      <span className="text-red-500">
-                        {metadata.errorMessage}
-                      </span>
+                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                        <CircleAlert className="size-4" />
+                        <span> {metadata.errorMessage}</span>
+                      </div>
                     )}
                   </div>
                 ))}
