@@ -302,6 +302,51 @@ export async function POST(request: NextRequest) {
         },
       })) ?? [];
 
+    // 엑셀에 입력된 이미지 중 등록되어 있지 않은 이미지가 있는지 확인
+    const backgroundImageIds = questions.map(
+      (question) => question.backgroundImageId
+    );
+
+    const notRegisteredBackgroundImages = backgroundImageIds.filter(
+      (id) => !backgroundImages.find((image) => image.title === id)
+    );
+
+    if (notRegisteredBackgroundImages.length > 0) {
+      console.error('Background images not registered');
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Background images not registered`,
+            code: ERROR_CODES.BACKGROUND_IMAGES_NOT_REGISTERED,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const characterImageIds = questions.map(
+      (question) => question.characterImageId
+    );
+
+    const notRegisteredCharacterImages = characterImageIds.filter(
+      (id) => !characterImages.find((image) => image.title === id)
+    );
+
+    if (notRegisteredCharacterImages.length > 0) {
+      console.error('Character images not registered');
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Character images not registered`,
+            code: ERROR_CODES.CHARACTER_IMAGES_NOT_REGISTERED,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     // if (quizSet) {
     //   const savedQuizSetFile = await prisma.quizSetFile.findFirst({
     //     where: {

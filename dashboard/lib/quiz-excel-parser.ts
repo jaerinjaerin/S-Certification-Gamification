@@ -248,7 +248,7 @@ const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
           text: row['Question'],
           questionType: row['QuestionType'] || null,
           backgroundImageId: row['ImageBackground'] || null,
-          characterImageId: row['ImageCharactor'] || null,
+          characterImageId: row['ImageCharacter'] || null,
           options: [], // 각 문제별로 options을 따로 저장
         };
 

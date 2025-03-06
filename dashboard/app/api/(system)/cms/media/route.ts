@@ -6,6 +6,8 @@ import { uploadToS3 } from '@/lib/s3-client';
 import { Campaign } from '@prisma/client';
 import { getPath } from '@/lib/file';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;

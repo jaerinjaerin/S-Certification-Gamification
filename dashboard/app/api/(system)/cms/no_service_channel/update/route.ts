@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { getS3Client } from '@/lib/aws/s3-client';
+import { DomainData } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
 import {
   CloudFrontClient,
@@ -132,14 +133,27 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    filteredDomainDatas.forEach((domainData: any) => {
+    filteredDomainDatas.forEach((domainData: DomainData) => {
       const quizSet = quizSets.find((q) => q.domainId === domainData.id);
       if (quizSet) {
         if (quizSet.language) {
-          if (!domainData.languages) {
-            domainData.languages = [];
+          // if (!domainData.languages) {
+          //   domainData.languages = [];
+          // }
+          // domainData.languages.push(quizSet.language);
+          if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+            if (!domainData.languages.ff) {
+              domainData.languages.ff = [];
+            }
+            domainData.languages.ff.push(quizSet.language);
           }
-          domainData.languages.push(quizSet.language);
+          if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+            if (!domainData.languages.fsm) {
+              domainData.languages.fsm = [];
+            }
+            domainData.languages.fsm.push(quizSet.language);
+          }
+
           domainData.isReady = true;
         }
       } else {
