@@ -9,7 +9,14 @@ export const parseDateFromQuery = (query: QueryParams): ParsedDateRange => {
   return { from, to };
 };
 
-export const querySearchParams = (searchParams: URLSearchParams) => {
+export const querySearchParams = (
+  searchParams: URLSearchParams | Record<string, string | string[] | undefined>
+) => {
+  // URLSearchParams인지 확인하고 아니면 변환
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as Record<string, string>);
+  }
+
   // Convert searchParams to an object
   const params = Object.fromEntries(searchParams.entries()) as Record<
     string,
@@ -31,11 +38,27 @@ export const querySearchParams = (searchParams: URLSearchParams) => {
 export const paramsToQueries = (params: Record<string, any>) => {
   if (params?.key) delete params.key;
   //
-  const take = Number(params?.take) ?? 10;
-  const skip = take * (Number(params?.page || 1) - 1);
+  const take = Number(params?.take ?? 10);
+  const skip = take * (Number(params?.page ?? 1) - 1);
 
   // Parse period from params
   const period = params?.date || { from: new Date(), to: new Date() };
+
+  // Build where condition
+  const where = buildWhereCondition(params, period);
+
+  return { params, period, where, take, skip };
+};
+
+export const searchToQuery = (params: Record<string, any>) => {
+  if (!params) return;
+  if (params?.key) delete params.key;
+
+  const take = Number(params?.take ?? 10);
+  const skip = take * (Number(params?.page ?? 1) - 1);
+
+  // Parse period from params
+  const period = parseDateFromQuery(params);
 
   // Build where condition
   const where = buildWhereCondition(params, period);

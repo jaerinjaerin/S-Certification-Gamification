@@ -1,13 +1,14 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { URLSearchParams } from 'url';
 
 // UserQuizStatistics 사용
 
-export async function getParticipantCount(data: Record<string, any>) {
+export async function getParticipantCount(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({

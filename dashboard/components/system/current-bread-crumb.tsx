@@ -2,7 +2,6 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  // BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
@@ -19,15 +18,13 @@ import {
 import { useStateVariables } from '../provider/state-provider';
 import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
-import { Separator } from '../ui/separator';
-import { useNavigation } from '@/app/(system)/(hub)/cms/_hooks/useNavigation';
 
 const CurrentBreadCrumb = () => {
   const router = useRouter();
   const { campaigns, campaign, setCampaign } = useStateVariables();
-  const { routeToPage } = useNavigation();
   const pathname = usePathname();
   const paths = pathname
+    .replace(/\/dashboard\/[^/]+/, `/dashboard/`)
     .split('/')
     .filter(Boolean)
     .map((name) => name.replaceAll('-', ' '));
@@ -36,12 +33,10 @@ const CurrentBreadCrumb = () => {
     if (!campaigns) return;
     if (value === '/campaign') router.push(value);
     //
-    if (value === 'certification-list') {
-      routeToPage('/');
-      return;
-    }
     const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
-    if (selectedCampaign) setCampaign(selectedCampaign);
+    if (selectedCampaign) {
+      setCampaign(selectedCampaign);
+    }
   };
 
   return (

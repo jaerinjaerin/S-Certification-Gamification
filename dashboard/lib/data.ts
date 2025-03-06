@@ -77,3 +77,21 @@ export const domainCheckOnly = async (where: any) => {
 
   return nwhere;
 };
+
+// Experts by group initial data
+export const initialExpertsData: ImprovedDataStructure = [
+  {
+    group: 'plus',
+    items: [
+      { title: 'ff', value: 0 },
+      { title: 'fsm', value: 0 },
+    ],
+  },
+  {
+    group: 'ses',
+    items: [
+      { title: 'ff', value: 0 },
+      { title: 'fsm', value: 0 },
+    ],
+  },
+];
