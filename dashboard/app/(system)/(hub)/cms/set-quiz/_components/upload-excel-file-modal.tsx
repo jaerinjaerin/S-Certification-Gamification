@@ -55,6 +55,7 @@ const UploadExcelFileModal = forwardRef<
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -106,12 +107,16 @@ const UploadExcelFileModal = forwardRef<
   };
 
   const submitQuiz = async () => {
+    setIsLoading(true);
     const result = await submitQuizSet(
       getValidFiles(),
       campaign!.id,
       setIsDialogOpen
     );
-    if (result) setProcessResult(result);
+    if (result) {
+      setProcessResult(result);
+      setIsLoading(false);
+    }
   };
 
   const handleSumbit = {
@@ -187,7 +192,11 @@ const UploadExcelFileModal = forwardRef<
           {!isEmpty(uploadFiles[variant]) && (
             <DialogFooter className="!justify-center !flex-row">
               <DialogClose asChild>
-                <Button variant="secondary" onClick={clearUploadFile[variant]}>
+                <Button
+                  disabled={isLoading}
+                  variant="secondary"
+                  onClick={clearUploadFile[variant]}
+                >
                   Cancel
                 </Button>
               </DialogClose>
@@ -195,9 +204,9 @@ const UploadExcelFileModal = forwardRef<
                 className={cn('!ml-3')}
                 variant="action"
                 onClick={handleSumbit[variant]}
-                disabled={isEmpty(getValidFiles())}
+                disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Upload...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}
