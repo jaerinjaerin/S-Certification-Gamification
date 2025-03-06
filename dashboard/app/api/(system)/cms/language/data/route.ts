@@ -4,6 +4,8 @@ import { getFromS3 } from '@/lib/s3-client';
 import { NextRequest, NextResponse } from 'next/server';
 import JSZip from 'jszip';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
