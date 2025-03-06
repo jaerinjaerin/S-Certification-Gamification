@@ -7,6 +7,9 @@ const QuizQuizzesRanked = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getQuizRankByIncorrectAnswer(searchParams);
 
   return <QuizQuizzesRankedChild data={data} />;

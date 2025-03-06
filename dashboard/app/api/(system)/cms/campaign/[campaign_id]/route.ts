@@ -27,7 +27,7 @@ const filterNullish = (obj: Record<string, any>) => {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json();
-  const sesstion = await auth();
+  const session = await auth();
   const validatedData = editCampaignScheme.parse(body);
 
   try {
@@ -66,7 +66,7 @@ export async function PUT(request: NextRequest) {
     const campaignUpdateData = filterNullish({
       description: validatedData.description,
       name: validatedData.name,
-      updaterId: sesstion?.user?.id,
+      updaterId: session?.user?.id,
       startedAt: validatedData.startedAt
         ? new Date(validatedData.startedAt)
         : null,

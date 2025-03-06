@@ -8,6 +8,9 @@ const OverviewParticipantsInfo = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const count = await getParticipantCount(searchParams);
 
   return (

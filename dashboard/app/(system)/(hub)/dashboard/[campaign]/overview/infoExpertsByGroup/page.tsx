@@ -7,6 +7,9 @@ const OverviewExpertsByGroupInfo = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getExpertByGroup(searchParams);
 
   return (

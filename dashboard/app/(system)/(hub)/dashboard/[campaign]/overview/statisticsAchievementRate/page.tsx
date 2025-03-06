@@ -10,6 +10,9 @@ const OverviewAchievementRate = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const [data, count] = await Promise.all([
     getAchievementProgress(searchParams),
     getAchievementRate(searchParams),

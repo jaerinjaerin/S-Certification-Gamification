@@ -1,8 +1,7 @@
-import UserFilterForm from './@filters/page';
+import UserFilterForm from './filters/page';
 
 type Props = {
   children: React.ReactNode;
-  filters: any;
 };
 
 const UserLayout = ({ children }: Props) => {

@@ -8,10 +8,10 @@ const UserDomain = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
-  // searchParams가 URLSearchParams인지 확인
   if (!(searchParams instanceof URLSearchParams)) {
     searchParams = new URLSearchParams(searchParams as any);
   }
+
   const page = (searchParams.get('domainPageIndex') as string | null) ?? '1';
   searchParams.set('take', '10');
   searchParams.set('page', page);

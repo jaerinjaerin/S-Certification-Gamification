@@ -8,6 +8,9 @@ const OverviewExperts = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getExpertsData(searchParams);
 
   return <OverviewExpertsChild data={data} />;

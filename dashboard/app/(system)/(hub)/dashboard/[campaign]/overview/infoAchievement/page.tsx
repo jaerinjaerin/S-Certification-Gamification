@@ -8,6 +8,9 @@ const OverviewAchievementInfo = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const count = await getAchievementRate(searchParams);
 
   return (

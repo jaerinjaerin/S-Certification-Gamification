@@ -7,6 +7,9 @@ export const OverviewGoalAchievement = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getAchievementGoalProgress(searchParams);
 
   return <OverviewGoalAchievementChild progressData={data} />;
