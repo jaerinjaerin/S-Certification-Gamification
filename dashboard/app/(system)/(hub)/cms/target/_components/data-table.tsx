@@ -77,7 +77,7 @@ export function DataTable() {
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="p-4">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -99,7 +99,7 @@ export function DataTable() {
                 className="h-16"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="px-4 py-6">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

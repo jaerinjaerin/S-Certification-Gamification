@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { LoaderWithBackground } from '@/components/loader';
@@ -19,17 +20,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import Image from 'next/image';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { Question } from '@prisma/client';
+import { Image, Question, QuestionType } from '@prisma/client';
 
-type AccessKeyType = Question & {
-  characterImage: { imagePath: string; alt: string };
-  backgroundImage: { imagePath: string; alt: string };
+type accessKeyType = {
+  order: string;
+  originalIndex: number;
+  importance?: string;
+  product?: string;
+  category?: string;
+  questionType: QuestionType;
+  characterImage?: Image;
+  backgroundImage?: Image;
 };
 
 export default function QuizSetDetailsClient() {
@@ -62,7 +68,7 @@ export default function QuizSetDetailsClient() {
 
   const quizTableData: {
     header: string;
-    accessKey: keyof AccessKeyType;
+    accessKey: keyof accessKeyType;
     image: boolean;
   }[] = [
     { header: 'Order', accessKey: 'order', image: false },
@@ -154,67 +160,28 @@ export default function QuizSetDetailsClient() {
                           <TableBody>
                             <TableRow>
                               {quizTableData.map((key) => {
+                                console.log(question[key.accessKey]);
                                 return (
                                   <TableCell
                                     key={key.accessKey}
                                     className="px-3.5"
                                   >
-                                    {key.image ? (
-                                      <Image
-                                        src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${(question[key.accessKey] as { imagePath: string })?.imagePath}`}
-                                        alt={
-                                          (
-                                            question[key.accessKey] as {
-                                              alt: string;
-                                            }
-                                          )?.alt ?? ''
-                                        }
+                                    {(key.image &&
+                                      key.accessKey === 'backgroundImage') ||
+                                    key.accessKey === 'characterImage' ? (
+                                      <img
+                                        src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question[key.accessKey]?.imagePath}`}
+                                        alt={question[key.accessKey]?.alt ?? ''}
                                         className="size-16 bg-zinc-200 rounded-md object-cover"
-                                        width={56}
-                                        height={56}
                                       />
-                                    ) : (
+                                    ) : question[key.accessKey] ? (
                                       question[key.accessKey]?.toString()
+                                    ) : (
+                                      '-'
                                     )}
                                   </TableCell>
                                 );
                               })}
-                              {/* <TableCell className="px-3.5">
-                                {question.order}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                {question.originalIndex}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                {question.importance}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                {question.product}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                {question.category}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                {question.questionType}
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                <Image
-                                  src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.characterImage?.imagePath}`}
-                                  alt={question.characterImage?.alt ?? ''}
-                                  className="size-16 bg-zinc-200 rounded-md object-cover"
-                                  width={56}
-                                  height={56}
-                                />
-                              </TableCell>
-                              <TableCell className="px-3.5">
-                                <Image
-                                  src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question.backgroundImage?.imagePath}`}
-                                  alt={question.backgroundImage?.alt ?? ''}
-                                  className="size-16 bg-zinc-200 rounded-md object-cover"
-                                  width={56}
-                                  height={56}
-                                />
-                              </TableCell> */}
                             </TableRow>
                           </TableBody>
                         </Table>
