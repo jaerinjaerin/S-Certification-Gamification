@@ -25,10 +25,7 @@ export default function CertificationClientComponent() {
 
   return (
     <div>
-      <div
-        style={{ width: 'calc(100vw - 62px)' }}
-        className="flex justify-between items-center"
-      >
+      <div className="flex justify-between items-center">
         <h2 className="text-size-17px font-semibold">Certification List</h2>
         {!role && (
           <div className="flex gap-3">
@@ -86,7 +83,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
 
   return (
     <>
-      <div className="h-[100px] flex px-6 gap-[2.625rem] items-center border border-zinc-200 rounded-lg justify-between shadow-sm">
+      <div className="h-[6.25rem] w-[24.25rem] flex px-6 gap-[2.625rem] items-center border border-zinc-200 rounded-lg justify-between shadow-sm">
         <button
           type="button"
           className=" grow min-w-0 cursor-pointer h-full text-left px-3 flex flex-col justify-center"

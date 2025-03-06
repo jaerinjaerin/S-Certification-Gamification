@@ -36,7 +36,7 @@ function StatusBadge({ isReady }: { isReady: boolean }) {
   return (
     <span
       className={cn(
-        'w-fit text-size-14px font-medium px-2 py-[3.5px] rounded-full leading-tight flex items-center justify-center',
+        'w-fit text-size-14px font-medium px-2 py-[3.5px] text-nowrap rounded-full leading-tight flex items-center justify-center',
         isReady ? 'bg-green-300' : 'bg-red-300'
       )}
     >
