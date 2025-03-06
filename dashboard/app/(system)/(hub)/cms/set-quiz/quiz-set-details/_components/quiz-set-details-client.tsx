@@ -61,7 +61,7 @@ export default function QuizSetDetailsClient() {
       <div>
         <h3>Imported Questions</h3>
         <div>
-          {quizSet.quizStages.map((stage, index: number) => {
+          {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
             return (
               <div key={index}>
                 <span className="font-extrabold text-2xl">
