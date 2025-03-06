@@ -56,7 +56,7 @@ export default function QuizSetDetailsClient() {
         </div>
         <div>Domain: {quizSet.domain.name}</div>
         <div>Job Code: {quizSet.jobCodes[0].toUpperCase()}</div>
-        <div>Quiz Set Language: {quizSet.language.name}</div>
+        <div>Quiz Set Language: {quizSet.language?.name ?? '-'}</div>
       </div>
       <div>
         <h3>Imported Questions</h3>

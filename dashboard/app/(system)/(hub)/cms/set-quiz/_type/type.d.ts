@@ -1,7 +1,8 @@
 import { DomainData } from '@/lib/nomember-excel-parser';
-import { DomainChannel } from '@/types/apiTypes';
+import { DomainChannel, QuizSetEx, QuizStageEx } from '@/types/apiTypes';
 import type {
   ActivityBadge,
+  Campaign,
   Domain,
   Image,
   Language,
@@ -17,28 +18,34 @@ export type UploadExcelFileModalProps = {
   title: string;
   variant: UploadExcelFileVariant;
 };
+// export interface GroupedQuizSet {
+//   quizSet: QuizSet & {
+// domain: Domain & {
+//   subsidiary: Subsidiary & {
+//     region: Region;
+//   };
+// };
+//     campaign: Campaign;
+//     language: Language;
+//     quizStages: QuizStageEx[];
+//   };
+//   quizSetFile: QuizSetFile | undefined;
+//   activityBadges: ActivityBadge[] | undefined;
+//   // webLanguage: DomainWebLanguageEx | undefined;
+//   uiLanguage: Language | null;
+// }
+
 export interface GroupedQuizSet {
-  quizSet: QuizSet & {
+  quizSet: QuizSetEx & {
     domain: Domain & {
       subsidiary: Subsidiary & {
         region: Region;
       };
     };
     campaign: Campaign;
-    language: Language;
-    quizStages: QuizStageEx[];
-    // quizStages: (QuizStageEx & {
-    //   badgeImage: Image | null;
-    //   questions: (Question & {
-    //     options: QuestionOption[];
-    //     backgroundImage: Image | null;
-    //     characterImage: Image | null;
-    //   })[];
-    // })[];
   };
   quizSetFile: QuizSetFile | undefined;
   activityBadges: ActivityBadge[] | undefined;
-  // webLanguage: DomainWebLanguageEx | undefined;
   uiLanguage: Language | null;
 }
 
