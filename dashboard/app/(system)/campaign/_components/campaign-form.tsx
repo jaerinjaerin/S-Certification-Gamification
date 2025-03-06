@@ -567,8 +567,8 @@ export default function CampaignForm({
                 <Input
                   {...field}
                   disabled={selectedNumberOfStages === undefined}
-                  placeholder="Expert"
-                  value={isEditMode ? initialData?.firstBadgeName : field.value}
+                  // placeholder="Expert"
+                  value={isEditMode ? field.value : undefined}
                   className={cn(
                     inputStyle,
                     form.formState.errors.firstBadgeName?.message &&
@@ -586,10 +586,9 @@ export default function CampaignForm({
                 <Input
                   {...field}
                   disabled={selectedNumberOfStages === undefined}
-                  placeholder="Advanced"
-                  value={
-                    isEditMode ? initialData?.secondBadgeName : field.value
-                  }
+                  // placeholder="Advanced"
+                  // defaultValue={'Advanced'}
+                  value={isEditMode ? field.value : undefined}
                   className={cn(inputStyle)}
                 />
               )}
