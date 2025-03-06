@@ -217,7 +217,7 @@ const UploadExcelFileModal = forwardRef<
                 onClick={handleSumbit[variant]}
                 disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Upload...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}

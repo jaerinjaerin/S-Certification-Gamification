@@ -5,3 +5,16 @@ export const legendCapitalizeFormatter = (text: string) => {
 export const legendUpperCaseFormatter = (text: string) => {
   return text.toUpperCase();
 };
+
+export const updateCampaignId = ({
+  pathname,
+  campaignId,
+}: {
+  pathname: string;
+  campaignId: string | undefined;
+}) => {
+  if (pathname.startsWith('/dashboard/') && campaignId) {
+    return pathname.replace(/\/dashboard\/[^/]+/, `/dashboard/${campaignId}`);
+  }
+  return pathname;
+};

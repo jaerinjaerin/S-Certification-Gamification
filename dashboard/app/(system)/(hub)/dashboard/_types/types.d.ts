@@ -60,3 +60,13 @@ interface AllFilterData {
   userGroup: UserGroup;
   filters: FilterData;
 }
+
+type GroupedData = {
+  group: string;
+  items: {
+    title: string;
+    value: number;
+  }[];
+};
+
+type ImprovedDataStructure = GroupedData[];

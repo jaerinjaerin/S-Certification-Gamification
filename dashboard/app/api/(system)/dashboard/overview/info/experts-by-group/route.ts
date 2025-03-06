@@ -2,11 +2,10 @@
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { initialExpertsData } from '@/app/(system)/(hub)/dashboard/overview/@infoExpertsByGroup/_lib/state';
 import { querySearchParams } from '../../../_lib/query';
 import { buildWhereWithValidKeys } from '../../../_lib/where';
 import { UserQuizBadgeStageStatistics } from '@prisma/client';
-import { removeDuplicateUsers } from '@/lib/data';
+import { initialExpertsData, removeDuplicateUsers } from '@/lib/data';
 
 async function fetchUserStatistics(
   where: any,

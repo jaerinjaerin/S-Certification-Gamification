@@ -1,16 +1,16 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
 import { UserQuizBadgeStageStatistics } from '@prisma/client';
-import { removeDuplicateUsers } from '@/lib/data';
-import { initialExpertsData } from '@/app/(system)/(hub)/dashboard/overview/@infoExpertsByGroup/_lib/state';
+import { initialExpertsData, removeDuplicateUsers } from '@/lib/data';
+import { URLSearchParams } from 'url';
 
 // UserQuizStatistics 중 isCompleted 기 true 인 유저
 
-export async function getExpertCount(data: Record<string, any>) {
+export async function getExpertCount(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -51,7 +51,7 @@ export async function getExpertCount(data: Record<string, any>) {
   }
 }
 
-export async function getExpertByGroup(data: Record<string, any>) {
+export async function getExpertByGroup(data: URLSearchParams) {
   async function fetchUserStatistics(
     where: any,
     jobGroup: { id: string; code: string }[],
@@ -94,7 +94,7 @@ export async function getExpertByGroup(data: Record<string, any>) {
   }
 
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, ...where } = condition;
 
     const expertsData: ImprovedDataStructure = JSON.parse(
@@ -123,7 +123,7 @@ export async function getExpertByGroup(data: Record<string, any>) {
   }
 }
 
-export async function getExpertsData(data: Record<string, any>) {
+export async function getExpertsData(data: URLSearchParams) {
   async function fetchUserStatistics(
     where: any,
     jobGroup: { id: string; code: string }[],
@@ -175,7 +175,7 @@ export async function getExpertsData(data: Record<string, any>) {
   }
 
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, ...where } = condition;
 
     // bar chart
@@ -213,7 +213,7 @@ export async function getExpertsData(data: Record<string, any>) {
     ];
 
     const count = pie.reduce((acc, item) => acc + item.value, 0);
-    return { result: { pie, bar: jobData }, count };
+    return { pie, bar: jobData, count };
   } catch (error) {
     console.error('Error fetching data:', error);
     return null;
