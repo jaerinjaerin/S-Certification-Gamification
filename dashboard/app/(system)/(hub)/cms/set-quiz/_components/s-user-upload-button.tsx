@@ -90,10 +90,16 @@ export function SPlusUserUploadButton({
   );
 }
 
-export function NonSPlusUserUploadButton() {
+export function NonSPlusUserUploadButton({
+  handleDownloadNonS,
+}: {
+  handleDownloadNonS: () => void;
+}) {
   return (
     <div className="flex gap-3">
-      <Button variant="secondary">Download Data</Button>
+      <Button variant="secondary" onClick={handleDownloadNonS}>
+        Download Data
+      </Button>
       <UploadExcelFileModal variant="non-s" title="Upload Non S+ User">
         <Button className="w-full justify-start" variant="action">
           <span>Upload</span>

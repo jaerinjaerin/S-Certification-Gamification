@@ -44,7 +44,10 @@ export async function handleDownloadQuizSet(data: QuizSetResponse | undefined) {
   });
 }
 
-export async function handleDownloadActivityId(campaignId: string | undefined) {
+export async function handleDownloadUploadedFile(
+  campaignId: string | undefined,
+  fileType: 'ACTIVITYID' | 'NON_SPLUS_DOMAINS'
+) {
   if (!campaignId) {
     toast.info('No campaign id');
     return;
@@ -52,7 +55,7 @@ export async function handleDownloadActivityId(campaignId: string | undefined) {
 
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/uploaded_file?campaignId=${campaignId}&fileType=ACTIVITYID`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/uploaded_file?campaignId=${campaignId}&fileType=${fileType}`
     );
 
     const data = response.data;
