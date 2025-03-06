@@ -275,8 +275,6 @@ export default function CampaignForm({
           fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
         }),
       });
-
-      console.log('🥕 response', response);
     } catch (error) {
     } finally {
       setIsLoading(false);

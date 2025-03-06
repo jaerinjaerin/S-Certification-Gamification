@@ -88,7 +88,7 @@ export default function UploadResultDialog({
     return 'Unknown error';
   };
   const failureFiles = uploadFilesResult.filter((item) => !item.success);
-  console.log('🥕 failureFiles', failureFiles);
+
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       {/* <DialogTrigger>{trigger}</DialogTrigger> */}
