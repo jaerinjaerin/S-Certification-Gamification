@@ -31,19 +31,11 @@ export type UploadExcelFileModalProps = {
 //   };
 //   quizSetFile: QuizSetFile | undefined;
 //   activityBadges: ActivityBadge[] | undefined;
-//   // webLanguage: DomainWebLanguageEx | undefined;
 //   uiLanguage: Language | null;
 // }
 
 export interface GroupedQuizSet {
-  quizSet: QuizSetEx & {
-    domain: Domain & {
-      subsidiary: Subsidiary & {
-        region: Region;
-      };
-    };
-    campaign: Campaign;
-  };
+  quizSet: QuizSetEx;
   quizSetFile: QuizSetFile | undefined;
   activityBadges: ActivityBadge[] | undefined;
   uiLanguage: Language | null;

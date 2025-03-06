@@ -16,7 +16,12 @@ import {
 } from '@prisma/client';
 
 export interface QuizSetEx extends QuizSet {
-  domain: Domain;
+  domain: Domain & {
+    subsidiary: Subsidiary & {
+      region: Region;
+    };
+  };
+  campaign: Campaign;
   // subsidiary: Subsidiary | null;
   language: Language | null;
   quizStages: QuizStageEx[];
