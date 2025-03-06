@@ -2,6 +2,7 @@ import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-co
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
@@ -48,8 +49,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const { quizSetFile, activityBadge } = row.original;
-      const isReady = quizSetFile?.id && activityBadge?.activityId;
+      const { quizSetFile, activityBadges, uiLanguage } = row.original;
+      const isReady =
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0 &&
+        uiLanguage?.code;
+      // const isReady = quizSetFile?.id && uiLanguage?.code;
       return <StatusBadge isReady={isReady} />;
     },
   },
@@ -86,13 +92,26 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       //   '🥕 row.original.quizSet.language',
       //   row.original.quizSet.language
       // );
-      return <div>{row.original.quizSet.language?.code ?? '-'}</div>;
+      if (row.original.quizSet.language) {
+        return <div>{row.original.quizSet.language.name}</div>;
+      }
+      return <div>-</div>;
     },
   },
   {
     accessorKey: 'url',
     header: 'URL',
-    cell: () => <div>URL</div>,
+    cell: ({ row }) => {
+      if (row.original.uiLanguage) {
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.name}/${row.original.quizSet.domain.code}_${row.original.quizSet.language.code}`;
+        return (
+          <a href={url} target="_blank">
+            {url}
+          </a>
+        );
+      }
+      return <div>-</div>;
+    },
   },
   {
     accessorKey: 'quizSet',
@@ -109,25 +128,44 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'activityId',
     header: 'Activity ID',
     // cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
-    cell: ({ row }) => (
-      <div>{row.original.activityBadge?.activityId ?? '-'}</div>
-    ),
+    cell: ({ row }) => {
+      // <div>{row.original.activityBadges?.activityId ?? '-'}</div>
+      if (row.original.activityBadges) {
+        return (
+          <>
+            {row.original.activityBadges.map((badge, index) => (
+              <div key={index}>
+                {badge.badgeType}-{badge.activityId}
+              </div>
+            ))}
+          </>
+        );
+      }
+      return <div>-</div>;
+    },
   },
   {
     accessorKey: 'uiLanguage',
     header: 'UI Language',
     // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
-    cell: ({ row }) => (
-      // <Select>
-      //   <SelectTrigger>
-      //     <SelectValue placeholder="Select">Select</SelectValue>
-      //   </SelectTrigger>
-      //   <SelectContent>
-      //     <SelectItem value="none">none</SelectItem>
-      //   </SelectContent>
-      // </Select>
-      <div>{row.original.uiLanguage?.code ?? '-'}</div>
-    ),
+    cell: ({ row }) => {
+      const router = useRouter();
+      if (row.original.uiLanguage?.code) {
+        return <div>{row.original.uiLanguage.code}</div>;
+      }
+      return (
+        <Button
+          variant={'secondary'}
+          className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
+          onClick={() =>
+            // routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
+            router.push(`/cms/ui-language`)
+          }
+        >
+          <div className="text-size-12px leading-tight font-semibold">Add</div>
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'delete',
@@ -179,7 +217,7 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
     const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
       method: 'DELETE',
     });
-    console.log('🥕 response', response);
+
     if (!response.ok) {
       toast.error(`Error deleting quiz set: ${response.statusText}`);
       return;

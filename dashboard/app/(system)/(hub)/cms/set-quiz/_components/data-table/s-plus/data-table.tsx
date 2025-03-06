@@ -1,9 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { useState } from 'react';
-import useSWR from 'swr';
 import { ChevronDown, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -22,8 +20,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
-import { columns } from './columns';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -35,6 +31,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
+import { columns } from './columns';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -68,20 +66,22 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     },
   });
 
-  React.useEffect(() => {
-    const readyItemCount = table.getRowModel().rows.filter((row) => {
-      const { quizSetFile, activityBadge } = row.original;
-      return quizSetFile?.id && activityBadge?.activityId;
-    }).length;
+  // useEffect(() => {
+  //   const readyItemCount = table.getRowModel().rows.filter((row) => {
+  //     const { quizSetFile, activityBadge } = row.original;
+  //     return quizSetFile?.id && activityBadge?.activityId;
+  //   }).length;
 
-    setReadyItemsLength(readyItemCount);
-  }, [table]);
+  //   setReadyItemsLength(readyItemCount);
+  // }, [table]);
 
   return (
     <div>
       <div className="flex items-center justify-between pt-[1.438rem] pb-2">
         <div className="flex items-center justify-end space-x-3 py-4">
-          <div className=" text-sm text-zinc-950">
+          Total: {table.getFilteredRowModel().rows.length}, Domain:
+          {new Set(data.map((item) => item.quizSet.domain.id)).size}
+          {/* <div className=" text-sm text-zinc-950">
             Total :
             <strong className="font-bold">
               {` ${table.getFilteredRowModel().rows.length}`}
@@ -98,7 +98,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             <strong className="font-bold">
               {` ${table.getFilteredRowModel().rows.length - readyItemsLength}`}
             </strong>
-          </div>
+          </div> */}
         </div>
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />

@@ -13,6 +13,11 @@ const MediaAssetGroup = ({ group }: Props) => {
   return (
     <MediaAssetListContainer group={group}>
       {!data && <LoaderWithBackground />}
+      {data?.length === 0 && (
+        <p className="text-zinc-950 mx-auto">
+          No registered Asset. Please select the Upload button to add one.
+        </p>
+      )}
       {data?.map((image) => {
         const key = `${image.id}_${image.date}`;
         return (

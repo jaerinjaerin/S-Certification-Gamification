@@ -165,7 +165,7 @@ const UserRole = () => {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns.length + 1}
                   className="h-24 text-center"
                 >
                   {loading ? '' : 'No results.'}

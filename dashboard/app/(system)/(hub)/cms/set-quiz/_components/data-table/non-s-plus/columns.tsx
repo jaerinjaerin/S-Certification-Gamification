@@ -1,9 +1,8 @@
+import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { DomainChannel } from '@/types/apiTypes';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, ExternalLink, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { CircleHelp } from 'lucide-react';
 import { StatusCircle } from '../../data-table-widgets';
-import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 
 // TODO: 타입 변경
 export const columns: ColumnDef<DomainChannel>[] = [
@@ -31,13 +30,7 @@ export const columns: ColumnDef<DomainChannel>[] = [
     ),
     cell: ({ row }) => (
       <div>
-        {/* TODO: status 값 확인 필요 */}
-        {/* <StatusCircle label="Ready" /> */}
-        {row.original.isReady ? (
-          <StatusCircle label="Ready" />
-        ) : (
-          <StatusCircle label="Not Ready" />
-        )}
+        <StatusCircle isReady={row.original.isReady} />
       </div>
     ),
   },
@@ -57,9 +50,27 @@ export const columns: ColumnDef<DomainChannel>[] = [
     accessorKey: 'channel',
     header: 'Channel Name',
     cell: ({ row }) => (
-      <div>
+      <div
+        style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 2,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'normal',
+        }}
+      >
         {row.original.channels.map((channel, index) => (
-          <div key={index}>{channel.name}</div>
+          <div
+            key={index}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {channel.name}
+          </div>
         ))}
       </div>
     ),
@@ -68,13 +79,33 @@ export const columns: ColumnDef<DomainChannel>[] = [
     accessorKey: 'channelSegment',
     header: 'Channel Segment',
     cell: ({ row }) => (
-      <div>
+      <div
+        style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 2,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'normal',
+        }}
+      >
         {row.original.channels.map((channel, index) => (
-          <div key={index}>{channel.channelSegment}</div>
+          <div
+            key={index}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+            title={channel.channelSegment} // 툴팁으로 전체 내용 표시 가능
+          >
+            {channel.channelSegment}
+          </div>
         ))}
       </div>
     ),
   },
+
   {
     accessorKey: 'jobGroup',
     header: 'Jop Group',

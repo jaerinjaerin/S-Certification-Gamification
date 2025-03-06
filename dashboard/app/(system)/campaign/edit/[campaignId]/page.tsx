@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import CampaignForm from '../../_components/campaign-form';
 
 export default async function EditCampaignPage({
@@ -5,28 +6,59 @@ export default async function EditCampaignPage({
 }: {
   params: { campaignId: string };
 }) {
-  // TODO: 데이터 Fetch 필요
+  const getCampaign = async (campaignId: string) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
+      {
+        cache: 'no-cache',
+      }
+    );
+    if (!response.ok) {
+      toast.error('Failed to fetch campaign');
+      return;
+    }
+    const data = await response.json();
+    return data;
+  };
 
-  const data = {
-    certificationName: 'testS25',
-    slug: 'tests25',
+  const data = await getCampaign(params.campaignId);
+  const { campaign } = data.result;
+
+  const numberToString = (value: number | undefined) =>
+    value !== undefined ? value.toString() : undefined;
+
+  const editData = {
+    certificationName: campaign.name,
+    slug: campaign.slug,
     isSlugChecked: true,
-    startDate: new Date('2025-01-01'),
-    endDate: new Date('2025-01-01'),
+    startDate: new Date(campaign.startedAt),
+    endDate: new Date(campaign.endedAt),
     copyMedia: undefined,
     copyTarget: undefined,
     copyUiLanguage: undefined,
-    numberOfStages: '6',
-    firstBadgeName: 'Expert',
-    ffFirstBadgeStage: '1',
-    fsmFirstBadgeStage: '2',
-    secondBadgeName: 'Advanced',
-    ffSecondBadgeStage: '3',
-    fsmSecondBadgeStage: undefined,
+    numberOfStages: numberToString(campaign.settings.totalStages),
+    firstBadgeName: campaign.settings.firstBadgeName,
+    ffFirstBadgeStage: numberToString(campaign.settings.ffFirstBadgeStageIndex),
+    fsmFirstBadgeStage: numberToString(
+      campaign.settings.fsmFirstBadgeStageIndex
+    ),
+    secondBadgeName: campaign.settings.secondBadgeName,
+    ffSecondBadgeStage: numberToString(
+      campaign.settings.ffSecondBadgeStageIndex
+    ),
+    fsmSecondBadgeStage: numberToString(
+      campaign.settings.fsmSecondBadgeStageIndex
+    ),
     targetSourceCampaignId: undefined,
     imageSourceCampaignId: undefined,
     uiLanguageSourceCampaignId: undefined,
   };
 
-  return <CampaignForm initialData={data} isEditMode />;
+  return (
+    <CampaignForm
+      initialData={editData}
+      isEditMode
+      campaignId={params.campaignId}
+    />
+  );
 }

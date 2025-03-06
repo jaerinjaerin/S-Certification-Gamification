@@ -801,6 +801,7 @@ export async function GET(request: Request) {
             },
           },
         },
+        campaign: true,
         language: true,
         quizStages: {
           include: {
@@ -857,6 +858,20 @@ export async function GET(request: Request) {
 
     // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
     // 🔹 region → subsidiary → domain 순서로 정렬
+    // quizSets.sort((a: any, b: any) => {
+    //   const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
+    //   const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
+    //   if (regionOrderA !== regionOrderB) return regionOrderA - regionOrderB;
+
+    //   const subsidiaryOrderA = a.domain?.subsidiary?.order ?? Infinity;
+    //   const subsidiaryOrderB = b.domain?.subsidiary?.order ?? Infinity;
+    //   if (subsidiaryOrderA !== subsidiaryOrderB)
+    //     return subsidiaryOrderA - subsidiaryOrderB;
+
+    //   const domainOrderA = a.domain?.order ?? Infinity;
+    //   const domainOrderB = b.domain?.order ?? Infinity;
+    //   return domainOrderA - domainOrderB;
+    // });
     quizSets.sort((a: any, b: any) => {
       const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
       const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
@@ -869,7 +884,23 @@ export async function GET(request: Request) {
 
       const domainOrderA = a.domain?.order ?? Infinity;
       const domainOrderB = b.domain?.order ?? Infinity;
-      return domainOrderA - domainOrderB;
+      if (domainOrderA !== domainOrderB) return domainOrderA - domainOrderB;
+
+      // languageId 기준 정렬
+      if (a.languageId !== b.languageId)
+        return a.languageId.localeCompare(b.languageId);
+
+      // jobCodes[0]이 ff인지 fsm인지에 따라 정렬
+      const jobCodePriority = (jobCode: string) => {
+        if (jobCode === 'ff') return 0;
+        if (jobCode === 'fsm') return 1;
+        return 2; // 기타 코드
+      };
+
+      const jobOrderA = jobCodePriority(a.jobCodes?.[0] ?? '');
+      const jobOrderB = jobCodePriority(b.jobCodes?.[0] ?? '');
+
+      return jobOrderA - jobOrderB;
     });
 
     const groupedQuizSets = quizSets.map((quizSet) => ({
@@ -877,12 +908,12 @@ export async function GET(request: Request) {
       quizSetFile: quizSetFiles
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
-      activityBadge: activityBadges.filter(
+      activityBadges: activityBadges.filter(
         (badge) =>
           badge.jobCode === quizSet.jobCodes[0] &&
           badge.languageId === quizSet.languageId &&
           badge.domainId === quizSet.domainId
-      )[0],
+      ),
       uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
       // webLanguage: domainWebLanguages.find(
       //   (dwl) => dwl.domainId === quizSet.domainId

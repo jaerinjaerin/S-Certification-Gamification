@@ -1,18 +1,24 @@
 'use client';
 
+// React and hooks
+import { useStateVariables } from '@/components/provider/state-provider';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
+
+// Form related
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField,
 } from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from '../_type/formSchema';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { useStateVariables } from '@/components/provider/state-provider';
+
+// UI Components
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -23,6 +29,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -31,16 +38,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/utils/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, CircleHelp } from 'lucide-react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-import { isEmpty } from '../../(hub)/cms/_utils/utils';
-import { API_ENDPOINTS } from '../constant/contant';
-import useCampaignState from '../store/campaign-state';
+
+// Custom Components
 import Container from './container';
 import {
   CustomSelectTrigger,
@@ -50,14 +49,28 @@ import {
 import FormComponent from './form-component';
 import TableComponent from './table-component';
 
+// Icons
+import { Check, CircleHelp } from 'lucide-react';
+
+// Utils and Constants
+import { cn } from '@/utils/utils';
+import { toast } from 'sonner';
+import { isEmpty } from '../../(hub)/cms/_utils/utils';
+import { API_ENDPOINTS } from '../constant/contant';
+
+// State Management
+import useCampaignState from '../store/campaign-state';
+
 interface CampaignFormProps {
   initialData: any;
   isEditMode?: boolean;
+  campaignId?: string;
 }
 
 export default function CampaignForm({
   initialData,
   isEditMode = false,
+  campaignId,
 }: CampaignFormProps) {
   const { campaigns } = useStateVariables();
   const { routeToPage } = useNavigation();
@@ -101,7 +114,8 @@ export default function CampaignForm({
       toast.error('Failed to check slug');
     }
   };
-  // API 서비스 함수들
+
+  // API 서비스 함수들 (CREATE)
   const campaignService = {
     async createCampaign(data: FormValues) {
       const response = await fetch(API_ENDPOINTS.CAMPAIGN, {
@@ -156,6 +170,7 @@ export default function CampaignForm({
     },
   };
 
+  // (CREATE)
   const getCopyResourceEndpoint = (
     type: 'target' | 'image' | 'uiLanguage'
   ): string | null => {
@@ -165,12 +180,12 @@ export default function CampaignForm({
     return null;
   };
 
+  // (CREATE)
   const handleCopyResources = async (
     campaignId: string,
     destinationId: string,
     type: 'target' | 'image' | 'uiLanguage'
   ) => {
-    console.log('🥕 handleCopyResources:', campaignId, destinationId, type);
     try {
       await campaignService.copyResources(campaignId, destinationId, type);
       toast.success(`Copied ${type} resources successfully`);
@@ -180,12 +195,12 @@ export default function CampaignForm({
     }
   };
 
+  // CREATE Submit
   const onSubmit = async (data: FormValues) => {
     try {
       setIsLoading(true);
 
       const campaignData = await campaignService.createCampaign(data);
-      console.log('🥕 campaignData:', campaignData);
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
         toast.error('Failed to create campaign');
@@ -237,7 +252,38 @@ export default function CampaignForm({
     }
   };
 
-  // console.log(error);
+  // EDIT Submit
+  // TODO: editSubmit 수정 필요
+  const editSubmit = async (data: FormValues) => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`/api/cms/campaign/${campaignId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          campaignId,
+          name: data.certificationName,
+          startedAt: data.startDate,
+          endedAt: data.endDate,
+          totalStages: Number(data.numberOfStages),
+          firstBadgeName: data.firstBadgeName,
+          secondBadgeName: data.secondBadgeName,
+          ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
+          ffSecondBadgeStageIndex: Number(data.ffSecondBadgeStage),
+          fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
+          fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
+        }),
+      });
+
+      console.log('🥕 response', response);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      // routeToPage('/campaign');
+    }
+  };
+
   const inputStyle =
     'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px text-zinc-500 disabled:bg-zinc-200 placeholder:text-zinc-500';
 
@@ -248,7 +294,7 @@ export default function CampaignForm({
       </h2>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(isEditMode ? editSubmit : onSubmit)}
           id="certification-form"
           className="space-y-8 mx-auto w-full max-w-[46.25rem] pt-16"
         >
@@ -282,7 +328,6 @@ export default function CampaignForm({
                 control={form.control}
                 name="slug"
                 render={({ field }) => {
-                  console.log(form.getFieldState('slug').error?.message);
                   return (
                     <FormItem className="">
                       <FormLabel>Slug</FormLabel>
@@ -303,7 +348,7 @@ export default function CampaignForm({
                               readOnly={isEditMode ? true : false}
                               value={
                                 isEditMode ? initialData?.slug : field.value
-                              } // TODO: 수정 필
+                              }
                               placeholder={isEditMode ? 'enter-name' : ''}
                               onKeyDown={handlePreventSpace}
                               onChange={(e) => {
@@ -562,7 +607,7 @@ export default function CampaignForm({
           Cancel
         </Button>
 
-        {form.formState.isValid ? (
+        {form.formState.isValid && !isEditMode ? (
           <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <AlertDialogTrigger asChild>
               <Button variant="action" form="certification-form">
@@ -593,7 +638,11 @@ export default function CampaignForm({
             </AlertDialogContent>
           </AlertDialog>
         ) : (
-          <Button variant="action" form="certification-form">
+          <Button
+            variant="action"
+            form="certification-form"
+            disabled={isEmpty(form.formState.dirtyFields) || isLoading}
+          >
             Save
           </Button>
         )}

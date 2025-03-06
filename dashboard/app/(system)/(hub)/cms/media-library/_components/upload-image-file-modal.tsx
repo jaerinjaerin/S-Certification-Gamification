@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { UploadFilesDialog } from '../../_components/upload-files-dialog';
 import { PreviewDialog } from './preivew-dialog';
 import axios from 'axios';
@@ -15,6 +15,7 @@ import { useMediaData } from '../_provider/media-data-provider';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { FileWithExtraInfo } from '../../_types/type';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { toast } from 'sonner';
 
 export function UploadImageFileModal({
   children,
@@ -35,6 +36,7 @@ export function UploadImageFileModal({
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<FileWithExtraInfo[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
   useEffect(() => {
@@ -64,12 +66,34 @@ export function UploadImageFileModal({
     );
   }, []);
 
+  const onDropRejected = (fileRejections: FileRejection[]) => {
+    const getErrorMessage = (code: string) => {
+      switch (code) {
+        case 'file-invalid-type':
+          return 'The uploaded file does not match the required format.';
+        case 'file-too-large':
+          return 'File is too large.';
+        case 'too-many-files':
+          return 'Only one file can be uploaded.';
+        default:
+          return 'Invalid file format';
+      }
+    };
+
+    setErrors([
+      ...new Set(
+        fileRejections.map((file) => getErrorMessage(file.errors[0].code))
+      ),
+    ]);
+  };
+
   const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
     useDropzone({
       accept: { 'image/jpeg': [], 'image/png': [] },
       onDrop,
       multiple: false,
       noClick: true,
+      onDropRejected,
     });
 
   useEffect(() => {
@@ -146,9 +170,11 @@ export function UploadImageFileModal({
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         console.log('🚀 File uploaded:', response.data);
+        toast.success('File uploaded successfully');
         insertData(response.data.result);
       } catch (error) {
         console.error('Upload failed:', error);
+        toast.error(`Upload failed: ${error}`);
       }
     } else {
       // 수정 모드 (PUT)
@@ -165,8 +191,10 @@ export function UploadImageFileModal({
         });
         console.log('🚀 File updated:', response.data);
         updateData(response.data.result);
+        toast.success('File updated successfully');
       } catch (error) {
         console.error('Update failed:', error);
+        toast.error(`Update failed: ${error}`);
       }
     }
 
@@ -209,7 +237,7 @@ export function UploadImageFileModal({
       <CustomAlertDialog
         open={isOpen}
         className="max-w-[20rem]"
-        description="The uploaded file does not match the required format."
+        description={errors[0]}
         buttons={[
           {
             label: 'OK',

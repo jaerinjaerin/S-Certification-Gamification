@@ -27,6 +27,7 @@ export interface GroupedQuizSet {
         region: Region;
       };
     };
+    campaign: Campaign;
     language: Language;
     quizStages: (QuizStage & {
       badgeImage: Image | null;
@@ -38,7 +39,7 @@ export interface GroupedQuizSet {
     })[];
   };
   quizSetFile: QuizSetFile | undefined;
-  activityBadge: ActivityBadge | undefined;
+  activityBadges: ActivityBadge[] | undefined;
   // webLanguage: DomainWebLanguageEx | undefined;
   uiLanguage: Language | null;
 }

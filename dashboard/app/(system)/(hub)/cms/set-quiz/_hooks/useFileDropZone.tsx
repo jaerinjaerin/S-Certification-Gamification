@@ -10,7 +10,6 @@ type VariantHandlers<T> = {
   setData: (data: { data: T[]; files: File[] }) => void;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const varinatHandlers: Record<UploadExcelFileVariant, VariantHandlers<any>> = {
   quiz: {
     handleUpload: handleQuizSetFileUpload,

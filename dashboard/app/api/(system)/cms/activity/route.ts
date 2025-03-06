@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     let uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         fileType: FileType.ACTIVITYID,
-        campaignId: campaign.id,
+        campaignId,
       },
     });
 
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
 
       if (!domain) {
         failures.push({
-          message: `Domain not found: ${domainCode}`,
+          message: `${data.domainCode}: Domain not found`,
           code: ERROR_CODES.DOMAIN_NOT_FOUND,
         });
         continue;
@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
 
       if (!language) {
         failures.push({
-          message: `Language not found: ${languageCode}`,
+          message: `${data.domainCode}: Language not found: ${languageCode}`,
           code: ERROR_CODES.LANGUAGE_NOT_FOUND,
         });
         continue;
@@ -165,12 +165,13 @@ export async function POST(request: NextRequest) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FF_FirstBadgeImage,
+            campaignId,
           },
         });
 
         if (!badgeImage) {
           failures.push({
-            message: `Badge image not found: ${data.domainCode}, ${data.FF_FirstBadgeImage}`,
+            message: `${data.domainCode}: Badge image not found`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
           continue;
@@ -212,18 +213,37 @@ export async function POST(request: NextRequest) {
         }
 
         activityBadges.push(activityBadge);
+      } else {
+        const activityBadge = await prisma.activityBadge.findFirst({
+          where: {
+            campaignId,
+            domainId: domain.id,
+            languageId: language.id,
+            jobCode: 'ff',
+            badgeType: BadgeType.FIRST,
+          },
+        });
+
+        if (activityBadge) {
+          await prisma.activityBadge.delete({
+            where: {
+              id: activityBadge.id,
+            },
+          });
+        }
       }
 
       if (data.FF_SecondActivityID) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FF_SecondBadgeImage,
+            campaignId,
           },
         });
 
         if (!badgeImage) {
           failures.push({
-            message: `Badge image not found: ${data.domainCode}, ${data.FF_SecondBadgeImage}`,
+            message: `${data.domainCode} - ${data.FF_SecondActivityID}: Badge image not found`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
           continue;
@@ -269,18 +289,37 @@ export async function POST(request: NextRequest) {
         }
 
         activityBadges.push(activityBadge);
+      } else {
+        const activityBadge = await prisma.activityBadge.findFirst({
+          where: {
+            campaignId: campaignId,
+            domainId: domain.id,
+            languageId: language.id,
+            jobCode: 'ff',
+            badgeType: BadgeType.SECOND,
+          },
+        });
+
+        if (activityBadge) {
+          await prisma.activityBadge.delete({
+            where: {
+              id: activityBadge.id,
+            },
+          });
+        }
       }
 
       if (data.FSM_FirstActivityID) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FSM_FirstBadgeImage,
+            campaignId,
           },
         });
 
         if (!badgeImage) {
           failures.push({
-            message: `Badge image not found: ${data.domainCode}, ${data.FSM_FirstBadgeImage}`,
+            message: `${data.domainCode}, ${data.FSM_FirstBadgeImage} : Badge image not found`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
           continue;
@@ -326,18 +365,37 @@ export async function POST(request: NextRequest) {
         }
 
         activityBadges.push(activityBadge);
+      } else {
+        const activityBadge = await prisma.activityBadge.findFirst({
+          where: {
+            campaignId: campaignId,
+            domainId: domain.id,
+            languageId: language.id,
+            jobCode: 'fsm',
+            badgeType: BadgeType.FIRST,
+          },
+        });
+
+        if (activityBadge) {
+          await prisma.activityBadge.delete({
+            where: {
+              id: activityBadge.id,
+            },
+          });
+        }
       }
 
       if (data.FSM_SecondActivityID) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FSM_SecondBadgeImage,
+            campaignId,
           },
         });
 
         if (!badgeImage) {
           failures.push({
-            message: `Badge image not found: ${data.domainCode}, ${data.FSM_SecondBadgeImage}`,
+            message: `${data.domainCode}, ${data.FSM_SecondBadgeImage}: Badge image not found`,
             code: ERROR_CODES.BADGE_IMAGE_NOT_FOUND,
           });
           continue;
@@ -350,7 +408,6 @@ export async function POST(request: NextRequest) {
             languageId: language.id,
             jobCode: 'fsm',
             badgeType: BadgeType.SECOND,
-            badgeImageId: badgeImage.id,
           },
         });
 
@@ -384,6 +441,24 @@ export async function POST(request: NextRequest) {
         }
 
         activityBadges.push(activityBadge);
+      } else {
+        const activityBadge = await prisma.activityBadge.findFirst({
+          where: {
+            campaignId: campaignId,
+            domainId: domain.id,
+            languageId: language.id,
+            jobCode: 'fsm',
+            badgeType: BadgeType.SECOND,
+          },
+        });
+
+        if (activityBadge) {
+          await prisma.activityBadge.delete({
+            where: {
+              id: activityBadge.id,
+            },
+          });
+        }
       }
     }
 

@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // const { searchParams } = request.nextUrl;
-
     await prisma.$connect();
 
     const roleData = await prisma.role.findMany({

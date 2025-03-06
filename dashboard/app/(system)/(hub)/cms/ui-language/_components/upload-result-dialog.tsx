@@ -14,11 +14,11 @@ import {
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
 import { X, Check, CircleX } from 'lucide-react';
-import { UploadExcelFileVariant } from '../set-quiz/_type/type';
+
 import {
   FilesTableComponent,
   Td,
-} from '../set-quiz/_components/files-table-component';
+} from '../../set-quiz/_components/files-table-component';
 
 type UploadFilesResult = ProcessResult | any; // TODO: fix type
 
@@ -26,14 +26,12 @@ interface UploadResultDialogProps {
   uploadFilesResult: UploadFilesResult[];
   onOpenChange?: () => void;
   open?: boolean;
-  variant: UploadExcelFileVariant;
 }
 
 export default function UploadResultDialog({
   uploadFilesResult,
   onOpenChange,
   open,
-  variant,
 }: UploadResultDialogProps) {
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
@@ -54,22 +52,11 @@ export default function UploadResultDialog({
   };
 
   const renderResultMessage = () => {
-    const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
-    if (variant === 'quiz') {
-      return (
-        <span className="text-size-14px font-semibold">
-          Out of a total of {uploadFilesResult.length} file(s),{' '}
-          {uploadFilesResult.filter((item) => item.success).length} files were
-          successfully uploaded.
-        </span>
-      );
-    }
-
     return (
       <span className="text-size-14px font-semibold">
-        {hasSuccessfulUploads
-          ? 'The file has been uploaded successfully.'
-          : 'The file upload has failed.'}
+        Out of a total of {uploadFilesResult.length} file(s),
+        {uploadFilesResult.filter((item) => item.success).length} files were
+        successfully uploaded.
       </span>
     );
   };
@@ -87,8 +74,9 @@ export default function UploadResultDialog({
     }
     return 'Unknown error';
   };
+
   const failureFiles = uploadFilesResult.filter((item) => !item.success);
-  console.log('🥕 failureFiles', failureFiles);
+
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       {/* <DialogTrigger>{trigger}</DialogTrigger> */}
@@ -119,28 +107,25 @@ export default function UploadResultDialog({
 
           <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
             <FilesTableComponent>
-              {variant === 'non-s' &&
+              {/* {variant === 'non-s' &&
                 uploadFilesResult.map((item, index) => (
                   <tr key={index} className="border-t border-t-zinc-200">
                     <Td>{index + 1}</Td>
                     <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
                     <Td>{item.result.failures[0]}</Td>
                   </tr>
-                ))}
+                ))} */}
 
-              {variant !== 'non-s' &&
-                failureFiles.map((item, index) => {
-                  return (
-                    <tr key={index} className="border-t border-t-zinc-200">
-                      <Td>{index + 1}</Td>
+              {failureFiles.map((item, index) => {
+                return (
+                  <tr key={index} className="border-t border-t-zinc-200">
+                    <Td>{index + 1}</Td>
 
-                      <Td>
-                        {item.fileName || item.error.message.split(':')[0]}
-                      </Td>
-                      <Td className="text-red-500">{getErrorMessage(item)}</Td>
-                    </tr>
-                  );
-                })}
+                    <Td>{item.fileName || item.error.message.split(':')[0]}</Td>
+                    <Td className="text-red-500">{getErrorMessage(item)}</Td>
+                  </tr>
+                );
+              })}
             </FilesTableComponent>
           </div>
         </div>

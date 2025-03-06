@@ -34,7 +34,7 @@ export const submitNonS = async (files: File[], campaignId: string) => {
 
     try {
       const result = await Promise.all(uploadPromises);
-      mutate(`no_member_country?campaignId=${campaignId}`);
+      mutate(`/api/cms/no_service_channel?campaignId=${campaignId}`);
       return result;
     } catch (error) {
       const err = error as NonSError;
