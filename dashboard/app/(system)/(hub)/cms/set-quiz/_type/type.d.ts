@@ -5,10 +5,7 @@ import type {
   Domain,
   Image,
   Language,
-  Question,
-  QuestionOption,
   QuizSet,
-  QuizStage,
   Region,
   Subsidiary,
 } from '@prisma/client';
@@ -29,14 +26,15 @@ export interface GroupedQuizSet {
     };
     campaign: Campaign;
     language: Language;
-    quizStages: (QuizStage & {
-      badgeImage: Image | null;
-      questions: (Question & {
-        options: QuestionOption[];
-        backgroundImage: Image | null;
-        characterImage: Image | null;
-      })[];
-    })[];
+    quizStages: QuizStageEx[];
+    // quizStages: (QuizStageEx & {
+    //   badgeImage: Image | null;
+    //   questions: (Question & {
+    //     options: QuestionOption[];
+    //     backgroundImage: Image | null;
+    //     characterImage: Image | null;
+    //   })[];
+    // })[];
   };
   quizSetFile: QuizSetFile | undefined;
   activityBadges: ActivityBadge[] | undefined;

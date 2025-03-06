@@ -5,6 +5,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { QuizStageEx } from '@/types/apiTypes';
 import { Download } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
@@ -60,7 +61,7 @@ export default function QuizSetDetailsClient() {
       <div>
         <h3>Imported Questions</h3>
         <div>
-          {quizSet.quizStages.map((stage, index) => {
+          {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
             return (
               <div key={index}>
                 <span className="font-extrabold text-2xl">
