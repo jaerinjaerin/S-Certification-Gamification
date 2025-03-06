@@ -1,12 +1,9 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import {
-  querySearchParams,
-  searchToQuery,
-} from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams, searchToQuery } from '@/lib/query';
 import { decrypt } from '@/utils/encrypt';
 import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { AuthType } from '@prisma/client';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { URLSearchParams } from 'url';

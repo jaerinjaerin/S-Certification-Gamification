@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { prisma } from '@/model/prisma';
 
 // userId 확인 후 중복 제거, quizStageIndex값이 높으면 업데이트

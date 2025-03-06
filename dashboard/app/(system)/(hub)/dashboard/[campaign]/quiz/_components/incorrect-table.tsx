@@ -17,7 +17,7 @@ import { formatSnakeToTitleCase } from '@/lib/text';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     id: 'no',
     header: 'No',
@@ -67,7 +67,7 @@ const IncorrectTable = ({
   pageIndex = 1,
   pageSize = 0,
 }: {
-  table: TableProps<QuizRankedIncorrectAnswerRateProps>;
+  table: TableProps<any>;
   loading: boolean;
   pageIndex?: number;
   pageSize?: number;

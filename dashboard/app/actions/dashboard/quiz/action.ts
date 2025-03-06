@@ -1,5 +1,5 @@
 'use server';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams } from '@/lib/query';
 import { prisma } from '@/model/prisma';
 import { AuthType, Question } from '@prisma/client';
 import { URLSearchParams } from 'url';

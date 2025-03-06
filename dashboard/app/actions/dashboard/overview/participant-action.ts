@@ -1,7 +1,7 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { URLSearchParams } from 'url';
 
 // UserQuizStatistics 사용
