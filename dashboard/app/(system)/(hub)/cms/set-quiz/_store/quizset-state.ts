@@ -1,11 +1,11 @@
-import { create } from 'zustand';
-import { combine } from 'zustand/middleware';
+import { ActivityIdProcessResult } from '@/lib/activityid-excel-parser';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { QuizSetWithFile } from '@/types';
-import { ActivityIdProcessResult } from '@/lib/activityid-excel-parser';
+import { create } from 'zustand';
+import { combine } from 'zustand/middleware';
 import { NonSProcessResult } from '../_type/type';
 
-type UserTabState = 's' | 'non-s';
+export type UserTabState = 's' | 'non-s';
 
 export type QuizSet = {
   data: ProcessResult[];

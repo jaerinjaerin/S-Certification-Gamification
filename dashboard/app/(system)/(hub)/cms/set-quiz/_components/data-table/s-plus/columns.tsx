@@ -2,12 +2,12 @@ import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-co
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
 import { GroupedQuizSet } from '../../../_type/type';
 import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
+import { useNavigation } from '../../../../_hooks/useNavigation';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -88,10 +88,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'Quiz Language',
     header: 'Quiz Language',
     cell: ({ row }) => {
-      // console.log(
-      //   '🥕 row.original.quizSet.language',
-      //   row.original.quizSet.language
-      // );
       if (row.original.quizSet.language) {
         return <div>{row.original.quizSet.language.name}</div>;
       }
@@ -103,7 +99,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'URL',
     cell: ({ row }) => {
       if (row.original.uiLanguage) {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.name}/${row.original.quizSet.domain.code}_${row.original.quizSet.language.code}`;
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
         return (
           <a href={url} target="_blank">
             {url}
@@ -127,9 +123,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'activityId',
     header: 'Activity ID',
-    // cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
     cell: ({ row }) => {
-      // <div>{row.original.activityBadges?.activityId ?? '-'}</div>
       if (row.original.activityBadges) {
         return (
           <>
@@ -147,24 +141,12 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'uiLanguage',
     header: 'UI Language',
-    // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
+
     cell: ({ row }) => {
-      const router = useRouter();
       if (row.original.uiLanguage?.code) {
         return <div>{row.original.uiLanguage.code}</div>;
       }
-      return (
-        <Button
-          variant={'secondary'}
-          className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
-          onClick={() =>
-            // routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
-            router.push(`/cms/ui-language`)
-          }
-        >
-          <div className="text-size-12px leading-tight font-semibold">Add</div>
-        </Button>
-      );
+      return <UILinkButton />;
     },
   },
   {
@@ -192,11 +174,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 label: 'Cancel',
                 variant: 'secondary',
                 type: 'cancel',
-                onClick: () => {},
               },
               {
                 label: 'Delete',
-                variant: 'destructive',
+                variant: 'delete',
                 type: 'delete',
                 onClick: async () =>
                   await handleQuizSetDelete(
@@ -233,4 +214,17 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);
   }
+};
+
+const UILinkButton = () => {
+  const { routeToPage } = useNavigation();
+  return (
+    <Button
+      variant={'secondary'}
+      className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
+      onClick={() => routeToPage('/cms/ui-language')}
+    >
+      <div className="text-size-12px leading-tight font-semibold">Add</div>
+    </Button>
+  );
 };

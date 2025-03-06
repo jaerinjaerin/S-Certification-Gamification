@@ -1,13 +1,14 @@
 'use server';
 import { prisma } from '@/model/prisma';
 import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
+import { URLSearchParams } from 'url';
 
-export async function getAchievementRate(data: Record<string, any>) {
+export async function getAchievementRate(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data) as any;
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -66,9 +67,9 @@ export async function getAchievementRate(data: Record<string, any>) {
   }
 }
 
-export async function getAchievementProgress(data: Record<string, any>) {
+export async function getAchievementProgress(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -193,7 +194,7 @@ export async function getAchievementProgress(data: Record<string, any>) {
   }
 }
 
-export async function getAchievementGoalProgress(data: Record<string, any>) {
+export async function getAchievementGoalProgress(data: URLSearchParams) {
   const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
   async function processUserQuizBadgeStageStatistics(
@@ -228,7 +229,7 @@ export async function getAchievementGoalProgress(data: Record<string, any>) {
   }
 
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, ...where } = condition;
 
     // 캠페인 데이터 가져오기

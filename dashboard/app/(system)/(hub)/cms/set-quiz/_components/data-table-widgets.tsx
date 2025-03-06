@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import { cn } from '@/utils/utils';
 import { ExternalLink } from 'lucide-react';
 import { useNavigation } from '../../_hooks/useNavigation';
-import { GroupedQuizSet } from '../_type/type';
+import { QuizSetEx } from '@/types/apiTypes';
 
 function ActiveToggle({
   checked,
@@ -45,7 +45,7 @@ function StatusBadge({ isReady }: { isReady: boolean }) {
   );
 }
 
-function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
+function QuizSetLink({ props }: { props: QuizSetEx }) {
   const { routeToPage } = useNavigation();
 
   return (
@@ -53,7 +53,7 @@ function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
       variant={'secondary'}
       className="min-w-[242px] justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
       onClick={() =>
-        routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
+        routeToPage(`/cms/set-quiz/quiz-set-details?id=${props!.id}`)
       }
     >
       <div className="text-size-12px leading-tight font-semibold">

@@ -108,7 +108,8 @@ export function DataTable() {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                No registered Target. Please select the Upload button to add
+                one.
               </TableCell>
             </TableRow>
           )}

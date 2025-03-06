@@ -6,6 +6,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { QuizStageEx } from '@/types/apiTypes';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { handleDownload } from '../../../_utils/utils';
@@ -124,7 +125,7 @@ export default function QuizSetDetailsClient() {
           Imported Questions
         </h3>
         <div>
-          {quizSet.quizStages.map((stage, index) => {
+          {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
             return (
               <Collapsible className="data-[state=open]:mb-[90px]" key={index}>
                 <CollapsibleTrigger asChild>
@@ -228,7 +229,7 @@ const InfoComponent = ({
   className,
 }: {
   title: string;
-  content: string;
+  content: string | undefined;
   className?: string;
 }) => {
   return (

@@ -89,7 +89,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           className=" grow min-w-0 cursor-pointer h-full text-left px-3 flex flex-col justify-center"
           onClick={() => {
             setCampaign(campaign);
-            routeToPage(`/dashboard/overview`);
+            routeToPage(`/dashboard/${campaign.id}/overview`);
           }}
         >
           <h3 className="text-size-24px font-semibold break-words">

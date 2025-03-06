@@ -5,6 +5,8 @@ import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 // Zod를 사용한 입력 데이터 검증
 const createCampaignScheme = z.object({
   name: z.string(),

@@ -66,7 +66,14 @@ export const StateVariablesProvider = ({
 
   return (
     <StateVariablesContext.Provider
-      value={{ filter, session, role, campaigns, campaign, setCampaign }}
+      value={{
+        filter,
+        session,
+        role,
+        campaigns,
+        campaign,
+        setCampaign,
+      }}
     >
       {children}
     </StateVariablesContext.Provider>

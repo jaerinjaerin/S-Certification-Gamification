@@ -166,10 +166,19 @@ export async function POST(request: NextRequest) {
       const quizSet = quizSets.find((q) => q.domainId === domainData.id);
       if (quizSet) {
         if (quizSet.language) {
-          if (!domainData.languages) {
-            domainData.languages = [];
+          if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+            if (!domainData.languages.ff) {
+              domainData.languages.ff = [];
+            }
+            domainData.languages.ff.push(quizSet.language);
           }
-          domainData.languages.push(quizSet.language);
+          if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+            if (!domainData.languages.fsm) {
+              domainData.languages.fsm = [];
+            }
+            domainData.languages.fsm.push(quizSet.language);
+          }
+
           domainData.isReady = true;
         }
       } else {
