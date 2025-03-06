@@ -124,8 +124,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'activityId',
     header: 'Activity ID',
     cell: ({ row }) => {
-      console.log('🥕 row.original', row.original);
-
       if (row.original.activityBadges) {
         return (
           <>
@@ -176,11 +174,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 label: 'Cancel',
                 variant: 'secondary',
                 type: 'cancel',
-                onClick: () => {},
               },
               {
                 label: 'Delete',
-                variant: 'destructive',
+                variant: 'delete',
                 type: 'delete',
                 onClick: async () =>
                   await handleQuizSetDelete(
