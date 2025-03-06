@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import { cn } from '@/utils/utils';
 import { ExternalLink } from 'lucide-react';
 import { useNavigation } from '../../_hooks/useNavigation';
-import { GroupedQuizSet } from '../_type/type';
+import { QuizSetEx } from '@/types/apiTypes';
 
 function ActiveToggle({
   checked,
@@ -45,7 +45,7 @@ function StatusBadge({ isReady }: { isReady: boolean }) {
   );
 }
 
-function QuizSetLink({ props }: { props: GroupedQuizSet['quizSet'] }) {
+function QuizSetLink({ props }: { props: QuizSetEx }) {
   const { routeToPage } = useNavigation();
 
   return (
