@@ -13,6 +13,9 @@ import {
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
+  Subsidiary,
+  Region,
+  Campaign,
 } from '@prisma/client';
 
 export interface QuizSetEx extends QuizSet {
@@ -22,9 +25,9 @@ export interface QuizSetEx extends QuizSet {
     };
   };
   campaign: Campaign;
-  // subsidiary: Subsidiary | null;
   language: Language | null;
   quizStages: QuizStageEx[];
+  // subsidiary: Subsidiary | null;
 }
 
 export interface QuizStageEx extends QuizStage {
