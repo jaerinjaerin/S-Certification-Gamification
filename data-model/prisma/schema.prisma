@@ -145,6 +145,8 @@ model Campaign {
   quizBadges QuizBadge[]
   images Image[]
   domainGoals DomainGoal[]
+  contentCopyHistoryId String? @unique
+  contentCopyHistory    ContentCopyHistory? @relation(fields: [contentCopyHistoryId], references: [id])
 }
 
 model CampaignSettings {
@@ -158,6 +160,20 @@ model CampaignSettings {
   fsmFirstBadgeStageIndex   Int?
   fsmSecondBadgeStageIndex  Int?
   campaign                  Campaign?
+}
+
+model ContentCopyHistory {
+  id          String   @id @default(uuid())
+  campaignId  String
+  targetCampaignId String?
+  targetCampaignName String?
+  imageCampaignId String?
+  imageCampaignName String?
+  uiLanguageCampaignId String?
+  uiLanguageCampaignName String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  campaign    Campaign?
 }
 
 model Hq {

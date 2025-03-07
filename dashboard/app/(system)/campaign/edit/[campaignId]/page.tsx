@@ -24,8 +24,8 @@ export default async function EditCampaignPage({
   const data = await getCampaign(params.campaignId);
   const { campaign } = data.result;
 
-  const numberToString = (value: number | undefined) =>
-    value !== undefined ? value.toString() : undefined;
+  const numberToString = (value: number | null) =>
+    value != null ? value.toString() : null;
 
   const editData = {
     certificationName: campaign.name,
