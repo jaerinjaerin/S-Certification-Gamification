@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getPath } from '@/lib/file';
 import { uploadToS3 } from '@/lib/s3-client';
 import { prisma } from '@/model/prisma';
@@ -89,6 +90,8 @@ export async function POST(request: NextRequest) {
     const path = getPath(campaign.name, 'target');
     const key = `${path}/target_${campaign.name}.xlsx`;
     await uploadToS3({ key, file, isNoCache: true });
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    invalidateCache(distributionId, [`/${key}`]);
     //
     const codes = json.map((j) => j.code);
     const domains = await prisma.domain.findMany({

@@ -1,17 +1,14 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
-import { getS3Client } from '@/lib/aws/s3-client';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import {
   parseExcelBufferToDomainJson,
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
 import { DomainChannel } from '@/types/apiTypes';
-import {
-  CloudFrontClient,
-  CreateInvalidationCommand,
-} from '@aws-sdk/client-cloudfront';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { CloudFrontClient } from '@aws-sdk/client-cloudfront';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -194,7 +191,17 @@ export async function POST(request: NextRequest) {
     // =============================================
 
     // const file = files.file?.[0];
-    const s3Client = getS3Client();
+    const s3Client =
+      process.env.ENV === 'local'
+        ? new S3Client({
+            region: process.env.ASSETS_S3_BUCKET_REGION,
+            credentials: fromIni({
+              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
+            }),
+          })
+        : new S3Client({
+            region: process.env.ASSETS_S3_BUCKET_REGION,
+          });
 
     // const fileBuffer = Buffer.from(await file.arrayBuffer());
     const timestamp = new Date()
@@ -251,25 +258,25 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    async function invalidateCache(distributionId: string, paths: string[]) {
-      try {
-        const command = new CreateInvalidationCommand({
-          DistributionId: distributionId,
-          InvalidationBatch: {
-            Paths: {
-              Quantity: paths.length,
-              Items: paths,
-            },
-            CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
-          },
-        });
+    // async function invalidateCache(distributionId: string, paths: string[]) {
+    //   try {
+    //     const command = new CreateInvalidationCommand({
+    //       DistributionId: distributionId,
+    //       InvalidationBatch: {
+    //         Paths: {
+    //           Quantity: paths.length,
+    //           Items: paths,
+    //         },
+    //         CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
+    //       },
+    //     });
 
-        const response = await cloudFrontClient.send(command);
-        console.log('Invalidation successful:', response);
-      } catch (error) {
-        console.error('Error invalidating CloudFront cache:', error);
-      }
-    }
+    //     const response = await cloudFrontClient.send(command);
+    //     console.log('Invalidation successful:', response);
+    //   } catch (error) {
+    //     console.error('Error invalidating CloudFront cache:', error);
+    //   }
+    // }
 
     const cloudFrontClient =
       process.env.ENV === 'local'
