@@ -4,7 +4,7 @@ import { createOverviewExcelBlob, OverviewExcelDataProps } from '@/lib/excel';
 import { removeDuplicateUsers } from '@/lib/data';
 import { AuthType } from '@prisma/client';
 import { formatDate } from 'date-fns';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
+import { paramsToQueries } from '@/lib/query';
 
 export async function downloadOverview(data: Record<string, any>) {
   try {

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { DownloadFileListPopoverButton } from '../_components/custom-popover';
 import SectionTitle from '../_components/section-title-container';
-import { DataTable } from './_components/data-table-v2';
+import { UiLanguageDataTable } from './_components/data-table-v2';
 import DownloadLanguages from './_components/download-files';
 import { ExcelUploader } from './_components/test-upload-button';
 import UploadExcelFileModal from './_components/upload-excel-file-modal';
@@ -24,9 +24,9 @@ export default async function UILanguagePage() {
           </div>
         </div>
 
-        <ExcelUploader />
+        {/* <ExcelUploader /> */}
         <div className="border rounded-md">
-          <DataTable />
+          <UiLanguageDataTable />
         </div>
       </div>
     </LanguageDataProvider>

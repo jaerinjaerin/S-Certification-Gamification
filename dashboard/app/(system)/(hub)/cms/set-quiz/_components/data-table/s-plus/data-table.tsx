@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDown, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -47,6 +47,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [readyItemsLength, setReadyItemsLength] = useState<number>(0);
 
   const table = useReactTable({
     data,
@@ -65,15 +66,45 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     },
   });
 
+  useEffect(() => {
+    const readyItemCount = table.getRowModel().rows.filter((row) => {
+      const { quizSetFile, activityBadges, uiLanguage } = row.original;
+      return (
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0 &&
+        uiLanguage?.code
+      );
+    }).length;
+
+    setReadyItemsLength(readyItemCount);
+  }, [table]);
+
   return (
     <div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Total: {table.getFilteredRowModel().rows.length}, Domain:{' '}
-          {new Set(data.map((item) => item.quizSet.domain.id)).size}
+      <div className="flex items-center justify-between pt-[1.438rem] pb-2">
+        <div className="flex items-center justify-end space-x-3 py-4">
+          {/* Total: {table.getFilteredRowModel().rows.length}, Domain:
+          {new Set(data.map((item) => item.quizSet.domain.id)).size} */}
+          <div className=" text-sm text-zinc-950">
+            Total :
+            <strong className="font-bold">
+              {` ${table.getFilteredRowModel().rows.length}`}
+            </strong>
+          </div>
+          <div className="w-[1px] h-3 bg-zinc-200" />
+          <div className=" text-sm text-zinc-950">
+            Ready :
+            <strong className="font-bold">{` ${readyItemsLength}`}</strong>
+          </div>
+          <div className="w-[1px] h-3 bg-zinc-200" />
+          <div className=" text-sm text-zinc-950">
+            Not Ready :
+            <strong className="font-bold">
+              {` ${table.getFilteredRowModel().rows.length - readyItemsLength}`}
+            </strong>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center py-4">
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
           <Input
@@ -87,8 +118,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             className="max-w-sm pl-9 placeholder:text-zinc-500 text-size-14px"
           />
         </div>
-
-        <DropdownMenu>
+      </div>
+      {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns <ChevronDown />
@@ -113,11 +144,10 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                 );
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+        </DropdownMenu> */}
 
       <div
-        style={{ width: 'calc(100vw - 296px)' }}
+        style={{ width: 'calc(100vw - 311px)' }}
         className="rounded-md border"
       >
         <Table>
@@ -141,21 +171,23 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell className="px-4 py-6" key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell className="px-4 py-6" key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

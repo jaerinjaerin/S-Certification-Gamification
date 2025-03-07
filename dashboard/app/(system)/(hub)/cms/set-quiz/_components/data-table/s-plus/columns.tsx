@@ -6,8 +6,13 @@ import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
 import { GroupedQuizSet } from '../../../_type/type';
-import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
+import {
+  ActivityIdBadge,
+  QuizSetLink,
+  StatusBadge,
+} from '../../data-table-widgets';
 import { useNavigation } from '../../../../_hooks/useNavigation';
+import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -124,11 +129,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'activityId',
     header: 'Activity ID',
     cell: ({ row }) => {
-      console.log('🥕 row.original', row.original);
-
       if (row.original.activityBadges) {
         return (
           <>
+            {/* <ActivityIdBadge id={10000} stage={3} /> */}
             {row.original.activityBadges.map((badge, index) => (
               <div key={index}>
                 {badge.badgeType}-{badge.activityId}
@@ -176,11 +180,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 label: 'Cancel',
                 variant: 'secondary',
                 type: 'cancel',
-                onClick: () => {},
               },
               {
                 label: 'Delete',
-                variant: 'destructive',
+                variant: 'delete',
                 type: 'delete',
                 onClick: async () =>
                   await handleQuizSetDelete(
@@ -213,6 +216,7 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
         key.includes(`quizset?campaignId=${campaignId}`)
     );
     toast.success('Quiz set deleted successfully');
+    updateNoServiceChannel(campaignId);
   } catch (error: any) {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);

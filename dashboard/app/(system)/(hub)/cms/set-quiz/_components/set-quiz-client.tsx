@@ -18,6 +18,10 @@ import {
   SPlusUserUploadButton,
 } from './s-user-upload-button';
 import { UserTabList } from './user-tab-list';
+import {
+  handleDownloadQuizSet,
+  handleDownloadUploadedFile,
+} from '../_lib/handle-download-data';
 
 export function SetQuizClient() {
   const {
@@ -58,8 +62,21 @@ export function SetQuizClient() {
             setTabState={(state) => setTabState(state as UserTabState)}
           />
         </div>
-        {tabState === 's' && <SPlusUserUploadButton />}
-        {tabState === 'non-s' && <NonSPlusUserUploadButton />}
+        {tabState === 's' && (
+          <SPlusUserUploadButton
+            handleDownloadQuizSet={() => handleDownloadQuizSet(data)}
+            handleDownloadActivityId={() =>
+              handleDownloadUploadedFile(campaign?.id, 'ACTIVITYID')
+            }
+          />
+        )}
+        {tabState === 'non-s' && (
+          <NonSPlusUserUploadButton
+            handleDownloadNonS={() =>
+              handleDownloadUploadedFile(campaign?.id, 'NON_SPLUS_DOMAINS')
+            }
+          />
+        )}
       </div>
       <div>{tabState === 's' && data && <SplusDataTable data={data} />}</div>
       <div>{tabState === 'non-s' && <NonSplusDataTable />}</div>

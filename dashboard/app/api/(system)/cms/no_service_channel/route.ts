@@ -16,7 +16,7 @@ import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -166,10 +166,19 @@ export async function POST(request: NextRequest) {
       const quizSet = quizSets.find((q) => q.domainId === domainData.id);
       if (quizSet) {
         if (quizSet.language) {
-          if (!domainData.languages) {
-            domainData.languages = [];
+          if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+            if (!domainData.languages.ff) {
+              domainData.languages.ff = [];
+            }
+            domainData.languages.ff.push(quizSet.language);
           }
-          domainData.languages.push(quizSet.language);
+          if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+            if (!domainData.languages.fsm) {
+              domainData.languages.fsm = [];
+            }
+            domainData.languages.fsm.push(quizSet.language);
+          }
+
           domainData.isReady = true;
         }
       } else {
@@ -236,7 +245,7 @@ export async function POST(request: NextRequest) {
           id: uploadedFile.id,
         },
         data: {
-          uploadedBy: sesstion?.user?.id,
+          uploadedBy: session?.user?.id,
           path: `/${destinationKey}`,
         },
       });
@@ -245,7 +254,7 @@ export async function POST(request: NextRequest) {
         data: {
           fileType: FileType.NON_SPLUS_DOMAINS,
           campaignId: campaign.id,
-          uploadedBy: sesstion?.user?.id ?? '',
+          uploadedBy: session?.user?.id ?? '',
           path: `/${destinationKey}`,
         },
       });

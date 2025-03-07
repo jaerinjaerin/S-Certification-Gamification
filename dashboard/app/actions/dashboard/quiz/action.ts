@@ -1,11 +1,12 @@
 'use server';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams } from '@/lib/query';
 import { prisma } from '@/model/prisma';
 import { AuthType, Question } from '@prisma/client';
+import { URLSearchParams } from 'url';
 
-export async function getQuizRankByIncorrectAnswer(data: Record<string, any>) {
+export async function getQuizRankByIncorrectAnswer(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...restWhere } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -112,9 +113,9 @@ export async function getQuizRankByIncorrectAnswer(data: Record<string, any>) {
   }
 }
 
-export async function getQuizRankByCategory(data: Record<string, any>) {
+export async function getQuizRankByCategory(data: URLSearchParams) {
   try {
-    const { where: condition } = paramsToQueries(data);
+    const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...restWhere } = condition;
 
     // 필터링된 `jobId` 가져오기

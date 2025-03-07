@@ -5,6 +5,8 @@ import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 // Zod를 사용한 입력 데이터 검증
 const createCampaignScheme = z.object({
   name: z.string(),
@@ -25,7 +27,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const validatedData = createCampaignScheme.parse(body);
 
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     const campaign = await prisma.campaign.create({
@@ -33,8 +35,8 @@ export async function POST(request: NextRequest) {
         name: validatedData.name,
         slug: validatedData.slug,
         description: validatedData.description,
-        createrId: sesstion?.user?.id ?? '',
-        updaterId: sesstion?.user?.id,
+        createrId: session?.user?.id ?? '',
+        updaterId: session?.user?.id,
         startedAt: new Date(validatedData.startedAt),
         endedAt: new Date(validatedData.endedAt),
       },

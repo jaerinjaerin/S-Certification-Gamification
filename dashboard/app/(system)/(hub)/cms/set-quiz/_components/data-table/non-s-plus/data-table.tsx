@@ -43,7 +43,6 @@ export default function NonSplusDataTable() {
     QUIZSET_DATA_URL,
     fetcher
   );
-  console.log('🥕 data', data);
 
   if (isLoading) {
     return <LoaderWithBackground />;

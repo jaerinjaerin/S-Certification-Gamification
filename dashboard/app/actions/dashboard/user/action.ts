@@ -1,15 +1,17 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import { paramsToQueries } from '@/app/api/(system)/dashboard/_lib/query';
+import { querySearchParams, searchToQuery } from '@/lib/query';
 import { decrypt } from '@/utils/encrypt';
 import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { AuthType } from '@prisma/client';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
+import { URLSearchParams } from 'url';
 
-export async function getUserProgress(data: Record<string, any>) {
+export async function getUserProgress(data: Record<string, string>) {
+  console.log('🚀 ~ getUserProgress ~ data:', data);
   try {
-    const { where: condition, take, skip } = paramsToQueries(data);
+    const { where: condition, take, skip } = searchToQuery(data) as any;
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -75,9 +77,9 @@ export async function getUserProgress(data: Record<string, any>) {
   }
 }
 
-export async function getUserDomain(data: Record<string, any>) {
+export async function getUserDomain(data: URLSearchParams) {
   try {
-    const { where: condition, take, skip } = paramsToQueries(data);
+    const { where: condition, take, skip } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -251,7 +253,7 @@ export async function getUserDomain(data: Record<string, any>) {
   }
 }
 
-export async function getUserAverageScore(data: Record<string, any>) {
+export async function getUserAverageScore(data: URLSearchParams) {
   function filterHighestScores(data: any) {
     // Create a Map to store the highest score for each userId
     const userMap = new Map();
@@ -269,7 +271,7 @@ export async function getUserAverageScore(data: Record<string, any>) {
   }
 
   try {
-    const { where: condition, period } = paramsToQueries(data);
+    const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -344,7 +346,7 @@ export async function getUserAverageScore(data: Record<string, any>) {
   }
 }
 
-export async function getUserCompletionTime(data: Record<string, any>) {
+export async function getUserCompletionTime(data: URLSearchParams) {
   function filterHighestElapsedSeconds(data: any) {
     // Create a Map to store the highest elapsedSeconds for each userId
     const userMap = new Map();
@@ -362,7 +364,7 @@ export async function getUserCompletionTime(data: Record<string, any>) {
   }
 
   try {
-    const { where: condition, period } = paramsToQueries(data);
+    const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     await prisma.$connect();
@@ -445,9 +447,9 @@ export async function getUserCompletionTime(data: Record<string, any>) {
   }
 }
 
-export async function getUserExpertsProgress(data: Record<string, any>) {
+export async function getUserExpertsProgress(data: URLSearchParams) {
   try {
-    const { where: condition, period } = paramsToQueries(data);
+    const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
