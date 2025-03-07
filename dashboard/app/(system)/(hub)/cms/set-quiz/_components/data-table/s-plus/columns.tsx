@@ -6,7 +6,11 @@ import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
 import { GroupedQuizSet } from '../../../_type/type';
-import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
+import {
+  ActivityIdBadge,
+  QuizSetLink,
+  StatusBadge,
+} from '../../data-table-widgets';
 import { useNavigation } from '../../../../_hooks/useNavigation';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
@@ -127,6 +131,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.activityBadges) {
         return (
           <>
+            {/* <ActivityIdBadge id={10000} stage={3} /> */}
             {row.original.activityBadges.map((badge, index) => (
               <div key={index}>
                 {badge.badgeType}-{badge.activityId}

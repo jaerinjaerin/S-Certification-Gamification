@@ -51,14 +51,14 @@ function QuizSetLink({ props }: { props: QuizSetEx }) {
   return (
     <Button
       variant={'secondary'}
-      className="min-w-[242px] justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
+      className="w-[12.5rem] justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none"
       onClick={() =>
         routeToPage(`/cms/set-quiz/quiz-set-details?id=${props!.id}`)
       }
     >
       <div className="text-size-12px leading-tight font-semibold">
-        <p className="text-zinc-950">
-          {props.domain.name}({props?.language?.name})
+        <p className="text-zinc-950 w-[7.938rem] truncate">
+          {props?.language?.name}
         </p>
         <p className="text-description">{props.jobCodes[0]}</p>
       </div>
@@ -80,10 +80,10 @@ function ActivityIdBadge({
   return (
     <div className="border border-zinc-200 rounded-full px-[10px] flex items-center gap-1 w-fit font-semibold">
       <div className="rounded-full bg-zinc-200 size-[14px] flex items-center justify-center leading-none text-size-12px">
-        3{id}
+        {stage}
       </div>
 
-      <span>102978{stage}</span>
+      <span>{id}</span>
     </div>
   );
 }
