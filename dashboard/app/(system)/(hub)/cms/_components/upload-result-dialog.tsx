@@ -9,16 +9,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { X, Check, CircleX, CircleAlert } from 'lucide-react';
-import { UploadExcelFileVariant } from '../set-quiz/_type/type';
+import { Check, CircleAlert, CircleX, X } from 'lucide-react';
 import {
   FilesTableComponent,
   Td,
 } from '../set-quiz/_components/files-table-component';
+import { UploadExcelFileVariant } from '../set-quiz/_type/type';
 
 type UploadFilesResult = ProcessResult | any; // TODO: fix type
 
@@ -129,7 +128,8 @@ export default function UploadResultDialog({
                         {/* {item.result.failures[0]} */}
                         <div className="flex items-center gap-2.5 text-red-600 font-medium">
                           <CircleAlert className="size-4" />
-                          <span>Some data is missing.</span>
+                          {/* <span>Some data is missing.</span> */}
+                          <span>{item.result.failures[0]}</span>
                         </div>
                       </Td>
                     </tr>
@@ -148,7 +148,8 @@ export default function UploadResultDialog({
                           {/* {getErrorMessage(item)} */}
                           <div className="flex items-center gap-2.5 text-red-600 font-medium">
                             <CircleAlert className="size-4" />
-                            <span>Some data is missing.</span>
+                            {/* <span>Some data is missing.</span> */}
+                            <span>{getErrorMessage(item)}</span>
                           </div>
                         </Td>
                       </tr>

@@ -303,9 +303,9 @@ export async function POST(request: NextRequest) {
       })) ?? [];
 
     // 엑셀에 입력된 이미지 중 등록되어 있지 않은 이미지가 있는지 확인
-    const backgroundImageIds = questions.map(
-      (question) => question.backgroundImageId
-    );
+    const backgroundImageIds = questions
+      .filter((question) => question.enabled)
+      .map((question) => question.backgroundImageId);
 
     const notRegisteredBackgroundImages = backgroundImageIds.filter(
       (id) => !backgroundImages.find((image) => image.title === id)
@@ -325,9 +325,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const characterImageIds = questions.map(
-      (question) => question.characterImageId
-    );
+    const characterImageIds = questions
+      .filter((question) => question.enabled)
+      .map((question) => question.characterImageId);
 
     const notRegisteredCharacterImages = characterImageIds.filter(
       (id) => !characterImages.find((image) => image.title === id)
