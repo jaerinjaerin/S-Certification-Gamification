@@ -2,6 +2,8 @@
 
 import { ErrorCode } from '@/app/constants/error-codes';
 import {
+  Campaign,
+  CampaignSettings,
   Domain,
   Image,
   Language,
@@ -10,12 +12,11 @@ import {
   QuizBadge,
   QuizSet,
   QuizStage,
+  Region,
+  Subsidiary,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
-  Subsidiary,
-  Region,
-  Campaign,
 } from '@prisma/client';
 
 export interface QuizSetEx extends QuizSet {
@@ -24,10 +25,14 @@ export interface QuizSetEx extends QuizSet {
       region: Region;
     };
   };
-  campaign: Campaign;
+  campaign: CampaignEx;
   language: Language | null;
   quizStages: QuizStageEx[];
   // subsidiary: Subsidiary | null;
+}
+
+export interface CampaignEx extends Campaign {
+  settings: CampaignSettings;
 }
 
 export interface QuizStageEx extends QuizStage {

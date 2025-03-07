@@ -1,7 +1,5 @@
 'use client';
 
-import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -11,6 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,

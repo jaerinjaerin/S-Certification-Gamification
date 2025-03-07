@@ -854,7 +854,11 @@ export async function GET(request: Request) {
             },
           },
         },
-        campaign: true,
+        campaign: {
+          include: {
+            settings: true,
+          },
+        },
         language: true,
         quizStages: {
           include: {
@@ -956,6 +960,11 @@ export async function GET(request: Request) {
       return jobOrderA - jobOrderB;
     });
 
+    const campaignSettings = await prisma.campaignSettings.findFirst({
+      where: {
+        campaignId: campaignId,
+      },
+    });
     const groupedQuizSets = quizSets.map((quizSet) => ({
       quizSet,
       quizSetFile: quizSetFiles
@@ -976,7 +985,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets },
+        result: { groupedQuizSets, campaignSettings },
       },
       { status: 200 }
     );

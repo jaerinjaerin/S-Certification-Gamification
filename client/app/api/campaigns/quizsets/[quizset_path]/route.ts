@@ -193,6 +193,21 @@ export async function GET(request: NextRequest, props: Props) {
       console.log("campaign:", campaign.settings);
       console.log("quizSet:", quizSet);
 
+      const campaignSettings = await prisma.campaignSettings.findFirst({
+        where: {
+          campaignId: campaign.id,
+        },
+      });
+
+      if (campaignSettings) {
+        const maxStage = campaignSettings.totalStages;
+        if (maxStage) {
+          if (quizSet.quizStages.length > maxStage) {
+            quizSet.quizStages = quizSet.quizStages.slice(0, maxStage);
+          }
+        }
+      }
+
       return NextResponse.json(
         {
           item: quizSet,

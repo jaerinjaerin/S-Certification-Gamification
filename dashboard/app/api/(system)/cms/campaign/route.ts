@@ -67,29 +67,42 @@ export async function POST(request: NextRequest) {
     //   },
     // });
 
-    const filterNullish = (obj: Record<string, any>) => {
-      return Object.fromEntries(
-        Object.entries(obj).filter(([_, v]) => v != null)
-      );
-    };
+    // const filterNullish = (obj: Record<string, any>) => {
+    //   return Object.fromEntries(
+    //     Object.entries(obj).filter(([_, v]) => v != null)
+    //   );
+    // };
 
-    const campaignSettingsData = filterNullish({
-      totalStages: validatedData.totalStages,
-      firstBadgeName: validatedData.firstBadgeName,
-      secondBadgeName: validatedData.secondBadgeName,
-      ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
-      ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
-      fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
-      fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
-    });
+    // const campaignSettingsData = filterNullish({
+    //   totalStages: validatedData.totalStages,
+    //   firstBadgeName: validatedData.firstBadgeName,
+    //   secondBadgeName: validatedData.secondBadgeName,
+    //   ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
+    //   ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
+    //   fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
+    //   fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
+    // });
 
-    console.log('campaignSettingsData: ', campaignSettingsData);
+    // console.log('campaignSettingsData: ', campaignSettingsData);
 
     // campaignSettingsData에 값이 있는 경우에만 생성
     const campaignSettings = await prisma.campaignSettings.create({
       data: {
         campaignId: campaign.id, // 필수 값
-        ...campaignSettingsData, // 옵션 값 (값이 있는 경우만)
+        // ...campaignSettingsData, // 옵션 값 (값이 있는 경우만)
+        totalStages: validatedData.totalStages,
+        firstBadgeName: validatedData.firstBadgeName,
+        secondBadgeName: validatedData.secondBadgeName,
+        ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
+        ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
+        fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
+        fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
+      },
+    });
+
+    const contentCopyHistory = await prisma.contentCopyHistory.create({
+      data: {
+        campaignId: campaign.id,
       },
     });
 
@@ -97,6 +110,7 @@ export async function POST(request: NextRequest) {
       where: { id: campaign.id },
       data: {
         settingsId: campaignSettings.id,
+        contentCopyHistoryId: contentCopyHistory.id,
       },
     });
 

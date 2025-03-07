@@ -245,6 +245,7 @@ export async function GET(request: NextRequest, props: Props) {
       },
       include: {
         settings: true,
+        contentCopyHistory: true,
       },
     });
 
