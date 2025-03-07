@@ -1,3 +1,4 @@
+import { convertUi } from '@/app/(system)/(hub)/cms/_utils/convert-excel-json';
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
@@ -64,6 +65,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const result = await convertUi(file);
+    if (!result.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: result.errorMessage,
+            code: ERROR_CODES.EXCEL_PROCESSING_ERROR,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     const fileName = file.name;
     const languageCode = fileName.split('.')[0];
@@ -92,7 +107,9 @@ export async function POST(request: NextRequest) {
     // file upload
     // =============================================
     const s3Client = getS3Client();
+    console.log('file.name: ', file.name);
     const destinationKey = `certification/${campaign.slug}/messages/${file.name}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/messages/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
@@ -107,9 +124,12 @@ export async function POST(request: NextRequest) {
       where: {
         campaignId: campaign.id,
         languageId: language.id,
+        uploadedBy: session?.user.id,
         fileType: FileType.UI_LANGUAGE,
       },
     });
+
+    console.log('uploadedFile: ', uploadedFile, `/${destinationKey}`);
 
     if (uploadedFile) {
       uploadedFile = await prisma.uploadedFile.update({
@@ -133,12 +153,29 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // const result = await convertUi(file);
+    const path = `certification/${campaign.slug}/messages`;
+    const key = `${path}/${languageCode}.json`;
+    // const json = jsonToFile({
+    //   filename: `${languageCode}.json`,
+    //   json: result.result,
+    // });
+    // await uploadToS3({ key, file, isNoCache: true });
+    const jsonString = JSON.stringify(result.result, null, 2);
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: process.env.ASSETS_S3_BUCKET_NAME,
+        Key: key,
+        Body: jsonString,
+      })
+    );
+
     return NextResponse.json(
       { success: true, result: { language, uploadedFile } },
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('Error create campaign: ', error);
+    console.error('Error upload ui language: ', error);
     return NextResponse.json(
       {
         success: false,

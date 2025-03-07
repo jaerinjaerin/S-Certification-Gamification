@@ -57,6 +57,8 @@ export async function POST(request: NextRequest) {
       Buffer.from(fileBuffer),
       file.name
     );
+
+    console.log('result: ', result);
     if (!result.success) {
       console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
@@ -304,7 +306,9 @@ export async function POST(request: NextRequest) {
 
     // 엑셀에 입력된 이미지 중 등록되어 있지 않은 이미지가 있는지 확인
     const backgroundImageIds = questions
-      .filter((question) => question.enabled)
+      .filter(
+        (question) => question.enabled && question.backgroundImageId != null
+      )
       .map((question) => question.backgroundImageId);
 
     const notRegisteredBackgroundImages = backgroundImageIds.filter(
@@ -326,12 +330,16 @@ export async function POST(request: NextRequest) {
     }
 
     const characterImageIds = questions
-      .filter((question) => question.enabled)
+      .filter(
+        (question) => question.enabled && question.characterImageId != null
+      )
       .map((question) => question.characterImageId);
 
     const notRegisteredCharacterImages = characterImageIds.filter(
       (id) => !characterImages.find((image) => image.title === id)
     );
+
+    console.log('notRegisteredCharacterImages: ', notRegisteredCharacterImages);
 
     if (notRegisteredCharacterImages.length > 0) {
       console.error('Character images not registered');

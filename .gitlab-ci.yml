@@ -299,6 +299,8 @@ deploy_stg_admin:
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
   rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/admin"'
+      when: always
     - if: '$ENV == "staging" && $SERVICE =~ /admin/'
       when: always
     - when: never

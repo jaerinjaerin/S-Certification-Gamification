@@ -111,12 +111,12 @@ export const processExcelBuffer = (
     const sheet2 = sheet2Name ? workbook.Sheets[sheet2Name] : null;
 
     // 첫 번째 시트 파싱 (questions)
-    const questionsResult = parseSheet(sheet1);
+    const questionsResult = parseSheet(sheet1, false);
 
     // 두 번째 시트가 존재하면 추가 파싱 (extraQuestions)
     let extraQuestionsResult: ParsingResult | null = null;
     if (sheet2) {
-      extraQuestionsResult = parseSheet(sheet2);
+      extraQuestionsResult = parseSheet(sheet2, true);
     }
 
     console.log('questionsResult:', questionsResult);
@@ -150,7 +150,7 @@ export const processExcelBuffer = (
 };
 
 // Sheet 파싱 함수
-const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
+const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
   try {
     // const mergedData = getMergedCellValues(sheet);
     // let data: (string | null)[][] = XLSX.utils.sheet_to_json(sheet, {
@@ -303,7 +303,21 @@ const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
       }
     });
 
-    // 각 질문의 옵션 중복 제거
+    console.log('groupedData[101]', groupedData['101']);
+    if (
+      groupedData['101'] &&
+      groupedData['101'].text == null &&
+      Object.keys(groupedData).length === 1
+    ) {
+      return {
+        success: errors.length === 0,
+        data: {
+          questions: [],
+        },
+        errors,
+      };
+    }
+
     // 정답이 없는 문제 체크
     Object.values(groupedData).forEach((question: any) => {
       let uniqueOptions = new Map();
