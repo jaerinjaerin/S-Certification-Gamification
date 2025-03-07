@@ -60,6 +60,7 @@ import { API_ENDPOINTS } from '../constant/contant';
 
 // State Management
 import useCampaignState from '../store/campaign-state';
+import { Campaign } from '@prisma/client';
 
 interface CampaignFormProps {
   initialData: any;
@@ -72,7 +73,7 @@ export default function CampaignForm({
   isEditMode = false,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns } = useStateVariables();
+  const { campaigns, setCampaigns } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -210,6 +211,9 @@ export default function CampaignForm({
       console.warn('complete campaign');
       const campaign = campaignData.result.campaign;
       const campaignSettings = campaignData.result.campaignSettings;
+      //
+      // ! mutation
+      setCampaigns((c) => [...c, campaign]);
 
       console.warn('campaign:', campaign);
       console.warn('campaignSettings:', campaignSettings);
@@ -275,6 +279,21 @@ export default function CampaignForm({
           fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
         }),
       });
+
+      const campaignData = await response.json();
+      if (!campaignData?.success) {
+        console.error('Failed to create campaign', campaignData);
+        toast.error('Failed to create campaign');
+        return;
+      }
+
+      // ! mutation
+      console.warn('update campaign');
+      const updatedCampaign = campaignData.result.campaign;
+      const updatedCampaigns = campaigns?.map((item) =>
+        item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
+      );
+      setCampaigns(updatedCampaigns as Campaign[]);
     } catch (error) {
     } finally {
       setIsLoading(false);

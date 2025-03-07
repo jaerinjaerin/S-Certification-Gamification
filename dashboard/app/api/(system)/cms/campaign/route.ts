@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const validatedData = createCampaignScheme.parse(body);
 
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     const campaign = await prisma.campaign.create({
@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
         name: validatedData.name,
         slug: validatedData.slug,
         description: validatedData.description,
-        createrId: sesstion?.user?.id ?? '',
-        updaterId: sesstion?.user?.id,
+        createrId: session?.user?.id ?? '',
+        updaterId: session?.user?.id,
         startedAt: new Date(validatedData.startedAt),
         endedAt: new Date(validatedData.endedAt),
       },

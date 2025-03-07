@@ -12,6 +12,7 @@ import {
   StatusBadge,
 } from '../../data-table-widgets';
 import { useNavigation } from '../../../../_hooks/useNavigation';
+import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -215,6 +216,7 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
         key.includes(`quizset?campaignId=${campaignId}`)
     );
     toast.success('Quiz set deleted successfully');
+    updateNoServiceChannel(campaignId);
   } catch (error: any) {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);

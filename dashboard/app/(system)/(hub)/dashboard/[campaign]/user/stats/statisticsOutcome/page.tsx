@@ -10,6 +10,10 @@ const UserOutcome = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
+
   const [score, time] = await Promise.all([
     getUserAverageScore(searchParams),
     getUserCompletionTime(searchParams),

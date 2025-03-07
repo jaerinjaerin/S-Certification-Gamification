@@ -1,8 +1,8 @@
-import QuizQuizzesRanked from './@infoQuizzesRankedByHighestIncorrectAnswerRate/page';
-import QuizIncorrectAnswerRate from './@statisticsIncorrectAnswerRateByCategory/page';
-import QuizFilterForm from './@filters/page';
 import { prisma } from '@/model/prisma';
 import { getSearchParams } from '@/lib/params';
+import QuizFilterForm from './filters/page';
+import QuizIncorrectAnswerRate from './statisticsIncorrectAnswerRateByCategory/page';
+import QuizQuizzesRanked from './infoQuizzesRankedByHighestIncorrectAnswerRate/page';
 
 const QuizLayout = async ({ params }: { params: { campaign: string } }) => {
   const searchParams = getSearchParams();

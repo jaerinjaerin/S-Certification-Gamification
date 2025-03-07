@@ -7,7 +7,7 @@ import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     const body = await request.formData();
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
           id: uploadedFile.id,
         },
         data: {
-          uploadedBy: sesstion?.user.id,
+          uploadedBy: session?.user.id,
           path: `/${destinationKey}`,
         },
       });
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
         data: {
           campaignId: campaign.id,
           languageId: language.id,
-          uploadedBy: sesstion?.user.id ?? '',
+          uploadedBy: session?.user.id ?? '',
           path: `/${destinationKey}`,
           fileType: FileType.UI_LANGUAGE,
         },

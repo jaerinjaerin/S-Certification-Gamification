@@ -7,6 +7,9 @@ export async function UserProgressExperts({
 }: {
   searchParams: URLSearchParams;
 }) {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getUserExpertsProgress(searchParams);
 
   return <UserProgressExpertsChild data={data} />;

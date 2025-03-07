@@ -4,6 +4,7 @@ import CardCustomHeader from '@/components/system/chart-header';
 import { DefaultHeatMapDatum, ResponsiveHeatMapCanvas } from '@nivo/heatmap';
 import { useModal } from '@/components/provider/modal-provider';
 import DetailIncorrectTable from './_components/detail-table';
+import { LoaderWithBackground } from '@/components/loader';
 
 type Props = {
   data: any;
@@ -14,6 +15,7 @@ const QuizIncorrectAnswerRateChild = ({ data }: Props) => {
 
   return (
     <ChartContainer>
+      {data?.length === 0 && <LoaderWithBackground />}
       <CardCustomHeader
         title="Incorrect answer rate by category"
         description="The darker the color, the more incorrect answers there were for that question type."

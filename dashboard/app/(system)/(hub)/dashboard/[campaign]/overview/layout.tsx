@@ -1,11 +1,11 @@
-import OverviewExpertsByGroupInfo from './@infoExpertsByGroup/page';
-import OverviewExpertsInfo from './@infoExperts/page';
-import OverviewParticipantsInfo from './@infoParticipants/page';
-import OverviewExperts from './@statisticsExperts/page';
-import OverviewGoalAchievement from './@statisticsProgressOfGoalAchievement/page';
-import OverviewFilterForm from './@filters/page';
-import OverviewAchievementInfo from './@infoAchievement/page';
-import OverviewAchievementRate from './@statisticsAchievementRate/page';
+import OverviewExpertsByGroupInfo from './infoExpertsByGroup/page';
+import OverviewExpertsInfo from './infoExperts/page';
+import OverviewParticipantsInfo from './infoParticipants/page';
+import OverviewExperts from './statisticsExperts/page';
+import OverviewGoalAchievement from './statisticsProgressOfGoalAchievement/page';
+import OverviewFilterForm from './filters/page';
+import OverviewAchievementInfo from './infoAchievement/page';
+import OverviewAchievementRate from './statisticsAchievementRate/page';
 import { getSearchParams } from '@/lib/params';
 import { prisma } from '@/model/prisma';
 

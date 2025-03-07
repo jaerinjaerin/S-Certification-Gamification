@@ -7,6 +7,9 @@ const QuizIncorrectAnswerRate = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  if (!(searchParams instanceof URLSearchParams)) {
+    searchParams = new URLSearchParams(searchParams as any);
+  }
   const data = await getQuizRankByCategory(searchParams);
 
   return <QuizIncorrectAnswerRateChild data={data} />;
