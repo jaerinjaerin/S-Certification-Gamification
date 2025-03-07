@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -402,8 +402,8 @@ export async function POST(request: NextRequest) {
           domainId: domain.id,
           languageId: language.id,
           jobCodes: jobCodes,
-          createrId: sesstion?.user?.id ?? '',
-          updaterId: sesstion?.user?.id,
+          createrId: session?.user?.id ?? '',
+          updaterId: session?.user?.id,
         },
       });
     } else {
@@ -414,7 +414,7 @@ export async function POST(request: NextRequest) {
         data: {
           // languageId: language.id,
           jobCodes: jobCodes,
-          updaterId: sesstion?.user?.id,
+          updaterId: session?.user?.id,
         },
       });
     }

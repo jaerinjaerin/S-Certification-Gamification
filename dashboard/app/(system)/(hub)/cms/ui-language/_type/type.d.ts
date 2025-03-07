@@ -16,3 +16,8 @@ type LanguageConvertedProps = {
   json?: File;
   metadata: Record<string, any>;
 };
+
+type DataType = {
+  file: UploadedFile;
+  language: LanguageProps;
+};

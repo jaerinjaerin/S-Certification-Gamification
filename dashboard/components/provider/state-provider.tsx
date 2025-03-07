@@ -16,6 +16,7 @@ type StateVariables = {
   session: Session | null;
   role: (Role & any) | null;
   campaigns: Campaign[] | null;
+  setCampaigns: React.Dispatch<React.SetStateAction<Campaign[]>>;
   campaign: Campaign | null;
   setCampaign: React.Dispatch<React.SetStateAction<Campaign | null>>;
 };
@@ -29,7 +30,7 @@ export const StateVariablesProvider = ({
   filter,
   session,
   role,
-  campaigns,
+  campaigns: initCampaigns,
 }: {
   children: ReactNode;
   filter: AllFilterData | null;
@@ -38,6 +39,7 @@ export const StateVariablesProvider = ({
   campaigns: Campaign[];
 }) => {
   const pathname = usePathname();
+  const [campaigns, setCampaigns] = useState<Campaign[]>(initCampaigns);
   const [campaign, setCampaign] = useState<Campaign | null>(() => {
     // sessionStorage에 저장된 캠페인 데이터 가져오기 (새로고침 유지)
     if (typeof window !== 'undefined') {
@@ -66,7 +68,15 @@ export const StateVariablesProvider = ({
 
   return (
     <StateVariablesContext.Provider
-      value={{ filter, session, role, campaigns, campaign, setCampaign }}
+      value={{
+        filter,
+        session,
+        role,
+        campaigns,
+        setCampaigns,
+        campaign,
+        setCampaign,
+      }}
     >
       {children}
     </StateVariablesContext.Provider>

@@ -16,7 +16,7 @@ import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
           id: uploadedFile.id,
         },
         data: {
-          uploadedBy: sesstion?.user?.id,
+          uploadedBy: session?.user?.id,
           path: `/${destinationKey}`,
         },
       });
@@ -254,7 +254,7 @@ export async function POST(request: NextRequest) {
         data: {
           fileType: FileType.NON_SPLUS_DOMAINS,
           campaignId: campaign.id,
-          uploadedBy: sesstion?.user?.id ?? '',
+          uploadedBy: session?.user?.id ?? '',
           path: `/${destinationKey}`,
         },
       });

@@ -13,13 +13,21 @@ import {
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
+  Subsidiary,
+  Region,
+  Campaign,
 } from '@prisma/client';
 
 export interface QuizSetEx extends QuizSet {
-  domain: Domain;
-  // subsidiary: Subsidiary | null;
+  domain: Domain & {
+    subsidiary: Subsidiary & {
+      region: Region;
+    };
+  };
+  campaign: Campaign;
   language: Language | null;
   quizStages: QuizStageEx[];
+  // subsidiary: Subsidiary | null;
 }
 
 export interface QuizStageEx extends QuizStage {

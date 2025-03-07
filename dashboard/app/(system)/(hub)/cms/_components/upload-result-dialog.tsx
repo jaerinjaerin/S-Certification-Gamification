@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { X, Check, CircleX } from 'lucide-react';
+import { X, Check, CircleX, CircleAlert } from 'lucide-react';
 import { UploadExcelFileVariant } from '../set-quiz/_type/type';
 import {
   FilesTableComponent,
@@ -88,7 +88,7 @@ export default function UploadResultDialog({
     return 'Unknown error';
   };
   const failureFiles = uploadFilesResult.filter((item) => !item.success);
-  console.log('🥕 failureFiles', failureFiles);
+
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       {/* <DialogTrigger>{trigger}</DialogTrigger> */}
@@ -110,40 +110,54 @@ export default function UploadResultDialog({
             </div>
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-5">
-          <div className="flex gap-2 items-center">
-            <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-            {uploadFilesResult.filter((item) => !item.success).length} files
-            failed to upload.
-          </div>
+        {failureFiles.length > 0 && (
+          <div className="flex flex-col gap-5">
+            <div className="flex gap-2 items-center">
+              <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
+              {uploadFilesResult.filter((item) => !item.success).length} files
+              failed to upload.
+            </div>
 
-          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-            <FilesTableComponent>
-              {variant === 'non-s' &&
-                uploadFilesResult.map((item, index) => (
-                  <tr key={index} className="border-t border-t-zinc-200">
-                    <Td>{index + 1}</Td>
-                    <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-                    <Td>{item.result.failures[0]}</Td>
-                  </tr>
-                ))}
-
-              {variant !== 'non-s' &&
-                failureFiles.map((item, index) => {
-                  return (
+            <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+              <FilesTableComponent>
+                {variant === 'non-s' &&
+                  uploadFilesResult.map((item, index) => (
                     <tr key={index} className="border-t border-t-zinc-200">
                       <Td>{index + 1}</Td>
-
+                      <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
                       <Td>
-                        {item.fileName || item.error.message.split(':')[0]}
+                        {/* {item.result.failures[0]} */}
+                        <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                          <CircleAlert className="size-4" />
+                          <span>Some data is missing.</span>
+                        </div>
                       </Td>
-                      <Td className="text-red-500">{getErrorMessage(item)}</Td>
                     </tr>
-                  );
-                })}
-            </FilesTableComponent>
+                  ))}
+
+                {variant !== 'non-s' &&
+                  failureFiles.map((item, index) => {
+                    return (
+                      <tr key={index} className="border-t border-t-zinc-200">
+                        <Td>{index + 1}</Td>
+
+                        <Td>
+                          {item.fileName || item.error.message.split(':')[0]}
+                        </Td>
+                        <Td>
+                          {/* {getErrorMessage(item)} */}
+                          <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                            <CircleAlert className="size-4" />
+                            <span>Some data is missing.</span>
+                          </div>
+                        </Td>
+                      </tr>
+                    );
+                  })}
+              </FilesTableComponent>
+            </div>
           </div>
-        </div>
+        )}
 
         <DialogFooter className="!justify-center">
           <DialogClose asChild>

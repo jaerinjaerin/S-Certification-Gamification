@@ -30,6 +30,7 @@ export async function getCampaigns(role: string) {
 
     const campaigns = await prisma.campaign.findMany({
       where,
+      include: { settings: true },
     });
 
     return { result: campaigns };
