@@ -152,10 +152,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu> */}
 
-      <div
-        style={{ width: 'calc(100vw - 311px)' }}
-        className="rounded-md border"
-      >
+      <div className="rounded-md border data-table">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
