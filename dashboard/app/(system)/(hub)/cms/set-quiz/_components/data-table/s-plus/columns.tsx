@@ -5,14 +5,10 @@ import { CircleHelp, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
-import { GroupedQuizSet } from '../../../_type/type';
-import {
-  ActivityIdBadge,
-  QuizSetLink,
-  StatusBadge,
-} from '../../data-table-widgets';
 import { useNavigation } from '../../../../_hooks/useNavigation';
 import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
+import { GroupedQuizSet } from '../../../_type/type';
+import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -104,7 +100,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'URL',
     cell: ({ row }) => {
       if (row.original.uiLanguage) {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
         return (
           <a href={url} target="_blank">
             {url}
