@@ -13,6 +13,7 @@ const SelectForm = ({
   label,
   placeholder = 'Select',
   width = 'auto',
+  disabled = false,
   field,
   items,
   onChange,
@@ -20,6 +21,7 @@ const SelectForm = ({
   label?: string | undefined;
   placeholder?: string;
   width?: number | string;
+  disabled?: boolean;
   field: ControllerRenderProps<FieldValues, string>;
   items: { label: string; value: string | number }[];
   onChange?: (value: string | number) => void;
@@ -28,6 +30,7 @@ const SelectForm = ({
     <div className="flex items-center space-x-4">
       {label && <div className="flex-shrink-0">{label}</div>}
       <Select
+        disabled={disabled}
         onValueChange={(value) => {
           field.onChange(value);
           onChange?.(value);

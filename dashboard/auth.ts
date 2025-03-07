@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from '@/model/prisma';
 import type { Adapter } from '@auth/core/adapters';
 import { PrismaAdapter } from '@auth/prisma-adapter';
@@ -9,12 +11,15 @@ import {
 } from './services/auth/sumtotal';
 import { encrypt } from './utils/encrypt';
 
+type UserProps = User & { loginName: string };
+
 declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
       provider: string;
       authType: AuthType;
+      loginName: string;
     } & DefaultSession['user'];
   }
 }
@@ -42,7 +47,7 @@ export const {
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: async (profile: SumtotalProfile, tokens) => {
-        // console.log("profile:", profile);
+        // console.log('profile:', profile);
         // // console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
 
@@ -122,6 +127,7 @@ export const {
           channelSegmentId: channelSegmentId,
           regionId: regionId,
           subsidiaryId: subsidiaryId,
+          loginName: encrypt(profile.userLogin.username, true),
         };
       },
     },
@@ -133,12 +139,13 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // // console.log("auth callbacks jwt", token, profile, user, account);
+      // console.log('auth callbacks jwt', token, profile, user, account);
       if (account) {
         token.provider = account.provider;
       }
       if (user) {
         token.authType = (user as User).authType;
+        token.loginName = (user as UserProps).loginName;
       }
       return token;
     },
@@ -154,6 +161,7 @@ export const {
           session.user.id = token.sub;
           session.user.provider = (token as any).provider;
           session.user.authType = (token as any).authType;
+          session.user.loginName = (token as any).loginName;
         }
       }
 

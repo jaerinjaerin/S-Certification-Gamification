@@ -1,0 +1,38 @@
+'use client';
+import { MediaAssetItem } from './media-asset-item';
+import MediaAssetListContainer from './media-asset-list-container';
+import { useMediaData } from '../_provider/media-data-provider';
+import { LoaderWithBackground } from '@/components/loader';
+
+type Props = { group: MediaGroupName };
+
+const MediaAssetGroup = ({ group }: Props) => {
+  const { state } = useMediaData();
+  const data = state[group];
+
+  return (
+    <MediaAssetListContainer group={group}>
+      {!data && <LoaderWithBackground />}
+      {data?.length === 0 && (
+        <p className="text-zinc-950 mx-auto">
+          No registered Asset. Please select the Upload button to add one.
+        </p>
+      )}
+      {data?.map((image) => {
+        const key = `${image.id}_${image.date}`;
+        return (
+          <MediaAssetItem
+            key={key}
+            id={image.id}
+            group={group}
+            imageUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${image.url}`}
+            fileName={image.name}
+            updatedAt={image.date}
+          />
+        );
+      })}
+    </MediaAssetListContainer>
+  );
+};
+
+export default MediaAssetGroup;

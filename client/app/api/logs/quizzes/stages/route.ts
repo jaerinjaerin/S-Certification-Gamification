@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       storeId,
       channelId,
       channelName,
+      badgeType,
     } = body;
 
     // function generateRandomNumber(length) {
@@ -102,6 +103,7 @@ export async function POST(request: NextRequest) {
           storeId,
           channelId,
           channelName,
+          badgeType,
         },
       });
     } else {
@@ -134,6 +136,7 @@ export async function POST(request: NextRequest) {
           storeId,
           channelId,
           channelName,
+          badgeType,
         },
       });
     }
@@ -175,6 +178,7 @@ export async function POST(request: NextRequest) {
           storeId,
           channelId,
           channelName,
+          badgeType,
         },
       });
     } else {
@@ -208,6 +212,7 @@ export async function POST(request: NextRequest) {
           storeId,
           channelId,
           channelName,
+          badgeType,
         },
       });
     }
@@ -244,6 +249,7 @@ export async function POST(request: NextRequest) {
             storeId,
             channelId,
             channelName,
+            badgeType,
           },
         });
       } else {
@@ -271,6 +277,7 @@ export async function POST(request: NextRequest) {
             storeId,
             channelId,
             channelName,
+            badgeType,
           },
         });
       }
@@ -306,6 +313,7 @@ export async function POST(request: NextRequest) {
             storeId,
             channelId,
             channelName,
+            badgeType,
           },
         });
       } else {
@@ -333,6 +341,7 @@ export async function POST(request: NextRequest) {
             storeId,
             channelId,
             channelName,
+            badgeType,
           },
         });
       }

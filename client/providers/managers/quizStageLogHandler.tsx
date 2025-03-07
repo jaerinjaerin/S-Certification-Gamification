@@ -1,4 +1,9 @@
-import { AuthType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
+import {
+  AuthType,
+  BadgeType,
+  UserQuizLog,
+  UserQuizStageLog,
+} from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 
 interface CreateQuizStageLogParams {
@@ -17,6 +22,7 @@ interface CreateQuizStageLogParams {
   isBadgeStage: boolean;
   isBadgeAcquired: boolean;
   badgeActivityId: string | null;
+  badgeType: BadgeType | null;
   quizLog: UserQuizLog | null;
 }
 
@@ -41,6 +47,7 @@ export class QuizStageLogHandler {
       isBadgeStage,
       isBadgeAcquired,
       badgeActivityId,
+      badgeType,
       quizLog,
     } = params;
 
@@ -82,6 +89,7 @@ export class QuizStageLogHandler {
               channelId: quizLog?.channelId,
               channelName: quizLog?.channelName,
               channelSegmentId: quizLog?.channelSegmentId,
+              badgeType,
             }),
           }
         );

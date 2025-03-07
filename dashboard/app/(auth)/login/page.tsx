@@ -6,7 +6,7 @@ export default async function Login() {
   const session = await auth();
   // redirect to home if user is already logged in
   if (session?.user) {
-    redirect('/dashboard/overview');
+    redirect('/campaign');
   }
 
   return (

@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": "1",
+    "enabled": "1",
+    "stage": "1",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما هي أبرز ميزات Galaxy S25؟ (اختر ثلاثة)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "رفيق AI حقيقي",
+        "answerStatus": "1"
+      },
+      {
+        "text": "الأداء الأكثر تقدماً",
+        "answerStatus": "1"
+      },
+      {
+        "text": "تجربة كاميرا مثالية",
+        "answerStatus": "1"
+      },
+      {
+        "text": "رفيقك الصحي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "فضي تيتانيوم",
+        "answerStatus": "1"
+      },
+      {
+        "text": "فضي أبيض تيتانيوم",
+        "answerStatus": "1"
+      },
+      {
+        "text": "أسود تيتانيوم",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Cross-app action - إجراء عبر التطبيقات",
+        "answerStatus": "1"
+      },
+      {
+        "text": "التمرير الدائري للبحث",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": "0"
+      },
+      {
+        "text": "بإمكانك الآن فلترة الأصوات غير المرغوب فيها والاحتفاظ بالأصوات التي تريدها.",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يمكنك إتمام المهام باستخدام تطبيقات متعددة في وقت واحد من خلال التحدث بشكل طبيعي إلى سلسلة Galaxy S25",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يمكنك التقاط اللون البشرة الطبيعي بحرية",
+        "answerStatus": "1"
+      },
+      {
+        "text": "بإمكانك الآن فلترة الأصوات غير المرغوب فيها والاحتفاظ بالأصوات التي تريدها.",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يمكنك إتمام المهام باستخدام تطبيقات متعددة في وقت واحد من خلال التحدث بشكل طبيعي إلى هواتف سلسلة Galaxy S25",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يمكنك التقاط اللون الدقيق والملمس الطبيعي للبشرة بحرية",
+        "answerStatus": "0"
+      },
+      {
+        "text": "نتيجة الطاقة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "سباق",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Sound Optimization\r\n(صوت مثالي)",
+        "answerStatus": "1"
+      },
+      {
+        "text": "IP57",
+        "answerStatus": "0"
+      },
+      {
+        "text": "عرض الشراء المتعدد",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كتابة النص الصوتي والترجمة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "ترجمة في الوقت الفعلي أثناء التسجيل الصوتي",
+        "answerStatus": "1"
+      },
+      {
+        "text": "تلخيص وتنسيق تلقائي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يجب عليك دفع مبلغ معين من رسوم الاشتراك",
+        "answerStatus": "0"
+      },
+      {
+        "text": "يجب عليك تنزيل تطبيق Galaxy AI المخصص",
+        "answerStatus": "0"
+      },
+      {
+        "text": "لاشيء",
+        "answerStatus": "0"
+      },
+      {
+        "text": "من خلال One UI 7.0، ستتمتع بتجربة هاتف AI أكثر ثراءً مقارنة بالبرامج السابقة",
+        "answerStatus": "1"
+      },
+      {
+        "text": "رياح",
+        "answerStatus": "0"
+      },
+      {
+        "text": "ضجيج",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Cross-app action - إجراء عبر التطبيقات",
+        "answerStatus": "1"
+      },
+      {
+        "text": "صورة Portrait و My Filter",
+        "answerStatus": "1"
+      },
+      {
+        "text": "أداة حذف مقطع صوت",
+        "answerStatus": "1"
+      },
+      {
+        "text": "تعدد الوسائط",
+        "answerStatus": "1"
+      },
+      {
+        "text": "البطارية",
+        "answerStatus": "0"
+      },
+      {
+        "text": "معالج 3 نانومتر",
+        "answerStatus": "1"
+      },
+      {
+        "text": "معالج 5 نانومتر",
+        "answerStatus": "0"
+      },
+      {
+        "text": "معالج 4 نانومتر",
+        "answerStatus": "0"
+      },
+      {
+        "text": "معالج 3 نانومتر",
+        "answerStatus": "1"
+      },
+      {
+        "text": "الوزن",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Corning Gorilla Armor2 (للشاشة الأمامية للجهاز)",
+        "answerStatus": "1"
+      },
+      {
+        "text": "المعالج",
+        "answerStatus": "1"
+      },
+      {
+        "text": "نوم مدعوم بالذكاء الاصطناعي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "حجم الشاشة",
+        "answerStatus": "1"
+      },
+      {
+        "text": "تجربة تمارين مخصصة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "تقنية إلغاء الضوضاء النشطة (ANC) التكيفية",
+        "answerStatus": "0"
+      },
+      {
+        "text": "تلاؤم مريح",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "مضاد انعكاس",
+        "answerStatus": "1"
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": "0"
+      },
+      {
+        "text": "شاشة كبيرة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": "1"
+      },
+      {
+        "text": "تطبيق Smart Switch",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الترجمة المباشرة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "نعم، للأسف ينبغي عليك البقاء حتى النهاية",
+        "answerStatus": "0"
+      },
+      {
+        "text": "صورة Portrait و My Filter",
+        "answerStatus": "0"
+      },
+      {
+        "text": "أداة حذف مقطع صوت",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": "0"
+      },
+      {
+        "text": "أعطني معلومات عن الطقس اليوم",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": "0"
+      },
+      {
+        "text": "باستخدام الوضع الليلي لتطبيق الكاميرا",
+        "answerStatus": "0"
+      },
+      {
+        "text": "باستخدام My filter للصور في الاستديو",
+        "answerStatus": "1"
+      },
+      {
+        "text": "باستخدام الحركة البطيئة لتطبيق الكاميرا",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": "0"
+      },
+      {
+        "text": "المواعيد",
+        "answerStatus": "1"
+      },
+      {
+        "text": "المنبه",
+        "answerStatus": "1"
+      },
+      {
+        "text": "عنوان المنزل",
+        "answerStatus": "0"
+      },
+      {
+        "text": "تدريب مخصص",
+        "answerStatus": "0"
+      },
+      {
+        "text": "تطوير وتحفيز ذاتي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "IP57",
+        "answerStatus": "0"
+      },
+      {
+        "text": "تلاؤم مريح",
+        "answerStatus": "0"
+      },
+      {
+        "text": "صوت نقي كريستالي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "مفتاح ذكاء اصطناعي مخصص",
+        "answerStatus": "1"
+      },
+      {
+        "text": "أداة تشغيل Samsung Note ",
+        "answerStatus": "0"
+      },
+      {
+        "text": "مساعد Google",
+        "answerStatus": "0"
+      },
+      {
+        "text": "النشاط",
+        "answerStatus": "0"
+      },
+      {
+        "text": "معدل نبضات القلب",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "يمكنك تخفيض العبء/التكلفة المترتبة على شراء أحدث هاتف ذكي على الفور",
+        "answerStatus": "1"
+      },
+      {
+        "text": "يمكنك الحصول على مساحة تخزين أكبر 2X بنفس السعر",
+        "answerStatus": "0"
+      },
+      {
+        "text": "عند شرائك هاتفاً، ستحصل على هاتف آخر مجاناً",
+        "answerStatus": "0"
+      },
+      {
+        "text": "جودة الصورة",
+        "answerStatus": "1"
+      },
+      {
+        "text": "عدد الكاميرات",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الأبعاد",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كاميرا 200 ميجابكسل و 100x تكبير",
+        "answerStatus": "0"
+      },
+      {
+        "text": "البطارية/شاشة أكبر",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": "0"
+      },
+      {
+        "text": "أداة حذف مقطع صوت",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الحركة البطيئة الفورية",
+        "answerStatus": "1"
+      },
+      {
+        "text": "قص تلقائي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الترجمة المباشرة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "Now Brief - الموجز الحالي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "بحث متعدد الوسائط",
+        "answerStatus": "0"
+      },
+      {
+        "text": "قدم توصية بـ \"Samsung Wallet\"",
+        "answerStatus": "0"
+      },
+      {
+        "text": "قدم توصية بـ \"مشاركة سريعة\"",
+        "answerStatus": "0"
+      },
+      {
+        "text": "قدم توصية بـ \"موديل أقل سعراً\"",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الساعة",
+        "answerStatus": "0"
+      },
+      {
+        "text": "الكمبيوتر المكتبي",
+        "answerStatus": "1"
+      },
+      {
+        "text": "الجهاز اللوحي",
+        "answerStatus": "0"
+      },
+      {
+        "text": "اغمر إصبعك في الماء البارد لتضييق الأوعية الدموية مؤقتاً وتقليص الإصبع.",
+        "answerStatus": "0"
+      },
+      {
+        "text": "قلّل التورم من خلال رفع يدك لأكثر من 5 دقائق.",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      },
+      {
+        "text": "بطاقة التعزيز",
+        "answerStatus": "0"
+      },
+      {
+        "text": "التدريب على النوم",
+        "answerStatus": "1"
+      },
+      {
+        "text": "قرص بالإصبع مضاعف",
+        "answerStatus": "0"
+      },
+      {
+        "text": "ارتداء مريح 24/7",
+        "answerStatus": "0"
+      },
+      {
+        "text": "قرص بالإصبع مضاعف",
+        "answerStatus": "0"
+      },
+      {
+        "text": "كل مما سبق",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": "2",
+    "enabled": "1",
+    "stage": "1",
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي ألوان Galaxy S25 Ultra؟ (اختر كل ما ينطبق)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "أزرق فضي تيتانيوم",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": "3",
+    "enabled": "1",
+    "stage": "1",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "سمعت أن هناك ميزة للبحث عن مطعم وإرسال رسالة على الفور، ما اسم هذه الميزة؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "الشريط الحالي - Now Brief و الموجز الحالي - Now Brief",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": "4",
+    "enabled": "1",
+    "stage": "1",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الفوائد الرئيسية عند التقاط صور Portrait؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "يمكنك تسجيل فيديوهات ليلية أكثر إشراقاً مع ضوضاء أقل.",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": "5",
+    "enabled": "1",
+    "stage": "1",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "هل يمكنك توضيح النتيجة عند التقاط فيديو التصوير الليلي؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "يمكنك تسجيل فيديوهات ليلية أكثر إشراقاً مع ضوضاء أقل.",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": "6",
+    "enabled": "1",
+    "stage": "1",
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي يعد ميزة رئيسية في New Watch والتي يجب إبرازها بوصفها تجربة الربط بين أجهزة جالكسي عند تقديم العرض التجريبي لحالة الاستخدام في أسلوب الحياة؟ (اختر كافة الإجابات الصحيحة)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "صوت نقي كريستالي",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": "7",
+    "enabled": "1",
+    "stage": "1",
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي يعد ميزة رئيسية في Buds3 Pro وBuds3 والتي يجب إبرازها بوصفها تجربة الربط بين أجهزة جالكسي عند تقديم العرض التجريبي لحالة الاستخدام في أسلوب الحياة؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "واجهة UI/UX تفاعلية",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": "8",
+    "enabled": "1",
+    "stage": "1",
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الميزة غير المدعومة في Samsung Notes؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ترجمة ملفات PDF متراكبة",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": "9",
+    "enabled": "1",
+    "stage": "1",
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما الذي ينبغي عليّ تحضيره حتى أتمكن من استخدام Galaxy AI؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "يجب عليك تسجيل الدخول إلى حسابك Samsung Account",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": "10",
+    "enabled": "1",
+    "stage": "1",
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "لماذا يجب عليّ تحديث جهازي Galaxy إلى One UI 7.0؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "لم يطراً تغييراً كبيراً بالمقارنة مع One UI 6.1.1",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": "11",
+    "enabled": "1",
+    "stage": "2",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي العناصر التي يمكنني حذفها باستخدام أداة حذف مقطع صوت؟ (اختر كل ماينطبق)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "موسيقى",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": "12",
+    "enabled": "1",
+    "stage": "2",
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الميزات الرئيسية التي يجب تجربتها في هاتف Galaxy S25؟ (اختر كل ما ينطبق)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "مساعد الدردشة",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": "13",
+    "enabled": "1",
+    "stage": "2",
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما هي أبرز التطويرات التي طرأت على Galaxy S25؟ (اختر ثلاثة)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action - إجراء عبر التطبيقات",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": "14",
+    "enabled": "1",
+    "stage": "2",
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هو المعالج المستخدم في سلسلة Galaxy S25 ؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "معالج 6 نانومتر",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": "15",
+    "enabled": "1",
+    "stage": "2",
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما هي التطويرات التي طرأت على Galaxy S25 Ultra؟ (اختر ثلاثة)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "كاميرا واسعة للغاية 50 ميغابكسل",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": "16",
+    "enabled": "1",
+    "stage": "2",
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي لا يعد من إحدى أبرز نقاط تجربة المستخدم في New Watch؟ (اختر إجابة واحدة)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "أساسيات المستوى التالي\r\n(الأداء)",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": "17",
+    "enabled": "1",
+    "stage": "2",
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي يعد ميزة رئيسية يجب إبرازها عند تقديم Buds3 Pro وBuds3 للزبائن الجدد للسماعات (المشتري لأول مرة)؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "صوت نقي كريستالي",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": "18",
+    "enabled": "1",
+    "stage": "2",
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الميزة الجديدة في Tab S10 التي تدعم المشاهدة الحيوية في الهواء الطلق؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": "19",
+    "enabled": "1",
+    "stage": "2",
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "هل هناك ميزة لمشاركة الصور/الفيديوهات بسهولة وسرعة مع الأصدقاء؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": "20",
+    "enabled": "1",
+    "stage": "2",
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "هل ينبغي عليّ البقاء بجانب الهاتف عند استخدام ميزة Quick Share؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "لا توجد مشكلة، ستعمل عبر السحابة",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": "21",
+    "enabled": "1",
+    "stage": "3",
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "هل يمكنك أن توصيني بأبرز الميزات التي يمكنني تجربتها؟ (اختر كل ما ينطبق)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action - إجراء عبر التطبيقات",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": "22",
+    "enabled": "1",
+    "stage": "3",
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما الذي ينبغي عليّ قوله لتجربة ميزة Cross-app action - إجراء عبر التطبيقات في سلسلة Galaxy S25؟ (على سبيل المثال)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ابحث عن مطعم صيني في الجوار وأرسله إلى طوني",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": "23",
+    "enabled": "1",
+    "stage": "3",
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "كيف يمكنني تطبيق الفلتر عند التقاط صورة؟ (اختر اثنين)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "باستخدام الفلتر المحدد مسبقاً لتطبيق الكاميرا",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": "24",
+    "enabled": "1",
+    "stage": "3",
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "أنا من أشد المعجبين بقلم S Pen ، هل لديك أي توصية لي؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": "25",
+    "enabled": "1",
+    "stage": "3",
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي المعلومات/الرؤى التي يمكنني الحصول عليها من ميزة الموجز الحالي؟ (اختر ثلاثة)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "نقاط الطاقة",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": "26",
+    "enabled": "1",
+    "stage": "3",
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "اختر ميزة تتعلق بالصحة/النوم في New Watch (اختر كافة الإجابات الصحيحة)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "نتيجة الطاقة",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": "27",
+    "enabled": "1",
+    "stage": "3",
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "حدد الميزة الأكثر ملاءمة في Buds3 والتي يمكن الاستفادة منها عند اللقاء مع شخص أجنبي يتحدث لغة أخرى.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "المترجم",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": "28",
+    "enabled": "1",
+    "stage": "3",
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما الجديد في لوحة المفاتيح الجديدة Book Cover الخاصة بـ Tab S10؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ضوء خلفي",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": "29",
+    "enabled": "1",
+    "stage": "3",
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي معايير نقاط الطاقة؟ (اختر كل ما ينطبق)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "النوم",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 3,
+    "enabled": "0",
+    "stage": "3",
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الميزة الرئيسية لبرنامج الاستبدال؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "يمكنك الحصول على خطة تمويل شهرية",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": "30",
+    "enabled": "1",
+    "stage": "4",
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "أنا من مستخدمي S22. ما هي أبرز التطويرات التي طرأت على Galaxy S25؟ (اختر اثنين)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "معالج 3 نانومتر",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": "31",
+    "enabled": "1",
+    "stage": "4",
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "هل يمكنك إخباري بالميزات الحصرية لهاتف Galaxy S25 Ultra؟ (اختر كل ما ينطبق)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "قلم S Pen مدمج",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": "32",
+    "enabled": "1",
+    "stage": "4",
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "هل هناك أي طرق لمشاركة ملفاتي مع أجهزة غير Android؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": "33",
+    "enabled": "1",
+    "stage": "4",
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "ما هي الميزة التي تُظهر الفيديو المسجل بالحركة البطيئة؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "فيديوهات التصوير الليلي",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": "34",
+    "enabled": "1",
+    "stage": "4",
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "أُجري الكثير من المكالمات في حياتي اليومية، إلا أنني غالباً ما أنسى ما تحدثنا عنه. هل هناك أي ميزة جيدة يمكنك التوصية بها في هذا الموقف؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "مساعدة النص",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 3,
+    "enabled": "0",
+    "stage": "4",
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "غالباً ما أُضيّع هاتفي أو أسقطه. أشعر بالقلق بشأن شراء شيء باهظ الثمن لأنه سيتعطل.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "قدم توصية بخدمة \"+Samsung Care\"",
+        "answerStatus": "1"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 3,
+    "enabled": "0",
+    "stage": "4",
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي غير مغطى بخدمة +Samsung Care؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "الجهاز الذكي",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": "35",
+    "enabled": "1",
+    "stage": "4",
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": "30",
+    "text": "إذا علق الخاتم في إصبعي, ماذا يجب أن أفعل؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ضع مادة مزلّقة، مثل كريم اليد أو زيت التنظيف أو الصابون، لتقليل الاحتكاك، مما يسهل إزالته.",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": "36",
+    "enabled": "1",
+    "stage": "4",
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "\"ما هي الإجابة الأنسب للفراغ التالي؟\r\nGalaxy Ring هو جهاز جديد يمكن ارتداؤه. على وجه الخصوص، تتبع الصحة المدعوم بالذكاء الاصطناعي و________.\"",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "نتيجة الطاقة",
+        "answerStatus": "0"
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": "37",
+    "enabled": "1",
+    "stage": "4",
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": "30",
+    "text": "أي مما يلي هي أبرز نقاط تجربة المستخدم لـ Galaxy Ring؟",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "تدريب مخصص",
+        "answerStatus": "0"
+      }
+    ]
+  }
+]
