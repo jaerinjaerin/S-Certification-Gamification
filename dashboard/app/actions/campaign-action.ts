@@ -39,3 +39,20 @@ export async function getCampaigns(role: string) {
     return { result: null };
   }
 }
+
+export async function getCampaign(id: string | null) {
+  try {
+    if (!id) {
+      return { result: null };
+    }
+    //
+    const campaign = await prisma.campaign.findUnique({
+      where: { id },
+    });
+
+    return { result: campaign };
+  } catch (error: unknown) {
+    console.error('Error get campaigns: ', error);
+    return { result: null };
+  }
+}

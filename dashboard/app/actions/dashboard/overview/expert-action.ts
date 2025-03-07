@@ -8,7 +8,9 @@ import { URLSearchParams } from 'url';
 
 // UserQuizStatistics 중 isCompleted 기 true 인 유저
 
-export async function getExpertCount(data: URLSearchParams) {
+export async function getExpertCount(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
@@ -51,7 +53,9 @@ export async function getExpertCount(data: URLSearchParams) {
   }
 }
 
-export async function getExpertByGroup(data: URLSearchParams) {
+export async function getExpertByGroup(
+  data: URLSearchParams | Record<string, any>
+) {
   async function fetchUserStatistics(
     where: any,
     jobGroup: { id: string; code: string }[],
@@ -123,7 +127,9 @@ export async function getExpertByGroup(data: URLSearchParams) {
   }
 }
 
-export async function getExpertsData(data: URLSearchParams) {
+export async function getExpertsData(
+  data: URLSearchParams | Record<string, any>
+) {
   async function fetchUserStatistics(
     where: any,
     jobGroup: { id: string; code: string }[],
