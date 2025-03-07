@@ -399,7 +399,6 @@ export async function GET(request: Request) {
         const subsidiary = subsidiaries.find(
           (subsidiary) => subsidiary.id === country.subsidiaryId
         );
-        console.log('subsidiary: ', subsidiary);
         if (subsidiary) {
           country.subsidiary = subsidiary;
         }
