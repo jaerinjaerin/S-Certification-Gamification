@@ -34,48 +34,27 @@ import {
 } from '../ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useStateVariables } from '../provider/state-provider';
-import { Role } from '@prisma/client';
+import { Campaign, Role } from '@prisma/client';
 import { useEffect, useState } from 'react';
 
-const initMenuItems = (role: Role): MenuItems => {
-  const dashboard = {
-    title: 'Dashboard',
-    items: [
-      {
-        label: 'Overview',
-        icon: LayoutDashboard,
-      },
-      {
-        label: 'User',
-        icon: Users,
-        children: [{ label: 'Stats' }],
-      },
-      { label: 'Quiz', icon: Sheet },
-    ],
-  };
-
-  const cms = {
-    title: 'CMS',
-    items: [
-      { label: 'Set Quiz', icon: NotebookPen, href: '/cms/set-quiz' },
-      { label: 'Media Library', icon: Images, href: '/cms/media-library' },
-      { label: 'UI Language', icon: Languages, href: '/cms/ui-language' },
-      { label: 'Target', icon: Goal, href: '/cms/target' },
-    ],
-  };
-  //
-  return role ? [dashboard] : [dashboard, cms];
-};
-
 // 메뉴 데이터를 배열로 정의
-const getMenuItems = (role: Role, campaign: string | undefined): MenuItems => {
+const getMenuItems = (role: Role, campaign: Campaign | null): MenuItems => {
+  // searchParams 최적화: campaign이 있을 때만 생성
+  const searchParams = campaign
+    ? `?date.from=${new Date(campaign.startedAt).toISOString()}&date.to=${new Date(campaign.endedAt).toISOString()}`
+    : '';
+
+  // 공통 URL 생성 함수
+  const createUrl = (path: string) =>
+    campaign ? `/dashboard/${campaign.id}${path}${searchParams}` : '';
+
   const dashboard = {
     title: 'Dashboard',
     items: [
       {
         label: 'Overview',
         icon: LayoutDashboard,
-        ...(campaign && { href: `/dashboard/${campaign}/overview` }),
+        href: createUrl('/overview'),
       },
       {
         label: 'User',
@@ -83,14 +62,14 @@ const getMenuItems = (role: Role, campaign: string | undefined): MenuItems => {
         children: [
           {
             label: 'Stats',
-            ...(campaign && { href: `/dashboard/${campaign}/user/stats` }),
+            href: createUrl('/user/stats'),
           },
         ],
       },
       {
         label: 'Quiz',
         icon: Sheet,
-        ...(campaign && { href: `/dashboard/${campaign}/quiz` }),
+        href: createUrl('/quiz'),
       },
     ],
   };
@@ -104,8 +83,10 @@ const getMenuItems = (role: Role, campaign: string | undefined): MenuItems => {
       { label: 'Target', icon: Goal, href: '/cms/target' },
     ],
   };
-  //
-  return role ? [dashboard] : [dashboard, cms];
+
+  // role에 따른 반환 최적화
+  if (role) return [dashboard];
+  return [dashboard, cms];
 };
 
 // Menu 컴포넌트
@@ -113,12 +94,12 @@ const LeftMenu = () => {
   const { role, campaign } = useStateVariables();
   const pathname = usePathname();
   const { setOpen } = useSidebar();
-  const [campaignId, setCampaignId] = useState<string | undefined>();
+  const [campaignData, setCampaignData] = useState<Campaign | null>(null);
   // const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (campaign) {
-      setCampaignId(campaign.id);
+      setCampaignData(campaign);
     }
   }, [campaign]);
 
@@ -131,7 +112,7 @@ const LeftMenu = () => {
       {/* <SidebarTrigger className="group-data-[collapsible=icon]:mx-auto my-[10px] ml-auto mr-5" /> */}
       <Separator />
       <SidebarContent className="!gap-0 px-3 pb-3">
-        {getMenuItems(role, campaignId).map((group, groupIndex) => (
+        {getMenuItems(role, campaignData).map((group, groupIndex) => (
           <SidebarGroup key={groupIndex} className="px-0 pb-0 pt-4 gap-3">
             <SidebarGroupLabel className="mx-5 my-[5px] h-[27px] p-0" asChild>
               <div className="!text-size-14px text-sidebar-text">

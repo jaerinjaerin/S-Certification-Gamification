@@ -6,7 +6,9 @@ import { buildWhereWithValidKeys } from '@/lib/where';
 import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
 import { URLSearchParams } from 'url';
 
-export async function getAchievementRate(data: URLSearchParams) {
+export async function getAchievementRate(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition } = querySearchParams(data) as any;
     const { jobId, storeId, ...where } = condition;
@@ -67,7 +69,9 @@ export async function getAchievementRate(data: URLSearchParams) {
   }
 }
 
-export async function getAchievementProgress(data: URLSearchParams) {
+export async function getAchievementProgress(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
@@ -194,7 +198,9 @@ export async function getAchievementProgress(data: URLSearchParams) {
   }
 }
 
-export async function getAchievementGoalProgress(data: URLSearchParams) {
+export async function getAchievementGoalProgress(
+  data: URLSearchParams | Record<string, any>
+) {
   const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
   async function processUserQuizBadgeStageStatistics(

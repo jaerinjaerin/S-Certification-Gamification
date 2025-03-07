@@ -1,29 +1,25 @@
-import UserOutcome from './statisticsOutcome/page';
-import UserDomain from './infoDomain/page';
-import UserProgressExperts from './statisticsProgressOfExperts/page';
-import { getSearchParams } from '@/lib/params';
-import { prisma } from '@/model/prisma';
+import React from 'react';
 
-const UserStats = async ({ params }: { params: { campaign: string } }) => {
-  let searchParams = getSearchParams();
-  if (!searchParams.get('date.from')) {
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: params.campaign },
-    });
-    if (campaign) {
-      searchParams.set('date.from', campaign.startedAt.toISOString());
-      searchParams.set('date.to', campaign.endedAt.toISOString());
-    }
-  }
-  searchParams.set('campaign', params.campaign);
-
+const UserStats = ({
+  infoDomain,
+  statisticsOutcome,
+  statisticsProgressOfExperts,
+}: {
+  infoDomain: React.ReactNode;
+  statisticsOutcome: React.ReactNode;
+  statisticsProgressOfExperts: React.ReactNode;
+}) => {
   return (
     <div className="space-y-3">
-      {/*<UserList />*/}
-      <UserDomain searchParams={searchParams} />
-      <UserProgressExperts searchParams={searchParams} />
-      <UserOutcome searchParams={searchParams} />
+      {infoDomain}
+      {statisticsProgressOfExperts}
+      {statisticsOutcome}
     </div>
+    // <div className="space-y-3">
+    //   <UserDomain params={params} />
+    //   <UserProgressExperts params={params} />
+    //   <UserOutcome params={params} />
+    // </div>
   );
 };
 

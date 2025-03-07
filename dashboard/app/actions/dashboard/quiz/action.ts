@@ -2,9 +2,10 @@
 import { querySearchParams } from '@/lib/query';
 import { prisma } from '@/model/prisma';
 import { AuthType, Question } from '@prisma/client';
-import { URLSearchParams } from 'url';
 
-export async function getQuizRankByIncorrectAnswer(data: URLSearchParams) {
+export async function getQuizRankByIncorrectAnswer(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...restWhere } = condition;
@@ -113,7 +114,9 @@ export async function getQuizRankByIncorrectAnswer(data: URLSearchParams) {
   }
 }
 
-export async function getQuizRankByCategory(data: URLSearchParams) {
+export async function getQuizRankByCategory(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition } = querySearchParams(data);
     const { jobId, storeId, ...restWhere } = condition;
@@ -286,7 +289,6 @@ export async function getQuizRankByCategory(data: URLSearchParams) {
       };
     });
 
-    // console.log(result);
     return result;
   } catch (error) {
     console.error('Error fetching data:', error);
