@@ -1,4 +1,5 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 import { useStateVariables } from '@/components/provider/state-provider';
@@ -55,10 +56,12 @@ export default function CertificationClientComponent() {
 }
 
 function CertificationListItem({ campaign }: { campaign: Campaign }) {
-  const { setCampaign } = useStateVariables();
+  const { setCampaign, setCampaigns, campaigns } = useStateVariables();
   const { routeToPage, isRouting } = useNavigation();
   const currentDate = dayjs();
-  const isEditable = currentDate < campaign?.startedAt;
+  const isEditable = campaign?.startedAt
+    ? dayjs(currentDate).isBefore(dayjs(campaign.startedAt))
+    : false;
 
   const handleDeleteCampaign = async () => {
     try {
@@ -74,6 +77,20 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
         return;
       }
 
+      const deletedCampaign = campaigns?.filter((c) => c.id === campaign.id)[0];
+
+      if (!deletedCampaign) {
+        toast.error('Failed to delete campaign');
+        return;
+      }
+
+      const updatedCampaigns = campaigns?.map((item) =>
+        item.id === deletedCampaign.id
+          ? { ...deletedCampaign, deleted: true }
+          : item
+      );
+
+      setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign deleted successfully');
     } catch (error) {
       toast.error(`Error deleting campaign: ${error}`);

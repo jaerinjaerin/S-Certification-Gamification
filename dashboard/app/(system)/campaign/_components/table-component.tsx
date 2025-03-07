@@ -41,7 +41,7 @@ export default function TableComponent({
   const TableHeadData = [
     { label: 'Job Group' },
     { label: 'First Badge Stage' },
-    { label: 'Second Badge Stage' },
+    { label: 'Second Badge Stage (Optional)' },
   ];
 
   const TableConfig = [
@@ -178,7 +178,11 @@ const BadgeSettingRows = ({
               <CustomFormLabel>{label}</CustomFormLabel>
               <FormControl>
                 <Select
-                  defaultValue={field.value as string}
+                  defaultValue={
+                    isEditMode && initialData[secondStage]
+                      ? initialData[secondStage]
+                      : (field.value as string)
+                  }
                   onValueChange={(value) => {
                     field.onChange(value);
                   }}
@@ -187,15 +191,16 @@ const BadgeSettingRows = ({
                   <CustomSelectTrigger className={'max-w-[7.125rem]'}>
                     <SelectValue
                       placeholder={
-                        isEditMode
+                        isEditMode && initialData[secondStage]
                           ? initialData[secondStage]
-                            ? initialData[secondStage]
-                            : 'Select'
                           : 'Select'
                       }
                     />
                   </CustomSelectTrigger>
                   <SelectContent>
+                    <SelectItem value="none" key="none">
+                      None
+                    </SelectItem>
                     {Array.from({
                       length: Number(selectedNumberOfStages) + 1,
                     }).map((_, index) => (
