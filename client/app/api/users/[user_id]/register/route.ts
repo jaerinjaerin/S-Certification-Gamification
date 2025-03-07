@@ -30,7 +30,7 @@ export async function POST(request: Request, props: Props) {
     channelId,
     channelName,
     channelSegmentId,
-    campaignId,
+    // campaignId,
     campaignSlug,
   } = body;
 
