@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${uploadedFile.path}`
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`
     );
     if (!response.ok) {
       return NextResponse.json(
@@ -155,6 +155,8 @@ export async function POST(request: NextRequest) {
           }
 
           domainData.isReady = true;
+        } else {
+          domainData.isReady = false;
         }
       } else {
         domainData.isReady = false;
