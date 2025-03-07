@@ -140,6 +140,11 @@ model Campaign {
   settingsId  String?   @unique
   settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
   domainWebLanguages DomainWebLanguage[]
+  uploadedFile UploadedFile[]
+  activityBadges ActivityBadge[]
+  quizBadges QuizBadge[]
+  images Image[]
+  domainGoals DomainGoal[]
 }
 
 model CampaignSettings {
@@ -211,6 +216,7 @@ model DomainGoal {
   domainId     String
   regionId     String?
   subsidiaryId String?
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model QuizSet {
@@ -226,7 +232,7 @@ model QuizSet {
   updaterId    String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  campaign     Campaign    @relation(fields: [campaignId], references: [id])
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   quizStages   QuizStage[]
   questions    Question[]
   questionOptions    QuestionOption[]
@@ -257,6 +263,7 @@ model QuizBadge {
   domainId    String?
   quizStages  QuizStage[]
   activityBadges ActivityBadge[]
+  campaign        Campaign?    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model Image {
@@ -274,6 +281,7 @@ model Image {
   domainId             String?
   questionsBackgrounds Question[] @relation("BackgroundImage")
   questionsCharacters  Question[] @relation("CharacterImage")
+  campaign             Campaign?    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model QuizStage {
@@ -705,6 +713,7 @@ model ActivityBadge {
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  campaign        Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model UploadedFile {
@@ -719,6 +728,7 @@ model UploadedFile {
   fileType      FileType
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  campaign        Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 enum FileType {
