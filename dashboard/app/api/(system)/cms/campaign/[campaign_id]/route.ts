@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { deleteS3Folder } from '@/lib/aws/s3-client';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -166,14 +167,56 @@ export async function DELETE(request: NextRequest) {
         { status: 400 }
       );
     }
+    // ✅ 사용 예시
+    const bucketName = process.env.ASSETS_S3_BUCKET_NAME!;
+    const folderToDelete = `certification/${campaign.slug}/`; // 삭제할 "디렉토리"
+    await deleteS3Folder(bucketName, folderToDelete);
 
-    await prisma.campaign.update({
+    await prisma.campaignSettings.deleteMany({
+      where: {
+        campaignId: campaign.id,
+      },
+    });
+
+    // await prisma.quizSet.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    // await prisma.uploadedFile.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    // await prisma.domainGoal.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    // await prisma.image.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    // await prisma.quizBadge.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    // await prisma.activityBadge.deleteMany({
+    //   where: {
+    //     campaignId: campaign.id,
+    //   },
+    // });
+
+    await prisma.campaign.delete({
       where: {
         id: campaign.id,
-      },
-      data: {
-        deleted: true,
-        deletedAt: new Date(),
       },
     });
 
@@ -202,6 +245,7 @@ export async function GET(request: NextRequest, props: Props) {
       },
       include: {
         settings: true,
+        contentCopyHistory: true,
       },
     });
 

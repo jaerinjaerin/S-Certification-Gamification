@@ -114,6 +114,14 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .data-table {
+    width: calc(100vw - 40px);
+
+    @screen md {
+      width: calc(100vw - 311px);
+    }
+  }
 }
 
 @layer components {

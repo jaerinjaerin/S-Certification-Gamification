@@ -1,14 +1,16 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
+import { ActivityBadgeEx } from '@/types';
+import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
-import { GroupedQuizSet } from '../../../_type/type';
-import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
 import { useNavigation } from '../../../../_hooks/useNavigation';
 import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
+import { GroupedQuizSet } from '../../../_type/type';
+import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -100,7 +102,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'URL',
     cell: ({ row }) => {
       if (row.original.uiLanguage) {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
         return (
           <a href={url} target="_blank">
             {url}
@@ -128,9 +130,44 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.activityBadges) {
         return (
           <>
+            {/* <ActivityIdBadge id={10000} stage={3} /> */}
+            {row.original.activityBadges.map((badge, index) => {
+              const stageNum = getStageNumFromActivityBadge(
+                badge as ActivityBadgeEx,
+                row
+              );
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  <span className="font-bold">{stageNum}</span>
+                  {badge.activityId}
+                </div>
+              );
+            })}
+          </>
+        );
+      }
+      return <div>-</div>;
+    },
+  },
+  {
+    accessorKey: 'Badge',
+    header: 'Badge',
+    cell: ({ row }) => {
+      if (row.original.activityBadges) {
+        return (
+          <>
             {row.original.activityBadges.map((badge, index) => (
-              <div key={index}>
-                {badge.badgeType}-{badge.activityId}
+              <div key={index} className="flex items-center gap-2">
+                <span className="font-bold">
+                  {getStageNumFromActivityBadge(badge as ActivityBadgeEx, row)}
+                </span>
+
+                {badge.badgeImage?.imagePath && (
+                  <img
+                    className="w-6 h-6"
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                  />
+                )}
               </div>
             ))}
           </>
@@ -216,6 +253,49 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);
   }
+};
+
+const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
+  let stageNum = 0;
+  if (
+    badge.badgeType === BadgeType.FIRST &&
+    badge.jobCode.toLowerCase() === 'ff'
+  ) {
+    const firstBadgeStage =
+      row.original.quizSet.campaign.settings.ffFirstBadgeStageIndex;
+    if (firstBadgeStage) {
+      stageNum = firstBadgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.FIRST &&
+    badge.jobCode.toLowerCase() === 'fsm'
+  ) {
+    const badgeStage =
+      row.original.quizSet.campaign.settings.fsmFirstBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.SECOND &&
+    badge.jobCode.toLowerCase() === 'ff'
+  ) {
+    const badgeStage =
+      row.original.quizSet.campaign.settings.ffSecondBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.SECOND &&
+    badge.jobCode.toLowerCase() === 'fsm'
+  ) {
+    const badgeStage =
+      row.original.quizSet.campaign.settings.fsmSecondBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  }
+
+  return stageNum;
 };
 
 const UILinkButton = () => {

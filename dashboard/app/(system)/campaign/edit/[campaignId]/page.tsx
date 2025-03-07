@@ -45,7 +45,6 @@ function numberToString(value: number | null | undefined) {
   return value !== undefined && value !== null ? String(value) : undefined;
 }
 
-// 캠페인 데이터를 폼 데이터로 매핑
 function mapCampaignToFormData(campaign: any) {
   return {
     certificationName: campaign.name,

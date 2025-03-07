@@ -1,15 +1,5 @@
 'use client';
 
-import { ChevronDown, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -19,10 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,
   ColumnFiltersState,
+  Row,
   SortingState,
   VisibilityState,
   flexRender,
@@ -47,7 +40,12 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [readyItemsLength, setReadyItemsLength] = useState<number>(0);
+  const [rowState, setRowState] = useState<{
+    readyRows: Row<GroupedQuizSet>[];
+    notReadyRows: Row<GroupedQuizSet>[];
+  }>({ readyRows: [], notReadyRows: [] });
+
+  const { readyRows, notReadyRows } = rowState;
 
   const table = useReactTable({
     data,
@@ -66,19 +64,29 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     },
   });
 
-  useEffect(() => {
-    const readyItemCount = table.getRowModel().rows.filter((row) => {
-      const { quizSetFile, activityBadges, uiLanguage } = row.original;
-      return (
-        quizSetFile?.id &&
-        activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code
-      );
-    }).length;
+  const rows = table.getFilteredRowModel().rows;
 
-    setReadyItemsLength(readyItemCount);
-  }, [table]);
+  useEffect(() => {
+    const { ready, notReady } = rows.reduce<{
+      ready: Row<GroupedQuizSet>[];
+      notReady: Row<GroupedQuizSet>[];
+    }>(
+      (acc, row) => {
+        const { quizSetFile, activityBadges, uiLanguage } = row.original;
+        const isReady =
+          quizSetFile?.id && activityBadges?.length && uiLanguage?.code;
+
+        acc[isReady ? 'ready' : 'notReady'].push(row);
+        return acc;
+      },
+      { ready: [], notReady: [] }
+    );
+
+    setRowState((prevState) => ({
+      readyRows: ready,
+      notReadyRows: notReady,
+    }));
+  }, [table, rows]);
 
   return (
     <div>
@@ -95,14 +103,12 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           <div className="w-[1px] h-3 bg-zinc-200" />
           <div className=" text-sm text-zinc-950">
             Ready :
-            <strong className="font-bold">{` ${readyItemsLength}`}</strong>
+            <strong className="font-bold">{` ${readyRows.length}`}</strong>
           </div>
           <div className="w-[1px] h-3 bg-zinc-200" />
           <div className=" text-sm text-zinc-950">
             Not Ready :
-            <strong className="font-bold">
-              {` ${table.getFilteredRowModel().rows.length - readyItemsLength}`}
-            </strong>
+            <strong className="font-bold">{` ${notReadyRows.length}`}</strong>
           </div>
         </div>
         <div className="relative w-[13.625rem]">
@@ -146,10 +152,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu> */}
 
-      <div
-        style={{ width: 'calc(100vw - 311px)' }}
-        className="rounded-md border"
-      >
+      <div className="rounded-md border data-table">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

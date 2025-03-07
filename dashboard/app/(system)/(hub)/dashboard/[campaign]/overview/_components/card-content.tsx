@@ -1,11 +1,15 @@
 import { LoaderWithBackground } from '@/components/loader';
 
-type Props = { info: string | number | null; caption: string; unit?: '%' | '' };
+type Props = {
+  info: string | number | null | undefined;
+  caption: string;
+  unit?: '%' | '';
+};
 
 const InfoCardStyleContent = ({ info, caption, unit = '' }: Props) => {
   return (
     <>
-      {info === undefined && <LoaderWithBackground />}
+      {!info && <LoaderWithBackground />}
       <div className="text-zinc-950 font-bold text-size-24px my-1">
         {`${info?.toLocaleString() ?? 0}${unit}`}
       </div>

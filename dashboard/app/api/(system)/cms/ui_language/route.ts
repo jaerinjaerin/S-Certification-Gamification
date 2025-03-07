@@ -48,14 +48,31 @@ export async function GET(request: Request) {
     });
 
     const languages = await prisma.language.findMany();
+    const filteredLanguages = languages.filter(
+      (lang) => !lang.name.includes('deprecated')
+    );
 
     const groupedLanguages = uploadedFiles.map((file) => {
       const language = languages.find((lang) => lang.id === file.languageId);
       return { file, language };
     });
 
+    const filteredGroupedLanguages = groupedLanguages.filter(
+      (group) =>
+        group.language != null &&
+        !group.language.name.includes('deprecated') &&
+        !group.language.name.includes('deprecated')
+    );
+
+    filteredGroupedLanguages.sort((a, b) => {
+      if (a.language == null || b.language == null) {
+        return 0;
+      }
+      return a.language.code.localeCompare(b.language.code);
+    });
+
     return NextResponse.json(
-      { success: true, result: { groupedLanguages } },
+      { success: true, result: { groupedLanguages: filteredGroupedLanguages } },
       { status: 200 }
     );
   } catch (error) {

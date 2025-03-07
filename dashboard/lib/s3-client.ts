@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  GetObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from '@aws-sdk/client-s3';
+import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { execSync } from 'child_process';
-import { fromIni } from '@aws-sdk/credential-provider-ini';
+import { getS3Client } from './aws/s3-client';
 
 const getCredentials = () => {
   const AWS_PROFILE =
@@ -26,12 +22,13 @@ const getCredentials = () => {
 };
 
 // S3 클라이언트 설정
-const s3Client = new S3Client({
-  region: process.env.AWS_SES_REGION, // S3 리전 설정
-  credentials: fromIni({
-    profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-  }),
-});
+// const s3Client = new S3Client({
+//   region: process.env.AWS_SES_REGION, // S3 리전 설정
+//   credentials: fromIni({
+//     profile: process.env.ASSETS_S3_BUCKET_PROFILE,
+//   }),
+// });
+const s3Client = getS3Client();
 
 const uploadToS3 = async ({
   key,
@@ -95,4 +92,4 @@ const getFromS3 = async ({
   }
 };
 
-export { s3Client, getCredentials, uploadToS3, getFromS3 };
+export { getCredentials, getFromS3, s3Client, uploadToS3 };

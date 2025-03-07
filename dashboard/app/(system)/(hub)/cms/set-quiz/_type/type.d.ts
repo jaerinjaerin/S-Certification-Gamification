@@ -1,6 +1,11 @@
 import { DomainData } from '@/lib/nomember-excel-parser';
-import { DomainChannel, QuizSetEx, QuizStageEx } from '@/types/apiTypes';
-import type { ActivityBadge, Image, Language } from '@prisma/client';
+import { DomainChannel, QuizSetEx } from '@/types/apiTypes';
+import type {
+  ActivityBadge,
+  CampaignSettings,
+  Image,
+  Language,
+} from '@prisma/client';
 
 export type UploadExcelFileVariant = 'quiz' | 'activityId' | 'non-s' | 'hq';
 
@@ -13,15 +18,16 @@ export type UploadExcelFileModalProps = {
 export interface GroupedQuizSet {
   quizSet: QuizSetEx;
   quizSetFile: QuizSetFile | undefined;
-  activityBadges: ActivityBadge[] | undefined;
+  activityBadges: ActivityBadgeEx[] | undefined;
   uiLanguage: Language | null;
+  campaignSettings: CampaignSettings;
 }
 
 export interface DomainWebLanguageEx extends DomainWebLanguage {
   language: Language;
 }
 
-export interface ActivityBadgeWithImage extends ActivityBadge {
+export interface ActivityBadgeEx extends ActivityBadge {
   badgeImage: Image | null;
 }
 
@@ -29,6 +35,7 @@ export interface QuizSetResponse {
   success: boolean;
   result: {
     groupedQuizSets: GroupedQuizSet[];
+    campaignSettings: CampaignSettings;
   };
 }
 

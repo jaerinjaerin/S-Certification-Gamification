@@ -73,7 +73,7 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
   });
 
   return (
-    <div className="w-full">
+    <div className="data-table">
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total: {table.getFilteredRowModel().rows.length}

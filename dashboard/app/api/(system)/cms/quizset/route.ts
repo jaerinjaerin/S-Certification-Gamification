@@ -57,6 +57,8 @@ export async function POST(request: NextRequest) {
       Buffer.from(fileBuffer),
       file.name
     );
+
+    console.log('result: ', result);
     if (!result.success) {
       console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
@@ -303,9 +305,11 @@ export async function POST(request: NextRequest) {
       })) ?? [];
 
     // 엑셀에 입력된 이미지 중 등록되어 있지 않은 이미지가 있는지 확인
-    const backgroundImageIds = questions.map(
-      (question) => question.backgroundImageId
-    );
+    const backgroundImageIds = questions
+      .filter(
+        (question) => question.enabled && question.backgroundImageId != null
+      )
+      .map((question) => question.backgroundImageId);
 
     const notRegisteredBackgroundImages = backgroundImageIds.filter(
       (id) => !backgroundImages.find((image) => image.title === id)
@@ -325,13 +329,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const characterImageIds = questions.map(
-      (question) => question.characterImageId
-    );
+    const characterImageIds = questions
+      .filter(
+        (question) => question.enabled && question.characterImageId != null
+      )
+      .map((question) => question.characterImageId);
 
     const notRegisteredCharacterImages = characterImageIds.filter(
       (id) => !characterImages.find((image) => image.title === id)
     );
+
+    console.log('notRegisteredCharacterImages: ', notRegisteredCharacterImages);
 
     if (notRegisteredCharacterImages.length > 0) {
       console.error('Character images not registered');
@@ -846,7 +854,11 @@ export async function GET(request: Request) {
             },
           },
         },
-        campaign: true,
+        campaign: {
+          include: {
+            settings: true,
+          },
+        },
         language: true,
         quizStages: {
           include: {
@@ -948,6 +960,11 @@ export async function GET(request: Request) {
       return jobOrderA - jobOrderB;
     });
 
+    const campaignSettings = await prisma.campaignSettings.findFirst({
+      where: {
+        campaignId: campaignId,
+      },
+    });
     const groupedQuizSets = quizSets.map((quizSet) => ({
       quizSet,
       quizSetFile: quizSetFiles
@@ -968,7 +985,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets },
+        result: { groupedQuizSets, campaignSettings },
       },
       { status: 200 }
     );

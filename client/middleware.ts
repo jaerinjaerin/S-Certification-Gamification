@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { isValidCampaignQuizSetId } from "./utils/validationUtils";
 
 export async function middleware(request: NextRequest) {
   const session = await auth();
@@ -14,6 +13,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/logout") ||
     pathname.includes("/test") ||
     pathname.includes("/home") ||
+    pathname.includes("/register") ||
     pathname.includes("/site")
   ) {
     return NextResponse.next();
@@ -28,11 +28,12 @@ export async function middleware(request: NextRequest) {
   }
 
   const campaignName = segments[0];
-  const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
-    segments[1]
-  )
-    ? segments[1]
-    : null;
+  const campaignQuizSetPath = segments[1];
+  // const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
+  //   segments[1]
+  // )
+  //   ? segments[1]
+  //   : null;
 
   /**
    * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
