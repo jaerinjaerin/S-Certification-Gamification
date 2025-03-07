@@ -98,42 +98,46 @@ export default function UploadResultDialog({
             </div>
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-5">
-          <div className="flex gap-2 items-center">
-            <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-            {uploadFilesResult.filter((item) => !item.success).length} files
-            failed to upload.
+        {failureFiles.length > 0 && (
+          <div className="flex flex-col gap-5">
+            <div className="flex gap-2 items-center">
+              <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
+              {uploadFilesResult.filter((item) => !item.success).length} files
+              failed to upload.
+            </div>
+
+            <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+              <FilesTableComponent>
+                {/* {variant === 'non-s' &&
+       uploadFilesResult.map((item, index) => (
+         <tr key={index} className="border-t border-t-zinc-200">
+           <Td>{index + 1}</Td>
+           <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
+           <Td>{item.result.failures[0]}</Td>
+         </tr>
+       ))} */}
+
+                {failureFiles.map((item, index) => {
+                  return (
+                    <tr key={index} className="border-t border-t-zinc-200">
+                      <Td>{index + 1}</Td>
+
+                      <Td>
+                        {item.fileName || item.error.message.split(':')[0]}
+                      </Td>
+                      <Td>
+                        <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                          <CircleAlert className="size-4" />
+                          <span>{getErrorMessage(item)}</span>
+                        </div>
+                      </Td>
+                    </tr>
+                  );
+                })}
+              </FilesTableComponent>
+            </div>
           </div>
-
-          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-            <FilesTableComponent>
-              {/* {variant === 'non-s' &&
-                uploadFilesResult.map((item, index) => (
-                  <tr key={index} className="border-t border-t-zinc-200">
-                    <Td>{index + 1}</Td>
-                    <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-                    <Td>{item.result.failures[0]}</Td>
-                  </tr>
-                ))} */}
-
-              {failureFiles.map((item, index) => {
-                return (
-                  <tr key={index} className="border-t border-t-zinc-200">
-                    <Td>{index + 1}</Td>
-
-                    <Td>{item.fileName || item.error.message.split(':')[0]}</Td>
-                    <Td>
-                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                        <CircleAlert className="size-4" />
-                        <span>{getErrorMessage(item)}</span>
-                      </div>
-                    </Td>
-                  </tr>
-                );
-              })}
-            </FilesTableComponent>
-          </div>
-        </div>
+        )}
 
         <DialogFooter className="!justify-center">
           <DialogClose asChild>
