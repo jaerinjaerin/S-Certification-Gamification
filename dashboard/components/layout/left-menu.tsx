@@ -128,7 +128,7 @@ const LeftMenu = () => {
 
   return (
     <Sidebar className="!p-0" variant="sidebar" collapsible="icon">
-      <SidebarTrigger className="group-data-[collapsible=icon]:mx-auto my-[10px] ml-auto mr-5" />
+      {/* <SidebarTrigger className="group-data-[collapsible=icon]:mx-auto my-[10px] ml-auto mr-5" /> */}
       <Separator />
       <SidebarContent className="!gap-0 px-3 pb-3">
         {getMenuItems(role, campaignId).map((group, groupIndex) => (
