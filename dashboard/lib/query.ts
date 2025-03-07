@@ -65,3 +65,7 @@ export const searchToQuery = (params: Record<string, any>) => {
 
   return { params, period, where, take, skip };
 };
+
+export const searchParamsToJson = (searchParams: URLSearchParams) => {
+  return Object.fromEntries(searchParams.entries());
+};

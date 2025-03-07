@@ -377,13 +377,13 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("Error creating user campaign domain log:", error);
+    console.error("Error creating user quiz log:", error);
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
         type: "api",
         endpoint: "/api/logs/quizzes/sets",
         method: "POST",
-        description: "Failed to create user campaign domain log",
+        description: "Failed to create user quiz log",
       });
       scope.setTag("userId", userId);
       scope.setTag("quizSetPath", quizSetPath);

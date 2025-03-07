@@ -1,6 +1,6 @@
 'use server';
 import { prisma } from '@/model/prisma';
-import { querySearchParams, searchToQuery } from '@/lib/query';
+import { querySearchParams } from '@/lib/query';
 import { decrypt } from '@/utils/encrypt';
 import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
 import { buildWhereWithValidKeys } from '@/lib/where';
@@ -8,10 +8,11 @@ import { AuthType } from '@prisma/client';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { URLSearchParams } from 'url';
 
-export async function getUserProgress(data: Record<string, string>) {
-  console.log('🚀 ~ getUserProgress ~ data:', data);
+export async function getUserProgress(
+  data: URLSearchParams | Record<string, string>
+) {
   try {
-    const { where: condition, take, skip } = searchToQuery(data) as any;
+    const { where: condition, take, skip } = querySearchParams(data) as any;
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -77,7 +78,9 @@ export async function getUserProgress(data: Record<string, string>) {
   }
 }
 
-export async function getUserDomain(data: URLSearchParams) {
+export async function getUserDomain(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition, take, skip } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
@@ -253,7 +256,9 @@ export async function getUserDomain(data: URLSearchParams) {
   }
 }
 
-export async function getUserAverageScore(data: URLSearchParams) {
+export async function getUserAverageScore(
+  data: URLSearchParams | Record<string, any>
+) {
   function filterHighestScores(data: any) {
     // Create a Map to store the highest score for each userId
     const userMap = new Map();
@@ -346,7 +351,9 @@ export async function getUserAverageScore(data: URLSearchParams) {
   }
 }
 
-export async function getUserCompletionTime(data: URLSearchParams) {
+export async function getUserCompletionTime(
+  data: URLSearchParams | Record<string, any>
+) {
   function filterHighestElapsedSeconds(data: any) {
     // Create a Map to store the highest elapsedSeconds for each userId
     const userMap = new Map();
@@ -447,7 +454,9 @@ export async function getUserCompletionTime(data: URLSearchParams) {
   }
 }
 
-export async function getUserExpertsProgress(data: URLSearchParams) {
+export async function getUserExpertsProgress(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
