@@ -82,7 +82,8 @@ export default function UploadResultDialog({
       return item.errors[0].message;
     }
     if ('error' in item && item.error?.message) {
-      return item.error.message.split(':')[1];
+      // return item.error.message.split(':')[1];
+      return item.error.message;
     }
     return 'Unknown error';
   };
