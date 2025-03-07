@@ -24,7 +24,7 @@ export default function CertificationClientComponent() {
   }
 
   return (
-    <div>
+    <div style={{ width: 'calc(100vw - 63px)' }}>
       <div className="flex justify-between items-center">
         <h2 className="text-size-17px font-semibold">Certification List</h2>
         {!role && (
