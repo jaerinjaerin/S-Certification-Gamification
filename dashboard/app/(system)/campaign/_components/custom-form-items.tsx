@@ -21,27 +21,6 @@ const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// const CustomInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-//   ({ className, ...props }, ref) => {
-//     return (
-//       <Input
-//         ref={ref}
-//         className={cn(
-//           'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px',
-//           className
-//         )}
-//         onKeyDown={(e) => {
-//           if (e.key === ' ') {
-//             e.preventDefault();
-//           }
-//         }}
-//         {...props}
-//       />
-//     );
-//   }
-// );
-// CustomInput.displayName = 'CustomInput';
-
 const DatePickerPopover = ({
   field,
   error,

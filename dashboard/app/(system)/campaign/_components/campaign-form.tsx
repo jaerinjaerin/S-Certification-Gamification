@@ -2,7 +2,7 @@
 
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 
@@ -50,7 +50,7 @@ import FormComponent from './form-component';
 import TableComponent from './table-component';
 
 // Icons
-import { Check, CircleHelp } from 'lucide-react';
+import { CalendarIcon, Check, CircleHelp } from 'lucide-react';
 
 // Utils and Constants
 import { cn } from '@/utils/utils';
@@ -60,6 +60,13 @@ import { API_ENDPOINTS } from '../constant/contant';
 
 // State Management
 import { Campaign } from '@prisma/client';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 
 interface CampaignFormProps {
@@ -79,11 +86,35 @@ export default function CampaignForm({
     useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [startDatePickerOpen, setStartDatePickerOpen] = useState(false);
+  const [endDatePickerOpen, setEndDatePickerOpen] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (
+        name === 'secondBadgeName' &&
+        (!value.secondBadgeName || value.secondBadgeName.length === 0)
+      ) {
+        form.clearErrors(['ffSecondBadgeStage', 'fsmSecondBadgeStage']);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);
+
+  useEffect(() => {
+    if (isEditMode) {
+      setSelectedNumberOfStages(initialData.numberOfStages);
+      return;
+    }
+
+    setSelectedNumberOfStages(undefined);
+  }, []);
 
   const handlePreventSpace = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
@@ -211,9 +242,6 @@ export default function CampaignForm({
       console.warn('complete campaign');
       const campaign = campaignData.result.campaign;
       const campaignSettings = campaignData.result.campaignSettings;
-      //
-      // ! mutation
-      setCampaigns((c) => [...c, campaign]);
 
       console.warn('campaign:', campaign);
       console.warn('campaignSettings:', campaignSettings);
@@ -244,6 +272,7 @@ export default function CampaignForm({
       }
 
       await Promise.all(copyPromises);
+      setCampaigns((c) => [...c, campaign]);
       toast.success('Certification created successfully!');
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -257,47 +286,57 @@ export default function CampaignForm({
   };
 
   // EDIT Submit
-  // TODO: editSubmit 수정 필요
   const editSubmit = async (data: FormValues) => {
     setIsLoading(true);
+
+    const requestBody: Record<string, any> = {
+      campaignId: campaignId,
+      name: data.certificationName,
+      startedAt: data.startDate,
+      endedAt: data.endDate,
+      totalStages: Number(data.numberOfStages),
+      firstBadgeName: data.firstBadgeName,
+      secondBadgeName: data.secondBadgeName,
+      ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
+      fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
+    };
+
+    if (data.ffSecondBadgeStage !== 'none') {
+      requestBody.ffSecondBadgeStageIndex = Number(data.ffSecondBadgeStage);
+    }
+
+    if (data.fsmSecondBadgeStage !== 'none') {
+      requestBody.fsmSecondBadgeStageIndex = Number(data.fsmSecondBadgeStage);
+    }
 
     try {
       const response = await fetch(`/api/cms/campaign/${campaignId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          campaignId,
-          name: data.certificationName,
-          startedAt: data.startDate,
-          endedAt: data.endDate,
-          totalStages: Number(data.numberOfStages),
-          firstBadgeName: data.firstBadgeName,
-          secondBadgeName: data.secondBadgeName,
-          ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
-          ffSecondBadgeStageIndex: Number(data.ffSecondBadgeStage),
-          fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
-          fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const campaignData = await response.json();
+
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
         toast.error('Failed to create campaign');
         return;
       }
 
-      // ! mutation
       console.warn('update campaign');
       const updatedCampaign = campaignData.result.campaign;
       const updatedCampaigns = campaigns?.map((item) =>
         item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
       );
+
       setCampaigns(updatedCampaigns as Campaign[]);
+      toast.success('Campaign updated successfully!');
     } catch (error) {
+      toast.error(`Failed to update campaign: ${error}`);
     } finally {
       setIsLoading(false);
-      // routeToPage('/campaign');
+      routeToPage('/campaign');
     }
   };
 
@@ -398,14 +437,33 @@ export default function CampaignForm({
                           )}
                         </div>
                       </FormControl>
-                      {form.getValues('slug') &&
-                      !form.getValues('isSlugChecked') ? (
-                        <FormMessage>
-                          {form.formState.errors.isSlugChecked?.message}
-                        </FormMessage>
-                      ) : (
-                        <FormMessage />
-                      )}
+                      {(() => {
+                        // Edit 모드인 경우 메시지 표시하지 않음
+                        if (isEditMode) {
+                          return null;
+                        }
+
+                        // slug 값이 없는 경우
+                        if (!form.getValues('slug')) {
+                          return <FormMessage />;
+                        }
+
+                        // slug 값이 있고 체크되지 않은 경우
+                        if (!form.getValues('isSlugChecked')) {
+                          return (
+                            <FormMessage>
+                              {form.formState.errors.isSlugChecked?.message}
+                            </FormMessage>
+                          );
+                        }
+
+                        // slug 값이 있고 체크된 경우 (성공)
+                        return (
+                          <FormMessage success>
+                            Slug is available and has been checked
+                          </FormMessage>
+                        );
+                      })()}
                     </FormItem>
                   );
                 }}
@@ -419,15 +477,45 @@ export default function CampaignForm({
                   <FormItem className="flex flex-col w-full max-w-[20rem] ">
                     <FormLabel>Start Date</FormLabel>
                     <FormControl>
-                      <DatePickerPopover
-                        error={form.formState.errors.startDate?.message}
-                        field={field}
-                      />
+                      <Popover
+                        open={startDatePickerOpen}
+                        onOpenChange={setStartDatePickerOpen}
+                      >
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={'secondary'}
+                            className={cn(
+                              'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
+                              !field.value && 'text-muted-foreground',
+                              form.formState.errors.startDate?.message &&
+                                'border-destructive'
+                            )}
+                          >
+                            <CalendarIcon />
+                            {field.value ? (
+                              format(field.value as Date, 'PPP')
+                            ) : (
+                              <span className="font-medium">Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 " align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value as Date}
+                            onSelect={(date) => {
+                              field.onChange(date);
+                              setStartDatePickerOpen(false);
+                            }}
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="endDate"
@@ -435,10 +523,43 @@ export default function CampaignForm({
                   <FormItem className="w-full flex flex-col">
                     <FormLabel>End Date</FormLabel>
                     <FormControl>
-                      <DatePickerPopover
-                        error={form.formState.errors.endDate?.message}
-                        field={field}
-                      />
+                      <Popover
+                        open={endDatePickerOpen}
+                        onOpenChange={setEndDatePickerOpen}
+                      >
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={'secondary'}
+                            className={cn(
+                              'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
+                              !field.value && 'text-muted-foreground',
+                              form.formState.errors.startDate?.message &&
+                                'border-destructive'
+                            )}
+                          >
+                            <CalendarIcon />
+                            {field.value ? (
+                              format(field.value as Date, 'PPP')
+                            ) : (
+                              <span className="font-medium">Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 " align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value as Date}
+                            onSelect={(date) => {
+                              field.onChange(date);
+                              setEndDatePickerOpen(false);
+                            }}
+                            fromDate={form.getValues('startDate')}
+                            disabled={(date) =>
+                              date < form.getValues('startDate')
+                            }
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -576,7 +697,7 @@ export default function CampaignForm({
           <p className="font-medium">Badge Setting</p>
           <Container className="space-x-0 min-[880px]:space-x-[3.125rem]">
             <FormComponent
-              className="max-w-[20rem]"
+              className="max-w-[20rem] "
               form={form}
               label="First Badge Name"
               name="firstBadgeName"
@@ -584,12 +705,12 @@ export default function CampaignForm({
                 <Input
                   {...field}
                   disabled={selectedNumberOfStages === undefined}
-                  // placeholder="Expert"
-                  value={isEditMode ? field.value : undefined}
+                  value={field.value}
                   className={cn(
                     inputStyle,
                     form.formState.errors.firstBadgeName?.message &&
-                      'border-destructive'
+                      'border-destructive',
+                    'placeholder:text-slate-300'
                   )}
                 />
               )}
@@ -599,16 +720,26 @@ export default function CampaignForm({
               form={form}
               label="Second Badge Name"
               name="secondBadgeName"
-              render={(field) => (
-                <Input
-                  {...field}
-                  disabled={selectedNumberOfStages === undefined}
-                  // placeholder="Advanced"
-                  // defaultValue={'Advanced'}
-                  value={isEditMode ? field.value : undefined}
-                  className={cn(inputStyle)}
-                />
-              )}
+              render={(field) => {
+                console.log(
+                  '🥕 selectedNumberOfStages',
+                  selectedNumberOfStages
+                );
+                return (
+                  <Input
+                    {...field}
+                    disabled={selectedNumberOfStages === undefined}
+                    placeholder="Advanced"
+                    value={field.value}
+                    className={cn(
+                      inputStyle,
+                      form.formState.errors.secondBadgeName?.message &&
+                        'border-destructive',
+                      'placeholder:text-slate-300'
+                    )}
+                  />
+                );
+              }}
             />
           </Container>
           <TableComponent
