@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   const { userId, quizSetPath, campaignId } = body;
 
   try {
-    if (!quizSetPath) {
+    if (!quizSetPath || !campaignId || !userId) {
       Sentry.captureMessage("Quiz set path is required");
       return NextResponse.json(
         {
@@ -34,6 +34,26 @@ export async function POST(request: NextRequest) {
           },
         },
         { status: 400 }
+      );
+    }
+
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    if (campaign == null) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Campaign not found",
+          },
+        },
+        { status: 404 }
       );
     }
 
@@ -111,6 +131,209 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (campaign.name.toLowerCase() !== "s25") {
+      const job = await prisma.job.findFirst({
+        where: {
+          id: user?.jobId ?? sumtotalUserOthersJobId,
+        },
+      });
+
+      let language = await prisma.language.findFirst({
+        where: {
+          code: languageCode,
+        },
+      });
+
+      if (!language) {
+        Sentry.captureMessage("Language not found", (scope) => {
+          scope.setContext("operation", {
+            type: "api",
+            endpoint: "/api/logs/quizzes/sets",
+            method: "POST",
+            description: "Language not found",
+          });
+          scope.setTag("userId", userId);
+          scope.setTag("quizSetPath", quizSetPath);
+          return scope;
+        });
+
+        return NextResponse.json(
+          {
+            status: 404,
+            message: "Not found",
+            error: {
+              code: "NOT_FOUND",
+              details: "Language not found",
+            },
+          },
+          { status: 404 }
+        );
+      }
+
+      const quizSet = await prisma.quizSet.findFirst({
+        where: {
+          domainId: domain?.id,
+          campaignId,
+          languageId: language?.id,
+          jobCodes: {
+            has: job?.code,
+          },
+        },
+      });
+
+      if (!quizSet) {
+        return NextResponse.json(
+          {
+            status: 404,
+            message: "Not found",
+            error: {
+              code: "NOT_FOUND",
+              details: "Quiz set not found",
+            },
+          },
+          { status: 404 }
+        );
+      }
+
+      // // console.log("user:", user);
+
+      let userQuizLog = await prisma.userQuizLog.findFirst({
+        where: {
+          userId: userId,
+          campaignId: quizSet.campaignId,
+        },
+      });
+
+      if (userQuizLog) {
+        console.warn("Warn already exists user quiz log:", userQuizLog);
+        userQuizLog = await prisma.userQuizLog.update({
+          where: {
+            id: userQuizLog.id,
+          },
+          data: {
+            // userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      } else {
+        userQuizLog = await prisma.userQuizLog.create({
+          data: {
+            userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      }
+
+      let userQuizStatistics = await prisma.userQuizStatistics.findFirst({
+        where: {
+          userId: userId,
+          campaignId: quizSet.campaignId,
+        },
+      });
+
+      if (userQuizStatistics) {
+        userQuizStatistics = await prisma.userQuizStatistics.update({
+          where: {
+            id: userQuizStatistics.id,
+          },
+          data: {
+            // userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      } else {
+        userQuizStatistics = await prisma.userQuizStatistics.create({
+          data: {
+            userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      }
+
+      return NextResponse.json(
+        {
+          item: {
+            quizLog: userQuizLog,
+          },
+        },
+        { status: 200 }
+      );
+    }
+
+    // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.
+    // 대체 로직은 위의 로직을 사용
     const job = await prisma.job.findFirst({
       where: {
         id: user?.jobId ?? sumtotalUserOthersJobId,
@@ -309,64 +532,6 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-
-    // const result = await prisma.$transaction(async (tx) => {
-    //   const userQuizLog = await tx.userQuizLog.create({
-    //     data: {
-    //       userId: userId,
-    //       authType: user?.authType || AuthType.UNKNOWN,
-    //       campaignId: campaignId,
-    //       isCompleted: false,
-    //       isBadgeAcquired: false,
-
-    //       jobId: job?.id,
-    //       quizSetId: quizSet.id,
-    //       languageId: language?.id,
-    //       quizSetPath: confirmedQuizSetPath,
-
-    //       domainId: domain?.id,
-    //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-    //       subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
-
-    //       storeId: user?.storeId,
-    //       storeSegmentText: user?.storeSegmentText,
-    //       channelId: user?.channelId,
-    //       channelName: user?.channelName,
-    //       channelSegmentId: user?.channelSegmentId,
-    //     },
-    //   });
-
-    //   const userQuizStatistics = await tx.userQuizStatistics.create({
-    //     data: {
-    //       id: userQuizLog.id,
-    //       userId: userId,
-    //       authType: user?.authType || AuthType.UNKNOWN,
-    //       campaignId: quizSet.campaignId,
-    //       isCompleted: false,
-    //       isBadgeAcquired: false,
-
-    //       jobId: job?.id,
-    //       quizSetId: quizSet.id,
-    //       languageId: language?.id,
-    //       quizSetPath: confirmedQuizSetPath,
-
-    //       domainId: domain?.id,
-    //       regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-    //       subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
-
-    //       storeId: user?.storeId,
-    //       storeSegmentText: user?.storeSegmentText,
-    //       channelId: user?.channelId,
-    //       channelName: user?.channelName,
-    //       channelSegmentId: user?.channelSegmentId,
-    //     },
-    //   });
-
-    //   return { userQuizLog, userQuizStatistics };
-    // });
-
-    // // console.log("userQuizLog:", result.userQuizLog);
-    // // console.log("userQuizStatistics:", result.userQuizStatistics);
 
     return NextResponse.json(
       {

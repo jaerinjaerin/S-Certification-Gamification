@@ -177,8 +177,8 @@ export async function getQuizSet(
           }
         }
       }
-      console.log("activityBadges:", activityBadges);
-      console.log("campaign:", campaign.settings);
+      // console.log("activityBadges:", activityBadges);
+      // console.log("campaign:", campaign.settings);
       console.log("quizSet:", quizSet);
 
       const campaignSettings = await prisma.campaignSettings.findFirst({

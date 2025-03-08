@@ -188,7 +188,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {

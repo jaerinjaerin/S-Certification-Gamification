@@ -111,7 +111,7 @@ export default async function QuizLayout({
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
-  console.log("QuizLayout quizSet", quizSet);
+  // console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
     redirect(`/${params.campaign_name}/not-ready`);
   }
