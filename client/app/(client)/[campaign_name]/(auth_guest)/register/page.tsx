@@ -102,7 +102,6 @@ export default function GuestRegisterPage({
   const [quizLanguageCode, selectQuizLanguageCode] = useState<string | null>(
     null
   ); // 브라우저에서 주는 언어코드
-  const [errorJob, setErrorJob] = useState<string | null>(null); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<DomainDetail[]>([]);
