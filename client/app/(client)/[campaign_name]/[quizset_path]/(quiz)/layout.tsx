@@ -27,6 +27,50 @@ export default async function QuizLayout({
     redirect("/login");
   }
 
+  // ================== Quiz Log Setup ==================
+  const quizLogResponse = await getQuizLog(userId, params.campaign_name);
+
+  // const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
+  console.log("QuizLayout quizLogResponse", quizLogResponse);
+  if (
+    quizLogResponse.status != null &&
+    quizLogResponse.status >= 400 &&
+    quizLogResponse.status < 500
+  ) {
+    redirect(`/${params.campaign_name}/not-ready`);
+  }
+
+  if (quizLogResponse.status != null && quizLogResponse.status >= 500) {
+    console.error(
+      "Server error while fetching quiz log",
+      params.campaign_name,
+      quizLogResponse
+    );
+    Sentry.captureMessage(
+      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
+    );
+    return <RefreshButton />;
+  }
+
+  const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
+  const quizStageLogs: UserQuizStageLog[] | null =
+    quizLogResponse.item?.quizStageLogs || null;
+
+  // ================== Check User Details(Guest) ==================
+  if (session?.user.authType === "GUEST") {
+    const userResponse = await fetchUserInfo(userId);
+    const user = userResponse.item;
+
+    if (!hasSavedDetails(user)) {
+      redirect(`/${params.campaign_name}/register`);
+    }
+  }
+
+  // ================== Redirect if user is on a different quiz set ==================
+  if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
+    redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
+  }
+
   // ================== Quiz Setup ==================
   const quizResponse: ApiResponseV2<QuizSetEx> = await getQuizSet(
     params.quizset_path,
@@ -67,51 +111,9 @@ export default async function QuizLayout({
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
+  console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
     redirect(`/${params.campaign_name}/not-ready`);
-  }
-
-  // ================== Quiz Log Setup ==================
-  const quizLogResponse = await getQuizLog(userId, params.campaign_name);
-
-  // const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  if (
-    quizLogResponse.status != null &&
-    quizLogResponse.status >= 400 &&
-    quizLogResponse.status < 500
-  ) {
-    redirect(`/${params.campaign_name}/not-ready`);
-  }
-
-  if (quizLogResponse.status != null && quizLogResponse.status >= 500) {
-    console.error(
-      "Server error while fetching quiz log",
-      params.campaign_name,
-      quizLogResponse
-    );
-    Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
-    );
-    return <RefreshButton />;
-  }
-
-  const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
-  const quizStageLogs: UserQuizStageLog[] | null =
-    quizLogResponse.item?.quizStageLogs || null;
-
-  // ================== Check User Details(Guest) ==================
-  if (session?.user.authType === "GUEST") {
-    const userResponse = await fetchUserInfo(userId);
-    const user = userResponse.item;
-
-    if (!hasSavedDetails(user)) {
-      redirect(`/${params.campaign_name}/register`);
-    }
-  }
-
-  // ================== Redirect if user is on a different quiz set ==================
-  if (quizLog?.quizSetPath && quizLog.quizSetPath !== params.quizset_path) {
-    redirect(`/${params.campaign_name}/${quizLog.quizSetPath}`);
   }
 
   return (
