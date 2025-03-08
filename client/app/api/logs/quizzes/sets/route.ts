@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      let language = await prisma.language.findFirst({
+      const language = await prisma.language.findFirst({
         where: {
           code: languageCode,
         },
