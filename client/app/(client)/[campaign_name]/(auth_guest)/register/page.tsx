@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ERROR_CODES } from "@/constants/error-codes";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import useCreateItem from "@/hooks/useCreateItem";
@@ -34,6 +35,7 @@ import { useEffect, useState } from "react";
 
 interface Job {
   name: string;
+  group: string;
   id: string;
   value: string;
   storeId?: string;
@@ -46,6 +48,17 @@ interface Channel {
   channelSegmentId: string;
 }
 
+interface QuizLanguage {
+  id: string;
+  code: string;
+  name: string;
+}
+
+interface JobQuizLanguage {
+  ff: QuizLanguage[];
+  fsm: QuizLanguage[];
+}
+
 interface DomainDetail {
   id: string;
   channels: Channel[];
@@ -53,9 +66,15 @@ interface DomainDetail {
   code: string;
   regionId: string;
   subsidiaryId: string;
+  isReady: false;
+  languages: JobQuizLanguage;
 }
 
-export default function GuestRegisterPage() {
+export default function GuestRegisterPage({
+  params,
+}: {
+  params: { campaign_name: string };
+}) {
   useGAPageView();
   const router = useRouter();
 
@@ -77,19 +96,25 @@ export default function GuestRegisterPage() {
   const [channelInput, setChannelInput] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [languageCode, setLanguageCode] = useState<string | undefined>(
-    undefined
+  // const [languageCode, setLanguageCode] = useState<string | undefined>(
+  //   undefined
+  // ); // 브라우저에서 주는 언어코드
+  const [quizLanguageCode, selectQuizLanguageCode] = useState<string | null>(
+    null
   ); // 브라우저에서 주는 언어코드
+  const [errorJob, setErrorJob] = useState<string | null>(null); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<DomainDetail[]>([]);
   const [channels, setChannels] = useState<Channel[] | null>(null);
-  const [jobs] = useState<Job[]>([
-    { name: "FSM", value: "8", id: "8" },
-    { name: "FF", value: "9", id: "9" },
-    { name: "FSM(SES)", value: "10", id: "8", storeId: "4" },
-    { name: "FF(SES)", value: "11", id: "9", storeId: "4" },
-  ]);
+  const defaultJobs: Job[] = [
+    { name: "FSM", group: "fsm", value: "8", id: "8" },
+    { name: "FF", group: "ff", value: "9", id: "9" },
+    { name: "FSM(SES)", group: "fsm", value: "10", id: "8", storeId: "4" },
+    { name: "FF(SES)", group: "ff", value: "11", id: "9", storeId: "4" },
+  ];
+  const [jobs, setJobs] = useState<Job[]>(defaultJobs);
+  const [quizLanguages, setQuizLanguages] = useState<QuizLanguage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -107,7 +132,8 @@ export default function GuestRegisterPage() {
     try {
       setLoading(true);
 
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/channels.json`;
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/jsons/channels.json`;
+      console.log("jsonUrl", jsonUrl);
       const res = await fetch(jsonUrl, {
         method: "GET",
         // cache: "force-cache",
@@ -119,7 +145,9 @@ export default function GuestRegisterPage() {
         return a.name.localeCompare(b.name);
       });
       console.log("data", data.length);
-      setCountries(data as DomainDetail[]);
+      const countries = data as DomainDetail[];
+      const readyCountries = countries.filter((c) => c.isReady);
+      setCountries(readyCountries);
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
@@ -127,15 +155,15 @@ export default function GuestRegisterPage() {
     }
   };
 
-  const fetchLanguage = async () => {
-    const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
-    // console.log("matchedLocale", matchedLocale);
-    setLanguageCode(matchedLocale);
-  };
+  // const fetchLanguage = async () => {
+  //   const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
+  //   // console.log("matchedLocale", matchedLocale);
+  //   setLanguageCode(matchedLocale);
+  // };
 
   useEffect(() => {
     fetchConutries();
-    fetchLanguage();
+    // fetchLanguage();
   }, []);
 
   useEffect(() => {
@@ -187,14 +215,27 @@ export default function GuestRegisterPage() {
     setChannelInput(false);
     setChannelName(null);
     setSelectedJobId(null);
+    selectQuizLanguageCode(null);
+
+    const _jobs: Job[] = [];
+    if (country.languages.ff.length > 0) {
+      _jobs.push(...defaultJobs.filter((j) => j.group === "ff"));
+    }
+    if (country.languages.fsm.length > 0) {
+      _jobs.push(...defaultJobs.filter((j) => j.group === "fsm"));
+    }
+    setJobs(_jobs);
   };
 
   const selectChannel = (channelName: string) => {
+    setSelectedJobId(null);
+    selectQuizLanguageCode(null);
+
     if (channelName === "input_directly") {
       setChannelInput(true);
       setSelectedChannel(null);
 
-      setSelectedJobId(jobs[0].value);
+      // setSelectedJobId(jobs[0].value);
 
       return;
     }
@@ -208,21 +249,40 @@ export default function GuestRegisterPage() {
     }
     setSelectedChannel(channel);
     setSelectedChannelSegmentId(channel.channelSegmentId);
-    setSelectedJobId(channel.job.id);
+    // setSelectedJobId(channel.job.id);
   };
 
   const selectJob = (jobId: string) => {
     setSelectedJobId(jobId);
+    const job = jobs.find((j) => j.value === jobId);
+
+    const jobCode = job?.group.toLowerCase();
+    if (jobCode && selectedCountry?.languages[jobCode] != null) {
+      const langeuages = selectedCountry.languages[jobCode];
+      setQuizLanguages(langeuages);
+
+      console.log("langeuages", langeuages);
+      if (langeuages.length === 1) {
+        selectQuizLanguageCode(langeuages[0].code);
+      } else {
+        selectQuizLanguageCode(null);
+      }
+    }
   };
 
   const routeQuizPage = () => {
     if (!selectedCountry) {
-      setErrorMessage("Please select a country.");
+      setErrorMessage("Please select a country."); // 번역 필요
       return;
     }
 
     if (!selectedJobId) {
-      setErrorMessage("Please select a job group.");
+      setErrorMessage("Please select a job group."); // 번역 필요
+      return;
+    }
+
+    if (!quizLanguageCode) {
+      setErrorMessage("Please select a quiz language."); // 번역 필요
       return;
     }
     createItem({
@@ -234,7 +294,8 @@ export default function GuestRegisterPage() {
         regionId: selectedCountry?.regionId,
         jobId: jobs.find((j) => j.value === selectedJobId)?.id,
         storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
-        languageCode: languageCode,
+        // languageCode: languageCode,
+        languageCode: quizLanguageCode,
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
@@ -250,7 +311,10 @@ export default function GuestRegisterPage() {
   );
   useEffect(() => {
     if (errorCreate) {
-      setErrorMessage(errorCreate);
+      if (errorCreate.code === ERROR_CODES.UNAUTHORIZED) {
+        router.push(`${campaignPath}/login`);
+      }
+      setErrorMessage(errorCreate.message);
     }
   }, [errorCreate]);
 
@@ -260,7 +324,7 @@ export default function GuestRegisterPage() {
       !selectedCountry ||
       (!selectedChannel && (!channelName || channelName.trim().length < 2)) ||
       !selectedJobId ||
-      !languageCode ||
+      !quizLanguageCode ||
       (!loadingCreate && !!campaignPath)
     );
   };
@@ -406,6 +470,33 @@ export default function GuestRegisterPage() {
                 ))}
               </SelectContent>
             </Select>
+            {quizLanguages && quizLanguages.length > 0 && (
+              <Select
+                onValueChange={(value) => selectQuizLanguageCode(value)}
+                value={quizLanguageCode || ""}
+              >
+                <SelectTrigger
+                  disabled={
+                    loading ||
+                    loadingCreate ||
+                    (selectedChannel === null &&
+                      (channelName === null ||
+                        channelName.trim().length < 1)) ||
+                    !selectedJobId
+                  }
+                >
+                  {/* <SelectValue placeholder={translation("job_group")} /> */}
+                  <SelectValue placeholder={"퀴즈 언어 선택 (번역정보 필요)"} />
+                </SelectTrigger>
+                <SelectContent className="font-medium font-one">
+                  {quizLanguages.map((lang) => (
+                    <SelectItem key={lang.name} value={lang.code}>
+                      {lang.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           {!isPolicyAcceptCountry && (

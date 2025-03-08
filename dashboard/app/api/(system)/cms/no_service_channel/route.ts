@@ -161,24 +161,29 @@ export async function POST(request: NextRequest) {
     });
 
     filteredDomainDatas.forEach((domainData) => {
-      const quizSet = quizSets.find((q) => q.domainId === domainData.id);
-      if (quizSet) {
-        if (quizSet.language) {
-          if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
-            if (!domainData.languages.ff) {
-              domainData.languages.ff = [];
-            }
-            domainData.languages.ff.push(quizSet.language);
-          }
-          if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
-            if (!domainData.languages.fsm) {
-              domainData.languages.fsm = [];
-            }
-            domainData.languages.fsm.push(quizSet.language);
-          }
+      const relatedQuizSets = quizSets.filter(
+        (q) => q.domainId === domainData.id
+      );
 
-          domainData.isReady = true;
-        }
+      if (relatedQuizSets.length > 0) {
+        relatedQuizSets.forEach((quizSet) => {
+          if (quizSet.language) {
+            if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+              if (!domainData.languages.ff) {
+                domainData.languages.ff = [];
+              }
+              domainData.languages.ff.push(quizSet.language);
+            }
+            if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+              if (!domainData.languages.fsm) {
+                domainData.languages.fsm = [];
+              }
+              domainData.languages.fsm.push(quizSet.language);
+            }
+          }
+        });
+
+        domainData.isReady = true;
       } else {
         domainData.isReady = false;
       }
