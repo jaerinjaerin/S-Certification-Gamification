@@ -2,7 +2,7 @@
 import { prisma } from '@/model/prisma';
 import { querySearchParams } from '@/lib/query';
 import { decrypt } from '@/utils/encrypt';
-import { domainCheckOnly, removeDuplicateUsers } from '@/lib/data';
+import { domainCheckOnly, getJobIds, removeDuplicateUsers } from '@/lib/data';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { AuthType } from '@prisma/client';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
@@ -85,12 +85,36 @@ export async function getUserDomain(
     const { where: condition, take, skip } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
     });
 
-    // domainId만 확인해서 필터링 생성성
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    // domainId만 확인해서 필터링 생성
     const whereForGoal = (await domainCheckOnly(where)) as any;
     const count = await prisma.domainGoal.count({
       where: whereForGoal,
@@ -114,26 +138,32 @@ export async function getUserDomain(
       skip,
     });
 
-    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'authType',
-          'channelSegmentId',
-          'createdAt',
-        ]),
-        domainId: { in: domains.map((domain) => domain.id) },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      _count: { quizStageIndex: true },
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.groupBy({
+          by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
+          where: {
+            ...buildWhereWithValidKeys(where, [
+              'campaignId',
+              'authType',
+              'channelSegmentId',
+              'createdAt',
+            ]),
+            domainId: { in: domains.map((domain) => domain.id) },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          _count: { quizStageIndex: true },
+        })
+      )
+    );
+
+    const experts = userBadges.flat();
 
     const expertData = domains.reduce(
       (acc: any, domain: any) => {
@@ -173,7 +203,10 @@ export async function getUserDomain(
         const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
         const expertType = quizStageIndex === 2 ? 'Expert' : 'Advanced';
         const storeType = storeId === '4' ? 'Ses' : '';
-        const jobName = jobGroup.find((job) => job.id === jobId)?.code;
+        const jobName =
+          (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+            jobGroup[key].includes(jobId || '')
+          ) || null;
 
         //goal
         const { ff, fsm, ffSes, fsmSes } = domainsGoals.find(
@@ -279,10 +312,34 @@ export async function getUserAverageScore(
     const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
     });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
 
     // 오늘과 6일 전 설정
     const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
@@ -293,25 +350,29 @@ export async function getUserAverageScore(
       )
     );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...where,
-        createdAt: {
-          gte: startOfDay(beforeWeek), // 6일 전부터
-          lte: endOfDay(today), // 오늘까지
-        },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.findMany({
+          where: {
+            ...where,
+            createdAt: {
+              gte: startOfDay(beforeWeek), // 6일 전부터
+              lte: endOfDay(today), // 오늘까지
+            },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
+        })
+      )
+    );
     // 중복 userId 제거
-    experts = removeDuplicateUsers(experts);
+    let experts = removeDuplicateUsers(userBadges.flat());
     experts = filterHighestScores(experts);
     //
     // 날짜 범위를 생성
@@ -335,7 +396,7 @@ export async function getUserAverageScore(
     const result = experts.reduce((acc, item) => {
       const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
       const match = acc.find(
-        (entry) => entry.date === dateKey.replace(/-/g, '.')
+        (entry: any) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
         const score = item.score / experts.length;
@@ -374,12 +435,34 @@ export async function getUserCompletionTime(
     const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
-    await prisma.$connect();
-
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
     });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
 
     // 오늘과 6일 전 설정
     const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
@@ -390,26 +473,30 @@ export async function getUserCompletionTime(
       )
     );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['userId', 'elapsedSeconds', 'createdAt'], // quizStageId와 createdAt으로 그룹화
-      where: {
-        ...where,
-        createdAt: {
-          gte: startOfDay(beforeWeek), // 6일 전부터
-          lte: endOfDay(today), // 오늘까지
-        },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.groupBy({
+          by: ['userId', 'elapsedSeconds', 'createdAt'], // quizStageId와 createdAt으로 그룹화
+          where: {
+            ...where,
+            createdAt: {
+              gte: startOfDay(beforeWeek), // 6일 전부터
+              lte: endOfDay(today), // 오늘까지
+            },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
+        })
+      )
+    );
 
-    experts = removeDuplicateUsers(experts);
+    let experts = removeDuplicateUsers(userBadges.flat());
     experts = filterHighestElapsedSeconds(experts);
 
     // 날짜 범위를 생성
@@ -434,7 +521,7 @@ export async function getUserCompletionTime(
       .reduce((acc, item) => {
         const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
         const match = acc.find(
-          (entry) => entry.date === dateKey.replace(/-/g, '.')
+          (entry: any) => entry.date === dateKey.replace(/-/g, '.')
         ); // 날짜 일치 항목 찾기
 
         if (match) {
@@ -443,7 +530,7 @@ export async function getUserCompletionTime(
         }
         return acc;
       }, initialData)
-      .map((r) => {
+      .map((r: any) => {
         return { ...r, time: Math.round(r.time / 360) };
       });
 
@@ -461,10 +548,34 @@ export async function getUserExpertsProgress(
     const { where: condition, period } = querySearchParams(data);
     const { jobId, storeId, ...where } = condition;
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
     });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
 
     // 오늘과 6일 전 설정
     const today = addDays(
@@ -479,26 +590,30 @@ export async function getUserExpertsProgress(
     //   )
     // );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...where,
-        createdAt: {
-          gte: startOfDay(beforeWeek), // 6일 전부터
-          lte: endOfDay(today), // 오늘까지
-        },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.findMany({
+          where: {
+            ...where,
+            createdAt: {
+              gte: startOfDay(beforeWeek), // 6일 전부터
+              lte: endOfDay(today), // 오늘까지
+            },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
+        })
+      )
+    );
 
     // 중복 userId 제거
-    experts = removeDuplicateUsers(experts);
+    const experts = removeDuplicateUsers(userBadges.flat());
 
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {
@@ -523,7 +638,7 @@ export async function getUserExpertsProgress(
     const result = experts.reduce((acc, item) => {
       const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
       const match = acc.find(
-        (entry) => entry.date === dateKey.replace(/-/g, '.')
+        (entry: any) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
         if (item.quizStageIndex === 2) {

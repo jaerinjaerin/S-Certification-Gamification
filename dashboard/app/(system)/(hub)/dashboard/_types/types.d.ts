@@ -15,7 +15,7 @@ interface ParsedDateRange {
 
 // Prisma 기반 타입 정의
 type Campaign = Prisma.CampaignGetPayload<{
-  select: { id: true; name: true };
+  include: { settings: true };
 }>;
 type Region = Prisma.RegionGetPayload<{
   select: { id: true; name: true };
