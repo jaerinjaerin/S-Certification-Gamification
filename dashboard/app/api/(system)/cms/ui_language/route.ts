@@ -48,20 +48,17 @@ export async function GET(request: Request) {
     });
 
     const languages = await prisma.language.findMany();
-    const filteredLanguages = languages.filter(
-      (lang) => !lang.name.includes('deprecated')
-    );
 
     const groupedLanguages = uploadedFiles.map((file) => {
       const language = languages.find((lang) => lang.id === file.languageId);
       return { file, language };
     });
 
+    console.log('groupedLanguages:', groupedLanguages.length);
+
     const filteredGroupedLanguages = groupedLanguages.filter(
       (group) =>
-        group.language != null &&
-        !group.language.name.includes('deprecated') &&
-        !group.language.name.includes('deprecated')
+        group.language != null && !group.language.name.includes('deprecated')
     );
 
     filteredGroupedLanguages.sort((a, b) => {
