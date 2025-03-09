@@ -124,7 +124,6 @@ export async function POST(request: NextRequest) {
       where: {
         campaignId: campaign.id,
         languageId: language.id,
-        uploadedBy: session?.user.id,
         fileType: FileType.UI_LANGUAGE,
       },
     });
