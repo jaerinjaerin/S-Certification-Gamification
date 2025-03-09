@@ -7,7 +7,6 @@ import {
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
 import { DomainChannel } from '@/types/apiTypes';
-import { CloudFrontClient } from '@aws-sdk/client-cloudfront';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
@@ -238,7 +237,7 @@ export async function POST(request: NextRequest) {
       new PutObjectCommand({
         Bucket: process.env.ASSETS_S3_BUCKET_NAME,
         Key: destinationKey,
-        Body: jsonString,
+        Body: fileBuffer,
       })
     );
 
@@ -262,38 +261,6 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-
-    // async function invalidateCache(distributionId: string, paths: string[]) {
-    //   try {
-    //     const command = new CreateInvalidationCommand({
-    //       DistributionId: distributionId,
-    //       InvalidationBatch: {
-    //         Paths: {
-    //           Quantity: paths.length,
-    //           Items: paths,
-    //         },
-    //         CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
-    //       },
-    //     });
-
-    //     const response = await cloudFrontClient.send(command);
-    //     console.log('Invalidation successful:', response);
-    //   } catch (error) {
-    //     console.error('Error invalidating CloudFront cache:', error);
-    //   }
-    // }
-
-    const cloudFrontClient =
-      process.env.ENV === 'local'
-        ? new CloudFrontClient({
-            region: 'us-east-1',
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new CloudFrontClient({
-            region: 'us-east-1',
-          });
 
     // 사용 예제
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
@@ -344,14 +311,25 @@ export async function GET(request: Request) {
       );
     }
 
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    if (!campaign) {
+      return NextResponse.json(
+        { message: 'Campaign not found' },
+        { status: 404 }
+      );
+    }
+
     const uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         campaignId: campaignId,
         fileType: FileType.NON_SPLUS_DOMAINS,
       },
     });
-
-    console.log('uploadedFile: ', uploadedFile);
 
     if (!uploadedFile) {
       // return NextResponse.json(
@@ -370,16 +348,8 @@ export async function GET(request: Request) {
       );
     }
 
-    console.log(
-      'url: ',
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`
-    );
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`,
-      { method: 'GET' }
-    );
-    console.log('response: ', response);
+    const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign.slug}/jsons/channels.json`;
+    const response = await fetch(jsonUrl, { method: 'GET' });
     if (!response.ok) {
       return NextResponse.json(
         {
