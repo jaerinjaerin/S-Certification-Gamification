@@ -13,7 +13,7 @@ const initialState = {
 
 const useCampaignState = create(
   combine(initialState, (set) => ({
-    setSelectedNumberOfStages: (value: string) =>
+    setSelectedNumberOfStages: (value: string | undefined) =>
       set(() => ({
         selectedNumberOfStages: value,
       })),

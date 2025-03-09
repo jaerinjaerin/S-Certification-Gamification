@@ -1,25 +1,49 @@
 import { z } from 'zod';
 
-// ✅ Badge 타입 정의
-export type Badge = {
-  name?: string;
-  stage?: number;
-};
+// 🟢 유효성 검사 함수들
+const validateDateRange = (startDate: Date, endDate: Date): boolean =>
+  endDate >= startDate;
 
-// ✅ FormValues 타입 정의
-export type FormValues = z.infer<typeof formSchema>;
+const validateBadgeStages = (
+  firstStage: number,
+  secondStage?: number
+): boolean => secondStage === undefined || secondStage > firstStage;
 
-// ✅ 전체 폼 스키마
+const isNotEmpty = (value?: string) =>
+  value !== undefined && value.trim() !== '';
+
+const validateRequiredString = (minLength: number, message: string) =>
+  z.string().min(minLength, { message });
+
+const badgeSchema = z.object({
+  firstBadgeName: validateRequiredString(
+    2,
+    'Badge name must be at least 2 characters.'
+  ),
+  ffFirstBadgeStage: z.string({
+    required_error: 'Please select FF First Badge Stage',
+  }),
+  fsmFirstBadgeStage: z.string({
+    required_error: 'Please select FSM First Badge Stage',
+  }),
+  secondBadgeName: z.string().optional(),
+  ffSecondBadgeStage: z.string().optional(),
+  fsmSecondBadgeStage: z.string().optional(),
+});
+
+const campaignIdSchema = z.object({
+  targetSourceCampaignId: z.string().optional(),
+  imageSourceCampaignId: z.string().optional(),
+  uiLanguageSourceCampaignId: z.string().optional(),
+});
+
 export const formSchema = z
   .object({
-    certificationName: z
-      .string()
-      .min(2, {
-        message: 'Certification name must be at least 2 characters.',
-      })
-      .max(30, {
-        message: 'Certification name must be at most 30 characters.',
-      }),
+    certificationName: validateRequiredString(
+      2,
+      'Certification name must be at least 2 characters.'
+    ).max(30, { message: 'Certification name must be at most 30 characters.' }),
+
     slug: z
       .string()
       .regex(/^[a-z0-9-]+$/, {
@@ -27,51 +51,39 @@ export const formSchema = z
           'Only lowercase English letters, numbers, and hyphens (-) are allowed.',
       })
       .min(1, 'Slug must be at least 1 character.'),
+
     isSlugChecked: z
       .boolean()
       .default(false)
       .refine((value) => value === true, {
         message: 'Slug availability must be verified before submission.',
       }),
+
     startDate: z.date({
       required_error: 'Please select a date Start Date',
     }),
     endDate: z.date({
       required_error: 'Please select a date End Date',
     }),
+
     copyMedia: z.string().optional(),
     copyTarget: z.string().optional(),
     copyUiLanguage: z.string().optional(),
+
     numberOfStages: z.string({
       required_error: 'Please select Number of Stages',
     }),
-    firstBadgeName: z
-      .string()
-      .min(2, { message: 'Badge name must be at least 2 characters.' }),
-    ffFirstBadgeStage: z.string({
-      required_error: 'Please select FF First Badge Stage',
-    }),
-    fsmFirstBadgeStage: z.string({
-      required_error: 'Please select FSM First Badge Stage',
-    }),
-    secondBadgeName: z.string().optional(),
-    ffSecondBadgeStage: z
-      .string({
-        required_error: 'Please select FF Second Badge Stage',
-      })
-      .optional(),
-    fsmSecondBadgeStage: z
-      .string({
-        required_error: 'Please select FSM Second Badge Stage',
-      })
-      .optional(),
-    targetSourceCampaignId: z.string().optional(),
-    imageSourceCampaignId: z.string().optional(),
-    uiLanguageSourceCampaignId: z.string().optional(),
+
+    ...badgeSchema.shape,
+    ...campaignIdSchema.shape,
   })
   .superRefine((data, ctx) => {
-    // ✅ startDate와 endDate가 존재하는 경우만 비교 (undefined 방지)
-    if (data.startDate && data.endDate && data.endDate < data.startDate) {
+    // 🟢 dateRange validation
+    if (
+      data.startDate &&
+      data.endDate &&
+      !validateDateRange(data.startDate, data.endDate)
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'End date must be after start date.',
@@ -79,12 +91,8 @@ export const formSchema = z
       });
     }
 
-    // ✅ secondBadgeName이 존재하는 경우만 길이 검사
-    if (
-      data.secondBadgeName !== undefined &&
-      data.secondBadgeName.length > 0 &&
-      data.secondBadgeName.length < 2
-    ) {
+    // 🟢 secondBadgeName.length validation
+    if (isNotEmpty(data.secondBadgeName) && data.secondBadgeName!.length < 2) {
       ctx.addIssue({
         code: z.ZodIssueCode.too_small,
         type: 'string',
@@ -95,52 +103,57 @@ export const formSchema = z
       });
     }
 
+    // 🟢 ffSecondBadgeStage 또는 fsmSecondBadgeStage 값이 있는 경우, secondBadgeName이 존재하는지 유효성 검사
     if (
-      data.ffFirstBadgeStage !== undefined &&
-      data.ffSecondBadgeStage !== undefined &&
-      data.ffFirstBadgeStage !== '' &&
-      data.ffSecondBadgeStage !== ''
+      (isNotEmpty(data.ffSecondBadgeStage) ||
+        isNotEmpty(data.fsmSecondBadgeStage)) &&
+      !isNotEmpty(data.secondBadgeName)
     ) {
-      const firstStage = Number(data.ffFirstBadgeStage);
-      const secondStage = Number(data.ffSecondBadgeStage);
-
-      if (
-        !isNaN(firstStage) &&
-        !isNaN(secondStage) &&
-        firstStage >= secondStage
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message:
-            'FF Second Badge Stage must be greater than FF First Badge Stage.',
-          path: ['ffSecondBadgeStage'],
-        });
-      }
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          'Second Badge Name is required when any Second Badge Stage is provided.',
+        path: ['secondBadgeName'],
+      });
     }
 
-    if (
-      data.fsmFirstBadgeStage !== undefined &&
-      data.fsmSecondBadgeStage !== undefined &&
-      data.fsmFirstBadgeStage !== '' &&
-      data.fsmSecondBadgeStage !== ''
-    ) {
-      const firstStage = Number(data.fsmFirstBadgeStage);
-      const secondStage = Number(data.fsmSecondBadgeStage);
-
-      if (
-        !isNaN(firstStage) &&
-        !isNaN(secondStage) &&
-        firstStage >= secondStage
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message:
-            'FSM Second Badge Stage must be greater than FSM First Badge Stage.',
-          path: ['fsmSecondBadgeStage'],
-        });
+    // 🟢 뱃지 스테이지 순서 검증
+    const validateStageOrder = (
+      first: string,
+      second?: string,
+      path?: string
+    ) => {
+      if (first && second) {
+        const firstStage = Number(first);
+        const secondStage = Number(second);
+        if (
+          !isNaN(firstStage) &&
+          !isNaN(secondStage) &&
+          !validateBadgeStages(firstStage, secondStage)
+        ) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `${path} must be greater than previous stage.`,
+            path: [path!],
+          });
+        }
       }
-    }
+    };
+
+    validateStageOrder(
+      data.ffFirstBadgeStage,
+      data.ffSecondBadgeStage,
+      'ffSecondBadgeStage'
+    );
+    validateStageOrder(
+      data.fsmFirstBadgeStage,
+      data.fsmSecondBadgeStage,
+      'fsmSecondBadgeStage'
+    );
   });
+
+// ✅ FormValues 타입 정의
+export type FormValues = z.infer<typeof formSchema>;
 
 export const defaultValues = {
   certificationName: '',
@@ -152,10 +165,10 @@ export const defaultValues = {
   copyTarget: undefined,
   copyUiLanguage: undefined,
   numberOfStages: undefined,
-  firstBadgeName: '',
+  firstBadgeName: 'Expert',
   ffFirstBadgeStage: undefined,
   fsmFirstBadgeStage: undefined,
-  secondBadgeName: '',
+  secondBadgeName: 'Advanced',
   ffSecondBadgeStage: undefined,
   fsmSecondBadgeStage: undefined,
   targetSourceCampaignId: undefined,

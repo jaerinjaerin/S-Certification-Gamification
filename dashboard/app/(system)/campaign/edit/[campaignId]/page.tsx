@@ -6,28 +6,47 @@ export default async function EditCampaignPage({
 }: {
   params: { campaignId: string };
 }) {
-  const getCampaign = async (campaignId: string) => {
+  const { campaignId } = params;
+  const campaign = await getCampaign(campaignId);
+
+  if (!campaign) {
+    return <div>Campaign not found</div>;
+  }
+
+  const editData = mapCampaignToFormData(campaign);
+
+  return (
+    <CampaignForm initialData={editData} isEditMode campaignId={campaignId} />
+  );
+}
+
+async function getCampaign(campaignId: string) {
+  try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
-      {
-        cache: 'no-cache',
-      }
+      { cache: 'no-cache' }
     );
+
     if (!response.ok) {
       toast.error('Failed to fetch campaign');
-      return;
+      return null;
     }
+
     const data = await response.json();
-    return data;
-  };
+    return data.result.campaign;
+  } catch (error) {
+    toast.error('Error fetching campaign');
+    console.error(error);
+    return null;
+  }
+}
 
-  const data = await getCampaign(params.campaignId);
-  const { campaign } = data.result;
+function numberToString(value: number | null | undefined) {
+  return value !== undefined && value !== null ? String(value) : undefined;
+}
 
-  const numberToString = (value: number | null) =>
-    value != null ? value.toString() : null;
-
-  const editData = {
+function mapCampaignToFormData(campaign: any) {
+  return {
     certificationName: campaign.name,
     slug: campaign.slug,
     isSlugChecked: true,
@@ -53,12 +72,4 @@ export default async function EditCampaignPage({
     imageSourceCampaignId: undefined,
     uiLanguageSourceCampaignId: undefined,
   };
-
-  return (
-    <CampaignForm
-      initialData={editData}
-      isEditMode
-      campaignId={params.campaignId}
-    />
-  );
 }

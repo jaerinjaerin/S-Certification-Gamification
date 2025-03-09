@@ -27,8 +27,6 @@ export default function QuizComplete() {
     });
   };
 
-  console.log("QuizComplete lastCompletedQuizStage", lastCompletedQuizStage);
-
   useEffect(() => {
     const routeToMapPage = async () => {
       await sleep(3000);

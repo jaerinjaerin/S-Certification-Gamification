@@ -177,9 +177,27 @@ export async function getQuizSet(
           }
         }
       }
-      console.log("activityBadges:", activityBadges);
-      console.log("campaign:", campaign.settings);
+      // console.log("activityBadges:", activityBadges);
+      // console.log("campaign:", campaign.settings);
       console.log("quizSet:", quizSet);
+
+      const campaignSettings = await prisma.campaignSettings.findFirst({
+        where: {
+          campaignId: campaign.id,
+        },
+      });
+
+      console.log("campaignSettings:", campaignSettings);
+
+      if (campaignSettings) {
+        const maxStage = campaignSettings.totalStages;
+        console.log("maxStage:", maxStage, quizSet.quizStages.length);
+        if (maxStage) {
+          if (quizSet.quizStages.length > maxStage + 1) {
+            quizSet.quizStages = quizSet.quizStages.slice(0, maxStage + 1);
+          }
+        }
+      }
 
       return {
         success: true,

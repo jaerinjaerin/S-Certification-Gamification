@@ -1,5 +1,6 @@
 // src/types/apiTypes.ts
 
+import { ErrorCode } from "@/constants/error-codes";
 import {
   Domain,
   Image,
@@ -77,4 +78,15 @@ export interface ApiListResponse<T> {
   items: T[] | null;
   success: boolean;
   message?: string;
+}
+
+export interface ApiResponseV3<T> {
+  success: boolean;
+  result: {
+    item: T | null;
+  };
+  error?: {
+    message: string;
+    code: ErrorCode;
+  };
 }
