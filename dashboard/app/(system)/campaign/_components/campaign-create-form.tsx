@@ -354,7 +354,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                       <FormControl>
                         <div className="flex relative w-fit">
                           <div className="max-w-[20rem] flex items-center">
-                            <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
+                            <p className="text-size-11px text-nowrap text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
                               {process.env.NEXT_PUBLIC_CLIENT_URL}
                             </p>
                             <Input
