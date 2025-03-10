@@ -30,6 +30,8 @@ import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import { LoaderWithBackground } from '@/components/loader';
+import { capitalize } from '@/lib/text';
+import { CampaignSettings } from '@prisma/client';
 
 const fetcher = async (params: any) => {
   const [data, count] = await Promise.all([
@@ -46,6 +48,7 @@ const fetcher = async (params: any) => {
 };
 const OverviewAchievementRateChild = () => {
   const { campaign } = useStateVariables();
+  const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: dataycountData, isLoading } = useSWR(
     {
@@ -53,6 +56,10 @@ const OverviewAchievementRateChild = () => {
       campaign: campaign?.id,
     },
     fetcher
+  );
+  console.log(
+    '🚀 ~ OverviewAchievementRateChild ~ dataycountData:',
+    dataycountData
   );
 
   const { data, count } = (dataycountData || {
@@ -105,6 +112,7 @@ const OverviewAchievementRateChild = () => {
           <Bar
             dataKey="expert"
             fill={chartColorSecondary}
+            name={capitalize(settings?.firstBadgeName || 'Expert')}
             activeBar={
               <Rectangle
                 fill={chartColorSecondary}

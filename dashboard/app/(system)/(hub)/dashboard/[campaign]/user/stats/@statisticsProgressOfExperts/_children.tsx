@@ -27,9 +27,12 @@ import useSWR from 'swr';
 import { searchParamsToJson } from '@/lib/query';
 import { getUserExpertsProgress } from '@/app/actions/dashboard/user/action';
 import { LoaderWithBackground } from '@/components/loader';
+import { CampaignSettings } from '@prisma/client';
+import { capitalize } from '@/lib/text';
 
 export function UserProgressExpertsChild() {
   const { campaign } = useStateVariables();
+  const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: progressData, isLoading } = useSWR(
     {
@@ -45,10 +48,12 @@ export function UserProgressExpertsChild() {
   return (
     <ChartContainer>
       {isLoading && <LoaderWithBackground />}
-      <CardCustomHeaderWithoutDesc title="Progress of Experts" />
+      <CardCustomHeaderWithoutDesc
+        title={`Progress of ${capitalize(settings?.firstBadgeName || 'Expert')}s`}
+      />
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart
-          title="Experts distribution"
+          title={`${capitalize(settings?.firstBadgeName || 'Expert')}s distribution`}
           data={data}
           barSize={40}
           margin={{
@@ -79,17 +84,21 @@ export function UserProgressExpertsChild() {
 
           {/* Job 데이터의 모든 Bar를 생성 */}
           <Bar
-            name="Expert"
-            dataKey="expert" // `FF`의 데이터 값
+            name={capitalize(settings?.firstBadgeName || 'Expert')}
+            dataKey="expert"
             stackId="a"
             fill={chartColorPrimary}
           />
-          <Bar
-            name="Expert + Advanced"
-            dataKey="advanced" // `FSM`의 데이터 값
-            stackId="a"
-            fill={chartColorSecondary}
-          />
+          {(settings?.ffSecondBadgeStageIndex ||
+            settings?.fsmSecondBadgeStageIndex) && (
+            <Bar
+              name={capitalize(settings?.secondBadgeName || 'Advanced')}
+              dataKey="advanced"
+              stackId="a"
+              fill={chartColorSecondary}
+            />
+          )}
+
           <Line
             name="Total"
             type="linear"

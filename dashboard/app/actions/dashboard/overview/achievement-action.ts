@@ -237,7 +237,7 @@ export async function getAchievementProgress(
     return result;
   } catch (error) {
     console.error('Error fetching data:', error);
-    return null;
+    return [];
   }
 }
 

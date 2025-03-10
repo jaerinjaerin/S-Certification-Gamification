@@ -31,11 +31,14 @@ import useSWR from 'swr';
 import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
 import { searchParamsToJson } from '@/lib/query';
 import { LoaderWithBackground } from '@/components/loader';
+import { capitalize } from '@/lib/text';
+import { CampaignSettings } from '@prisma/client';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExpertsChild = () => {
-  const { campaign } = useStateVariables() as { campaign: Campaign };
+  const { campaign } = useStateVariables();
+  const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data, isLoading } = useSWR(
     {
@@ -50,7 +53,7 @@ const OverviewExpertsChild = () => {
     <ChartContainer>
       {isLoading && <LoaderWithBackground />}
       <CardCustomHeader
-        title="Experts"
+        title={`${capitalize(settings?.firstBadgeName || 'Expert')}s`}
         numbers={data?.count.toLocaleString()}
         description="Number of people completed"
       />
@@ -67,8 +70,8 @@ const OverviewExpertsChild = () => {
                 label={({ name, value }) => {
                   return `${
                     name.toLowerCase() === 'expert'
-                      ? campaign.settings?.firstBadgeName
-                      : campaign.settings.secondBadgeName
+                      ? capitalize(settings?.firstBadgeName || 'Expert')
+                      : capitalize(settings?.secondBadgeName)
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -80,8 +83,8 @@ const OverviewExpertsChild = () => {
                         fill={COLORS[index % COLORS.length]}
                         name={
                           entry.name === 'expert'
-                            ? campaign.settings?.firstBadgeName
-                            : campaign.settings.secondBadgeName
+                            ? capitalize(settings?.firstBadgeName || 'Expert')
+                            : capitalize(settings?.secondBadgeName)
                         }
                       />
                     );
@@ -119,7 +122,7 @@ const OverviewExpertsChild = () => {
           </div>
           <ResponsiveContainer width="100%" height={chartHeight}>
             <BarChart
-              title="Experts distribution"
+              title={`${capitalize(settings?.firstBadgeName || 'Expert')}s distribution`}
               data={data?.bar}
               barSize={40}
               margin={{
@@ -144,26 +147,27 @@ const OverviewExpertsChild = () => {
               <Legend />
               <Bar
                 dataKey="expert"
-                name={campaign.settings?.firstBadgeName}
+                name={capitalize(settings?.firstBadgeName || 'Expert')}
                 stackId="a"
                 fill={chartColorPrimary}
               >
                 <LabelList
                   dataKey="expert"
-                  name={campaign.settings?.firstBadgeName}
+                  name={capitalize(settings?.firstBadgeName || 'Expert')}
                   content={renderLabelContent}
                 />
               </Bar>
-              {campaign.settings?.secondBadgeName && (
+              {(settings?.ffSecondBadgeStageIndex ||
+                settings?.fsmSecondBadgeStageIndex) && (
                 <Bar
                   dataKey="advanced"
-                  name={campaign.settings.secondBadgeName}
+                  name={capitalize(settings?.secondBadgeName || 'Advanced')}
                   stackId="a"
                   fill={chartColorSecondary}
                 >
                   <LabelList
                     dataKey="advanced"
-                    name={campaign.settings.secondBadgeName}
+                    name={capitalize(settings?.secondBadgeName || 'Advanced')}
                     content={renderLabelContent}
                   />
                 </Bar>

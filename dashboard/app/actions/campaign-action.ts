@@ -31,6 +31,7 @@ export async function getCampaigns(role: string) {
     const campaigns = await prisma.campaign.findMany({
       where,
       include: { settings: true },
+      orderBy: { createdAt: 'asc' },
     });
 
     return { result: campaigns };
