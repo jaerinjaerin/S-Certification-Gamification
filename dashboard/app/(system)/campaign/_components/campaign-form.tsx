@@ -2,7 +2,7 @@
 
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 
@@ -41,11 +41,7 @@ import { Separator } from '@/components/ui/separator';
 
 // Custom Components
 import Container from './container';
-import {
-  CustomSelectTrigger,
-  DatePickerPopover,
-  SelectComponent,
-} from './custom-form-items';
+import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
 
@@ -59,13 +55,13 @@ import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
 
 // State Management
-import { Campaign } from '@prisma/client';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
+import { Campaign } from '@prisma/client';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 
@@ -133,6 +129,10 @@ export default function CampaignForm({
         `${API_ENDPOINTS.CHECK_SLUG}?slug=${form.getValues('slug')}`
       );
       const result = await response.json();
+      if (result.success === false) {
+        form.setError('slug', { message: result.error.message });
+        return;
+      }
 
       if (result.result.available) {
         form.setValue('isSlugChecked', true);
