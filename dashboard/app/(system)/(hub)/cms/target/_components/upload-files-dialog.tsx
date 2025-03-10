@@ -49,14 +49,14 @@ export function DropzoneView({
     <div className="border border-dashed rounded-md">
       <div
         {...getRootProps()}
-        className="h-[200px] flex items-center justify-center"
+        className="h-[18.813rem] flex items-center justify-center"
       >
         <input {...getInputProps()} />
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
           <p className="flex flex-col items-center">
-            <span>Drag & Drop here or</span>
+            <span className="mb-8">Drag & Drop here or</span>
             <Button onClick={open}>Browse files</Button>
           </p>
         )}
