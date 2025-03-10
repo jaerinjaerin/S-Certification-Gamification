@@ -26,6 +26,7 @@ type PreviewDialogProps = OptionalDropzoneProps & {
   loading: boolean;
   onSave: () => void;
   onClear: () => void;
+  onDownload?: () => void;
 };
 
 export function PreviewDialog({
@@ -38,6 +39,7 @@ export function PreviewDialog({
   loading,
   onSave,
   onClear,
+  onDownload,
 }: PreviewDialogProps) {
   const [status, setStatus] = useState(modalOpen);
   return (
@@ -72,6 +74,7 @@ export function PreviewDialog({
             getInputProps={getInputProps}
             open={open}
             files={files}
+            onDownload={onDownload}
           />
         )}
 
@@ -98,6 +101,7 @@ type AssetPreviewViewProps = {
   files: FileWithExtraInfo[];
   open: () => void;
   extraContent?: React.ReactNode;
+  onDownload?: () => void;
 } & Pick<DropzoneProps, 'getInputProps'>;
 
 function AssetPreviewView({
@@ -152,7 +156,7 @@ function AssetPreviewView({
 }
 
 function AddAssetPreviewView(
-  props: Omit<AssetPreviewViewProps, 'extraContent'>
+  props: Omit<AssetPreviewViewProps, 'extraContent' | 'onDownload'>
 ) {
   return <AssetPreviewView {...props} />;
 }
@@ -160,16 +164,22 @@ function AddAssetPreviewView(
 function EditAssetPreviewView(
   props: Omit<AssetPreviewViewProps, 'extraContent'>
 ) {
+  const { onDownload, ...restProps } = props;
   const timestamp = props.files[0].lastModified;
   const date = dayjs(timestamp).format('YY.MM.DD HH:mm:ss');
 
   return (
     <AssetPreviewView
-      {...props}
+      {...restProps}
       extraContent={
         <div className="flex items-center gap-2">
           <span>{date}</span>
-          <Button variant="download" className="shadow-none" size="icon">
+          <Button
+            variant="download"
+            className="shadow-none"
+            size="icon"
+            onClick={onDownload}
+          >
             <Download />
           </Button>
         </div>

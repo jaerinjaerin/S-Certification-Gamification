@@ -136,16 +136,18 @@ export async function POST(request: NextRequest) {
 
     const index = `${count + 1}`;
     const format = file.type.split('/')[1];
+    console.log('🚀 ~ POST ~ index:', index);
     let imagePath = getPath(campaign.name, `images/${group}`);
     imagePath = `${imagePath}/${group}_${index}.${format}`;
 
-    // 파일 업로드드
+    console.log('🚀 ~ POST ~ imagePath:', imagePath);
+    // 파일 업로드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
-    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
     // const pathsToInvalidate = [
     //   `/certification/${campaign.slug}/jsons/channels.json`,
     // ]; // 무효화할 경로
 
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
     invalidateCache(distributionId, [`/${imagePath}`]);
 
     let result = {};
@@ -171,13 +173,15 @@ export async function POST(request: NextRequest) {
       // 데이터베이스에 업로드된 파일 정보 저장 (예제)
       uploadedFile = await prisma.image.create({
         data: {
-          alt: index,
-          caption: index,
+          alt: group,
+          title: index,
+          caption: group,
           format: format,
           imagePath: `/${imagePath}`,
           campaignId: campaign.id,
         },
       });
+
       //
       result = {
         id: uploadedFile.id,
