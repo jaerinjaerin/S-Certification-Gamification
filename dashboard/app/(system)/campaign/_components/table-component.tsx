@@ -131,7 +131,9 @@ const BadgeSettingRows = ({
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}
-                    disabled={selectedNumberOfStages === undefined}
+                    disabled={
+                      isEditMode || selectedNumberOfStages === undefined
+                    }
                   >
                     <CustomSelectTrigger
                       className={cn(
@@ -186,7 +188,7 @@ const BadgeSettingRows = ({
                   onValueChange={(value) => {
                     field.onChange(value);
                   }}
-                  disabled={selectedNumberOfStages === undefined}
+                  disabled={isEditMode || selectedNumberOfStages === undefined}
                 >
                   <CustomSelectTrigger className={'max-w-[7.125rem]'}>
                     <SelectValue
