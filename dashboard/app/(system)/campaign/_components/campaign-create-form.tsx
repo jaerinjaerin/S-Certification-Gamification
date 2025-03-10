@@ -389,9 +389,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                             disabled={
                               isEmpty(form.getValues('slug')) ||
                               form.getValues('isSlugChecked') ||
-                              isSlugCheckedLoading ||
-                              form.formState.errors.slug?.message ===
-                                'Slug is already in use'
+                              isSlugCheckedLoading
                             }
                             onClick={handleCheckSlug}
                           >
