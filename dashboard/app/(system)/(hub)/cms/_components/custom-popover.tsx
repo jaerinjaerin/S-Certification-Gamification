@@ -50,6 +50,7 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
       { label: 'QuizSet', name: 'QuizSet' },
       { label: 'ActivityID', name: 'Activity ID' },
       { label: 'NonSUser', name: 'Non S+ Users' },
+      { label: 'UILanguage', name: 'UI Language' },
       { label: 'Target', name: 'Target' },
     ],
     title: 'Download Templates',
