@@ -2,12 +2,18 @@
 import { Button } from '@/components/ui/button';
 import { serializeJsonToQuery } from '@/lib/search-params';
 import { useLanguageData } from '../_provider/language-data-provider';
+import { isEmpty } from '../../_utils/utils';
+import { toast } from 'sonner';
 
 const DownloadLanguages = () => {
   const { state } = useLanguageData();
 
   const onDownload = async () => {
     console.log('state:', state);
+    if (isEmpty(state.languages)) {
+      toast.warning('No data to download');
+      return;
+    }
     if (state.languages) {
       const keys = state.languages
         // .map((l) => (l.excelUrl ? l.excelUrl.slice(1) : ''))
