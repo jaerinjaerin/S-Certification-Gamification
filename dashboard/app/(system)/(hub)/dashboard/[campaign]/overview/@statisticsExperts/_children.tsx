@@ -1,5 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import CustomTooltip, {
+  ExpertsTooltip,
+} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
+import {
+  chartColorHoverBackground,
+  chartColorPrimary,
+  chartColorSecondary,
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
+import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
+import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
+import { searchParamsToJson } from '@/lib/query';
+import { useSearchParams } from 'next/navigation';
 import {
   Bar,
   BarChart,
@@ -14,23 +30,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '@/components/system/chart-header';
-import ChartContainer from '@/components/system/chart-container';
-import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
-import {
-  chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
-} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
-import CustomTooltip, {
-  ExpertsTooltip,
-} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useStateVariables } from '@/components/provider/state-provider';
-import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
-import { searchParamsToJson } from '@/lib/query';
-import { LoaderWithBackground } from '@/components/loader';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
@@ -68,7 +68,7 @@ const OverviewExpertsChild = () => {
                   return `${
                     name.toLowerCase() === 'expert'
                       ? campaign.settings?.firstBadgeName
-                      : campaign.settings.secondBadgeName
+                      : campaign.settings?.secondBadgeName
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -81,7 +81,7 @@ const OverviewExpertsChild = () => {
                         name={
                           entry.name === 'expert'
                             ? campaign.settings?.firstBadgeName
-                            : campaign.settings.secondBadgeName
+                            : campaign.settings?.secondBadgeName
                         }
                       />
                     );

@@ -139,16 +139,18 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      if (language) {
-        await prisma.uploadedFile.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            languageId: language.id,
-            path: `/${destinationKey}`,
-            fileType: FileType.UI_LANGUAGE,
-            uploadedBy: 'seed',
-          },
-        });
+      if (destinationKey.split('/').pop()?.includes('.xlsx')) {
+        if (language) {
+          await prisma.uploadedFile.create({
+            data: {
+              campaignId: destinationCampaign.id,
+              languageId: language.id,
+              path: `/${destinationKey}`,
+              fileType: FileType.UI_LANGUAGE,
+              uploadedBy: 'seed',
+            },
+          });
+        }
       }
     }
 
