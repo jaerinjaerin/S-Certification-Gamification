@@ -1,3 +1,4 @@
+import { GroupedQuizSet } from '@/app/(system)/(hub)/cms/set-quiz/_type/type';
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
@@ -982,10 +983,35 @@ export async function GET(request: Request) {
       // ),
     }));
 
+    const noQuizSetActivityBadges = activityBadges.filter(
+      (badge) =>
+        !groupedQuizSets.find(
+          (group) =>
+            group.quizSet.domainId === badge.domainId &&
+            group.quizSet.languageId === badge.languageId &&
+            group.quizSet.jobCodes[0] === badge.jobCode
+        )
+    );
+
+    let extraGroupedQuizSets: GroupedQuizSet[] = [];
+    if (noQuizSetActivityBadges.length > 0) {
+      extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
+        return {
+          quizSet: null,
+          quizSetFile: null,
+          activityBadges: [badge],
+          uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
+        };
+      });
+    }
+
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets, campaignSettings },
+        result: {
+          groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          campaignSettings,
+        },
       },
       { status: 200 }
     );

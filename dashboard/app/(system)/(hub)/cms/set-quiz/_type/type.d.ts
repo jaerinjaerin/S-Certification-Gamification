@@ -16,11 +16,11 @@ export type UploadExcelFileModalProps = {
 };
 
 export interface GroupedQuizSet {
-  quizSet: QuizSetEx;
-  quizSetFile: QuizSetFile | undefined;
-  activityBadges: ActivityBadgeEx[] | undefined;
+  quizSet: QuizSetEx | null;
+  quizSetFile: QuizSetFile | null;
+  activityBadges: ActivityBadgeEx[] | null;
   uiLanguage: Language | null;
-  campaignSettings: CampaignSettings;
+  // campaignSettings: CampaignSettings;
 }
 
 export interface DomainWebLanguageEx extends DomainWebLanguage {
