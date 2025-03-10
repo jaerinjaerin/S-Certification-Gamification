@@ -1,17 +1,13 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
-import { getS3Client } from '@/lib/aws/s3-client';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import {
   parseExcelBufferToDomainJson,
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
 import { DomainChannel } from '@/types/apiTypes';
-import {
-  CloudFrontClient,
-  CreateInvalidationCommand,
-} from '@aws-sdk/client-cloudfront';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -164,24 +160,29 @@ export async function POST(request: NextRequest) {
     });
 
     filteredDomainDatas.forEach((domainData) => {
-      const quizSet = quizSets.find((q) => q.domainId === domainData.id);
-      if (quizSet) {
-        if (quizSet.language) {
-          if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
-            if (!domainData.languages.ff) {
-              domainData.languages.ff = [];
-            }
-            domainData.languages.ff.push(quizSet.language);
-          }
-          if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
-            if (!domainData.languages.fsm) {
-              domainData.languages.fsm = [];
-            }
-            domainData.languages.fsm.push(quizSet.language);
-          }
+      const relatedQuizSets = quizSets.filter(
+        (q) => q.domainId === domainData.id
+      );
 
-          domainData.isReady = true;
-        }
+      if (relatedQuizSets.length > 0) {
+        relatedQuizSets.forEach((quizSet) => {
+          if (quizSet.language) {
+            if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+              if (!domainData.languages.ff) {
+                domainData.languages.ff = [];
+              }
+              domainData.languages.ff.push(quizSet.language);
+            }
+            if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+              if (!domainData.languages.fsm) {
+                domainData.languages.fsm = [];
+              }
+              domainData.languages.fsm.push(quizSet.language);
+            }
+          }
+        });
+
+        domainData.isReady = true;
       } else {
         domainData.isReady = false;
       }
@@ -194,7 +195,17 @@ export async function POST(request: NextRequest) {
     // =============================================
 
     // const file = files.file?.[0];
-    const s3Client = getS3Client();
+    const s3Client =
+      process.env.ENV === 'local'
+        ? new S3Client({
+            region: process.env.ASSETS_S3_BUCKET_REGION,
+            credentials: fromIni({
+              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
+            }),
+          })
+        : new S3Client({
+            region: process.env.ASSETS_S3_BUCKET_REGION,
+          });
 
     // const fileBuffer = Buffer.from(await file.arrayBuffer());
     const timestamp = new Date()
@@ -226,7 +237,7 @@ export async function POST(request: NextRequest) {
       new PutObjectCommand({
         Bucket: process.env.ASSETS_S3_BUCKET_NAME,
         Key: destinationKey,
-        Body: jsonString,
+        Body: fileBuffer,
       })
     );
 
@@ -250,38 +261,6 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-
-    async function invalidateCache(distributionId: string, paths: string[]) {
-      try {
-        const command = new CreateInvalidationCommand({
-          DistributionId: distributionId,
-          InvalidationBatch: {
-            Paths: {
-              Quantity: paths.length,
-              Items: paths,
-            },
-            CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
-          },
-        });
-
-        const response = await cloudFrontClient.send(command);
-        console.log('Invalidation successful:', response);
-      } catch (error) {
-        console.error('Error invalidating CloudFront cache:', error);
-      }
-    }
-
-    const cloudFrontClient =
-      process.env.ENV === 'local'
-        ? new CloudFrontClient({
-            region: 'us-east-1',
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new CloudFrontClient({
-            region: 'us-east-1',
-          });
 
     // 사용 예제
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
@@ -332,14 +311,25 @@ export async function GET(request: Request) {
       );
     }
 
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    if (!campaign) {
+      return NextResponse.json(
+        { message: 'Campaign not found' },
+        { status: 404 }
+      );
+    }
+
     const uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         campaignId: campaignId,
         fileType: FileType.NON_SPLUS_DOMAINS,
       },
     });
-
-    console.log('uploadedFile: ', uploadedFile);
 
     if (!uploadedFile) {
       // return NextResponse.json(
@@ -358,16 +348,8 @@ export async function GET(request: Request) {
       );
     }
 
-    console.log(
-      'url: ',
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`
-    );
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`,
-      { method: 'GET' }
-    );
-    console.log('response: ', response);
+    const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign.slug}/jsons/channels.json`;
+    const response = await fetch(jsonUrl, { method: 'GET' });
     if (!response.ok) {
       return NextResponse.json(
         {

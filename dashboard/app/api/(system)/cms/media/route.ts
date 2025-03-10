@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { uploadToS3 } from '@/lib/s3-client';
-import { Campaign } from '@prisma/client';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getPath } from '@/lib/file';
+import { uploadToS3 } from '@/lib/s3-client';
+import { prisma } from '@/model/prisma';
+import { Campaign } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -140,6 +141,12 @@ export async function POST(request: NextRequest) {
 
     // 파일 업로드드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    // const pathsToInvalidate = [
+    //   `/certification/${campaign.slug}/jsons/channels.json`,
+    // ]; // 무효화할 경로
+
+    invalidateCache(distributionId, [`/${imagePath}`]);
 
     let result = {};
     let uploadedFile = null;
@@ -228,6 +235,9 @@ export async function PUT(request: NextRequest) {
     // 파일 업로드
     const Key = existingFile.imagePath.replace(/^\/+/, '');
     await uploadToS3({ key: Key, file, isNoCache: true });
+
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    invalidateCache(distributionId, [`/${Key}`]);
 
     let updatedFile = null;
     let result = {};

@@ -14,7 +14,8 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/test") ||
     pathname.includes("/home") ||
     pathname.includes("/register") ||
-    pathname.includes("/site")
+    pathname.includes("/site") ||
+    pathname.includes("/not-ready")
   ) {
     return NextResponse.next();
   }
@@ -50,6 +51,8 @@ export async function middleware(request: NextRequest) {
    * 로그인한 사용자가 /login 페이지에 접근하려는 경우
    */
   if (session && pathname.includes("/login")) {
+    // const authType = session.user?.authType;
+    // if (authType === AuthType.SUMTOTAL) {
     const url = campaignQuizSetPath
       ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
       : `${basePath}/${campaignName}${search}`;

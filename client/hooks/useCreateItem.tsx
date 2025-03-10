@@ -1,9 +1,16 @@
+import { ERROR_CODES, ErrorCode } from "@/constants/error-codes";
+import { ApiResponseV3 } from "@/types/apiTypes";
 import { CustomError } from "@/types/type";
 import { useState } from "react";
 
+interface CreateItemError {
+  code: ErrorCode;
+  message: string;
+}
+
 export default function useCreateItem<T>() {
   const [item, setItem] = useState<T>();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<CreateItemError>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
@@ -22,24 +29,31 @@ export default function useCreateItem<T>() {
         body: body != null ? JSON.stringify(body) : null,
       });
 
-      if (response.status != 200) {
-        setError(response.statusText);
+      const data = await response.json();
+      console.log("data", data);
+      if (!data.success) {
+        setError(data.error);
         setIsLoading(false);
+        return;
       }
 
-      const data = await response.json();
-      const { item } = data as {
-        item: T;
-      };
+      const { result } = data as ApiResponseV3<T>;
+      const item = result.item as T;
       setItem(item);
       setSuccess(true);
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof Error) {
         const customError = error as CustomError;
-        setError(customError?.error?.name ?? customError.message);
+        setError({
+          code: ERROR_CODES.UNKNOWN,
+          message: customError.message,
+        });
       } else {
-        setError("Something went wrong");
+        setError({
+          code: ERROR_CODES.UNKNOWN,
+          message: "Something went wrong",
+        });
       }
       setIsLoading(false);
       setSuccess(false);

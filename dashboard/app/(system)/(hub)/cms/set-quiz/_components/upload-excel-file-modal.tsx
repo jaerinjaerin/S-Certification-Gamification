@@ -1,7 +1,7 @@
 // React & Types
+import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { forwardRef, useState } from 'react';
 import { UploadExcelFileModalProps } from '../_type/type';
-import { ProcessResult } from '@/lib/quiz-excel-parser';
 
 // UI Components
 import { Button } from '@/components/ui/button';
@@ -22,17 +22,18 @@ import { cn } from '@/lib/utils';
 import { isEmpty } from '../../_utils/utils';
 
 // Hooks & State
-import useQuizSetState from '../_store/quizset-state';
 import { useStateVariables } from '@/components/provider/state-provider';
+import useQuizSetState from '../_store/quizset-state';
 
 // API Functions
-import { submitQuizSet } from '../_lib/submit-quizset';
-import { submitActivityId } from '../_lib/submit-activityId';
-import useFileDropZone from '../_hooks/useFileDropZone';
-import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
-import { submitNonS } from '../_lib/submit-nonS';
-import UploadResultDialog from '../../_components/upload-result-dialog';
 import { CircleAlert, X } from 'lucide-react';
+import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
+import UploadResultDialog from '../../_components/upload-result-dialog';
+import useFileDropZone from '../_hooks/useFileDropZone';
+import { submitActivityId } from '../_lib/submit-activityId';
+import { submitNonS } from '../_lib/submit-nonS';
+import { submitQuizSet } from '../_lib/submit-quizset';
+import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
@@ -117,6 +118,7 @@ const UploadExcelFileModal = forwardRef<
         setIsDialogOpen
       );
       if (result) setProcessResult(result);
+      updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
     }

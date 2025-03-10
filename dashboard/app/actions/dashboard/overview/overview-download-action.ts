@@ -1,7 +1,7 @@
 'use server';
 import { prisma } from '@/model/prisma';
 import { createOverviewExcelBlob, OverviewExcelDataProps } from '@/lib/excel';
-import { removeDuplicateUsers } from '@/lib/data';
+import { getJobIds, removeDuplicateUsers } from '@/lib/data';
 import { AuthType } from '@prisma/client';
 import { formatDate } from 'date-fns';
 import { paramsToQueries } from '@/lib/query';
@@ -10,6 +10,31 @@ export async function downloadOverview(data: Record<string, any>) {
   try {
     const { where: condition, period } = paramsToQueries(data);
     const { jobId, storeId, ...where } = condition;
+
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
+    });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+    const jobFF = jobGroup.ff;
+    const jobFSM = jobGroup.fsm;
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: settings.ffFirstBadgeStageIndex! || -1,
+        jobIds: jobFF,
+      },
+      {
+        key: 'fsm',
+        stageIndex: settings.fsmFirstBadgeStageIndex! || -1,
+        jobIds: jobFSM,
+      },
+    ];
 
     let regions = await prisma.region.findMany({
       include: { subsidiaries: { include: { domains: true } } },
@@ -27,22 +52,21 @@ export async function downloadOverview(data: Record<string, any>) {
 
     regions = [...domainsIntoRegion, ...regions] as typeof regions;
 
-    const jobs = await prisma.job.findMany({});
-    const jobFF = jobs.filter((job) => job.code === 'ff').map((job) => job.id);
-    const jobFSM = jobs
-      .filter((job) => job.code === 'fsm')
-      .map((job) => job.id);
-
     const goals = await prisma.domainGoal.findMany({});
-    let badges = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        quizStageIndex: 2,
-        ...(where?.campaignId ? { campaignId: where.campaignId } : {}),
-        ...(where?.createdAt ? { createdAt: where.createdAt } : {}),
-      },
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex }) =>
+        prisma.userQuizBadgeStageStatistics.findMany({
+          where: {
+            quizStageIndex: stageIndex,
+            ...(where?.campaignId ? { campaignId: where.campaignId } : {}),
+            ...(where?.createdAt ? { createdAt: where.createdAt } : {}),
+          },
+        })
+      )
+    );
+
     // 유저 중복 제거
-    badges = removeDuplicateUsers(badges);
+    const badges = removeDuplicateUsers(userBadges.flat());
 
     // 데이터 생성 시작
     let expertUsers: OverviewExcelDataProps[] = [];
