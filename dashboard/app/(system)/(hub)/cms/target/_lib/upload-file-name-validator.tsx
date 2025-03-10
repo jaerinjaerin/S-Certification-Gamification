@@ -20,7 +20,7 @@ export const uploadFileNameValidator = (file: File) => {
     },
   };
 
-  return file.name.startsWith(`target`)
+  return file.name.toLowerCase().startsWith(`target`)
     ? successResult
     : errorResult('Invalid target file name.');
 };

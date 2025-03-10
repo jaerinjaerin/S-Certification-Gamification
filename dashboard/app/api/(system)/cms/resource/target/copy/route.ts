@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
 
     const contentCopyHistory = await prisma.contentCopyHistory.findFirst({
       where: {
-        campaignId: soruceCampaign.id,
+        campaignId: destinationCampaign.id,
       },
     });
     if (contentCopyHistory) {

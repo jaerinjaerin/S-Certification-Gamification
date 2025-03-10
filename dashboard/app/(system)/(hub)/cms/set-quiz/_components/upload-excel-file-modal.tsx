@@ -58,8 +58,6 @@ const UploadExcelFileModal = forwardRef<
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
 
-  console.log(campaign);
-
   const uploadFiles = {
     quiz: quizSet.files,
     activityId: activityId.files,

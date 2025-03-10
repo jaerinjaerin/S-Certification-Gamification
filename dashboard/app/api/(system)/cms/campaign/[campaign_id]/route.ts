@@ -12,7 +12,7 @@ const editCampaignScheme = z.object({
   description: z.string().optional(),
   startedAt: z.string(),
   endedAt: z.string(),
-  totalStages: z.number(),
+  totalStages: z.number().optional().nullable(),
   firstBadgeName: z.string().optional().nullable(),
   secondBadgeName: z.string().optional().nullable(),
   ffFirstBadgeStageIndex: z.number().optional().nullable(),

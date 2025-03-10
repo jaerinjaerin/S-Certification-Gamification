@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import CampaignForm from '../../_components/campaign-form';
+import CampaignEditForm from '../../_components/campaign-edit-form';
 
 export default async function EditCampaignPage({
   params,
@@ -15,9 +15,7 @@ export default async function EditCampaignPage({
 
   const editData = mapCampaignToFormData(campaign);
 
-  return (
-    <CampaignForm initialData={editData} isEditMode campaignId={campaignId} />
-  );
+  return <CampaignEditForm initialData={editData} campaignId={campaignId} />;
 }
 
 async function getCampaign(campaignId: string) {
@@ -53,16 +51,16 @@ function mapCampaignToFormData(campaign: any) {
     isSlugChecked: true,
     startDate: new Date(campaign.startedAt),
     endDate: new Date(campaign.endedAt),
-    copyMedia: undefined,
-    copyTarget: undefined,
-    copyUiLanguage: undefined,
+    copyMedia: campaign.contentCopyHistory?.imageCampaignName || '',
+    copyTarget: campaign.contentCopyHistory?.targetCampaignName || '',
+    copyUiLanguage: campaign.contentCopyHistory?.uiLanguageCampaignName || '',
     numberOfStages: numberToString(campaign.settings.totalStages),
     firstBadgeName: campaign.settings.firstBadgeName,
     ffFirstBadgeStage: numberToString(campaign.settings.ffFirstBadgeStageIndex),
     fsmFirstBadgeStage: numberToString(
       campaign.settings.fsmFirstBadgeStageIndex
     ),
-    secondBadgeName: campaign.settings.secondBadgeName,
+    secondBadgeName: campaign.settings.secondBadgeName || '',
     ffSecondBadgeStage: numberToString(
       campaign.settings.ffSecondBadgeStageIndex
     ),

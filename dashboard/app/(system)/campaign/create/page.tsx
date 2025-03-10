@@ -1,6 +1,6 @@
 import { defaultValues } from '../_type/formSchema';
-import CampaignForm from '../_components/campaign-form';
+import CampaignCreateForm from '../_components/campaign-create-form';
 
 export default function CreateCampaignPage() {
-  return <CampaignForm initialData={defaultValues} isEditMode={false} />;
+  return <CampaignCreateForm initialData={defaultValues} />;
 }
