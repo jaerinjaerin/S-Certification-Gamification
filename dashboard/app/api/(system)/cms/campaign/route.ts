@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: {
-            message: '금칙어가 포함된 슬러그입니다.',
+            message: 'Slug contains banned words',
+            code: ERROR_CODES.INVALID_PARAMETER,
           },
         },
         { status: 400 }
