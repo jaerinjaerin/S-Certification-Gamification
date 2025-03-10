@@ -885,28 +885,28 @@ export async function GET(request: Request) {
       },
       include: {
         language: true,
-        quizStages: {
-          include: {
-            badgeImage: true,
-            questions: {
-              orderBy: {
-                order: 'asc',
-              },
-              include: {
-                options: {
-                  orderBy: {
-                    order: 'asc',
-                  },
-                },
-                backgroundImage: true,
-                characterImage: true,
-              },
-            },
-          },
-          orderBy: {
-            order: 'asc',
-          },
-        },
+        // quizStages: {
+        //   include: {
+        //     badgeImage: true,
+        //     questions: {
+        //       orderBy: {
+        //         order: 'asc',
+        //       },
+        //       include: {
+        //         options: {
+        //           orderBy: {
+        //             order: 'asc',
+        //           },
+        //         },
+        //         backgroundImage: true,
+        //         characterImage: true,
+        //       },
+        //     },
+        //   },
+        // orderBy: {
+        //   order: 'asc',
+        // },
+        // },
       },
     });
 
