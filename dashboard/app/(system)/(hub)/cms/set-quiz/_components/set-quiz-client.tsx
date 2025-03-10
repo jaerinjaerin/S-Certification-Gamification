@@ -47,7 +47,14 @@ export function SetQuizClient() {
     data?.result?.groupedQuizSets &&
     isEmpty(data.result.groupedQuizSets)
   ) {
-    return <HQUploadComponent />;
+    return (
+      <>
+        <div className="absolute top-0 right-0 ">
+          <DownloadFileListPopoverButton type="template" />
+        </div>
+        <HQUploadComponent />
+      </>
+    );
   }
 
   return (

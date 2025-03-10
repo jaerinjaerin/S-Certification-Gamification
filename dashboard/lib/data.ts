@@ -95,3 +95,21 @@ export const initialExpertsData: ImprovedDataStructure = [
     ],
   },
 ];
+
+// ff, fsm으로 구분하여 id 반환
+export const getJobIds = async (jobId: string) => {
+  const jobGroup = await prisma.job.findMany({
+    where: jobId ? { code: jobId } : {},
+    select: { id: true, code: true },
+  });
+
+  const groupedJobByCode = jobGroup.reduce(
+    (acc, { id, code }) => {
+      (acc[code] ||= []).push(id);
+      return acc;
+    },
+    {} as Record<string, string[]>
+  );
+
+  return groupedJobByCode;
+};
