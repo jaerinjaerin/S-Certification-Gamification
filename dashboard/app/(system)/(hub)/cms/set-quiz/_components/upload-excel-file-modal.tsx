@@ -38,7 +38,7 @@ import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
->(({ children, title, variant }, ref) => {
+>(({ children, title, variant, onDropdownClose }, ref) => {
   const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
@@ -121,6 +121,7 @@ const UploadExcelFileModal = forwardRef<
       updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
+      if (onDropdownClose) onDropdownClose();
     }
   };
 
@@ -138,6 +139,7 @@ const UploadExcelFileModal = forwardRef<
         }
       } finally {
         setIsLoading(false);
+        if (onDropdownClose) onDropdownClose();
       }
     },
     'non-s': async () => {
@@ -149,6 +151,7 @@ const UploadExcelFileModal = forwardRef<
         }
       } finally {
         setIsLoading(false);
+        if (onDropdownClose) onDropdownClose();
       }
     },
     hq: submitQuiz,
