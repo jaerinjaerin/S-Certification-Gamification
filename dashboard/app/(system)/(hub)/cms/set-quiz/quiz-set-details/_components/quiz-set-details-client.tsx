@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { QuizStageEx } from '@/types/apiTypes';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { handleDownload } from '../../../_utils/utils';
 import { fetcher } from '../../../lib/fetcher';
@@ -27,6 +27,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Image, Question, QuestionType } from '@prisma/client';
+import dayjs from 'dayjs';
 
 type accessKeyType = {
   order: string;
@@ -43,6 +44,7 @@ export default function QuizSetDetailsClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const { campaign } = useStateVariables();
+  const router = useRouter();
 
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
   const { data, isLoading } = useSWR<QuizSetResponse>(
@@ -92,7 +94,8 @@ export default function QuizSetDetailsClient() {
           <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} />
           <div className="flex items-center gap-2">
             <span className="text-nowrap text-secondary">
-              version : {quizSetFile?.updatedAt}
+              {/* data : {quizSetFile?.updatedAt} */}
+              date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
             </span>
             <Button
               onClick={() =>
@@ -127,7 +130,11 @@ export default function QuizSetDetailsClient() {
         <div>
           {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
             return (
-              <Collapsible className="data-[state=open]:mb-[90px]" key={index}>
+              <Collapsible
+                defaultOpen={index === 0}
+                className="data-[state=open]:mb-[90px]"
+                key={index}
+              >
                 <CollapsibleTrigger asChild>
                   <div className="flex gap-4 items-center mb-8 group">
                     <p className="font-bold">Stage {stage.order}</p>
@@ -218,6 +225,11 @@ export default function QuizSetDetailsClient() {
             );
           })}
         </div>
+        <div className="w-full flex justify-center mt-[1.188rem]">
+          <Button onClick={() => router.back()} variant={'secondary'}>
+            Back
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -235,11 +247,9 @@ const InfoComponent = ({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <span className="text-secondary text-size-14px text-nowrap">{title}</span>
-      <Input
-        readOnly
-        value={content}
-        className="w-[20rem] h-10 !text-zinc-500 text-size-14px shadow-none"
-      />
+      <div className="w-[20rem] h-10 flex items-center border rounded-md border-zinc-200 p-3 !text-zinc-500 text-size-14px shadow-none">
+        {content}
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
 import { LoaderWithBackground } from '@/components/loader';
 import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
 export default function CertificationClientComponent() {
   const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
@@ -42,7 +43,7 @@ export default function CertificationClientComponent() {
           </div>
         )}
       </div>
-      <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8">
+      <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8 mb-[3.125rem]">
         {campaigns ? (
           campaigns
             .filter((campaign) => !campaign.deleted)
@@ -71,10 +72,17 @@ export default function CertificationClientComponent() {
 function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { setCampaign, setCampaigns, campaigns } = useStateVariables();
   const { routeToPage, isRouting } = useNavigation();
+  const [isEditAble, setIsEditAble] = useState(false);
   const currentDate = dayjs();
-  const isEditable = campaign?.startedAt
-    ? dayjs(currentDate).isBefore(dayjs(campaign.startedAt))
-    : false;
+  // const isEditAble = campaign?.startedAt
+  //   ? dayjs(currentDate).isBefore(dayjs(campaign.startedAt))
+  //   : false;
+
+  useEffect(() => {
+    if (campaign?.startedAt) {
+      setIsEditAble(dayjs(currentDate).isBefore(dayjs(campaign.startedAt)));
+    }
+  }, [campaign.startedAt, currentDate]);
 
   const handleDeleteCampaign = async () => {
     try {
@@ -131,7 +139,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           </time>
         </button>
         <div className="flex gap-3">
-          {isEditable ? (
+          {isEditAble ? (
             <>
               <CustomAlertDialog
                 trigger={
