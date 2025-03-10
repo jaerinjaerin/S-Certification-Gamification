@@ -114,6 +114,16 @@ export interface DomainChannel {
   subsidiary: Subsidiary;
   subsidiaryId: string;
   isReady: boolean;
-  languages: Language[];
+  languages: JobQuizLanguage;
   channels: Channel[];
+}
+
+interface QuizLanguage {
+  id: string;
+  code: string;
+  name: string;
+}
+interface JobQuizLanguage {
+  ff: QuizLanguage[];
+  fsm: QuizLanguage[];
 }
