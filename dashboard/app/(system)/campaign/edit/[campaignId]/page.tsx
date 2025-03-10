@@ -33,6 +33,7 @@ async function getCampaign(campaignId: string) {
     }
 
     const data = await response.json();
+    console.log('data: ', data);
     return data.result.campaign;
   } catch (error) {
     toast.error('Error fetching campaign');

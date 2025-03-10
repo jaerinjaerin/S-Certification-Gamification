@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// type LanguageProps = {
+//   id: string;
+//   code: string;
+//   name: string;
+//   jsonUrl?: string;
+//   excelUrl?: string;
+// };
+
 type LanguageProps = {
-  id: string;
-  code: string;
-  name: string;
-  jsonUrl?: string;
-  excelUrl?: string;
+  file: UploadedFile;
+  language: Language;
 };
 
 type LanguageDataProps = {
