@@ -4,7 +4,7 @@ import { getS3Client } from '@/lib/aws/s3-client';
 import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { FileType, QuestionType } from '@prisma/client';
+import { BadgeType, FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
 
@@ -858,20 +858,6 @@ export async function GET(request: Request) {
         campaignId: campaignId,
       },
       include: {
-        // domain: {
-        //   include: {
-        //     subsidiary: {
-        //       include: {
-        //         region: true,
-        //       },
-        //     },
-        //   },
-        // },
-        // campaign: {
-        //   include: {
-        //     settings: true,
-        //   },
-        // },
         language: true,
         quizStages: {
           include: {
@@ -985,12 +971,14 @@ export async function GET(request: Request) {
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
       domain: domains.find((domain) => domain.id === quizSet.domainId),
       campaign,
-      activityBadges: activityBadges.filter(
-        (badge) =>
-          badge.jobCode === quizSet.jobCodes[0] &&
-          badge.languageId === quizSet.languageId &&
-          badge.domainId === quizSet.domainId
-      ),
+      activityBadges: activityBadges
+        .filter(
+          (badge) =>
+            badge.jobCode === quizSet.jobCodes[0] &&
+            badge.languageId === quizSet.languageId &&
+            badge.domainId === quizSet.domainId
+        )
+        .sort((a, b) => (a.badgeType === BadgeType.FIRST ? -1 : 1)),
       uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
       // webLanguage: domainWebLanguages.find(
       //   (dwl) => dwl.domainId === quizSet.domainId
