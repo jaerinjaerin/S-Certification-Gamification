@@ -67,31 +67,31 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'Subsidiary',
     cell: ({ row }) => (
       <div className="uppercase">
-        {row.original.quizSet.domain.subsidiary?.name ?? '-'}
+        {row.original.domain.subsidiary?.name ?? '-'}
       </div>
     ),
   },
   {
     accessorKey: 'domain',
     header: 'Domain',
-    accessorFn: (row) => row.quizSet.domain.name,
-    cell: ({ row }) => <div>{row.original.quizSet.domain.name ?? '-'}</div>,
+    accessorFn: (row) => row.domain.name,
+    cell: ({ row }) => <div>{row.original.domain.name ?? '-'}</div>,
   },
   {
     accessorKey: 'domainCode',
     header: 'Domain Code',
-    cell: ({ row }) => <div>{row.original.quizSet.domain.code ?? '-'}</div>,
+    cell: ({ row }) => <div>{row.original.domain.code ?? '-'}</div>,
   },
   {
     accessorKey: 'Job',
     header: 'Job',
-    cell: ({ row }) => <div>{row.original.quizSet.jobCodes[0] ?? '-'}</div>,
+    cell: ({ row }) => <div>{row.original.quizSet?.jobCodes[0] ?? '-'}</div>,
   },
   {
     accessorKey: 'Quiz Language',
     header: 'Quiz Language',
     cell: ({ row }) => {
-      if (row.original.quizSet.language) {
+      if (row.original.quizSet?.language) {
         return <div>{row.original.quizSet.language.name}</div>;
       }
       return <div>-</div>;
@@ -102,7 +102,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'URL',
     cell: ({ row }) => {
       if (row.original.uiLanguage) {
-        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.quizSet.campaign.slug}/${row.original.quizSet.domain.code}_${row.original.quizSet.language?.code}`;
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
           <a href={url} target="_blank">
             {url}
@@ -117,7 +117,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     header: 'Quiz Set',
     cell: ({ row }) => {
       const { quizSet, quizSetFile } = row.original;
-      if (!quizSetFile) {
+      if (!quizSetFile || !quizSet) {
         return;
       }
       return <QuizSetLink props={quizSet} />;
@@ -191,8 +191,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'delete',
     header: 'Delete',
     cell: ({ row }) => {
-      const HQ = row.original.quizSet.domain.code === 'OrgCode-7';
+      const HQ = row.original.domain.code === 'OrgCode-7';
       if (HQ) {
+        return;
+      }
+
+      const quizSet = row.original.quizSet;
+      if (!quizSet) {
         return;
       }
 
@@ -218,10 +223,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 variant: 'delete',
                 type: 'delete',
                 onClick: async () =>
-                  await handleQuizSetDelete(
-                    row.original.quizSet.id,
-                    row.original.quizSet.campaignId
-                  ),
+                  await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
               },
             ]}
           />
@@ -262,7 +264,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.jobCode.toLowerCase() === 'ff'
   ) {
     const firstBadgeStage =
-      row.original.quizSet.campaign.settings.ffFirstBadgeStageIndex;
+      row.original.campaign.settings.ffFirstBadgeStageIndex;
     if (firstBadgeStage) {
       stageNum = firstBadgeStage + 1;
     }
@@ -270,8 +272,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.badgeType === BadgeType.FIRST &&
     badge.jobCode.toLowerCase() === 'fsm'
   ) {
-    const badgeStage =
-      row.original.quizSet.campaign.settings.fsmFirstBadgeStageIndex;
+    const badgeStage = row.original.campaign.settings.fsmFirstBadgeStageIndex;
     if (badgeStage) {
       stageNum = badgeStage + 1;
     }
@@ -279,8 +280,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.badgeType === BadgeType.SECOND &&
     badge.jobCode.toLowerCase() === 'ff'
   ) {
-    const badgeStage =
-      row.original.quizSet.campaign.settings.ffSecondBadgeStageIndex;
+    const badgeStage = row.original.campaign.settings.ffSecondBadgeStageIndex;
     if (badgeStage) {
       stageNum = badgeStage + 1;
     }
@@ -288,8 +288,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.badgeType === BadgeType.SECOND &&
     badge.jobCode.toLowerCase() === 'fsm'
   ) {
-    const badgeStage =
-      row.original.quizSet.campaign.settings.fsmSecondBadgeStageIndex;
+    const badgeStage = row.original.campaign.settings.fsmSecondBadgeStageIndex;
     if (badgeStage) {
       stageNum = badgeStage + 1;
     }

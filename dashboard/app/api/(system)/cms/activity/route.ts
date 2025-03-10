@@ -40,6 +40,9 @@ export async function POST(request: NextRequest) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (!campaign) {
@@ -55,6 +58,8 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
+
+    console.log('campaign: ', campaign);
 
     // Check if a file is received
     if (!file) {
@@ -125,6 +130,68 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       );
+    }
+
+    const ffSecondBadgeStageIndex = campaign.settings?.ffSecondBadgeStageIndex;
+    console.log('ffSecondBadgeStageIndex: ', ffSecondBadgeStageIndex);
+    if (!ffSecondBadgeStageIndex) {
+      const hasBadge = result.data.some(
+        (data) => data.FF_SecondBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FF Second Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const fsmFirstBadgeStageIndex = campaign.settings?.fsmFirstBadgeStageIndex;
+    if (!fsmFirstBadgeStageIndex) {
+      const hasBadge = result.data.some(
+        (data) => data.FSM_FirstBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FSM First Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const fsmSecondBadgeStageIndex =
+      campaign.settings?.fsmSecondBadgeStageIndex;
+    if (!fsmSecondBadgeStageIndex) {
+      const hasBadge = result.data.some(
+        (data) => data.FSM_SecondBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FSM Second Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
     }
 
     const activityBadges = [];

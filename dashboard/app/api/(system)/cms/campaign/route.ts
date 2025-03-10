@@ -1,6 +1,7 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
+import { containsBannedWords } from '@/utils/slug';
 import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -30,6 +31,19 @@ export async function POST(request: NextRequest) {
   const session = await auth();
 
   try {
+    if (containsBannedWords(validatedData.slug)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Slug contains banned words',
+            code: ERROR_CODES.INVALID_PARAMETER,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     const campaign = await prisma.campaign.create({
       data: {
         name: validatedData.name,
@@ -67,21 +81,21 @@ export async function POST(request: NextRequest) {
     //   },
     // });
 
-    // const filterNullish = (obj: Record<string, any>) => {
-    //   return Object.fromEntries(
-    //     Object.entries(obj).filter(([_, v]) => v != null)
-    //   );
-    // };
+    const filterNullish = (obj: Record<string, any>) => {
+      return Object.fromEntries(
+        Object.entries(obj).filter(([_, v]) => v != null)
+      );
+    };
 
-    // const campaignSettingsData = filterNullish({
-    //   totalStages: validatedData.totalStages,
-    //   firstBadgeName: validatedData.firstBadgeName,
-    //   secondBadgeName: validatedData.secondBadgeName,
-    //   ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
-    //   ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
-    //   fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
-    //   fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
-    // });
+    const campaignSettingsData = filterNullish({
+      totalStages: validatedData.totalStages,
+      firstBadgeName: validatedData.firstBadgeName,
+      secondBadgeName: validatedData.secondBadgeName,
+      ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
+      ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
+      fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
+      fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
+    });
 
     // console.log('campaignSettingsData: ', campaignSettingsData);
 
@@ -89,14 +103,14 @@ export async function POST(request: NextRequest) {
     const campaignSettings = await prisma.campaignSettings.create({
       data: {
         campaignId: campaign.id, // 필수 값
-        // ...campaignSettingsData, // 옵션 값 (값이 있는 경우만)
-        totalStages: validatedData.totalStages,
-        firstBadgeName: validatedData.firstBadgeName,
-        secondBadgeName: validatedData.secondBadgeName,
-        ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
-        ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
-        fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
-        fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
+        ...campaignSettingsData, // 옵션 값 (값이 있는 경우만)
+        // totalStages: validatedData.totalStages,
+        // firstBadgeName: validatedData.firstBadgeName,
+        // secondBadgeName: validatedData.secondBadgeName,
+        // ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
+        // ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
+        // fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
+        // fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
       },
     });
 

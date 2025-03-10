@@ -1,5 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import CustomTooltip, {
+  ExpertsTooltip,
+} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
+import {
+  chartColorHoverBackground,
+  chartColorPrimary,
+  chartColorSecondary,
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
+import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
+import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
+import { searchParamsToJson } from '@/lib/query';
+import { useSearchParams } from 'next/navigation';
 import {
   Bar,
   BarChart,
@@ -14,31 +30,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '@/components/system/chart-header';
-import ChartContainer from '@/components/system/chart-container';
-import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
-import {
-  chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
-} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
-import CustomTooltip, {
-  ExpertsTooltip,
-} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useStateVariables } from '@/components/provider/state-provider';
-import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
-import { searchParamsToJson } from '@/lib/query';
-import { LoaderWithBackground } from '@/components/loader';
-import { capitalize } from '@/lib/text';
-import { CampaignSettings } from '@prisma/client';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExpertsChild = () => {
-  const { campaign } = useStateVariables();
-  const settings = (campaign as Campaign).settings as CampaignSettings;
+  const { campaign } = useStateVariables() as { campaign: Campaign };
   const searchParams = useSearchParams();
   const { data, isLoading } = useSWR(
     {
@@ -53,7 +50,7 @@ const OverviewExpertsChild = () => {
     <ChartContainer>
       {isLoading && <LoaderWithBackground />}
       <CardCustomHeader
-        title={`${capitalize(settings?.firstBadgeName || 'Expert')}s`}
+        title="Experts"
         numbers={data?.count.toLocaleString()}
         description="Number of people completed"
       />
@@ -70,8 +67,8 @@ const OverviewExpertsChild = () => {
                 label={({ name, value }) => {
                   return `${
                     name.toLowerCase() === 'expert'
-                      ? capitalize(settings?.firstBadgeName || 'Expert')
-                      : capitalize(settings?.secondBadgeName)
+                      ? campaign.settings?.firstBadgeName
+                      : campaign.settings.secondBadgeName
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -83,8 +80,8 @@ const OverviewExpertsChild = () => {
                         fill={COLORS[index % COLORS.length]}
                         name={
                           entry.name === 'expert'
-                            ? capitalize(settings?.firstBadgeName || 'Expert')
-                            : capitalize(settings?.secondBadgeName)
+                            ? campaign.settings?.firstBadgeName
+                            : campaign.settings.secondBadgeName
                         }
                       />
                     );
@@ -122,7 +119,7 @@ const OverviewExpertsChild = () => {
           </div>
           <ResponsiveContainer width="100%" height={chartHeight}>
             <BarChart
-              title={`${capitalize(settings?.firstBadgeName || 'Expert')}s distribution`}
+              title="Experts distribution"
               data={data?.bar}
               barSize={40}
               margin={{
@@ -147,27 +144,26 @@ const OverviewExpertsChild = () => {
               <Legend />
               <Bar
                 dataKey="expert"
-                name={capitalize(settings?.firstBadgeName || 'Expert')}
+                name={campaign.settings?.firstBadgeName}
                 stackId="a"
                 fill={chartColorPrimary}
               >
                 <LabelList
                   dataKey="expert"
-                  name={capitalize(settings?.firstBadgeName || 'Expert')}
+                  name={campaign.settings?.firstBadgeName}
                   content={renderLabelContent}
                 />
               </Bar>
-              {(settings?.ffSecondBadgeStageIndex ||
-                settings?.fsmSecondBadgeStageIndex) && (
+              {campaign.settings?.secondBadgeName && (
                 <Bar
                   dataKey="advanced"
-                  name={capitalize(settings?.secondBadgeName || 'Advanced')}
+                  name={campaign.settings.secondBadgeName}
                   stackId="a"
                   fill={chartColorSecondary}
                 >
                   <LabelList
                     dataKey="advanced"
-                    name={capitalize(settings?.secondBadgeName || 'Advanced')}
+                    name={campaign.settings.secondBadgeName}
                     content={renderLabelContent}
                   />
                 </Bar>

@@ -60,13 +60,14 @@ export async function POST(request: NextRequest) {
     if (!uploadedFile) {
       return NextResponse.json(
         {
-          success: false,
-          error: {
-            message: 'No file uploaded',
-            code: ERROR_CODES.NO_DATA_FOUND,
-          },
+          success: true,
+          result: {},
+          // error: {
+          //   message: 'No file uploaded',
+          //   code: ERROR_CODES.NO_DATA_FOUND,
+          // },
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
 

@@ -127,7 +127,7 @@ export default function UploadResultDialog({
                       </Td>
                       <Td>
                         <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                          <CircleAlert className="size-4" />
+                          <CircleAlert className="size-4 shrink-0" />
                           <span>{getErrorMessage(item)}</span>
                         </div>
                       </Td>
