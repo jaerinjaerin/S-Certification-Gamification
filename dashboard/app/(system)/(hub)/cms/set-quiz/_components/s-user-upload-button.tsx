@@ -9,6 +9,7 @@ import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import UploadExcelFileModal from './upload-excel-file-modal';
 import { ChevronDown, DownloadIcon } from 'lucide-react';
 import { PopoverWithButton } from '../../_components/custom-popover';
+import { useState } from 'react';
 
 export function SPlusUserUploadButton({
   handleDownloadQuizSet,
@@ -17,6 +18,12 @@ export function SPlusUserUploadButton({
   handleDownloadQuizSet: () => void;
   handleDownloadActivityId: () => void;
 }) {
+  const [open, setOpen] = useState(false);
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="flex gap-3">
       <PopoverWithButton
@@ -59,7 +66,7 @@ export function SPlusUserUploadButton({
         }}
       />
 
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="action">
             <span>Upload</span>
@@ -68,7 +75,11 @@ export function SPlusUserUploadButton({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <UploadExcelFileModal title="Upload Quiz Set" variant="quiz">
+            <UploadExcelFileModal
+              title="Upload Quiz Set"
+              variant="quiz"
+              onDropdownClose={onClose}
+            >
               <Button className="w-full justify-start" variant="ghost">
                 Quiz Set
               </Button>
@@ -78,6 +89,7 @@ export function SPlusUserUploadButton({
             <UploadExcelFileModal
               variant="activityId"
               title="Upload Activity ID"
+              onDropdownClose={onClose}
             >
               <Button className="w-full justify-start" variant="ghost">
                 Activity ID
