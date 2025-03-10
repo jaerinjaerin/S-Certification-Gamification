@@ -1,5 +1,6 @@
 import { DomainData } from '@/lib/nomember-excel-parser';
 import { DomainChannel, QuizSetEx } from '@/types/apiTypes';
+import { DomainEx } from '@/types/type';
 import type {
   ActivityBadge,
   CampaignSettings,
@@ -18,9 +19,11 @@ export type UploadExcelFileModalProps = {
 export interface GroupedQuizSet {
   quizSet: QuizSetEx | null;
   quizSetFile: QuizSetFile | null;
+  domain: DomainEx;
+  campaign: CampaignEx;
   activityBadges: ActivityBadgeEx[] | null;
   uiLanguage: Language | null;
-  // campaignSettings: CampaignSettings;
+  campaignSettings: CampaignSettings;
 }
 
 export interface DomainWebLanguageEx extends DomainWebLanguage {

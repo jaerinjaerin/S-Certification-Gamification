@@ -1,4 +1,3 @@
-import { GroupedQuizSet } from '@/app/(system)/(hub)/cms/set-quiz/_type/type';
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
@@ -826,6 +825,9 @@ export async function GET(request: Request) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (campaign == null) {
@@ -841,25 +843,35 @@ export async function GET(request: Request) {
       );
     }
 
+    const domains = await prisma.domain.findMany({
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
     const quizSets = await prisma.quizSet.findMany({
       where: {
         campaignId: campaignId,
       },
       include: {
-        domain: {
-          include: {
-            subsidiary: {
-              include: {
-                region: true,
-              },
-            },
-          },
-        },
-        campaign: {
-          include: {
-            settings: true,
-          },
-        },
+        // domain: {
+        //   include: {
+        //     subsidiary: {
+        //       include: {
+        //         region: true,
+        //       },
+        //     },
+        //   },
+        // },
+        // campaign: {
+        //   include: {
+        //     settings: true,
+        //   },
+        // },
         language: true,
         quizStages: {
           include: {
@@ -971,6 +983,8 @@ export async function GET(request: Request) {
       quizSetFile: quizSetFiles
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
+      domain: domains.find((domain) => domain.id === quizSet.domainId),
+      campaign,
       activityBadges: activityBadges.filter(
         (badge) =>
           badge.jobCode === quizSet.jobCodes[0] &&
@@ -993,14 +1007,46 @@ export async function GET(request: Request) {
         )
     );
 
-    let extraGroupedQuizSets: GroupedQuizSet[] = [];
-    if (noQuizSetActivityBadges.length > 0) {
-      extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
+    // let extraGroupedQuizSets: any[] = [];
+    // if (noQuizSetActivityBadges.length > 0) {
+    //   extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
+    //     return {
+    //       quizSet: null,
+    //       quizSetFile: null,
+    //       domain: domains.find((domain) => domain.id === badge.domainId),
+    //       campaign,
+    //       activityBadges: [badge],
+    //       uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
+    //     };
+    //   });
+    // }
+
+    // languageId와 jobCode를 기준으로 그룹화
+    const groupedBadges = noQuizSetActivityBadges.reduce(
+      (acc, badge) => {
+        const key = `${badge.domainId}-${badge.languageId}-${badge.jobCode}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(badge);
+        return acc;
+      },
+      {} as Record<string, typeof noQuizSetActivityBadges>
+    );
+
+    let extraGroupedQuizSets: any[] = [];
+
+    if (Object.keys(groupedBadges).length > 0) {
+      extraGroupedQuizSets = Object.values(groupedBadges).map((badges) => {
         return {
           quizSet: null,
           quizSetFile: null,
-          activityBadges: [badge],
-          uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
+          domain: domains.find((domain) => domain.id === badges[0].domainId),
+          campaign,
+          activityBadges: badges, // 같은 languageId와 jobCode를 가진 배지들을 그룹화
+          uiLanguage: uiLanguages.find(
+            (lang) => lang.id === badges[0].languageId
+          ),
         };
       });
     }
