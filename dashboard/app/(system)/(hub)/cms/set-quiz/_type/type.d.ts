@@ -14,6 +14,7 @@ export type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
   variant: UploadExcelFileVariant;
+  onDropdownClose?: () => void;
 };
 
 export interface GroupedQuizSet {

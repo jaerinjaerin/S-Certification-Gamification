@@ -323,23 +323,25 @@ export default function CampaignEditForm({
                   trigger={
                     <CircleHelp className="size-3 text-secondary cursor-pointer" />
                   }
-                  render={(field) => (
-                    <SelectComponent
-                      field={field}
-                      selectDefaultValue="None"
-                      disabled
-                    >
-                      <SelectContent>
-                        <SelectItem value="none">None</SelectItem>
-                        {campaigns &&
-                          campaigns.map((campaign) => (
-                            <SelectItem value={campaign.id} key={campaign.id}>
-                              {campaign.name}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </SelectComponent>
-                  )}
+                  render={(field) => {
+                    return (
+                      <SelectComponent
+                        field={field}
+                        selectDefaultValue={initialData.copyMedia || 'None'}
+                        disabled
+                      >
+                        <SelectContent>
+                          <SelectItem value="none">None</SelectItem>
+                          {campaigns &&
+                            campaigns.map((campaign) => (
+                              <SelectItem value={campaign.id} key={campaign.id}>
+                                {campaign.name}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </SelectComponent>
+                    );
+                  }}
                 />
                 <FormComponent
                   form={form}
@@ -354,7 +356,7 @@ export default function CampaignEditForm({
                   render={(field) => (
                     <SelectComponent
                       field={field}
-                      selectDefaultValue="None"
+                      selectDefaultValue={initialData.copyTarget || 'None'}
                       disabled
                     >
                       <SelectContent>
@@ -384,7 +386,7 @@ export default function CampaignEditForm({
                   render={(field) => (
                     <SelectComponent
                       field={field}
-                      selectDefaultValue="None"
+                      selectDefaultValue={initialData.copyUiLanguage || 'None'}
                       disabled
                     >
                       <SelectContent>
