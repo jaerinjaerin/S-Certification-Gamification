@@ -133,6 +133,9 @@ export async function POST(request: NextRequest) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (!campaign) {
@@ -187,6 +190,29 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       );
+    }
+
+    // 업로드 된 문제의 Stage가 캠페인 settings에 설정된 totalStages보다 큰지 확인
+    const maxStage = Math.max(
+      ...questions
+        // .filter((question) => question.enabled)
+        .map((question) => question.stage)
+    );
+
+    if (campaign.settings && campaign.settings.totalStages) {
+      if (maxStage !== campaign.settings.totalStages + 1) {
+        console.error('Stage exceeds total stages');
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Stage mismatch. The maximum stage number should be ${campaign.settings.totalStages + 1}`,
+              code: ERROR_CODES.STAGE_EXCEEDS_TOTAL_STAGES,
+            },
+          },
+          { status: 400 }
+        );
+      }
     }
 
     // HQ 문제 불러오기
