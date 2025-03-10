@@ -4,11 +4,14 @@ import { getExpertByGroup } from '@/app/actions/dashboard/overview/expert-action
 import { LoaderWithBackground } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { searchParamsToJson } from '@/lib/query';
+import { capitalize } from '@/lib/text';
+import { CampaignSettings } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 
 const OverviewExpertsByGroupInfoChild = () => {
   const { campaign } = useStateVariables();
+  const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data, isLoading } = useSWR(
     {
@@ -20,7 +23,10 @@ const OverviewExpertsByGroupInfoChild = () => {
   );
 
   return (
-    <InfoCardStyleContainer title="Experts by group" iconName="users">
+    <InfoCardStyleContainer
+      title={`${capitalize(settings?.firstBadgeName || 'Expert')}s by group`}
+      iconName="users"
+    >
       {isLoading && <LoaderWithBackground />}
       {data?.map((groupData) => {
         const groupSuffix =

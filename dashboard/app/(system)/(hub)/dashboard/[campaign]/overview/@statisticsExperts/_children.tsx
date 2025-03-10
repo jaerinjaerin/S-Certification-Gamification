@@ -1,5 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import CustomTooltip, {
+  ExpertsTooltip,
+} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
+import {
+  chartColorHoverBackground,
+  chartColorPrimary,
+  chartColorSecondary,
+} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
+import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
+import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
+import { LoaderWithBackground } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
+import ChartContainer from '@/components/system/chart-container';
+import CardCustomHeader from '@/components/system/chart-header';
+import { searchParamsToJson } from '@/lib/query';
+import { useSearchParams } from 'next/navigation';
 import {
   Bar,
   BarChart,
@@ -14,28 +30,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import CardCustomHeader from '@/components/system/chart-header';
-import ChartContainer from '@/components/system/chart-container';
-import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
-import {
-  chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
-} from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
-import CustomTooltip, {
-  ExpertsTooltip,
-} from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
-import { useStateVariables } from '@/components/provider/state-provider';
-import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
-import { searchParamsToJson } from '@/lib/query';
-import { LoaderWithBackground } from '@/components/loader';
 
 const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExpertsChild = () => {
-  const { campaign } = useStateVariables();
+  const { campaign } = useStateVariables() as { campaign: Campaign };
   const searchParams = useSearchParams();
   const { data, isLoading } = useSWR(
     {
@@ -67,8 +67,8 @@ const OverviewExpertsChild = () => {
                 label={({ name, value }) => {
                   return `${
                     name.toLowerCase() === 'expert'
-                      ? 'Expert'
-                      : 'Expert + Advanced'
+                      ? campaign.settings?.firstBadgeName
+                      : campaign.settings.secondBadgeName
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -80,8 +80,8 @@ const OverviewExpertsChild = () => {
                         fill={COLORS[index % COLORS.length]}
                         name={
                           entry.name === 'expert'
-                            ? 'Expert'
-                            : 'Expert + Advanced'
+                            ? campaign.settings?.firstBadgeName
+                            : campaign.settings.secondBadgeName
                         }
                       />
                     );
@@ -144,28 +144,30 @@ const OverviewExpertsChild = () => {
               <Legend />
               <Bar
                 dataKey="expert"
-                name="Expert"
+                name={campaign.settings?.firstBadgeName}
                 stackId="a"
                 fill={chartColorPrimary}
               >
                 <LabelList
                   dataKey="expert"
-                  name="Expert"
+                  name={campaign.settings?.firstBadgeName}
                   content={renderLabelContent}
                 />
               </Bar>
-              <Bar
-                dataKey="advanced"
-                name="Expert + Advanced"
-                stackId="a"
-                fill={chartColorSecondary}
-              >
-                <LabelList
+              {campaign.settings?.secondBadgeName && (
+                <Bar
                   dataKey="advanced"
-                  name="Expert + Advanced"
-                  content={renderLabelContent}
-                />
-              </Bar>
+                  name={campaign.settings.secondBadgeName}
+                  stackId="a"
+                  fill={chartColorSecondary}
+                >
+                  <LabelList
+                    dataKey="advanced"
+                    name={campaign.settings.secondBadgeName}
+                    content={renderLabelContent}
+                  />
+                </Bar>
+              )}
             </BarChart>
           </ResponsiveContainer>
         </div>

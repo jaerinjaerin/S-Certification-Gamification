@@ -12,7 +12,7 @@ const CurrentBreadCrumb = dynamic(
 
 type Props = { children: React.ReactNode };
 
-const ManagementLayout = async ({ children }: Props) => {
+const ManagementLayout = ({ children }: Props) => {
   return (
     <>
       <aside>

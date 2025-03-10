@@ -10,9 +10,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
+import { cn } from '@/utils/utils';
 import { Language, UploadedFile } from '@prisma/client';
-import useSWR from 'swr';
-import { columns } from './columns';
 import {
   ColumnDef,
   flexRender,
@@ -21,9 +20,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { cn } from '@/utils/utils';
-import Link from 'next/link';
 import { Download } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import useSWR from 'swr';
+import { useLanguageData } from '../_provider/language-data-provider';
 
 interface UiLanguageDataTableProps {
   data: DataType[] | undefined;
@@ -32,16 +33,29 @@ interface UiLanguageDataTableProps {
 
 export function UiLanguageDataTable() {
   const { campaign } = useStateVariables();
-  const { data, isLoading: loading } = useSWR(
+  const { data: result, isLoading: loading } = useSWR(
     `/api/cms/ui_language?${searchParamsToQuery({ campaignId: campaign?.id })}`,
     swrFetcher
   );
+
+  const { state, dispatch } = useLanguageData();
+  // const { result: data } = languageData || { result: [] };
+
+  useEffect(() => {
+    console.log('result:', result);
+    if (result && result.result.groupedLanguages) {
+      dispatch({
+        type: 'SET_LANGUAGE_LIST',
+        payload: result.result.groupedLanguages,
+      });
+    }
+  }, [result]);
 
   if (loading) {
     return <LoaderWithBackground />;
   }
 
-  if (!data.result.groupedLanguages) {
+  if (!result.result.groupedLanguages) {
     return null;
   }
 
@@ -54,7 +68,7 @@ export function UiLanguageDataTable() {
         <Colum>File Name</Colum>
       </div>
 
-      {data.result.groupedLanguages.map(
+      {result.result.groupedLanguages.map(
         (
           groupedData: { file: UploadedFile; language: Language },
           index: number

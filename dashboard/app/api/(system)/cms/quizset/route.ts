@@ -4,7 +4,7 @@ import { getS3Client } from '@/lib/aws/s3-client';
 import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { FileType, QuestionType } from '@prisma/client';
+import { BadgeType, FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
 
@@ -133,6 +133,9 @@ export async function POST(request: NextRequest) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (!campaign) {
@@ -187,6 +190,29 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       );
+    }
+
+    // 업로드 된 문제의 Stage가 캠페인 settings에 설정된 totalStages보다 큰지 확인
+    const maxStage = Math.max(
+      ...questions
+        // .filter((question) => question.enabled)
+        .map((question) => question.stage)
+    );
+
+    if (campaign.settings && campaign.settings.totalStages) {
+      if (maxStage !== campaign.settings.totalStages + 1) {
+        console.error('Stage exceeds total stages');
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Stage mismatch. The maximum stage number should be ${campaign.settings.totalStages + 1}`,
+              code: ERROR_CODES.STAGE_EXCEEDS_TOTAL_STAGES,
+            },
+          },
+          { status: 400 }
+        );
+      }
     }
 
     // HQ 문제 불러오기
@@ -825,6 +851,9 @@ export async function GET(request: Request) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (campaign == null) {
@@ -840,25 +869,21 @@ export async function GET(request: Request) {
       );
     }
 
+    const domains = await prisma.domain.findMany({
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
     const quizSets = await prisma.quizSet.findMany({
       where: {
         campaignId: campaignId,
       },
       include: {
-        domain: {
-          include: {
-            subsidiary: {
-              include: {
-                region: true,
-              },
-            },
-          },
-        },
-        campaign: {
-          include: {
-            settings: true,
-          },
-        },
         language: true,
         quizStages: {
           include: {
@@ -970,22 +995,83 @@ export async function GET(request: Request) {
       quizSetFile: quizSetFiles
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
-      activityBadges: activityBadges.filter(
-        (badge) =>
-          badge.jobCode === quizSet.jobCodes[0] &&
-          badge.languageId === quizSet.languageId &&
-          badge.domainId === quizSet.domainId
-      ),
+      domain: domains.find((domain) => domain.id === quizSet.domainId),
+      campaign,
+      activityBadges: activityBadges
+        .filter(
+          (badge) =>
+            badge.jobCode === quizSet.jobCodes[0] &&
+            badge.languageId === quizSet.languageId &&
+            badge.domainId === quizSet.domainId
+        )
+        .sort((a, b) => (a.badgeType === BadgeType.FIRST ? -1 : 1)),
       uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
       // webLanguage: domainWebLanguages.find(
       //   (dwl) => dwl.domainId === quizSet.domainId
       // ),
     }));
 
+    const noQuizSetActivityBadges = activityBadges.filter(
+      (badge) =>
+        !groupedQuizSets.find(
+          (group) =>
+            group.quizSet.domainId === badge.domainId &&
+            group.quizSet.languageId === badge.languageId &&
+            group.quizSet.jobCodes[0] === badge.jobCode
+        )
+    );
+
+    // let extraGroupedQuizSets: any[] = [];
+    // if (noQuizSetActivityBadges.length > 0) {
+    //   extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
+    //     return {
+    //       quizSet: null,
+    //       quizSetFile: null,
+    //       domain: domains.find((domain) => domain.id === badge.domainId),
+    //       campaign,
+    //       activityBadges: [badge],
+    //       uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
+    //     };
+    //   });
+    // }
+
+    // languageId와 jobCode를 기준으로 그룹화
+    const groupedBadges = noQuizSetActivityBadges.reduce(
+      (acc, badge) => {
+        const key = `${badge.domainId}-${badge.languageId}-${badge.jobCode}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(badge);
+        return acc;
+      },
+      {} as Record<string, typeof noQuizSetActivityBadges>
+    );
+
+    let extraGroupedQuizSets: any[] = [];
+
+    if (Object.keys(groupedBadges).length > 0) {
+      extraGroupedQuizSets = Object.values(groupedBadges).map((badges) => {
+        return {
+          quizSet: null,
+          quizSetFile: null,
+          domain: domains.find((domain) => domain.id === badges[0].domainId),
+          campaign,
+          activityBadges: badges, // 같은 languageId와 jobCode를 가진 배지들을 그룹화
+          uiLanguage: uiLanguages.find(
+            (lang) => lang.id === badges[0].languageId
+          ),
+        };
+      });
+    }
+
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets, campaignSettings },
+        result: {
+          groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          campaignSettings,
+        },
       },
       { status: 200 }
     );

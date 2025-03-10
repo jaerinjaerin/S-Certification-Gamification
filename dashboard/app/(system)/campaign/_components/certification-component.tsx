@@ -43,13 +43,26 @@ export default function CertificationClientComponent() {
         )}
       </div>
       <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8">
-        {campaigns &&
+        {campaigns ? (
           campaigns
             .filter((campaign) => !campaign.deleted)
             .map((campaign) => (
               <CertificationListItem key={campaign.id} campaign={campaign} />
-            ))}
+            ))
+        ) : (
+          <div className="text-center w-full mt-[80px]">
+            <h2 className="text-size-24px font-semibold mb-5">
+              This list is empty.
+            </h2>
+            <p className="text-zinc-500 whitespace-pre-line">
+              {role
+                ? 'There is no certification program you have participated in.'
+                : 'No registered certification programs. \n Click the Create Certification button to add a certification program.'}
+            </p>
+          </div>
+        )}
       </div>
+
       {isRouting && <LoaderWithBackground />}
     </div>
   );

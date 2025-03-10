@@ -4,14 +4,11 @@
 import { LoaderWithBackground } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Download } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { QuizStageEx } from '@/types/apiTypes';
-import { useSearchParams } from 'next/navigation';
-import useSWR from 'swr';
-import { handleDownload } from '../../../_utils/utils';
-import { fetcher } from '../../../lib/fetcher';
-import { QuizSetResponse } from '../../_type/type';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -21,12 +18,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
-import { Image, Question, QuestionType } from '@prisma/client';
+import { cn } from '@/lib/utils';
+import { QuizStageEx } from '@/types/apiTypes';
+import { Image, QuestionType } from '@prisma/client';
+import { ChevronDown, Download } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
+import { handleDownload } from '../../../_utils/utils';
+import { fetcher } from '../../../lib/fetcher';
+import { QuizSetResponse } from '../../_type/type';
 
 type accessKeyType = {
   order: string;
@@ -55,14 +55,14 @@ export default function QuizSetDetailsClient() {
   }
 
   const matchedQuizSet = data?.result.groupedQuizSets.filter(
-    (quizSet) => quizSet.quizSet.id === id
+    (quizSet) => quizSet.quizSet?.id === id
   )[0];
 
-  if (!matchedQuizSet) {
+  if (!matchedQuizSet || !matchedQuizSet.quizSet) {
     return <div>Quiz set not found</div>;
   }
 
-  const { quizSet, quizSetFile } = matchedQuizSet;
+  const { quizSet, quizSetFile, domain } = matchedQuizSet;
 
   const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
   const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
@@ -107,7 +107,7 @@ export default function QuizSetDetailsClient() {
         <InfoComponent
           className="mb-[1.188rem]"
           title="Domain"
-          content={quizSet.domain.name}
+          content={domain.name}
         />
         <div className="flex space-x-[5.125rem]">
           <InfoComponent

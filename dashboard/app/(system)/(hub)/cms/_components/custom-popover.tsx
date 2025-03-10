@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { ButtonVariant } from '../_types/type';
+import { handleDownload } from '../_utils/utils';
 
 // popover가 나타나는 버튼컴포넌트
 type PopoverWithButtonProps = {
@@ -46,10 +47,11 @@ type PopoverConfig = {
 const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
   template: {
     items: [
-      { label: 'quizset', name: 'QuizSet' },
-      { label: 'activity-id', name: 'Activity ID' },
-      { label: 'non-user', name: 'Non S+ Users' },
-      { label: 'target', name: 'Target' },
+      { label: 'QuizSet', name: 'QuizSet' },
+      { label: 'ActivityID', name: 'Activity ID' },
+      { label: 'NonSUser', name: 'Non S+ Users' },
+      { label: 'UILanguage', name: 'UI Language' },
+      { label: 'Target', name: 'Target' },
     ],
     title: 'Download Templates',
     description: 'You can download the templates for the quiz.',
@@ -71,8 +73,10 @@ export function DownloadFileListPopoverButton({
   type: 'template' | 'data';
   buttonVariant?: ButtonVariant;
 }) {
-  const handleDownloadeFile = () => {
-    console.log('🥕 label에 맞는 파일 다운로드 필요');
+  const handleDownloadFile = (label: string) => {
+    const FILE_NAME = `${label}_template.xlsx`;
+    const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/templates/${FILE_NAME}`;
+    handleDownload(FILE_NAME, DOWNLOAD_URL);
   };
   return (
     <PopoverWithButton
@@ -101,7 +105,7 @@ export function DownloadFileListPopoverButton({
                     className="size-[32px] shadow-none"
                     size="icon"
                     variant="download"
-                    onClick={handleDownloadeFile}
+                    onClick={() => handleDownloadFile(item.label)}
                   >
                     <DownloadIcon className="!w-3 !h-3" />
                   </Button>
