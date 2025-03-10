@@ -36,6 +36,8 @@ import {
   FilesTableComponent,
   Td,
 } from '../../set-quiz/_components/files-table-component';
+import { mutate } from 'swr';
+import { searchParamsToQuery } from '@/lib/fetch';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -172,6 +174,7 @@ const UploadExcelFileModal = forwardRef<
             }
           );
 
+          mutate(`/api/cms/ui_language?${searchParamsToQuery({ campaignId })}`);
           return response.json();
         } catch (error) {
           console.error(`파일 "${file.name}" 업로드 중 오류 발생:`, error);
@@ -224,7 +227,7 @@ const UploadExcelFileModal = forwardRef<
     ...uploadState.processResult,
     ...getInvalidFiles(),
   ];
-
+  console.log('🥕 uploadState', uploadState);
   return (
     <div ref={ref}>
       <Dialog open={isDialogOpen} onOpenChange={handleDialogOpen}>
