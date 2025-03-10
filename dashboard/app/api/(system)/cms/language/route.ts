@@ -22,12 +22,12 @@ export async function GET(request: NextRequest) {
     const path = getPath(campaignName, 'ui_language');
 
     const result = await Promise.all(
-      languages.map(async (language: LanguageProps) => {
+      languages.map(async (language: any) => {
         let urls: { excelUrl?: string; jsonUrl?: string } = {
           excelUrl: undefined,
           jsonUrl: undefined,
         };
-        const dir = `${path}/ui_${language.code}`;
+        const dir = `${path}/ui_${language.language.code}`;
         // 엑셀만 체크
         const response = await getFromS3({
           key: `${dir}.xlsx`,

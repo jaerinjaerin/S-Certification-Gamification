@@ -8,14 +8,14 @@ export const columns: ColumnDef<DataType>[] = [
     accessorKey: 'name',
     header: 'Language',
     cell: ({ row }) => {
-      return <span>{row.original.language?.name}</span>;
+      return <span>{row.original.language?.language.name}</span>;
     },
   },
   {
     accessorKey: 'code',
     header: 'UI Code',
     cell: ({ row }) => {
-      return <span>{row.original.language?.code}</span>;
+      return <span>{row.original.language?.language.code}</span>;
     },
   },
   {
