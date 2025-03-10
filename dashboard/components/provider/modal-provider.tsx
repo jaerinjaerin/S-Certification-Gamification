@@ -14,7 +14,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ModalContext.Provider value={{ setContent }}>
-      <div className="h-screen overflow-y-scroll">
+      <div>
         {content && (
           <div
             className="absolute z-50 h-full inset-0 flex items-center justify-center bg-zinc-950/70"

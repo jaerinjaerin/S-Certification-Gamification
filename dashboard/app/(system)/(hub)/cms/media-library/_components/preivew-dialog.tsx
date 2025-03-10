@@ -130,11 +130,9 @@ function AssetPreviewView({
                 </div>
 
                 <div className="grow w-full">
-                  <input
-                    value={file.name}
-                    readOnly
-                    className="size-full border border-zinc-200 rounded-md overflow-hidden p-3 font-medium text-size-14px text-zinc-950"
-                  />
+                  <div className="size-full border flex items-center border-zinc-200 rounded-md overflow-hidden p-3 font-medium text-size-14px text-zinc-950">
+                    {file.name}
+                  </div>
                 </div>
               </div>
 
