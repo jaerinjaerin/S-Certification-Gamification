@@ -91,7 +91,7 @@ export default function CampaignEditForm({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
-
+  console.log('🥕 form', form.formState.errors);
   useEffect(() => {
     setSelectedNumberOfStages(initialData.numberOfStages);
   }, []);

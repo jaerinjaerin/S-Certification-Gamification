@@ -50,16 +50,16 @@ function mapCampaignToFormData(campaign: any) {
     isSlugChecked: true,
     startDate: new Date(campaign.startedAt),
     endDate: new Date(campaign.endedAt),
-    copyMedia: campaign.contentCopyHistory?.imageCampaignName,
-    copyTarget: campaign.contentCopyHistory?.targetCampaignName,
-    copyUiLanguage: campaign.contentCopyHistory?.uiLanguageCampaignName,
+    copyMedia: campaign.contentCopyHistory?.imageCampaignName || '',
+    copyTarget: campaign.contentCopyHistory?.targetCampaignName || '',
+    copyUiLanguage: campaign.contentCopyHistory?.uiLanguageCampaignName || '',
     numberOfStages: numberToString(campaign.settings.totalStages),
     firstBadgeName: campaign.settings.firstBadgeName,
     ffFirstBadgeStage: numberToString(campaign.settings.ffFirstBadgeStageIndex),
     fsmFirstBadgeStage: numberToString(
       campaign.settings.fsmFirstBadgeStageIndex
     ),
-    secondBadgeName: campaign.settings.secondBadgeName,
+    secondBadgeName: campaign.settings.secondBadgeName || '',
     ffSecondBadgeStage: numberToString(
       campaign.settings.ffSecondBadgeStageIndex
     ),
