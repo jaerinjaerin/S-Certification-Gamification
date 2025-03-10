@@ -57,8 +57,9 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const { quizSetFile, activityBadges, uiLanguage } = row.original;
+      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
       const isReady =
+        quizSet != null &&
         quizSetFile?.id &&
         activityBadges != null &&
         activityBadges.length > 0 &&
@@ -116,7 +117,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
-      if (row.original.uiLanguage) {
+      if (row.original.uiLanguage && row.original.quizSet) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
           <a href={url} target="_blank">
