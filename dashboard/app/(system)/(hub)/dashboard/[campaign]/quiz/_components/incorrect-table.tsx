@@ -97,27 +97,25 @@ const IncorrectTable = ({
                       width: header.id === 'question' ? '50%' : 'auto',
                     }}
                   >
-                    <TableCell>
-                      <div className="flex items-center">
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {header.id === 'errorRate' && (
-                          <>
-                            {!header.column.getIsSorted() && (
-                              <ChevronsUpDown className="ml-2 h-4 w-4" />
-                            )}
-                            {header.column.getIsSorted() === 'asc' && (
-                              <ArrowUp className="ml-2 h-4 w-4" />
-                            )}
-                            {header.column.getIsSorted() === 'desc' && (
-                              <ArrowDown className="ml-2 h-4 w-4" />
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </TableCell>
+                    <div className="flex items-center">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {header.id === 'errorRate' && (
+                        <>
+                          {!header.column.getIsSorted() && (
+                            <ChevronsUpDown className="ml-2 h-4 w-4" />
+                          )}
+                          {header.column.getIsSorted() === 'asc' && (
+                            <ArrowUp className="ml-2 h-4 w-4" />
+                          )}
+                          {header.column.getIsSorted() === 'desc' && (
+                            <ArrowDown className="ml-2 h-4 w-4" />
+                          )}
+                        </>
+                      )}
+                    </div>
                   </TableHead>
                 );
               })}
