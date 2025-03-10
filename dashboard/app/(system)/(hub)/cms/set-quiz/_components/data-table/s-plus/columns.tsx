@@ -136,6 +136,9 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 badge as ActivityBadgeEx,
                 row
               );
+              if (stageNum === 0) {
+                return <></>;
+              }
               return (
                 <div key={index} className="flex items-center gap-2">
                   <span className="font-bold">{stageNum}</span>
@@ -156,20 +159,32 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.activityBadges) {
         return (
           <>
-            {row.original.activityBadges.map((badge, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <span className="font-bold">
-                  {getStageNumFromActivityBadge(badge as ActivityBadgeEx, row)}
-                </span>
+            {row.original.activityBadges.map((badge, index) => {
+              const stageNum = getStageNumFromActivityBadge(
+                badge as ActivityBadgeEx,
+                row
+              );
+              if (stageNum === 0) {
+                return <></>;
+              }
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  <span className="font-bold">
+                    {getStageNumFromActivityBadge(
+                      badge as ActivityBadgeEx,
+                      row
+                    )}
+                  </span>
 
-                {badge.badgeImage?.imagePath && (
-                  <img
-                    className="w-6 h-6"
-                    src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
-                  />
-                )}
-              </div>
-            ))}
+                  {badge.badgeImage?.imagePath && (
+                    <img
+                      className="w-6 h-6"
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </>
         );
       }
