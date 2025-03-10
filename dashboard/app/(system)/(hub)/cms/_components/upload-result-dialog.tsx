@@ -128,7 +128,7 @@ export default function UploadResultDialog({
                       <Td>
                         {/* {item.result.failures[0]} */}
                         <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                          <CircleAlert className="size-4" />
+                          <CircleAlert className="size-4 shrink-0" />
                           {/* <span>Some data is missing.</span> */}
                           <span>{item.result.failures[0]}</span>
                         </div>
@@ -148,7 +148,7 @@ export default function UploadResultDialog({
                         <Td>
                           {/* {getErrorMessage(item)} */}
                           <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                            <CircleAlert className="size-4" />
+                            <CircleAlert className="size-4 shrink-0" />
                             {/* <span>Some data is missing.</span> */}
                             <span>{getErrorMessage(item)}</span>
                           </div>
