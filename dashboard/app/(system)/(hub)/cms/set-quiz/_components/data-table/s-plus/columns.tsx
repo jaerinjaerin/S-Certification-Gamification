@@ -30,6 +30,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   //   cell: () => <ActiveToggle />,
   // },
   {
+    accessorKey: 'No',
+    header: 'No',
+    cell: ({ row }) => <div className="uppercase">{row.index + 1}</div>,
+  },
+  {
     accessorKey: 'status',
     header: () => (
       <div className="flex gap-1 items-center">
@@ -85,7 +90,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Job',
     header: 'Job',
-    cell: ({ row }) => <div>{row.original.quizSet?.jobCodes[0] ?? '-'}</div>,
+    cell: ({ row }) => (
+      <div>
+        {/* {row.original.quizSet?.jobCodes[0] ?? '-'} */}
+        {row.original.quizSet?.jobCodes[0] ??
+          row.original.activityBadges?.map((badge) => badge.jobCode)[0]}
+      </div>
+    ),
   },
   {
     accessorKey: 'Quiz Language',
@@ -93,6 +104,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       if (row.original.quizSet?.language) {
         return <div>{row.original.quizSet.language.name}</div>;
+      }
+      // quizLanuage 와 ui Language를 동일하게 사용하고 있음
+      if (row.original.uiLanguage) {
+        return <div>{row.original.uiLanguage.name}</div>;
       }
       return <div>-</div>;
     },
@@ -136,7 +151,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 badge as ActivityBadgeEx,
                 row
               );
-              if (stageNum === 0) {
+              if (
+                stageNum === 0 ||
+                badge.activityId == null ||
+                badge.activityId === ''
+              ) {
                 return <></>;
               }
               return (

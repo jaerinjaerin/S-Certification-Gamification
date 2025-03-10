@@ -938,8 +938,6 @@ export async function GET(request: Request) {
         uploadedFiles.find((file) => file.languageId === lang.id) != null
     );
 
-    // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
-    // 🔹 region → subsidiary → domain 순서로 정렬
     // quizSets.sort((a: any, b: any) => {
     //   const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
     //   const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
@@ -952,38 +950,24 @@ export async function GET(request: Request) {
 
     //   const domainOrderA = a.domain?.order ?? Infinity;
     //   const domainOrderB = b.domain?.order ?? Infinity;
-    //   return domainOrderA - domainOrderB;
+    //   if (domainOrderA !== domainOrderB) return domainOrderA - domainOrderB;
+
+    //   // languageId 기준 정렬
+    //   if (a.languageId !== b.languageId)
+    //     return a.languageId.localeCompare(b.languageId);
+
+    //   // jobCodes[0]이 ff인지 fsm인지에 따라 정렬
+    //   const jobCodePriority = (jobCode: string) => {
+    //     if (jobCode === 'ff') return 0;
+    //     if (jobCode === 'fsm') return 1;
+    //     return 2; // 기타 코드
+    //   };
+
+    //   const jobOrderA = jobCodePriority(a.jobCodes?.[0] ?? '');
+    //   const jobOrderB = jobCodePriority(b.jobCodes?.[0] ?? '');
+
+    //   return jobOrderA - jobOrderB;
     // });
-    quizSets.sort((a: any, b: any) => {
-      const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
-      const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
-      if (regionOrderA !== regionOrderB) return regionOrderA - regionOrderB;
-
-      const subsidiaryOrderA = a.domain?.subsidiary?.order ?? Infinity;
-      const subsidiaryOrderB = b.domain?.subsidiary?.order ?? Infinity;
-      if (subsidiaryOrderA !== subsidiaryOrderB)
-        return subsidiaryOrderA - subsidiaryOrderB;
-
-      const domainOrderA = a.domain?.order ?? Infinity;
-      const domainOrderB = b.domain?.order ?? Infinity;
-      if (domainOrderA !== domainOrderB) return domainOrderA - domainOrderB;
-
-      // languageId 기준 정렬
-      if (a.languageId !== b.languageId)
-        return a.languageId.localeCompare(b.languageId);
-
-      // jobCodes[0]이 ff인지 fsm인지에 따라 정렬
-      const jobCodePriority = (jobCode: string) => {
-        if (jobCode === 'ff') return 0;
-        if (jobCode === 'fsm') return 1;
-        return 2; // 기타 코드
-      };
-
-      const jobOrderA = jobCodePriority(a.jobCodes?.[0] ?? '');
-      const jobOrderB = jobCodePriority(b.jobCodes?.[0] ?? '');
-
-      return jobOrderA - jobOrderB;
-    });
 
     const campaignSettings = await prisma.campaignSettings.findFirst({
       where: {
@@ -1048,6 +1032,8 @@ export async function GET(request: Request) {
       {} as Record<string, typeof noQuizSetActivityBadges>
     );
 
+    console.log('groupedBadges: ', groupedBadges);
+
     let extraGroupedQuizSets: any[] = [];
 
     if (Object.keys(groupedBadges).length > 0) {
@@ -1065,11 +1051,48 @@ export async function GET(request: Request) {
       });
     }
 
+    const resultGroupedQuizSets = [...groupedQuizSets, ...extraGroupedQuizSets];
+
+    resultGroupedQuizSets.sort((a: any, b: any) => {
+      const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
+      const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
+      if (regionOrderA !== regionOrderB) return regionOrderA - regionOrderB;
+
+      const subsidiaryOrderA = a.domain?.subsidiary?.order ?? Infinity;
+      const subsidiaryOrderB = b.domain?.subsidiary?.order ?? Infinity;
+      if (subsidiaryOrderA !== subsidiaryOrderB)
+        return subsidiaryOrderA - subsidiaryOrderB;
+
+      const domainOrderA = a.domain?.order ?? Infinity;
+      const domainOrderB = b.domain?.order ?? Infinity;
+      if (domainOrderA !== domainOrderB) return domainOrderA - domainOrderB;
+
+      // languageId 기준 정렬
+      if (a.uiLanguage.code !== b.uiLanguage.code)
+        return a.uiLanguage.code.localeCompare(b.uiLanguage.code);
+
+      // jobCodes[0]이 ff인지 fsm인지에 따라 정렬
+      const jobCodePriority = (jobCode: string) => {
+        if (jobCode === 'ff') return 0;
+        if (jobCode === 'fsm') return 1;
+        return 2; // 기타 코드
+      };
+
+      const jobOrderA = jobCodePriority(a.jobCodes?.[0] ?? '');
+      const jobOrderB = jobCodePriority(b.jobCodes?.[0] ?? '');
+      if (jobOrderA !== jobOrderB) return jobOrderA - jobOrderB;
+
+      // quizSet 존재 여부를 가장 마지막에 비교
+      const quizsetOrderA = a.quizSet ? 0 : 1;
+      const quizsetOrderB = b.quizSet ? 0 : 1;
+      return quizsetOrderA - quizsetOrderB;
+    });
+
     return NextResponse.json(
       {
         success: true,
         result: {
-          groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          groupedQuizSets: resultGroupedQuizSets,
           campaignSettings,
         },
       },
