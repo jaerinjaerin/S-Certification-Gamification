@@ -5,7 +5,7 @@ interface QuizOption {
   answerStatus: boolean;
 }
 
-interface QuizData {
+export interface QuizData {
   originQuestionIndex: number;
   orderInStage: number;
   enabled: boolean;

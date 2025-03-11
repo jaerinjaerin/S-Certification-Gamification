@@ -84,15 +84,12 @@ export async function POST(request: NextRequest) {
             code: ERROR_CODES.UNKNOWN,
           },
         },
-        { status: 500 }
+        { status: 400 }
       );
     }
 
     const arrayBuffer = await response.arrayBuffer();
     const fileBuffer = Buffer.from(arrayBuffer);
-
-    console.log('arrayBuffer', fileBuffer);
-    console.log('fileBuffer', fileBuffer);
 
     const result: ProcessResult = parseExcelBufferToDomainJson(
       Buffer.from(fileBuffer)
@@ -352,7 +349,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

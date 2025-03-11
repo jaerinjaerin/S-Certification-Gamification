@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { serializeJsonToQuery } from '@/lib/search-params';
-import { useLanguageData } from '../_provider/language-data-provider';
-import { isEmpty } from '../../_utils/utils';
 import { toast } from 'sonner';
+import { isEmpty } from '../../_utils/utils';
+import { useLanguageData } from '../_provider/language-data-provider';
 
 const DownloadLanguages = () => {
   const { state } = useLanguageData();
@@ -25,6 +25,10 @@ const DownloadLanguages = () => {
       window.location.href = `/api/cms/language/data?${serializeJsonToQuery({ keys })}`;
     }
   };
+
+  if (!state.languages || state.languages.length === 0) {
+    return <> </>;
+  }
 
   return (
     <Button variant="secondary" onClick={onDownload}>

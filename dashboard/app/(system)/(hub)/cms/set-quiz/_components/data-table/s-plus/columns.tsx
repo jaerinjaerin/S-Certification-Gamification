@@ -30,6 +30,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   //   cell: () => <ActiveToggle />,
   // },
   {
+    accessorKey: 'No',
+    header: 'No',
+    cell: ({ row }) => <div className="uppercase">{row.index + 1}</div>,
+  },
+  {
     accessorKey: 'status',
     header: () => (
       <div className="flex gap-1 items-center">
@@ -52,8 +57,9 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const { quizSetFile, activityBadges, uiLanguage } = row.original;
+      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
       const isReady =
+        quizSet != null &&
         quizSetFile?.id &&
         activityBadges != null &&
         activityBadges.length > 0 &&
@@ -85,7 +91,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Job',
     header: 'Job',
-    cell: ({ row }) => <div>{row.original.quizSet?.jobCodes[0] ?? '-'}</div>,
+    cell: ({ row }) => (
+      <div>
+        {/* {row.original.quizSet?.jobCodes[0] ?? '-'} */}
+        {row.original.quizSet?.jobCodes[0] ??
+          row.original.activityBadges?.map((badge) => badge.jobCode)[0]}
+      </div>
+    ),
   },
   {
     accessorKey: 'Quiz Language',
@@ -94,6 +106,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.quizSet?.language) {
         return <div>{row.original.quizSet.language.name}</div>;
       }
+      // quizLanuage 와 ui Language를 동일하게 사용하고 있음
+      if (row.original.uiLanguage) {
+        return <div>{row.original.uiLanguage.name}</div>;
+      }
       return <div>-</div>;
     },
   },
@@ -101,7 +117,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
-      if (row.original.uiLanguage) {
+      if (row.original.uiLanguage && row.original.quizSet) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
           <a href={url} target="_blank">
@@ -136,6 +152,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 badge as ActivityBadgeEx,
                 row
               );
+              if (
+                stageNum === 0 ||
+                badge.activityId == null ||
+                badge.activityId === ''
+              ) {
+                return <></>;
+              }
               return (
                 <div key={index} className="flex items-center gap-2">
                   <span className="font-bold">{stageNum}</span>
@@ -156,20 +179,32 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.activityBadges) {
         return (
           <>
-            {row.original.activityBadges.map((badge, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <span className="font-bold">
-                  {getStageNumFromActivityBadge(badge as ActivityBadgeEx, row)}
-                </span>
+            {row.original.activityBadges.map((badge, index) => {
+              const stageNum = getStageNumFromActivityBadge(
+                badge as ActivityBadgeEx,
+                row
+              );
+              if (stageNum === 0) {
+                return <></>;
+              }
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  <span className="font-bold">
+                    {getStageNumFromActivityBadge(
+                      badge as ActivityBadgeEx,
+                      row
+                    )}
+                  </span>
 
-                {badge.badgeImage?.imagePath && (
-                  <img
-                    className="w-6 h-6"
-                    src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
-                  />
-                )}
-              </div>
-            ))}
+                  {badge.badgeImage?.imagePath && (
+                    <img
+                      className="w-6 h-6"
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </>
         );
       }

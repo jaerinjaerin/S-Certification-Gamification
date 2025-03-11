@@ -68,7 +68,7 @@ const OverviewExpertsChild = () => {
                   return `${
                     name.toLowerCase() === 'expert'
                       ? campaign.settings?.firstBadgeName
-                      : campaign.settings.secondBadgeName
+                      : campaign.settings?.secondBadgeName
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -81,7 +81,7 @@ const OverviewExpertsChild = () => {
                         name={
                           entry.name === 'expert'
                             ? campaign.settings?.firstBadgeName
-                            : campaign.settings.secondBadgeName
+                            : campaign.settings?.secondBadgeName
                         }
                       />
                     );
