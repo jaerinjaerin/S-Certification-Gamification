@@ -119,7 +119,6 @@ const UploadExcelFileModal = forwardRef<
       updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
-      if (onDropdownClose) onDropdownClose();
     }
   };
 
@@ -137,7 +136,6 @@ const UploadExcelFileModal = forwardRef<
         }
       } finally {
         setIsLoading(false);
-        if (onDropdownClose) onDropdownClose();
       }
     },
     'non-s': async () => {
@@ -149,7 +147,6 @@ const UploadExcelFileModal = forwardRef<
         }
       } finally {
         setIsLoading(false);
-        if (onDropdownClose) onDropdownClose();
       }
     },
     hq: submitQuiz,
@@ -243,6 +240,7 @@ const UploadExcelFileModal = forwardRef<
         onOpenChange={() => {
           setProcessResult([]);
           handleDialogOpen(false);
+          if (onDropdownClose) onDropdownClose();
         }} // 다이얼로그가 닫힐 때 processResult를 초기화
       />
 
