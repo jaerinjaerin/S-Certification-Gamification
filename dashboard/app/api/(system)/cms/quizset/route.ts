@@ -822,21 +822,22 @@ export async function POST(request: NextRequest) {
     // =============================================
     const s3Client = getS3Client();
 
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
 
-    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
@@ -1088,7 +1089,7 @@ export async function GET(request: Request) {
       //   (dwl) => dwl.domainId === quizSet.domainId
       // ),
     }));
-
+    /*
     const noQuizSetActivityBadges = activityBadges.filter(
       (badge) =>
         !groupedQuizSets.find(
@@ -1099,20 +1100,7 @@ export async function GET(request: Request) {
         )
     );
 
-    // let extraGroupedQuizSets: any[] = [];
-    // if (noQuizSetActivityBadges.length > 0) {
-    //   extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
-    //     return {
-    //       quizSet: null,
-    //       quizSetFile: null,
-    //       domain: domains.find((domain) => domain.id === badge.domainId),
-    //       campaign,
-    //       activityBadges: [badge],
-    //       uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
-    //     };
-    //   });
-    // }
-
+    
     // languageId와 jobCode를 기준으로 그룹화
     const groupedBadges = noQuizSetActivityBadges.reduce(
       (acc, badge) => {
@@ -1142,12 +1130,14 @@ export async function GET(request: Request) {
         };
       });
     }
+    */
 
     return NextResponse.json(
       {
         success: true,
         result: {
-          groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          // groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          groupedQuizSets: groupedQuizSets,
           campaignSettings,
         },
       },

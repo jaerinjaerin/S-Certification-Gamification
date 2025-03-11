@@ -31,7 +31,7 @@ import { swrFetcher } from '@/lib/fetch';
 
 export function UserProgressExpertsChild() {
   const { campaign } = useStateVariables();
-  const settings = (campaign as Campaign).settings as CampaignSettings;
+  const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: progressData, isLoading } = useSWR(
     `/api/dashboard/user/statistics/progress-of-experts?${searchParams.toString()}&campaign=${campaign?.id}`,
