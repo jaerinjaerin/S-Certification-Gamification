@@ -73,8 +73,8 @@ const OverviewExpertsChild = () => {
                 label={({ name, value }) => {
                   return `${
                     name.toLowerCase() === 'expert'
-                      ? campaign.settings?.firstBadgeName
-                      : campaign.settings?.secondBadgeName
+                      ? campaign?.settings?.firstBadgeName
+                      : campaign?.settings?.secondBadgeName
                   }: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -86,8 +86,8 @@ const OverviewExpertsChild = () => {
                         fill={COLORS[index % COLORS.length]}
                         name={
                           entry.name === 'expert'
-                            ? campaign.settings?.firstBadgeName
-                            : campaign.settings?.secondBadgeName
+                            ? campaign?.settings?.firstBadgeName
+                            : campaign?.settings?.secondBadgeName
                         }
                       />
                     );
@@ -150,26 +150,26 @@ const OverviewExpertsChild = () => {
               <Legend />
               <Bar
                 dataKey="expert"
-                name={campaign.settings?.firstBadgeName}
+                name={campaign?.settings?.firstBadgeName}
                 stackId="a"
                 fill={chartColorPrimary}
               >
                 <LabelList
                   dataKey="expert"
-                  name={campaign.settings?.firstBadgeName}
+                  name={campaign?.settings?.firstBadgeName}
                   content={renderLabelContent}
                 />
               </Bar>
-              {campaign.settings?.secondBadgeName && (
+              {campaign?.settings?.secondBadgeName && (
                 <Bar
                   dataKey="advanced"
-                  name={campaign.settings.secondBadgeName}
+                  name={campaign?.settings.secondBadgeName}
                   stackId="a"
                   fill={chartColorSecondary}
                 >
                   <LabelList
                     dataKey="advanced"
-                    name={campaign.settings.secondBadgeName}
+                    name={campaign?.settings.secondBadgeName}
                     content={renderLabelContent}
                   />
                 </Bar>

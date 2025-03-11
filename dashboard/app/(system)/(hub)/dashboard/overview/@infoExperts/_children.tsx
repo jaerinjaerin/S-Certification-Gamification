@@ -10,7 +10,7 @@ import { swrFetcher } from '@/lib/fetch';
 
 const OverviewExpertsInfoChild = () => {
   const { campaign } = useStateVariables();
-  const settings = (campaign as Campaign).settings as CampaignSettings;
+  const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data } = useSWR(
     `/api/dashboard/overview/info/experts?${searchParams.toString()}&campaign=${campaign?.id}`,

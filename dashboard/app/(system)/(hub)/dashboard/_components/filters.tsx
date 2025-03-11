@@ -95,6 +95,32 @@ const Filters = ({
   }, [filter, role]);
 
   useEffect(() => {
+    if (campaign && filterData) {
+      initializeFilters(
+        filterData.filters,
+        form,
+        setFilteredSubsidiaries,
+        setFilteredDomains
+      );
+      form.setValue('userGroup', 'all');
+
+      const fromDate = campaign.startedAt;
+      const toDate = campaign.endedAt;
+      if (fromDate && toDate) {
+        form.setValue('date', {
+          from: new Date(fromDate),
+          to: new Date(toDate),
+        });
+      }
+      //
+
+      // 기준 정보 저장
+      defaultValues.current = form.getValues();
+      onSubmit(form.getValues());
+    }
+  }, [campaign]);
+
+  useEffect(() => {
     if (!filterData || defaultValues.current) return;
 
     if (searchParams.size > 0) {

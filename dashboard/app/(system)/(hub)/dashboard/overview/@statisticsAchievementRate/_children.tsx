@@ -31,7 +31,7 @@ import { swrFetcher } from '@/lib/fetch';
 
 const OverviewAchievementRateChild = () => {
   const { campaign } = useStateVariables();
-  const settings = (campaign as Campaign).settings as CampaignSettings;
+  const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: dataycountData, isLoading } = useSWR(
     [
