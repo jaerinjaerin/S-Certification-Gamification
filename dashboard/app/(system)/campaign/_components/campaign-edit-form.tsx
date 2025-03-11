@@ -121,6 +121,7 @@ export default function CampaignEditForm({
       });
 
       const campaignData = await response.json();
+      console.log('🥕 campaignData', campaignData); // ! 업데이트 이전의 데이터가 들어옴
 
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
@@ -136,11 +137,11 @@ export default function CampaignEditForm({
 
       setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign updated successfully!');
+      routeToPage('/campaign');
     } catch (error) {
       toast.error(`Failed to update campaign: ${error}`);
     } finally {
       setIsLoading(false);
-      routeToPage('/campaign');
     }
   };
 

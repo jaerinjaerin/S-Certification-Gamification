@@ -73,6 +73,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const { setCampaign, setCampaigns, campaigns } = useStateVariables();
   const { routeToPage, isRouting } = useNavigation();
   const [isEditAble, setIsEditAble] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const currentDate = dayjs();
   // const isEditAble = campaign?.startedAt
   //   ? dayjs(currentDate).isBefore(dayjs(campaign.startedAt))
@@ -86,6 +88,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
 
   const handleDeleteCampaign = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(`/api/cms/campaign/${campaign.id}`, {
         method: 'DELETE',
         body: JSON.stringify({
@@ -116,6 +119,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
     } catch (error) {
       toast.error(`Error deleting campaign: ${error}`);
       console.error('Error deleting campaign:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -172,7 +177,6 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
                 className="p-0 aspect-square size-[1.875rem] rounded-sm"
                 variant="ghost"
                 onClick={() => {
-                  setCampaign(campaign);
                   routeToPage(`/campaign/edit/${campaign.id}`);
                 }}
               >
@@ -184,7 +188,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           )}
         </div>
       </div>
-      {isRouting && <LoadingFullScreen />}
+
+      {(isLoading || isRouting) && <LoadingFullScreen />}
     </>
   );
 }
