@@ -70,7 +70,7 @@ export default function CertificationClientComponent() {
 }
 
 function CertificationListItem({ campaign }: { campaign: Campaign }) {
-  const { setCampaign, setCampaigns, campaigns } = useStateVariables();
+  const { setCampaign, campaigns, campaignMutate } = useStateVariables();
   const { routeToPage, isRouting } = useNavigation();
   const [isEditAble, setIsEditAble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -101,20 +101,22 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
         return;
       }
 
-      const deletedCampaign = campaigns?.filter((c) => c.id === campaign.id)[0];
+      // const deletedCampaign = campaigns?.filter((c) => c.id === campaign.id)[0];
 
-      if (!deletedCampaign) {
-        toast.error('Failed to delete campaign');
-        return;
-      }
+      // if (!deletedCampaign) {
+      //   toast.error('Failed to delete campaign');
+      //   return;
+      // }
 
-      const updatedCampaigns = campaigns?.map((item) =>
-        item.id === deletedCampaign.id
-          ? { ...deletedCampaign, deleted: true }
-          : item
-      );
+      campaignMutate();
 
-      setCampaigns(updatedCampaigns as Campaign[]);
+      // const updatedCampaigns = campaigns?.map((item) =>
+      //   item.id === deletedCampaign.id
+      //     ? { ...deletedCampaign, deleted: true }
+      //     : item
+      // );
+
+      // setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign deleted successfully');
     } catch (error) {
       toast.error(`Error deleting campaign: ${error}`);

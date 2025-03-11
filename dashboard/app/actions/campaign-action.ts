@@ -25,6 +25,7 @@ export async function getCampaigns(role: string) {
 
       where = {
         quizSets: { some: { domain: { id: { in: domainIds } } } },
+        deleted: false,
       };
     }
 

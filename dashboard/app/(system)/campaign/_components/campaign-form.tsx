@@ -1,11 +1,9 @@
 'use client';
-
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-
 // Form related
 import {
   Form,
@@ -17,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from '../_type/formSchema';
-
 // UI Components
 import {
   AlertDialog,
@@ -38,22 +35,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-
 // Custom Components
 import Container from './container';
 import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
-
 // Icons
 import { CalendarIcon, Check, CircleHelp, Loader } from 'lucide-react';
-
 // Utils and Constants
 import { cn } from '@/utils/utils';
 import { toast } from 'sonner';
 import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
-
 // State Management
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -61,7 +54,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Campaign } from '@prisma/client';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
@@ -77,7 +69,7 @@ export default function CampaignForm({
   isEditMode = false,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, setCampaigns } = useStateVariables();
+  const { campaigns, campaignMutate } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -304,7 +296,8 @@ export default function CampaignForm({
       }
 
       await Promise.all(copyPromises);
-      setCampaigns((c) => [...c, campaign]);
+      campaignMutate();
+      // setCampaigns((c) => [...c, campaign]);
       toast.success('Certification created successfully!');
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -356,13 +349,14 @@ export default function CampaignForm({
         return;
       }
 
+      campaignMutate();
       console.warn('update campaign');
-      const updatedCampaign = campaignData.result.campaign;
-      const updatedCampaigns = campaigns?.map((item) =>
-        item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
-      );
+      // const updatedCampaign = campaignData.result.campaign;
+      // const updatedCampaigns = campaigns?.map((item) =>
+      //   item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
+      // );
 
-      setCampaigns(updatedCampaigns as Campaign[]);
+      // setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign updated successfully!');
     } catch (error) {
       toast.error(`Failed to update campaign: ${error}`);

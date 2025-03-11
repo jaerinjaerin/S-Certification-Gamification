@@ -34,7 +34,7 @@ export async function PUT(request: NextRequest) {
   const validatedData = editCampaignScheme.parse(body);
 
   try {
-    let campaign = await prisma.campaign.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
         id: validatedData.campaignId,
       },
@@ -135,9 +135,10 @@ const deleteCampaignScheme = z.object({
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
   const validatedData = deleteCampaignScheme.parse(body);
+  console.log('🚀 ~ DELETE ~ validatedData:', validatedData);
 
   try {
-    let campaign = await prisma.campaign.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
         id: validatedData.campaignId,
       },
@@ -233,7 +234,7 @@ export async function DELETE(request: NextRequest) {
 
       if (!listResult.Contents || listResult.Contents.length === 0) {
         console.log('삭제할 파일이 없습니다.');
-        return;
+        return NextResponse.json({ success: true }, { status: 200 });
       }
 
       // 2. 조회된 객체들을 삭제 요청 형식으로 변환
