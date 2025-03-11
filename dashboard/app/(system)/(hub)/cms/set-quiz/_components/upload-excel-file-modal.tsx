@@ -1,6 +1,6 @@
 // React & Types
 import { ProcessResult } from '@/lib/quiz-excel-parser';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { UploadExcelFileModalProps } from '../_type/type';
 
 // UI Components
@@ -9,6 +9,7 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
+  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -56,6 +57,7 @@ const UploadExcelFileModal = forwardRef<
     variant,
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showResultDialog, setShowResultDialog] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
 
   const uploadFiles = {
@@ -101,6 +103,9 @@ const UploadExcelFileModal = forwardRef<
   };
 
   const handleDialogOpen = (open: boolean) => {
+    // Don't allow opening dialog when loading
+    if (isLoading && open) return;
+
     setIsDialogOpen(open);
     if (!open) {
       clearUploadFile[variant]();
@@ -110,12 +115,14 @@ const UploadExcelFileModal = forwardRef<
   const submitQuiz = async () => {
     try {
       setIsLoading(true);
-      const result = await submitQuizSet(
+      setProcessResult([]);
+      await submitQuizSet(
         getValidFiles(),
         campaign!.id,
-        setIsDialogOpen
+        setIsDialogOpen,
+        setProcessResult
       );
-      if (result) setProcessResult(result);
+      // if (result) setProcessResult(result);
       updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
@@ -152,7 +159,14 @@ const UploadExcelFileModal = forwardRef<
     hq: submitQuiz,
   };
 
-  const uploadFilesResult = [...processResult, ...getInvalidFiles()];
+  const uploadFilesResult = [...getInvalidFiles(), ...processResult];
+
+  useEffect(() => {
+    // processResult가 비어있지 않을 때만 결과 다이얼로그를 표시합니다
+    if (!isEmpty(processResult)) {
+      setShowResultDialog(true);
+    }
+  }, [processResult]);
 
   return (
     <div ref={ref}>
@@ -233,16 +247,19 @@ const UploadExcelFileModal = forwardRef<
         </CustomDialogContent>
       </Dialog>
 
-      <UploadResultDialog
-        variant={variant}
-        uploadFilesResult={uploadFilesResult}
-        open={!isEmpty(processResult)}
-        onOpenChange={() => {
-          setProcessResult([]);
-          handleDialogOpen(false);
-          if (onDropdownClose) onDropdownClose();
-        }} // 다이얼로그가 닫힐 때 processResult를 초기화
-      />
+      {!isEmpty(uploadFilesResult) && (
+        <UploadResultDialog
+          isLoading={isLoading}
+          uploadFilesResult={processResult}
+          onOpenChange={() => {
+            setProcessResult([]);
+            handleDialogOpen(false);
+            if (onDropdownClose) onDropdownClose();
+          }}
+          open={showResultDialog}
+          variant={variant}
+        />
+      )}
 
       <CustomAlertDialog
         open={alert.isOpen}
