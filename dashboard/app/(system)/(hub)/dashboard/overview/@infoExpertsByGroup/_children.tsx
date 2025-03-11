@@ -10,7 +10,7 @@ import useSWR from 'swr';
 
 const OverviewExpertsByGroupInfoChild = () => {
   const { campaign } = useStateVariables();
-  const settings = (campaign as Campaign).settings as CampaignSettings;
+  const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: groupedExperts, isLoading } = useSWR(
     `/api/dashboard/overview/info/experts-by-group?${searchParams.toString()}&campaign=${campaign?.id}`,
