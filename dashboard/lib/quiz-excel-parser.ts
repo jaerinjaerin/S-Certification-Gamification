@@ -253,6 +253,12 @@ const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
         };
 
         if (groupedData[no].enabled) {
+          if (row['NewOrder'] == null) {
+            errors.push({
+              line: headerIndex + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has NewOrder!`,
+            });
+          }
           if (groupedData[no].text == null || groupedData[no].text === '') {
             errors.push({
               line: headerIndex + groupedData[no].originQuestionIndex,
@@ -292,6 +298,18 @@ const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
 
       // 옵션 데이터 올바르게 매칭
       if (row['Answer']) {
+        if (row['Answer'] == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no answer!`,
+          });
+        }
+        if (row['AnswerStatus'] == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no answer status!`,
+          });
+        }
         groupedData[no].options.push({
           text: row['Answer'],
           answerStatus: row['AnswerStatus']
