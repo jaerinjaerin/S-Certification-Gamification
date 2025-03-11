@@ -9,11 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { X, Check, CircleX, CircleAlert } from 'lucide-react';
+import { Check, CircleAlert, CircleX, X } from 'lucide-react';
 
 import {
   FilesTableComponent,
@@ -118,17 +117,20 @@ export default function UploadResultDialog({
        ))} */}
 
                 {failureFiles.map((item, index) => {
+                  console.log('item.error', item);
+                  const messages = item.error.message.split(':');
+                  const fileName = messages[0];
+                  const message = messages.length > 1 ? messages[1] : '';
                   return (
                     <tr key={index} className="border-t border-t-zinc-200">
                       <Td>{index + 1}</Td>
 
-                      <Td>
-                        {item.fileName || item.error.message.split(':')[0]}
-                      </Td>
+                      <Td>{fileName}</Td>
                       <Td>
                         <div className="flex items-center gap-2.5 text-red-600 font-medium">
                           <CircleAlert className="size-4 shrink-0" />
-                          <span>{getErrorMessage(item)}</span>
+                          {/* <span>{getErrorMessage(item)}</span> */}
+                          <span>{message}</span>
                         </div>
                       </Td>
                     </tr>
