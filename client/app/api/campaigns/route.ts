@@ -16,6 +16,27 @@ export async function GET(request: Request) {
   }
 
   try {
+    if (campaignName.toLowerCase() !== "s25") {
+      const campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+
+      if (campaign == null) {
+        Sentry.captureMessage(`Campaign not found: ${campaignName}`);
+        return NextResponse.json(
+          { message: "Campaign not found" },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({ item: campaign }, { status: 200 });
+    }
+
     const campaign = await prisma.campaign.findFirst({
       where: {
         name: {

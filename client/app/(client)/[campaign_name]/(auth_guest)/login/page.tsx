@@ -562,7 +562,7 @@ export default function GuestLogin({
 
       {/* success */}
       <AlertDialog open={!!successSendEmail}>
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px] ">
           <AlertDialogHeader>
             <AlertDialogTitle aria-hidden className="hidden">
               Alert
