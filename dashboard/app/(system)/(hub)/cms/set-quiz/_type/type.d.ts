@@ -47,6 +47,7 @@ export interface QuizSetDetailsResponse {
   success: boolean;
   result: {
     quizSet: QuizSetEx;
+    quizSetFile: QuizSetFile;
   };
 }
 

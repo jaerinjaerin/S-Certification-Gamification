@@ -24,10 +24,10 @@ import { Image, QuestionType } from '@prisma/client';
 import { ChevronDown, Download } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-// import { handleDownload } from '../../../_utils/utils';
+import { handleDownload } from '../../../_utils/utils';
 import { fetcher } from '../../../lib/fetcher';
 import { QuizSetDetailsResponse } from '../../_type/type';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 type accessKeyType = {
   order: string;
@@ -57,10 +57,12 @@ export default function QuizSetDetailsClient() {
   }
 
   const quizSet = data?.result.quizSet;
+  const quizSetFile = data?.result.quizSetFile;
 
   // TODO: 파일 다운로드 기능 추가
-  // const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
-  // const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
+  const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
+  const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
+  const domain = QUIZSET_FILE_NAME.split('.')[0];
 
   const quizTableData: {
     header: string;
@@ -84,16 +86,14 @@ export default function QuizSetDetailsClient() {
           User Information
         </h3>
         <div className="flex items-center gap-3 mb-[1.688rem]">
-          {/* <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} /> */}
+          <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} />
           <div className="flex items-center gap-2">
             <span className="text-nowrap text-secondary">
-              {/* data : {quizSetFile?.updatedAt} */}
-              {/* date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')} */}
+              date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
             </span>
             <Button
               onClick={() =>
-                // handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL)
-                console.log('파일 다운로드 필요')
+                handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL)
               }
               className="bg-white text-zinc-950 shadow-none size-8"
             >
@@ -101,11 +101,11 @@ export default function QuizSetDetailsClient() {
             </Button>
           </div>
         </div>
-        {/* <InfoComponent
+        <InfoComponent
           className="mb-[1.188rem]"
           title="Domain"
-          content={domain.name}
-        /> */}
+          content={domain}
+        />
         <div className="flex space-x-[5.125rem]">
           <InfoComponent
             title="Job Group"
@@ -162,7 +162,6 @@ export default function QuizSetDetailsClient() {
                           <TableBody>
                             <TableRow>
                               {quizTableData.map((key) => {
-                                console.log(question[key.accessKey]);
                                 return (
                                   <TableCell
                                     key={key.accessKey}
