@@ -1099,20 +1099,7 @@ export async function GET(request: Request) {
         )
     );
 
-    // let extraGroupedQuizSets: any[] = [];
-    // if (noQuizSetActivityBadges.length > 0) {
-    //   extraGroupedQuizSets = noQuizSetActivityBadges.map((badge) => {
-    //     return {
-    //       quizSet: null,
-    //       quizSetFile: null,
-    //       domain: domains.find((domain) => domain.id === badge.domainId),
-    //       campaign,
-    //       activityBadges: [badge],
-    //       uiLanguage: uiLanguages.find((lang) => lang.id === badge.languageId),
-    //     };
-    //   });
-    // }
-
+    /*
     // languageId와 jobCode를 기준으로 그룹화
     const groupedBadges = noQuizSetActivityBadges.reduce(
       (acc, badge) => {
@@ -1142,12 +1129,14 @@ export async function GET(request: Request) {
         };
       });
     }
+    */
 
     return NextResponse.json(
       {
         success: true,
         result: {
-          groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          // groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          groupedQuizSets: groupedQuizSets,
           campaignSettings,
         },
       },
