@@ -1,16 +1,14 @@
-'use server';
 import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
-import { URLSearchParams } from 'url';
 
 // UserQuizStatistics 사용
 
-export async function getParticipantCount(
-  data: URLSearchParams | Record<string, any>
-) {
+export async function GET(request: NextRequest) {
   try {
-    const { where: condition } = querySearchParams(data);
+    const { searchParams } = request.nextUrl;
+    const { where: condition } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup = await prisma.job.findMany({
@@ -37,9 +35,13 @@ export async function getParticipantCount(
           : {}),
       },
     });
-    return count;
+
+    return NextResponse.json({ result: { count } });
   } catch (error) {
     console.error('Error fetching data:', error);
-    return 0;
+    return NextResponse.json(
+      { result: { count: 0 }, message: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

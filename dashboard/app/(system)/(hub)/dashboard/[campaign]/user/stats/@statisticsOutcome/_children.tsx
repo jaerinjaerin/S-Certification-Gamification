@@ -21,40 +21,37 @@ import CustomTooltip, {
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import ChartContainer from '@/components/system/chart-container';
-import {
-  getUserAverageScore,
-  getUserCompletionTime,
-} from '@/app/actions/dashboard/user/action';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
 import { LoaderWithBackground } from '@/components/loader';
-
-const fetcher = async (params: any) => {
-  const [score, time] = await Promise.all([
-    getUserAverageScore({
-      ...params,
-      key: 'getUserAverageScore',
-    }),
-    getUserCompletionTime({
-      ...params,
-      key: 'getUserCompletionTime',
-    }),
-  ]);
-  return { score, time };
-};
+import { swrFetcher } from '@/lib/fetch';
 
 const UserOutcomeChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data, isLoading } = useSWR(
+  const { data: scoreytimeData, isLoading } = useSWR(
+    [
+      `/api/dashboard/user/statistics/outcome/average-score?${searchParams.toString()}&campaign=${campaign?.id}`,
+      `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParams.toString()}&campaign=${campaign?.id}`,
+    ],
+    ([scoreUrl, timeUrl]) =>
+      Promise.all([swrFetcher(scoreUrl), swrFetcher(timeUrl)]),
     {
-      ...searchParamsToJson(searchParams),
-      campaign: campaign?.id,
-    },
-    fetcher
+      fallbackData: [
+        {
+          result: [],
+        },
+        {
+          result: [],
+        },
+      ],
+    }
   );
+  const [{ result: score }, { result: time }] = scoreytimeData || [
+    { result: [] },
+    { result: [] },
+  ];
 
   return (
     <ChartContainer>
@@ -67,7 +64,7 @@ const UserOutcomeChild = () => {
           </div>
           <ResponsiveContainer width="100%" height={chartHeight / 1.5}>
             <BarChart
-              data={data?.score || []}
+              data={score}
               barSize={40}
               margin={{
                 top: 5,
@@ -93,7 +90,7 @@ const UserOutcomeChild = () => {
           </div>
           <ResponsiveContainer width="100%" height={chartHeight / 1.5}>
             <ComposedChart
-              data={data?.time || []}
+              data={time}
               margin={{
                 top: 10,
                 right: 30,

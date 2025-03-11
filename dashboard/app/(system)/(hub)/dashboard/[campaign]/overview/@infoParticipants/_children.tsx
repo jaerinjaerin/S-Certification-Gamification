@@ -1,30 +1,25 @@
 'use client';
 import InfoCardStyleContent from '../_components/card-content';
 import InfoCardStyleContainer from '../_components/card-with-title';
-import { getParticipantCount } from '@/app/actions/dashboard/overview/participant-action';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { LoaderWithBackground } from '@/components/loader';
+import { swrFetcher } from '@/lib/fetch';
 
 const OverviewParticipantsInfoChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data: count, isLoading } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getParticipantCount',
-      campaign: campaign?.id,
-    },
-    getParticipantCount
+  const { data } = useSWR(
+    `/api/dashboard/overview/info/participants?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
+    { fallbackData: { result: { count: null } } }
   );
+  const count = data.result?.count;
 
   return (
     <InfoCardStyleContainer title="Participants" iconName="user">
-      {isLoading && <LoaderWithBackground />}
       <InfoCardStyleContent
-        info={count?.toString()}
+        info={count?.toLocaleString()}
         caption="Total paricipants"
       />
     </InfoCardStyleContainer>

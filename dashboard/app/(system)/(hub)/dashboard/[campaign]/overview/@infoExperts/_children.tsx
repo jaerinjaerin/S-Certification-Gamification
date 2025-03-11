@@ -1,26 +1,23 @@
 'use client';
-import { getExpertCount } from '@/app/actions/dashboard/overview/expert-action';
 import InfoCardStyleContainer from '../_components/card-with-title';
 import InfoCardStyleContent from '../_components/card-content';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
 import { CampaignSettings } from '@prisma/client';
 import { capitalize } from '@/lib/text';
+import { swrFetcher } from '@/lib/fetch';
 
 const OverviewExpertsInfoChild = () => {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
-  const { data: count } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getExpertCount',
-      campaign: campaign?.id,
-    },
-    getExpertCount
+  const { data } = useSWR(
+    `/api/dashboard/overview/info/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
+    { fallbackData: { result: { count: null } } }
   );
+  const count = data.result?.count;
 
   return (
     <InfoCardStyleContainer
@@ -28,7 +25,7 @@ const OverviewExpertsInfoChild = () => {
       iconName="userCheck"
     >
       <InfoCardStyleContent
-        info={count?.toString()}
+        info={count?.toLocaleString()}
         caption={`Total ${settings?.firstBadgeName || 'Expert'}s users`}
       />
     </InfoCardStyleContainer>

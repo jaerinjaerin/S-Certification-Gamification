@@ -8,22 +8,20 @@ import { LoaderWithBackground } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { getQuizRankByCategory } from '@/app/actions/dashboard/quiz/action';
+import { swrFetcher } from '@/lib/fetch';
 
 const QuizIncorrectAnswerRateChild = () => {
   const { setContent } = useModal();
 
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data, isLoading } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getQuizRankByCategory',
-      campaign: campaign?.id,
-    },
-    getQuizRankByCategory
+  const { data: categoryData, isLoading } = useSWR(
+    `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
+    { fallbackData: { result: [] } }
   );
+
+  const data = categoryData.result;
 
   return (
     <ChartContainer>

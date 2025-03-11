@@ -24,26 +24,22 @@ import ChartContainer from '@/components/system/chart-container';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { getUserExpertsProgress } from '@/app/actions/dashboard/user/action';
 import { LoaderWithBackground } from '@/components/loader';
 import { CampaignSettings } from '@prisma/client';
 import { capitalize } from '@/lib/text';
+import { swrFetcher } from '@/lib/fetch';
 
 export function UserProgressExpertsChild() {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: progressData, isLoading } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getUserExpertsProgress',
-      campaign: campaign?.id,
-    },
-    getUserExpertsProgress
+    `/api/dashboard/user/statistics/progress-of-experts?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
+    { fallbackData: { result: [] } }
   );
 
-  const data = progressData || [];
+  const data = progressData.result;
 
   return (
     <ChartContainer>
