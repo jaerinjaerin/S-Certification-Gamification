@@ -103,7 +103,6 @@ const UploadExcelFileModal = forwardRef<
   };
 
   const handleDialogOpen = (open: boolean) => {
-    // Don't allow opening dialog when loading
     if (isLoading && open) return;
 
     setIsDialogOpen(open);
@@ -162,7 +161,6 @@ const UploadExcelFileModal = forwardRef<
   const uploadFilesResult = [...getInvalidFiles(), ...processResult];
 
   useEffect(() => {
-    // processResult가 비어있지 않을 때만 결과 다이얼로그를 표시합니다
     if (!isEmpty(processResult)) {
       setShowResultDialog(true);
     }
@@ -249,6 +247,7 @@ const UploadExcelFileModal = forwardRef<
 
       {!isEmpty(uploadFilesResult) && (
         <UploadResultDialog
+          totalFiles={uploadFiles[variant].length}
           isLoading={isLoading}
           uploadFilesResult={processResult}
           onOpenChange={() => {
@@ -266,8 +265,8 @@ const UploadExcelFileModal = forwardRef<
         description={alert.message}
         buttons={[
           {
-            label: '확인',
-            variant: 'action',
+            label: 'OK',
+            variant: 'secondary',
             type: 'ok',
             onClick: () => {
               closeAlert();

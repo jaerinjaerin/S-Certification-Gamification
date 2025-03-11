@@ -304,7 +304,7 @@ const UploadExcelFileModal = forwardRef<
                 }
                 disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Uploading...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}
@@ -312,6 +312,8 @@ const UploadExcelFileModal = forwardRef<
       </Dialog>
 
       <UploadResultDialog
+        totalFiles={uploadState.files.length}
+        isLoading={isLoading}
         uploadFilesResult={uploadFilesResult}
         open={!isEmpty(uploadState.processResult)}
         onOpenChange={() => {

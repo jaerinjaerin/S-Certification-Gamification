@@ -27,6 +27,7 @@ interface UploadResultDialogProps {
   open: boolean;
   variant: UploadExcelFileVariant;
   isLoading: boolean;
+  totalFiles: number;
 }
 
 export default function UploadResultDialog({
@@ -35,6 +36,7 @@ export default function UploadResultDialog({
   open,
   variant,
   isLoading,
+  totalFiles,
 }: UploadResultDialogProps) {
   // console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
@@ -60,9 +62,7 @@ export default function UploadResultDialog({
     if (variant === 'quiz') {
       return (
         <span className="text-size-14px font-semibold">
-          Out of a total of {uploadFilesResult.length} file(s),{' '}
-          {uploadFilesResult.filter((item) => item.success).length} files were
-          successfully uploaded.
+          {`Out of a total of ${totalFiles} files, ${uploadFilesResult.filter((item) => item.success).length} files were successfully uploaded.`}
         </span>
       );
     }
@@ -75,22 +75,6 @@ export default function UploadResultDialog({
       </span>
     );
   };
-
-  // const getErrorMessage = (item: any) => {
-  //   if (
-  //     'errors' in item &&
-  //     Array.isArray(item.errors) &&
-  //     item.errors.length > 0
-  //   ) {
-  //     return item.errors[0].message;
-  //   }
-  //   if ('error' in item && item.error?.message) {
-  //     // return item.error.message.split(':')[1];
-  //     return item.error.message;
-  //   }
-  //   return 'Unknown error';
-  // };
-  // const failureFiles = uploadFilesResult.filter((item) => !item.success);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
