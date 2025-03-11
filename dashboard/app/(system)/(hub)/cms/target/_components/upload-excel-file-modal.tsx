@@ -26,6 +26,7 @@ import {
   FilesTableComponent,
   Td,
 } from '../../set-quiz/_components/files-table-component';
+import UploadResultDialog from './upload-target-result-dialog';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -52,6 +53,9 @@ export default function UploadExcelFileModal({
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [processResult, setProcessResult] = useState<Record<string, string>[]>(
+    []
+  );
 
   // 에러 처리 로직 개선
   const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
@@ -143,7 +147,9 @@ export default function UploadExcelFileModal({
       const response = await axios.post('/api/cms/target', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       updateData(response.data.result);
+      setProcessResult(response.data.result);
     } catch (error) {
       console.error('Upload failed:', error);
     } finally {
@@ -172,7 +178,6 @@ export default function UploadExcelFileModal({
 
   return (
     <>
-      {loading && <LoaderWithBackground />}
       <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="gap-[4.063rem]">
@@ -241,6 +246,14 @@ export default function UploadExcelFileModal({
           )}
         </DialogContent>
       </Dialog>
+
+      <UploadResultDialog
+        uploadFilesResult={processResult}
+        open={!isEmpty(processResult)}
+        onOpenChange={() => {
+          setProcessResult([]);
+        }}
+      />
 
       <CustomAlertDialog
         open={isOpen}
