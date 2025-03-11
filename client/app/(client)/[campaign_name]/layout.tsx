@@ -18,7 +18,11 @@ export default async function CampaignLayout({
 
   // 🚀 404 에러면 바로 not-found 페이지로 이동
   if (response.status === 404) {
-    console.error("Campaign not found", params.campaign_name, response);
+    console.error(
+      "CampaignLayout Campaign not found",
+      params.campaign_name,
+      response
+    );
     Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
     redirect("/error/not-found");
   }
@@ -36,7 +40,11 @@ export default async function CampaignLayout({
 
   const campaign = response.result?.item;
   if (!campaign) {
-    console.error("Campaign not found", params.campaign_name, response);
+    console.error(
+      "CampaignLayout Campaign not found",
+      params.campaign_name,
+      response
+    );
     Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
     redirect("/error/not-found");
   }

@@ -21,6 +21,37 @@ export async function getCampaignByName(
   }
 
   try {
+    if (campaignName.toLowerCase() !== "s25") {
+      const campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+
+      if (campaign == null) {
+        Sentry.captureMessage(`Campaign not found: ${campaignName}`);
+        return {
+          success: false,
+          status: 500,
+          error: {
+            message: "An unexpected error occurred",
+            code: "UNEXPECTED_ERROR",
+          },
+        };
+      }
+
+      return {
+        result: {
+          item: campaign,
+        },
+        success: true,
+        status: 200,
+      };
+    }
+
     const campaign = await prisma.campaign.findFirst({
       where: {
         name: {
@@ -36,7 +67,7 @@ export async function getCampaignByName(
         success: false,
         status: 404,
         error: {
-          message: "Campaign not found",
+          message: "getCampaignByName Campaign not found",
           code: "CAMPAIGN_NOT_FOUND",
         },
       };
