@@ -160,7 +160,9 @@ const UploadExcelFileModal = forwardRef<
   ) => {
     try {
       setIsLoading(true);
-      const uploadPromises = files.map(async (file) => {
+      const allResults = [];
+
+      for (const file of files) {
         try {
           const formData = new FormData();
           formData.append('file', file);
@@ -174,28 +176,34 @@ const UploadExcelFileModal = forwardRef<
             }
           );
 
-          mutate(`/api/cms/ui_language?${searchParamsToQuery({ campaignId })}`);
-          return response.json();
+          const result = await response.json();
+          allResults.push(result);
+
+          // 각 파일 처리 결과를 즉시 dispatch
+          dispatch({
+            type: 'SET_PROCESS_RESULT',
+            payload: allResults,
+          });
         } catch (error) {
           console.error(`파일 "${file.name}" 업로드 중 오류 발생:`, error);
-          return {
+          const errorResult = {
             success: false,
             fileName: file.name,
             message: '파일 업로드 중 오류가 발생했습니다.',
           };
-        }
-      });
+          allResults.push(errorResult);
 
-      try {
-        const result = await Promise.all(uploadPromises);
-        dispatch({
-          type: 'SET_PROCESS_RESULT',
-          payload: result,
-        });
-      } catch (error) {
-        toast.error('파일 업로드 중 오류가 발생했습니다.');
+          // 에러 결과도 즉시 dispatch
+          dispatch({
+            type: 'SET_PROCESS_RESULT',
+            payload: allResults,
+          });
+        }
       }
+
+      mutate(`/api/cms/ui_language?${searchParamsToQuery({ campaignId })}`);
     } catch (error) {
+      toast.error('파일 업로드 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
@@ -224,8 +232,8 @@ const UploadExcelFileModal = forwardRef<
     });
 
   const uploadFilesResult = [
-    ...uploadState.processResult,
     ...getInvalidFiles(),
+    ...uploadState.processResult,
   ];
 
   return (
@@ -296,7 +304,7 @@ const UploadExcelFileModal = forwardRef<
                 }
                 disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Uploading...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}
@@ -304,6 +312,8 @@ const UploadExcelFileModal = forwardRef<
       </Dialog>
 
       <UploadResultDialog
+        totalFiles={uploadState.files.length}
+        isLoading={isLoading}
         uploadFilesResult={uploadFilesResult}
         open={!isEmpty(uploadState.processResult)}
         onOpenChange={() => {

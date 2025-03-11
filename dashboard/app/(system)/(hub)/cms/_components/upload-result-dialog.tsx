@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { Check, CircleAlert, CircleX, X } from 'lucide-react';
+import { Check, CircleX, X } from 'lucide-react';
 import {
   FilesTableComponent,
   Td,
@@ -23,9 +23,11 @@ type UploadFilesResult = ProcessResult | any; // TODO: fix type
 
 interface UploadResultDialogProps {
   uploadFilesResult: UploadFilesResult[];
-  onOpenChange?: () => void;
-  open?: boolean;
+  onOpenChange: () => void;
+  open: boolean;
   variant: UploadExcelFileVariant;
+  isLoading: boolean;
+  totalFiles: number;
 }
 
 export default function UploadResultDialog({
@@ -33,7 +35,10 @@ export default function UploadResultDialog({
   onOpenChange,
   open,
   variant,
+  isLoading,
+  totalFiles,
 }: UploadResultDialogProps) {
+  // console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
     const iconContainerClasses = cn(
@@ -57,9 +62,7 @@ export default function UploadResultDialog({
     if (variant === 'quiz') {
       return (
         <span className="text-size-14px font-semibold">
-          Out of a total of {uploadFilesResult.length} file(s),{' '}
-          {uploadFilesResult.filter((item) => item.success).length} files were
-          successfully uploaded.
+          {`Out of a total of ${totalFiles} files, ${uploadFilesResult.filter((item) => item.success).length} files were successfully uploaded.`}
         </span>
       );
     }
@@ -73,24 +76,8 @@ export default function UploadResultDialog({
     );
   };
 
-  const getErrorMessage = (item: any) => {
-    if (
-      'errors' in item &&
-      Array.isArray(item.errors) &&
-      item.errors.length > 0
-    ) {
-      return item.errors[0].message;
-    }
-    if ('error' in item && item.error?.message) {
-      // return item.error.message.split(':')[1];
-      return item.error.message;
-    }
-    return 'Unknown error';
-  };
-  const failureFiles = uploadFilesResult.filter((item) => !item.success);
-
   return (
-    <Dialog onOpenChange={onOpenChange} open={open}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       {/* <DialogTrigger>{trigger}</DialogTrigger> */}
       <CustomDialogContent
         className="flex-col gap-16"
@@ -110,56 +97,86 @@ export default function UploadResultDialog({
             </div>
           </DialogDescription>
         </DialogHeader>
-        {failureFiles.length > 0 && (
-          <div className="flex flex-col gap-5">
-            <div className="flex gap-2 items-center">
-              <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-              {uploadFilesResult.filter((item) => !item.success).length} files
-              failed to upload.
-            </div>
 
-            <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-              <FilesTableComponent>
-                {variant === 'non-s' &&
-                  uploadFilesResult.map((item, index) => (
-                    <tr key={index} className="border-t border-t-zinc-200">
-                      <Td>{index + 1}</Td>
-                      <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-                      <Td>
-                        {/* {item.result.failures[0]} */}
-                        <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                          <CircleAlert className="size-4 shrink-0" />
-                          {/* <span>Some data is missing.</span> */}
-                          <span>{item.result.failures[0]}</span>
-                        </div>
-                      </Td>
-                    </tr>
-                  ))}
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-2 items-center">
+            <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
+            {uploadFilesResult.filter((item) => !item.success).length} files
+            failed to upload.
+          </div>
 
-                {variant !== 'non-s' &&
-                  failureFiles.map((item, index) => {
+          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+            {variant === 'quiz' && (
+              <table className={cn('w-full')}>
+                <thead>
+                  <tr className="text-zinc-500">
+                    <Td className="py-4 ">Order</Td>
+                    <Td className="py-4 ">File Result</Td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {uploadFilesResult.map((item, index) => {
                     return (
                       <tr key={index} className="border-t border-t-zinc-200">
                         <Td>{index + 1}</Td>
-
                         <Td>
-                          {item.fileName || item.error.message.split(':')[0]}
-                        </Td>
-                        <Td>
-                          {/* {getErrorMessage(item)} */}
-                          <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                            <CircleAlert className="size-4 shrink-0" />
-                            {/* <span>Some data is missing.</span> */}
-                            <span>{getErrorMessage(item)}</span>
-                          </div>
+                          {!item.success ? (
+                            <span className="text-red-500">
+                              {item.error.message}
+                            </span>
+                          ) : (
+                            <span>{item.quizSetFile?.path}</span>
+                          )}
                         </Td>
                       </tr>
                     );
                   })}
+                </tbody>
+              </table>
+            )}
+            {variant === 'non-s' && (
+              // <FilesTableComponent>
+              //   {uploadFilesResult.map((item, index) => {
+              //     console.log('🥕 non-s', item);
+              //     return (
+              //       <tr key={index} className="border-t border-t-zinc-200">
+              //         <Td>{index + 1}</Td>
+              //         <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
+              //         <Td>
+              //           <div className="flex items-center gap-2.5 text-red-600 font-medium">
+              //             <CircleAlert className="size-4 shrink-0" />
+              //             <span>{item.result.failures[0]}</span>
+              //           </div>
+              //         </Td>
+              //       </tr>
+              //     );
+              //   })}
+              // </FilesTableComponent>
+              <></>
+            )}
+            {variant === 'activityId' && (
+              <FilesTableComponent>
+                {uploadFilesResult.map((item, index) => {
+                  console.log('🥕 item', item);
+                  return (
+                    <tr key={index} className="border-t border-t-zinc-200">
+                      <Td>{index + 1}</Td>
+                      <Td>
+                        {!item.success ? (
+                          <span className="text-red-500">
+                            {item.error.message}
+                          </span>
+                        ) : (
+                          <span>{item.quizSetFile?.path}</span>
+                        )}
+                      </Td>
+                    </tr>
+                  );
+                })}
               </FilesTableComponent>
-            </div>
+            )}
           </div>
-        )}
+        </div>
 
         <DialogFooter className="!justify-center">
           <DialogClose asChild>
@@ -167,8 +184,9 @@ export default function UploadResultDialog({
               className="shadow-none"
               variant={'action'}
               onClick={onOpenChange}
+              disabled={isLoading}
             >
-              Confirm
+              {isLoading ? 'Uploading...' : 'Confirm'}
             </Button>
           </DialogClose>
         </DialogFooter>

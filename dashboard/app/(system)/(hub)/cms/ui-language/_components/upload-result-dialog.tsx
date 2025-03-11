@@ -23,14 +23,17 @@ type UploadFilesResult = ProcessResult | any; // TODO: fix type
 
 interface UploadResultDialogProps {
   uploadFilesResult: UploadFilesResult[];
-  onOpenChange?: () => void;
-  open?: boolean;
+  onOpenChange: () => void;
+  open: boolean;
+  isLoading: boolean;
+  totalFiles: number;
 }
 
 export default function UploadResultDialog({
   uploadFilesResult,
   onOpenChange,
   open,
+  totalFiles,
 }: UploadResultDialogProps) {
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
@@ -53,9 +56,7 @@ export default function UploadResultDialog({
   const renderResultMessage = () => {
     return (
       <span className="text-size-14px font-semibold">
-        Out of a total of {uploadFilesResult.length} file(s),
-        {uploadFilesResult.filter((item) => item.success).length} files were
-        successfully uploaded.
+        {`Out of a total of ${totalFiles} files, ${uploadFilesResult.filter((item) => item.success).length} files were successfully uploaded.`}
       </span>
     );
   };
@@ -74,7 +75,7 @@ export default function UploadResultDialog({
     return 'Unknown error';
   };
 
-  const failureFiles = uploadFilesResult.filter((item) => !item.success);
+  // const failureFiles = uploadFilesResult.filter((item) => !item.success);
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
@@ -97,49 +98,64 @@ export default function UploadResultDialog({
             </div>
           </DialogDescription>
         </DialogHeader>
-        {failureFiles.length > 0 && (
-          <div className="flex flex-col gap-5">
-            <div className="flex gap-2 items-center">
-              <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-              {uploadFilesResult.filter((item) => !item.success).length} files
-              failed to upload.
-            </div>
 
-            <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-              <FilesTableComponent>
-                {/* {variant === 'non-s' &&
-       uploadFilesResult.map((item, index) => (
-         <tr key={index} className="border-t border-t-zinc-200">
-           <Td>{index + 1}</Td>
-           <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-           <Td>{item.result.failures[0]}</Td>
-         </tr>
-       ))} */}
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-2 items-center">
+            <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
+            {uploadFilesResult.filter((item) => !item.success).length} files
+            failed to upload.
+          </div>
 
-                {failureFiles.map((item, index) => {
-                  console.log('item.error', item);
-                  const messages = item.error.message.split(':');
-                  const fileName = messages[0];
-                  const message = messages.length > 1 ? messages[1] : '';
+          <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
+            {/* <FilesTableComponent>
+              {uploadFilesResult.map((item, index) => {
+                console.log('item.error', item);
+                const messages = item.error.message.split(':');
+                const fileName = messages[0];
+                const message = messages.length > 1 ? messages[1] : '';
+                return (
+                  <tr key={index} className="border-t border-t-zinc-200">
+                    <Td>{index + 1}</Td>
+                    <Td>{fileName}</Td>
+                    <Td>
+                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                        <CircleAlert className="size-4 shrink-0" />
+
+                        <span>{message}</span>
+                      </div>
+                    </Td>
+                  </tr>
+                );
+              })}
+            </FilesTableComponent> */}
+            <table className={cn('w-full')}>
+              <thead>
+                <tr className="text-zinc-500">
+                  <Td className="py-4 ">Order</Td>
+                  <Td className="py-4 ">File Result</Td>
+                </tr>
+              </thead>
+              <tbody>
+                {uploadFilesResult.map((item, index) => {
                   return (
                     <tr key={index} className="border-t border-t-zinc-200">
                       <Td>{index + 1}</Td>
-
-                      <Td>{fileName}</Td>
                       <Td>
-                        <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                          <CircleAlert className="size-4 shrink-0" />
-                          {/* <span>{getErrorMessage(item)}</span> */}
-                          <span>{message}</span>
-                        </div>
+                        {!item.success ? (
+                          <span className="text-red-500">
+                            {item.error.message}
+                          </span>
+                        ) : (
+                          <span>{item.result?.uploadedFile?.path}</span>
+                        )}
                       </Td>
                     </tr>
                   );
                 })}
-              </FilesTableComponent>
-            </div>
+              </tbody>
+            </table>
           </div>
-        )}
+        </div>
 
         <DialogFooter className="!justify-center">
           <DialogClose asChild>
