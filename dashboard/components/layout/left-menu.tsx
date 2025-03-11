@@ -24,6 +24,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useStateVariables } from '../provider/state-provider';
 import { Role } from '@prisma/client';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 // 메뉴 데이터를 배열로 정의
 const getMenuItems = (role: Role): MenuItems => {
@@ -92,18 +93,24 @@ const LeftMenu = () => {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               {group.items.map((item, itemIndex) => {
+                const isActive = item.href?.includes(pathname);
                 return (
                   <SidebarMenu key={itemIndex} className="mb-1">
                     {/* 상위 메뉴 */}
                     <SidebarMenuButton
-                      isActive={item.href?.includes(pathname)}
+                      isActive={isActive}
                       disabled={!item?.children && !item?.href}
-                      className="flex items-center justify-between !px-4 !py-6"
+                      className={cn(
+                        'flex items-center justify-between !px-4 !py-6',
+                        isActive && 'pointer-events-none'
+                      )}
                       onClick={() => {
                         if (item?.children) {
                           toggleSection(item.label);
                         } else if (item?.href) {
-                          router.push(item.href);
+                          if (!isActive) {
+                            router.push(item.href);
+                          }
                         }
                       }}
                     >

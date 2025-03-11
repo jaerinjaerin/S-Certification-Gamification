@@ -60,7 +60,7 @@ export const StateVariablesProvider = ({
 
   // 캠페인 데이터 없으면 캠페인으로 리다이렉트
   useEffect(() => {
-    if (pathname === '/campaign/create') return;
+    if (pathname === '/campaign/create' || pathname === '/role') return;
     if (!campaign && pathname !== '/campaign') {
       redirect('/campaign');
     }

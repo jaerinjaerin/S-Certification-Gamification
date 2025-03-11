@@ -13,10 +13,16 @@ export const updateSearchParamsOnUrl = (data: Record<string, any>) => {
   try {
     if (typeof window !== 'undefined') {
       const params = transformFormData(data);
-      const url = `${window.location.pathname}?${params.toString()}`;
-      window.history.replaceState(null, '', url);
+      updateSearchParamsBySearchStrings(params.toString());
     }
   } catch (error) {
     console.error('Failed to update search params:', error);
+  }
+};
+
+export const updateSearchParamsBySearchStrings = (searchStrings: string) => {
+  if (typeof window !== 'undefined') {
+    const url = `${window.location.pathname}?${searchStrings}`;
+    window.history.replaceState(null, '', url);
   }
 };

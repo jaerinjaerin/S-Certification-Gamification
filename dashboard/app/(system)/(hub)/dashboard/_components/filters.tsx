@@ -84,33 +84,6 @@ const Filters = ({
   const [applyButtonDisabled, setApplyButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!campaign || !filterData) return;
-
-    // 필터 초기화
-    initializeFilters(
-      filterData.filters,
-      form,
-      setFilteredSubsidiaries,
-      setFilteredDomains
-    );
-
-    // 날짜 설정
-    form.setValue('date', {
-      from: new Date(campaign.startedAt),
-      to: new Date(campaign.endedAt),
-    });
-
-    // 유저 선택 초기화
-    form.setValue('userGroup', 'all');
-
-    // 기준 정보 저장
-    defaultValues.current = form.getValues();
-
-    // reducer에 알림
-    onSubmit(form.getValues());
-  }, [campaign, filterData]);
-
-  useEffect(() => {
     if (!filter) return;
 
     setFilterData(filter);
@@ -124,7 +97,7 @@ const Filters = ({
   useEffect(() => {
     if (!filterData || defaultValues.current) return;
 
-    if (searchParams) {
+    if (searchParams.size > 0) {
       const priorities = ['domain', 'subsidiary', 'region']; // 필터 우선순위
       let isUpdated = false;
 

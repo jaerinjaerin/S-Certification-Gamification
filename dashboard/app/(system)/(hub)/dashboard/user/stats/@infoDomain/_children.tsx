@@ -27,11 +27,11 @@ import {
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
-import { useStateVariables } from '@/components/provider/state-provider';
 import useSWR from 'swr';
-import { useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
 import { swrFetcher } from '@/lib/fetch';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { usePageIndex } from '@/components/hook/use-page-index';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -143,11 +143,11 @@ const columns: ColumnDef<DomainProps>[] = [
 const UserDomainChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const page = parseInt(
-    (searchParams.get('domainPageIndex') as string | null) ?? '1'
-  );
   const pageSize = 10;
-  const [pageIndex, setPageIndex] = useState(page);
+  const [pageIndex, setPageIndex] = usePageIndex(
+    searchParams,
+    'domainPageIndex'
+  );
 
   const { data: domainData, isLoading } = useSWR(
     `/api/dashboard/user/info/domain?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
@@ -240,13 +240,7 @@ const UserDomainChild = () => {
             totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
-            onPageChange={(page) => {
-              setPageIndex(page);
-              // const params = Object.fromEntries(searchParams.entries());
-              // router.push(
-              //   `${pathname}?${serializeJsonToQuery({ ...params, domainPageIndex: page })}`
-              // );
-            }}
+            onPageChange={setPageIndex}
           />
         </div>
       ) : (
