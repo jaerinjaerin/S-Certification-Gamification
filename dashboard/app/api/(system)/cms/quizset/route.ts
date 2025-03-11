@@ -389,11 +389,13 @@ export async function POST(request: NextRequest) {
 
     if (notRegisteredBackgroundImages.length > 0) {
       console.error('Background images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: `${file.name}: Background images not registered`,
+            message: `${file.name}: Background images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
             code: ERROR_CODES.BACKGROUND_IMAGES_NOT_REGISTERED,
           },
         },
@@ -415,11 +417,13 @@ export async function POST(request: NextRequest) {
 
     if (notRegisteredCharacterImages.length > 0) {
       console.error('Character images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: `${file.name}: Character images not registered`,
+            message: `${file.name}: Character images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
             code: ERROR_CODES.CHARACTER_IMAGES_NOT_REGISTERED,
           },
         },
