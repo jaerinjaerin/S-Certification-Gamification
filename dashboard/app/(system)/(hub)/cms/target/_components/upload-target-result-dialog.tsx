@@ -34,7 +34,6 @@ export default function UploadResultDialog({
   onOpenChange,
   open,
 }: UploadResultDialogProps) {
-  console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
     const hasSuccessfulUploads = !isEmpty(uploadFilesResult);
     const iconContainerClasses = cn(
