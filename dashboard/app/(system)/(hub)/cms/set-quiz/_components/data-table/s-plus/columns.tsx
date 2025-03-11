@@ -298,17 +298,16 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.badgeType === BadgeType.FIRST &&
     badge.jobCode.toLowerCase() === 'ff'
   ) {
-    const firstBadgeStage =
-      row.original.campaign.settings.ffFirstBadgeStageIndex;
-    if (firstBadgeStage) {
-      stageNum = firstBadgeStage + 1;
+    const badgeStage = row.original.campaign.settings.ffFirstBadgeStageIndex;
+    if (badgeStage != null) {
+      stageNum = badgeStage + 1;
     }
   } else if (
     badge.badgeType === BadgeType.FIRST &&
     badge.jobCode.toLowerCase() === 'fsm'
   ) {
     const badgeStage = row.original.campaign.settings.fsmFirstBadgeStageIndex;
-    if (badgeStage) {
+    if (badgeStage != null) {
       stageNum = badgeStage + 1;
     }
   } else if (
@@ -316,7 +315,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.jobCode.toLowerCase() === 'ff'
   ) {
     const badgeStage = row.original.campaign.settings.ffSecondBadgeStageIndex;
-    if (badgeStage) {
+    if (badgeStage != null) {
       stageNum = badgeStage + 1;
     }
   } else if (
@@ -324,7 +323,7 @@ const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
     badge.jobCode.toLowerCase() === 'fsm'
   ) {
     const badgeStage = row.original.campaign.settings.fsmSecondBadgeStageIndex;
-    if (badgeStage) {
+    if (badgeStage != null) {
       stageNum = badgeStage + 1;
     }
   }
