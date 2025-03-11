@@ -16,7 +16,7 @@ const DownloadTarget = () => {
 
   return (
     <Button variant="secondary" onClick={onDownload}>
-      Download All Data
+      Download Data
     </Button>
   );
 };

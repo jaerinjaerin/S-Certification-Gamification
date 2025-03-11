@@ -125,7 +125,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
           <Input
-            placeholder="Search"
+            placeholder="Search Domain"
             value={
               (table.getColumn('domain')?.getFilterValue() as string) ?? ''
             }
