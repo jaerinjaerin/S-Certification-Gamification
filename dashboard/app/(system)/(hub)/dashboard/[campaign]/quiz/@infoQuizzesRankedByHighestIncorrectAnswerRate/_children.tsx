@@ -12,21 +12,19 @@ import IncorrectTable, { columns } from '../_components/incorrect-table';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { getQuizRankByIncorrectAnswer } from '@/app/actions/dashboard/quiz/action';
+import { swrFetcher } from '@/lib/fetch';
 
 const QuizQuizzesRankedChild = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data, isLoading } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getQuizRankByIncorrectAnswer',
-      campaign: campaign?.id,
-    },
-    getQuizRankByIncorrectAnswer
+  const { data: rankData, isLoading } = useSWR(
+    `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
+    { fallbackData: { result: [] } }
   );
+
+  const data = rankData.result;
 
   const table = useReactTable({
     data: data || [], // 현재 페이지 데이터

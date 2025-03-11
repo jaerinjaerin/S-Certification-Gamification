@@ -9,12 +9,11 @@ import {
   chartColorSecondary,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
-import { getExpertsData } from '@/app/actions/dashboard/overview/expert-action';
 import { LoaderWithBackground } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
-import { searchParamsToJson } from '@/lib/query';
+import { swrFetcher } from '@/lib/fetch';
 import { useSearchParams } from 'next/navigation';
 import {
   Bar,
@@ -37,21 +36,28 @@ const COLORS = [chartColorPrimary, chartColorSecondary];
 const OverviewExpertsChild = () => {
   const { campaign } = useStateVariables() as { campaign: Campaign };
   const searchParams = useSearchParams();
-  const { data, isLoading } = useSWR(
+  const { data: expertsData, isLoading } = useSWR(
+    `/api/dashboard/overview/statistics/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
     {
-      ...searchParamsToJson(searchParams),
-      key: 'getExpertsData',
-      campaign: campaign?.id,
-    },
-    getExpertsData
+      fallbackData: {
+        result: {
+          pie: [],
+          bar: [],
+          count: 0,
+        },
+      },
+    }
   );
+
+  const data = expertsData.result;
 
   return (
     <ChartContainer>
       {isLoading && <LoaderWithBackground />}
       <CardCustomHeader
         title="Experts"
-        numbers={data?.count.toLocaleString()}
+        numbers={data.count?.toLocaleString()}
         description="Number of people completed"
       />
       <div className="flex items-center">
@@ -96,7 +102,7 @@ const OverviewExpertsChild = () => {
                   dominantBaseline="middle"
                   className="font-bold text-size-20px opacity-90"
                 >
-                  {data?.count.toLocaleString()}
+                  {data.count?.toLocaleString()}
                 </text>
                 <text
                   x="50%"

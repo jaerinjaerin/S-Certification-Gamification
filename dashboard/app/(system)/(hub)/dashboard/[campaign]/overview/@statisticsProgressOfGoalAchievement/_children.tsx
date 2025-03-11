@@ -25,27 +25,31 @@ import CardCustomHeader from '@/components/system/chart-header';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { getAchievementGoalProgress } from '@/app/actions/dashboard/overview/achievement-action';
 import { LoaderWithBackground } from '@/components/loader';
+import { swrFetcher } from '@/lib/fetch';
 
 export const OverviewGoalAchievementChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
   const { data: progressData, isLoading } = useSWR(
+    `/api/dashboard/overview/statistics/progress-of-goal-achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
+    swrFetcher,
     {
-      ...searchParamsToJson(searchParams),
-      key: 'getAchievementGoalProgress',
-      campaign: campaign?.id,
-    },
-    getAchievementGoalProgress
+      fallbackData: {
+        result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
+      },
+    }
   );
 
   const {
     jobData: data,
     goalTotalScore: expertRange,
     cumulativeRate: count,
-  } = progressData || { jobData: [], goalTotalScore: 0, cumulativeRate: 0 };
+  } = progressData.result || {
+    jobData: [],
+    goalTotalScore: 0,
+    cumulativeRate: 0,
+  };
 
   return (
     <ChartContainer>

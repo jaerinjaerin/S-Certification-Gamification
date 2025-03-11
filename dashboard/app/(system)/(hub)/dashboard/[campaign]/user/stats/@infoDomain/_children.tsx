@@ -29,10 +29,9 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
 import { useStateVariables } from '@/components/provider/state-provider';
 import useSWR from 'swr';
-import { searchParamsToJson } from '@/lib/query';
-import { getUserDomain } from '@/app/actions/dashboard/user/action';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { LoaderWithBackground } from '@/components/loader';
+import { swrFetcher } from '@/lib/fetch';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -149,25 +148,14 @@ const UserDomainChild = () => {
   );
   const pageSize = 10;
   const [pageIndex, setPageIndex] = useState(page);
-  const [data, setData] = useState<DomainProps[] | any>([]);
-  const total = useRef(0);
+
   const { data: domainData, isLoading } = useSWR(
-    {
-      ...searchParamsToJson(searchParams),
-      key: 'getUserDomain',
-      campaign: campaign?.id,
-      take: pageSize,
-      page: pageIndex,
-    },
-    getUserDomain
+    `/api/dashboard/user/info/domain?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
+    swrFetcher,
+    { fallbackData: { result: { data: [], total: 0 } } }
   );
 
-  useEffect(() => {
-    if (domainData) {
-      total.current = domainData.total;
-      setData(domainData.result);
-    }
-  }, [domainData]);
+  const { data, total } = domainData.result;
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -175,7 +163,7 @@ const UserDomainChild = () => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(), // 페이지네이션 모델 추가
     manualPagination: true, // 페이지네이션을 수동으로 처리
-    pageCount: Math.ceil(total.current / pageSize), // 총 페이지 수 계산
+    pageCount: Math.ceil(total / pageSize), // 총 페이지 수 계산
     state: {
       pagination: {
         pageIndex: pageIndex - 1, // 0 기반 인덱스 적용
@@ -249,7 +237,7 @@ const UserDomainChild = () => {
       {table.getRowModel().rows?.length ? (
         <div className="py-5">
           <Pagination
-            totalItems={total.current}
+            totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
             onPageChange={(page) => {

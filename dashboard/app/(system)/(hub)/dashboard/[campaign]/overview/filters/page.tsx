@@ -3,7 +3,7 @@
 import Filters from '@/app/(system)/(hub)/dashboard/_components/filters';
 import { FieldValues } from 'react-hook-form';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { downloadOverview } from '@/app/actions/dashboard/overview/overview-download-action';
+import { downloadOverview } from '@/app/actions/dashboard/overview-download-action';
 import { downloadFileByBase64 } from '@/lib/download';
 import { updateSearchParamsOnUrl } from '@/lib/url';
 

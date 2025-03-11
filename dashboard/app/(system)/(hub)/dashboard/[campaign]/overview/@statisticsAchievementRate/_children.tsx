@@ -21,51 +21,45 @@ import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable'
 import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
-import {
-  getAchievementProgress,
-  getAchievementRate,
-} from '@/app/actions/dashboard/overview/achievement-action';
-import { searchParamsToJson } from '@/lib/query';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import { LoaderWithBackground } from '@/components/loader';
 import { capitalize } from '@/lib/text';
 import { CampaignSettings } from '@prisma/client';
+import { swrFetcher } from '@/lib/fetch';
 
-const fetcher = async (params: any) => {
-  const [data, count] = await Promise.all([
-    getAchievementProgress({
-      ...params,
-      key: 'getAchievementProgress',
-    }),
-    getAchievementRate({
-      ...params,
-      key: 'getAchievementRate',
-    }),
-  ]);
-  return { data, count };
-};
 const OverviewAchievementRateChild = () => {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign).settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: dataycountData, isLoading } = useSWR(
+    [
+      `/api/dashboard/overview/info/achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
+      `/api/dashboard/overview/statistics/achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
+    ],
+    ([infoUrl, statisticsUrl]) =>
+      Promise.all([swrFetcher(infoUrl), swrFetcher(statisticsUrl)]),
     {
-      ...searchParamsToJson(searchParams),
-      campaign: campaign?.id,
-    },
-    fetcher
-  );
-  console.log(
-    '🚀 ~ OverviewAchievementRateChild ~ dataycountData:',
-    dataycountData
+      fallbackData: [
+        {
+          result: {
+            count: 0,
+          },
+        },
+        {
+          result: [],
+        },
+      ],
+    }
   );
 
-  const { data, count } = (dataycountData || {
-    data: [],
-    count: 0,
-  }) as { data: any[]; count: number };
+  const [
+    {
+      result: { count },
+    },
+    { result: data },
+  ] = dataycountData || [{ result: { count: 0 } }, { result: [] }];
 
   return (
     <ChartContainer>
