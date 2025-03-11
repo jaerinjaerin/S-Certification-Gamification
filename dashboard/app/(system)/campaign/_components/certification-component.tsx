@@ -10,6 +10,7 @@ import { Pen, Trash2 } from 'lucide-react';
 import { LoadingFullScreen } from '@/components/loader';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
+import { handleDownload } from '../../(hub)/cms/_utils/utils';
 
 export default function CertificationClientComponent() {
   const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
@@ -31,6 +32,7 @@ export default function CertificationClientComponent() {
         <h2 className="text-size-17px font-semibold">Certification List</h2>
         {!role && (
           <div className="flex gap-3">
+            <DownloadManualButton />
             <DownloadFileListPopoverButton type="template" />
             <Button
               variant="action"
@@ -188,3 +190,19 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
     </>
   );
 }
+
+const DownloadManualButton = () => {
+  const handleDownloadFile = () => {
+    const FILE_NAME = `Admin_Manual.pptx`;
+    const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
+    handleDownload(FILE_NAME, DOWNLOAD_URL);
+
+    console.log(DOWNLOAD_URL);
+  };
+
+  return (
+    <Button onClick={() => handleDownloadFile()} variant={'secondary'}>
+      Download Manual
+    </Button>
+  );
+};
