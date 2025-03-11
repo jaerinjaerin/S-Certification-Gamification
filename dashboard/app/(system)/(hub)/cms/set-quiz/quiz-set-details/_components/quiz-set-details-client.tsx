@@ -9,7 +9,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -20,7 +19,7 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { QuizStageEx } from '@/types/apiTypes';
-import { Image, QuestionType } from '@prisma/client';
+import { Image, QuestionOption, QuestionType } from '@prisma/client';
 import { ChevronDown, Download } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
@@ -45,19 +44,29 @@ export default function QuizSetDetailsClient() {
   const id = searchParams.get('id');
   const { campaign } = useStateVariables();
   const router = useRouter();
-
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset/${id}`;
+
   const { data, isLoading } = useSWR<QuizSetDetailsResponse>(
     QUIZSET_DATA_URL,
     fetcher
   );
 
+  const quizSet = data?.result.quizSet;
+  const quizSetFile = data?.result.quizSetFile;
+
+  const disabledData: any[] = [];
+
+  quizSet?.quizStages.map((stage) => {
+    stage.questions.filter((question) => {
+      if (!question.enabled) {
+        disabledData.push(question);
+      }
+    });
+  });
+
   if (isLoading || !campaign) {
     return <LoadingFullScreen />;
   }
-
-  const quizSet = data?.result.quizSet;
-  const quizSetFile = data?.result.quizSetFile;
 
   // TODO: 파일 다운로드 기능 추가
   const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
@@ -123,6 +132,14 @@ export default function QuizSetDetailsClient() {
         </h3>
         <div>
           {quizSet?.quizStages.map((stage: QuizStageEx, index: number) => {
+            const enabledData: any[] = [];
+
+            stage.questions.filter((question) => {
+              if (question.enabled) {
+                enabledData.push(question);
+              }
+            });
+
             return (
               <Collapsible
                 defaultOpen={index === 0}
@@ -131,14 +148,16 @@ export default function QuizSetDetailsClient() {
               >
                 <CollapsibleTrigger asChild>
                   <div className="flex gap-4 items-center mb-8 group">
-                    <p className="font-bold">Stage {stage.order}</p>
+                    <p className="font-bold">
+                      Stage {stage.order} ({enabledData.length})
+                    </p>
                     <Button className="w-[17px] h-[17px] bg-zinc-50 shadow-none rounded-none text-zinc-950 p-0 hover:bg-zinc-200">
                       <ChevronDown className="!w-2 h-auto group-data-[state=open]:rotate-180" />
                     </Button>
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="flex flex-col gap-4 ">
-                  {stage.questions.map((question) => {
+                  {enabledData.map((question) => {
                     return (
                       <div
                         key={question.id}
@@ -194,19 +213,21 @@ export default function QuizSetDetailsClient() {
                           <div className="space-y-3">
                             <p className="font-bold">Answer</p>
                             <ul>
-                              {question.options.map((option) => {
-                                return (
-                                  <li
-                                    className={cn(
-                                      'block',
-                                      option.isCorrect && 'text-blue-600'
-                                    )}
-                                    key={option.id}
-                                  >
-                                    {option.text}
-                                  </li>
-                                );
-                              })}
+                              {question.options.map(
+                                (option: QuestionOption) => {
+                                  return (
+                                    <li
+                                      className={cn(
+                                        'block',
+                                        option.isCorrect && 'text-blue-600'
+                                      )}
+                                      key={option.id}
+                                    >
+                                      {option.text}
+                                    </li>
+                                  );
+                                }
+                              )}
                             </ul>
                           </div>
                         </div>
@@ -217,6 +238,90 @@ export default function QuizSetDetailsClient() {
               </Collapsible>
             );
           })}
+
+          <Collapsible className="data-[state=open]:mb-[90px]">
+            <CollapsibleTrigger asChild>
+              <div className="flex gap-4 items-center mb-8 group">
+                <p className="font-bold">
+                  Stage Disabled ({disabledData.length})
+                </p>
+                <Button className="w-[17px] h-[17px] bg-zinc-50 shadow-none rounded-none text-zinc-950 p-0 hover:bg-zinc-200">
+                  <ChevronDown className="!w-2 h-auto group-data-[state=open]:rotate-180" />
+                </Button>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="flex flex-col gap-4 ">
+              {disabledData.map((question) => {
+                return (
+                  <div
+                    key={question.id}
+                    className="p-6 border border-zinc-200 rounded-lg space-y-[3.313rem]"
+                  >
+                    <Table className="bg-zinc-50 rounded-md py-3">
+                      <TableHeader>
+                        <TableRow className="border-none">
+                          {quizTableData.map((header) => {
+                            return (
+                              <TableHead key={header.header} className="px-3.5">
+                                {header.header}
+                              </TableHead>
+                            );
+                          })}
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          {quizTableData.map((key) => {
+                            return (
+                              <TableCell key={key.accessKey} className="px-3.5">
+                                {(key.image &&
+                                  key.accessKey === 'backgroundImage') ||
+                                key.accessKey === 'characterImage' ? (
+                                  <img
+                                    src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${question[key.accessKey]?.imagePath}`}
+                                    alt={question[key.accessKey]?.alt ?? ''}
+                                    className="size-16 bg-zinc-200 rounded-md object-cover"
+                                  />
+                                ) : question[key.accessKey] ? (
+                                  question[key.accessKey]?.toString()
+                                ) : (
+                                  '-'
+                                )}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="space-y-3">
+                        <p className="font-bold">Question</p>
+                        <p>{question.text}</p>
+                      </div>
+                      <div className="space-y-3">
+                        <p className="font-bold">Answer</p>
+                        <ul>
+                          {question.options.map((option: QuestionOption) => {
+                            return (
+                              <li
+                                className={cn(
+                                  'block',
+                                  option.isCorrect && 'text-blue-600'
+                                )}
+                                key={option.id}
+                              >
+                                {option.text}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </CollapsibleContent>
+          </Collapsible>
         </div>
         <div className="w-full flex justify-center mt-[1.188rem]">
           <Button onClick={() => router.back()} variant={'secondary'}>
