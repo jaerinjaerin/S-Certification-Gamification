@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     const fileName = file.name;
-    const languageCode = fileName.split('.')[0];
+    const languageCode = fileName.split('.')[0].split('_')[0];
 
     const language = await prisma.language.findFirst({
       where: {
