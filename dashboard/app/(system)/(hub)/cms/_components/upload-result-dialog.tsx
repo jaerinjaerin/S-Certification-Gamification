@@ -12,12 +12,13 @@ import {
 } from '@/components/ui/dialog';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
-import { Check, CircleX, X } from 'lucide-react';
+import { Check, CircleAlert, CircleX, X } from 'lucide-react';
 import {
   FilesTableComponent,
   Td,
 } from '../set-quiz/_components/files-table-component';
 import { UploadExcelFileVariant } from '../set-quiz/_type/type';
+import { isEmpty } from '../_utils/utils';
 
 type UploadFilesResult = ProcessResult | any; // TODO: fix type
 
@@ -38,7 +39,6 @@ export default function UploadResultDialog({
   isLoading,
   totalFiles,
 }: UploadResultDialogProps) {
-  // console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
     const iconContainerClasses = cn(
@@ -59,10 +59,32 @@ export default function UploadResultDialog({
 
   const renderResultMessage = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
+
     if (variant === 'quiz') {
+      const successfulUploads = uploadFilesResult.filter(
+        (item) => item.success
+      ).length;
       return (
         <span className="text-size-14px font-semibold">
-          {`Out of a total of ${totalFiles} files, ${uploadFilesResult.filter((item) => item.success).length} files were successfully uploaded.`}
+          {`Out of a total of ${totalFiles} files, ${successfulUploads} files were successfully uploaded.`}
+        </span>
+      );
+    }
+
+    if (variant === 'activityId') {
+      const failedUploads = uploadFilesResult.flatMap(
+        (item) => item.result.failures
+      );
+      const successfulUploads = uploadFilesResult.flatMap(
+        (item) => item.result.data
+      );
+      const totalUploads = failedUploads.length + successfulUploads.length;
+
+      return (
+        <span>
+          {failedUploads.length === 0
+            ? 'The file has been uploaded successfully.'
+            : `Out of a total of ${totalUploads} data items, ${successfulUploads.length} data items were successfully uploaded.`}
         </span>
       );
     }
@@ -101,12 +123,21 @@ export default function UploadResultDialog({
         <div className="flex flex-col gap-5">
           <div className="flex gap-2 items-center">
             <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-            {uploadFilesResult.filter((item) => !item.success).length} files
-            failed to upload.
+            {variant !== 'activityId' && (
+              <span>
+                {uploadFilesResult.filter((item) => !item.success).length} files
+                failed to upload.
+              </span>
+            )}
+            {variant === 'activityId' && (
+              <span>
+                {`${uploadFilesResult.flatMap((item) => item.result.failures).length} items failed to upload.`}
+              </span>
+            )}
           </div>
 
           <div className="overflow-y-scroll max-h-[373px] border border-zinc-200 rounded-md">
-            {variant === 'quiz' && (
+            {(variant === 'quiz' || variant === 'hq') && (
               <table className={cn('w-full')}>
                 <thead>
                   <tr className="text-zinc-500">
@@ -155,25 +186,36 @@ export default function UploadResultDialog({
               <></>
             )}
             {variant === 'activityId' && (
-              <FilesTableComponent>
-                {uploadFilesResult.map((item, index) => {
-                  console.log('🥕 item', item);
-                  return (
-                    <tr key={index} className="border-t border-t-zinc-200">
-                      <Td>{index + 1}</Td>
-                      <Td>
-                        {!item.success ? (
-                          <span className="text-red-500">
-                            {item.error.message}
-                          </span>
-                        ) : (
-                          <span>{item.quizSetFile?.path}</span>
-                        )}
-                      </Td>
-                    </tr>
-                  );
-                })}
-              </FilesTableComponent>
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <Td>Order</Td>
+                    <Td>File Result</Td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {uploadFilesResult.map((item, index) => {
+                    if (!isEmpty(item.result.failures)) {
+                      return item.result.failures.map(
+                        (failure: any, failureIndex: number) => {
+                          return (
+                            <tr
+                              key={failureIndex}
+                              className="border-t border-t-zinc-200"
+                            >
+                              <Td>{failureIndex + 1}</Td>
+                              <Td className="text-red-500">
+                                {failure.message}
+                              </Td>
+                            </tr>
+                          );
+                        }
+                      );
+                    }
+                    return <>11</>;
+                  })}
+                </tbody>
+              </table>
             )}
           </div>
         </div>

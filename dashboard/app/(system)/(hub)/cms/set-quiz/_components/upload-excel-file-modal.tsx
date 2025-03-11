@@ -9,7 +9,6 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
-  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -121,7 +120,7 @@ const UploadExcelFileModal = forwardRef<
         setIsDialogOpen,
         setProcessResult
       );
-      // if (result) setProcessResult(result);
+
       updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
@@ -249,7 +248,7 @@ const UploadExcelFileModal = forwardRef<
         <UploadResultDialog
           totalFiles={uploadFiles[variant].length}
           isLoading={isLoading}
-          uploadFilesResult={processResult}
+          uploadFilesResult={uploadFilesResult}
           onOpenChange={() => {
             setProcessResult([]);
             handleDialogOpen(false);
