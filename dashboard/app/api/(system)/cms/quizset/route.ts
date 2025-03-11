@@ -1,7 +1,11 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
-import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
+import {
+  processExcelBuffer,
+  ProcessResult,
+  QuizData,
+} from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { BadgeType, FileType, QuestionType } from '@prisma/client';
@@ -58,7 +62,7 @@ export async function POST(request: NextRequest) {
       file.name
     );
 
-    console.log('result: ', result);
+    // console.log('result: ', result);
     if (!result.success) {
       console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
@@ -215,6 +219,48 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const checkMissingStages = (
+      questions: QuizData[],
+      maxStage: number
+    ): number[] => {
+      // 1. 각 stage의 존재 여부를 확인하기 위한 Set 생성
+      const filteredQuestions = questions.filter(
+        (question) => question.enabled
+      );
+      const existingStages = new Set(
+        filteredQuestions.map((question) => question.stage)
+      );
+
+      // 2. 1부터 maxStage까지의 숫자 중 없는 stage 찾기
+      const missingStages = Array.from(
+        { length: maxStage },
+        (_, i) => i + 1
+      ).filter((stage) => !existingStages.has(stage));
+
+      return missingStages; // 비어 있는 stage 리스트 반환
+    };
+
+    const missingStages = checkMissingStages(questions, maxStage);
+
+    console.log(
+      missingStages.length === 0
+        ? '✅ 모든 스테이지가 존재합니다.'
+        : `🚨 누락된 스테이지: ${missingStages}`
+    );
+
+    if (missingStages.length > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Missing stages: ${missingStages.join(', ')}`,
+            code: ERROR_CODES.HQ_DOMAIN_NOT_FOUND,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     // HQ 문제 불러오기
     const hqDomainCode = 'OrgCode-7';
     const hqMaxQuestionIndex = 100;
@@ -365,7 +411,7 @@ export async function POST(request: NextRequest) {
       (id) => !characterImages.find((image) => image.title === id)
     );
 
-    console.log('notRegisteredCharacterImages: ', notRegisteredCharacterImages);
+    // console.log('notRegisteredCharacterImages: ', notRegisteredCharacterImages);
 
     if (notRegisteredCharacterImages.length > 0) {
       console.error('Character images not registered');
@@ -744,21 +790,22 @@ export async function POST(request: NextRequest) {
     // =============================================
     const s3Client = getS3Client();
 
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
     // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
 
-    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
@@ -1032,7 +1079,7 @@ export async function GET(request: Request) {
       {} as Record<string, typeof noQuizSetActivityBadges>
     );
 
-    console.log('groupedBadges: ', groupedBadges);
+    // console.log('groupedBadges: ', groupedBadges);
 
     let extraGroupedQuizSets: any[] = [];
 
