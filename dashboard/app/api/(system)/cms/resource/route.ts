@@ -1,4 +1,3 @@
-import { prisma } from '@/model/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -7,7 +6,5 @@ export async function GET() {
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

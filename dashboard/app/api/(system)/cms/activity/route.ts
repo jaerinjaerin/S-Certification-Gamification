@@ -599,7 +599,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('Error create campaign: ', error);
+    console.error('Error upload activity ID: ', error);
     return NextResponse.json(
       {
         success: false,
@@ -610,10 +610,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
-  // });
 }
 
 export async function GET(request: Request) {

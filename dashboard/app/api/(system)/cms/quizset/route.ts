@@ -130,6 +130,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // HQ 문제는
+    if (domainCode === 'OrgCode-7') {
+      if (jobGroup !== 'ff') {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Invalid job code. Must be "ff"`,
+              code: ERROR_CODES.INVALID_JOB_GROUP,
+            },
+          },
+          { status: 400 }
+        );
+      }
+
+      if (languageCode !== 'en') {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Invalid language code. Must be "en"`,
+              code: ERROR_CODES.INVALID_LANGUAGE_CODE,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
     // const jobCodes = jobGroup === 'all' ? ['ff', 'fsm'] : [jobGroup];
     const jobCodes = [jobGroup];
 
