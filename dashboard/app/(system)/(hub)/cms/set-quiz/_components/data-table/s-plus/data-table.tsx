@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Search } from 'lucide-react';
+import { ChevronDown, ChevronsUpDown, ChevronUp, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import {
@@ -99,6 +99,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     }));
   }, [table, rows]);
 
+  const noSortData = ['url', 'quiz set', 'activity id', 'badge', 'ui language'];
+
   return (
     <div>
       <div className="flex items-center justify-between pt-[1.438rem] pb-2">
@@ -170,13 +172,46 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="p-4 text-nowrap" key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                    <TableHead
+                      className="p-4 text-nowrap"
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-1">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        {!(
+                          header.id.toLowerCase() === 'url' ||
+                          header.id.toLowerCase() === 'quizset' ||
+                          header.id.toLowerCase() === 'activityid' ||
+                          header.id.toLowerCase() === 'badge' ||
+                          header.id.toLowerCase() === 'uilanguage'
+                        ) ? (
+                          <>
+                            {(() => {
+                              const sortDirection = header.column.getIsSorted();
+                              return sortDirection
+                                ? {
+                                    asc: (
+                                      <ChevronDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                    desc: (
+                                      <ChevronUp className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                  }[sortDirection]
+                                : null;
+                            })()}
+                            {header.column.getCanSort() &&
+                            !header.column.getIsSorted() ? (
+                              <ChevronsUpDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                            ) : null}
+                          </>
+                        ) : null}
+                      </div>
                     </TableHead>
                   );
                 })}
