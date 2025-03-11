@@ -1,7 +1,8 @@
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
-const Dashboard = () => {
-  return notFound();
+const DashboardWithParams = () => {
+  redirect(`/dashboard/overview`);
+  return null;
 };
 
-export default Dashboard;
+export default DashboardWithParams;

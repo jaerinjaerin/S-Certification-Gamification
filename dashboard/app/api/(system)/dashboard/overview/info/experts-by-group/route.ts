@@ -11,6 +11,8 @@ import {
   removeDuplicateUsers,
 } from '@/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 async function fetchUserStatistics(
   where: any,
   stageIndex: number,

@@ -2,13 +2,12 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { decrypt } from '@/utils/encrypt';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { Account, Prisma } from '@prisma/client';
 import { refreshToken } from '@/services/api/refresh_token';
 import UserWhereInput = Prisma.UserWhereInput;
+import { querySearchParams } from '@/lib/query';
 
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 
-// UserQuizStatistics 사용
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {

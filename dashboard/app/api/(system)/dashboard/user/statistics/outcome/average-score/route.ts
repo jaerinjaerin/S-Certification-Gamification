@@ -6,6 +6,8 @@ import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
 import { querySearchParams } from '@/lib/query';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;

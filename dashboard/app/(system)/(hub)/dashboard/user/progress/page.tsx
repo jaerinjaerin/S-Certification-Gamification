@@ -22,8 +22,8 @@ import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
 import Pagination from '@/components/pagenation';
 import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { getUserProgress } from '@/app/actions/dashboard/user/action';
 import { useSearchParams } from 'next/navigation';
+import { swrFetcher } from '@/lib/fetch';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -51,33 +51,33 @@ const UserProgress = () => {
   const state = { fieldValues: Object.fromEntries(searchParams.entries()) };
   const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
   const pageSize = 50; // 페이지당 데이터 개수
-  const { data: progressData, isLoading: loading } = useSWR(
-    {
-      key: 'getUserProgress',
-      ...state.fieldValues,
-      campaign: campaign?.id,
-      take: pageSize,
-      page: pageIndex,
-    },
-    getUserProgress
-  );
-  console.log('🚀 ~ UserProgress ~ progressData:', progressData);
-
-  const { result: data, total } = (progressData || {
-    result: [],
-    total: 0,
-  }) as { result: UserListProps[]; total: number };
-  //
   // const { data: progressData, isLoading: loading } = useSWR(
-  //   `/api/dashboard/user/progress?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
-  //   swrFetcher
+  //   {
+  //     key: 'getUserProgress',
+  //     ...state.fieldValues,
+  //     campaign: campaign?.id,
+  //     take: pageSize,
+  //     page: pageIndex,
+  //   },
+  //   getUserProgress
   // );
+  // console.log('🚀 ~ UserProgress ~ progressData:', progressData);
 
-  // const { result: data, total }: { result: UserListProps[]; total: 0 } =
-  //   progressData || {
-  //     result: [],
-  //     total: 0,
-  //   };
+  // const { result: data, total } = (progressData || {
+  //   result: [],
+  //   total: 0,
+  // }) as { result: UserListProps[]; total: number };
+  //
+  const { data: progressData, isLoading: loading } = useSWR(
+    `/api/dashboard/user/progress?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
+    swrFetcher
+  );
+
+  const { result: data, total }: { result: UserListProps[]; total: 0 } =
+    progressData || {
+      result: [],
+      total: 0,
+    };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터

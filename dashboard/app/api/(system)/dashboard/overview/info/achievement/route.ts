@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { domainCheckOnly, getJobIds } from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {

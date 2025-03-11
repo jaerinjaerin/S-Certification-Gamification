@@ -4,7 +4,7 @@ import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { getJobIds } from '@/lib/data';
 
-// UserQuizStatistics 중 isCompleted 기 true 인 유저
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {

@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 const UserDomainChild = dynamic(() => import('./_children'), {
   ssr: false,
 });
-const UserDomain = ({ params }: { params: { campaign: string } }) => {
+const UserDomain = () => {
   return <UserDomainChild />;
 };
 

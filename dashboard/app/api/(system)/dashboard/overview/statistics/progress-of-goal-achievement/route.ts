@@ -7,6 +7,8 @@ import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { domainCheckOnly, getJobIds, removeDuplicateUsers } from '@/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 async function processUserQuizBadgeStageStatistics(
   weeklyWhere: any,
   moreWhere: any,

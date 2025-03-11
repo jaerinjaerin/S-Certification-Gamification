@@ -7,6 +7,8 @@ import { buildWhereWithValidKeys } from '@/lib/where';
 import { UserQuizBadgeStageStatistics } from '@prisma/client';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
 
+export const dynamic = 'force-dynamic';
+
 async function fetchUserStatistics(
   where: any,
   stageIndexes: number[],
