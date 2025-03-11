@@ -35,7 +35,6 @@ interface NoServiceChannelDataTableProps {
   columns: ColumnDef<DomainChannel>[];
 }
 
-// TODO: 데이터 반환 확인 필요
 export default function NonSplusDataTable() {
   const { campaign } = useStateVariables();
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel?campaignId=${campaign?.id}`;

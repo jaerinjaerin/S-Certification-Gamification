@@ -26,6 +26,9 @@ import {
 } from '@tanstack/react-table';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
+import { cn } from '@/lib/utils';
+import { hqColumns } from './hq-columns';
+import { isEmpty } from '../../../../_utils/utils';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -42,9 +45,16 @@ export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
   const HQquizSet = groupedQuizSets.filter(
     (quizSet) => quizSet.domain.code === ORG_CODE_PRIORITY
   );
-  const sortedGroupedQuizSets = [...HQquizSet, ...filteredGroupedQuizSets];
+  const sortedGroupedQuizSets = [...filteredGroupedQuizSets];
 
-  return <DataTable data={sortedGroupedQuizSets} columns={columns} />;
+  return (
+    <>
+      <HQDataTable data={HQquizSet} columns={hqColumns} />
+      {!isEmpty(sortedGroupedQuizSets) && (
+        <DataTable data={sortedGroupedQuizSets} columns={columns} />
+      )}
+    </>
+  );
 }
 
 function DataTable({ data = [], columns }: QuizSetDataTableProps) {
@@ -103,8 +113,6 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     <div>
       <div className="flex items-center justify-between pt-[1.438rem] pb-2">
         <div className="flex items-center justify-end space-x-3 py-4">
-          {/* Total: {table.getFilteredRowModel().rows.length}, Domain:
-          {new Set(data.map((item) => item.quizSet.domain.id)).size} */}
           <div className=" text-sm text-zinc-950">
             Total :
             <strong className="font-bold">
@@ -184,34 +192,96 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => {
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell className="px-4 py-6" key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
+            {table.getRowModel().rows.map((row) => {
+              const isHQ = row.original.domain?.code === 'OrgCode-7';
+              return (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className={cn(isHQ && 'bg-[#EFF6FF80]')}
                 >
-                  No results.
-                </TableCell>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell className="px-4 py-6" key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
+
+function HQDataTable({ data = [], columns }: QuizSetDataTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+    },
+  });
+
+  return (
+    <div className="mt-8 mb-4">
+      <div className="rounded-md border data-table">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead className="p-4 text-nowrap" key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            )}
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => {
+              const isHQ = row.original.domain?.code === 'OrgCode-7';
+              return (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className={cn(isHQ && 'bg-[#EFF6FF80]')}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell className="px-4 py-6" key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>
