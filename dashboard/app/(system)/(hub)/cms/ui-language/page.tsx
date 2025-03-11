@@ -3,7 +3,6 @@ import { DownloadFileListPopoverButton } from '../_components/custom-popover';
 import SectionTitle from '../_components/section-title-container';
 import { UiLanguageDataTable } from './_components/data-table-v2';
 import DownloadLanguages from './_components/download-files';
-import { ExcelUploader } from './_components/test-upload-button';
 import UploadExcelFileModal from './_components/upload-excel-file-modal';
 import { LanguageDataProvider } from './_provider/language-data-provider';
 
@@ -23,8 +22,6 @@ export default async function UILanguagePage() {
             </UploadExcelFileModal>
           </div>
         </div>
-
-        {/* <ExcelUploader /> */}
         <div className="border rounded-md">
           <UiLanguageDataTable />
         </div>

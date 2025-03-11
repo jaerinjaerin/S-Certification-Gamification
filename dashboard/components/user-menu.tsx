@@ -30,10 +30,10 @@ export function UserMenu({ className }: UserMenuProps) {
           align="end"
           className="w-[14rem] bg-background px-3 py-5 dark:border-borderDark rounded-xl shadow-none border border-zinc-200 space-y-3"
         >
-          <DropdownMenuItem className="flex-col items-start py-0 px-3">
+          {/* <DropdownMenuItem className="flex-col items-start py-0 px-3">
             <span className="font-medium">User name</span>
             <span className="text-zinc-500">address@example.com</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {/* <DropdownMenuSeparator className="bg-border dark:bg-borderDark !my-1" /> */}
           <div className="flex flex-col flex-grow py-2 px-3 transition-colors focus:bg-accent focus:text-accent-foreground dark:hover:bg-[#27272A]">
             <form

@@ -38,6 +38,12 @@ const CurrentBreadCrumb = () => {
     }
   };
 
+  const UppercaseFormat = (text: string) => {
+    const words = text.split(' ');
+
+    return words[0].toUpperCase() + ' ' + words[1];
+  };
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -78,7 +84,9 @@ const CurrentBreadCrumb = () => {
                   item.toLowerCase() === 'cms' ? 'uppercase' : 'capitalize',
                 ])}
               >
-                {item}
+                {item.toLocaleLowerCase() === 'ui language'
+                  ? UppercaseFormat(item)
+                  : item}
               </BreadcrumbItem>
               {index < paths.length - 1 && ( // 마지막 아이템에는 Separator를 추가하지 않음
                 <BreadcrumbSeparator>
