@@ -259,6 +259,12 @@ const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
               message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has NewOrder!`,
             });
           }
+          if (groupedData[no].timeLimitSeconds == null) {
+            errors.push({
+              line: headerIndex + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no timeLimitSeconds!`,
+            });
+          }
           if (groupedData[no].text == null || groupedData[no].text === '') {
             errors.push({
               line: headerIndex + groupedData[no].originQuestionIndex,
