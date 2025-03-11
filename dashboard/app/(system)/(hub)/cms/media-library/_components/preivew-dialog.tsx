@@ -11,7 +11,7 @@ import { DropzoneProps, FileWithExtraInfo } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useState } from 'react';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import dayjs from 'dayjs';
 
 type OptionalDropzoneProps = Omit<
@@ -57,7 +57,7 @@ export function PreviewDialog({
         className="p-10 gap-[2.625rem]"
         onInteractOutside={(e) => e.preventDefault()}
       >
-        {loading && <LoaderWithBackground />}
+        {loading && <LoadingFullScreen />}
         <DialogHeader>
           <DialogTitle className="text-size-24px font-medium">
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}

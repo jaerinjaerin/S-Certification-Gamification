@@ -1,6 +1,6 @@
 'use client';
 import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -196,7 +196,7 @@ export default function UploadExcelFileModal({
           )}
           {!isEmpty(files) && (
             <div>
-              {isConverting && <LoaderWithBackground />}
+              {isConverting && <LoadingFullScreen />}
               {!isConverting && (
                 <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
                   <FilesTableComponent>

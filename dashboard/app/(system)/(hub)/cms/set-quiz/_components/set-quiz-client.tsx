@@ -5,7 +5,7 @@ import { DownloadFileListPopoverButton } from '../../_components/custom-popover'
 
 import useQuizSetState, { UserTabState } from '../_store/quizset-state';
 
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
 import { isEmpty } from '../../_utils/utils';
 import { fetcher } from '../../lib/fetcher';
@@ -39,7 +39,7 @@ export function SetQuizClient() {
   );
 
   if (isLoading) {
-    return <LoaderWithBackground />;
+    return <LoadingFullScreen />;
   }
 
   if (

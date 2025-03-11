@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import { useState } from 'react';
 import ChartContainer from '@/components/system/chart-container';
 import {
   Table,
@@ -24,6 +22,7 @@ import useSWR from 'swr';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import { swrFetcher } from '@/lib/fetch';
+import { usePageIndex } from '@/components/hook/use-page-index';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -47,37 +46,24 @@ const columns: ColumnDef<UserListProps>[] = [
 const UserProgress = () => {
   const searchParams = useSearchParams();
   const { campaign } = useStateVariables();
-  const page = (searchParams.get('progressPageIndex') as string | null) ?? '1';
   const state = { fieldValues: Object.fromEntries(searchParams.entries()) };
-  const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
+  const [pageIndex, setPageIndex] = usePageIndex(
+    searchParams,
+    'progressPageIndex'
+  );
   const pageSize = 50; // 페이지당 데이터 개수
-  // const { data: progressData, isLoading: loading } = useSWR(
-  //   {
-  //     key: 'getUserProgress',
-  //     ...state.fieldValues,
-  //     campaign: campaign?.id,
-  //     take: pageSize,
-  //     page: pageIndex,
-  //   },
-  //   getUserProgress
-  // );
-  // console.log('🚀 ~ UserProgress ~ progressData:', progressData);
 
-  // const { result: data, total } = (progressData || {
-  //   result: [],
-  //   total: 0,
-  // }) as { result: UserListProps[]; total: number };
   //
-  const { data: progressData, isLoading: loading } = useSWR(
+  const { data: progressData, isLoading } = useSWR(
     `/api/dashboard/user/progress?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
-    swrFetcher
+    swrFetcher,
+    { fallbackData: { result: { data: [], total: 0 } } }
   );
 
-  const { result: data, total }: { result: UserListProps[]; total: 0 } =
-    progressData || {
-      result: [],
-      total: 0,
-    };
+  const { data, total } = progressData.result || {
+    data: [],
+    total: 0,
+  };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -94,15 +80,6 @@ const UserProgress = () => {
     },
   });
 
-  // useEffect(() => {
-  //   if (state.fieldValues) {
-  //     updateSearchParamsOnUrl({
-  //       ...state.fieldValues,
-  //       progressPageIndex: pageIndex,
-  //     });
-  //   }
-  // }, [state.fieldValues, pageIndex]);
-
   const onDownload = () => {
     if (state.fieldValues) {
       const url = `/api/dashboard/user/progress/download?${searchParams.toString()}`;
@@ -112,7 +89,7 @@ const UserProgress = () => {
 
   return (
     <ChartContainer>
-      {loading && <LoaderWithBackground />}
+      {isLoading && <LoaderWithBackground />}
       <CardCustomHeaderWithDownload
         title="Stage Progress"
         onDownload={onDownload}
@@ -166,7 +143,7 @@ const UserProgress = () => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {loading ? '' : 'No results.'}
+                  {isLoading ? '' : 'No results.'}
                 </TableCell>
               </TableRow>
             )}
@@ -181,7 +158,7 @@ const UserProgress = () => {
             totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
-            onPageChange={(page) => setPageIndex(page)}
+            onPageChange={setPageIndex}
           />
         </div>
       ) : (

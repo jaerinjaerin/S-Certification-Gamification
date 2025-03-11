@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
 import {
@@ -53,7 +53,7 @@ export default function QuizSetDetailsClient() {
   );
 
   if (isLoading || !campaign) {
-    return <LoaderWithBackground />;
+    return <LoadingFullScreen />;
   }
 
   const quizSet = data?.result.quizSet;

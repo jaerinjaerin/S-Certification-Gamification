@@ -5,6 +5,7 @@ import { updateSearchParamsOnUrl } from '@/lib/url';
 
 const UserFilterForm = () => {
   const onSubmit = (formData: FieldValues, action?: boolean) => {
+    console.log('🚀 ~ onSubmit ~ formData:', formData);
     updateSearchParamsOnUrl(formData);
   };
 
