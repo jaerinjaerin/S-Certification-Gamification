@@ -61,7 +61,6 @@ export const StateVariablesProvider = ({
 
   // campaignData가 변경될 때 campaign 검증 및 다이얼로그 처리
   useEffect(() => {
-    console.log('🚀 ~ useEffect ~ campaignData:', campaignData);
     if (campaignData) {
       const campaignsCalled = campaignData.result.campaigns;
       setCampaigns(campaignsCalled);

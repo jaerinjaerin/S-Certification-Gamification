@@ -14,6 +14,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import ChartContainer from '@/components/system/chart-container';
 import CardCustomHeader from '@/components/system/chart-header';
 import { swrFetcher } from '@/lib/fetch';
+import { CampaignSettings } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 import {
   Bar,
@@ -35,6 +36,7 @@ const COLORS = [chartColorPrimary, chartColorSecondary];
 
 const OverviewExpertsChild = () => {
   const { campaign } = useStateVariables() as { campaign: Campaign };
+  const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
   const { data: expertsData, isLoading } = useSWR(
     `/api/dashboard/overview/statistics/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
@@ -50,7 +52,7 @@ const OverviewExpertsChild = () => {
     }
   );
 
-  const data = expertsData.result;
+  const data = removeAdvanced(expertsData.result, settings?.secondBadgeName);
 
   return (
     <ChartContainer>
@@ -71,28 +73,27 @@ const OverviewExpertsChild = () => {
                 fill={chartColorPrimary}
                 dataKey="value"
                 label={({ name, value }) => {
-                  return `${
-                    name.toLowerCase() === 'expert'
-                      ? campaign?.settings?.firstBadgeName
-                      : campaign?.settings?.secondBadgeName
-                  }: ${value.toLocaleString()}`;
+                  console.log('🚀 ~ OverviewExpertsChild ~ name:', name);
+                  return `${name}: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
-                {data?.pie.map(
-                  (entry: { name: string; value: number }, index: number) => {
-                    return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                        name={
-                          entry.name === 'expert'
-                            ? campaign?.settings?.firstBadgeName
-                            : campaign?.settings?.secondBadgeName
-                        }
-                      />
-                    );
-                  }
-                )}
+                {data?.pie
+                  .map(
+                    (entry: { name: string; value: number }, index: number) => {
+                      return (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                          name={
+                            entry.name === 'expert'
+                              ? settings?.firstBadgeName || 'Expert'
+                              : settings?.secondBadgeName || 'Advanced'
+                          }
+                        />
+                      );
+                    }
+                  )
+                  .filter(Boolean)}
               </Pie>
               <>
                 <text
@@ -150,26 +151,26 @@ const OverviewExpertsChild = () => {
               <Legend />
               <Bar
                 dataKey="expert"
-                name={campaign?.settings?.firstBadgeName}
+                name={settings?.firstBadgeName || 'Expert'}
                 stackId="a"
                 fill={chartColorPrimary}
               >
                 <LabelList
                   dataKey="expert"
-                  name={campaign?.settings?.firstBadgeName}
+                  name={settings?.firstBadgeName || 'Expert'}
                   content={renderLabelContent}
                 />
               </Bar>
-              {campaign?.settings?.secondBadgeName && (
+              {settings?.secondBadgeName && (
                 <Bar
                   dataKey="advanced"
-                  name={campaign?.settings.secondBadgeName}
+                  name={settings.secondBadgeName}
                   stackId="a"
                   fill={chartColorSecondary}
                 >
                   <LabelList
                     dataKey="advanced"
-                    name={campaign?.settings.secondBadgeName}
+                    name={settings.secondBadgeName}
                     content={renderLabelContent}
                   />
                 </Bar>
@@ -221,3 +222,20 @@ const renderCustomTick = (props: any) => {
     </text>
   );
 };
+
+function removeAdvanced(data: any, secondBadgeName: string | null) {
+  if (!secondBadgeName) {
+    // secondBadgeName이 null 또는 빈값일 경우
+    return {
+      pie: data.pie.filter((item: any) => item.name !== 'advanced'),
+      bar: data.bar.map(
+        ({ name, expert }: { name: string; expert: number }) => ({
+          name,
+          expert,
+        })
+      ),
+      count: data.pie.find((item: any) => item.name === 'expert')?.value || 0,
+    };
+  }
+  return data; // secondBadgeName이 존재하면 원본 데이터 반환
+}
