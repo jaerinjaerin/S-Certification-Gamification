@@ -23,7 +23,7 @@ export const LoadingFullScreen = (props: HTMLAttributes<HTMLDivElement>) => {
 export const LoaderWithBackground = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <Loader
-      className="inset-0 z-[9999] absolute flex items-center justify-center bg-white/80 rounded-xl"
+      className="inset-0 z-40 absolute flex items-center justify-center bg-white/80 rounded-xl"
       {...props}
     />
   );
