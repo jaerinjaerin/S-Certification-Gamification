@@ -227,7 +227,7 @@ const UploadExcelFileModal = forwardRef<
     ...uploadState.processResult,
     ...getInvalidFiles(),
   ];
-  console.log('🥕 uploadState', uploadState);
+
   return (
     <div ref={ref}>
       <Dialog open={isDialogOpen} onOpenChange={handleDialogOpen}>

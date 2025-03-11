@@ -63,6 +63,12 @@ export async function GET(request: NextRequest, props: Props) {
     if (campaignSlug.toLowerCase() !== "s25") {
       const campaign = await prisma.campaign.findFirst({
         where: { slug: campaignSlug },
+        // where: {
+        //   slug: {
+        //     equals: campaignSlug,
+        //     mode: "insensitive", // 대소문자 구분 없이 검색
+        //   },
+        // },
         include: {
           settings: true,
         },
