@@ -94,8 +94,17 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
+    const quizSetFile = await prisma.quizSetFile.findFirst({
+      where: {
+        quizSetId: quizSet.id,
+        campaignId: quizSet.campaignId,
+        // languageId: quizSet.languageId,
+        // domainId: quizSet.domainId,
+      },
+    });
+
     return NextResponse.json(
-      { success: true, result: { quizSet } },
+      { success: true, result: { quizSet, quizSetFile } },
       { status: 200 }
     );
   } catch (error: unknown) {
