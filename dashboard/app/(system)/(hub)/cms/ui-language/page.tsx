@@ -22,7 +22,7 @@ export default async function UILanguagePage() {
             </UploadExcelFileModal>
           </div>
         </div>
-        <div className="border rounded-md">
+        <div>
           <UiLanguageDataTable />
         </div>
       </div>

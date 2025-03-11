@@ -22,9 +22,7 @@ export default async function TargetPage() {
             </UploadExcelFileModal>
           </div>
         </div>
-        <div className="border rounded-md">
-          <DataTable />
-        </div>
+        <DataTable />
       </div>
     </TargetDataProvider>
   );
