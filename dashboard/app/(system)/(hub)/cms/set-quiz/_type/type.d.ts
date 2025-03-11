@@ -43,6 +43,13 @@ export interface QuizSetResponse {
   };
 }
 
+export interface QuizSetDetailsResponse {
+  success: boolean;
+  result: {
+    quizSet: QuizSetEx;
+  };
+}
+
 export interface NoServiceChannelsResponse {
   success: boolean;
   result: {

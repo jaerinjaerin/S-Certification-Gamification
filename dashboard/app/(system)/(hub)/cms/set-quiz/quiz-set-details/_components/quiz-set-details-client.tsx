@@ -24,10 +24,10 @@ import { Image, QuestionType } from '@prisma/client';
 import { ChevronDown, Download } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { handleDownload } from '../../../_utils/utils';
+// import { handleDownload } from '../../../_utils/utils';
 import { fetcher } from '../../../lib/fetcher';
-import { QuizSetResponse } from '../../_type/type';
-import dayjs from 'dayjs';
+import { QuizSetDetailsResponse } from '../../_type/type';
+// import dayjs from 'dayjs';
 
 type accessKeyType = {
   order: string;
@@ -46,8 +46,8 @@ export default function QuizSetDetailsClient() {
   const { campaign } = useStateVariables();
   const router = useRouter();
 
-  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset?campaignId=${campaign?.id}`;
-  const { data, isLoading } = useSWR<QuizSetResponse>(
+  const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset/${id}`;
+  const { data, isLoading } = useSWR<QuizSetDetailsResponse>(
     QUIZSET_DATA_URL,
     fetcher
   );
@@ -56,18 +56,11 @@ export default function QuizSetDetailsClient() {
     return <LoaderWithBackground />;
   }
 
-  const matchedQuizSet = data?.result.groupedQuizSets.filter(
-    (quizSet) => quizSet.quizSet?.id === id
-  )[0];
+  const quizSet = data?.result.quizSet;
 
-  if (!matchedQuizSet || !matchedQuizSet.quizSet) {
-    return <div>Quiz set not found</div>;
-  }
-
-  const { quizSet, quizSetFile, domain } = matchedQuizSet;
-
-  const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
-  const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
+  // TODO: 파일 다운로드 기능 추가
+  // const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
+  // const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
 
   const quizTableData: {
     header: string;
@@ -91,15 +84,16 @@ export default function QuizSetDetailsClient() {
           User Information
         </h3>
         <div className="flex items-center gap-3 mb-[1.688rem]">
-          <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} />
+          {/* <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} /> */}
           <div className="flex items-center gap-2">
             <span className="text-nowrap text-secondary">
               {/* data : {quizSetFile?.updatedAt} */}
-              date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
+              {/* date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')} */}
             </span>
             <Button
               onClick={() =>
-                handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL)
+                // handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL)
+                console.log('파일 다운로드 필요')
               }
               className="bg-white text-zinc-950 shadow-none size-8"
             >
@@ -107,19 +101,19 @@ export default function QuizSetDetailsClient() {
             </Button>
           </div>
         </div>
-        <InfoComponent
+        {/* <InfoComponent
           className="mb-[1.188rem]"
           title="Domain"
           content={domain.name}
-        />
+        /> */}
         <div className="flex space-x-[5.125rem]">
           <InfoComponent
             title="Job Group"
-            content={quizSet.jobCodes[0].toUpperCase()}
+            content={quizSet?.jobCodes[0].toUpperCase()}
           />
           <InfoComponent
             title="Quiz Set Language"
-            content={quizSet.language?.name}
+            content={quizSet?.language?.name}
           />
         </div>
       </div>
@@ -128,7 +122,7 @@ export default function QuizSetDetailsClient() {
           Imported Questions
         </h3>
         <div>
-          {quizSet.quizStages.map((stage: QuizStageEx, index: number) => {
+          {quizSet?.quizStages.map((stage: QuizStageEx, index: number) => {
             return (
               <Collapsible
                 defaultOpen={index === 0}
