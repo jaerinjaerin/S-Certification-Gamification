@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AuthType } from "@prisma/client";
+import { AuthType } from '@prisma/client';
 
 export const buildWhereCondition = (
   params: QueryParams,
@@ -13,9 +13,9 @@ export const buildWhereCondition = (
     },
   };
 
-  if (params.userGroup === "plus") {
+  if (params.userGroup === 'plus') {
     where = { ...where, authType: AuthType.SUMTOTAL };
-  } else if (params.userGroup === "none") {
+  } else if (params.userGroup === 'none') {
     where = {
       ...where,
       authType: {
@@ -24,27 +24,27 @@ export const buildWhereCondition = (
     };
   }
 
-  if (params.region && params.region !== "all") {
+  if (params.region && params.region !== 'all') {
     where = { ...where, regionId: params.region };
   }
 
-  if (params.subsidiary && params.subsidiary !== "all") {
+  if (params.subsidiary && params.subsidiary !== 'all') {
     where = { ...where, subsidiaryId: params.subsidiary };
   }
 
-  if (params.domain && params.domain !== "all") {
+  if (params.domain && params.domain !== 'all') {
     where = { ...where, domainId: params.domain };
   }
 
-  if (params.channelSegment && params.channelSegment !== "all") {
+  if (params.channelSegment && params.channelSegment !== 'all') {
     where = { ...where, channelSegmentId: params.channelSegment };
   }
 
-  if (params.salesFormat && params.salesFormat !== "all") {
+  if (params.salesFormat && params.salesFormat !== 'all') {
     where = { ...where, storeId: params.salesFormat };
   }
 
-  if (params.jobGroup && params.jobGroup !== "all") {
+  if (params.jobGroup && params.jobGroup !== 'all') {
     where = { ...where, jobId: params.jobGroup };
   }
 
@@ -55,10 +55,13 @@ export const buildWhereWithValidKeys = (
   where: Record<string, any>,
   keys: string[]
 ) => {
-  return keys.reduce((acc, key) => {
-    if (where?.[key] !== undefined) {
-      acc[key] = where[key];
-    }
-    return acc;
-  }, {} as Record<string, any>);
+  return keys.reduce(
+    (acc, key) => {
+      if (where?.[key] !== undefined) {
+        acc[key] = where[key];
+      }
+      return acc;
+    },
+    {} as Record<string, any>
+  );
 };

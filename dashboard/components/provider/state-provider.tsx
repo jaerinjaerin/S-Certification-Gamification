@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import { swrFetcher } from '@/lib/fetch';
 import { Campaign, Role } from '@prisma/client';
 import { Session } from 'next-auth';
 import { redirect, usePathname } from 'next/navigation';
@@ -10,15 +11,17 @@ import {
   ReactNode,
   useEffect,
 } from 'react';
+import useSWR, { KeyedMutator } from 'swr';
 
 type StateVariables = {
   filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
   campaigns: Campaign[] | null;
-  setCampaigns: React.Dispatch<React.SetStateAction<Campaign[]>>;
+  // setCampaigns: React.Dispatch<React.SetStateAction<Campaign[]>>;
   campaign: Campaign | null;
   setCampaign: React.Dispatch<React.SetStateAction<Campaign | null>>;
+  campaignMutate: KeyedMutator<{ result: { campaigns: Campaign[] } }>;
 };
 
 const StateVariablesContext = createContext<StateVariables | undefined>(
@@ -48,6 +51,17 @@ export const StateVariablesProvider = ({
     }
     return null;
   });
+  const { data: campaignData, mutate: campaignMutate } = useSWR(
+    `/api/cms/campaign?role=${role?.name || 'ADMIN'}`,
+    swrFetcher,
+    { fallbackData: { result: { campaigns: initCampaigns } } }
+  );
+
+  useEffect(() => {
+    if (campaignData) {
+      setCampaigns(campaignData.result.campaigns);
+    }
+  }, [campaignData]);
 
   // campaign 변경 시 sessionStorage업데이트
   useEffect(() => {
@@ -73,9 +87,10 @@ export const StateVariablesProvider = ({
         session,
         role,
         campaigns,
-        setCampaigns,
+        // setCampaigns,
         campaign,
         setCampaign,
+        campaignMutate,
       }}
     >
       {children}

@@ -6,7 +6,9 @@ import { AuthType } from '@prisma/client';
 import { formatDate } from 'date-fns';
 import { paramsToQueries } from '@/lib/query';
 
-export async function downloadOverview(data: Record<string, any>) {
+export async function downloadOverview(
+  data: URLSearchParams | Record<string, any>
+) {
   try {
     const { where: condition, period } = paramsToQueries(data);
     const { jobId, storeId, ...where } = condition;
@@ -52,14 +54,16 @@ export async function downloadOverview(data: Record<string, any>) {
 
     regions = [...domainsIntoRegion, ...regions] as typeof regions;
 
-    const goals = await prisma.domainGoal.findMany({});
+    const goals = await prisma.domainGoal.findMany({
+      where: { campaignId: where.campaignId },
+    });
     const userBadges = await Promise.all(
       jobGroups.map(({ stageIndex }) =>
         prisma.userQuizBadgeStageStatistics.findMany({
           where: {
             quizStageIndex: stageIndex,
-            ...(where?.campaignId ? { campaignId: where.campaignId } : {}),
-            ...(where?.createdAt ? { createdAt: where.createdAt } : {}),
+            campaignId: where.campaignId,
+            createdAt: where.createdAt,
           },
         })
       )
@@ -91,6 +95,10 @@ export async function downloadOverview(data: Record<string, any>) {
               fsmSes: 0,
             };
             const target = ff + fsm + ffSes + fsmSes;
+
+            if (domain.name.toLowerCase() === 'china') {
+              console.log(target);
+            }
 
             // 도메인 진행 상황
             const badgesInDomain = badges.filter(

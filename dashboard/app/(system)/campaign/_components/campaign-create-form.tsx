@@ -70,7 +70,7 @@ interface CampaignFormProps {
 }
 
 export default function CampaignForm({ initialData }: CampaignFormProps) {
-  const { campaigns, setCampaigns } = useStateVariables();
+  const { campaigns, campaignMutate } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -409,7 +409,9 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
       }
 
       await Promise.all(copyPromises);
-      setCampaigns((c) => [...c, campaign]);
+      campaignMutate();
+      // setCampaigns((c) => [...c, campaign]);
+
       toast.success('Certification created successfully!');
     } catch (error) {
       console.error('Unexpected error:', error);

@@ -5,7 +5,7 @@ interface JsonObject {
 }
 
 interface QueryParams {
-  [key: string]: string | undefined;
+  [key: string]: any;
 }
 
 interface ParsedDateRange {
