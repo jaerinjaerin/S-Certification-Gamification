@@ -54,7 +54,5 @@ export async function PUT(request: NextRequest) {
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
