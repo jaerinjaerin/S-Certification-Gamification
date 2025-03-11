@@ -1,7 +1,9 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { deleteS3Folder } from '@/lib/aws/s3-client';
+import { s3Client } from '@/lib/s3-client';
 import { prisma } from '@/model/prisma';
+import { DeleteObjectsCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -32,7 +34,7 @@ export async function PUT(request: NextRequest) {
   const validatedData = editCampaignScheme.parse(body);
 
   try {
-    let campaign = await prisma.campaign.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
         id: validatedData.campaignId,
       },
@@ -123,8 +125,6 @@ export async function PUT(request: NextRequest) {
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -135,9 +135,10 @@ const deleteCampaignScheme = z.object({
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
   const validatedData = deleteCampaignScheme.parse(body);
+  console.log('🚀 ~ DELETE ~ validatedData:', validatedData);
 
   try {
-    let campaign = await prisma.campaign.findFirst({
+    const campaign = await prisma.campaign.findFirst({
       where: {
         id: validatedData.campaignId,
       },
@@ -220,14 +221,43 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
+    try {
+      // 1. 특정 디렉토리(prefix) 하위 모든 객체 조회
+      const listParams = {
+        Bucket: process.env.ASSETS_S3_BUCKET_NAME!,
+        Prefix: `certification/${campaign.slug}/`, // 특정 디렉토리 경로 (예: "certification/campaign123/jsons/")
+      };
+
+      const listResult = await s3Client.send(
+        new ListObjectsV2Command(listParams)
+      );
+
+      if (!listResult.Contents || listResult.Contents.length === 0) {
+        console.log('삭제할 파일이 없습니다.');
+        return NextResponse.json({ success: true }, { status: 200 });
+      }
+
+      // 2. 조회된 객체들을 삭제 요청 형식으로 변환
+      const deleteParams = {
+        Bucket: bucketName,
+        Delete: {
+          Objects: listResult.Contents.map((obj) => ({ Key: obj.Key })),
+        },
+      };
+
+      // 3. 객체 삭제 실행
+      await s3Client.send(new DeleteObjectsCommand(deleteParams));
+      console.log(`${listResult.Contents.length}개의 파일을 삭제했습니다.`);
+    } catch (error) {
+      console.error('S3 파일 삭제 중 오류 발생:', error);
+    }
+
     // s3Client.deleteFolder(bucketName, folderToDelete);
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error delete campaign: ', error);
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -267,7 +297,5 @@ export async function GET(request: NextRequest, props: Props) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

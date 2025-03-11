@@ -144,8 +144,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -153,8 +151,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const role = searchParams.get('role') as string;
-
-    await prisma.$connect();
 
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
@@ -182,6 +178,8 @@ export async function GET(request: NextRequest) {
 
     const campaigns = await prisma.campaign.findMany({
       where,
+      include: { settings: true },
+      orderBy: { createdAt: 'asc' },
     });
 
     return NextResponse.json(
@@ -200,7 +198,5 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

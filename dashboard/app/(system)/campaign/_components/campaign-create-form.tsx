@@ -41,11 +41,7 @@ import { Separator } from '@/components/ui/separator';
 
 // Custom Components
 import Container from './container';
-import {
-  CustomSelectTrigger,
-  DatePickerPopover,
-  SelectComponent,
-} from './custom-form-items';
+import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
 
@@ -59,7 +55,6 @@ import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
 
 // State Management
-import { Campaign } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
@@ -75,7 +70,7 @@ interface CampaignFormProps {
 }
 
 export default function CampaignForm({ initialData }: CampaignFormProps) {
-  const { campaigns, setCampaigns } = useStateVariables();
+  const { campaigns, campaignMutate } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -90,32 +85,153 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
     defaultValues: initialData,
   });
 
+  const watchForm = form.watch();
+
   useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      // secondBadgeName이 비어있을 때
-      if (
-        name === 'secondBadgeName' &&
-        (!value.secondBadgeName || value.secondBadgeName.length === 0)
-      ) {
-        form.clearErrors([
-          'ffSecondBadgeStage',
-          'fsmSecondBadgeStage',
-          'custom',
-        ]);
-      }
+    const hasSecondBadgeStage =
+      (watchForm.ffSecondBadgeStage &&
+        watchForm.ffSecondBadgeStage !== 'none') ||
+      (watchForm.fsmSecondBadgeStage &&
+        watchForm.fsmSecondBadgeStage !== 'none');
 
-      // ffSecondBadgeStage나 fsmSecondBadgeStage가 변경될 때
-      if (
-        (name === 'ffSecondBadgeStage' || name === 'fsmSecondBadgeStage') &&
-        (value.ffSecondBadgeStage !== 'none' ||
-          value.fsmSecondBadgeStage !== 'none')
-      ) {
-        form.clearErrors(['custom']);
-      }
-    });
+    // 현재 에러 상태 확인
+    const hasError = !!form.formState.errors.secondBadgeName;
+    const hasCustomError = !!form.formState.errors.custom;
+    const hasFFStageOrderError = !!form.formState.errors.ffSecondBadgeStage;
+    const hasFSMStageOrderError = !!form.formState.errors.fsmSecondBadgeStage;
+    const hasStartDateError = !!form.formState.errors.startDate;
+    const hasEndDateError = !!form.formState.errors.endDate;
 
-    return () => subscription.unsubscribe();
-  }, [form]);
+    // secondBageStage가 존재하지만, secondBadgeName이 비어있는 경우 에러
+    if (
+      hasSecondBadgeStage &&
+      (!watchForm.secondBadgeName || watchForm.secondBadgeName.trim() === '') &&
+      !hasError // 에러가 없을 때만 setError 호출
+    ) {
+      form.setError('secondBadgeName', {
+        message:
+          'Second Badge Name is required when a Second Badge Stage is selected',
+      });
+    } else if (
+      (hasSecondBadgeStage && watchForm.secondBadgeName) ||
+      !hasSecondBadgeStage
+    ) {
+      // 에러가 있을 때만 clearErrors 호출
+      if (hasError) {
+        form.clearErrors('secondBadgeName');
+      }
+    }
+
+    // secondBadgeName이 있는데 ffSecondBadgeStage와 fsmSecondBadgeStage 둘 다 없는 경우 에러
+    if (
+      watchForm.secondBadgeName &&
+      watchForm.secondBadgeName.trim() !== '' &&
+      !hasSecondBadgeStage &&
+      !hasCustomError
+    ) {
+      form.setError('custom', {
+        message:
+          'Please select at least one Second Badge Stage when Second Badge Name is provided',
+      });
+    } else if (
+      (!watchForm.secondBadgeName || hasSecondBadgeStage) &&
+      hasCustomError
+    ) {
+      form.clearErrors('custom');
+    }
+
+    // FF 뱃지 스테이지 순서 검증
+    if (
+      watchForm.ffFirstBadgeStage &&
+      watchForm.ffFirstBadgeStage !== 'none' &&
+      watchForm.ffSecondBadgeStage &&
+      watchForm.ffSecondBadgeStage !== 'none' &&
+      Number(watchForm.ffFirstBadgeStage) >=
+        Number(watchForm.ffSecondBadgeStage) &&
+      !hasFFStageOrderError
+    ) {
+      form.setError('ffSecondBadgeStage', {
+        message: 'Second Badge Stage must be greater than First Badge Stage',
+      });
+    } else if (
+      (!watchForm.ffSecondBadgeStage ||
+        watchForm.ffSecondBadgeStage === 'none' ||
+        (watchForm.ffFirstBadgeStage &&
+          watchForm.ffFirstBadgeStage !== 'none' &&
+          Number(watchForm.ffFirstBadgeStage) <
+            Number(watchForm.ffSecondBadgeStage))) &&
+      hasFFStageOrderError
+    ) {
+      form.clearErrors('ffSecondBadgeStage');
+    }
+
+    // FSM 뱃지 스테이지 순서 검증
+    if (
+      watchForm.fsmFirstBadgeStage &&
+      watchForm.fsmFirstBadgeStage !== 'none' &&
+      watchForm.fsmSecondBadgeStage &&
+      watchForm.fsmSecondBadgeStage !== 'none' &&
+      Number(watchForm.fsmFirstBadgeStage) >=
+        Number(watchForm.fsmSecondBadgeStage) &&
+      !hasFSMStageOrderError
+    ) {
+      form.setError('fsmSecondBadgeStage', {
+        message: 'Second Badge Stage must be greater than First Badge Stage',
+      });
+    } else if (
+      (!watchForm.fsmSecondBadgeStage ||
+        watchForm.fsmSecondBadgeStage === 'none' ||
+        (watchForm.fsmFirstBadgeStage &&
+          watchForm.fsmFirstBadgeStage !== 'none' &&
+          Number(watchForm.fsmFirstBadgeStage) <
+            Number(watchForm.fsmSecondBadgeStage))) &&
+      hasFSMStageOrderError
+    ) {
+      form.clearErrors('fsmSecondBadgeStage');
+    }
+
+    // 날짜 유효성 검사 - startDate와 endDate가 모두 존재할 때
+    if (watchForm.startDate && watchForm.endDate) {
+      const startDate = new Date(watchForm.startDate);
+      const endDate = new Date(watchForm.endDate);
+
+      // startDate가 endDate보다 늦은 경우
+      if (startDate > endDate) {
+        if (!hasStartDateError) {
+          form.setError('startDate', {
+            message: 'Start Date must be earlier than End Date',
+          });
+        }
+        if (!hasEndDateError) {
+          form.setError('endDate', {
+            message: 'End Date must be later than Start Date',
+          });
+        }
+      } else {
+        // 날짜가 올바른 순서인 경우 에러 제거
+        if (hasStartDateError) {
+          form.clearErrors('startDate');
+        }
+        if (hasEndDateError) {
+          form.clearErrors('endDate');
+        }
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      // 컴포넌트 언마운트 시에만 에러 클리어
+    };
+  }, [
+    watchForm,
+    form,
+    form.formState.errors.secondBadgeName,
+    form.formState.errors.custom,
+    form.formState.errors.ffSecondBadgeStage,
+    form.formState.errors.fsmSecondBadgeStage,
+    form.formState.errors.startDate,
+    form.formState.errors.endDate,
+  ]);
 
   useEffect(() => {
     setSelectedNumberOfStages(undefined);
@@ -293,7 +409,9 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
       }
 
       await Promise.all(copyPromises);
-      setCampaigns((c) => [...c, campaign]);
+      campaignMutate();
+      // setCampaigns((c) => [...c, campaign]);
+
       toast.success('Certification created successfully!');
     } catch (error) {
       console.error('Unexpected error:', error);

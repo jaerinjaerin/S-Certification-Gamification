@@ -1,15 +1,18 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dispatch, SetStateAction } from 'react';
-import { UserTabState } from '../_store/quizset-state';
+import useQuizSetState, { UserTabState } from '../_store/quizset-state';
 
 export function UserTabList({
   setTabState,
 }: {
   setTabState: Dispatch<SetStateAction<UserTabState>>;
 }) {
+  const {
+    ui: { tabState },
+  } = useQuizSetState();
   return (
     <Tabs
-      defaultValue="s"
+      defaultValue={tabState}
       className="w-[400px]"
       onValueChange={(value) => {
         setTabState(value as 's' | 'non-s');

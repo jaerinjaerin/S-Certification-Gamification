@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
 
     const ffSecondBadgeStageIndex = campaign.settings?.ffSecondBadgeStageIndex;
     console.log('ffSecondBadgeStageIndex: ', ffSecondBadgeStageIndex);
-    if (!ffSecondBadgeStageIndex) {
+    if (ffSecondBadgeStageIndex == null) {
       const hasBadge = result.data.some(
         (data) => data.FF_SecondBadgeImage != null
       );
@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
     }
 
     const fsmFirstBadgeStageIndex = campaign.settings?.fsmFirstBadgeStageIndex;
-    if (!fsmFirstBadgeStageIndex) {
+    if (fsmFirstBadgeStageIndex == null) {
       const hasBadge = result.data.some(
         (data) => data.FSM_FirstBadgeImage != null
       );
@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
 
     const fsmSecondBadgeStageIndex =
       campaign.settings?.fsmSecondBadgeStageIndex;
-    if (!fsmSecondBadgeStageIndex) {
+    if (fsmSecondBadgeStageIndex == null) {
       const hasBadge = result.data.some(
         (data) => data.FSM_SecondBadgeImage != null
       );
@@ -599,7 +599,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('Error create campaign: ', error);
+    console.error('Error upload activity ID: ', error);
     return NextResponse.json(
       {
         success: false,
@@ -610,10 +610,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
-  // });
 }
 
 export async function GET(request: Request) {

@@ -64,7 +64,7 @@ const CurrentBreadCrumb = () => {
               </SelectItem>
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
-                  {c.name}
+                  {c.slug}
                 </SelectItem>
               ))}
             </SelectContent>

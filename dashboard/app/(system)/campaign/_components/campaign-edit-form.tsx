@@ -1,11 +1,9 @@
 'use client';
-
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-
 // Form related
 import {
   Form,
@@ -17,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from '../_type/formSchema';
-
 // UI Components
 import {
   AlertDialog,
@@ -38,28 +35,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-
 // Custom Components
 import Container from './container';
-import {
-  CustomSelectTrigger,
-  DatePickerPopover,
-  SelectComponent,
-} from './custom-form-items';
+import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
-
 // Icons
-import { CalendarIcon, Check, CircleHelp, Loader } from 'lucide-react';
-
+import { CalendarIcon, CircleHelp } from 'lucide-react';
 // Utils and Constants
 import { cn } from '@/utils/utils';
 import { toast } from 'sonner';
 import { isEmpty } from '../../(hub)/cms/_utils/utils';
-import { API_ENDPOINTS } from '../constant/contant';
-
 // State Management
-import { Campaign } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
@@ -79,7 +66,7 @@ export default function CampaignEditForm({
   initialData,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, setCampaigns } = useStateVariables();
+  const { campaigns, campaignMutate } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { setSelectedNumberOfStages } = useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
@@ -121,6 +108,7 @@ export default function CampaignEditForm({
       });
 
       const campaignData = await response.json();
+      console.log('🥕 campaignData', campaignData); // ! 업데이트 이전의 데이터가 들어옴
 
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
@@ -129,18 +117,21 @@ export default function CampaignEditForm({
       }
 
       console.warn('update campaign');
-      const updatedCampaign = campaignData.result.campaign;
-      const updatedCampaigns = campaigns?.map((item) =>
-        item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
-      );
 
-      setCampaigns(updatedCampaigns as Campaign[]);
+      campaignMutate();
+      //
+      // const updatedCampaign = campaignData.result.campaign;
+      // const updatedCampaigns = campaigns?.map((item) =>
+      //   item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
+      // );
+
+      // setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign updated successfully!');
+      routeToPage('/campaign');
     } catch (error) {
       toast.error(`Failed to update campaign: ${error}`);
     } finally {
       setIsLoading(false);
-      routeToPage('/campaign');
     }
   };
 

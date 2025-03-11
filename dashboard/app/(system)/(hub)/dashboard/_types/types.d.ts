@@ -5,7 +5,7 @@ interface JsonObject {
 }
 
 interface QueryParams {
-  [key: string]: string | undefined;
+  [key: string]: any;
 }
 
 interface ParsedDateRange {
@@ -56,3 +56,8 @@ type GroupedData = {
 };
 
 type ImprovedDataStructure = GroupedData[];
+
+type UserListProps = {
+  providerUserId: string;
+  lastCompletedStage: number | string;
+};
