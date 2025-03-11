@@ -63,39 +63,54 @@ export function UiLanguageDataTable() {
     // <DataTable data={data.result.groupedLanguages} columns={columns} />
     <div>
       <div className="grid grid-cols-5">
-        <Colum>Language</Colum>
-        <Colum>UI Code</Colum>
-        <Colum>File Name</Colum>
+        <Colum className="text-nowrap text-zinc-500 font-medium">
+          Language
+        </Colum>
+        <Colum className="text-nowrap text-zinc-500 font-medium">UI Code</Colum>
+        <Colum className="text-nowrap text-zinc-500 font-medium">
+          File Name
+        </Colum>
       </div>
 
-      {result.result.groupedLanguages.map(
-        (
-          groupedData: { file: UploadedFile; language: Language },
-          index: number
-        ) => {
-          const filePath = groupedData.file.path;
-          const filePathArr = filePath.split('/');
-          const fileName = filePathArr[filePathArr.length - 1];
+      {result.result.groupedLanguages.length ? (
+        result.result.groupedLanguages.map(
+          (
+            groupedData: { file: UploadedFile; language: Language },
+            index: number
+          ) => {
+            const filePath = groupedData.file.path;
+            const filePathArr = filePath.split('/');
+            const fileName = filePathArr[filePathArr.length - 1];
 
-          return (
-            <div
-              key={index}
-              className="grid grid-cols-5 border-t border-t-zinc-200"
-            >
-              <Colum className="py-6">{groupedData.language.name}</Colum>
-              <Colum className="py-6">{groupedData.language.code}</Colum>
-              <Colum className="py-6 gap-2.5">
-                <span className="min-w-[7.5rem]">{fileName}</span>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${groupedData.file.path}`}
-                  className="size-8 shadow-none  rounded-md bg-zinc-100 flex items-center justify-center hover:bg-zinc-200"
-                >
-                  <Download className="size-4" />
-                </Link>
-              </Colum>
-            </div>
-          );
-        }
+            return (
+              <div
+                key={index}
+                className="grid grid-cols-5 border-t border-t-zinc-200"
+              >
+                <Colum className="py-6 break-all">
+                  {groupedData.language.name}
+                </Colum>
+                <Colum className="py-6">{groupedData.language.code}</Colum>
+                <Colum className="py-6 gap-2.5">
+                  <span className="min-w-[7.5rem]">{fileName}</span>
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${groupedData.file.path}`}
+                    className="size-8 shadow-none shrink-0  rounded-md bg-zinc-100 flex items-center justify-center hover:bg-zinc-200"
+                  >
+                    <Download className="size-4" />
+                  </Link>
+                </Colum>
+              </div>
+            );
+          }
+        )
+      ) : (
+        <div className="grid grid-cols-5 border-t border-t-zinc-200">
+          <Colum className="py-6 col-span-5 justify-center">
+            No registered UI language. Please select the Upload button to add
+            one.
+          </Colum>
+        </div>
       )}
     </div>
   );

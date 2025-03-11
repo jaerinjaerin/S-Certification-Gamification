@@ -38,7 +38,7 @@ import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
->(({ children, title, variant }, ref) => {
+>(({ children, title, variant, onDropdownClose }, ref) => {
   const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
@@ -57,8 +57,6 @@ const UploadExcelFileModal = forwardRef<
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
-
-  console.log(campaign);
 
   const uploadFiles = {
     quiz: quizSet.files,
@@ -195,7 +193,7 @@ const UploadExcelFileModal = forwardRef<
                         <Td>
                           {!uploadData[variant][index].success ? (
                             <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                              <CircleAlert className="size-4" />
+                              <CircleAlert className="size-4 shrink-0" />
                               <span>
                                 {uploadData[variant][index].errors?.[0].message}
                               </span>
@@ -242,6 +240,7 @@ const UploadExcelFileModal = forwardRef<
         onOpenChange={() => {
           setProcessResult([]);
           handleDialogOpen(false);
+          if (onDropdownClose) onDropdownClose();
         }} // 다이얼로그가 닫힐 때 processResult를 초기화
       />
 

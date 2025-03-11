@@ -22,6 +22,11 @@ import { useTargetData } from '../_provider/target-data-provider';
 import { DropzoneView } from './upload-files-dialog';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { uploadFileNameValidator } from '../_lib/upload-file-name-validator';
+import {
+  FilesTableComponent,
+  Td,
+} from '../../set-quiz/_components/files-table-component';
+import UploadResultDialog from './upload-target-result-dialog';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
@@ -48,6 +53,9 @@ export default function UploadExcelFileModal({
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [processResult, setProcessResult] = useState<Record<string, string>[]>(
+    []
+  );
 
   // 에러 처리 로직 개선
   const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
@@ -139,7 +147,9 @@ export default function UploadExcelFileModal({
       const response = await axios.post('/api/cms/target', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       updateData(response.data.result);
+      setProcessResult(response.data.result);
     } catch (error) {
       console.error('Upload failed:', error);
     } finally {
@@ -168,12 +178,13 @@ export default function UploadExcelFileModal({
 
   return (
     <>
-      {loading && <LoaderWithBackground />}
       <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="gap-[4.063rem]">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className="text-size-17px font-semibold !text-left">
+              {title}
+            </DialogTitle>
           </DialogHeader>
           {isEmpty(files) && (
             <DropzoneView
@@ -186,22 +197,30 @@ export default function UploadExcelFileModal({
           {!isEmpty(files) && (
             <div>
               {isConverting && <LoaderWithBackground />}
-              {!isConverting &&
-                files.map(({ file, metadata }, index) => (
-                  <div key={index} className={cn('flex gap-5')}>
-                    <span>{file.name}</span>
-                    {metadata.hasError && (
-                      <div className="flex items-center gap-2.5 text-red-600 font-medium">
-                        <CircleAlert className="size-4" />
-                        <span> {metadata.errorMessage}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
+              {!isConverting && (
+                <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
+                  <FilesTableComponent>
+                    {files.map(({ file, metadata }, index) => (
+                      <tr key={index} className="border-t border-t-zinc-200">
+                        <Td>{index + 1}</Td>
+                        <Td>{file.name}</Td>
+                        <Td>
+                          {metadata.hasError && (
+                            <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                              <CircleAlert className="size-4 shrink-0" />
+                              <span> {metadata.errorMessage}</span>
+                            </div>
+                          )}
+                        </Td>
+                      </tr>
+                    ))}
+                  </FilesTableComponent>
+                </div>
+              )}
             </div>
           )}
           {!isEmpty(files) && (
-            <DialogFooter>
+            <DialogFooter className="!flex-row !justify-center gap-3">
               <DialogClose asChild>
                 <Button
                   variant="secondary"
@@ -212,6 +231,7 @@ export default function UploadExcelFileModal({
                 </Button>
               </DialogClose>
               <Button
+                className="!m-0"
                 variant="action"
                 onClick={handleSubmit}
                 disabled={
@@ -226,6 +246,14 @@ export default function UploadExcelFileModal({
           )}
         </DialogContent>
       </Dialog>
+
+      <UploadResultDialog
+        uploadFilesResult={processResult}
+        open={!isEmpty(processResult)}
+        onOpenChange={() => {
+          setProcessResult([]);
+        }}
+      />
 
       <CustomAlertDialog
         open={isOpen}

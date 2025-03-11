@@ -1,7 +1,11 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
-import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
+import {
+  processExcelBuffer,
+  ProcessResult,
+  QuizData,
+} from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { BadgeType, FileType, QuestionType } from '@prisma/client';
@@ -215,6 +219,48 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const checkMissingStages = (
+      questions: QuizData[],
+      maxStage: number
+    ): number[] => {
+      // 1. 각 stage의 존재 여부를 확인하기 위한 Set 생성
+      const filteredQuestions = questions.filter(
+        (question) => question.enabled
+      );
+      const existingStages = new Set(
+        filteredQuestions.map((question) => question.stage)
+      );
+
+      // 2. 1부터 maxStage까지의 숫자 중 없는 stage 찾기
+      const missingStages = Array.from(
+        { length: maxStage },
+        (_, i) => i + 1
+      ).filter((stage) => !existingStages.has(stage));
+
+      return missingStages; // 비어 있는 stage 리스트 반환
+    };
+
+    const missingStages = checkMissingStages(questions, maxStage);
+
+    console.log(
+      missingStages.length === 0
+        ? '✅ 모든 스테이지가 존재합니다.'
+        : `🚨 누락된 스테이지: ${missingStages}`
+    );
+
+    if (missingStages.length > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Missing stages: ${missingStages.join(', ')}`,
+            code: ERROR_CODES.HQ_DOMAIN_NOT_FOUND,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     // HQ 문제 불러오기
     const hqDomainCode = 'OrgCode-7';
     const hqMaxQuestionIndex = 100;
@@ -343,11 +389,13 @@ export async function POST(request: NextRequest) {
 
     if (notRegisteredBackgroundImages.length > 0) {
       console.error('Background images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: `${file.name}: Background images not registered`,
+            message: `${file.name}: Background images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
             code: ERROR_CODES.BACKGROUND_IMAGES_NOT_REGISTERED,
           },
         },
@@ -369,11 +417,13 @@ export async function POST(request: NextRequest) {
 
     if (notRegisteredCharacterImages.length > 0) {
       console.error('Character images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
       return NextResponse.json(
         {
           success: false,
           error: {
-            message: `${file.name}: Character images not registered`,
+            message: `${file.name}: Character images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
             code: ERROR_CODES.CHARACTER_IMAGES_NOT_REGISTERED,
           },
         },

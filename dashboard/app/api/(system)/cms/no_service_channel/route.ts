@@ -208,20 +208,21 @@ export async function POST(request: NextRequest) {
           });
 
     // const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
-    const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${fileNameWithTimestamp}`;
+    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${file.name}`;
 
     const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -293,8 +294,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 

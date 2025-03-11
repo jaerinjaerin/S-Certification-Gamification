@@ -1,6 +1,7 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
+import { containsBannedWords } from '@/utils/slug';
 import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -30,6 +31,19 @@ export async function POST(request: NextRequest) {
   const session = await auth();
 
   try {
+    if (containsBannedWords(validatedData.slug)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Slug contains banned words',
+            code: ERROR_CODES.INVALID_PARAMETER,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     const campaign = await prisma.campaign.create({
       data: {
         name: validatedData.name,

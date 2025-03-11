@@ -33,7 +33,18 @@ interface QuizSetDataTableProps {
 }
 
 export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
-  return <DataTable data={data.result.groupedQuizSets} columns={columns} />;
+  const groupedQuizSets = data.result.groupedQuizSets;
+
+  const ORG_CODE_PRIORITY = 'OrgCode-7';
+  const filteredGroupedQuizSets = groupedQuizSets.filter(
+    (quizSet) => quizSet.domain.code !== ORG_CODE_PRIORITY
+  );
+  const HQquizSet = groupedQuizSets.filter(
+    (quizSet) => quizSet.domain.code === ORG_CODE_PRIORITY
+  );
+  const sortedGroupedQuizSets = [...HQquizSet, ...filteredGroupedQuizSets];
+
+  return <DataTable data={sortedGroupedQuizSets} columns={columns} />;
 }
 
 function DataTable({ data = [], columns }: QuizSetDataTableProps) {

@@ -14,6 +14,7 @@ export type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
   variant: UploadExcelFileVariant;
+  onDropdownClose?: () => void;
 };
 
 export interface GroupedQuizSet {
@@ -39,6 +40,14 @@ export interface QuizSetResponse {
   result: {
     groupedQuizSets: GroupedQuizSet[];
     campaignSettings: CampaignSettings;
+  };
+}
+
+export interface QuizSetDetailsResponse {
+  success: boolean;
+  result: {
+    quizSet: QuizSetEx;
+    quizSetFile: QuizSetFile;
   };
 }
 

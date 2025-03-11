@@ -76,6 +76,7 @@ export const formSchema = z
 
     ...badgeSchema.shape,
     ...campaignIdSchema.shape,
+    custom: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     // 🟢 dateRange validation
@@ -107,13 +108,31 @@ export const formSchema = z
     if (
       (isNotEmpty(data.ffSecondBadgeStage) ||
         isNotEmpty(data.fsmSecondBadgeStage)) &&
-      !isNotEmpty(data.secondBadgeName)
+      !isNotEmpty(data.secondBadgeName) &&
+      data.ffSecondBadgeStage !== 'none' &&
+      data.fsmSecondBadgeStage !== 'none'
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message:
           'Second Badge Name is required when any Second Badge Stage is provided.',
         path: ['secondBadgeName'],
+      });
+    }
+
+    // 🟢 secondBadgeName이 있는 경우, ffSecondBadgeStage 또는 fsmSecondBadgeStage 값이 적어도 하나 존재하는지 유효성 검사
+    if (
+      isNotEmpty(data.secondBadgeName) &&
+      (!isNotEmpty(data.ffSecondBadgeStage) ||
+        data.ffSecondBadgeStage === 'none') &&
+      (!isNotEmpty(data.fsmSecondBadgeStage) ||
+        data.fsmSecondBadgeStage === 'none')
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          'At least one Second Badge Stage is required when Second Badge Name is provided.',
+        path: ['custom'],
       });
     }
 
@@ -168,7 +187,7 @@ export const defaultValues = {
   firstBadgeName: 'Expert',
   ffFirstBadgeStage: undefined,
   fsmFirstBadgeStage: undefined,
-  secondBadgeName: 'Advanced',
+  secondBadgeName: undefined,
   ffSecondBadgeStage: undefined,
   fsmSecondBadgeStage: undefined,
   targetSourceCampaignId: undefined,

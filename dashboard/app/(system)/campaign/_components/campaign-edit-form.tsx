@@ -2,7 +2,7 @@
 
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 
@@ -41,7 +41,11 @@ import { Separator } from '@/components/ui/separator';
 
 // Custom Components
 import Container from './container';
-import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
+import {
+  CustomSelectTrigger,
+  DatePickerPopover,
+  SelectComponent,
+} from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
 
@@ -55,37 +59,33 @@ import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
 
 // State Management
-import { Calendar } from '@/components/ui/calendar';
+import { Campaign } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Campaign } from '@prisma/client';
+import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoaderWithBackground } from '@/components/loader';
 
 interface CampaignFormProps {
   initialData: any;
-  isEditMode?: boolean;
   campaignId?: string;
 }
 
-export default function CampaignForm({
+export default function CampaignEditForm({
   initialData,
-  isEditMode = false,
   campaignId,
 }: CampaignFormProps) {
   const { campaigns, setCampaigns } = useStateVariables();
   const { routeToPage } = useNavigation();
-  const { selectedNumberOfStages, setSelectedNumberOfStages } =
-    useCampaignState();
+  const { setSelectedNumberOfStages } = useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [startDatePickerOpen, setStartDatePickerOpen] = useState(false);
   const [endDatePickerOpen, setEndDatePickerOpen] = useState(false);
-  const [isSlugCheckedLoading, setIsSlugCheckedLoading] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -93,39 +93,7 @@ export default function CampaignForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      // secondBadgeName이 비어있을 때
-      if (
-        name === 'secondBadgeName' &&
-        (!value.secondBadgeName || value.secondBadgeName.length === 0)
-      ) {
-        form.clearErrors([
-          'ffSecondBadgeStage',
-          'fsmSecondBadgeStage',
-          'custom',
-        ]);
-      }
-
-      // ffSecondBadgeStage나 fsmSecondBadgeStage가 변경될 때
-      if (
-        (name === 'ffSecondBadgeStage' || name === 'fsmSecondBadgeStage') &&
-        (value.ffSecondBadgeStage !== 'none' ||
-          value.fsmSecondBadgeStage !== 'none')
-      ) {
-        form.clearErrors(['custom']);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form]);
-
-  useEffect(() => {
-    if (isEditMode) {
-      setSelectedNumberOfStages(initialData.numberOfStages);
-      return;
-    }
-
-    setSelectedNumberOfStages(undefined);
+    setSelectedNumberOfStages(initialData.numberOfStages);
   }, []);
 
   const handlePreventSpace = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -134,191 +102,8 @@ export default function CampaignForm({
     }
   };
 
-  // slug 중복체크
-  const handleCheckSlug = async () => {
-    const isSlugValid = await form.trigger('slug');
-
-    if (!isSlugValid) return;
-
-    // 금지어 적용
-    const reservedWordsPattern =
-      /(?:error|logout|test|home|register|site|not-ready)/i;
-    const slugValue = form.getValues('slug').toLowerCase();
-
-    if (reservedWordsPattern.test(slugValue)) {
-      const matchedWord = slugValue.match(reservedWordsPattern)?.[0];
-      form.setError('slug', {
-        message: `Slug cannot contain the reserved word "${matchedWord}"`,
-      });
-      return;
-    }
-
-    try {
-      setIsSlugCheckedLoading(true);
-      const response = await fetch(
-        `${API_ENDPOINTS.CHECK_SLUG}?slug=${form.getValues('slug')}`
-      );
-      const result = await response.json();
-      if (result.success === false) {
-        form.setError('slug', { message: result.error.message });
-        return;
-      }
-
-      if (result.result.available) {
-        form.setValue('isSlugChecked', true);
-        form.resetField('slug', {
-          defaultValue: form.getValues('slug'),
-        });
-      } else {
-        form.setError('slug', { message: 'Slug is already in use' });
-      }
-    } catch (error) {
-      toast.error('Failed to check slug');
-    } finally {
-      setIsSlugCheckedLoading(false);
-    }
-  };
-
-  // API 서비스 함수들 (CREATE)
-  const campaignService = {
-    async createCampaign(data: FormValues) {
-      const response = await fetch(API_ENDPOINTS.CAMPAIGN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.certificationName,
-          slug: data.slug,
-          startedAt: data.startDate,
-          endedAt: data.endDate,
-          totalStages: Number(data.numberOfStages),
-          firstBadgeName: data.firstBadgeName,
-          secondBadgeName: data.secondBadgeName,
-          ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
-          ffSecondBadgeStageIndex: Number(data.ffSecondBadgeStage),
-          fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
-          fsmSecondBadgeStageIndex: Number(data.fsmSecondBadgeStage),
-        }),
-      });
-
-      // 응답이 성공이 아닌 경우 오류 출력 후 예외 발생
-      if (!response.ok) {
-        toast.error('Failed to create campaign');
-        throw new Error(
-          `Request failed createCampaign with status ${response.status}`
-        );
-      }
-
-      return response.json();
-    },
-
-    async copyResources(
-      sourceCampaignId: string,
-      destinationCampaignId: string,
-      type: 'target' | 'image' | 'uiLanguage'
-    ) {
-      const endpoint = getCopyResourceEndpoint(type);
-      if (endpoint === null) {
-        alert('Invalid type');
-        return;
-      }
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sourceCampaignId, destinationCampaignId }),
-      });
-      if (!response.ok) {
-        toast.error(`Failed to copy ${type} resources`);
-      }
-      return response;
-    },
-  };
-
-  // (CREATE)
-  const getCopyResourceEndpoint = (
-    type: 'target' | 'image' | 'uiLanguage'
-  ): string | null => {
-    if (type === 'target') return API_ENDPOINTS.COPY_TARGET;
-    if (type === 'image') return API_ENDPOINTS.COPY_IMAGE;
-    if (type === 'uiLanguage') return API_ENDPOINTS.COPY_UI_LANG;
-    return null;
-  };
-
-  // (CREATE)
-  const handleCopyResources = async (
-    campaignId: string,
-    destinationId: string,
-    type: 'target' | 'image' | 'uiLanguage'
-  ) => {
-    try {
-      await campaignService.copyResources(campaignId, destinationId, type);
-      toast.success(`Copied ${type} resources successfully`);
-    } catch (error) {
-      toast.error(`Failed to copy ${type} resources`);
-      throw error;
-    }
-  };
-
-  // CREATE Submit
-  const onSubmit = async (data: FormValues) => {
-    try {
-      setIsLoading(true);
-
-      const campaignData = await campaignService.createCampaign(data);
-      if (!campaignData?.success) {
-        console.error('Failed to create campaign', campaignData);
-        toast.error('Failed to create campaign');
-        return;
-      }
-
-      console.warn('complete campaign');
-      const campaign = campaignData.result.campaign;
-      const campaignSettings = campaignData.result.campaignSettings;
-
-      console.warn('campaign:', campaign);
-      console.warn('campaignSettings:', campaignSettings);
-
-      const copyPromises = [];
-      if (data.targetSourceCampaignId) {
-        copyPromises.push(
-          handleCopyResources(
-            data.targetSourceCampaignId,
-            campaign.id,
-            'target'
-          )
-        );
-      }
-      if (data.imageSourceCampaignId) {
-        copyPromises.push(
-          handleCopyResources(data.imageSourceCampaignId, campaign.id, 'image')
-        );
-      }
-      if (data.uiLanguageSourceCampaignId) {
-        copyPromises.push(
-          handleCopyResources(
-            data.uiLanguageSourceCampaignId,
-            campaign.id,
-            'uiLanguage'
-          )
-        );
-      }
-
-      await Promise.all(copyPromises);
-      setCampaigns((c) => [...c, campaign]);
-      toast.success('Certification created successfully!');
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      toast.error(' An error occurred while creating the campaign.');
-    } finally {
-      console.warn('loading end');
-      setIsLoading(false);
-      setIsDialogOpen(false);
-      routeToPage('/campaign');
-    }
-  };
-
   // EDIT Submit
-  const editSubmit = async (data: FormValues) => {
+  const editSubmit = async (data: any) => {
     setIsLoading(true);
 
     const requestBody: Record<string, any> = {
@@ -326,20 +111,7 @@ export default function CampaignForm({
       name: data.certificationName,
       startedAt: data.startDate,
       endedAt: data.endDate,
-      totalStages: Number(data.numberOfStages),
-      firstBadgeName: data.firstBadgeName,
-      secondBadgeName: data.secondBadgeName,
-      ffFirstBadgeStageIndex: Number(data.ffFirstBadgeStage),
-      fsmFirstBadgeStageIndex: Number(data.fsmFirstBadgeStage),
     };
-
-    if (data.ffSecondBadgeStage !== 'none') {
-      requestBody.ffSecondBadgeStageIndex = Number(data.ffSecondBadgeStage);
-    }
-
-    if (data.fsmSecondBadgeStage !== 'none') {
-      requestBody.fsmSecondBadgeStageIndex = Number(data.fsmSecondBadgeStage);
-    }
 
     try {
       const response = await fetch(`/api/cms/campaign/${campaignId}`, {
@@ -375,16 +147,13 @@ export default function CampaignForm({
   const inputStyle =
     'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px text-zinc-500 disabled:bg-zinc-200 placeholder:text-zinc-500';
 
-  console.log('🥕 form.fomstate.errors', form.formState.errors);
   return (
     <>
       <div className="w-full m-6">
-        <h2 className="text-size-17px font-semibold">
-          {isEditMode ? 'Edit' : 'Create'} Certification
-        </h2>
+        <h2 className="text-size-17px font-semibold">Edit Certification</h2>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(isEditMode ? editSubmit : onSubmit)}
+            onSubmit={form.handleSubmit(editSubmit)}
             id="certification-form"
             className="space-y-8 mx-auto w-full max-w-[46.25rem] pt-16"
           >
@@ -425,7 +194,7 @@ export default function CampaignForm({
                           <div className="flex relative w-fit">
                             <div className="max-w-[20rem] flex items-center">
                               <p className="text-size-12px text-zinc-500 underline h-10 px-3 leading-[2.5rem] border border-r-0 border-zinc-200 bg-zinc-50 rounded-l-md">
-                                {process.env.NEXT_PUBLIC_CLIENT_URL}
+                                https://www.samsungplus.net/
                               </p>
                               <Input
                                 className={cn(
@@ -435,75 +204,12 @@ export default function CampaignForm({
                                     'border-destructive'
                                 )}
                                 {...field}
-                                readOnly={isEditMode ? true : false}
-                                value={
-                                  isEditMode ? initialData?.slug : field.value
-                                }
-                                placeholder={isEditMode ? 'enter-name' : ''}
-                                onKeyDown={handlePreventSpace}
-                                onChange={(e) => {
-                                  field.onChange(e);
-                                  if (form.getFieldState('slug').isDirty) {
-                                    form.setValue('isSlugChecked', false);
-                                  }
-                                }}
+                                readOnly
+                                value={initialData?.slug}
                               />
                             </div>
-                            {!isEditMode && (
-                              <Button
-                                variant={'secondary'}
-                                className={cn(
-                                  'absolute left-[20rem] border-zinc-200 shadow-none ml-5 text-size-14px w-[7.125rem] h-10 font-normal text-zinc-500 text-center',
-                                  !form.getFieldState('slug').isDirty &&
-                                    form.getValues('isSlugChecked') &&
-                                    'text-green-600 border-green-600'
-                                )}
-                                type="button"
-                                disabled={
-                                  isEmpty(form.getValues('slug')) ||
-                                  form.getValues('isSlugChecked') ||
-                                  isSlugCheckedLoading ||
-                                  form.formState.errors.slug?.message ===
-                                    'Slug is already in use'
-                                }
-                                onClick={handleCheckSlug}
-                              >
-                                Check {isSlugCheckedLoading && <Loader />}
-                                {!form.getFieldState('slug').isDirty &&
-                                  form.getValues('isSlugChecked') && (
-                                    <Check className="text-green-600" />
-                                  )}
-                              </Button>
-                            )}
                           </div>
                         </FormControl>
-                        {(() => {
-                          // Edit 모드인 경우 메시지 표시하지 않음
-                          if (isEditMode) {
-                            return null;
-                          }
-
-                          // slug 값이 없는 경우
-                          if (!form.getValues('slug')) {
-                            return <FormMessage />;
-                          }
-
-                          // slug 값이 있고 체크되지 않은 경우
-                          if (!form.getValues('isSlugChecked')) {
-                            return (
-                              <FormMessage>
-                                {form.formState.errors.isSlugChecked?.message}
-                              </FormMessage>
-                            );
-                          }
-
-                          // slug 값이 있고 체크된 경우 (성공)
-                          return (
-                            <FormMessage success>
-                              Slug is available and has been checked
-                            </FormMessage>
-                          );
-                        })()}
                       </FormItem>
                     );
                   }}
@@ -617,23 +323,25 @@ export default function CampaignForm({
                   trigger={
                     <CircleHelp className="size-3 text-secondary cursor-pointer" />
                   }
-                  render={(field) => (
-                    <SelectComponent
-                      field={field}
-                      selectDefaultValue="None"
-                      disabled={isEditMode ? true : false}
-                    >
-                      <SelectContent>
-                        <SelectItem value="none">None</SelectItem>
-                        {campaigns &&
-                          campaigns.map((campaign) => (
-                            <SelectItem value={campaign.id} key={campaign.id}>
-                              {campaign.name}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </SelectComponent>
-                  )}
+                  render={(field) => {
+                    return (
+                      <SelectComponent
+                        field={field}
+                        selectDefaultValue={initialData.copyMedia || 'None'}
+                        disabled
+                      >
+                        <SelectContent>
+                          <SelectItem value="none">None</SelectItem>
+                          {campaigns &&
+                            campaigns.map((campaign) => (
+                              <SelectItem value={campaign.id} key={campaign.id}>
+                                {campaign.name}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </SelectComponent>
+                    );
+                  }}
                 />
                 <FormComponent
                   form={form}
@@ -648,8 +356,8 @@ export default function CampaignForm({
                   render={(field) => (
                     <SelectComponent
                       field={field}
-                      selectDefaultValue="None"
-                      disabled={isEditMode ? true : false}
+                      selectDefaultValue={initialData.copyTarget || 'None'}
+                      disabled
                     >
                       <SelectContent>
                         <SelectItem value="none">None</SelectItem>
@@ -678,8 +386,8 @@ export default function CampaignForm({
                   render={(field) => (
                     <SelectComponent
                       field={field}
-                      selectDefaultValue="None"
-                      disabled={isEditMode ? true : false}
+                      selectDefaultValue={initialData.copyUiLanguage || 'None'}
+                      disabled
                     >
                       <SelectContent>
                         <SelectItem value="none">None</SelectItem>
@@ -703,6 +411,7 @@ export default function CampaignForm({
               name="numberOfStages"
               render={(field) => (
                 <Select
+                  disabled
                   defaultValue={field.value as string}
                   onValueChange={(value) => {
                     setSelectedNumberOfStages(value);
@@ -716,11 +425,7 @@ export default function CampaignForm({
                         'border-destructive'
                     )}
                   >
-                    <SelectValue
-                      placeholder={
-                        isEditMode ? initialData?.numberOfStages : 'Select'
-                      }
-                    />
+                    <SelectValue placeholder={initialData?.numberOfStages} />
                   </CustomSelectTrigger>
                   <SelectContent>
                     {Array.from({ length: 10 }).map((_, index) => (
@@ -744,7 +449,7 @@ export default function CampaignForm({
                 render={(field) => (
                   <Input
                     {...field}
-                    disabled={selectedNumberOfStages === undefined}
+                    disabled
                     value={field.value}
                     className={cn(
                       inputStyle,
@@ -764,8 +469,9 @@ export default function CampaignForm({
                   return (
                     <Input
                       {...field}
-                      disabled={selectedNumberOfStages === undefined}
+                      disabled
                       placeholder="Advanced"
+                      value={field.value}
                       className={cn(
                         inputStyle,
                         form.formState.errors.secondBadgeName?.message &&
@@ -779,12 +485,9 @@ export default function CampaignForm({
             </Container>
             <TableComponent
               form={form}
-              isEditMode={isEditMode}
+              isEditMode={true}
               initialData={initialData}
             />
-            {form.formState.errors.custom?.message && (
-              <FormMessage>{form.formState.errors.custom?.message}</FormMessage>
-            )}
           </form>
         </Form>
         <div className="flex justify-center mt-16 gap-3">
@@ -792,7 +495,7 @@ export default function CampaignForm({
             Cancel
           </Button>
 
-          {form.formState.isValid && !isEditMode ? (
+          {form.formState.isValid ? (
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <AlertDialogTrigger asChild>
                 <Button variant="action" form="certification-form">

@@ -1,5 +1,3 @@
-import { toast } from 'sonner';
-
 export const updateNoServiceChannel = async (campaignId?: string) => {
   if (!campaignId) return;
 
@@ -16,9 +14,8 @@ export const updateNoServiceChannel = async (campaignId?: string) => {
       throw new Error('Failed to update no service channel');
     }
 
-    toast.success('No service channel updated successfully');
+    console.log('No service channel updated successfully');
   } catch (error) {
     console.error('Error updating no service channel:', error);
-    toast.error('Failed to update no service channel');
   }
 };
