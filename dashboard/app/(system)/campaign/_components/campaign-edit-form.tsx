@@ -68,7 +68,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 
 interface CampaignFormProps {
   initialData: any;
@@ -536,7 +536,7 @@ export default function CampaignEditForm({
           )}
         </div>
       </div>
-      {isLoading && <LoaderWithBackground />}
+      {isLoading && <LoadingFullScreen />}
     </>
   );
 }

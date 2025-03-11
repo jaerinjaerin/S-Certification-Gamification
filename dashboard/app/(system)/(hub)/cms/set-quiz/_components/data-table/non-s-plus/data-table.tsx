@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import {
   Table,
@@ -45,7 +45,7 @@ export default function NonSplusDataTable() {
   );
 
   if (isLoading) {
-    return <LoaderWithBackground />;
+    return <LoadingFullScreen />;
   }
   return <DataTable data={data?.result.channels ?? []} columns={columns} />;
 }

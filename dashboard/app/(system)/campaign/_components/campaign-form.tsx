@@ -64,7 +64,7 @@ import {
 import { Campaign } from '@prisma/client';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 
 interface CampaignFormProps {
   initialData: any;
@@ -833,7 +833,7 @@ export default function CampaignForm({
           )}
         </div>
       </div>
-      {isLoading && <LoaderWithBackground />}
+      {isLoading && <LoadingFullScreen />}
     </>
   );
 }

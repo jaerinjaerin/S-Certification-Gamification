@@ -17,7 +17,7 @@ import { useTargetData } from '../_provider/target-data-provider';
 import { useEffect } from 'react';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
 
 export const columns: ColumnDef<TargetProps>[] = [
@@ -70,7 +70,7 @@ export function DataTable() {
 
   return (
     <>
-      {loading && <LoaderWithBackground />}
+      {loading && <LoadingFullScreen />}
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

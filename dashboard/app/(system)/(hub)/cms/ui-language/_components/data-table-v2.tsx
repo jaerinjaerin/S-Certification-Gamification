@@ -1,5 +1,5 @@
 'use client';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import {
   Table,
@@ -52,7 +52,7 @@ export function UiLanguageDataTable() {
   }, [result]);
 
   if (loading) {
-    return <LoaderWithBackground />;
+    return <LoadingFullScreen />;
   }
 
   if (!result.result.groupedLanguages) {

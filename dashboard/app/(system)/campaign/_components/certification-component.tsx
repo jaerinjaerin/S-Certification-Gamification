@@ -7,7 +7,7 @@ import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
 import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
 import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 
@@ -64,7 +64,7 @@ export default function CertificationClientComponent() {
         )}
       </div>
 
-      {isRouting && <LoaderWithBackground />}
+      {isRouting && <LoadingFullScreen />}
     </div>
   );
 }
@@ -184,7 +184,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           )}
         </div>
       </div>
-      {isRouting && <LoaderWithBackground />}
+      {isRouting && <LoadingFullScreen />}
     </>
   );
 }
