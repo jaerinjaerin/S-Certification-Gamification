@@ -22,32 +22,23 @@ import {
 } from '@/components/ui/sidebar';
 import { usePathname, useRouter } from 'next/navigation';
 import { useStateVariables } from '../provider/state-provider';
-import { Campaign, Role } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { Role } from '@prisma/client';
+import { useState } from 'react';
 
 // 메뉴 데이터를 배열로 정의
-const getMenuItems = (role: Role, campaign: Campaign | null): MenuItems => {
-  // searchParams 최적화: campaign이 있을 때만 생성
-  const searchParams = campaign
-    ? `?date.from=${new Date(campaign.startedAt).toISOString()}&date.to=${new Date(campaign.endedAt).toISOString()}`
-    : '';
-
-  // 공통 URL 생성 함수
-  const createUrl = (path: string) =>
-    campaign ? `/dashboard/${campaign.id}${path}${searchParams}` : '';
-
+const getMenuItems = (role: Role): MenuItems => {
   const dashboard = {
     title: 'Dashboard',
     items: [
       {
         label: 'Overview',
         icon: LayoutDashboard,
-        href: createUrl('/overview'),
+        href: '/dashboard/overview',
       },
       {
         label: 'User',
         icon: Users,
-        href: createUrl('/user/stats'),
+        href: '/dashboard/user/stats',
         // children: [
         //   {
         //     label: 'Stats',
@@ -58,7 +49,7 @@ const getMenuItems = (role: Role, campaign: Campaign | null): MenuItems => {
       {
         label: 'Quiz',
         icon: Sheet,
-        href: createUrl('/quiz'),
+        href: '/dashboard/quiz',
       },
     ],
   };
@@ -81,16 +72,9 @@ const getMenuItems = (role: Role, campaign: Campaign | null): MenuItems => {
 // Menu 컴포넌트
 const LeftMenu = () => {
   const router = useRouter();
-  const { role, campaign } = useStateVariables();
+  const { role } = useStateVariables();
   const pathname = usePathname();
-  const [campaignData, setCampaignData] = useState<Campaign | null>(null);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    if (campaign) {
-      setCampaignData(campaign);
-    }
-  }, [campaign]);
 
   const toggleSection = (label: string) => {
     setOpenSections((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -99,7 +83,7 @@ const LeftMenu = () => {
   return (
     <Sidebar variant="inset" collapsible="none">
       <SidebarContent className="p-2">
-        {getMenuItems(role, campaignData).map((group, groupIndex) => (
+        {getMenuItems(role).map((group, groupIndex) => (
           <SidebarGroup key={groupIndex}>
             <SidebarGroupLabel asChild>
               <div className="!text-size-14px mx-2 my-0.5 mb-1">

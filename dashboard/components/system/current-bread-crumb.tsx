@@ -24,7 +24,6 @@ const CurrentBreadCrumb = () => {
   const { campaigns, campaign, setCampaign } = useStateVariables();
   const pathname = usePathname();
   const paths = pathname
-    .replace(/\/dashboard\/[^/]+/, `/dashboard/`)
     .split('/')
     .filter(Boolean)
     .map((name) => name.replaceAll('-', ' '));

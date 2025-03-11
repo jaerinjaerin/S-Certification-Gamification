@@ -28,3 +28,35 @@ export const downloadFileByBase64 = ({
   // 3️⃣ 메모리 해제
   window.URL.revokeObjectURL(blobUrl);
 };
+
+export const downloadFileByUrl = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to download file');
+
+    const blob = await response.blob();
+    const fileUrl = window.URL.createObjectURL(blob);
+
+    // ✅ 파일명 추출 (서버에서 `Content-Disposition` 헤더 제공 시)
+    const disposition = response.headers.get('Content-Disposition');
+    let filename = 'downloaded-file'; // 기본 파일명
+
+    if (disposition) {
+      const match = disposition.match(/filename="(.+)"/);
+      if (match && match[1]) filename = match[1]; // 서버에서 받은 파일명 적용
+    }
+
+    // ✅ 가짜 <a> 태그를 생성하여 다운로드 트리거
+    const a = document.createElement('a');
+    a.href = fileUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    // ✅ 메모리 해제
+    window.URL.revokeObjectURL(fileUrl);
+    document.body.removeChild(a);
+  } catch (error) {
+    console.error('Download failed:', error);
+  }
+};

@@ -220,6 +220,8 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
+    // s3Client.deleteFolder(bucketName, folderToDelete);
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error delete campaign: ', error);
