@@ -38,11 +38,15 @@ const CurrentBreadCrumb = () => {
     }
   };
 
+<<<<<<< Updated upstream
   const UppercaseFormat = (text: string) => {
     const words = text.split(' ');
 
     return words[0].toUpperCase() + ' ' + words[1];
   };
+=======
+  console.log('🥕 campaigns', campaigns);
+>>>>>>> Stashed changes
 
   return (
     <Breadcrumb>
@@ -64,7 +68,7 @@ const CurrentBreadCrumb = () => {
               </SelectItem>
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
-                  {c.name}
+                  {c.slug}
                 </SelectItem>
               ))}
             </SelectContent>
