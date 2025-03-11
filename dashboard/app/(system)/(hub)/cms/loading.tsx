@@ -1,7 +1,6 @@
 import Loader from '@/components/loader';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
-  return (
-    <Loader className=" w-full py-28 flex items-center justify-center bg-red-500/80 rounded-xl" />
-  );
+  return <Skeleton className=" w-full h-full rounded-xl" />;
 }

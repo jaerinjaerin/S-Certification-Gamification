@@ -337,7 +337,7 @@ const UILinkButton = () => {
   return (
     <Button
       variant={'secondary'}
-      className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
+      className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-zinc-200"
       onClick={() => routeToPage('/cms/ui-language')}
     >
       <div className="text-size-12px leading-tight font-semibold">Add</div>
