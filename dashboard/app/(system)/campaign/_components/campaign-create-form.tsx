@@ -825,9 +825,9 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                   Alert
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
-                  Once you create a certification, you cannot change the Slug,
-                  Media to Copy, Target to Copy, or UI Language to Copy. Are you
-                  sure you want to save?
+                  When an certification is created, only the certification name
+                  and start/end dates can be modified until the start date. Are
+                  you sure you want to save?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">

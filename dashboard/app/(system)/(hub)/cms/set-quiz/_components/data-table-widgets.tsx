@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/utils/utils';
-import { ExternalLink } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useNavigation } from '../../_hooks/useNavigation';
 import { QuizSetEx } from '@/types/apiTypes';
 
@@ -63,7 +63,7 @@ function QuizSetLink({ props }: { props: QuizSetEx }) {
         <p className="text-description">{props.jobCodes[0]}</p>
       </div>
       <div>
-        <ExternalLink className="text-zinc-950" />
+        <ChevronRight className="text-zinc-950" />
       </div>
     </Button>
   );
@@ -72,18 +72,23 @@ function QuizSetLink({ props }: { props: QuizSetEx }) {
 // TODO: id랑 stage props로 받아야 함
 function ActivityIdBadge({
   id,
+  src,
   stage,
 }: {
-  id: string | number;
+  id?: string | number;
+  src?: string;
   stage: number;
 }) {
   return (
-    <div className="border border-zinc-200 rounded-full px-[10px] flex items-center gap-1 w-fit font-semibold">
-      <div className="rounded-full bg-zinc-200 size-[14px] flex items-center justify-center leading-none text-size-12px">
+    <div className="border border-zinc-200 rounded-full px-[10px] py-2 flex items-center gap-1 w-max h-8 font-semibold">
+      <div className="rounded-full shrink-0 bg-zinc-200 size-[14px] flex items-center justify-center leading-none text-size-12px">
         {stage}
       </div>
-
-      <span>{id}</span>
+      {src ? (
+        <img className="size-6" src={src} alt="badge" />
+      ) : (
+        <span>{id}</span>
+      )}
     </div>
   );
 }

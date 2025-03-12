@@ -8,6 +8,7 @@ import { StatusCircle } from '../../data-table-widgets';
 export const columns: ColumnDef<DomainChannel>[] = [
   {
     accessorKey: 'status',
+    accessorFn: (row) => row.isReady,
     header: () => (
       <div className="flex gap-1 items-center">
         <span>Status</span>
@@ -36,6 +37,13 @@ export const columns: ColumnDef<DomainChannel>[] = [
   },
   {
     accessorKey: 'subsidiary',
+    accessorFn: (row) => {
+      if (row.subsidiary) {
+        return row.subsidiary.name;
+      } else {
+        return '-';
+      }
+    },
     header: 'Subsidiary',
     cell: ({ row }) => (
       <div className="uppercase">{row.original.subsidiary?.name}</div>
@@ -43,6 +51,7 @@ export const columns: ColumnDef<DomainChannel>[] = [
   },
   {
     accessorKey: 'domain',
+    accessorFn: (row) => row.name,
     header: 'Domain',
     cell: ({ row }) => <div>{row.original.name}</div>,
   },

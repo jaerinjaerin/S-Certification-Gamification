@@ -216,6 +216,7 @@ export function UploadImageFileModal({
           getInputProps={getInputProps}
           isDragActive={isDragActive}
           open={open}
+          description="Asset allows only one file to be uploaded at a time."
         >
           {children}
         </UploadFilesDialog>

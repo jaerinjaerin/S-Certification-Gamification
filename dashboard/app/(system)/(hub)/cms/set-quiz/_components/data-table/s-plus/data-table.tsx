@@ -115,7 +115,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     <div>
       <div className="flex items-center justify-between pt-[1.438rem] pb-2">
         <div className="flex items-center justify-end space-x-3 py-4">
-          <div className=" text-sm text-zinc-950">
+          <div className="text-sm text-zinc-950">
             Total :
             <strong className="font-bold">
               {` ${table.getFilteredRowModel().rows.length}`}
@@ -197,7 +197,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                           header.id.toLowerCase() === 'quizset' ||
                           header.id.toLowerCase() === 'activityid' ||
                           header.id.toLowerCase() === 'badge' ||
-                          header.id.toLowerCase() === 'uilanguage'
+                          header.id.toLowerCase() === 'uilanguage' ||
+                          header.id.toLowerCase() === 'delete'
                         ) ? (
                           <>
                             {(() => {
