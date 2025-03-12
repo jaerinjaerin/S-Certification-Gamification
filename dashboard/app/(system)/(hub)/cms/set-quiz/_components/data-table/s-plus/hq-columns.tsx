@@ -3,13 +3,18 @@ import { Button } from '@/components/ui/button';
 import { ActivityBadgeEx } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
-import { Flag } from 'lucide-react';
+import { Copy, ExternalLink, Flag } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { useNavigation } from '../../../../_hooks/useNavigation';
 import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
 import { GroupedQuizSet } from '../../../_type/type';
-import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
+import {
+  ActivityIdBadge,
+  QuizSetLink,
+  StatusBadge,
+} from '../../data-table-widgets';
+import { cn } from '@/utils/utils';
 
 export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
   {
@@ -85,9 +90,29 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.uiLanguage && row.original.quizSet) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
-          <a href={url} target="_blank">
-            {url}
-          </a>
+          <div className="flex gap-[0.438rem]">
+            <Button
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                window.navigator.clipboard.writeText(url);
+                alert('copy to clipboard');
+              }}
+            >
+              <Copy />
+            </Button>
+            <a
+              href={url}
+              target="_blank"
+              className={cn(
+                'size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5',
+                !url && 'disabled:bg-black/5'
+              )}
+            >
+              <ExternalLink className="size-4" />
+            </a>
+            {/* <a href={url}>{url}</a> */}
+          </div>
         );
       }
       return <div>-</div>;
@@ -110,7 +135,7 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       if (row.original.activityBadges) {
         return (
-          <>
+          <div className="flex flex-col gap-2.5">
             {/* <ActivityIdBadge id={10000} stage={3} /> */}
             {row.original.activityBadges.map((badge, index) => {
               const stageNum = getStageNumFromActivityBadge(
@@ -125,13 +150,18 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
                 return <></>;
               }
               return (
-                <div key={index} className="flex items-center gap-2">
-                  <span className="font-bold">{stageNum}</span>
-                  {badge.activityId}
-                </div>
+                <ActivityIdBadge
+                  key={index}
+                  id={badge.activityId}
+                  stage={stageNum}
+                />
+                // <div key={index} className="flex items-center gap-2">
+                //   <span className="font-bold">{stageNum}</span>
+                //   {badge.activityId}
+                // </div>
               );
             })}
-          </>
+          </div>
         );
       }
       return <div>-</div>;
@@ -143,7 +173,7 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       if (row.original.activityBadges) {
         return (
-          <>
+          <div className="flex flex-col gap-2.5">
             {row.original.activityBadges.map((badge, index) => {
               const stageNum = getStageNumFromActivityBadge(
                 badge as ActivityBadgeEx,
@@ -153,24 +183,20 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
                 return <></>;
               }
               return (
-                <div key={index} className="flex items-center gap-2">
-                  <span className="font-bold">
-                    {getStageNumFromActivityBadge(
-                      badge as ActivityBadgeEx,
-                      row
-                    )}
-                  </span>
-
+                <div key={index}>
                   {badge.badgeImage?.imagePath && (
-                    <img
-                      className="w-6 h-6"
+                    <ActivityIdBadge
                       src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                      stage={getStageNumFromActivityBadge(
+                        badge as ActivityBadgeEx,
+                        row
+                      )}
                     />
                   )}
                 </div>
               );
             })}
-          </>
+          </div>
         );
       }
       return <div>-</div>;
