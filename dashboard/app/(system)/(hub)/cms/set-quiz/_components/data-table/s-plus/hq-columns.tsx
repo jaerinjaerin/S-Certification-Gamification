@@ -1,4 +1,3 @@
-import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
 import { ActivityBadgeEx } from '@/types';
 import { BadgeType } from '@prisma/client';
@@ -14,7 +13,6 @@ import {
   QuizSetLink,
   StatusBadge,
 } from '../../data-table-widgets';
-import { cn } from '@/utils/utils';
 
 export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
   {
@@ -96,22 +94,22 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
               className="size-[2.375rem]"
               onClick={() => {
                 window.navigator.clipboard.writeText(url);
-                alert('copy to clipboard');
+                alert('copy to clipboard:\n' + url);
               }}
+              title={url}
             >
               <Copy />
             </Button>
-            <a
-              href={url}
-              target="_blank"
-              className={cn(
-                'size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5',
-                !url && 'disabled:bg-black/5'
-              )}
+            <Button
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                window.open(url, '_blank');
+              }}
+              title={url}
             >
               <ExternalLink className="size-4" />
-            </a>
-            {/* <a href={url}>{url}</a> */}
+            </Button>
           </div>
         );
       }
