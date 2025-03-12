@@ -14,10 +14,9 @@ export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl;
     const campaign = searchParams.get('campaignName') as string;
 
-    await prisma.$connect();
-
     const languages = await prisma.language.findMany({});
 
+    console.log('🚀 ~ GET ~ languages:', languages);
     const campaignName = (campaign || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'ui_language');
 
@@ -59,8 +58,6 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }
 

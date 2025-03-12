@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { querySearchParams } from '@/lib/query';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { CampaignSettings } from '@prisma/client';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,9 +14,11 @@ export async function GET(request: NextRequest) {
     const { where: condition, period } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');
@@ -54,10 +58,12 @@ export async function GET(request: NextRequest) {
     //   )
     // );
 
-    const userBadges = await Promise.all(
+    const userBadges: any = await Promise.all(
       jobGroups.map(({ stageIndex, jobIds }) =>
-        prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
+        extendedQuery(
+          prisma,
+          'UserQuizBadgeStageStatistics',
+          {
             ...where,
             createdAt: {
               gte: startOfDay(beforeWeek), // 6일 전부터
@@ -71,8 +77,8 @@ export async function GET(request: NextRequest) {
                 : { OR: [{ storeId }, { storeId: null }] }
               : {}),
           },
-          orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
-        })
+          { orderBy: { createdAt: 'asc' } }
+        )
       )
     );
 

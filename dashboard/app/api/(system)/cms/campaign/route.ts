@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { setHoursFromZeroToEnd } from '@/lib/time';
 import { prisma } from '@/model/prisma';
 import { containsBannedWords } from '@/utils/slug';
 import { Prisma } from '@prisma/client';
@@ -176,11 +177,17 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    const campaigns = await prisma.campaign.findMany({
+    const campaignData = await prisma.campaign.findMany({
       where,
       include: { settings: true },
       orderBy: { createdAt: 'asc' },
     });
+
+    // 시간 조정
+    const campaigns = campaignData.map((c) => ({
+      ...c,
+      ...setHoursFromZeroToEnd(c.startedAt, c.endedAt),
+    }));
 
     return NextResponse.json(
       { success: true, result: { campaigns } },

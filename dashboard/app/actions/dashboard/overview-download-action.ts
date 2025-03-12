@@ -2,9 +2,10 @@
 import { prisma } from '@/model/prisma';
 import { createOverviewExcelBlob, OverviewExcelDataProps } from '@/lib/excel';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
-import { AuthType } from '@prisma/client';
+import { AuthType, CampaignSettings, Domain, DomainGoal } from '@prisma/client';
 import { formatDate } from 'date-fns';
 import { paramsToQueries } from '@/lib/query';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
 
 export async function downloadOverview(
   data: URLSearchParams | Record<string, any>
@@ -13,9 +14,11 @@ export async function downloadOverview(
     const { where: condition, period } = paramsToQueries(data);
     const { jobId, storeId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');
@@ -43,10 +46,17 @@ export async function downloadOverview(
       orderBy: { order: 'asc' },
     });
 
-    const domainsWithSubsidiaryNull = await prisma.domain.findMany({
-      where: { subsidiaryId: null },
-      orderBy: { order: 'asc' },
-    });
+    const domainsWithSubsidiaryNull: Domain[] = await extendedQuery(
+      prisma,
+      'Domain',
+      { subsidiaryId: null },
+      { orderBy: { order: 'asc' } }
+    );
+
+    // prisma.domain.findMany({
+    //   where: { subsidiaryId: null },
+    //   orderBy: { order: 'asc' },
+    // });
 
     const domainsIntoRegion = domainsWithSubsidiaryNull.map((domain) =>
       transformDataToRegion(domain)
@@ -54,17 +64,16 @@ export async function downloadOverview(
 
     regions = [...domainsIntoRegion, ...regions] as typeof regions;
 
-    const goals = await prisma.domainGoal.findMany({
-      where: { campaignId: where.campaignId },
+    const goals: DomainGoal[] = await queryRawWithWhere(prisma, 'DomainGoal', {
+      campaignId: where.campaignId,
     });
-    const userBadges = await Promise.all(
+
+    const userBadges: any = await Promise.all(
       jobGroups.map(({ stageIndex }) =>
-        prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
-            quizStageIndex: stageIndex,
-            campaignId: where.campaignId,
-            createdAt: where.createdAt,
-          },
+        queryRawWithWhere(prisma, 'UserQuizBadgeStageStatistics', {
+          quizStageIndex: stageIndex,
+          campaignId: where.campaignId,
+          createdAt: where.createdAt,
         })
       )
     );
@@ -117,25 +126,25 @@ export async function downloadOverview(
               (badge) =>
                 badge.storeId === '4' &&
                 badge.jobId &&
-                jobFSM.includes(badge.jobId)
+                jobFSM.includes(badge.jobId as never)
             ).length;
             const cnr = badgesInDomain.filter(
               (badge) =>
                 (badge.storeId !== '4' || badge.storeId === null) &&
                 badge.jobId &&
-                jobFSM.includes(badge.jobId)
+                jobFSM.includes(badge.jobId as never)
             ).length;
             const sesFieldForce = badgesInDomain.filter(
               (badge) =>
                 badge.storeId === '4' &&
                 badge.jobId &&
-                jobFF.includes(badge.jobId)
+                jobFF.includes(badge.jobId as never)
             ).length;
             const nonSesFieldForce = badgesInDomain.filter(
               (badge) =>
                 (badge.storeId !== '4' || badge.storeId === null) &&
                 badge.jobId &&
-                jobFF.includes(badge.jobId)
+                jobFF.includes(badge.jobId as never)
             ).length;
 
             // 도메인 데이터 생성

@@ -38,6 +38,7 @@ const UserOutcomeChild = () => {
     ([scoreUrl, timeUrl]) =>
       Promise.all([swrFetcher(scoreUrl), swrFetcher(timeUrl)]),
     {
+      revalidateOnFocus: false,
       fallbackData: [
         {
           result: [],

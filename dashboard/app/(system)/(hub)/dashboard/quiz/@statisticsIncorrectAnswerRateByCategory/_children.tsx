@@ -18,7 +18,7 @@ const QuizIncorrectAnswerRateChild = () => {
   const { data: categoryData, isLoading } = useSWR(
     `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
-    { fallbackData: { result: [] } }
+    { revalidateOnFocus: false, fallbackData: { result: [] } }
   );
 
   const data = categoryData.result;

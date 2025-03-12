@@ -10,6 +10,7 @@ import {
   initialExpertsData,
   removeDuplicateUsers,
 } from '@/lib/data';
+import { queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,23 +19,38 @@ async function fetchUserStatistics(
   stageIndex: number,
   jobGroup: string[],
   moreWhere: any
-) {
-  return prisma.userQuizBadgeStageStatistics.findMany({
-    where: {
-      ...buildWhereWithValidKeys(where, [
-        'campaignId',
-        'regionId',
-        'subsidiaryId',
-        'domainId',
-        'authType',
-        'channelSegmentId',
-        'createdAt',
-      ]),
-      quizStageIndex: stageIndex,
-      jobId: { in: jobGroup },
-      ...moreWhere,
-    },
+): Promise<UserQuizBadgeStageStatistics[]> {
+  return queryRawWithWhere(prisma, 'UserQuizBadgeStageStatistics', {
+    ...buildWhereWithValidKeys(where, [
+      'campaignId',
+      'regionId',
+      'subsidiaryId',
+      'domainId',
+      'authType',
+      'channelSegmentId',
+      'createdAt',
+    ]),
+    quizStageIndex: stageIndex,
+    jobId: { in: jobGroup },
+    ...moreWhere,
   });
+
+  // return prisma.userQuizBadgeStageStatistics.findMany({
+  //   where: {
+  //     ...buildWhereWithValidKeys(where, [
+  //       'campaignId',
+  //       'regionId',
+  //       'subsidiaryId',
+  //       'domainId',
+  //       'authType',
+  //       'channelSegmentId',
+  //       'createdAt',
+  //     ]),
+  //     quizStageIndex: stageIndex,
+  //     jobId: { in: jobGroup },
+  //     ...moreWhere,
+  //   },
+  // });
 }
 
 async function processUserStatistics(

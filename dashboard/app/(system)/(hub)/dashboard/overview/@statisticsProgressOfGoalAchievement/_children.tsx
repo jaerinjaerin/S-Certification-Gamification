@@ -35,6 +35,7 @@ export const OverviewGoalAchievementChild = () => {
     `/api/dashboard/overview/statistics/progress-of-goal-achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
     {
+      revalidateOnFocus: false,
       fallbackData: {
         result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
       },

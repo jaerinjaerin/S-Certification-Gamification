@@ -15,7 +15,7 @@ const OverviewExpertsInfoChild = () => {
   const { data } = useSWR(
     `/api/dashboard/overview/info/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
-    { fallbackData: { result: { count: null } } }
+    { revalidateOnFocus: false, fallbackData: { result: { count: null } } }
   );
   const count = data.result?.count;
 
