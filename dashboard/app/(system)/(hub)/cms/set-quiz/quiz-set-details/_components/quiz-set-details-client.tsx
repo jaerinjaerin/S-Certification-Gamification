@@ -95,7 +95,11 @@ export default function QuizSetDetailsClient() {
           User Information
         </h3>
         <div className="flex items-center gap-3 mb-[1.688rem]">
-          <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} />
+          <InfoComponent
+            className="break-all text-pretty !h-fit"
+            title="Quiz Set File"
+            content={QUIZSET_FILE_NAME}
+          />
           <div className="flex items-center gap-2">
             <span className="text-nowrap text-secondary">
               date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
@@ -212,13 +216,13 @@ export default function QuizSetDetailsClient() {
                           </div>
                           <div className="space-y-3">
                             <p className="font-bold">Answer</p>
-                            <ul>
+                            <ul className="space-y-3">
                               {question.options.map(
                                 (option: QuestionOption) => {
                                   return (
                                     <li
                                       className={cn(
-                                        'block',
+                                        'block border border-zinc-200 rounded-xl py-3 px-4',
                                         option.isCorrect && 'text-blue-600'
                                       )}
                                       key={option.id}
@@ -242,9 +246,7 @@ export default function QuizSetDetailsClient() {
           <Collapsible className="data-[state=open]:mb-[90px]">
             <CollapsibleTrigger asChild>
               <div className="flex gap-4 items-center mb-8 group">
-                <p className="font-bold">
-                  Stage Disabled ({disabledData.length})
-                </p>
+                <p className="font-bold">Disabled ({disabledData.length})</p>
                 <Button className="w-[17px] h-[17px] bg-zinc-50 shadow-none rounded-none text-zinc-950 p-0 hover:bg-zinc-200">
                   <ChevronDown className="!w-2 h-auto group-data-[state=open]:rotate-180" />
                 </Button>
@@ -343,9 +345,14 @@ const InfoComponent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className="flex items-center gap-2">
       <span className="text-secondary text-size-14px text-nowrap">{title}</span>
-      <div className="w-[20rem] h-10 flex items-center border rounded-md border-zinc-200 p-3 !text-zinc-500 text-size-14px shadow-none">
+      <div
+        className={cn(
+          'w-[20rem] h-10 flex items-center border rounded-md border-zinc-200 p-3 !text-zinc-500 text-size-14px shadow-none',
+          className
+        )}
+      >
         {content}
       </div>
     </div>

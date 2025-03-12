@@ -14,7 +14,7 @@ export default Loader;
 export const LoadingFullScreen = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <Loader
-      className="fixed z-[9999] top-0 left-0 w-full h-full flex items-center justify-center bg-white"
+      className="fixed z-[9999] top-0 left-0 w-full h-full flex items-center justify-center bg-white/70"
       {...props}
     />
   );
