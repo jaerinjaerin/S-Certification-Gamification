@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     const users = removeDuplicateUsers(userBadges.flat());
 
     // domainId만 확인해서 필터링 생성
-    const whereForGoal = await domainCheckOnly(where);
+    const { createdAt, ...whereForGoal } = await domainCheckOnly(where);
     const domain_goal = await prisma.domainGoal.findMany({
       where: whereForGoal,
       orderBy: { updatedAt: 'desc' },
