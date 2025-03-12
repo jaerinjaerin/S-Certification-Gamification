@@ -136,6 +136,7 @@ const UploadExcelFileModal = forwardRef<
           uploadFiles.activityId,
           campaign!.id
         );
+
         if (result) {
           setProcessResult(result);
         }
