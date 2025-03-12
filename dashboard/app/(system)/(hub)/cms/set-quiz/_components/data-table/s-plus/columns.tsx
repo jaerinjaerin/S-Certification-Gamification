@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ActivityBadgeEx } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, Trash2 } from 'lucide-react';
+import { CircleHelp, Copy, ExternalLink, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
@@ -15,6 +15,7 @@ import {
   QuizSetLink,
   StatusBadge,
 } from '../../data-table-widgets';
+import { cn } from '@/utils/utils';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -151,20 +152,37 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'url',
     header: 'URL',
-    accessorFn: (row) => {
-      if (row.uiLanguage && row.quizSet) {
-        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.campaign.slug}/${row.domain.code}_${row.uiLanguage.code}`;
-        return { url };
-      }
-      return '-';
-    },
     cell: ({ row }) => {
       if (row.original.uiLanguage && row.original.quizSet) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
+
         return (
-          <a href={url} target="_blank">
-            {url}
-          </a>
+          <div className="flex gap-[0.438rem]">
+            <Button
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                window.navigator.clipboard.writeText(url);
+                alert('copy to clipboard');
+              }}
+            >
+              <Copy />
+            </Button>
+            <a
+              target="_blank"
+              href={url}
+              className={cn(
+                'size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5',
+                !url && 'disabled:bg-black/5'
+              )}
+            >
+              <ExternalLink className="size-4" />
+            </a>
+            {/* <a href={url}>{url}</a> */}
+          </div>
+          // <a href={url} target="_blank">
+          //   {url}
+          // </a>
         );
       }
       return <div>-</div>;
@@ -174,68 +192,22 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'quizSet',
     header: 'Quiz Set',
-    accessorFn: (row) => {
-      if (row.quizSet?.language) {
-        return row.quizSet.language.name;
-      }
-    },
     cell: ({ row }) => {
       const { quizSet, quizSetFile } = row.original;
       if (!quizSetFile || !quizSet) {
         return;
       }
-      return (
-        <div className="flex items-center gap-1">
-          <QuizSetLink props={quizSet} />
-          <div className="flex items-center justify-center text-center">
-            <CustomAlertDialog
-              trigger={
-                <Button variant={'ghost'} size={'icon'}>
-                  <Trash2 className="text-red-500 !size-5" />
-                </Button>
-              }
-              description={
-                'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
-              }
-              buttons={[
-                {
-                  label: 'Cancel',
-                  variant: 'secondary',
-                  type: 'cancel',
-                },
-                {
-                  label: 'Delete',
-                  variant: 'delete',
-                  type: 'delete',
-                  onClick: async () =>
-                    await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
-                },
-              ]}
-            />
-          </div>
-        </div>
-      );
+      return <QuizSetLink props={quizSet} />;
     },
     sortingFn: 'auto',
   },
   {
     accessorKey: 'activityId',
     header: 'Activity ID',
-    accessorFn: (row) => {
-      if (row.activityBadges) {
-        let activityId;
-        {
-          row.activityBadges.map((badge, index) => {
-            return (activityId = badge.activityId);
-          });
-        }
-        return activityId;
-      }
-    },
     cell: ({ row }) => {
       if (row.original.activityBadges) {
         return (
-          <>
+          <div className="flex flex-col gap-2.5">
             {/* <ActivityIdBadge id={10000} stage={3} /> */}
             {row.original.activityBadges.map((badge, index) => {
               const stageNum = getStageNumFromActivityBadge(
@@ -257,7 +229,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 />
               );
             })}
-          </>
+          </div>
         );
       }
       return <div>-</div>;
@@ -267,19 +239,10 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'Badge',
     header: 'Badge',
-    accessorFn: (row) => {
-      if (row.activityBadges) {
-        row.activityBadges.map((badge, index) => {
-          if (badge.badgeImage?.imagePath) {
-            return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`;
-          }
-        });
-      }
-    },
     cell: ({ row }) => {
       if (row.original.activityBadges) {
         return (
-          <>
+          <div className="flex flex-col gap-2.5">
             {row.original.activityBadges.map((badge, index) => {
               const stageNum = getStageNumFromActivityBadge(
                 badge as ActivityBadgeEx,
@@ -289,24 +252,14 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 return <></>;
               }
               return (
-                <div key={index} className="flex items-center gap-2">
-                  <span className="font-bold">
-                    {getStageNumFromActivityBadge(
-                      badge as ActivityBadgeEx,
-                      row
-                    )}
-                  </span>
-
-                  {badge.badgeImage?.imagePath && (
-                    <img
-                      className="w-6 h-6"
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
-                    />
-                  )}
-                </div>
+                <ActivityIdBadge
+                  key={index}
+                  stage={stageNum}
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                />
               );
             })}
-          </>
+          </div>
         );
       }
       return <div>-</div>;
@@ -316,11 +269,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'uiLanguage',
     header: 'UI Language',
-    accessorFn: (row) => {
-      if (row.uiLanguage) {
-        return row.uiLanguage.code;
-      }
-    },
     cell: ({ row }) => {
       if (row.original.uiLanguage?.code) {
         return <div>{row.original.uiLanguage.code}</div>;
@@ -329,51 +277,51 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     },
     sortingFn: 'auto',
   },
-  // {
-  //   accessorKey: 'delete',
-  //   header: 'Delete',
-  //   cell: ({ row }) => {
-  //     const HQ = row.original.domain.code === 'OrgCode-7';
-  //     if (HQ) {
-  //       return;
-  //     }
+  {
+    accessorKey: 'delete',
+    header: 'Delete',
+    cell: ({ row }) => {
+      const HQ = row.original.domain.code === 'OrgCode-7';
+      if (HQ) {
+        return;
+      }
 
-  //     const quizSet = row.original.quizSet;
-  //     if (!quizSet) {
-  //       return;
-  //     }
+      const quizSet = row.original.quizSet;
+      if (!quizSet) {
+        return;
+      }
 
-  //     return (
-  //       <div className="flex items-center justify-center text-center">
-  //         <CustomAlertDialog
-  //           trigger={
-  //             <Button variant={'ghost'} size={'icon'}>
-  //               <Trash2 className="text-red-500 !size-6" />
-  //             </Button>
-  //           }
-  //           description={
-  //             'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
-  //           }
-  //           buttons={[
-  //             {
-  //               label: 'Cancel',
-  //               variant: 'secondary',
-  //               type: 'cancel',
-  //             },
-  //             {
-  //               label: 'Delete',
-  //               variant: 'delete',
-  //               type: 'delete',
-  //               onClick: async () =>
-  //                 await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
-  //             },
-  //           ]}
-  //         />
-  //       </div>
-  //     );
-  //   },
-  //   sortingFn: 'auto',
-  // },
+      return (
+        <div className="flex items-center justify-center text-center">
+          <CustomAlertDialog
+            trigger={
+              <Button variant={'ghost'} size={'icon'}>
+                <Trash2 className="text-red-500 !size-6" />
+              </Button>
+            }
+            description={
+              'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
+            }
+            buttons={[
+              {
+                label: 'Cancel',
+                variant: 'secondary',
+                type: 'cancel',
+              },
+              {
+                label: 'Delete',
+                variant: 'delete',
+                type: 'delete',
+                onClick: async () =>
+                  await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
+              },
+            ]}
+          />
+        </div>
+      );
+    },
+    sortingFn: 'auto',
+  },
 ];
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {

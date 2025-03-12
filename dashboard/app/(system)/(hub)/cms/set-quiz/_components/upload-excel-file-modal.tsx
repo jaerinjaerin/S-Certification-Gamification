@@ -9,6 +9,7 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -39,7 +40,7 @@ import { mutate } from 'swr';
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
->(({ children, title, variant, onDropdownClose }, ref) => {
+>(({ children, title, variant, onDropdownClose, description }, ref) => {
   const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
@@ -193,9 +194,18 @@ const UploadExcelFileModal = forwardRef<
           onInteractOutside={(e) => e.preventDefault()}
         >
           <DialogHeader className="!flex-row !items-center justify-between">
-            <DialogTitle className="text-size-17px font-semibold">
-              {title}
-            </DialogTitle>
+            <div className="space-y-2">
+              <DialogTitle className="text-size-17px font-semibold">
+                {title}
+              </DialogTitle>
+              {description && (
+                <DialogDescription className="text-neutral-600 flex items-center gap-2">
+                  <CircleAlert className="size-4" />
+                  {description}
+                </DialogDescription>
+              )}
+            </div>
+
             <DialogClose className={cn(isLoading && 'pointer-events-none')}>
               <X />
             </DialogClose>

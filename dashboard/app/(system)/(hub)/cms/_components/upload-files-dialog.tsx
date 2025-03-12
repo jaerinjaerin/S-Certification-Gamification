@@ -2,17 +2,19 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { DropzoneProps } from '../_types/type';
 import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
+import { CircleAlert, X } from 'lucide-react';
 
 type DataUploadDialogProps = DropzoneProps & {
   children: React.ReactNode;
   title: string;
+  description?: string;
 };
 
 export function UploadFilesDialog({
@@ -22,6 +24,7 @@ export function UploadFilesDialog({
   getInputProps,
   isDragActive,
   open,
+  description,
 }: DataUploadDialogProps) {
   return (
     <Dialog>
@@ -31,9 +34,17 @@ export function UploadFilesDialog({
         onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogHeader className="!flex-row !items-center justify-between">
-          <DialogTitle className="text-size-17px font-semibold">
-            {title}
-          </DialogTitle>
+          <div className="space-y-2">
+            <DialogTitle className="text-size-17px font-semibold">
+              {title}
+            </DialogTitle>
+            {description && (
+              <DialogDescription className="text-neutral-600 flex items-center gap-2">
+                <CircleAlert className="size-4" />
+                {description}
+              </DialogDescription>
+            )}
+          </div>
           <DialogClose>
             <X />
           </DialogClose>

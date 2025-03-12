@@ -17,7 +17,10 @@ export default async function TargetPage() {
           <SectionTitle>Set Target</SectionTitle>
           <div className="flex space-x-3">
             <DownloadTarget />
-            <UploadExcelFileModal title="Upload Target">
+            <UploadExcelFileModal
+              title="Upload Target"
+              description="Target allows only one file to be uploaded at a time."
+            >
               <Button variant="action">Upload</Button>
             </UploadExcelFileModal>
           </div>

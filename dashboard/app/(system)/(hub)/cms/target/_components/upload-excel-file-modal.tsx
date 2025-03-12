@@ -3,9 +3,11 @@ import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
 import { LoadingFullScreen } from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import {
+  CustomDialogContent,
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -17,7 +19,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { processAndExportExcelAndJsonObject } from '../_lib/file-converter';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { CircleAlert } from 'lucide-react';
+import { CircleAlert, X } from 'lucide-react';
 import { useTargetData } from '../_provider/target-data-provider';
 import { DropzoneView } from './upload-files-dialog';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
@@ -31,6 +33,7 @@ import UploadResultDialog from './upload-target-result-dialog';
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
+  description?: string;
 };
 
 const ERROR_MESSAGES = {
@@ -44,6 +47,7 @@ const ERROR_MESSAGES = {
 export default function UploadExcelFileModal({
   children,
   title,
+  description,
 }: UploadExcelFileModalProps) {
   const { campaign } = useStateVariables();
   const { state, dispatch } = useTargetData();
@@ -180,11 +184,22 @@ export default function UploadExcelFileModal({
     <>
       <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="gap-[4.063rem]">
-          <DialogHeader>
-            <DialogTitle className="text-size-17px font-semibold !text-left">
-              {title}
-            </DialogTitle>
+        <CustomDialogContent className="gap-[4.063rem]">
+          <DialogHeader className="!flex-row !items-center justify-between">
+            <div className="space-y-2">
+              <DialogTitle className="text-size-17px font-semibold">
+                {title}
+              </DialogTitle>
+              {description && (
+                <DialogDescription className="text-neutral-600 flex items-center gap-2">
+                  <CircleAlert className="size-4" />
+                  {description}
+                </DialogDescription>
+              )}
+            </div>
+            <DialogClose>
+              <X />
+            </DialogClose>
           </DialogHeader>
           {isEmpty(files) && (
             <DropzoneView
@@ -244,7 +259,7 @@ export default function UploadExcelFileModal({
               </Button>
             </DialogFooter>
           )}
-        </DialogContent>
+        </CustomDialogContent>
       </Dialog>
 
       <UploadResultDialog

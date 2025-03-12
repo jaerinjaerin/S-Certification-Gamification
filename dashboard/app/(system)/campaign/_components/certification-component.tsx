@@ -203,12 +203,10 @@ const DownloadManualButton = () => {
     const FILE_NAME = `Admin_Manual.pptx`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
     handleDownload(FILE_NAME, DOWNLOAD_URL);
-
-    console.log(DOWNLOAD_URL);
   };
 
   return (
-    <Button onClick={() => handleDownloadFile()} variant={'secondary'}>
+    <Button onClick={handleDownloadFile} variant={'secondary'}>
       Download Manual
     </Button>
   );
