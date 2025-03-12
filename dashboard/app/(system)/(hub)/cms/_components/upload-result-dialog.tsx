@@ -13,10 +13,7 @@ import {
 import { ProcessResult } from '@/lib/quiz-excel-parser';
 import { cn } from '@/utils/utils';
 import { Check, CircleAlert, CircleX, X } from 'lucide-react';
-import {
-  FilesTableComponent,
-  Td,
-} from '../set-quiz/_components/files-table-component';
+import { Td } from '../set-quiz/_components/files-table-component';
 import { UploadExcelFileVariant } from '../set-quiz/_type/type';
 import { isEmpty } from '../_utils/utils';
 
@@ -71,24 +68,6 @@ export default function UploadResultDialog({
       );
     }
 
-    if (variant === 'activityId') {
-      const failedUploads = uploadFilesResult.flatMap(
-        (item) => item.result.failures
-      );
-      const successfulUploads = uploadFilesResult.flatMap(
-        (item) => item.result.data
-      );
-      const totalUploads = failedUploads.length + successfulUploads.length;
-
-      return (
-        <span>
-          {failedUploads.length === 0
-            ? 'The file has been uploaded successfully.'
-            : `Out of a total of ${totalUploads} data items, ${successfulUploads.length} data items were successfully uploaded.`}
-        </span>
-      );
-    }
-
     return (
       <span className="text-size-14px font-semibold">
         {hasSuccessfulUploads
@@ -129,7 +108,7 @@ export default function UploadResultDialog({
                 failed to upload.
               </span>
             )}
-            {variant === 'activityId' && (
+            {variant === 'activityId' && uploadFilesResult[0].success && (
               <span>
                 {`${uploadFilesResult.flatMap((item) => item.result.failures).length} items failed to upload.`}
               </span>
@@ -152,8 +131,11 @@ export default function UploadResultDialog({
                         <Td>{index + 1}</Td>
                         <Td>
                           {!item.success ? (
-                            <span className="text-red-500">
-                              {item.error.message}
+                            <span className="text-red-500 flex items-center gap-2">
+                              <CircleAlert className="size-4 shrink-0" />
+                              {item.error?.message ||
+                                item.errors?.[0]?.message ||
+                                'Unknown error'}
                             </span>
                           ) : (
                             <span>{item.quizSetFile?.path}</span>
@@ -195,7 +177,7 @@ export default function UploadResultDialog({
                 </thead>
                 <tbody>
                   {uploadFilesResult.map((item, index) => {
-                    if (!isEmpty(item.result.failures)) {
+                    if (item.success && !isEmpty(item.result.failures)) {
                       return item.result.failures.map(
                         (failure: any, failureIndex: number) => {
                           return (
@@ -204,15 +186,25 @@ export default function UploadResultDialog({
                               className="border-t border-t-zinc-200"
                             >
                               <Td>{failureIndex + 1}</Td>
-                              <Td className="text-red-500">
+                              <Td className="text-red-500 flex items-center gap-2">
+                                <CircleAlert className="size-4 shrink-0" />
                                 {failure.message}
                               </Td>
                             </tr>
                           );
                         }
                       );
+                    } else if (!item.success) {
+                      return (
+                        <tr key={index} className="border-t border-t-zinc-200">
+                          <Td>{index + 1}</Td>
+                          <Td className="text-red-500 flex items-center gap-2">
+                            <CircleAlert className="size-4 shrink-0" />
+                            {item.error.message}
+                          </Td>
+                        </tr>
+                      );
                     }
-                    return <>11</>;
                   })}
                 </tbody>
               </table>

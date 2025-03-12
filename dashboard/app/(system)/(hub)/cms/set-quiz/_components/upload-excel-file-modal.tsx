@@ -35,6 +35,7 @@ import { submitActivityId } from '../_lib/submit-activityId';
 import { submitNonS } from '../_lib/submit-nonS';
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
+import { mutate } from 'swr';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
@@ -111,25 +112,24 @@ const UploadExcelFileModal = forwardRef<
     }
   };
 
-  const submitQuiz = async () => {
-    try {
-      setIsLoading(true);
-      setProcessResult([]);
-      await submitQuizSet(
-        getValidFiles(),
-        campaign!.id,
-        setIsDialogOpen,
-        setProcessResult
-      );
-
-      updateNoServiceChannel(campaign!.id);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSumbit = {
-    quiz: submitQuiz,
+    quiz: async () => {
+      try {
+        setIsLoading(true);
+        setProcessResult([]);
+        await submitQuizSet(
+          getValidFiles(),
+          campaign!.id,
+          setIsDialogOpen,
+          setProcessResult,
+          'quiz'
+        );
+
+        updateNoServiceChannel(campaign!.id);
+      } finally {
+        setIsLoading(false);
+      }
+    },
     activityId: async () => {
       try {
         setIsLoading(true);
@@ -137,6 +137,7 @@ const UploadExcelFileModal = forwardRef<
           uploadFiles.activityId,
           campaign!.id
         );
+
         if (result) {
           setProcessResult(result);
         }
@@ -155,7 +156,23 @@ const UploadExcelFileModal = forwardRef<
         setIsLoading(false);
       }
     },
-    hq: submitQuiz,
+    hq: async () => {
+      try {
+        setIsLoading(true);
+        setProcessResult([]);
+        await submitQuizSet(
+          getValidFiles(),
+          campaign!.id,
+          setIsDialogOpen,
+          setProcessResult,
+          'hq'
+        );
+
+        updateNoServiceChannel(campaign!.id);
+      } finally {
+        setIsLoading(false);
+      }
+    },
   };
 
   const uploadFilesResult = [...getInvalidFiles(), ...processResult];
@@ -163,6 +180,8 @@ const UploadExcelFileModal = forwardRef<
   useEffect(() => {
     if (!isEmpty(processResult)) {
       setShowResultDialog(true);
+    } else {
+      setShowResultDialog(false);
     }
   }, [processResult]);
 
@@ -263,6 +282,13 @@ const UploadExcelFileModal = forwardRef<
             setProcessResult([]);
             handleDialogOpen(false);
             if (onDropdownClose) onDropdownClose();
+            if (variant === 'hq') {
+              mutate(
+                (key) =>
+                  typeof key === 'string' &&
+                  (key.includes('quizset') || key.includes('activity'))
+              );
+            }
           }}
           open={showResultDialog}
           variant={variant}
