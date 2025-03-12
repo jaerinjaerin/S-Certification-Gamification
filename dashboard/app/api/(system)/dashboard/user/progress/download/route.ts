@@ -2,17 +2,17 @@
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { decrypt } from '@/utils/encrypt';
 import { createNormalExcelBlob } from '@/lib/excel';
+import { querySearchParams } from '@/lib/query';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition, period } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
-
-    await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { code: jobId } : {},
@@ -81,7 +81,5 @@ export async function GET(request: NextRequest) {
       { message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

@@ -101,6 +101,23 @@ export async function POST(request: NextRequest) {
 
     console.log('도메인 목표 복사 완료');
 
+    const contentCopyHistory = await prisma.contentCopyHistory.findFirst({
+      where: {
+        campaignId: destinationCampaign.id,
+      },
+    });
+    if (contentCopyHistory) {
+      await prisma.contentCopyHistory.update({
+        where: {
+          id: contentCopyHistory.id,
+        },
+        data: {
+          targetCampaignId: validatedData.sourceCampaignId,
+          targetCampaignName: soruceCampaign.name,
+        },
+      });
+    }
+
     return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
@@ -113,7 +130,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

@@ -1,7 +1,7 @@
 // React & Types
-import { forwardRef, useState } from 'react';
-import { UploadExcelFileModalProps } from '../_type/type';
 import { ProcessResult } from '@/lib/quiz-excel-parser';
+import { forwardRef, useEffect, useState } from 'react';
+import { UploadExcelFileModalProps } from '../_type/type';
 
 // UI Components
 import { Button } from '@/components/ui/button';
@@ -22,22 +22,23 @@ import { cn } from '@/lib/utils';
 import { isEmpty } from '../../_utils/utils';
 
 // Hooks & State
-import useQuizSetState from '../_store/quizset-state';
 import { useStateVariables } from '@/components/provider/state-provider';
+import useQuizSetState from '../_store/quizset-state';
 
 // API Functions
-import { submitQuizSet } from '../_lib/submit-quizset';
-import { submitActivityId } from '../_lib/submit-activityId';
-import useFileDropZone from '../_hooks/useFileDropZone';
+import { CircleAlert, X } from 'lucide-react';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
-import { submitNonS } from '../_lib/submit-nonS';
 import UploadResultDialog from '../../_components/upload-result-dialog';
-import { X } from 'lucide-react';
+import useFileDropZone from '../_hooks/useFileDropZone';
+import { submitActivityId } from '../_lib/submit-activityId';
+import { submitNonS } from '../_lib/submit-nonS';
+import { submitQuizSet } from '../_lib/submit-quizset';
+import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
->(({ children, title, variant }, ref) => {
+>(({ children, title, variant, onDropdownClose }, ref) => {
   const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
@@ -55,6 +56,7 @@ const UploadExcelFileModal = forwardRef<
     variant,
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showResultDialog, setShowResultDialog] = useState(false);
   const [processResult, setProcessResult] = useState<ProcessResult[]>([]);
 
   const uploadFiles = {
@@ -100,6 +102,8 @@ const UploadExcelFileModal = forwardRef<
   };
 
   const handleDialogOpen = (open: boolean) => {
+    if (isLoading && open) return;
+
     setIsDialogOpen(open);
     if (!open) {
       clearUploadFile[variant]();
@@ -109,12 +113,15 @@ const UploadExcelFileModal = forwardRef<
   const submitQuiz = async () => {
     try {
       setIsLoading(true);
-      const result = await submitQuizSet(
+      setProcessResult([]);
+      await submitQuizSet(
         getValidFiles(),
         campaign!.id,
-        setIsDialogOpen
+        setIsDialogOpen,
+        setProcessResult
       );
-      if (result) setProcessResult(result);
+
+      updateNoServiceChannel(campaign!.id);
     } finally {
       setIsLoading(false);
     }
@@ -150,7 +157,13 @@ const UploadExcelFileModal = forwardRef<
     hq: submitQuiz,
   };
 
-  const uploadFilesResult = [...processResult, ...getInvalidFiles()];
+  const uploadFilesResult = [...getInvalidFiles(), ...processResult];
+
+  useEffect(() => {
+    if (!isEmpty(processResult)) {
+      setShowResultDialog(true);
+    }
+  }, [processResult]);
 
   return (
     <div ref={ref}>
@@ -164,7 +177,7 @@ const UploadExcelFileModal = forwardRef<
             <DialogTitle className="text-size-17px font-semibold">
               {title}
             </DialogTitle>
-            <DialogClose>
+            <DialogClose className={cn(isLoading && 'pointer-events-none')}>
               <X />
             </DialogClose>
           </DialogHeader>
@@ -183,19 +196,26 @@ const UploadExcelFileModal = forwardRef<
               </span>
               <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
                 <FilesTableComponent>
-                  {uploadFiles[variant].map((file, index) => (
-                    <tr key={index} className="border-t border-t-zinc-200">
-                      <Td>{index + 1}</Td>
-                      <Td>{file.name}</Td>
-                      <Td>
-                        {!uploadData[variant][index].success && (
-                          <span className="text-red-500">
-                            {uploadData[variant][index].errors?.[0].message}
-                          </span>
-                        )}
-                      </Td>
-                    </tr>
-                  ))}
+                  {uploadFiles[variant].map((file, index) => {
+                    return (
+                      <tr key={index} className="border-t border-t-zinc-200">
+                        <Td>{index + 1}</Td>
+                        <Td>{file.name}</Td>
+                        <Td>
+                          {!uploadData[variant][index].success ? (
+                            <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                              <CircleAlert className="size-4 shrink-0" />
+                              <span>
+                                {uploadData[variant][index].errors?.[0].message}
+                              </span>
+                            </div>
+                          ) : (
+                            <span>-</span>
+                          )}
+                        </Td>
+                      </tr>
+                    );
+                  })}
                 </FilesTableComponent>
               </div>
             </div>
@@ -217,30 +237,35 @@ const UploadExcelFileModal = forwardRef<
                 onClick={handleSumbit[variant]}
                 disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Upload...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}
         </CustomDialogContent>
       </Dialog>
 
-      <UploadResultDialog
-        variant={variant}
-        uploadFilesResult={uploadFilesResult}
-        open={!isEmpty(processResult)}
-        onOpenChange={() => {
-          setProcessResult([]);
-          handleDialogOpen(false);
-        }} // 다이얼로그가 닫힐 때 processResult를 초기화
-      />
+      {!isEmpty(uploadFilesResult) && (
+        <UploadResultDialog
+          totalFiles={uploadFiles[variant].length}
+          isLoading={isLoading}
+          uploadFilesResult={uploadFilesResult}
+          onOpenChange={() => {
+            setProcessResult([]);
+            handleDialogOpen(false);
+            if (onDropdownClose) onDropdownClose();
+          }}
+          open={showResultDialog}
+          variant={variant}
+        />
+      )}
 
       <CustomAlertDialog
         open={alert.isOpen}
         description={alert.message}
         buttons={[
           {
-            label: '확인',
-            variant: 'action',
+            label: 'OK',
+            variant: 'secondary',
             type: 'ok',
             onClick: () => {
               closeAlert();

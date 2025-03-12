@@ -6,9 +6,8 @@ export const processAndExportExcelAndJsonObject = async (
   file: File,
   setIsConverting: Dispatch<SetStateAction<boolean>>
 ): Promise<TargetConvertedProps> => {
-  setIsConverting(true);
-
   try {
+    setIsConverting(true);
     const result = await convertTarget(file);
 
     if (!result.success) {

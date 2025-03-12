@@ -1,6 +1,9 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { prisma } from '@/model/prisma';
+import { containsBannedWords } from '@/utils/slug';
 import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,6 +16,19 @@ export async function GET(request: NextRequest) {
           error: {
             message: 'Missing required parameter: slug',
             code: ERROR_CODES.MISSING_REQUIRED_PARAMETER,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    if (containsBannedWords(slug)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Slug contains banned words',
+            code: ERROR_CODES.INVALID_PARAMETER,
           },
         },
         { status: 400 }
@@ -41,7 +57,5 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

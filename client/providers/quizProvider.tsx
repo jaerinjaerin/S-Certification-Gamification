@@ -69,6 +69,7 @@ export const QuizProvider = ({
   const translation = useTranslations();
 
   console.log("QuizProvider", quizSet);
+  console.log("QuizProvider", quizStageLogs);
 
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
@@ -389,7 +390,10 @@ export const QuizProvider = ({
     campaignSlug: string
   ): string | null => {
     if (campaignSlug.toLowerCase() !== "s25") {
-      return currentQuizStage?.badgeActivityId ?? null;
+      const badgeActivityId = currentQuizStage?.badgeActivityId;
+      if (badgeActivityId != null && badgeActivityId !== "") {
+        return badgeActivityId;
+      }
     }
 
     // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.

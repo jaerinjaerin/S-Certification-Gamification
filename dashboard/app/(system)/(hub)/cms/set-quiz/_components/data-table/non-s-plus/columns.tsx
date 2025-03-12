@@ -108,13 +108,64 @@ export const columns: ColumnDef<DomainChannel>[] = [
 
   {
     accessorKey: 'jobGroup',
-    header: 'Jop Group',
+    header: 'Quiz Set Info(Job, Language)',
     cell: ({ row }) => (
-      <div>
-        {row.original.channels.map((channel, index) => (
-          <div key={index}>{channel.job.group}</div>
-        ))}
+      <div
+        style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 2,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'normal',
+        }}
+      >
+        {row.original.languages.ff &&
+          row.original.languages.ff.map((lang, index) => (
+            <div
+              key={index}
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              ff - {lang.name}
+            </div>
+          ))}
+        {row.original.languages.fsm &&
+          row.original.languages.fsm.map((lang, index) => (
+            <div
+              key={index}
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              fsm - {lang.name}
+            </div>
+          ))}
+        {/* {row.original.languages.map((channel, index) => (
+          <div
+            key={index}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {channel.name}
+          </div>
+        ))} */}
       </div>
     ),
+    // cell: ({ row }) => (
+    //   <div>
+    //     {row.original.channels.map((channel, index) => (
+    //       <div key={index}>{channel.ff.}</div>
+    //     ))}
+    //   </div>
+    // ),
   },
 ];

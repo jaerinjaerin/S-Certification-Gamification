@@ -1,9 +1,12 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { prisma } from '@/model/prisma';
+import { containsBannedWords } from '@/utils/slug';
 import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+
+export const dynamic = 'force-dynamic';
 
 // Zod를 사용한 입력 데이터 검증
 const createCampaignScheme = z.object({
@@ -25,16 +28,29 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const validatedData = createCampaignScheme.parse(body);
 
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
+    if (containsBannedWords(validatedData.slug)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Slug contains banned words',
+            code: ERROR_CODES.INVALID_PARAMETER,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     const campaign = await prisma.campaign.create({
       data: {
         name: validatedData.name,
         slug: validatedData.slug,
         description: validatedData.description,
-        createrId: sesstion?.user?.id ?? '',
-        updaterId: sesstion?.user?.id,
+        createrId: session?.user?.id ?? '',
+        updaterId: session?.user?.id,
         startedAt: new Date(validatedData.startedAt),
         endedAt: new Date(validatedData.endedAt),
       },
@@ -81,13 +97,26 @@ export async function POST(request: NextRequest) {
       fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
     });
 
-    console.log('campaignSettingsData: ', campaignSettingsData);
+    // console.log('campaignSettingsData: ', campaignSettingsData);
 
     // campaignSettingsData에 값이 있는 경우에만 생성
     const campaignSettings = await prisma.campaignSettings.create({
       data: {
         campaignId: campaign.id, // 필수 값
         ...campaignSettingsData, // 옵션 값 (값이 있는 경우만)
+        // totalStages: validatedData.totalStages,
+        // firstBadgeName: validatedData.firstBadgeName,
+        // secondBadgeName: validatedData.secondBadgeName,
+        // ffFirstBadgeStageIndex: validatedData.ffFirstBadgeStageIndex,
+        // ffSecondBadgeStageIndex: validatedData.ffSecondBadgeStageIndex,
+        // fsmFirstBadgeStageIndex: validatedData.fsmFirstBadgeStageIndex,
+        // fsmSecondBadgeStageIndex: validatedData.fsmSecondBadgeStageIndex,
+      },
+    });
+
+    const contentCopyHistory = await prisma.contentCopyHistory.create({
+      data: {
+        campaignId: campaign.id,
       },
     });
 
@@ -95,6 +124,7 @@ export async function POST(request: NextRequest) {
       where: { id: campaign.id },
       data: {
         settingsId: campaignSettings.id,
+        contentCopyHistoryId: contentCopyHistory.id,
       },
     });
 
@@ -114,8 +144,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -123,8 +151,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const role = searchParams.get('role') as string;
-
-    await prisma.$connect();
 
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
@@ -152,6 +178,8 @@ export async function GET(request: NextRequest) {
 
     const campaigns = await prisma.campaign.findMany({
       where,
+      include: { settings: true },
+      orderBy: { createdAt: 'asc' },
     });
 
     return NextResponse.json(
@@ -170,7 +198,5 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

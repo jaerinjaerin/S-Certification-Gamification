@@ -26,7 +26,7 @@ export const convertUi = async (
     if (hasMissingValues) {
       return {
         success: false,
-        errorMessage: 'Data is Missing',
+        errorMessage: `${file.name}: Data is Missing`,
       };
     }
 
@@ -91,30 +91,37 @@ export const convertTarget = async (
       'FSM(SES)': string;
     }>;
 
-    const transformedData = jsonData.map((row) => {
-      const {
-        ID,
-        Total,
-        FF,
-        ['FF(SES)']: FF_SES,
-        FSM,
-        ['FSM(SES)']: FSM_SES,
-      } = row;
-      return {
-        code: ID.replace(/[\r\n]/g, '').trim(),
-        total: Total,
-        ff: FF,
-        ffSes: FF_SES,
-        fsm: FSM,
-        fsmSes: FSM_SES,
-      }; // 줄바꿈 등의 기호 제거
-    });
+    const transformedData = jsonData
+      .map((row) => {
+        const {
+          ID,
+          Total,
+          FF,
+          ['FF(SES)']: FF_SES,
+          FSM,
+          ['FSM(SES)']: FSM_SES,
+        } = row;
+
+        if (ID) {
+          return {
+            code: ID.replace(/[\r\n]/g, '').trim(),
+            total: Total,
+            ff: FF,
+            ffSes: FF_SES,
+            fsm: FSM,
+            fsmSes: FSM_SES,
+          }; // 줄바꿈 등의 기호 제거
+        }
+
+        return null;
+      })
+      .filter(Boolean);
 
     // 데이터가 없거나 '-'일때 0으로 변환
     const normalizedData = transformedData.map((row) => {
       const updatedRow: Record<string, string | number> = {};
 
-      Object.entries(row).forEach(([key, value]) => {
+      Object.entries(row!).forEach(([key, value]) => {
         updatedRow[key] = value === '' || value === '-' ? 0 : value;
       });
 

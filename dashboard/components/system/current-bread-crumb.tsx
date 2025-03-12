@@ -2,7 +2,6 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  // BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
@@ -19,13 +18,10 @@ import {
 import { useStateVariables } from '../provider/state-provider';
 import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
-import { Separator } from '../ui/separator';
-import { useNavigation } from '@/app/(system)/(hub)/cms/_hooks/useNavigation';
 
 const CurrentBreadCrumb = () => {
   const router = useRouter();
   const { campaigns, campaign, setCampaign } = useStateVariables();
-  const { routeToPage } = useNavigation();
   const pathname = usePathname();
   const paths = pathname
     .split('/')
@@ -36,12 +32,16 @@ const CurrentBreadCrumb = () => {
     if (!campaigns) return;
     if (value === '/campaign') router.push(value);
     //
-    if (value === 'certification-list') {
-      routeToPage('/');
-      return;
-    }
     const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
-    if (selectedCampaign) setCampaign(selectedCampaign);
+    if (selectedCampaign) {
+      setCampaign(selectedCampaign);
+    }
+  };
+
+  const UppercaseFormat = (text: string) => {
+    const words = text.split(' ');
+
+    return words[0].toUpperCase() + ' ' + words[1];
   };
 
   return (
@@ -64,7 +64,7 @@ const CurrentBreadCrumb = () => {
               </SelectItem>
               {campaigns?.map((c: Campaign) => (
                 <SelectItem key={c.id} value={c.id}>
-                  {c.name}
+                  {c.slug}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -84,7 +84,9 @@ const CurrentBreadCrumb = () => {
                   item.toLowerCase() === 'cms' ? 'uppercase' : 'capitalize',
                 ])}
               >
-                {item}
+                {item.toLocaleLowerCase() === 'ui language'
+                  ? UppercaseFormat(item)
+                  : item}
               </BreadcrumbItem>
               {index < paths.length - 1 && ( // 마지막 아이템에는 Separator를 추가하지 않음
                 <BreadcrumbSeparator>

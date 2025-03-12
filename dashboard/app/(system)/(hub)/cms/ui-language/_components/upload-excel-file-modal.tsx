@@ -1,144 +1,258 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
+// React & Types
 import {
+  Dispatch,
+  forwardRef,
+  SetStateAction,
+  useState,
+  useReducer,
+} from 'react';
+
+// UI Components
+import { Button } from '@/components/ui/button';
+import {
+  CustomDialogContent,
   Dialog,
   DialogClose,
-  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { DropzoneView } from './upload-files-dialog';
-import { FileRejection, useDropzone } from 'react-dropzone';
-import { useState } from 'react';
 import { DialogTitle } from '@radix-ui/react-dialog';
+import { DropzoneView } from '../../_components/upload-files-dialog';
+
+// Utils
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
-import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
-import { useLanguageData } from '../_provider/language-data-provider';
-import axios from 'axios';
-import { LoaderWithBackground } from '@/components/loader';
-import { processAndExportExcelAndJson } from '../_lib/file-converter';
+import { isEmpty } from '../../_utils/utils';
+
+// Hooks & State
 import { useStateVariables } from '@/components/provider/state-provider';
+
+import { CircleAlert, X } from 'lucide-react';
+import { useDropzone } from 'react-dropzone';
+import UploadResultDialog from './upload-result-dialog';
+import { toast } from 'sonner';
+import {
+  FilesTableComponent,
+  Td,
+} from '../../set-quiz/_components/files-table-component';
+import { mutate } from 'swr';
+import { searchParamsToQuery } from '@/lib/fetch';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
 };
 
-export default function UploadExcelFileModal({
-  children,
-  title,
-}: UploadExcelFileModalProps) {
-  const { campaign } = useStateVariables();
-  const { state, dispatch } = useLanguageData();
-  const [files, setFiles] = useState<LanguageConvertedProps[]>([]);
-  const [processResult, setProcessResult] = useState<LanguageConvertedProps[]>(
-    []
-  );
+type ProcessResult = {
+  success: boolean;
+  data?: Record<string, any>;
+};
 
-  const [isConverting, setIsConverting] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+interface UploadState {
+  files: File[];
+  data: { success: boolean; data: File }[];
+  processResult: ProcessResult[];
+}
 
-  const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
-    accept: {
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
-      'application/vnd.ms-excel': [],
-    },
-    onDrop: async (acceptedFiles) => {
-      const fileNameValidationResults = acceptedFiles.map((file) =>
-        uploadFileNameValidator(file, 'ui')
-      );
-      const validFiles = fileNameValidationResults.filter(
-        ({ metadata }) => !metadata.hasError
-      );
-      const invalidFiles = fileNameValidationResults.filter(
-        ({ metadata }) => metadata.hasError
-      );
-
-      const processed = await Promise.all(
-        validFiles.map(async (file) =>
-          processAndExportExcelAndJson(file!.file, setIsConverting)
-        )
-      );
-      setFiles([...processed, ...invalidFiles]);
-    },
-    noClick: true,
-    noKeyboard: false,
-  });
-
-  const updateData = (updatedItems: LanguageProps[]) => {
-    const data = state.languages || [];
-
-    // 특정 `id`를 가진 항목만 업데이트하고 나머지는 그대로 유지
-    const updatedData = data.map((item) => {
-      const updatedItem = updatedItems.find(
-        (updateItem) => updateItem.id === item.id
-      );
-      return updatedItem ? { ...item, ...updatedItem } : item;
-    });
-
-    dispatch({ type: 'SET_LANGUAGE_LIST', payload: updatedData });
-  };
-
-  const dataFilterNoHasError = (files: LanguageConvertedProps[]) => {
-    return files.filter(({ metadata }) => !metadata.hasError);
-  };
-
-  const handleSubmit = async () => {
-    // hasError가 true인 파일은 업로드하지 않음
-
-    const validFiles = dataFilterNoHasError(files);
-    const formData = new FormData();
-    validFiles.forEach(({ file, json }) => {
-      formData.append('files', file);
-      if (json) formData.append('jsons', json);
-    });
-    formData.append('campaign', JSON.stringify(campaign));
-
-    try {
-      setLoading(true);
-
-      const response = await axios.post('/api/cms/language', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log('🚀 File uploaded:', response.data);
-      updateData(response.data.result);
-      setProcessResult(response.data.result);
-    } catch (error) {
-      console.error('Upload failed:', error);
-    } finally {
-      dialogOpenHandler(false);
-      setLoading(false);
-      handleClear();
+type UploadAction =
+  | {
+      type: 'SET_FILES';
+      payload: { files: File[]; data: { success: boolean; data: File }[] };
     }
-  };
+  | { type: 'SET_PROCESS_RESULT'; payload: ProcessResult[] }
+  | { type: 'CLEAR' };
 
-  const dialogOpenHandler = (open: boolean) => {
+const uploadReducer = (
+  state: UploadState,
+  action: UploadAction
+): UploadState => {
+  switch (action.type) {
+    case 'SET_FILES':
+      return {
+        ...state,
+        files: action.payload.files,
+        data: action.payload.data,
+      };
+    case 'SET_PROCESS_RESULT':
+      return {
+        ...state,
+        processResult: action.payload,
+      };
+    case 'CLEAR':
+      return {
+        files: [],
+        data: [],
+        processResult: [],
+      };
+    default:
+      return state;
+  }
+};
+
+const UploadExcelFileModal = forwardRef<
+  HTMLDivElement,
+  UploadExcelFileModalProps
+>(({ children, title }, ref) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { campaign } = useStateVariables();
+  const [uploadState, dispatch] = useReducer(uploadReducer, {
+    files: [],
+    data: [],
+    processResult: [],
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleDialogOpen = (open: boolean) => {
     setIsDialogOpen(open);
     if (!open) {
-      handleClear();
+      dispatch({ type: 'CLEAR' });
     }
   };
 
-  const handleClear = () => {
-    setFiles([]);
+  const getValidFiles = () => {
+    const validIndices = uploadState.data
+      .map((data, index) => (data.success ? index : -1))
+      .filter((index) => index !== -1);
+
+    return validIndices.map((index) => uploadState.files[index]);
   };
 
-  //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
-  console.log('🥕 files', files);
+  const getInvalidFiles = () => {
+    return uploadState.data
+      .map((data, index) => ({
+        ...data,
+        fileName: uploadState.files[index].name,
+      }))
+      .filter((data) => !data.success);
+  };
+
+  const handleUiExcelFileUpload = async (
+    file: File
+  ): Promise<{ success: boolean; data: File }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        if (!event.target) return reject(new Error('Failed to read file'));
+        const bufferArray = event.target.result;
+        if (!(bufferArray instanceof ArrayBuffer)) {
+          return reject(new Error('Failed to read file as ArrayBuffer'));
+        }
+
+        const result = {
+          success: true,
+          data: file,
+        };
+
+        resolve(result);
+      };
+
+      reader.onerror = () => reject(new Error('Failed to read file'));
+    });
+  };
+
+  const handleSubmitUiExcelFile = async (
+    files: File[],
+    campaignId: string,
+    setIsLoading: Dispatch<SetStateAction<boolean>>
+  ) => {
+    try {
+      setIsLoading(true);
+      const allResults = [];
+
+      for (const file of files) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('campaignId', campaignId);
+
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/cms/ui_language/upload`,
+            {
+              method: 'POST',
+              body: formData,
+            }
+          );
+
+          const result = await response.json();
+          allResults.push(result);
+
+          // 각 파일 처리 결과를 즉시 dispatch
+          dispatch({
+            type: 'SET_PROCESS_RESULT',
+            payload: allResults,
+          });
+        } catch (error) {
+          console.error(`파일 "${file.name}" 업로드 중 오류 발생:`, error);
+          const errorResult = {
+            success: false,
+            fileName: file.name,
+            message: '파일 업로드 중 오류가 발생했습니다.',
+          };
+          allResults.push(errorResult);
+
+          // 에러 결과도 즉시 dispatch
+          dispatch({
+            type: 'SET_PROCESS_RESULT',
+            payload: allResults,
+          });
+        }
+      }
+
+      mutate(`/api/cms/ui_language?${searchParamsToQuery({ campaignId })}`);
+    } catch (error) {
+      toast.error('파일 업로드 중 오류가 발생했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onDropHandler = async (acceptedFiles: File[]) => {
+    const processed = await Promise.all(
+      acceptedFiles.map(handleUiExcelFileUpload)
+    );
+    dispatch({
+      type: 'SET_FILES',
+      payload: { files: acceptedFiles, data: processed },
+    });
+  };
+
+  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
+    useDropzone({
+      accept: {
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
+        'application/vnd.ms-excel': [],
+      },
+      onDrop: onDropHandler,
+      noClick: true,
+      noKeyboard: false,
+      multiple: true,
+    });
+
+  const uploadFilesResult = [
+    ...getInvalidFiles(),
+    ...uploadState.processResult,
+  ];
+
   return (
-    <>
-      {loading && <LoaderWithBackground />}
-      <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
+    <div ref={ref}>
+      <Dialog open={isDialogOpen} onOpenChange={handleDialogOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+        <CustomDialogContent
+          className="gap-16"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <DialogHeader className="!flex-row !items-center justify-between">
+            <DialogTitle className="text-size-17px font-semibold">
+              {title}
+            </DialogTitle>
+            <DialogClose>
+              <X />
+            </DialogClose>
           </DialogHeader>
-          {isEmpty(files) && (
+          {isEmpty(uploadState.files) && (
             <DropzoneView
               getRootProps={getRootProps}
               getInputProps={getInputProps}
@@ -146,40 +260,71 @@ export default function UploadExcelFileModal({
               open={open}
             />
           )}
-          {!isEmpty(files) && (
-            <div>
-              {isConverting && <div>Converting...</div>}
-              {!isConverting &&
-                files.map(({ file, metadata }, index) => (
-                  <div key={index} className={cn('flex gap-5')}>
-                    <span>{file.name}</span>
-                    {metadata.hasError && (
-                      <span className="text-red-500">
-                        {metadata.errorMessage}
-                      </span>
-                    )}
-                  </div>
-                ))}
+          {!isEmpty(uploadState.files) && (
+            <div className="flex flex-col gap-5">
+              <span className="text-size-14px font-semibold">
+                Total : {uploadState.files.length}
+              </span>
+              <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
+                <FilesTableComponent>
+                  {uploadState.files.map((file, index) => (
+                    <tr key={index} className="border-t border-t-zinc-200">
+                      <Td>{index + 1}</Td>
+                      <Td>{file.name}</Td>
+                      <Td>
+                        {!uploadState.data[index].success && (
+                          <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                            <CircleAlert className="size-4 shrink-0" />
+                            <span>{uploadState.data[index].data.name}</span>
+                          </div>
+                        )}
+                      </Td>
+                    </tr>
+                  ))}
+                </FilesTableComponent>
+              </div>
             </div>
           )}
-          {!isEmpty(files) && (
-            <DialogFooter>
+          {!isEmpty(uploadState.files) && (
+            <DialogFooter className="!justify-center !flex-row">
               <DialogClose asChild>
-                <Button variant="secondary" onClick={handleClear}>
+                <Button variant="secondary" disabled={isLoading}>
                   Cancel
                 </Button>
               </DialogClose>
               <Button
+                className={cn('!ml-3')}
                 variant="action"
-                onClick={handleSubmit}
-                disabled={isConverting || isEmpty(dataFilterNoHasError(files))}
+                onClick={() =>
+                  handleSubmitUiExcelFile(
+                    uploadState.files,
+                    campaign!.id,
+                    setIsLoading
+                  )
+                }
+                disabled={isEmpty(getValidFiles()) || isLoading}
               >
-                Upload
+                {isLoading ? 'Uploading...' : 'Upload'}
               </Button>
             </DialogFooter>
           )}
-        </DialogContent>
+        </CustomDialogContent>
       </Dialog>
-    </>
+
+      <UploadResultDialog
+        totalFiles={uploadState.files.length}
+        isLoading={isLoading}
+        uploadFilesResult={uploadFilesResult}
+        open={!isEmpty(uploadState.processResult)}
+        onOpenChange={() => {
+          dispatch({ type: 'CLEAR' });
+          handleDialogOpen(false);
+        }}
+      />
+    </div>
   );
-}
+});
+
+UploadExcelFileModal.displayName = 'UploadExcelFileModal';
+
+export default UploadExcelFileModal;

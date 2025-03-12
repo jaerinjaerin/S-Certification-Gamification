@@ -1,15 +1,19 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
 import { getS3Client } from '@/lib/aws/s3-client';
-import { processExcelBuffer, ProcessResult } from '@/lib/quiz-excel-parser';
+import {
+  processExcelBuffer,
+  ProcessResult,
+  QuizData,
+} from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { FileType, QuestionType } from '@prisma/client';
+import { BadgeType, FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import * as uuid from 'uuid';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -57,6 +61,8 @@ export async function POST(request: NextRequest) {
       Buffer.from(fileBuffer),
       file.name
     );
+
+    console.log('result: ', result);
     if (!result.success) {
       console.error('Error processing excel file: ', result.errors);
       return NextResponse.json(
@@ -124,12 +130,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // HQ 문제는
+    if (domainCode === 'OrgCode-7') {
+      if (jobGroup !== 'ff') {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Invalid job code. Must be "ff"`,
+              code: ERROR_CODES.INVALID_JOB_GROUP,
+            },
+          },
+          { status: 400 }
+        );
+      }
+
+      if (languageCode !== 'en') {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Invalid language code. Must be "en"`,
+              code: ERROR_CODES.INVALID_LANGUAGE_CODE,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
     // const jobCodes = jobGroup === 'all' ? ['ff', 'fsm'] : [jobGroup];
     const jobCodes = [jobGroup];
 
     const campaign = await prisma.campaign.findFirst({
       where: {
         id: campaignId,
+      },
+      include: {
+        settings: true,
       },
     });
 
@@ -181,6 +218,71 @@ export async function POST(request: NextRequest) {
           error: {
             message: `${file.name}: Language not found`,
             code: ERROR_CODES.LANGUAGE_NOT_FOUND,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    // 업로드 된 문제의 Stage가 캠페인 settings에 설정된 totalStages보다 큰지 확인
+    const maxStage = Math.max(
+      ...questions
+        // .filter((question) => question.enabled)
+        .map((question) => question.stage)
+    );
+
+    if (campaign.settings && campaign.settings.totalStages) {
+      if (maxStage !== campaign.settings.totalStages + 1) {
+        console.error('Stage exceeds total stages');
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: `${file.name}: Stage mismatch. The maximum stage number should be ${campaign.settings.totalStages + 1}`,
+              code: ERROR_CODES.STAGE_EXCEEDS_TOTAL_STAGES,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const checkMissingStages = (
+      questions: QuizData[],
+      maxStage: number
+    ): number[] => {
+      // 1. 각 stage의 존재 여부를 확인하기 위한 Set 생성
+      const filteredQuestions = questions.filter(
+        (question) => question.enabled
+      );
+      const existingStages = new Set(
+        filteredQuestions.map((question) => question.stage)
+      );
+
+      // 2. 1부터 maxStage까지의 숫자 중 없는 stage 찾기
+      const missingStages = Array.from(
+        { length: maxStage },
+        (_, i) => i + 1
+      ).filter((stage) => !existingStages.has(stage));
+
+      return missingStages; // 비어 있는 stage 리스트 반환
+    };
+
+    const missingStages = checkMissingStages(questions, maxStage);
+
+    console.log(
+      missingStages.length === 0
+        ? '✅ 모든 스테이지가 존재합니다.'
+        : `🚨 누락된 스테이지: ${missingStages}`
+    );
+
+    if (missingStages.length > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Missing stages: ${missingStages.join(', ')}`,
+            code: ERROR_CODES.HQ_DOMAIN_NOT_FOUND,
           },
         },
         { status: 400 }
@@ -302,6 +404,61 @@ export async function POST(request: NextRequest) {
         },
       })) ?? [];
 
+    // 엑셀에 입력된 이미지 중 등록되어 있지 않은 이미지가 있는지 확인
+    const backgroundImageIds = questions
+      .filter(
+        (question) => question.enabled && question.backgroundImageId != null
+      )
+      .map((question) => question.backgroundImageId);
+
+    const notRegisteredBackgroundImages = backgroundImageIds.filter(
+      (id) => !backgroundImages.find((image) => image.title === id)
+    );
+
+    if (notRegisteredBackgroundImages.length > 0) {
+      console.error('Background images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Background images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
+            code: ERROR_CODES.BACKGROUND_IMAGES_NOT_REGISTERED,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const characterImageIds = questions
+      .filter(
+        (question) => question.enabled && question.characterImageId != null
+      )
+      .map((question) => question.characterImageId);
+
+    const notRegisteredCharacterImages = characterImageIds.filter(
+      (id) => !characterImages.find((image) => image.title === id)
+    );
+
+    console.log('notRegisteredCharacterImages: ', notRegisteredCharacterImages);
+
+    if (notRegisteredCharacterImages.length > 0) {
+      console.error('Character images not registered');
+      const uniqueIds = [...new Set(notRegisteredBackgroundImages)];
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: `${file.name}: Character images not registered: ${uniqueIds.join(', ')}. You must register the image in the "Media Library" menu.`,
+            code: ERROR_CODES.CHARACTER_IMAGES_NOT_REGISTERED,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     // if (quizSet) {
     //   const savedQuizSetFile = await prisma.quizSetFile.findFirst({
     //     where: {
@@ -357,8 +514,8 @@ export async function POST(request: NextRequest) {
           domainId: domain.id,
           languageId: language.id,
           jobCodes: jobCodes,
-          createrId: sesstion?.user?.id ?? '',
-          updaterId: sesstion?.user?.id,
+          createrId: session?.user?.id ?? '',
+          updaterId: session?.user?.id,
         },
       });
     } else {
@@ -369,7 +526,7 @@ export async function POST(request: NextRequest) {
         data: {
           // languageId: language.id,
           jobCodes: jobCodes,
-          updaterId: sesstion?.user?.id,
+          updaterId: session?.user?.id,
         },
       });
     }
@@ -665,21 +822,22 @@ export async function POST(request: NextRequest) {
     // =============================================
     const s3Client = getS3Client();
 
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
 
-    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
@@ -772,6 +930,9 @@ export async function GET(request: Request) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (campaign == null) {
@@ -787,44 +948,44 @@ export async function GET(request: Request) {
       );
     }
 
+    const domains = await prisma.domain.findMany({
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
     const quizSets = await prisma.quizSet.findMany({
       where: {
         campaignId: campaignId,
       },
       include: {
-        domain: {
-          include: {
-            subsidiary: {
-              include: {
-                region: true,
-              },
-            },
-          },
-        },
-        campaign: true,
         language: true,
-        quizStages: {
-          include: {
-            badgeImage: true,
-            questions: {
-              orderBy: {
-                order: 'asc',
-              },
-              include: {
-                options: {
-                  orderBy: {
-                    order: 'asc',
-                  },
-                },
-                backgroundImage: true,
-                characterImage: true,
-              },
-            },
-          },
-          orderBy: {
-            order: 'asc',
-          },
-        },
+        // quizStages: {
+        //   include: {
+        //     badgeImage: true,
+        //     questions: {
+        //       orderBy: {
+        //         order: 'asc',
+        //       },
+        //       include: {
+        //         options: {
+        //           orderBy: {
+        //             order: 'asc',
+        //           },
+        //         },
+        //         backgroundImage: true,
+        //         characterImage: true,
+        //       },
+        //     },
+        //   },
+        //   orderBy: {
+        //     order: 'asc',
+        //   },
+        // },
       },
     });
 
@@ -903,27 +1064,82 @@ export async function GET(request: Request) {
       return jobOrderA - jobOrderB;
     });
 
+    const campaignSettings = await prisma.campaignSettings.findFirst({
+      where: {
+        campaignId: campaignId,
+      },
+    });
     const groupedQuizSets = quizSets.map((quizSet) => ({
       quizSet,
       quizSetFile: quizSetFiles
         .filter((file) => file.quizSetId === quizSet.id)
         .sort((a, b) => (a.updatedAt > b.updatedAt ? -1 : 1))[0],
-      activityBadges: activityBadges.filter(
-        (badge) =>
-          badge.jobCode === quizSet.jobCodes[0] &&
-          badge.languageId === quizSet.languageId &&
-          badge.domainId === quizSet.domainId
-      ),
+      domain: domains.find((domain) => domain.id === quizSet.domainId),
+      campaign,
+      activityBadges: activityBadges
+        .filter(
+          (badge) =>
+            badge.jobCode === quizSet.jobCodes[0] &&
+            badge.languageId === quizSet.languageId &&
+            badge.domainId === quizSet.domainId
+        )
+        .sort((a, b) => (a.badgeType === BadgeType.FIRST ? -1 : 1)),
       uiLanguage: uiLanguages.find((lang) => lang.id === quizSet.languageId),
       // webLanguage: domainWebLanguages.find(
       //   (dwl) => dwl.domainId === quizSet.domainId
       // ),
     }));
+    /*
+    const noQuizSetActivityBadges = activityBadges.filter(
+      (badge) =>
+        !groupedQuizSets.find(
+          (group) =>
+            group.quizSet.domainId === badge.domainId &&
+            group.quizSet.languageId === badge.languageId &&
+            group.quizSet.jobCodes[0] === badge.jobCode
+        )
+    );
+
+    
+    // languageId와 jobCode를 기준으로 그룹화
+    const groupedBadges = noQuizSetActivityBadges.reduce(
+      (acc, badge) => {
+        const key = `${badge.domainId}-${badge.languageId}-${badge.jobCode}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(badge);
+        return acc;
+      },
+      {} as Record<string, typeof noQuizSetActivityBadges>
+    );
+
+    let extraGroupedQuizSets: any[] = [];
+
+    if (Object.keys(groupedBadges).length > 0) {
+      extraGroupedQuizSets = Object.values(groupedBadges).map((badges) => {
+        return {
+          quizSet: null,
+          quizSetFile: null,
+          domain: domains.find((domain) => domain.id === badges[0].domainId),
+          campaign,
+          activityBadges: badges, // 같은 languageId와 jobCode를 가진 배지들을 그룹화
+          uiLanguage: uiLanguages.find(
+            (lang) => lang.id === badges[0].languageId
+          ),
+        };
+      });
+    }
+    */
 
     return NextResponse.json(
       {
         success: true,
-        result: { groupedQuizSets },
+        result: {
+          // groupedQuizSets: [...groupedQuizSets, ...extraGroupedQuizSets],
+          groupedQuizSets: groupedQuizSets,
+          campaignSettings,
+        },
       },
       { status: 200 }
     );

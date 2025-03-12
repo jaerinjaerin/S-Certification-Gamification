@@ -1,15 +1,15 @@
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '@/app/api/(system)/dashboard/_lib/query';
 import { decrypt } from '@/utils/encrypt';
+import { querySearchParams } from '@/lib/query';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition, take, skip } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
-
-    await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { code: jobId } : {},
@@ -67,14 +67,12 @@ export async function GET(request: NextRequest) {
         : 0,
     }));
 
-    return NextResponse.json({ result, total: count });
+    return NextResponse.json({ result: { data: result, total: count } });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { result: { data: [], total: 0 }, message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

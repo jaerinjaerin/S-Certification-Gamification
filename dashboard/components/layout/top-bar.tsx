@@ -9,7 +9,7 @@ const Topbar = (props: React.HTMLAttributes<HTMLDivElement>) => {
       <Button
         className="flex items-center font-medium"
         variant={'link'}
-        onClick={() => routeToPage('/')}
+        onClick={() => routeToPage('/campaign')}
       >
         <img src="/assets/svg/logo.svg" alt="logo" className="size-8" />
         <span className="font-roboto font-bold text-white top-[0.05rem] relative text-size-18px">

@@ -5,7 +5,7 @@ interface JsonObject {
 }
 
 interface QueryParams {
-  [key: string]: string | undefined;
+  [key: string]: any;
 }
 
 interface ParsedDateRange {
@@ -14,27 +14,13 @@ interface ParsedDateRange {
 }
 
 // Prisma 기반 타입 정의
-type Campaign = Prisma.CampaignGetPayload<{
-  select: { id: true; name: true };
-}>;
-type Region = Prisma.RegionGetPayload<{
-  select: { id: true; name: true };
-}>;
-type Subsidiary = Prisma.SubsidiaryGetPayload<{
-  select: { id: true; name: true; regionId: true };
-}>;
-type Domain = Prisma.DomainGetPayload<{
-  select: { id: true; name: true; subsidiaryId: true };
-}>;
-type ChannelSegment = Prisma.ChannelSegmentGetPayload<{
-  select: { id: true; name: true };
-}>;
-type JobGroup = Prisma.JobGetPayload<{
-  select: { id: true; name: true };
-}>;
-type Store = Prisma.StoreGetPayload<{
-  select: { id: true; name: true };
-}>;
+type Campaign = Prisma.CampaignGetPayload;
+type Region = Prisma.RegionGetPayload;
+type Subsidiary = Prisma.SubsidiaryGetPayload;
+type Domain = Prisma.DomainGetPayload;
+type ChannelSegment = Prisma.ChannelSegmentGetPayload;
+type JobGroup = Prisma.JobGetPayload;
+type Store = Prisma.StoreGetPayload;
 
 interface FilterData {
   region: Region[];
@@ -60,3 +46,18 @@ interface AllFilterData {
   userGroup: UserGroup;
   filters: FilterData;
 }
+
+type GroupedData = {
+  group: string;
+  items: {
+    title: string;
+    value: number;
+  }[];
+};
+
+type ImprovedDataStructure = GroupedData[];
+
+type UserListProps = {
+  providerUserId: string;
+  lastCompletedStage: number | string;
+};

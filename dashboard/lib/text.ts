@@ -17,3 +17,8 @@ export function extractLanguageCode(filename: string): string | null {
   const match = filename.match(/_(\w{2}(?:-\w{2,3}){0,4})\./); // 최대 5개까지 허용
   return match ? match[1] : null;
 }
+
+export function capitalize(str: string | undefined | null): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}

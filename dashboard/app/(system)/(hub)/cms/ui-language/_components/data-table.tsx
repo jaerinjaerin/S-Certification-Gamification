@@ -19,7 +19,7 @@ import { useLanguageData } from '../_provider/language-data-provider';
 import { handleDownload } from '../../_utils/utils';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
 import { useEffect } from 'react';
 
@@ -82,7 +82,7 @@ export function DataTable() {
 
   return (
     <>
-      {loading && <LoaderWithBackground />}
+      {loading && <LoadingFullScreen />}
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

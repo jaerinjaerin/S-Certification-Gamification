@@ -10,7 +10,7 @@ import { FileRejection, useDropzone } from 'react-dropzone';
 import { UploadFilesDialog } from '../../_components/upload-files-dialog';
 import { PreviewDialog } from './preivew-dialog';
 import axios from 'axios';
-import { isEmpty } from '../../_utils/utils';
+import { handleDownload, isEmpty } from '../../_utils/utils';
 import { useMediaData } from '../_provider/media-data-provider';
 import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
 import { FileWithExtraInfo } from '../../_types/type';
@@ -227,6 +227,15 @@ export function UploadImageFileModal({
           type={id ? 'edit' : 'add'}
           files={files}
           loading={loading}
+          onDownload={() => {
+            if (files.length > 0) {
+              const file = files[0];
+              if (file.preview) {
+                const filename = `${group}_${file.name}.${file.type.split('/')[1]}`;
+                handleDownload(filename, file.preview);
+              }
+            }
+          }}
           onSave={handleSave}
           onClear={handleClear}
         >

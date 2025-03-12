@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { uploadToS3 } from '@/lib/s3-client';
-import { Campaign } from '@prisma/client';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getPath } from '@/lib/file';
+import { uploadToS3 } from '@/lib/s3-client';
+import { prisma } from '@/model/prisma';
+import { Campaign } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -133,11 +136,19 @@ export async function POST(request: NextRequest) {
 
     const index = `${count + 1}`;
     const format = file.type.split('/')[1];
+    console.log('🚀 ~ POST ~ index:', index);
     let imagePath = getPath(campaign.name, `images/${group}`);
     imagePath = `${imagePath}/${group}_${index}.${format}`;
 
-    // 파일 업로드드
+    console.log('🚀 ~ POST ~ imagePath:', imagePath);
+    // 파일 업로드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
+    // const pathsToInvalidate = [
+    //   `/certification/${campaign.slug}/jsons/channels.json`,
+    // ]; // 무효화할 경로
+
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    invalidateCache(distributionId, [`/${imagePath}`]);
 
     let result = {};
     let uploadedFile = null;
@@ -162,13 +173,15 @@ export async function POST(request: NextRequest) {
       // 데이터베이스에 업로드된 파일 정보 저장 (예제)
       uploadedFile = await prisma.image.create({
         data: {
-          alt: index,
-          caption: index,
+          alt: group,
+          title: index,
+          caption: group,
           format: format,
           imagePath: `/${imagePath}`,
           campaignId: campaign.id,
         },
       });
+
       //
       result = {
         id: uploadedFile.id,
@@ -226,6 +239,9 @@ export async function PUT(request: NextRequest) {
     // 파일 업로드
     const Key = existingFile.imagePath.replace(/^\/+/, '');
     await uploadToS3({ key: Key, file, isNoCache: true });
+
+    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    invalidateCache(distributionId, [`/${Key}`]);
 
     let updatedFile = null;
     let result = {};

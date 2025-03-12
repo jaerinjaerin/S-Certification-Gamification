@@ -1,17 +1,15 @@
-import UserFilterForm from './@filters/page';
-import { UserProvider } from './_provider/provider';
+import UserFilterForm from './filters/page';
 
 type Props = {
   children: React.ReactNode;
-  filters: any;
 };
 
 const UserLayout = ({ children }: Props) => {
   return (
-    <UserProvider>
+    <div className="space-y-3">
       <UserFilterForm />
       <div className="mt-3">{children}</div>
-    </UserProvider>
+    </div>
   );
 };
 

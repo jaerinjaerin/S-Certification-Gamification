@@ -11,7 +11,7 @@ import { DropzoneProps, FileWithExtraInfo } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useState } from 'react';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import dayjs from 'dayjs';
 
 type OptionalDropzoneProps = Omit<
@@ -26,6 +26,7 @@ type PreviewDialogProps = OptionalDropzoneProps & {
   loading: boolean;
   onSave: () => void;
   onClear: () => void;
+  onDownload?: () => void;
 };
 
 export function PreviewDialog({
@@ -38,6 +39,7 @@ export function PreviewDialog({
   loading,
   onSave,
   onClear,
+  onDownload,
 }: PreviewDialogProps) {
   const [status, setStatus] = useState(modalOpen);
   return (
@@ -55,7 +57,7 @@ export function PreviewDialog({
         className="p-10 gap-[2.625rem]"
         onInteractOutside={(e) => e.preventDefault()}
       >
-        {loading && <LoaderWithBackground />}
+        {loading && <LoadingFullScreen />}
         <DialogHeader>
           <DialogTitle className="text-size-24px font-medium">
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}
@@ -72,6 +74,7 @@ export function PreviewDialog({
             getInputProps={getInputProps}
             open={open}
             files={files}
+            onDownload={onDownload}
           />
         )}
 
@@ -98,6 +101,7 @@ type AssetPreviewViewProps = {
   files: FileWithExtraInfo[];
   open: () => void;
   extraContent?: React.ReactNode;
+  onDownload?: () => void;
 } & Pick<DropzoneProps, 'getInputProps'>;
 
 function AssetPreviewView({
@@ -126,11 +130,9 @@ function AssetPreviewView({
                 </div>
 
                 <div className="grow w-full">
-                  <input
-                    value={file.name}
-                    readOnly
-                    className="size-full border border-zinc-200 rounded-md overflow-hidden p-3 font-medium text-size-14px text-zinc-950"
-                  />
+                  <div className="size-full border flex items-center border-zinc-200 rounded-md overflow-hidden p-3 font-medium text-size-14px text-zinc-950">
+                    {file.name}
+                  </div>
                 </div>
               </div>
 
@@ -152,7 +154,7 @@ function AssetPreviewView({
 }
 
 function AddAssetPreviewView(
-  props: Omit<AssetPreviewViewProps, 'extraContent'>
+  props: Omit<AssetPreviewViewProps, 'extraContent' | 'onDownload'>
 ) {
   return <AssetPreviewView {...props} />;
 }
@@ -160,16 +162,22 @@ function AddAssetPreviewView(
 function EditAssetPreviewView(
   props: Omit<AssetPreviewViewProps, 'extraContent'>
 ) {
+  const { onDownload, ...restProps } = props;
   const timestamp = props.files[0].lastModified;
   const date = dayjs(timestamp).format('YY.MM.DD HH:mm:ss');
 
   return (
     <AssetPreviewView
-      {...props}
+      {...restProps}
       extraContent={
         <div className="flex items-center gap-2">
           <span>{date}</span>
-          <Button variant="download" className="shadow-none" size="icon">
+          <Button
+            variant="download"
+            className="shadow-none"
+            size="icon"
+            onClick={onDownload}
+          >
             <Download />
           </Button>
         </div>

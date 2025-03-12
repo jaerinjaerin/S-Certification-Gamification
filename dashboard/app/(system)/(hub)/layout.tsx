@@ -3,16 +3,20 @@ import React from 'react';
 import ContentWithTitleSection from '@/components/system/content-with-title-section';
 import LeftMenu from '@/components/layout/left-menu';
 import { SidebarInset } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // CurrentBreadCrumb을 클라이언트 사이드에서만 렌더링하도록 설정
 const CurrentBreadCrumb = dynamic(
   () => import('@/components/system/current-bread-crumb'),
-  { ssr: false }
+  {
+    ssr: false,
+    // loading: () => <Skeleton className="h-12 w-[18.75rem] rounded-md" />,
+  }
 );
 
 type Props = { children: React.ReactNode };
 
-const ManagementLayout = async ({ children }: Props) => {
+const ManagementLayout = ({ children }: Props) => {
   return (
     <>
       <aside>

@@ -1,22 +1,19 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import {
   parseExcelBufferToDomainJson,
   ProcessResult,
 } from '@/lib/nomember-excel-parser';
 import { prisma } from '@/model/prisma';
 import { DomainChannel } from '@/types/apiTypes';
-import {
-  CloudFrontClient,
-  CreateInvalidationCommand,
-} from '@aws-sdk/client-cloudfront';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -163,15 +160,29 @@ export async function POST(request: NextRequest) {
     });
 
     filteredDomainDatas.forEach((domainData) => {
-      const quizSet = quizSets.find((q) => q.domainId === domainData.id);
-      if (quizSet) {
-        if (quizSet.language) {
-          if (!domainData.languages) {
-            domainData.languages = [];
+      const relatedQuizSets = quizSets.filter(
+        (q) => q.domainId === domainData.id
+      );
+
+      if (relatedQuizSets.length > 0) {
+        relatedQuizSets.forEach((quizSet) => {
+          if (quizSet.language) {
+            if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+              if (!domainData.languages.ff) {
+                domainData.languages.ff = [];
+              }
+              domainData.languages.ff.push(quizSet.language);
+            }
+            if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+              if (!domainData.languages.fsm) {
+                domainData.languages.fsm = [];
+              }
+              domainData.languages.fsm.push(quizSet.language);
+            }
           }
-          domainData.languages.push(quizSet.language);
-          domainData.isReady = true;
-        }
+        });
+
+        domainData.isReady = true;
       } else {
         domainData.isReady = false;
       }
@@ -197,20 +208,21 @@ export async function POST(request: NextRequest) {
           });
 
     // const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
-    const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${fileNameWithTimestamp}`;
+    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/noservice_channel/${file.name}`;
 
     const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -226,7 +238,7 @@ export async function POST(request: NextRequest) {
       new PutObjectCommand({
         Bucket: process.env.ASSETS_S3_BUCKET_NAME,
         Key: destinationKey,
-        Body: jsonString,
+        Body: fileBuffer,
       })
     );
 
@@ -236,7 +248,7 @@ export async function POST(request: NextRequest) {
           id: uploadedFile.id,
         },
         data: {
-          uploadedBy: sesstion?.user?.id,
+          uploadedBy: session?.user?.id,
           path: `/${destinationKey}`,
         },
       });
@@ -245,43 +257,11 @@ export async function POST(request: NextRequest) {
         data: {
           fileType: FileType.NON_SPLUS_DOMAINS,
           campaignId: campaign.id,
-          uploadedBy: sesstion?.user?.id ?? '',
+          uploadedBy: session?.user?.id ?? '',
           path: `/${destinationKey}`,
         },
       });
     }
-
-    async function invalidateCache(distributionId: string, paths: string[]) {
-      try {
-        const command = new CreateInvalidationCommand({
-          DistributionId: distributionId,
-          InvalidationBatch: {
-            Paths: {
-              Quantity: paths.length,
-              Items: paths,
-            },
-            CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
-          },
-        });
-
-        const response = await cloudFrontClient.send(command);
-        console.log('Invalidation successful:', response);
-      } catch (error) {
-        console.error('Error invalidating CloudFront cache:', error);
-      }
-    }
-
-    const cloudFrontClient =
-      process.env.ENV === 'local'
-        ? new CloudFrontClient({
-            region: 'us-east-1',
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new CloudFrontClient({
-            region: 'us-east-1',
-          });
 
     // 사용 예제
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
@@ -314,8 +294,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -332,14 +310,25 @@ export async function GET(request: Request) {
       );
     }
 
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    if (!campaign) {
+      return NextResponse.json(
+        { message: 'Campaign not found' },
+        { status: 404 }
+      );
+    }
+
     const uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         campaignId: campaignId,
         fileType: FileType.NON_SPLUS_DOMAINS,
       },
     });
-
-    console.log('uploadedFile: ', uploadedFile);
 
     if (!uploadedFile) {
       // return NextResponse.json(
@@ -358,16 +347,8 @@ export async function GET(request: Request) {
       );
     }
 
-    console.log(
-      'url: ',
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`
-    );
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`,
-      { method: 'GET' }
-    );
-    console.log('response: ', response);
+    const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign.slug}/jsons/channels.json`;
+    const response = await fetch(jsonUrl, { method: 'GET' });
     if (!response.ok) {
       return NextResponse.json(
         {
@@ -390,7 +371,6 @@ export async function GET(request: Request) {
         const subsidiary = subsidiaries.find(
           (subsidiary) => subsidiary.id === country.subsidiaryId
         );
-        console.log('subsidiary: ', subsidiary);
         if (subsidiary) {
           country.subsidiary = subsidiary;
         }

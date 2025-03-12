@@ -54,8 +54,22 @@ export async function GET(request: Request) {
       return { file, language };
     });
 
+    console.log('groupedLanguages:', groupedLanguages.length);
+
+    const filteredGroupedLanguages = groupedLanguages.filter(
+      (group) =>
+        group.language != null && !group.language.name.includes('deprecated')
+    );
+
+    filteredGroupedLanguages.sort((a, b) => {
+      if (a.language == null || b.language == null) {
+        return 0;
+      }
+      return a.language.code.localeCompare(b.language.code);
+    });
+
     return NextResponse.json(
-      { success: true, result: { groupedLanguages } },
+      { success: true, result: { groupedLanguages: filteredGroupedLanguages } },
       { status: 200 }
     );
   } catch (error) {

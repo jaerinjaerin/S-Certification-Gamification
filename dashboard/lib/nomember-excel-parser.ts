@@ -29,6 +29,11 @@ interface ChannelData {
   channelSegmentId: string;
 }
 
+export interface LanguageGroup {
+  ff: Language[];
+  fsm: Language[];
+}
+
 export interface DomainData {
   id: string;
   name: string;
@@ -37,7 +42,7 @@ export interface DomainData {
   subsidiaryId: string;
   isReady: boolean;
   channels: ChannelData[];
-  languages: Language[];
+  languages: LanguageGroup;
 }
 
 export interface ProcessResult {
@@ -86,7 +91,10 @@ export function parseExcelBufferToDomainJson(
           regionId: row.RegionId,
           subsidiaryId: row.SubsidiaryId,
           isReady: false, // or true, depending on your logic
-          languages: [], // or populate with actual languages if available
+          languages: {
+            ff: [],
+            fsm: [],
+          }, // or populate with actual languages if available
           channels: [],
         };
       }

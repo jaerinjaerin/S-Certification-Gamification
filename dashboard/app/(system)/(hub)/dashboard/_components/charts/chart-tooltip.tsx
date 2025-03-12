@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { capitalize } from '@/lib/text';
 import { TooltipProps } from 'recharts';
 
 interface ProgressTooltipProps extends TooltipProps<number, string> {
@@ -59,9 +60,9 @@ export const ExpertsTooltip = ({
         <p className="text-zinc-500">{label}</p>
         <p className="font-bold text-size-16px">{`Total: ${total.toLocaleString()}`}</p>
         {payload.map((data: any, index: number) => (
-          <p key={index} className="text-size-16px">{`${
+          <p key={index} className="text-size-16px">{`${capitalize(
             data.name
-          }: ${data.value.toLocaleString()}`}</p>
+          )}: ${data.value.toLocaleString()}`}</p>
         ))}
       </div>
     );
@@ -79,9 +80,9 @@ const CustomTooltip = ({
       <div className="border rounded-md bg-white p-5 shadow-sm space-y-2">
         <p className="text-zinc-500">{label}</p>
         {payload.map((data: any, index: number) => (
-          <p key={index} className="font-bold text-size-16px">{`${
-            data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase()
-          }: ${data.value.toLocaleString()}`}</p>
+          <p key={index} className="font-bold text-size-16px">{`${capitalize(
+            data.name
+          )}: ${data.value.toLocaleString()}`}</p>
         ))}
       </div>
     );
@@ -109,9 +110,9 @@ export const CustomTimeTooltip = ({
       <div className="border rounded-md bg-white p-5 shadow-sm space-y-2">
         <p className="text-zinc-500">{label}</p>
         {uniqueData.map((data: any, index: number) => (
-          <p key={index} className="font-bold text-size-16px">{`${
+          <p key={index} className="font-bold text-size-16px">{`${capitalize(
             data.name
-          }: ${data.value.toLocaleString()}min`}</p>
+          )}: ${data.value.toLocaleString()}min`}</p>
         ))}
       </div>
     );

@@ -17,14 +17,12 @@ export default async function TargetPage() {
           <SectionTitle>Set Target</SectionTitle>
           <div className="flex space-x-3">
             <DownloadTarget />
-            <UploadExcelFileModal title="Upload Target" variant="target">
+            <UploadExcelFileModal title="Upload Target">
               <Button variant="action">Upload</Button>
             </UploadExcelFileModal>
           </div>
         </div>
-        <div className="border rounded-md">
-          <DataTable />
-        </div>
+        <DataTable />
       </div>
     </TargetDataProvider>
   );

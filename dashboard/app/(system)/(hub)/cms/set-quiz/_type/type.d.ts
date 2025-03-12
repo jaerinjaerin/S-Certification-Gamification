@@ -1,16 +1,11 @@
 import { DomainData } from '@/lib/nomember-excel-parser';
-import { DomainChannel } from '@/types/apiTypes';
+import { DomainChannel, QuizSetEx } from '@/types/apiTypes';
+import { DomainEx } from '@/types/type';
 import type {
   ActivityBadge,
-  Domain,
+  CampaignSettings,
   Image,
   Language,
-  Question,
-  QuestionOption,
-  QuizSet,
-  QuizStage,
-  Region,
-  Subsidiary,
 } from '@prisma/client';
 
 export type UploadExcelFileVariant = 'quiz' | 'activityId' | 'non-s' | 'hq';
@@ -19,36 +14,24 @@ export type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
   variant: UploadExcelFileVariant;
+  onDropdownClose?: () => void;
 };
+
 export interface GroupedQuizSet {
-  quizSet: QuizSet & {
-    domain: Domain & {
-      subsidiary: Subsidiary & {
-        region: Region;
-      };
-    };
-    campaign: Campaign;
-    language: Language;
-    quizStages: (QuizStage & {
-      badgeImage: Image | null;
-      questions: (Question & {
-        options: QuestionOption[];
-        backgroundImage: Image | null;
-        characterImage: Image | null;
-      })[];
-    })[];
-  };
-  quizSetFile: QuizSetFile | undefined;
-  activityBadges: ActivityBadge[] | undefined;
-  // webLanguage: DomainWebLanguageEx | undefined;
+  quizSet: QuizSetEx | null;
+  quizSetFile: QuizSetFile | null;
+  domain: DomainEx;
+  campaign: CampaignEx;
+  activityBadges: ActivityBadgeEx[] | null;
   uiLanguage: Language | null;
+  campaignSettings: CampaignSettings;
 }
 
 export interface DomainWebLanguageEx extends DomainWebLanguage {
   language: Language;
 }
 
-export interface ActivityBadgeWithImage extends ActivityBadge {
+export interface ActivityBadgeEx extends ActivityBadge {
   badgeImage: Image | null;
 }
 
@@ -56,6 +39,15 @@ export interface QuizSetResponse {
   success: boolean;
   result: {
     groupedQuizSets: GroupedQuizSet[];
+    campaignSettings: CampaignSettings;
+  };
+}
+
+export interface QuizSetDetailsResponse {
+  success: boolean;
+  result: {
+    quizSet: QuizSetEx;
+    quizSetFile: QuizSetFile;
   };
 }
 

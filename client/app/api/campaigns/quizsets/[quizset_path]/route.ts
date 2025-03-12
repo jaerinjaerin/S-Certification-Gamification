@@ -63,6 +63,12 @@ export async function GET(request: NextRequest, props: Props) {
     if (campaignSlug.toLowerCase() !== "s25") {
       const campaign = await prisma.campaign.findFirst({
         where: { slug: campaignSlug },
+        // where: {
+        //   slug: {
+        //     equals: campaignSlug,
+        //     mode: "insensitive", // 대소문자 구분 없이 검색
+        //   },
+        // },
         include: {
           settings: true,
         },
@@ -192,6 +198,21 @@ export async function GET(request: NextRequest, props: Props) {
       console.log("activityBadges:", activityBadges);
       console.log("campaign:", campaign.settings);
       console.log("quizSet:", quizSet);
+
+      const campaignSettings = await prisma.campaignSettings.findFirst({
+        where: {
+          campaignId: campaign.id,
+        },
+      });
+
+      if (campaignSettings) {
+        const maxStage = campaignSettings.totalStages;
+        if (maxStage) {
+          if (quizSet.quizStages.length > maxStage) {
+            quizSet.quizStages = quizSet.quizStages.slice(0, maxStage);
+          }
+        }
+      }
 
       return NextResponse.json(
         {

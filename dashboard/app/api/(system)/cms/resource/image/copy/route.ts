@@ -326,6 +326,23 @@ export async function POST(request: NextRequest) {
 
     console.log('데이타 생성 완료');
 
+    const contentCopyHistory = await prisma.contentCopyHistory.findFirst({
+      where: {
+        campaignId: destinationCampaign.id,
+      },
+    });
+    if (contentCopyHistory) {
+      await prisma.contentCopyHistory.update({
+        where: {
+          id: contentCopyHistory.id,
+        },
+        data: {
+          imageCampaignId: validatedData.sourceCampaignId,
+          imageCampaignName: soruceCampaign.name,
+        },
+      });
+    }
+
     return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error copy images: ', error);
@@ -339,7 +356,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

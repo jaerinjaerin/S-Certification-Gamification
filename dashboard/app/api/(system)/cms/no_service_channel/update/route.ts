@@ -1,12 +1,12 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getS3Client } from '@/lib/aws/s3-client';
-import { prisma } from '@/model/prisma';
 import {
-  CloudFrontClient,
-  CreateInvalidationCommand,
-} from '@aws-sdk/client-cloudfront';
+  parseExcelBufferToDomainJson,
+  ProcessResult,
+} from '@/lib/nomember-excel-parser';
+import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { fromIni } from '@aws-sdk/credential-provider-ini';
 import { FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -60,19 +60,21 @@ export async function POST(request: NextRequest) {
     if (!uploadedFile) {
       return NextResponse.json(
         {
-          success: false,
-          error: {
-            message: 'No file uploaded',
-            code: ERROR_CODES.NO_DATA_FOUND,
-          },
+          success: true,
+          result: {},
+          // error: {
+          //   message: 'No file uploaded',
+          //   code: ERROR_CODES.NO_DATA_FOUND,
+          // },
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${uploadedFile.path}`
-    );
+    const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${uploadedFile.path}`;
+    console.log('jsonUrl', jsonUrl);
+    const response = await fetch(jsonUrl);
+
     if (!response.ok) {
       return NextResponse.json(
         {
@@ -82,10 +84,33 @@ export async function POST(request: NextRequest) {
             code: ERROR_CODES.UNKNOWN,
           },
         },
-        { status: 500 }
+        { status: 400 }
       );
     }
-    const domainDatas = await response.json();
+
+    const arrayBuffer = await response.arrayBuffer();
+    const fileBuffer = Buffer.from(arrayBuffer);
+
+    const result: ProcessResult = parseExcelBufferToDomainJson(
+      Buffer.from(fileBuffer)
+    );
+
+    console.log('parseExcelBufferToDomainJson result', result);
+    if (!result.success || !result.result) {
+      console.error('Error processing no member country: ', result.error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: result.error,
+            errorCode: ERROR_CODES.UNKNOWN,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const domainDatas = result.result.domainDatas;
 
     const failures: string[] = [];
     const domains = await prisma.domain.findMany({
@@ -98,7 +123,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    domainDatas.forEach(async (domainData: any) => {
+    domainDatas.forEach(async (domainData) => {
       const domain = domains.find((d) => domainData.code === d.code);
       if (domain) {
         domainData.id = domain.id;
@@ -113,13 +138,11 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    const filteredDomainDatas = domainDatas.filter((domainData: any) => {
+    const filteredDomainDatas = domainDatas.filter((domainData) => {
       return domainData.id !== '';
     });
 
-    const domainIds = filteredDomainDatas.map(
-      (domainData: any) => domainData.id
-    );
+    const domainIds = filteredDomainDatas.map((domainData) => domainData.id);
     const quizSets = await prisma.quizSet.findMany({
       where: {
         domainId: {
@@ -132,29 +155,44 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    filteredDomainDatas.forEach((domainData: any) => {
-      const quizSet = quizSets.find((q) => q.domainId === domainData.id);
-      if (quizSet) {
-        if (quizSet.language) {
-          if (!domainData.languages) {
-            domainData.languages = [];
+    filteredDomainDatas.forEach((domainData) => {
+      const relatedQuizSets = quizSets.filter(
+        (q) => q.domainId === domainData.id
+      );
+
+      if (relatedQuizSets.length > 0) {
+        relatedQuizSets.forEach((quizSet) => {
+          if (quizSet.language) {
+            if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+              if (!domainData.languages.ff) {
+                domainData.languages.ff = [];
+              }
+              domainData.languages.ff.push(quizSet.language);
+            }
+            if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+              if (!domainData.languages.fsm) {
+                domainData.languages.fsm = [];
+              }
+              domainData.languages.fsm.push(quizSet.language);
+            }
           }
-          domainData.languages.push(quizSet.language);
-          domainData.isReady = true;
-        }
+        });
+
+        domainData.isReady = true;
       } else {
         domainData.isReady = false;
       }
     });
 
-    // JSON 객체를 문자열로 변환
+    // JSON 객체를 문자열로 변환 (예쁘게 출력)
     const jsonString = JSON.stringify(filteredDomainDatas, null, 2);
+    console.log('jsonString', jsonString);
     // =============================================
     // file upload
     // =============================================
 
+    // const file = files.file?.[0];
     const s3Client = getS3Client();
-
     const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
@@ -164,38 +202,6 @@ export async function POST(request: NextRequest) {
         Body: jsonString,
       })
     );
-
-    async function invalidateCache(distributionId: string, paths: string[]) {
-      try {
-        const command = new CreateInvalidationCommand({
-          DistributionId: distributionId,
-          InvalidationBatch: {
-            Paths: {
-              Quantity: paths.length,
-              Items: paths,
-            },
-            CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
-          },
-        });
-
-        const response = await cloudFrontClient.send(command);
-        console.log('Invalidation successful:', response);
-      } catch (error) {
-        console.error('Error invalidating CloudFront cache:', error);
-      }
-    }
-
-    const cloudFrontClient =
-      process.env.ENV === 'local'
-        ? new CloudFrontClient({
-            region: 'us-east-1',
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new CloudFrontClient({
-            region: 'us-east-1',
-          });
 
     // 사용 예제
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
@@ -216,6 +222,121 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
+
+    // const domainDatas = await response.json();
+
+    // const failures: string[] = [];
+    // const domains = await prisma.domain.findMany({
+    //   include: {
+    //     subsidiary: {
+    //       include: {
+    //         region: true,
+    //       },
+    //     },
+    //   },
+    // });
+
+    // domainDatas.forEach(async (domainData: any) => {
+    //   const domain = domains.find((d) => domainData.code === d.code);
+    //   if (domain) {
+    //     domainData.id = domain.id;
+    //     if (domain.subsidiary?.regionId) {
+    //       domainData.regionId = domain.subsidiary.regionId;
+    //     }
+    //     if (domain.subsidiaryId) {
+    //       domainData.subsidiaryId = domain.subsidiaryId;
+    //     }
+    //   } else {
+    //     failures.push('Domain not found: ' + domainData.code);
+    //   }
+    // });
+
+    // const filteredDomainDatas = domainDatas.filter((domainData: any) => {
+    //   return domainData.id !== '';
+    // });
+
+    // const domainIds = filteredDomainDatas.map(
+    //   (domainData: any) => domainData.id
+    // );
+    // const quizSets = await prisma.quizSet.findMany({
+    //   where: {
+    //     domainId: {
+    //       in: domainIds,
+    //     },
+    //     campaignId: campaign.id,
+    //   },
+    //   include: {
+    //     language: true,
+    //   },
+    // });
+
+    // filteredDomainDatas.forEach((domainData: DomainData) => {
+    //   const quizSet = quizSets.find((q) => q.domainId === domainData.id);
+    //   if (quizSet) {
+    //     if (quizSet.language) {
+    //       // if (!domainData.languages) {
+    //       //   domainData.languages = [];
+    //       // }
+    //       // domainData.languages.push(quizSet.language);
+    //       if (quizSet.jobCodes[0].toLowerCase() === 'ff') {
+    //         if (!domainData.languages.ff) {
+    //           domainData.languages.ff = [];
+    //         }
+    //         domainData.languages.ff.push(quizSet.language);
+    //       }
+    //       if (quizSet.jobCodes[0].toLowerCase() === 'fsm') {
+    //         if (!domainData.languages.fsm) {
+    //           domainData.languages.fsm = [];
+    //         }
+    //         domainData.languages.fsm.push(quizSet.language);
+    //       }
+
+    //       domainData.isReady = true;
+    //     } else {
+    //       domainData.isReady = false;
+    //     }
+    //   } else {
+    //     domainData.isReady = false;
+    //   }
+    // });
+
+    // // JSON 객체를 문자열로 변환
+    // const jsonString = JSON.stringify(filteredDomainDatas, null, 2);
+    // // =============================================
+    // // file upload
+    // // =============================================
+
+    // const s3Client = getS3Client();
+
+    // const destinationKeyForWeb = `certification/${campaign.slug}/jsons/channels.json`;
+    // // 📌 S3 업로드 실행 (PutObjectCommand 사용)
+    // await s3Client.send(
+    //   new PutObjectCommand({
+    //     Bucket: process.env.ASSETS_S3_BUCKET_NAME,
+    //     Key: destinationKeyForWeb,
+    //     Body: jsonString,
+    //   })
+    // );
+
+    // // 사용 예제
+    // const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
+    // const pathsToInvalidate = [
+    //   `/certification/${campaign.slug}/jsons/channels.json`,
+    // ]; // 무효화할 경로
+
+    // invalidateCache(distributionId, pathsToInvalidate);
+
+    // return NextResponse.json(
+    //   {
+    //     success: true,
+    //     result: {
+    //       data: filteredDomainDatas,
+    //       uploadedFile,
+    //       failures,
+    //     },
+    //   },
+    //   { status: 200 }
+    // );
   } catch (error: unknown) {
     console.error('Error create campaign: ', error);
     return NextResponse.json(
@@ -228,7 +349,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

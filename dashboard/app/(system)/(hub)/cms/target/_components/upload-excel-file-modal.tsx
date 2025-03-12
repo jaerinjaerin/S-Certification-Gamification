@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
+import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
+import { LoadingFullScreen } from '@/components/loader';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -8,31 +10,40 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { DropzoneView } from './upload-files-dialog';
-import { useDropzone } from 'react-dropzone';
-import { useState } from 'react';
-import { DialogTitle } from '@radix-ui/react-dialog';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { UploadExcelFileVariant } from '@/app/(system)/(hub)/cms/_types/type';
-import { uploadFileNameValidator } from '@/app/(system)/(hub)/cms/_utils/upload-file-name-validator';
-import { isEmpty } from '@/app/(system)/(hub)/cms/_utils/utils';
-import { useTargetData } from '../_provider/target-data-provider';
+import { DialogTitle } from '@radix-ui/react-dialog';
 import axios from 'axios';
-import { LoaderWithBackground } from '@/components/loader';
+import { useCallback, useEffect, useState } from 'react';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { processAndExportExcelAndJsonObject } from '../_lib/file-converter';
 import { useStateVariables } from '@/components/provider/state-provider';
+import { CircleAlert } from 'lucide-react';
+import { useTargetData } from '../_provider/target-data-provider';
+import { DropzoneView } from './upload-files-dialog';
+import { CustomAlertDialog } from '../../_components/custom-alert-dialog';
+import { uploadFileNameValidator } from '../_lib/upload-file-name-validator';
+import {
+  FilesTableComponent,
+  Td,
+} from '../../set-quiz/_components/files-table-component';
+import UploadResultDialog from './upload-target-result-dialog';
 
 type UploadExcelFileModalProps = {
   children: React.ReactNode;
   title: string;
-  variant: UploadExcelFileVariant;
 };
+
+const ERROR_MESSAGES = {
+  'file-invalid-type': 'The uploaded file does not match the required format.',
+  'file-too-large': 'File is too large.',
+  'too-many-files': 'Only one file can be uploaded.',
+  'invalid-file-name': 'Invalid target file name.',
+  default: 'Invalid file format',
+} as const;
 
 export default function UploadExcelFileModal({
   children,
   title,
-  variant,
 }: UploadExcelFileModalProps) {
   const { campaign } = useStateVariables();
   const { state, dispatch } = useTargetData();
@@ -40,50 +51,74 @@ export default function UploadExcelFileModal({
   const [isConverting, setIsConverting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [processResult, setProcessResult] = useState<Record<string, string>[]>(
+    []
+  );
 
-  const {
-    getRootProps,
-    getInputProps,
-    open,
-    isDragActive,
-    acceptedFiles,
-    fileRejections,
-  } = useDropzone({
-    accept: {
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
-      'application/vnd.ms-excel': [],
-    },
-    validator: (file) =>
-      uploadFileNameValidator(
-        file,
-        variant,
-        variant === 'target' ? campaign?.name : undefined
-      ),
-    onDrop: async (acceptedFiles) => {
-      const processed = await Promise.all(
-        acceptedFiles.map(async (file) =>
-          processAndExportExcelAndJsonObject(file, setIsConverting)
-        )
-      );
-
-      setFiles(processed);
-    },
-    multiple: false,
-    noClick: true,
-    noKeyboard: false,
-  });
-
-  const updateData = (updatedItems: TargetProps[]) => {
-    const data = state.targets || [];
-
-    const updatedData = Array.from(
-      new Map(
-        [...data, ...updatedItems].map((item) => [item.domainId, item])
-      ).values()
+  // 에러 처리 로직 개선
+  const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
+    const errorMessages = fileRejections.map(
+      (file) =>
+        ERROR_MESSAGES[file.errors[0].code as keyof typeof ERROR_MESSAGES] ||
+        ERROR_MESSAGES.default
     );
+    setErrors([...new Set(errorMessages)]);
+  }, []);
 
-    dispatch({ type: 'SET_TARGET_LIST', payload: updatedData });
-  };
+  const { getRootProps, getInputProps, open, isDragActive, fileRejections } =
+    useDropzone({
+      accept: {
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
+        'application/vnd.ms-excel': [],
+      },
+      onDrop: async (acceptedFiles) => {
+        const processed = await Promise.all(
+          acceptedFiles.map(async (file) =>
+            processAndExportExcelAndJsonObject(file, setIsConverting)
+          )
+        );
+
+        setFiles(processed);
+      },
+      validator: (file) => {
+        if (!file.name) return null;
+        const checkFileValidation = uploadFileNameValidator(file);
+
+        if (checkFileValidation.metadata?.hasError) {
+          return (
+            checkFileValidation.errors?.map((error) => ({
+              code: error.code,
+              message: error.message,
+            })) ?? null
+          );
+        }
+        return null;
+      },
+      multiple: false,
+      noClick: true,
+      noKeyboard: false,
+      onDropRejected,
+    });
+
+  // 데이터 업데이트 로직 개선
+  const updateData = useCallback(
+    (updatedItems: TargetProps[]) => {
+      dispatch({
+        type: 'SET_TARGET_LIST',
+        payload: Array.from(
+          new Map(
+            [...(state.targets || []), ...updatedItems].map((item) => [
+              item.domainId,
+              item,
+            ])
+          ).values()
+        ),
+      });
+    },
+    [dispatch, state.targets]
+  );
 
   const dataFilterNoHasError = (files: TargetConvertedProps[]) => {
     return files.filter(({ metadata }) => !metadata.hasError);
@@ -112,7 +147,9 @@ export default function UploadExcelFileModal({
       const response = await axios.post('/api/cms/target', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       updateData(response.data.result);
+      setProcessResult(response.data.result);
     } catch (error) {
       console.error('Upload failed:', error);
     } finally {
@@ -133,16 +170,21 @@ export default function UploadExcelFileModal({
     setFiles([]);
   };
 
-  //TODO:fileRejections에 요소가 있는 경우, AlertDialog 띄우고, dropzone 요소 닫기
+  useEffect(() => {
+    if (fileRejections.length > 0) {
+      setIsOpen(true);
+    }
+  }, [fileRejections]);
 
   return (
     <>
-      {loading && <LoaderWithBackground />}
       <Dialog open={isDialogOpen} onOpenChange={dialogOpenHandler}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="gap-[4.063rem]">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className="text-size-17px font-semibold !text-left">
+              {title}
+            </DialogTitle>
           </DialogHeader>
           {isEmpty(files) && (
             <DropzoneView
@@ -154,31 +196,49 @@ export default function UploadExcelFileModal({
           )}
           {!isEmpty(files) && (
             <div>
-              {isConverting && <div>Converting...</div>}
-              {!isConverting &&
-                files.map(({ file, metadata }, index) => (
-                  <div key={index} className={cn('flex gap-5')}>
-                    <span>{file.name}</span>
-                    {metadata.hasError && (
-                      <span className="text-red-500">
-                        {metadata.errorMessage}
-                      </span>
-                    )}
-                  </div>
-                ))}
+              {isConverting && <LoadingFullScreen />}
+              {!isConverting && (
+                <div className="border border-zinc-200 rounded-md max-h-[23.313rem] overflow-y-scroll">
+                  <FilesTableComponent>
+                    {files.map(({ file, metadata }, index) => (
+                      <tr key={index} className="border-t border-t-zinc-200">
+                        <Td>{index + 1}</Td>
+                        <Td>{file.name}</Td>
+                        <Td>
+                          {metadata.hasError && (
+                            <div className="flex items-center gap-2.5 text-red-600 font-medium">
+                              <CircleAlert className="size-4 shrink-0" />
+                              <span> {metadata.errorMessage}</span>
+                            </div>
+                          )}
+                        </Td>
+                      </tr>
+                    ))}
+                  </FilesTableComponent>
+                </div>
+              )}
             </div>
           )}
           {!isEmpty(files) && (
-            <DialogFooter>
+            <DialogFooter className="!flex-row !justify-center gap-3">
               <DialogClose asChild>
-                <Button variant="secondary" onClick={handleClear}>
+                <Button
+                  variant="secondary"
+                  onClick={handleClear}
+                  disabled={loading}
+                >
                   Cancel
                 </Button>
               </DialogClose>
               <Button
+                className="!m-0"
                 variant="action"
                 onClick={handleSubmit}
-                disabled={isConverting || isEmpty(dataFilterNoHasError(files))}
+                disabled={
+                  isConverting ||
+                  isEmpty(dataFilterNoHasError(files)) ||
+                  loading
+                }
               >
                 Upload
               </Button>
@@ -186,6 +246,28 @@ export default function UploadExcelFileModal({
           )}
         </DialogContent>
       </Dialog>
+
+      <UploadResultDialog
+        uploadFilesResult={processResult}
+        open={!isEmpty(processResult)}
+        onOpenChange={() => {
+          setProcessResult([]);
+        }}
+      />
+
+      <CustomAlertDialog
+        open={isOpen}
+        className="max-w-[20rem]"
+        description={errors[0]}
+        buttons={[
+          {
+            label: 'OK',
+            type: 'ok',
+            variant: 'secondary',
+            onClick: () => setIsOpen(false),
+          },
+        ]}
+      />
     </>
   );
 }

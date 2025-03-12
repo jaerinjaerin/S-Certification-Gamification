@@ -2,15 +2,21 @@
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { initialExpertsData } from '@/app/(system)/(hub)/dashboard/overview/@infoExpertsByGroup/_lib/state';
-import { querySearchParams } from '../../../_lib/query';
-import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { UserQuizBadgeStageStatistics } from '@prisma/client';
-import { removeDuplicateUsers } from '@/lib/data';
+import {
+  getJobIds,
+  initialExpertsData,
+  removeDuplicateUsers,
+} from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
 
 async function fetchUserStatistics(
   where: any,
-  jobGroup: { id: string; code: string }[],
+  stageIndex: number,
+  jobGroup: string[],
   moreWhere: any
 ) {
   return prisma.userQuizBadgeStageStatistics.findMany({
@@ -24,8 +30,8 @@ async function fetchUserStatistics(
         'channelSegmentId',
         'createdAt',
       ]),
-      quizStageIndex: 2,
-      jobId: { in: jobGroup.map((job) => job.id) },
+      quizStageIndex: stageIndex,
+      jobId: { in: jobGroup },
       ...moreWhere,
     },
   });
@@ -33,12 +39,15 @@ async function fetchUserStatistics(
 
 async function processUserStatistics(
   users: UserQuizBadgeStageStatistics[],
-  jobGroup: { id: string; code: string }[],
+  jobGroup: Record<string, string[]>,
   expertsData: any
 ) {
   // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
   removeDuplicateUsers(users).forEach((user) => {
-    const jobName = jobGroup.find((j) => j.id === user.jobId)?.code;
+    const jobName =
+      (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+        jobGroup[key].includes(user.jobId)
+      ) || null;
     if (jobName) {
       expertsData.items.forEach((item: { title: string; value: number }) => {
         if (item.title === jobName) {
@@ -55,35 +64,81 @@ export async function GET(request: NextRequest) {
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, ...where } = condition;
 
-    await prisma.$connect();
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
+    });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
 
     const expertsData: ImprovedDataStructure = JSON.parse(
       JSON.stringify(initialExpertsData)
     );
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
+    const jobGroup = await getJobIds(jobId);
 
-    const plusUsers = await fetchUserStatistics(where, jobGroup, {
-      OR: [{ storeId: { not: '4' } }, { storeId: null }],
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: settings.ffFirstBadgeStageIndex! || -1,
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: settings.fsmFirstBadgeStageIndex! || -1,
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    const plusUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          OR: [{ storeId: { not: '4' } }, { storeId: null }],
+        })
+      )
+    );
+
+    plusUsers.forEach((plusUser, index) => {
+      processUserStatistics(plusUser, jobGroup, expertsData[0]);
     });
-    processUserStatistics(plusUsers, jobGroup, expertsData[0]);
     //
-    const sesUsers = await fetchUserStatistics(where, jobGroup, {
-      storeId: '4',
+    const sesUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          storeId: '4',
+        })
+      )
+    );
+
+    sesUsers.forEach((sesUser, index) => {
+      processUserStatistics(sesUser, jobGroup, expertsData[1]);
     });
-    processUserStatistics(sesUsers, jobGroup, expertsData[1]);
 
     return NextResponse.json({ result: expertsData });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      {
+        result: [
+          {
+            group: 'plus',
+            items: [
+              { title: 'ff', value: 0 },
+              { title: 'fsm', value: 0 },
+            ],
+          },
+          {
+            group: 'ses',
+            items: [
+              { title: 'ff', value: 0 },
+              { title: 'fsm', value: 0 },
+            ],
+          },
+        ],
+        message: 'Internal server error',
+      },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

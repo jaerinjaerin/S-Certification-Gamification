@@ -23,10 +23,10 @@ const DetailIncorrectTable = ({
 }: {
   category: string;
   group: string;
-  questions: QuizRankedIncorrectAnswerRateProps[];
+  questions: any[];
 }) => {
   const { setContent } = useModal();
-  const [data, setData] = useState<QuizRankedIncorrectAnswerRateProps[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sorting, setSorting] = useState<SortingState>([]);
 

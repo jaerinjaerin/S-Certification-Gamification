@@ -4,14 +4,14 @@ import {
   ActivityIdProcessResult,
   processActivityExcelBuffer,
 } from '@/lib/activityid-excel-parser';
+import { getS3Client } from '@/lib/aws/s3-client';
 import { prisma } from '@/model/prisma';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { fromIni } from '@aws-sdk/credential-provider-ini';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { BadgeType, FileType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const sesstion = await auth();
+  const session = await auth();
 
   try {
     // ✅ `req.body`를 `Buffer`로 변환 (Node.js `IncomingMessage`와 호환)
@@ -40,6 +40,9 @@ export async function POST(request: NextRequest) {
       where: {
         id: campaignId,
       },
+      include: {
+        settings: true,
+      },
     });
 
     if (!campaign) {
@@ -55,6 +58,8 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
+
+    console.log('campaign: ', campaign);
 
     // Check if a file is received
     if (!file) {
@@ -127,6 +132,68 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const ffSecondBadgeStageIndex = campaign.settings?.ffSecondBadgeStageIndex;
+    console.log('ffSecondBadgeStageIndex: ', ffSecondBadgeStageIndex);
+    if (ffSecondBadgeStageIndex == null) {
+      const hasBadge = result.data.some(
+        (data) => data.FF_SecondBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FF Second Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const fsmFirstBadgeStageIndex = campaign.settings?.fsmFirstBadgeStageIndex;
+    if (fsmFirstBadgeStageIndex == null) {
+      const hasBadge = result.data.some(
+        (data) => data.FSM_FirstBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FSM First Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const fsmSecondBadgeStageIndex =
+      campaign.settings?.fsmSecondBadgeStageIndex;
+    if (fsmSecondBadgeStageIndex == null) {
+      const hasBadge = result.data.some(
+        (data) => data.FSM_SecondBadgeImage != null
+      );
+
+      if (hasBadge) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: {
+              message: 'FSM Second Badge is not set in campaign settings',
+              errorCode: ERROR_CODES.UNKNOWN,
+            },
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     const activityBadges = [];
     const failures = [];
 
@@ -161,7 +228,8 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      if (data.FF_FirstActivityID) {
+      // if (data.FF_FirstActivityID && data.FF_FirstBadgeImage != null) {
+      if (data.FF_FirstBadgeImage != null) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FF_FirstBadgeImage,
@@ -190,7 +258,7 @@ export async function POST(request: NextRequest) {
         if (!activityBadge) {
           activityBadge = await prisma.activityBadge.create({
             data: {
-              activityId: data.FF_FirstActivityID,
+              activityId: data.FF_FirstActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -205,7 +273,7 @@ export async function POST(request: NextRequest) {
               id: activityBadge.id,
             },
             data: {
-              activityId: data.FF_FirstActivityID,
+              activityId: data.FF_FirstActivityID ?? '',
               badgeImageId: badgeImage.id,
               languageId: language.id,
             },
@@ -233,7 +301,8 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      if (data.FF_SecondActivityID) {
+      // if (data.FF_SecondActivityID && data.FF_SecondBadgeImage != null) {
+      if (data.FF_SecondBadgeImage != null) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FF_SecondBadgeImage,
@@ -262,7 +331,7 @@ export async function POST(request: NextRequest) {
         if (!activityBadge) {
           activityBadge = await prisma.activityBadge.create({
             data: {
-              activityId: data.FF_SecondActivityID,
+              activityId: data.FF_SecondActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -277,7 +346,7 @@ export async function POST(request: NextRequest) {
               id: activityBadge.id,
             },
             data: {
-              activityId: data.FF_SecondActivityID,
+              activityId: data.FF_SecondActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -309,7 +378,8 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      if (data.FSM_FirstActivityID) {
+      // if (data.FSM_FirstActivityID && data.FSM_FirstBadgeImage != null) {
+      if (data.FSM_FirstBadgeImage != null) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FSM_FirstBadgeImage,
@@ -338,7 +408,7 @@ export async function POST(request: NextRequest) {
         if (!activityBadge) {
           activityBadge = await prisma.activityBadge.create({
             data: {
-              activityId: data.FSM_FirstActivityID,
+              activityId: data.FSM_FirstActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -353,7 +423,7 @@ export async function POST(request: NextRequest) {
               id: activityBadge.id,
             },
             data: {
-              activityId: data.FSM_FirstActivityID,
+              activityId: data.FSM_FirstActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -385,7 +455,8 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      if (data.FSM_SecondActivityID) {
+      // if (data.FSM_SecondActivityID && data.FSM_SecondBadgeImage != null) {
+      if (data.FSM_SecondBadgeImage != null) {
         const badgeImage = await prisma.quizBadge.findFirst({
           where: {
             name: data.FSM_SecondBadgeImage,
@@ -414,7 +485,7 @@ export async function POST(request: NextRequest) {
         if (!activityBadge) {
           activityBadge = await prisma.activityBadge.create({
             data: {
-              activityId: data.FSM_SecondActivityID,
+              activityId: data.FSM_SecondActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -429,7 +500,7 @@ export async function POST(request: NextRequest) {
               id: activityBadge.id,
             },
             data: {
-              activityId: data.FSM_SecondActivityID,
+              activityId: data.FSM_SecondActivityID ?? '',
               campaignId: campaignId,
               domainId: domain.id,
               languageId: language.id,
@@ -467,34 +538,25 @@ export async function POST(request: NextRequest) {
     // =============================================
 
     // const file = files.file?.[0];
-    const s3Client =
-      process.env.ENV === 'local'
-        ? new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-            credentials: fromIni({
-              profile: process.env.ASSETS_S3_BUCKET_PROFILE,
-            }),
-          })
-        : new S3Client({
-            region: process.env.ASSETS_S3_BUCKET_REGION,
-          });
+    const s3Client = getS3Client();
 
     // const fileBuffer = Buffer.from(await file.arrayBuffer());
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-T:.Z]/g, '')
-      .slice(0, 12); // YYYYMMDDHHMM 형식
+    // const timestamp = new Date()
+    //   .toISOString()
+    //   .replace(/[-T:.Z]/g, '')
+    //   .slice(0, 12); // YYYYMMDDHHMM 형식
 
-    // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    const baseFileName = file.name
-      .replace(/(_\d{12})+/, '')
-      .replace(/\.[^/.]+$/, '');
-    const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
+    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
+    // const baseFileName = file.name
+    //   .replace(/(_\d{12})+/, '')
+    //   .replace(/\.[^/.]+$/, '');
+    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
 
-    // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
+    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
+    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
 
-    const destinationKey = `certification/${campaign.slug}/cms/upload/activityid/${fileNameWithTimestamp}`;
+    // const destinationKey = `certification/${campaign.slug}/cms/upload/activityid/${fileNameWithTimestamp}`;
+    const destinationKey = `certification/${campaign.slug}/cms/upload/activityid/${file.name}`;
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
     await s3Client.send(
       new PutObjectCommand({
@@ -510,7 +572,7 @@ export async function POST(request: NextRequest) {
           id: uploadedFile.id,
         },
         data: {
-          uploadedBy: sesstion?.user?.id,
+          uploadedBy: session?.user?.id,
           path: `/${destinationKey}`,
         },
       });
@@ -519,7 +581,7 @@ export async function POST(request: NextRequest) {
         data: {
           fileType: FileType.ACTIVITYID,
           campaignId: campaign.id,
-          uploadedBy: sesstion?.user?.id ?? '',
+          uploadedBy: session?.user?.id ?? '',
           path: `/${destinationKey}`,
         },
       });
@@ -537,7 +599,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('Error create campaign: ', error);
+    console.error('Error upload activity ID: ', error);
     return NextResponse.json(
       {
         success: false,
@@ -548,10 +610,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
-  // });
 }
 
 export async function GET(request: Request) {

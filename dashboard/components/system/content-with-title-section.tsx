@@ -40,10 +40,18 @@ const ContentWithTitleSection = ({ children }: Props) => {
   // 설명 가져오기
   const description = subtitles[category]?.[rawSegment] || null;
 
+  const UppercaseFormat = (text: string) => {
+    const words = text.split(' ');
+
+    return words[0].toUpperCase() + ' ' + words[1];
+  };
+
   return (
     <div>
       <header>
-        <h1 className="font-extrabold text-size-24px capitalize">{segment}</h1>
+        <h1 className="font-extrabold text-size-24px capitalize">
+          {segment === 'ui language' ? UppercaseFormat(segment) : segment}
+        </h1>
         {description && <p>{description}</p>}
         <hr className="w-full border-b my-5 border-zinc-200" />
       </header>

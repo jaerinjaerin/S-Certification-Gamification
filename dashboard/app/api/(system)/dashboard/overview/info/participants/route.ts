@@ -1,17 +1,15 @@
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
-import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
 
-// UserQuizStatistics 사용
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
-
-    await prisma.$connect();
 
     const jobGroup = await prisma.job.findMany({
       where: jobId ? { code: jobId } : {},
@@ -37,14 +35,13 @@ export async function GET(request: NextRequest) {
           : {}),
       },
     });
+
     return NextResponse.json({ result: { count } });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { result: { count: 0 }, message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

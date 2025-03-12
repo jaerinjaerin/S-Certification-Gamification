@@ -134,7 +134,7 @@ const SidebarProvider = React.forwardRef<
     return (
       <SidebarContext.Provider value={contextValue}>
         <TooltipProvider delayDuration={0}>
-          <Topbar className="bg-zinc-950 h-14 flex items-center justify-between flex-shrink-0 px-[1.875rem] fixed w-full z-20" />
+          <Topbar className="bg-zinc-950 h-14 flex items-center justify-between flex-shrink-0 px-[1.875rem] fixed w-full z-50" />
           <div
             style={
               {

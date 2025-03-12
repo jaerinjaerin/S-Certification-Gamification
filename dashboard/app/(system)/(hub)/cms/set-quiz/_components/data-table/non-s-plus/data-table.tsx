@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import {
   Table,
@@ -35,7 +35,6 @@ interface NoServiceChannelDataTableProps {
   columns: ColumnDef<DomainChannel>[];
 }
 
-// TODO: 데이터 반환 확인 필요
 export default function NonSplusDataTable() {
   const { campaign } = useStateVariables();
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/no_service_channel?campaignId=${campaign?.id}`;
@@ -43,10 +42,9 @@ export default function NonSplusDataTable() {
     QUIZSET_DATA_URL,
     fetcher
   );
-  console.log('🥕 data', data);
 
   if (isLoading) {
-    return <LoaderWithBackground />;
+    return <LoadingFullScreen />;
   }
   return <DataTable data={data?.result.channels ?? []} columns={columns} />;
 }
@@ -74,7 +72,7 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
   });
 
   return (
-    <div className="w-full">
+    <div className="data-table">
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total: {table.getFilteredRowModel().rows.length}

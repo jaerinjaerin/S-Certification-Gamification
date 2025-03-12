@@ -17,8 +17,10 @@ import { useTargetData } from '../_provider/target-data-provider';
 import { useEffect } from 'react';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { LoaderWithBackground } from '@/components/loader';
+import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
+
+const regex = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
 
 export const columns: ColumnDef<TargetProps>[] = [
   {
@@ -28,22 +30,37 @@ export const columns: ColumnDef<TargetProps>[] = [
   {
     accessorKey: 'total',
     header: 'Total',
-  },
-  {
-    accessorKey: 'ff',
-    header: 'FF Target',
-  },
-  {
-    accessorKey: 'ffSes',
-    header: 'FF(SES) Target',
-  },
-  {
-    accessorKey: 'fsm',
-    header: 'FSM Target',
+    cell: ({ row }) => {
+      return <span>{String(row.original.total).replaceAll(regex, ',')}</span>;
+    },
   },
   {
     accessorKey: 'fsmSes',
-    header: 'FSM(SES) Target',
+    header: 'FSM(SES)',
+    cell: ({ row }) => {
+      return <span>{String(row.original.fsmSes).replaceAll(regex, ',')}</span>;
+    },
+  },
+  {
+    accessorKey: 'fsm',
+    header: 'FSM',
+    cell: ({ row }) => {
+      return <span>{String(row.original.fsm).replaceAll(regex, ',')}</span>;
+    },
+  },
+  {
+    accessorKey: 'ffSes',
+    header: 'FF(SES)',
+    cell: ({ row }) => {
+      return <span>{String(row.original.ffSes).replaceAll(regex, ',')}</span>;
+    },
+  },
+  {
+    accessorKey: 'ff',
+    header: 'FF',
+    cell: ({ row }) => {
+      return <span>{String(row.original.ff).replaceAll(regex, ',')}</span>;
+    },
   },
 ];
 
@@ -69,51 +86,74 @@ export function DataTable() {
   });
 
   return (
-    <>
-      {loading && <LoaderWithBackground />}
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-                className="h-16"
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+    <div>
+      {loading && <LoadingFullScreen />}
+      <div className="flex items-center justify-start space-x-3 py-4">
+        <div className=" text-sm text-zinc-950">
+          Total :
+          <strong className="font-bold">
+            {` ${table.getRowModel().rows.length}`}
+          </strong>
+        </div>
+      </div>
+
+      <div className="border rounded-md">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} className="p-4">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className="h-16"
+                >
+                  {row.getVisibleCells().map((cell) => {
+                    console.log(
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    );
+                    return (
+                      <TableCell key={cell.id} className="px-4 py-6">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No registered Target. Please select the Upload button to add
+                  one.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   );
 }

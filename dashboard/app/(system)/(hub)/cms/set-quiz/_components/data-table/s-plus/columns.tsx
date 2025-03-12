@@ -1,13 +1,20 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
+import { ActivityBadgeEx } from '@/types';
+import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
 import { CustomAlertDialog } from '../../../../_components/custom-alert-dialog';
+import { useNavigation } from '../../../../_hooks/useNavigation';
+import { updateNoServiceChannel } from '../../../_lib/update-no-service-channel';
 import { GroupedQuizSet } from '../../../_type/type';
-import { QuizSetLink, StatusBadge } from '../../data-table-widgets';
+import {
+  ActivityIdBadge,
+  QuizSetLink,
+  StatusBadge,
+} from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -26,6 +33,13 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   //   ),
   //   cell: () => <ActiveToggle />,
   // },
+  {
+    accessorKey: 'No',
+    header: 'No',
+    accessorFn: (_row, index) => index + 1,
+    cell: ({ row }) => <div className="uppercase">{row.index + 1}</div>,
+    sortingFn: 'auto',
+  },
   {
     accessorKey: 'status',
     header: () => (
@@ -48,9 +62,20 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
         />
       </div>
     ),
-    cell: ({ row }) => {
-      const { quizSetFile, activityBadges, uiLanguage } = row.original;
+    accessorFn: (row) => {
+      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row;
       const isReady =
+        quizSet != null &&
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0 &&
+        uiLanguage?.code;
+      return isReady;
+    },
+    cell: ({ row }) => {
+      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
+      const isReady =
+        quizSet != null &&
         quizSetFile?.id &&
         activityBadges != null &&
         activityBadges.length > 0 &&
@@ -62,48 +87,80 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'subsidiary',
     header: 'Subsidiary',
+    accessorFn: (row) => row.domain.subsidiary?.name ?? '-',
     cell: ({ row }) => (
       <div className="uppercase">
-        {row.original.quizSet.domain.subsidiary?.name ?? '-'}
+        {row.original.domain.subsidiary?.name ?? '-'}
       </div>
     ),
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'domain',
     header: 'Domain',
-    accessorFn: (row) => row.quizSet.domain.name,
-    cell: ({ row }) => <div>{row.original.quizSet.domain.name ?? '-'}</div>,
+    accessorFn: (row) => row.domain.name ?? '-',
+    cell: ({ row }) => <div>{row.original.domain.name ?? '-'}</div>,
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'domainCode',
     header: 'Domain Code',
-    cell: ({ row }) => <div>{row.original.quizSet.domain.code ?? '-'}</div>,
+    accessorFn: (row) => row.domain.code ?? '-',
+    cell: ({ row }) => <div>{row.original.domain.code ?? '-'}</div>,
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'Job',
     header: 'Job',
-    cell: ({ row }) => <div>{row.original.quizSet.jobCodes[0] ?? '-'}</div>,
+    accessorFn: (row) =>
+      row.quizSet?.jobCodes[0] ??
+      row.activityBadges?.map((badge) => badge.jobCode[0]),
+    cell: ({ row }) => (
+      <div>
+        {/* {row.original.quizSet?.jobCodes[0] ?? '-'} */}
+        {row.original.quizSet?.jobCodes[0] ??
+          row.original.activityBadges?.map((badge) => badge.jobCode)[0]}
+      </div>
+    ),
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'Quiz Language',
     header: 'Quiz Language',
+    accessorFn: (row) => {
+      if (row.quizSet?.language) {
+        return row.quizSet.language.name;
+      }
+      if (row.uiLanguage) {
+        return row.uiLanguage.name;
+      }
+      return '-';
+    },
     cell: ({ row }) => {
-      // console.log(
-      //   '🥕 row.original.quizSet.language',
-      //   row.original.quizSet.language
-      // );
-      if (row.original.quizSet.language) {
+      if (row.original.quizSet?.language) {
         return <div>{row.original.quizSet.language.name}</div>;
+      }
+      // quizLanuage 와 ui Language를 동일하게 사용하고 있음
+      if (row.original.uiLanguage) {
+        return <div>{row.original.uiLanguage.name}</div>;
       }
       return <div>-</div>;
     },
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'url',
     header: 'URL',
+    accessorFn: (row) => {
+      if (row.uiLanguage && row.quizSet) {
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.campaign.slug}/${row.domain.code}_${row.uiLanguage.code}`;
+        return { url };
+      }
+      return '-';
+    },
     cell: ({ row }) => {
-      if (row.original.uiLanguage) {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/${row.original.quizSet.campaign.name}/${row.original.quizSet.domain.code}_${row.original.quizSet.language.code}`;
+      if (row.original.uiLanguage && row.original.quizSet) {
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
           <a href={url} target="_blank">
             {url}
@@ -112,104 +169,211 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       }
       return <div>-</div>;
     },
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'quizSet',
     header: 'Quiz Set',
+    accessorFn: (row) => {
+      if (row.quizSet?.language) {
+        return row.quizSet.language.name;
+      }
+    },
     cell: ({ row }) => {
       const { quizSet, quizSetFile } = row.original;
-      if (!quizSetFile) {
+      if (!quizSetFile || !quizSet) {
         return;
       }
-      return <QuizSetLink props={quizSet} />;
+      return (
+        <div className="flex items-center gap-1">
+          <QuizSetLink props={quizSet} />
+          <div className="flex items-center justify-center text-center">
+            <CustomAlertDialog
+              trigger={
+                <Button variant={'ghost'} size={'icon'}>
+                  <Trash2 className="text-red-500 !size-5" />
+                </Button>
+              }
+              description={
+                'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
+              }
+              buttons={[
+                {
+                  label: 'Cancel',
+                  variant: 'secondary',
+                  type: 'cancel',
+                },
+                {
+                  label: 'Delete',
+                  variant: 'delete',
+                  type: 'delete',
+                  onClick: async () =>
+                    await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
+                },
+              ]}
+            />
+          </div>
+        </div>
+      );
     },
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'activityId',
     header: 'Activity ID',
-    // cell: ({ row }) => <div>{row.getValue('activityId')}</div>,
+    accessorFn: (row) => {
+      if (row.activityBadges) {
+        let activityId;
+        {
+          row.activityBadges.map((badge, index) => {
+            return (activityId = badge.activityId);
+          });
+        }
+        return activityId;
+      }
+    },
     cell: ({ row }) => {
-      // <div>{row.original.activityBadges?.activityId ?? '-'}</div>
       if (row.original.activityBadges) {
         return (
           <>
-            {row.original.activityBadges.map((badge, index) => (
-              <div key={index}>
-                {badge.badgeType}-{badge.activityId}
-              </div>
-            ))}
+            {/* <ActivityIdBadge id={10000} stage={3} /> */}
+            {row.original.activityBadges.map((badge, index) => {
+              const stageNum = getStageNumFromActivityBadge(
+                badge as ActivityBadgeEx,
+                row
+              );
+              if (
+                stageNum === 0 ||
+                badge.activityId == null ||
+                badge.activityId === ''
+              ) {
+                return <></>;
+              }
+              return (
+                <ActivityIdBadge
+                  key={index}
+                  id={badge.activityId}
+                  stage={stageNum}
+                />
+              );
+            })}
           </>
         );
       }
       return <div>-</div>;
     },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'Badge',
+    header: 'Badge',
+    accessorFn: (row) => {
+      if (row.activityBadges) {
+        row.activityBadges.map((badge, index) => {
+          if (badge.badgeImage?.imagePath) {
+            return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`;
+          }
+        });
+      }
+    },
+    cell: ({ row }) => {
+      if (row.original.activityBadges) {
+        return (
+          <>
+            {row.original.activityBadges.map((badge, index) => {
+              const stageNum = getStageNumFromActivityBadge(
+                badge as ActivityBadgeEx,
+                row
+              );
+              if (stageNum === 0) {
+                return <></>;
+              }
+              return (
+                <div key={index} className="flex items-center gap-2">
+                  <span className="font-bold">
+                    {getStageNumFromActivityBadge(
+                      badge as ActivityBadgeEx,
+                      row
+                    )}
+                  </span>
+
+                  {badge.badgeImage?.imagePath && (
+                    <img
+                      className="w-6 h-6"
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badge.badgeImage?.imagePath}`}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </>
+        );
+      }
+      return <div>-</div>;
+    },
+    sortingFn: 'auto',
   },
   {
     accessorKey: 'uiLanguage',
     header: 'UI Language',
-    // cell: ({ row }) => <div>{row.getValue('uiLanguage')}</div>,
+    accessorFn: (row) => {
+      if (row.uiLanguage) {
+        return row.uiLanguage.code;
+      }
+    },
     cell: ({ row }) => {
-      const router = useRouter();
       if (row.original.uiLanguage?.code) {
         return <div>{row.original.uiLanguage.code}</div>;
       }
-      return (
-        <Button
-          variant={'secondary'}
-          className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-red-300"
-          onClick={() =>
-            // routeToPage(`/cms/set-quiz/quiz-set-details?id=${props.id}`)
-            router.push(`/cms/ui-language`)
-          }
-        >
-          <div className="text-size-12px leading-tight font-semibold">Add</div>
-        </Button>
-      );
+      return <UILinkButton />;
     },
+    sortingFn: 'auto',
   },
-  {
-    accessorKey: 'delete',
-    header: 'Delete',
-    cell: ({ row }) => {
-      const HQ = row.original.quizSet.domain.code === 'OrgCode-7';
-      if (HQ) {
-        return;
-      }
+  // {
+  //   accessorKey: 'delete',
+  //   header: 'Delete',
+  //   cell: ({ row }) => {
+  //     const HQ = row.original.domain.code === 'OrgCode-7';
+  //     if (HQ) {
+  //       return;
+  //     }
 
-      return (
-        <div className="flex items-center justify-center text-center">
-          <CustomAlertDialog
-            trigger={
-              <Button variant={'ghost'} size={'icon'}>
-                <Trash2 className="text-red-500 !size-6" />
-              </Button>
-            }
-            description={
-              'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
-            }
-            buttons={[
-              {
-                label: 'Cancel',
-                variant: 'secondary',
-                type: 'cancel',
-                onClick: () => {},
-              },
-              {
-                label: 'Delete',
-                variant: 'destructive',
-                type: 'delete',
-                onClick: async () =>
-                  await handleQuizSetDelete(
-                    row.original.quizSet.id,
-                    row.original.quizSet.campaignId
-                  ),
-              },
-            ]}
-          />
-        </div>
-      );
-    },
-  },
+  //     const quizSet = row.original.quizSet;
+  //     if (!quizSet) {
+  //       return;
+  //     }
+
+  //     return (
+  //       <div className="flex items-center justify-center text-center">
+  //         <CustomAlertDialog
+  //           trigger={
+  //             <Button variant={'ghost'} size={'icon'}>
+  //               <Trash2 className="text-red-500 !size-6" />
+  //             </Button>
+  //           }
+  //           description={
+  //             'Once deleted, the registered data cannot be restored. \n Are you sure you want to delete?'
+  //           }
+  //           buttons={[
+  //             {
+  //               label: 'Cancel',
+  //               variant: 'secondary',
+  //               type: 'cancel',
+  //             },
+  //             {
+  //               label: 'Delete',
+  //               variant: 'delete',
+  //               type: 'delete',
+  //               onClick: async () =>
+  //                 await handleQuizSetDelete(quizSet.id, quizSet.campaignId),
+  //             },
+  //           ]}
+  //         />
+  //       </div>
+  //     );
+  //   },
+  //   sortingFn: 'auto',
+  // },
 ];
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
@@ -229,8 +393,65 @@ const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
         key.includes(`quizset?campaignId=${campaignId}`)
     );
     toast.success('Quiz set deleted successfully');
+    updateNoServiceChannel(campaignId);
   } catch (error: any) {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);
   }
+};
+
+const getStageNumFromActivityBadge = (badge: ActivityBadgeEx, row: any) => {
+  let stageNum = 0;
+  if (
+    badge.badgeType === BadgeType.FIRST &&
+    badge.jobCode.toLowerCase() === 'ff'
+  ) {
+    const firstBadgeStage =
+      row.original?.campaign?.settings.ffFirstBadgeStageIndex;
+    if (firstBadgeStage) {
+      stageNum = firstBadgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.FIRST &&
+    badge.jobCode.toLowerCase() === 'fsm'
+  ) {
+    const badgeStage =
+      row?.original?.campaign?.settings?.fsmFirstBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.SECOND &&
+    badge.jobCode.toLowerCase() === 'ff'
+  ) {
+    const badgeStage =
+      row?.original?.campaign?.settings?.ffSecondBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  } else if (
+    badge.badgeType === BadgeType.SECOND &&
+    badge.jobCode.toLowerCase() === 'fsm'
+  ) {
+    const badgeStage =
+      row?.original?.campaign?.settings?.fsmSecondBadgeStageIndex;
+    if (badgeStage) {
+      stageNum = badgeStage + 1;
+    }
+  }
+
+  return stageNum;
+};
+
+const UILinkButton = () => {
+  const { routeToPage } = useNavigation();
+  return (
+    <Button
+      variant={'secondary'}
+      className="justify-between h-auto text-left rounded-lg px-[10px] py-1 gap-8 border-zinc-200 shadow-none bg-zinc-200"
+      onClick={() => routeToPage('/cms/ui-language')}
+    >
+      <div className="text-size-12px leading-tight font-semibold">Add</div>
+    </Button>
+  );
 };

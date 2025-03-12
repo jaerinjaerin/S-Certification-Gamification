@@ -140,6 +140,13 @@ model Campaign {
   settingsId  String?   @unique
   settings    CampaignSettings? @relation(fields: [settingsId], references: [id])
   domainWebLanguages DomainWebLanguage[]
+  uploadedFile UploadedFile[]
+  activityBadges ActivityBadge[]
+  quizBadges QuizBadge[]
+  images Image[]
+  domainGoals DomainGoal[]
+  contentCopyHistoryId String? @unique
+  contentCopyHistory    ContentCopyHistory? @relation(fields: [contentCopyHistoryId], references: [id])
 }
 
 model CampaignSettings {
@@ -153,6 +160,20 @@ model CampaignSettings {
   fsmFirstBadgeStageIndex   Int?
   fsmSecondBadgeStageIndex  Int?
   campaign                  Campaign?
+}
+
+model ContentCopyHistory {
+  id          String   @id @default(uuid())
+  campaignId  String
+  targetCampaignId String?
+  targetCampaignName String?
+  imageCampaignId String?
+  imageCampaignName String?
+  uiLanguageCampaignId String?
+  uiLanguageCampaignName String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  campaign    Campaign?
 }
 
 model Hq {
@@ -211,6 +232,7 @@ model DomainGoal {
   domainId     String
   regionId     String?
   subsidiaryId String?
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model QuizSet {
@@ -226,7 +248,7 @@ model QuizSet {
   updaterId    String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  campaign     Campaign    @relation(fields: [campaignId], references: [id])
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   quizStages   QuizStage[]
   questions    Question[]
   questionOptions    QuestionOption[]
@@ -257,6 +279,7 @@ model QuizBadge {
   domainId    String?
   quizStages  QuizStage[]
   activityBadges ActivityBadge[]
+  campaign        Campaign?    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model Image {
@@ -274,6 +297,7 @@ model Image {
   domainId             String?
   questionsBackgrounds Question[] @relation("BackgroundImage")
   questionsCharacters  Question[] @relation("CharacterImage")
+  campaign             Campaign?    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model QuizStage {
@@ -705,6 +729,7 @@ model ActivityBadge {
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  campaign        Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model UploadedFile {
@@ -719,6 +744,7 @@ model UploadedFile {
   fileType      FileType
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  campaign        Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 enum FileType {
@@ -780,8 +806,8 @@ model DomainWebLanguage {
   id              String   @id @default(uuid())
   campaignId      String?
   campaign        Campaign? @relation(fields: [campaignId], references: [id])
-  domainId        String
-  domain          Domain @relation(fields: [domainId], references: [id])
+  domainId        String?
+  domain          Domain? @relation(fields: [domainId], references: [id])
   languageId      String
   language        Language @relation(fields: [languageId], references: [id])
   createdAt       DateTime @default(now())

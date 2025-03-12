@@ -139,16 +139,18 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      if (language) {
-        await prisma.uploadedFile.create({
-          data: {
-            campaignId: destinationCampaign.id,
-            languageId: language.id,
-            path: `/${destinationKey}`,
-            fileType: FileType.UI_LANGUAGE,
-            uploadedBy: 'seed',
-          },
-        });
+      if (destinationKey.split('/').pop()?.includes('.xlsx')) {
+        if (language) {
+          await prisma.uploadedFile.create({
+            data: {
+              campaignId: destinationCampaign.id,
+              languageId: language.id,
+              path: `/${destinationKey}`,
+              fileType: FileType.UI_LANGUAGE,
+              uploadedBy: 'seed',
+            },
+          });
+        }
       }
     }
 
@@ -172,6 +174,23 @@ export async function POST(request: NextRequest) {
 
     console.log('데이타 생성 완료');
 
+    const contentCopyHistory = await prisma.contentCopyHistory.findFirst({
+      where: {
+        campaignId: destinationCampaign.id,
+      },
+    });
+    if (contentCopyHistory) {
+      await prisma.contentCopyHistory.update({
+        where: {
+          id: contentCopyHistory.id,
+        },
+        data: {
+          uiLanguageCampaignId: validatedData.sourceCampaignId,
+          uiLanguageCampaignName: soruceCampaign.name,
+        },
+      });
+    }
+
     return NextResponse.json({ success: true, result: {} }, { status: 200 });
   } catch (error: unknown) {
     console.error('Error copy images: ', error);
@@ -185,7 +204,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

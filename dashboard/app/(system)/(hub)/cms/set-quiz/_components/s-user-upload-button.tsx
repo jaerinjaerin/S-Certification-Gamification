@@ -5,16 +5,68 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { Button } from '@/components/ui/button';
-import { DownloadFileListPopoverButton } from '../../_components/custom-popover';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import UploadExcelFileModal from './upload-excel-file-modal';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, DownloadIcon } from 'lucide-react';
+import { PopoverWithButton } from '../../_components/custom-popover';
+import { useState } from 'react';
 
-export function SPlusUserUploadButton() {
+export function SPlusUserUploadButton({
+  handleDownloadQuizSet,
+  handleDownloadActivityId,
+}: {
+  handleDownloadQuizSet: () => void;
+  handleDownloadActivityId: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="flex gap-3">
-      <DownloadFileListPopoverButton type="data" />
-      <DropdownMenu>
+      <PopoverWithButton
+        options={{
+          children: <Button variant={'secondary'}>Download Data</Button>,
+          content: (
+            <div className="grid gap-6">
+              <div className="space-y-2">
+                <h3 className="text-base font-medium">Download Data</h3>
+                <span className="text-[14px] text-sidebar-icon">
+                  You can download data from the desired category all at once.
+                </span>
+              </div>
+              <div className="flex flex-col gap-2 pl-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Quiz Set</span>
+                  <Button
+                    className="size-[32px] shadow-none"
+                    size="icon"
+                    variant="download"
+                    onClick={handleDownloadQuizSet}
+                  >
+                    <DownloadIcon className="!w-3 !h-3" />
+                  </Button>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Activity ID</span>
+                  <Button
+                    className="size-[32px] shadow-none"
+                    size="icon"
+                    variant="download"
+                    onClick={handleDownloadActivityId}
+                  >
+                    <DownloadIcon className="!w-3 !h-3" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ),
+        }}
+      />
+
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="action">
             <span>Upload</span>
@@ -23,7 +75,11 @@ export function SPlusUserUploadButton() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <UploadExcelFileModal title="Upload Quiz Set" variant="quiz">
+            <UploadExcelFileModal
+              title="Upload Quiz Set"
+              variant="quiz"
+              onDropdownClose={onClose}
+            >
               <Button className="w-full justify-start" variant="ghost">
                 Quiz Set
               </Button>
@@ -33,6 +89,7 @@ export function SPlusUserUploadButton() {
             <UploadExcelFileModal
               variant="activityId"
               title="Upload Activity ID"
+              onDropdownClose={onClose}
             >
               <Button className="w-full justify-start" variant="ghost">
                 Activity ID
@@ -45,10 +102,16 @@ export function SPlusUserUploadButton() {
   );
 }
 
-export function NonSPlusUserUploadButton() {
+export function NonSPlusUserUploadButton({
+  handleDownloadNonS,
+}: {
+  handleDownloadNonS: () => void;
+}) {
   return (
     <div className="flex gap-3">
-      <Button variant="secondary">Download Data</Button>
+      <Button variant="secondary" onClick={handleDownloadNonS}>
+        Download Data
+      </Button>
       <UploadExcelFileModal variant="non-s" title="Upload Non S+ User">
         <Button className="w-full justify-start" variant="action">
           <span>Upload</span>

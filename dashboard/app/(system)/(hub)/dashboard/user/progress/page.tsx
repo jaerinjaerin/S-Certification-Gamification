@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import { useEffect, useState } from 'react';
-import { useUserContext } from '../_provider/provider';
 import ChartContainer from '@/components/system/chart-container';
 import {
   Table,
@@ -21,12 +18,11 @@ import {
 import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
 import Pagination from '@/components/pagenation';
-import { serializeJsonToQuery } from '@/lib/search-params';
-import { updateSearchParamsOnUrl } from '@/lib/url';
 import useSWR from 'swr';
-import { useSearchParams } from 'next/navigation';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { getUserProgress } from '@/app/actions/dashboard/user/action';
+import { useSearchParams } from 'next/navigation';
+import { swrFetcher } from '@/lib/fetch';
+import { usePageIndex } from '@/components/hook/use-page-index';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -48,38 +44,26 @@ const columns: ColumnDef<UserListProps>[] = [
 ];
 
 const UserProgress = () => {
-  const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const page = (searchParams.get('progressPageIndex') as string | null) ?? '1';
-  const { state } = useUserContext();
-  const [pageIndex, setPageIndex] = useState(parseInt(page)); // 현재 페이지
+  const { campaign } = useStateVariables();
+  const state = { fieldValues: Object.fromEntries(searchParams.entries()) };
+  const [pageIndex, setPageIndex] = usePageIndex(
+    searchParams,
+    'progressPageIndex'
+  );
   const pageSize = 50; // 페이지당 데이터 개수
-  const { data: progressData, isLoading: loading } = useSWR(
-    {
-      key: 'getUserProgress',
-      ...state.fieldValues,
-      campaign: campaign?.id,
-      take: pageSize,
-      page: pageIndex,
-    },
-    getUserProgress
+
+  //
+  const { data: progressData, isLoading } = useSWR(
+    `/api/dashboard/user/progress?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
+    swrFetcher,
+    { fallbackData: { result: { data: [], total: 0 } } }
   );
 
-  const { result: data, total } = (progressData || {
-    result: [],
+  const { data, total } = progressData.result || {
+    data: [],
     total: 0,
-  }) as { result: UserListProps[]; total: number };
-  //
-  // const { data: progressData, isLoading: loading } = useSWR(
-  //   `/api/dashboard/user/progress?${searchParamsToQuery({ ...state.fieldValues, campaign: campaign?.id, take: pageSize, page: pageIndex })}`,
-  //   swrFetcher
-  // );
-
-  // const { result: data, total }: { result: UserListProps[]; total: 0 } =
-  //   progressData || {
-  //     result: [],
-  //     total: 0,
-  //   };
+  };
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -96,18 +80,8 @@ const UserProgress = () => {
     },
   });
 
-  useEffect(() => {
-    if (state.fieldValues) {
-      updateSearchParamsOnUrl({
-        ...state.fieldValues,
-        progressPageIndex: pageIndex,
-      });
-    }
-  }, [state.fieldValues, pageIndex]);
-
   const onDownload = () => {
     if (state.fieldValues) {
-      const searchParams = serializeJsonToQuery(state.fieldValues);
       const url = `/api/dashboard/user/progress/download?${searchParams.toString()}`;
       window.location.href = url;
     }
@@ -115,7 +89,7 @@ const UserProgress = () => {
 
   return (
     <ChartContainer>
-      {loading && <LoaderWithBackground />}
+      {isLoading && <LoaderWithBackground />}
       <CardCustomHeaderWithDownload
         title="Stage Progress"
         onDownload={onDownload}
@@ -169,7 +143,7 @@ const UserProgress = () => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {loading ? '' : 'No results.'}
+                  {isLoading ? '' : 'No results.'}
                 </TableCell>
               </TableRow>
             )}
@@ -184,7 +158,7 @@ const UserProgress = () => {
             totalItems={total}
             pageSize={pageSize}
             currentPage={pageIndex}
-            onPageChange={(page) => setPageIndex(page)}
+            onPageChange={setPageIndex}
           />
         </div>
       ) : (

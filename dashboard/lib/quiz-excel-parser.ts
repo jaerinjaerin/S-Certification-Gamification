@@ -5,7 +5,7 @@ interface QuizOption {
   answerStatus: boolean;
 }
 
-interface QuizData {
+export interface QuizData {
   originQuestionIndex: number;
   orderInStage: number;
   enabled: boolean;
@@ -111,12 +111,12 @@ export const processExcelBuffer = (
     const sheet2 = sheet2Name ? workbook.Sheets[sheet2Name] : null;
 
     // 첫 번째 시트 파싱 (questions)
-    const questionsResult = parseSheet(sheet1);
+    const questionsResult = parseSheet(sheet1, false);
 
     // 두 번째 시트가 존재하면 추가 파싱 (extraQuestions)
     let extraQuestionsResult: ParsingResult | null = null;
     if (sheet2) {
-      extraQuestionsResult = parseSheet(sheet2);
+      extraQuestionsResult = parseSheet(sheet2, true);
     }
 
     console.log('questionsResult:', questionsResult);
@@ -150,7 +150,7 @@ export const processExcelBuffer = (
 };
 
 // Sheet 파싱 함수
-const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
+const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
   try {
     // const mergedData = getMergedCellValues(sheet);
     // let data: (string | null)[][] = XLSX.utils.sheet_to_json(sheet, {
@@ -248,11 +248,23 @@ const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
           text: row['Question'],
           questionType: row['QuestionType'] || null,
           backgroundImageId: row['ImageBackground'] || null,
-          characterImageId: row['ImageCharactor'] || null,
+          characterImageId: row['ImageCharacter'] || null,
           options: [], // 각 문제별로 options을 따로 저장
         };
 
         if (groupedData[no].enabled) {
+          if (row['NewOrder'] == null) {
+            errors.push({
+              line: headerIndex + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has NewOrder!`,
+            });
+          }
+          if (groupedData[no].timeLimitSeconds == null) {
+            errors.push({
+              line: headerIndex + groupedData[no].originQuestionIndex,
+              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no timeLimitSeconds!`,
+            });
+          }
           if (groupedData[no].text == null || groupedData[no].text === '') {
             errors.push({
               line: headerIndex + groupedData[no].originQuestionIndex,
@@ -292,6 +304,18 @@ const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
 
       // 옵션 데이터 올바르게 매칭
       if (row['Answer']) {
+        if (row['Answer'] == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no answer!`,
+          });
+        }
+        if (row['AnswerStatus'] == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no answer status!`,
+          });
+        }
         groupedData[no].options.push({
           text: row['Answer'],
           answerStatus: row['AnswerStatus']
@@ -303,7 +327,21 @@ const parseSheet = (sheet: XLSX.WorkSheet): ParsingResult => {
       }
     });
 
-    // 각 질문의 옵션 중복 제거
+    console.log('groupedData[101]', groupedData['101']);
+    if (
+      groupedData['101'] &&
+      groupedData['101'].text == null &&
+      Object.keys(groupedData).length === 1
+    ) {
+      return {
+        success: errors.length === 0,
+        data: {
+          questions: [],
+        },
+        errors,
+      };
+    }
+
     // 정답이 없는 문제 체크
     Object.values(groupedData).forEach((question: any) => {
       let uniqueOptions = new Map();

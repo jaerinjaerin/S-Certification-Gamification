@@ -1,15 +1,5 @@
 'use client';
 
-import { ChevronDown, Search } from 'lucide-react';
-import { useState } from 'react';
-
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -19,10 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { ChevronDown, ChevronsUpDown, ChevronUp, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import {
   ColumnDef,
   ColumnFiltersState,
+  Row,
   SortingState,
   VisibilityState,
   flexRender,
@@ -33,6 +26,9 @@ import {
 } from '@tanstack/react-table';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
+import { cn } from '@/lib/utils';
+import { hqColumns } from './hq-columns';
+import { isEmpty } from '../../../../_utils/utils';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -40,13 +36,37 @@ interface QuizSetDataTableProps {
 }
 
 export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
-  return <DataTable data={data.result.groupedQuizSets} columns={columns} />;
+  const groupedQuizSets = data.result.groupedQuizSets;
+
+  const ORG_CODE_PRIORITY = 'OrgCode-7';
+  const filteredGroupedQuizSets = groupedQuizSets.filter(
+    (quizSet) => quizSet.domain.code !== ORG_CODE_PRIORITY
+  );
+  const HQquizSet = groupedQuizSets.filter(
+    (quizSet) => quizSet.domain.code === ORG_CODE_PRIORITY
+  );
+  const sortedGroupedQuizSets = [...filteredGroupedQuizSets];
+
+  return (
+    <>
+      <HQDataTable data={HQquizSet} columns={hqColumns} />
+      {!isEmpty(sortedGroupedQuizSets) && (
+        <DataTable data={sortedGroupedQuizSets} columns={columns} />
+      )}
+    </>
+  );
 }
 
 function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowState, setRowState] = useState<{
+    readyRows: Row<GroupedQuizSet>[];
+    notReadyRows: Row<GroupedQuizSet>[];
+  }>({ readyRows: [], notReadyRows: [] });
+
+  const { readyRows, notReadyRows } = rowState;
 
   const table = useReactTable({
     data,
@@ -65,19 +85,57 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     },
   });
 
+  const rows = table.getFilteredRowModel().rows;
+
+  useEffect(() => {
+    const { ready, notReady } = rows.reduce<{
+      ready: Row<GroupedQuizSet>[];
+      notReady: Row<GroupedQuizSet>[];
+    }>(
+      (acc, row) => {
+        const { quizSetFile, activityBadges, uiLanguage } = row.original;
+        const isReady =
+          quizSetFile?.id && activityBadges?.length && uiLanguage?.code;
+
+        acc[isReady ? 'ready' : 'notReady'].push(row);
+        return acc;
+      },
+      { ready: [], notReady: [] }
+    );
+
+    setRowState((prevState) => ({
+      readyRows: ready,
+      notReadyRows: notReady,
+    }));
+  }, [table, rows]);
+
+  const noSortData = ['url', 'quiz set', 'activity id', 'badge', 'ui language'];
+
   return (
     <div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Total: {table.getFilteredRowModel().rows.length}, Domain:{' '}
-          {new Set(data.map((item) => item.quizSet.domain.id)).size}
+      <div className="flex items-center justify-between pt-[1.438rem] pb-2">
+        <div className="flex items-center justify-end space-x-3 py-4">
+          <div className=" text-sm text-zinc-950">
+            Total :
+            <strong className="font-bold">
+              {` ${table.getFilteredRowModel().rows.length}`}
+            </strong>
+          </div>
+          <div className="w-[1px] h-3 bg-zinc-200" />
+          <div className=" text-sm text-zinc-950">
+            Ready :
+            <strong className="font-bold">{` ${readyRows.length}`}</strong>
+          </div>
+          <div className="w-[1px] h-3 bg-zinc-200" />
+          <div className=" text-sm text-zinc-950">
+            Not Ready :
+            <strong className="font-bold">{` ${notReadyRows.length}`}</strong>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center py-4">
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
           <Input
-            placeholder="Search"
+            placeholder="Search Domain"
             value={
               (table.getColumn('domain')?.getFilterValue() as string) ?? ''
             }
@@ -87,8 +145,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             className="max-w-sm pl-9 placeholder:text-zinc-500 text-size-14px"
           />
         </div>
-
-        <DropdownMenu>
+      </div>
+      {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns <ChevronDown />
@@ -113,13 +171,113 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                 );
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+        </DropdownMenu> */}
 
-      <div
-        style={{ width: 'calc(100vw - 296px)' }}
-        className="rounded-md border"
-      >
+      <div className="rounded-md border data-table">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead
+                      className="p-4 text-nowrap"
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-1">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        {!(
+                          header.id.toLowerCase() === 'url' ||
+                          header.id.toLowerCase() === 'quizset' ||
+                          header.id.toLowerCase() === 'activityid' ||
+                          header.id.toLowerCase() === 'badge' ||
+                          header.id.toLowerCase() === 'uilanguage'
+                        ) ? (
+                          <>
+                            {(() => {
+                              const sortDirection = header.column.getIsSorted();
+                              return sortDirection
+                                ? {
+                                    asc: (
+                                      <ChevronDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                    desc: (
+                                      <ChevronUp className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                  }[sortDirection]
+                                : null;
+                            })()}
+                            {header.column.getCanSort() &&
+                            !header.column.getIsSorted() ? (
+                              <ChevronsUpDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                            ) : null}
+                          </>
+                        ) : null}
+                      </div>
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => {
+              const isHQ = row.original.domain?.code === 'OrgCode-7';
+              return (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className={cn(isHQ && 'bg-[#EFF6FF80]')}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell className="px-4 py-6" key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
+
+function HQDataTable({ data = [], columns }: QuizSetDataTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+    },
+  });
+
+  return (
+    <div className="mt-8 mb-4">
+      <div className="rounded-md border data-table">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -140,11 +298,13 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+            {table.getRowModel().rows.map((row) => {
+              const isHQ = row.original.domain?.code === 'OrgCode-7';
+              return (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className={cn(isHQ && 'bg-[#EFF6FF80]')}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="px-4 py-6" key={cell.id}>
@@ -155,17 +315,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
+              );
+            })}
           </TableBody>
         </Table>
       </div>

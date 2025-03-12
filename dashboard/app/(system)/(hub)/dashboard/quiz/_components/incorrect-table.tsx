@@ -16,8 +16,9 @@ import {
 import { formatSnakeToTitleCase } from '@/lib/text';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LoaderWithBackground } from '@/components/loader';
 
-export const columns: ColumnDef<QuizRankedIncorrectAnswerRateProps>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     id: 'no',
     header: 'No',
@@ -67,34 +68,35 @@ const IncorrectTable = ({
   pageIndex = 1,
   pageSize = 0,
 }: {
-  table: TableProps<QuizRankedIncorrectAnswerRateProps>;
+  table: TableProps<any>;
   loading: boolean;
   pageIndex?: number;
   pageSize?: number;
 }) => {
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-            {headerGroup.headers.map((header) => {
-              return (
-                <TableHead
-                  key={header.id}
-                  className={cn(
-                    'text-nowrap font-medium text-center text-size-14px text-zinc-500',
-                    header.id === 'errorRate' && 'cursor-pointer'
-                  )}
-                  onClick={
-                    header.id === 'errorRate'
-                      ? header.column.getToggleSortingHandler()
-                      : undefined
-                  }
-                  style={{
-                    width: header.id === 'question' ? '50%' : 'auto',
-                  }}
-                >
-                  <TableCell>
+    <>
+      {loading && <LoaderWithBackground />}
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id} className="h-[2.5625rem]">
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead
+                    key={header.id}
+                    className={cn(
+                      'text-nowrap font-medium text-center text-size-14px text-zinc-500',
+                      header.id === 'errorRate' && 'cursor-pointer'
+                    )}
+                    onClick={
+                      header.id === 'errorRate'
+                        ? header.column.getToggleSortingHandler()
+                        : undefined
+                    }
+                    style={{
+                      width: header.id === 'question' ? '50%' : 'auto',
+                    }}
+                  >
                     <div className="flex items-center">
                       {flexRender(
                         header.column.columnDef.header,
@@ -114,45 +116,45 @@ const IncorrectTable = ({
                         </>
                       )}
                     </div>
-                  </TableCell>
-                </TableHead>
-              );
-            })}
-          </TableRow>
-        ))}
-      </TableHeader>
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
 
-      <TableBody>
-        {table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row) => {
-            const id = row.id + pageIndex * pageSize;
-            return (
-              <TableRow key={id} className="h-[2.5625rem]">
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    <TableCell
-                      key={cell.id}
-                      className="font-medium text-center text-size-14px text-zinc-950"
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })
-        ) : (
-          <TableRow>
-            <TableCell colSpan={columns.length} className="h-24 text-center">
-              {loading ? '' : 'No results.'}
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => {
+              const id = row.id + pageIndex * pageSize;
+              return (
+                <TableRow key={id} className="h-[2.5625rem]">
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className="font-medium text-center text-size-14px text-zinc-950"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                {loading ? '' : 'No results.'}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 

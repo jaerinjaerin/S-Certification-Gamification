@@ -1,48 +1,66 @@
 import { toast } from 'sonner';
-import CampaignForm from '../../_components/campaign-form';
+import CampaignEditForm from '../../_components/campaign-edit-form';
 
 export default async function EditCampaignPage({
   params,
 }: {
   params: { campaignId: string };
 }) {
-  const getCampaign = async (campaignId: string) => {
+  const { campaignId } = params;
+  const campaign = await getCampaign(campaignId);
+
+  if (!campaign) {
+    return <div>Campaign not found</div>;
+  }
+
+  const editData = mapCampaignToFormData(campaign);
+
+  return <CampaignEditForm initialData={editData} campaignId={campaignId} />;
+}
+
+async function getCampaign(campaignId: string) {
+  try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
-      {
-        cache: 'no-cache',
-      }
+      { cache: 'no-cache' }
     );
+
     if (!response.ok) {
       toast.error('Failed to fetch campaign');
-      return;
+      return null;
     }
+
     const data = await response.json();
-    return data;
-  };
+    console.log('data: ', data);
+    return data.result.campaign;
+  } catch (error) {
+    toast.error('Error fetching campaign');
+    console.error(error);
+    return null;
+  }
+}
 
-  const data = await getCampaign(params.campaignId);
-  const { campaign } = data.result;
+function numberToString(value: number | null | undefined) {
+  return value !== undefined && value !== null ? String(value) : undefined;
+}
 
-  const numberToString = (value: number | undefined) =>
-    value !== undefined ? value.toString() : undefined;
-
-  const editData = {
+function mapCampaignToFormData(campaign: any) {
+  return {
     certificationName: campaign.name,
     slug: campaign.slug,
     isSlugChecked: true,
     startDate: new Date(campaign.startedAt),
     endDate: new Date(campaign.endedAt),
-    copyMedia: undefined,
-    copyTarget: undefined,
-    copyUiLanguage: undefined,
+    copyMedia: campaign.contentCopyHistory?.imageCampaignName || '',
+    copyTarget: campaign.contentCopyHistory?.targetCampaignName || '',
+    copyUiLanguage: campaign.contentCopyHistory?.uiLanguageCampaignName || '',
     numberOfStages: numberToString(campaign.settings.totalStages),
     firstBadgeName: campaign.settings.firstBadgeName,
     ffFirstBadgeStage: numberToString(campaign.settings.ffFirstBadgeStageIndex),
     fsmFirstBadgeStage: numberToString(
       campaign.settings.fsmFirstBadgeStageIndex
     ),
-    secondBadgeName: campaign.settings.secondBadgeName,
+    secondBadgeName: campaign.settings.secondBadgeName || '',
     ffSecondBadgeStage: numberToString(
       campaign.settings.ffSecondBadgeStageIndex
     ),
@@ -53,12 +71,4 @@ export default async function EditCampaignPage({
     imageSourceCampaignId: undefined,
     uiLanguageSourceCampaignId: undefined,
   };
-
-  return (
-    <CampaignForm
-      initialData={editData}
-      isEditMode
-      campaignId={params.campaignId}
-    />
-  );
 }
