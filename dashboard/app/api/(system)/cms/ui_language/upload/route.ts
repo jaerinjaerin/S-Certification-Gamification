@@ -103,6 +103,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const domainWebLanguage = await prisma.domainWebLanguage.findFirst({
+      where: {
+        campaignId: campaign.id,
+        languageId: language.id,
+      },
+    });
+
+    if (!domainWebLanguage) {
+      await prisma.domainWebLanguage.create({
+        data: {
+          campaignId: campaign.id,
+          languageId: language.id,
+        },
+      });
+    }
+
     // =============================================
     // file upload
     // =============================================
