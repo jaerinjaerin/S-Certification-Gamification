@@ -18,13 +18,13 @@ import { DomainChannel } from '@/types/apiTypes';
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from '@tanstack/react-table';
 import { fetcher } from '../../../../lib/fetcher';
 import { NoServiceChannelsResponse } from '../../../_type/type';
@@ -41,6 +41,7 @@ import { Button } from '@/components/ui/button';
 interface NoServiceChannelDataTableProps {
   data: DomainChannel[] | undefined;
   columns: ColumnDef<DomainChannel>[];
+  slug: string | undefined;
 }
 
 export default function NonSplusDataTable() {
@@ -54,10 +55,20 @@ export default function NonSplusDataTable() {
   if (isLoading) {
     return <LoadingFullScreen />;
   }
-  return <DataTable data={data?.result.channels ?? []} columns={columns} />;
+  return (
+    <DataTable
+      data={data?.result.channels ?? []}
+      columns={columns}
+      slug={campaign?.slug}
+    />
+  );
 }
 
-function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
+function DataTable({
+  data = [],
+  columns,
+  slug,
+}: NoServiceChannelDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -79,36 +90,41 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
     },
   });
 
+  const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${slug}/login`;
+  const length = table.getFilteredRowModel().rows.length;
+
   return (
     <div className="data-table">
       <div className="flex items-center space-x-2 pt-[1.438rem] pb-2 justify-between">
         <div className="flex-1 text-sm text-zinc-950">
-          Total :
-          <strong className="font-bold">
-            {` ${table.getFilteredRowModel().rows.length}`}
-          </strong>
+          Total :<strong className="font-bold">{` ${length}`}</strong>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-size-12px font-semibold">URL</span>
           <div className="flex gap-[0.438rem]">
             <Button
+              disabled={length === 0}
               variant={'secondary'}
               className="size-[2.375rem]"
               onClick={() => {
-                // TODO: 카피 텍스트 추가
-                // window.navigator.clipboard.writeText({quiz.samsungplus.net/{slug}/login});
-                alert('copy to clipboard');
+                window.navigator.clipboard.writeText(url);
+                alert('copy to clipboard:\n' + url);
               }}
+              title={url}
             >
               <Copy />
             </Button>
-            <a
-              // TODO: 미삼플 유저 url링크 추가 {quiz.samsungplus.net/{slug}/login}
-              // href={quiz.samsungplus.net/{slug}/login}
-              className="size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5"
+            <Button
+              disabled={length === 0}
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                window.open(url, '_blank');
+              }}
+              title={url}
             >
               <ExternalLink className="size-4" />
-            </a>
+            </Button>
           </div>
         </div>
       </div>
