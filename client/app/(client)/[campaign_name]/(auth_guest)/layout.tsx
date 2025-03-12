@@ -3,8 +3,10 @@ import { NextIntlClientProvider } from "next-intl";
 
 export default async function GuestLayout({
   children,
+  params: { campaign_name },
 }: {
   children: React.ReactNode;
+  params: { campaign_name: string };
 }) {
   const timeZone = "Seoul/Asia";
   // const locale = await getLocale();
@@ -13,13 +15,13 @@ export default async function GuestLayout({
   const serviceLangCode = await getServiceLangCode();
 
   // console.log("GuestLayout locale", locale);
-
-  const messages = await fetch(
-    `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${serviceLangCode}.json`,
-    { cache: "force-cache" }
-  )
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${serviceLangCode}.json`;
+  console.log("GuestLayout url", url);
+  const messages = await fetch(url, { cache: "force-cache" })
     .then((res) => res.json())
     .catch((error) => console.error("get message error", error));
+
+  console.log("GuestLayout messages", messages);
 
   return (
     <div lang={locale}>

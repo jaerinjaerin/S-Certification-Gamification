@@ -5,7 +5,7 @@ export default function RefreshButton() {
     <div
       className="h-full bg-[#F0F0F0] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]"
       style={{
-        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/bg_main2.jpg')`,
+        backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
       <h1 className="text-xl text-center text-[#2686F5]">

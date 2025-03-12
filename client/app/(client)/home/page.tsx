@@ -39,25 +39,10 @@ export default function Home() {
 
   if (session) {
     return (
-      // <div
-      //   style={{
-      //     backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
-      //     backgroundSize: "cover",
-      //     backgroundRepeat: "no-repeat",
-      //     backgroundPosition: "center",
-      //   }}
-      // >
-      //   :) Signed in as {session.user?.email} {session.user?.name}
-      //   <br />
-      //   <button onClick={processSignOut}>Sign out</button>
-      //   <br />
-      //   <br />
-      // </div>
-
       <div
         className="h-full bg-[#F0F0F0] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]"
         style={{
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/bg_main2.jpg')`,
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
         }}
       >
         <h1 className="text-xl text-center text-[#2686F5]">

@@ -7,10 +7,10 @@ import { NextIntlClientProvider } from "next-intl";
 
 export default async function SumtotalUserLayout({
   children,
-  params: { quizset_path },
+  params: { campaign_name, quizset_path },
 }: {
   children: React.ReactNode;
-  params: { quizset_path: string };
+  params: { campaign_name: string; quizset_path: string };
 }) {
   // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
@@ -29,10 +29,12 @@ export default async function SumtotalUserLayout({
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
 
-  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
+  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
   const agreementContent = await fetchAgreementContent(domainCode);
+
+  console.log("translatedMessages 2323", translatedMessages);
 
   return (
     <div>

@@ -104,7 +104,7 @@ export default function GuestLogin({
                 />
 
                 <style type="text/css" style="font-weight: 400">
-                  @import url(https://assets.samsungplus.net/certification/s25/fonts/sharpSans/SamsungSharpSans-Regular.woff);
+                  @import url(https://assets.samsungplus.net/certification/common/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
                   .colored-black {
                     color:#ffffff;
@@ -432,27 +432,10 @@ export default function GuestLogin({
   return (
     <>
       <div className="relative">
-        {/* <video
-          className="object-fill w-full h-svh "
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source
-            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/videos/bg.mp4`}
-            type="video/mp4"
-          />
-          <source
-            src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/videos/bg.webm`}
-            type="video/webm"
-          />
-        </video> */}
-
         <div
           className="object-fill w-full h-svh"
           style={{
-            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
+            backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/main_bg2.jpg')`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
