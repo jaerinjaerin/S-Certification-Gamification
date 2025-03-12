@@ -73,6 +73,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!file.name.includes('NonSUser')) {
+      console.error('Invalid file name');
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'Invalid file name',
+            errorCode: ERROR_CODES.INVALID_FILE_NAME,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     let uploadedFile = await prisma.uploadedFile.findFirst({
       where: {
         fileType: FileType.NON_SPLUS_DOMAINS,
