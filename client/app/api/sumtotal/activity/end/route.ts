@@ -108,6 +108,8 @@ export async function POST(request: Request) {
         account.access_token
       );
 
+      const data = await response.json();
+
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
         method: "POST",
         headers: {
@@ -123,7 +125,7 @@ export async function POST(request: Request) {
           accessToken: account.access_token,
           status: response.status,
           message: response.statusText || "Failed to update activity/progress",
-          rawLog: JSON.stringify(response),
+          rawLog: JSON.stringify(data),
         }),
       });
 
