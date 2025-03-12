@@ -43,7 +43,9 @@ export async function GET(request: NextRequest) {
     ];
 
     // domainId만 확인해서 필터링 생성
-    const whereForGoal = (await domainCheckOnly(where)) as any;
+    const { createdAt, ...whereForGoal } = (await domainCheckOnly(
+      where
+    )) as any;
     const count = await prisma.domainGoal.count({
       where: whereForGoal,
     });

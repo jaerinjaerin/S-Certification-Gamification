@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     const expertCount = users.reduce((total, group) => total + group.length, 0);
 
     // domainId만 확인해서 필터링 생성
-    const whereForGoal = await domainCheckOnly(where);
+    const { createdAt, ...whereForGoal } = await domainCheckOnly(where);
     const domain_goal = await prisma.domainGoal.findMany({
       where: whereForGoal,
     });
