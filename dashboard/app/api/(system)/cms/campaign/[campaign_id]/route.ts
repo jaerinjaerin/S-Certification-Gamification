@@ -119,7 +119,10 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: true, result: { campaign, campaignSettings } },
+      {
+        success: true,
+        result: { campaign: updatedCampaign, campaignSettings },
+      },
       { status: 200 }
     );
   } catch (error: unknown) {

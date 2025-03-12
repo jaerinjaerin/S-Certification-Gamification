@@ -2,6 +2,7 @@
 
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
+import { Campaign } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 
 export async function getQuizLog(userId: string, campaignName: string) {
@@ -14,14 +15,26 @@ export async function getQuizLog(userId: string, campaignName: string) {
       );
     }
 
-    const campaign = await prisma.campaign.findFirst({
-      where: {
-        name: {
-          equals: campaignName,
-          mode: "insensitive", // 대소문자 구분 없이 검색
+    let campaign: Campaign | null = null;
+    if (campaignName.toLowerCase() !== "s25") {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
         },
-      },
-    });
+      });
+    } else {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          name: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+    }
 
     if (!campaign) {
       throw new ApiError(
