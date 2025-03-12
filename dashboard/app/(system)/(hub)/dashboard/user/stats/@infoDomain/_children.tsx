@@ -152,7 +152,10 @@ const UserDomainChild = () => {
   const { data: domainData, isLoading } = useSWR(
     `/api/dashboard/user/info/domain?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
     swrFetcher,
-    { fallbackData: { result: { data: [], total: 0 } } }
+    {
+      revalidateOnFocus: false,
+      fallbackData: { result: { data: [], total: 0 } },
+    }
   );
 
   const { data, total } = domainData.result;

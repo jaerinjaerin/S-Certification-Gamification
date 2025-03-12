@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-
 import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { Button } from '@/components/ui/button';
@@ -46,7 +45,7 @@ export default function QuizSetDetailsClient() {
   const router = useRouter();
   const QUIZSET_DATA_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/cms/quizset/${id}`;
 
-  const { data, isLoading } = useSWR<QuizSetDetailsResponse>(
+  const { data, isLoading, error } = useSWR<QuizSetDetailsResponse>(
     QUIZSET_DATA_URL,
     fetcher
   );
@@ -71,7 +70,7 @@ export default function QuizSetDetailsClient() {
   // TODO: 파일 다운로드 기능 추가
   const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${quizSetFile?.path}`;
   const QUIZSET_FILE_NAME = quizSetFile?.path.split('/').pop();
-  const domain = QUIZSET_FILE_NAME.split('.')[0];
+  const domain = QUIZSET_FILE_NAME?.split('.')[0];
 
   const quizTableData: {
     header: string;

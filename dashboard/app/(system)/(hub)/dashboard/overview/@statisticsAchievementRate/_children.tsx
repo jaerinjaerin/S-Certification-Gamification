@@ -41,6 +41,7 @@ const OverviewAchievementRateChild = () => {
     ([infoUrl, statisticsUrl]) =>
       Promise.all([swrFetcher(infoUrl), swrFetcher(statisticsUrl)]),
     {
+      revalidateOnFocus: false,
       fallbackData: [
         {
           result: {

@@ -13,9 +13,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const campaignId = searchParams.get('campaignId') as string;
-    console.log('🚀 ~ GET ~ campaignId:', campaignId);
-
-    await prisma.$connect();
 
     const domains = await prisma.domain.findMany({
       include: { subsidiary: { include: { domains: true } } },
@@ -65,8 +62,6 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }
 
@@ -82,8 +77,6 @@ export async function POST(request: NextRequest) {
     if (!file) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
-
-    await prisma.$connect();
 
     //
     // excel 파일 업로드
@@ -180,7 +173,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }
