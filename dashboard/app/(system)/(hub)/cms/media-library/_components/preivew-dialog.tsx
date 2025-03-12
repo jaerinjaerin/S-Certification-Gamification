@@ -41,6 +41,8 @@ export function PreviewDialog({
   onClear,
   onDownload,
 }: PreviewDialogProps) {
+  const isFileInstance = files[0] instanceof File;
+
   const [status, setStatus] = useState(modalOpen);
   return (
     <Dialog
@@ -85,6 +87,7 @@ export function PreviewDialog({
             </Button>
           </DialogClose>
           <Button
+            disabled={!isFileInstance}
             className="!m-0 shadow-none"
             variant="action"
             onClick={onSave}
@@ -166,21 +169,25 @@ function EditAssetPreviewView(
   const timestamp = props.files[0].lastModified;
   const date = dayjs(timestamp).format('YY.MM.DD HH:mm:ss');
 
+  const isFileInstance = props.files[0] instanceof File;
+
   return (
     <AssetPreviewView
       {...restProps}
       extraContent={
-        <div className="flex items-center gap-2">
-          <span>{date}</span>
-          <Button
-            variant="download"
-            className="shadow-none"
-            size="icon"
-            onClick={onDownload}
-          >
-            <Download />
-          </Button>
-        </div>
+        !isFileInstance && (
+          <div className="flex items-center gap-2">
+            <span>{date}</span>
+            <Button
+              variant="download"
+              className="shadow-none"
+              size="icon"
+              onClick={onDownload}
+            >
+              <Download />
+            </Button>
+          </div>
+        )
       }
     />
   );
