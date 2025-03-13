@@ -1,4 +1,4 @@
-import { assert } from "console";
+import assert from "assert";
 
 export function extractCodesFromPath(path: string): {
   domainCode: string;
@@ -17,8 +17,7 @@ export function extractCodesFromPath(path: string): {
     // throw new Error(
     //   `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     // );
-    assert(
-      false,
+    console.error(
       `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     );
     return null;
@@ -31,8 +30,7 @@ export function extractCodesFromPath(path: string): {
     // throw new Error(
     //   `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     // );
-    assert(
-      false,
+    console.error(
       `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
     );
     return null;
