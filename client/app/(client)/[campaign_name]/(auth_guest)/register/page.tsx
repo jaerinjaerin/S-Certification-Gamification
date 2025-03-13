@@ -297,17 +297,17 @@ export default function GuestRegisterPage({
 
   const routeQuizPage = () => {
     if (!selectedCountry) {
-      setErrorMessage("Please select a country."); // 번역 필요
+      setErrorMessage(translation("required_country")); // 번역 필요
       return;
     }
 
     if (!selectedJobId) {
-      setErrorMessage("Please select a job group."); // 번역 필요
+      setErrorMessage(translation("required_country")); // 번역 필요
       return;
     }
 
     if (!quizLanguageCode) {
-      setErrorMessage("Please select a quiz language."); // 번역 필요
+      setErrorMessage(translation("required_quiz_language")); // 번역 필요
       return;
     }
     createItem({

@@ -507,7 +507,8 @@ export const QuizProvider = ({
       userId,
       badgeImageUrl,
       translationMessage,
-      currentQuizStageIndex
+      currentQuizStageIndex,
+      currentQuizStage
     );
 
     return result;
