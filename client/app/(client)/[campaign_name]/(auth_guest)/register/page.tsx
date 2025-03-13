@@ -537,7 +537,7 @@ export default function GuestRegisterPage({
                   }
                 >
                   {/* <SelectValue placeholder={translation("job_group")} /> */}
-                  <SelectValue placeholder={"퀴즈 언어 선택 (번역정보 필요)"} />
+                  <SelectValue placeholder={translation("quiz_language")} />
                 </SelectTrigger>
                 <SelectContent className="font-medium font-one">
                   {quizLanguages.map((lang) => (
