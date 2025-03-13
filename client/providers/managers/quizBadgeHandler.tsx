@@ -49,16 +49,45 @@ export class QuizBadgeHandler {
     badgeImageUrl: string,
     translationMessage: { [key: string]: string },
     currentQuizStageIndex: number,
-    currentQuizStage: QuizStageEx | null
+    currentQuizStage: QuizStageEx | null,
+    isOldCampaign: boolean = false
   ) => {
     try {
       // console.log("sendBadgeEmail");
+
+      const galaxyAIExpert: string = translationMessage["galaxy_ai_expert"];
+      const emailBadgeDate: string = translationMessage["email_badge_date"];
+      const emailBadgeDescriptionA: string =
+        translationMessage["email_badge_description_1"];
+
+      let emailBadgeDescriptionB: string =
+        translationMessage["email_badge_description_2"];
+      if (isOldCampaign) {
+        if (currentQuizStageIndex === 2) {
+          emailBadgeDescriptionB =
+            translationMessage["email_badge_description_2"];
+        } else if (currentQuizStageIndex === 3) {
+          emailBadgeDescriptionB =
+            translationMessage["email_badge_description_3"];
+        }
+      } else {
+        currentQuizStage?.badgeType === "FIRST" ||
+        currentQuizStage?.badgeType === null
+          ? translationMessage["email_badge_description_2"]
+          : translationMessage["email_badge_description_3"];
+      }
+
+      const emailBadgeDescriptionC: string =
+        translationMessage["email_badge_description_4"];
+
       const subject: string = "You have earned the Galaxy AI Expert Badge.";
       const bodyHtml: string = getBadgeEmailTemplete(
         badgeImageUrl,
-        translationMessage,
-        currentQuizStageIndex,
-        currentQuizStage
+        galaxyAIExpert,
+        emailBadgeDate,
+        emailBadgeDescriptionA,
+        emailBadgeDescriptionB,
+        emailBadgeDescriptionC
       );
 
       const response = await fetch(
