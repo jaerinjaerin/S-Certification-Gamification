@@ -277,7 +277,7 @@ export default function GuestRegisterPage({
     const job = jobs.find((j) => j.value === jobId);
 
     console.log("languageCode", languageCode);
-    if (languageCode) {
+    if (oldCampaign() && languageCode) {
       setQuizLanguageCode(languageCode);
     } else {
       const jobCode = job?.group.toLowerCase();
