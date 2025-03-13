@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   title: "Samsung+ Certification",
   description: "Be a Galaxy AI Expert",
   icons: {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/comomon/images/splus_logo.png`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/splus_logo.png`,
   },
   openGraph: {
     images: [
-      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/comomon/images/background/meta.jpg`,
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/meta.jpg`,
     ],
   },
 };
