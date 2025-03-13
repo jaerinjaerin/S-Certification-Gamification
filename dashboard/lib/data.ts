@@ -2,6 +2,7 @@
 
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { prisma } from '@/model/prisma';
+import { Prisma } from '@prisma/client';
 
 // userId 확인 후 중복 제거, quizStageIndex값이 높으면 업데이트
 export function removeDuplicateUsers(users: Record<string, any>[]) {
@@ -97,11 +98,14 @@ export const initialExpertsData: ImprovedDataStructure = [
 ];
 
 // ff, fsm으로 구분하여 id 반환
-export const getJobIds = async (jobId: string) => {
-  const jobGroup = await prisma.job.findMany({
-    where: jobId ? { code: jobId } : {},
-    select: { id: true, code: true },
-  });
+export const getJobIds = async (jobId?: string) => {
+  const jobGroup = await prisma.$queryRaw<{ id: string; code: string }[]>(
+    Prisma.sql`
+      SELECT id, code 
+      FROM "Job"
+      ${jobId ? Prisma.sql`WHERE code = ${jobId}` : Prisma.empty}
+    `
+  );
 
   const groupedJobByCode = jobGroup.reduce(
     (acc, { id, code }) => {
@@ -111,5 +115,5 @@ export const getJobIds = async (jobId: string) => {
     {} as Record<string, string[]>
   );
 
-  return groupedJobByCode;
+  return { ff: [], fsm: [], ...groupedJobByCode };
 };

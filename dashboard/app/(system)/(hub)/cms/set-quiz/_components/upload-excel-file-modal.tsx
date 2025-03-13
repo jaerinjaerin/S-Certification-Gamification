@@ -9,6 +9,7 @@ import {
   CustomDialogContent,
   Dialog,
   DialogClose,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
@@ -34,11 +35,12 @@ import { submitActivityId } from '../_lib/submit-activityId';
 import { submitNonS } from '../_lib/submit-nonS';
 import { submitQuizSet } from '../_lib/submit-quizset';
 import { updateNoServiceChannel } from '../_lib/update-no-service-channel';
+import { mutate } from 'swr';
 
 const UploadExcelFileModal = forwardRef<
   HTMLDivElement,
   UploadExcelFileModalProps
->(({ children, title, variant, onDropdownClose }, ref) => {
+>(({ children, title, variant, onDropdownClose, description }, ref) => {
   const [isLoading, setIsLoading] = useState(false);
   const { campaign } = useStateVariables();
   const {
@@ -110,25 +112,24 @@ const UploadExcelFileModal = forwardRef<
     }
   };
 
-  const submitQuiz = async () => {
-    try {
-      setIsLoading(true);
-      setProcessResult([]);
-      await submitQuizSet(
-        getValidFiles(),
-        campaign!.id,
-        setIsDialogOpen,
-        setProcessResult
-      );
-
-      updateNoServiceChannel(campaign!.id);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSumbit = {
-    quiz: submitQuiz,
+    quiz: async () => {
+      try {
+        setIsLoading(true);
+        setProcessResult([]);
+        await submitQuizSet(
+          getValidFiles(),
+          campaign!.id,
+          setIsDialogOpen,
+          setProcessResult,
+          'quiz'
+        );
+
+        updateNoServiceChannel(campaign!.id);
+      } finally {
+        setIsLoading(false);
+      }
+    },
     activityId: async () => {
       try {
         setIsLoading(true);
@@ -136,6 +137,7 @@ const UploadExcelFileModal = forwardRef<
           uploadFiles.activityId,
           campaign!.id
         );
+
         if (result) {
           setProcessResult(result);
         }
@@ -154,7 +156,23 @@ const UploadExcelFileModal = forwardRef<
         setIsLoading(false);
       }
     },
-    hq: submitQuiz,
+    hq: async () => {
+      try {
+        setIsLoading(true);
+        setProcessResult([]);
+        await submitQuizSet(
+          getValidFiles(),
+          campaign!.id,
+          setIsDialogOpen,
+          setProcessResult,
+          'hq'
+        );
+
+        updateNoServiceChannel(campaign!.id);
+      } finally {
+        setIsLoading(false);
+      }
+    },
   };
 
   const uploadFilesResult = [...getInvalidFiles(), ...processResult];
@@ -162,6 +180,8 @@ const UploadExcelFileModal = forwardRef<
   useEffect(() => {
     if (!isEmpty(processResult)) {
       setShowResultDialog(true);
+    } else {
+      setShowResultDialog(false);
     }
   }, [processResult]);
 
@@ -174,9 +194,18 @@ const UploadExcelFileModal = forwardRef<
           onInteractOutside={(e) => e.preventDefault()}
         >
           <DialogHeader className="!flex-row !items-center justify-between">
-            <DialogTitle className="text-size-17px font-semibold">
-              {title}
-            </DialogTitle>
+            <div className="space-y-2">
+              <DialogTitle className="text-size-17px font-semibold">
+                {title}
+              </DialogTitle>
+              {description && (
+                <DialogDescription className="text-neutral-600 flex items-center gap-2">
+                  <CircleAlert className="size-4" />
+                  {description}
+                </DialogDescription>
+              )}
+            </div>
+
             <DialogClose className={cn(isLoading && 'pointer-events-none')}>
               <X />
             </DialogClose>
@@ -253,6 +282,13 @@ const UploadExcelFileModal = forwardRef<
             setProcessResult([]);
             handleDialogOpen(false);
             if (onDropdownClose) onDropdownClose();
+            if (variant === 'hq') {
+              mutate(
+                (key) =>
+                  typeof key === 'string' &&
+                  (key.includes('quizset') || key.includes('activity'))
+              );
+            }
           }}
           open={showResultDialog}
           variant={variant}

@@ -1,43 +1,30 @@
-import { toast } from 'sonner';
+'use client';
 import CampaignEditForm from '../../_components/campaign-edit-form';
+import useSWR from 'swr';
+import { fetcher } from '@/app/(system)/(hub)/cms/lib/fetcher';
+import { LoadingFullScreen } from '@/components/loader';
 
-export default async function EditCampaignPage({
+export default function EditCampaignPage({
   params,
 }: {
   params: { campaignId: string };
 }) {
   const { campaignId } = params;
-  const campaign = await getCampaign(campaignId);
+  const { data, isLoading } = useSWR(
+    `/api/cms/campaign/${campaignId}`,
+    fetcher
+  );
 
-  if (!campaign) {
+  if (isLoading) {
+    return <LoadingFullScreen />;
+  }
+  if (!data) {
     return <div>Campaign not found</div>;
   }
 
-  const editData = mapCampaignToFormData(campaign);
+  const editData = mapCampaignToFormData(data.result.campaign);
 
   return <CampaignEditForm initialData={editData} campaignId={campaignId} />;
-}
-
-async function getCampaign(campaignId: string) {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
-      { cache: 'no-cache' }
-    );
-
-    if (!response.ok) {
-      toast.error('Failed to fetch campaign');
-      return null;
-    }
-
-    const data = await response.json();
-    console.log('data: ', data);
-    return data.result.campaign;
-  } catch (error) {
-    toast.error('Error fetching campaign');
-    console.error(error);
-    return null;
-  }
 }
 
 function numberToString(value: number | null | undefined) {

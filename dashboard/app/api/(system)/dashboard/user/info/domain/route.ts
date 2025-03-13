@@ -2,8 +2,9 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { domainCheckOnly, getJobIds } from '@/lib/data';
-import { AuthType } from '@prisma/client';
+import { AuthType, CampaignSettings, DomainGoal } from '@prisma/client';
 import { buildWhereWithValidKeys } from '@/lib/where';
+import { queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,9 +14,11 @@ export async function GET(request: NextRequest) {
     const { where: condition, take, skip } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');
@@ -43,14 +46,16 @@ export async function GET(request: NextRequest) {
     ];
 
     // domainId만 확인해서 필터링 생성
-    const whereForGoal = (await domainCheckOnly(where)) as any;
-    const count = await prisma.domainGoal.count({
-      where: whereForGoal,
-    });
+    const { createdAt, ...whereForGoal } = (await domainCheckOnly(
+      where
+    )) as any;
 
-    const domainsGoals = await prisma.domainGoal.findMany({
-      where: whereForGoal,
-    });
+    const domainsGoals: DomainGoal[] = await queryRawWithWhere(
+      prisma,
+      'DomainGoal',
+      whereForGoal
+    );
+    const count = domainsGoals.length;
 
     const domains = await prisma.domain.findMany({
       where: {
@@ -133,7 +138,7 @@ export async function GET(request: NextRequest) {
         const storeType = storeId === '4' ? 'Ses' : '';
         const jobName =
           (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
-            jobGroup[key].includes(jobId || '')
+            jobGroup[key].includes((jobId as never) || '')
           ) || null;
 
         //goal

@@ -42,6 +42,7 @@ const OverviewExpertsChild = () => {
     `/api/dashboard/overview/statistics/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
     {
+      revalidateOnFocus: false,
       fallbackData: {
         result: {
           pie: [],

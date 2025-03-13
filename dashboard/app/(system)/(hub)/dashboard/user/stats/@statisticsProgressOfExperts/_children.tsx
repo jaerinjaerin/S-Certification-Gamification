@@ -36,7 +36,7 @@ export function UserProgressExpertsChild() {
   const { data: progressData, isLoading } = useSWR(
     `/api/dashboard/user/statistics/progress-of-experts?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
-    { fallbackData: { result: [] } }
+    { revalidateOnFocus: false, fallbackData: { result: [] } }
   );
 
   const data = progressData.result;

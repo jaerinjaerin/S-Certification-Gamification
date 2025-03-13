@@ -4,8 +4,9 @@ import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
-import { UserQuizBadgeStageStatistics } from '@prisma/client';
+import { CampaignSettings, UserQuizBadgeStageStatistics } from '@prisma/client';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,22 +15,20 @@ async function fetchUserStatistics(
   stageIndexes: number[],
   jobGroup: string[],
   moreWhere: any
-) {
-  return prisma.userQuizBadgeStageStatistics.findMany({
-    where: {
-      ...buildWhereWithValidKeys(where, [
-        'campaignId',
-        'regionId',
-        'subsidiaryId',
-        'domainId',
-        'authType',
-        'channelSegmentId',
-        'createdAt',
-      ]),
-      quizStageIndex: { in: stageIndexes },
-      jobId: { in: jobGroup },
-      ...moreWhere,
-    },
+): Promise<UserQuizBadgeStageStatistics[]> {
+  return queryRawWithWhere(prisma, 'UserQuizBadgeStageStatistics', {
+    ...buildWhereWithValidKeys(where, [
+      'campaignId',
+      'regionId',
+      'subsidiaryId',
+      'domainId',
+      'authType',
+      'channelSegmentId',
+      'createdAt',
+    ]),
+    quizStageIndex: { in: stageIndexes },
+    jobId: { in: jobGroup },
+    ...moreWhere,
   });
 }
 
@@ -46,6 +45,7 @@ async function processUserData(
       (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
         jobGroup[key].includes(user.jobId)
       ) || null;
+
     if (!jobNameBase) return;
 
     const jobName = isSES ? `${jobNameBase} (SES)` : jobNameBase;
@@ -71,10 +71,13 @@ export async function GET(request: NextRequest) {
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
-
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      {
+        campaignId: where.campaignId,
+      }
+    );
     if (!settings) {
       throw new Error('Campaign settings not found');
     }

@@ -155,7 +155,7 @@ export async function GET(request: NextRequest) {
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
       const roles = await prisma.role.findUnique({
-        where: { id: role },
+        where: { name: role },
         include: {
           permissions: {
             select: { permission: { select: { domains: true } } },
@@ -178,7 +178,14 @@ export async function GET(request: NextRequest) {
 
     const campaigns = await prisma.campaign.findMany({
       where,
-      include: { settings: true },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        startedAt: true,
+        endedAt: true,
+        deleted: true,
+      },
       orderBy: { createdAt: 'asc' },
     });
 

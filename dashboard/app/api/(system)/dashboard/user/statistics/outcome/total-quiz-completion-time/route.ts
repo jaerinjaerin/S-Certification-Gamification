@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { CampaignSettings } from '@prisma/client';
+import { queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,9 +16,11 @@ export async function GET(request: NextRequest) {
     const { where: condition, period } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');

@@ -1,11 +1,9 @@
 'use client';
-
 // React and hooks
 import { useStateVariables } from '@/components/provider/state-provider';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-
 // Form related
 import {
   Form,
@@ -17,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormValues } from '../_type/formSchema';
-
 // UI Components
 import {
   AlertDialog,
@@ -38,22 +35,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-
 // Custom Components
 import Container from './container';
 import { CustomSelectTrigger, SelectComponent } from './custom-form-items';
 import FormComponent from './form-component';
 import TableComponent from './table-component';
-
 // Icons
 import { CalendarIcon, Check, CircleHelp, Loader } from 'lucide-react';
-
 // Utils and Constants
 import { cn } from '@/utils/utils';
 import { toast } from 'sonner';
 import { isEmpty } from '../../(hub)/cms/_utils/utils';
 import { API_ENDPOINTS } from '../constant/contant';
-
 // State Management
 import {
   Popover,
@@ -64,13 +57,15 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
+import { mutate } from 'swr';
+import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
 }
 
 export default function CampaignForm({ initialData }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -409,8 +404,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
       }
 
       await Promise.all(copyPromises);
-      campaignMutate();
-      // setCampaigns((c) => [...c, campaign]);
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
 
       toast.success('Certification created successfully!');
     } catch (error) {
@@ -579,7 +573,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                             mode="single"
                             selected={field.value as Date}
                             onSelect={(date) => {
-                              field.onChange(date);
+                              field.onChange(startOfDayTime(date));
                               setStartDatePickerOpen(false);
                             }}
                           />
@@ -625,7 +619,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                             mode="single"
                             selected={field.value as Date}
                             onSelect={(date) => {
-                              field.onChange(date);
+                              field.onChange(endOfDayTime(date));
                               setEndDatePickerOpen(false);
                             }}
                             fromDate={form.getValues('startDate')}
@@ -825,9 +819,9 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                   Alert
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
-                  Once you create a certification, you cannot change the Slug,
-                  Media to Copy, Target to Copy, or UI Language to Copy. Are you
-                  sure you want to save?
+                  When an certification is created, only the certification name
+                  and start/end dates can be modified until the start date. Are
+                  you sure you want to save?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">

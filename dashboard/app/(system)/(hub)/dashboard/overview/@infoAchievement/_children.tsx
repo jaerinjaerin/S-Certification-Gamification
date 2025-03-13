@@ -12,7 +12,7 @@ const OverviewAchievementInfoChild = () => {
   const { data } = useSWR(
     `/api/dashboard/overview/info/achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
-    { fallbackData: { result: { count: null } } }
+    { revalidateOnFocus: false, fallbackData: { result: { count: null } } }
   );
   const count = data.result?.count;
 

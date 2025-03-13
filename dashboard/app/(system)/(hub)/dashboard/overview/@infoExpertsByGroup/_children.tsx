@@ -16,6 +16,7 @@ const OverviewExpertsByGroupInfoChild = () => {
     `/api/dashboard/overview/info/experts-by-group?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
     {
+      revalidateOnFocus: false,
       fallbackData: {
         result: [
           {

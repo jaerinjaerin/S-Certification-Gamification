@@ -1,35 +1,44 @@
-import { getLanguageCodes } from "@/app/actions/language-actions";
-import { defaultLanguages } from "@/core/config/default";
+import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
+import { redirect } from "next/navigation";
 
 export default async function SumtotalUserLayout({
   children,
-  params: { quizset_path },
+  params: { campaign_name, quizset_path },
 }: {
   children: React.ReactNode;
-  params: { quizset_path: string };
+  params: { campaign_name: string; quizset_path: string };
 }) {
-  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
-  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
+  const codes = extractCodesFromPath(quizset_path);
+  if (codes == null) {
+    redirect(`/${campaign_name}/not-ready`);
+  }
+
+  const { domainCode, languageCode } = codes;
+
   // const supportedLanguages = await fetchSupportedLanguages();
   // const supportedLanguages = await fetchSupportedLanguageCodes();
-  const supportedLanguages =
-    (await getLanguageCodes())?.result?.item ??
-    defaultLanguages.map((lang) => lang.code);
+  // const supportedLanguages =
+  //   (await getLanguageCodes())?.result?.item ??
+  //   defaultLanguages.map((lang) => lang.code);
 
-  const locale = supportedLanguages.find((lang) => {
-    const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
-    return pattern.test(languageCode);
-  });
+  // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+  const normalizedLanguageCode = languageCode.replace(
+    /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+    "$1"
+  );
+
+  const locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
+  console.log("QuizSetLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
 
-  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
+  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
   const agreementContent = await fetchAgreementContent(domainCode);
@@ -41,7 +50,6 @@ export default async function SumtotalUserLayout({
         messages={translatedMessages}
         locale={locale}
       >
-        {/* <AuthProvider> */}
         <PolicyProvider
           privacyContent={privacyContent?.contents}
           termContent={termContent?.contents}
@@ -51,7 +59,6 @@ export default async function SumtotalUserLayout({
         >
           {children}
         </PolicyProvider>
-        {/* </AuthProvider> */}
       </NextIntlClientProvider>
     </div>
   );

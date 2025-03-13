@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Spinner from "@/components/ui/spinner";
 import { ERROR_CODES } from "@/constants/error-codes";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -78,7 +79,7 @@ export default function GuestRegisterPage({
   useGAPageView();
   const router = useRouter();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const translation = useTranslations();
   const { campaign } = useCampaign();
   const locale = useLocale();
@@ -96,12 +97,10 @@ export default function GuestRegisterPage({
   const [channelInput, setChannelInput] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  // const [languageCode, setLanguageCode] = useState<string | undefined>(
-  //   undefined
-  // ); // 브라우저에서 주는 언어코드
-  const [quizLanguageCode, selectQuizLanguageCode] = useState<string | null>(
-    null
+  const [languageCode, setLanguageCode] = useState<string | undefined>(
+    undefined
   ); // 브라우저에서 주는 언어코드
+  const [quizLanguageCode, setQuizLanguageCode] = useState<string | null>(null); // 브라우저에서 주는 언어코드
 
   // select box options
   const [countries, setCountries] = useState<DomainDetail[]>([]);
@@ -115,6 +114,10 @@ export default function GuestRegisterPage({
   const [jobs, setJobs] = useState<Job[]>(defaultJobs);
   const [quizLanguages, setQuizLanguages] = useState<QuizLanguage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [checkRegisteredLoading, setCheckRegisteredLoading] =
+    useState<boolean>(false);
+
+  console.log("status", status);
 
   const {
     privacyContent,
@@ -154,15 +157,15 @@ export default function GuestRegisterPage({
     }
   };
 
-  // const fetchLanguage = async () => {
-  //   const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
-  //   // console.log("matchedLocale", matchedLocale);
-  //   setLanguageCode(matchedLocale);
-  // };
+  const fetchLanguage = async () => {
+    const matchedLocale = locale === "es-419" ? "es-LTN" : locale;
+    console.log("matchedLocale", matchedLocale);
+    setLanguageCode(matchedLocale);
+  };
 
   useEffect(() => {
     fetchConutries();
-    // fetchLanguage();
+    fetchLanguage();
   }, []);
 
   useEffect(() => {
@@ -186,7 +189,10 @@ export default function GuestRegisterPage({
   }, [campaignPath]);
 
   const checkRegistered = async (userId: string) => {
+    console.log("checkRegistered", userId);
     try {
+      setCheckRegisteredLoading(true);
+      console.log("setCheckRegisteredLoading", true);
       // setCheckingRegisterd(true);
       const quizLogResponse = await fetchQuizLog(userId, campaign.name);
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
@@ -198,7 +204,17 @@ export default function GuestRegisterPage({
       console.error("Failed to fetch data", error);
     } finally {
       // setCheckingRegisterd(false);
+      console.log("setCheckRegisteredLoading", false);
+      setCheckRegisteredLoading(false);
     }
+  };
+
+  const oldCampaign = (): boolean => {
+    if (params.campaign_name.toLowerCase() === "s25") {
+      return true;
+    }
+
+    return false;
   };
 
   const selectCountry = (countryCode: string) => {
@@ -214,7 +230,12 @@ export default function GuestRegisterPage({
     setChannelInput(false);
     setChannelName(null);
     setSelectedJobId(null);
-    selectQuizLanguageCode(null);
+    setQuizLanguageCode(null);
+
+    if (oldCampaign()) {
+      setJobs(defaultJobs);
+      return;
+    }
 
     const _jobs: Job[] = [];
     if (country.languages.ff.length > 0) {
@@ -228,7 +249,7 @@ export default function GuestRegisterPage({
 
   const selectChannel = (channelName: string) => {
     setSelectedJobId(null);
-    selectQuizLanguageCode(null);
+    setQuizLanguageCode(null);
 
     if (channelName === "input_directly") {
       setChannelInput(true);
@@ -255,33 +276,38 @@ export default function GuestRegisterPage({
     setSelectedJobId(jobId);
     const job = jobs.find((j) => j.value === jobId);
 
-    const jobCode = job?.group.toLowerCase();
-    if (jobCode && selectedCountry?.languages[jobCode] != null) {
-      const langeuages = selectedCountry.languages[jobCode];
-      setQuizLanguages(langeuages);
+    console.log("languageCode", languageCode);
+    if (oldCampaign() && languageCode) {
+      setQuizLanguageCode(languageCode);
+    } else {
+      const jobCode = job?.group.toLowerCase();
+      if (jobCode && selectedCountry?.languages[jobCode] != null) {
+        const langeuages = selectedCountry.languages[jobCode];
+        setQuizLanguages(langeuages);
 
-      console.log("langeuages", langeuages);
-      if (langeuages.length === 1) {
-        selectQuizLanguageCode(langeuages[0].code);
-      } else {
-        selectQuizLanguageCode(null);
+        console.log("langeuages", langeuages);
+        if (langeuages.length === 1) {
+          setQuizLanguageCode(langeuages[0].code);
+        } else {
+          setQuizLanguageCode(null);
+        }
       }
     }
   };
 
   const routeQuizPage = () => {
     if (!selectedCountry) {
-      setErrorMessage("Please select a country."); // 번역 필요
+      setErrorMessage(translation("required_country")); // 번역 필요
       return;
     }
 
     if (!selectedJobId) {
-      setErrorMessage("Please select a job group."); // 번역 필요
+      setErrorMessage(translation("required_country")); // 번역 필요
       return;
     }
 
     if (!quizLanguageCode) {
-      setErrorMessage("Please select a quiz language."); // 번역 필요
+      setErrorMessage(translation("required_quiz_language")); // 번역 필요
       return;
     }
     createItem({
@@ -318,13 +344,34 @@ export default function GuestRegisterPage({
   }, [errorCreate]);
 
   const isDisabled = () => {
+    console.log(
+      "isDisabled",
+      selectedCountry,
+      selectedChannel,
+      selectedJobId,
+      quizLanguageCode,
+      checkRegisteredLoading
+    );
+    if (oldCampaign()) {
+      return (
+        loadingCreate ||
+        !selectedCountry ||
+        (!selectedChannel && (!channelName || channelName.trim().length < 2)) ||
+        !selectedJobId ||
+        !quizLanguageCode ||
+        (!loadingCreate && !!campaignPath) ||
+        checkRegisteredLoading
+      );
+    }
+
     return (
       loadingCreate ||
       !selectedCountry ||
       (!selectedChannel && (!channelName || channelName.trim().length < 2)) ||
       !selectedJobId ||
       !quizLanguageCode ||
-      (!loadingCreate && !!campaignPath)
+      (!loadingCreate && !!campaignPath) ||
+      checkRegisteredLoading
     );
   };
 
@@ -335,7 +382,7 @@ export default function GuestRegisterPage({
       <div
         className="py-[20px] min-h-svh flex items-center justify-center"
         style={{
-          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/background/main_bg2.jpg')`,
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/main_bg2.jpg')`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -382,7 +429,12 @@ export default function GuestRegisterPage({
               value={`${translation("country")}*`}
             >
               <SelectTrigger
-                disabled={loading || loadingCreate || countries == null}
+                disabled={
+                  loading ||
+                  loadingCreate ||
+                  countries == null ||
+                  checkRegisteredLoading
+                }
                 className={cn(
                   selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
                 )}
@@ -471,7 +523,7 @@ export default function GuestRegisterPage({
             </Select>
             {quizLanguages && quizLanguages.length > 0 && (
               <Select
-                onValueChange={(value) => selectQuizLanguageCode(value)}
+                onValueChange={(value) => setQuizLanguageCode(value)}
                 value={quizLanguageCode || ""}
               >
                 <SelectTrigger
@@ -549,6 +601,7 @@ export default function GuestRegisterPage({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        {(checkRegisteredLoading || status === "loading") && <Spinner />}
       </div>
     </>
   );

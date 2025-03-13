@@ -6,7 +6,7 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { AuthType } from "@prisma/client";
+import { AuthType, Campaign } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -57,7 +57,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+    const codes = extractCodesFromPath(quizSetPath);
+    if (codes == null) {
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "Bad request",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Invalid quizset path",
+          },
+        },
+        { status: 400 }
+      );
+    }
+    const { domainCode, languageCode } = codes;
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -574,14 +588,34 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const campaign = await prisma.campaign.findFirst({
-      where: {
-        name: {
-          equals: campaignName,
-          mode: "insensitive", // 대소문자 구분 없이 검색
+    // const campaign = await prisma.campaign.findFirst({
+    //   where: {
+    //     name: {
+    //       equals: campaignName,
+    //       mode: "insensitive", // 대소문자 구분 없이 검색
+    //     },
+    //   },
+    // });
+    let campaign: Campaign | null = null;
+    if (campaignName.toLowerCase() !== "s25") {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
         },
-      },
-    });
+      });
+    } else {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          name: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+    }
 
     // // console.log("campaign:", campaign);
 

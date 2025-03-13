@@ -1,5 +1,5 @@
 'use server';
-
+import { setHoursFromZeroToEnd } from '@/lib/time';
 import { prisma } from '@/model/prisma';
 import { Prisma } from '@prisma/client';
 
@@ -8,7 +8,7 @@ export async function getCampaigns(role: string) {
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
       const roles = await prisma.role.findUnique({
-        where: { id: role },
+        where: { name: role },
         include: {
           permissions: {
             select: { permission: { select: { domains: true } } },
@@ -29,13 +29,20 @@ export async function getCampaigns(role: string) {
       };
     }
 
-    const campaigns = await prisma.campaign.findMany({
+    const result = await prisma.campaign.findMany({
       where,
-      include: { settings: true },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        startedAt: true,
+        endedAt: true,
+        deleted: true,
+      },
       orderBy: { createdAt: 'asc' },
     });
 
-    return { result: campaigns };
+    return { result };
   } catch (error: unknown) {
     console.error('Error get campaigns: ', error);
     return { result: null };
@@ -50,9 +57,18 @@ export async function getCampaign(id: string | null) {
     //
     const campaign = await prisma.campaign.findUnique({
       where: { id },
+      include: { settings: true },
     });
 
-    return { result: campaign };
+    let result = null;
+    if (campaign) {
+      result = {
+        ...campaign,
+        ...setHoursFromZeroToEnd(campaign.startedAt, campaign.endedAt),
+      };
+    }
+
+    return { result };
   } catch (error: unknown) {
     console.error('Error get campaigns: ', error);
     return { result: null };

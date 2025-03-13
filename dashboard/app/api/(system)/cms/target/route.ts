@@ -13,9 +13,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const campaignId = searchParams.get('campaignId') as string;
-    console.log('🚀 ~ GET ~ campaignId:', campaignId);
-
-    await prisma.$connect();
 
     const domains = await prisma.domain.findMany({
       include: { subsidiary: { include: { domains: true } } },
@@ -65,8 +62,6 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }
 
@@ -83,12 +78,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    await prisma.$connect();
-
     //
     // excel 파일 업로드
-    const path = getPath(campaign.name, 'target');
-    const key = `${path}/target_${campaign.name}.xlsx`;
+    const path = getPath(campaign.slug, 'target');
+    const key = `${path}/target_${campaign.slug}.xlsx`;
     await uploadToS3({ key, file, isNoCache: true });
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
     invalidateCache(distributionId, [`/${key}`]);
@@ -180,7 +173,5 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

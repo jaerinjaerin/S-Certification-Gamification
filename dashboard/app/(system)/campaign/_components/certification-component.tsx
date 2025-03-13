@@ -11,9 +11,10 @@ import { LoadingFullScreen } from '@/components/loader';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { handleDownload } from '../../(hub)/cms/_utils/utils';
+import { mutate } from 'swr';
 
 export default function CertificationClientComponent() {
-  const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
+  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
   const { routeToPage, isRouting } = useNavigation();
 
   if (campaigns?.length === 0) {
@@ -72,7 +73,7 @@ export default function CertificationClientComponent() {
 }
 
 function CertificationListItem({ campaign }: { campaign: Campaign }) {
-  const { setCampaign, campaigns, campaignMutate } = useStateVariables();
+  const { setCampaign, role } = useStateVariables();
   const { routeToPage, isRouting } = useNavigation();
   const [isEditAble, setIsEditAble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,7 +111,7 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
       //   return;
       // }
 
-      campaignMutate();
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
 
       // const updatedCampaigns = campaigns?.map((item) =>
       //   item.id === deletedCampaign.id
@@ -118,7 +119,6 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
       //     : item
       // );
 
-      // setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign deleted successfully');
     } catch (error) {
       toast.error(`Error deleting campaign: ${error}`);
@@ -134,8 +134,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
         <button
           type="button"
           className=" grow min-w-0 cursor-pointer h-full text-left px-3 flex flex-col justify-center"
-          onClick={() => {
-            setCampaign(campaign);
+          onClick={async () => {
+            await setCampaign(campaign.id);
             routeToPage(`/dashboard/overview`);
           }}
         >
@@ -180,7 +180,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
               <Button
                 className="p-0 aspect-square size-[1.875rem] rounded-sm"
                 variant="ghost"
-                onClick={() => {
+                onClick={async () => {
+                  await setCampaign(campaign.id);
                   routeToPage(`/campaign/edit/${campaign.id}`);
                 }}
               >
@@ -203,12 +204,10 @@ const DownloadManualButton = () => {
     const FILE_NAME = `Admin_Manual.pptx`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
     handleDownload(FILE_NAME, DOWNLOAD_URL);
-
-    console.log(DOWNLOAD_URL);
   };
 
   return (
-    <Button onClick={() => handleDownloadFile()} variant={'secondary'}>
+    <Button onClick={handleDownloadFile} variant={'secondary'}>
       Download Manual
     </Button>
   );

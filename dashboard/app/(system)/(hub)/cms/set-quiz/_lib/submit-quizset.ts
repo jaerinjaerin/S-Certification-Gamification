@@ -14,7 +14,8 @@ export const submitQuizSet = async (
   files: File[],
   campaignId: string,
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>,
-  setProcessResult: Dispatch<SetStateAction<ProcessResult[]>>
+  setProcessResult: Dispatch<SetStateAction<ProcessResult[]>>,
+  variant: 'hq' | 'quiz'
 ) => {
   try {
     const allResults = [];
@@ -52,23 +53,25 @@ export const submitQuizSet = async (
       }
     }
 
-    try {
-      mutate(
-        (key) =>
-          typeof key === 'string' &&
-          (key.includes('quizset') || key.includes('activity'))
-      );
-    } catch (error: unknown) {
-      const err = error as QuizSetError;
-      if (err.result?.errorCode === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {
-        alert('HQ 퀴즈 질문이 등록되지 않았습니다.');
-      } else if (err.result?.errorCode === ERROR_CODES.FILE_NAME_MISMATCH) {
-        alert('최신 버전의 파일을 다운받아 수정하여 업로드해주세요.');
-      } else {
-        if (err.result?.errorCode) {
-          alert(err.result.errorCode);
+    if (variant !== 'hq') {
+      try {
+        mutate(
+          (key) =>
+            typeof key === 'string' &&
+            (key.includes('quizset') || key.includes('activity'))
+        );
+      } catch (error: unknown) {
+        const err = error as QuizSetError;
+        if (err.result?.errorCode === ERROR_CODES.HQ_QUESTIONS_NOT_REGISTERED) {
+          alert('HQ 퀴즈 질문이 등록되지 않았습니다.');
+        } else if (err.result?.errorCode === ERROR_CODES.FILE_NAME_MISMATCH) {
+          alert('최신 버전의 파일을 다운받아 수정하여 업로드해주세요.');
         } else {
-          alert('알 수 없는 오류가 발생했습니다.');
+          if (err.result?.errorCode) {
+            alert(err.result.errorCode);
+          } else {
+            alert('알 수 없는 오류가 발생했습니다.');
+          }
         }
       }
     }

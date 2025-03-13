@@ -90,6 +90,7 @@ export function SPlusUserUploadButton({
               variant="activityId"
               title="Upload Activity ID"
               onDropdownClose={onClose}
+              description="ActivityID allows only one file to be uploaded at a time."
             >
               <Button className="w-full justify-start" variant="ghost">
                 Activity ID
@@ -112,7 +113,11 @@ export function NonSPlusUserUploadButton({
       <Button variant="secondary" onClick={handleDownloadNonS}>
         Download Data
       </Button>
-      <UploadExcelFileModal variant="non-s" title="Upload Non S+ User">
+      <UploadExcelFileModal
+        variant="non-s"
+        title="Upload Non S+ User"
+        description="Non S+ User allows only one file to be uploaded at a time."
+      >
         <Button className="w-full justify-start" variant="action">
           <span>Upload</span>
         </Button>

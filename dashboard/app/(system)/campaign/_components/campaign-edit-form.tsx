@@ -56,6 +56,8 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
+import { mutate } from 'swr';
+import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
@@ -66,7 +68,7 @@ export default function CampaignEditForm({
   initialData,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { setSelectedNumberOfStages } = useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
@@ -78,6 +80,51 @@ export default function CampaignEditForm({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
+  const watchForm = form.watch();
+
+  useEffect(() => {
+    // 현재 에러 상태 확인
+    const hasStartDateError = !!form.formState.errors.startDate;
+    const hasEndDateError = !!form.formState.errors.endDate;
+
+    // 날짜 유효성 검사 - startDate와 endDate가 모두 존재할 때
+    if (watchForm.startDate && watchForm.endDate) {
+      const startDate = new Date(watchForm.startDate);
+      const endDate = new Date(watchForm.endDate);
+
+      // startDate가 endDate보다 늦은 경우
+      if (startDate > endDate) {
+        if (!hasStartDateError) {
+          form.setError('startDate', {
+            message: 'Start Date must be earlier than End Date',
+          });
+        }
+        if (!hasEndDateError) {
+          form.setError('endDate', {
+            message: 'End Date must be later than Start Date',
+          });
+        }
+      } else {
+        // 날짜가 올바른 순서인 경우 에러 제거
+        if (hasStartDateError) {
+          form.clearErrors('startDate');
+        }
+        if (hasEndDateError) {
+          form.clearErrors('endDate');
+        }
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      // 컴포넌트 언마운트 시에만 에러 클리어
+    };
+  }, [
+    watchForm,
+    form,
+    form.formState.errors.startDate,
+    form.formState.errors.endDate,
+  ]);
 
   useEffect(() => {
     setSelectedNumberOfStages(initialData.numberOfStages);
@@ -108,7 +155,7 @@ export default function CampaignEditForm({
       });
 
       const campaignData = await response.json();
-      console.log('🥕 campaignData', campaignData); // ! 업데이트 이전의 데이터가 들어옴
+      console.log('🥕 campaignData', campaignData);
 
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
@@ -118,14 +165,8 @@ export default function CampaignEditForm({
 
       console.warn('update campaign');
 
-      campaignMutate();
-      //
-      // const updatedCampaign = campaignData.result.campaign;
-      // const updatedCampaigns = campaigns?.map((item) =>
-      //   item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
-      // );
-
-      // setCampaigns(updatedCampaigns as Campaign[]);
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
+      await mutate(`/api/cms/campaign/${campaignId}`);
       toast.success('Campaign updated successfully!');
       routeToPage('/campaign');
     } catch (error) {
@@ -241,7 +282,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(startOfDayTime(date));
                                 setStartDatePickerOpen(false);
                               }}
                             />
@@ -287,7 +328,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(endOfDayTime(date));
                                 setEndDatePickerOpen(false);
                               }}
                               fromDate={form.getValues('startDate')}

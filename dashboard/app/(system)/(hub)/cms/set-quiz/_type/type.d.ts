@@ -15,6 +15,7 @@ export type UploadExcelFileModalProps = {
   title: string;
   variant: UploadExcelFileVariant;
   onDropdownClose?: () => void;
+  description?: string;
 };
 
 export interface GroupedQuizSet {

@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { domainCheckOnly, getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
+import { CampaignSettings, DomainGoal } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,9 +14,11 @@ export async function GET(request: NextRequest) {
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const settings = await prisma.campaignSettings.findFirst({
-      where: { campaignId: where.campaignId },
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');
@@ -36,34 +40,60 @@ export async function GET(request: NextRequest) {
       },
     ];
 
-    const userBadges = await Promise.all(
-      jobGroups.map(({ stageIndex, jobIds }) =>
-        prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
-            ...buildWhereWithValidKeys(where, [
-              'campaignId',
-              'regionId',
-              'subsidiaryId',
-              'domainId',
-              'authType',
-              'channelSegmentId',
-              'createdAt',
-            ]),
-            quizStageIndex: stageIndex,
-            jobId: { in: jobIds },
-            ...(storeId
-              ? storeId === '4'
-                ? { storeId }
-                : { OR: [{ storeId }, { storeId: null }] }
-              : {}),
-          },
-          select: {
-            userId: true,
-            regionId: true,
-            subsidiaryId: true,
-            domainId: true,
-          },
-        })
+    const userBadges: any = await Promise.all(
+      jobGroups.map(
+        ({ stageIndex, jobIds }) =>
+          extendedQuery(
+            prisma,
+            'UserQuizBadgeStageStatistics',
+            {
+              ...buildWhereWithValidKeys(where, [
+                'campaignId',
+                'regionId',
+                'subsidiaryId',
+                'domainId',
+                'authType',
+                'channelSegmentId',
+                'createdAt',
+              ]),
+              quizStageIndex: stageIndex,
+              jobId: { in: jobIds },
+              ...(storeId
+                ? storeId === '4'
+                  ? { storeId }
+                  : { OR: [{ storeId }, { storeId: null }] }
+                : {}),
+            },
+            {
+              select: ['userId', 'regionId', 'subsidiaryId', 'domainId'],
+            }
+          )
+        // prisma.userQuizBadgeStageStatistics.findMany({
+        //   where: {
+        //     ...buildWhereWithValidKeys(where, [
+        //       'campaignId',
+        //       'regionId',
+        //       'subsidiaryId',
+        //       'domainId',
+        //       'authType',
+        //       'channelSegmentId',
+        //       'createdAt',
+        //     ]),
+        //     quizStageIndex: stageIndex,
+        //     jobId: { in: jobIds },
+        //     ...(storeId
+        //       ? storeId === '4'
+        //         ? { storeId }
+        //         : { OR: [{ storeId }, { storeId: null }] }
+        //       : {}),
+        //   },
+        //   select: {
+        //     userId: true,
+        //     regionId: true,
+        //     subsidiaryId: true,
+        //     domainId: true,
+        //   },
+        // })
       )
     );
 
@@ -71,11 +101,13 @@ export async function GET(request: NextRequest) {
     const users = removeDuplicateUsers(userBadges.flat());
 
     // domainId만 확인해서 필터링 생성
-    const whereForGoal = await domainCheckOnly(where);
-    const domain_goal = await prisma.domainGoal.findMany({
-      where: whereForGoal,
-      orderBy: { updatedAt: 'desc' },
-    });
+    const { createdAt, ...whereForGoal } = await domainCheckOnly(where);
+    const domain_goal: DomainGoal[] = await extendedQuery(
+      prisma,
+      'DomainGoal',
+      whereForGoal,
+      { orderBy: { updatedAt: 'desc' } }
+    );
 
     const domains = await prisma.domain.findMany({
       where: { id: whereForGoal.domainId },

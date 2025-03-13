@@ -29,6 +29,14 @@ import {
 import { fetcher } from '../../../../lib/fetcher';
 import { NoServiceChannelsResponse } from '../../../_type/type';
 import { columns } from './columns';
+import {
+  ChevronDown,
+  ChevronsUpDown,
+  ChevronUp,
+  Copy,
+  ExternalLink,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface NoServiceChannelDataTableProps {
   data: DomainChannel[] | undefined;
@@ -73,9 +81,35 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
 
   return (
     <div className="data-table">
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Total: {table.getFilteredRowModel().rows.length}
+      <div className="flex items-center space-x-2 pt-[1.438rem] pb-2 justify-between">
+        <div className="flex-1 text-sm text-zinc-950">
+          Total :
+          <strong className="font-bold">
+            {` ${table.getFilteredRowModel().rows.length}`}
+          </strong>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-size-12px font-semibold">URL</span>
+          <div className="flex gap-[0.438rem]">
+            <Button
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                // TODO: 카피 텍스트 추가
+                // window.navigator.clipboard.writeText({quiz.samsungplus.net/{slug}/login});
+                alert('copy to clipboard');
+              }}
+            >
+              <Copy />
+            </Button>
+            <a
+              // TODO: 미삼플 유저 url링크 추가 {quiz.samsungplus.net/{slug}/login}
+              // href={quiz.samsungplus.net/{slug}/login}
+              className="size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5"
+            >
+              <ExternalLink className="size-4" />
+            </a>
+          </div>
         </div>
       </div>
       <div className="rounded-md border">
@@ -85,13 +119,44 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                    <TableHead
+                      className="p-4 text-nowrap"
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-1">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        {!(
+                          header.id.toLowerCase() === 'channel' ||
+                          header.id.toLowerCase() === 'channelsegment' ||
+                          header.id.toLowerCase() === 'jobgroup'
+                        ) ? (
+                          <>
+                            {(() => {
+                              const sortDirection = header.column.getIsSorted();
+                              return sortDirection
+                                ? {
+                                    asc: (
+                                      <ChevronDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                    desc: (
+                                      <ChevronUp className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                                    ),
+                                  }[sortDirection]
+                                : null;
+                            })()}
+                            {header.column.getCanSort() &&
+                            !header.column.getIsSorted() ? (
+                              <ChevronsUpDown className="size-4 cursor-pointer hover:bg-zinc-200 rounded-sm" />
+                            ) : null}
+                          </>
+                        ) : null}
+                      </div>
                     </TableHead>
                   );
                 })}
@@ -106,7 +171,7 @@ function DataTable({ data = [], columns }: NoServiceChannelDataTableProps) {
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell className="px-4 py-6" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

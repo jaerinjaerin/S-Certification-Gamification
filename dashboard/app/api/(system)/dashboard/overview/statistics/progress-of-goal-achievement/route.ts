@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
 import { querySearchParams } from '@/lib/query';
 import { buildWhereWithValidKeys } from '@/lib/where';
 import { domainCheckOnly, getJobIds, removeDuplicateUsers } from '@/lib/data';
+import {
+  CampaignSettings,
+  DomainGoal,
+  UserQuizBadgeStageStatistics,
+} from '@prisma/client';
+import { queryRawWithWhere } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,25 +23,29 @@ async function processUserQuizBadgeStageStatistics(
   jobData: any,
   isSES: boolean = false
 ) {
-  const users = await prisma.userQuizBadgeStageStatistics.findMany({
-    where: {
+  const users = await queryRawWithWhere(
+    prisma,
+    'UserQuizBadgeStageStatistics',
+    {
       ...weeklyWhere,
       quizStageIndex: stageIndex,
       jobId: { in: jobGroup },
       ...moreWhere,
-    },
-  });
+    }
+  );
 
   // userId 중복 제거
-  removeDuplicateUsers(users).forEach((user) => {
-    const lowJobName = isSES
-      ? `${jobName.toLowerCase()}(ses)`
-      : jobName.toLowerCase();
+  removeDuplicateUsers(users as UserQuizBadgeStageStatistics[]).forEach(
+    (user) => {
+      const lowJobName = isSES
+        ? `${jobName.toLowerCase()}(ses)`
+        : jobName.toLowerCase();
 
-    if (lowJobName in jobData) {
-      jobData[lowJobName] += 1;
+      if (lowJobName in jobData) {
+        jobData[lowJobName] += 1;
+      }
     }
-  });
+  );
 }
 
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
@@ -48,16 +57,21 @@ export async function GET(request: NextRequest) {
     const { jobId, ...where } = condition;
 
     // 캠페인 데이터 가져오기
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: where.campaignId },
-      include: { settings: true },
+    const [campaign]: Campaign[] = await queryRawWithWhere(prisma, 'Campaign', {
+      id: where.campaignId,
     });
 
     if (!campaign?.startedAt || !campaign?.endedAt) {
       throw new Error('Invalid campaign date range');
     }
 
-    const settings = campaign.settings;
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      {
+        campaignId: where.campaignId,
+      }
+    );
 
     if (!settings) {
       throw new Error('Campaign settings not found');
@@ -80,14 +94,15 @@ export async function GET(request: NextRequest) {
     ];
 
     // domainId만 확인해서 필터링 생성성
-    const whereForGoal = await domainCheckOnly(where);
-    const domain_goal = await prisma.domainGoal.findMany({
-      where: whereForGoal,
-      orderBy: { updatedAt: 'desc' },
-    });
+    const { createdAt, ...whereForGoal } = await domainCheckOnly(where);
+    const domain_goal = await queryRawWithWhere(
+      prisma,
+      'DomainGoal',
+      whereForGoal
+    );
 
     const goalTotalScore = Array.isArray(domain_goal)
-      ? domain_goal.reduce(
+      ? (domain_goal as DomainGoal[]).reduce(
           (sum, { ff = 0, ffSes = 0, fsm = 0, fsmSes = 0 }) =>
             sum + ff + fsm + ffSes + fsmSes,
           0
