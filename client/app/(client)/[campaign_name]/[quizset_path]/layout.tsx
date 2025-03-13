@@ -1,5 +1,4 @@
-import { getLanguageCodes } from "@/app/actions/language-actions";
-import { defaultLanguages } from "@/core/config/default";
+import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
@@ -13,7 +12,6 @@ export default async function SumtotalUserLayout({
   children: React.ReactNode;
   params: { campaign_name: string; quizset_path: string };
 }) {
-  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
   const codes = extractCodesFromPath(quizset_path);
   if (codes == null) {
@@ -24,14 +22,18 @@ export default async function SumtotalUserLayout({
 
   // const supportedLanguages = await fetchSupportedLanguages();
   // const supportedLanguages = await fetchSupportedLanguageCodes();
-  const supportedLanguages =
-    (await getLanguageCodes())?.result?.item ??
-    defaultLanguages.map((lang) => lang.code);
+  // const supportedLanguages =
+  //   (await getLanguageCodes())?.result?.item ??
+  //   defaultLanguages.map((lang) => lang.code);
 
-  const locale = supportedLanguages.find((lang) => {
-    const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
-    return pattern.test(languageCode);
-  });
+  // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+  const normalizedLanguageCode = languageCode.replace(
+    /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+    "$1"
+  );
+
+  const locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
+  console.log("QuizSetLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
@@ -48,7 +50,6 @@ export default async function SumtotalUserLayout({
         messages={translatedMessages}
         locale={locale}
       >
-        {/* <AuthProvider> */}
         <PolicyProvider
           privacyContent={privacyContent?.contents}
           termContent={termContent?.contents}
@@ -58,7 +59,6 @@ export default async function SumtotalUserLayout({
         >
           {children}
         </PolicyProvider>
-        {/* </AuthProvider> */}
       </NextIntlClientProvider>
     </div>
   );

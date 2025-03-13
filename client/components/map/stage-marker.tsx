@@ -40,7 +40,7 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>(
         return (
           <div
             className={cn(
-              "w-full h-full",
+              "w-full h-full rounded-full",
               !isActiveStage && !isCompleted && "grayscale"
             )}
             style={{

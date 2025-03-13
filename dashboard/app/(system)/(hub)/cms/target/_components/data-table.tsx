@@ -20,8 +20,6 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
 
-const regex = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
-
 export const columns: ColumnDef<TargetProps>[] = [
   {
     accessorKey: 'domain',
@@ -30,36 +28,36 @@ export const columns: ColumnDef<TargetProps>[] = [
   {
     accessorKey: 'total',
     header: 'Total',
-    cell: ({ row }) => {
-      return <span>{String(row.original.total).replaceAll(regex, ',')}</span>;
+    cell: ({ getValue }) => {
+      return <span>{(getValue() as number).toLocaleString()}</span>;
     },
   },
   {
     accessorKey: 'fsmSes',
     header: 'FSM(SES)',
-    cell: ({ row }) => {
-      return <span>{String(row.original.fsmSes).replaceAll(regex, ',')}</span>;
+    cell: ({ getValue }) => {
+      return <span>{(getValue() as number).toLocaleString()}</span>;
     },
   },
   {
     accessorKey: 'fsm',
     header: 'FSM',
-    cell: ({ row }) => {
-      return <span>{String(row.original.fsm).replaceAll(regex, ',')}</span>;
+    cell: ({ getValue }) => {
+      return <span>{(getValue() as number).toLocaleString()}</span>;
     },
   },
   {
     accessorKey: 'ffSes',
     header: 'FF(SES)',
-    cell: ({ row }) => {
-      return <span>{String(row.original.ffSes).replaceAll(regex, ',')}</span>;
+    cell: ({ getValue }) => {
+      return <span>{(getValue() as number).toLocaleString()}</span>;
     },
   },
   {
     accessorKey: 'ff',
     header: 'FF',
-    cell: ({ row }) => {
-      return <span>{String(row.original.ff).replaceAll(regex, ',')}</span>;
+    cell: ({ getValue }) => {
+      return <span>{(getValue() as number).toLocaleString()}</span>;
     },
   },
 ];
@@ -126,9 +124,6 @@ export function DataTable() {
                   className="h-16"
                 >
                   {row.getVisibleCells().map((cell) => {
-                    console.log(
-                      flexRender(cell.column.columnDef.cell, cell.getContext())
-                    );
                     return (
                       <TableCell key={cell.id} className="px-4 py-6">
                         {flexRender(

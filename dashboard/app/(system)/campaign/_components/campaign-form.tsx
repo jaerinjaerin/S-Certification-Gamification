@@ -57,6 +57,7 @@ import {
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
+import { mutate } from 'swr';
 
 interface CampaignFormProps {
   initialData: any;
@@ -69,7 +70,7 @@ export default function CampaignForm({
   isEditMode = false,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -296,8 +297,7 @@ export default function CampaignForm({
       }
 
       await Promise.all(copyPromises);
-      campaignMutate();
-      // setCampaigns((c) => [...c, campaign]);
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
       toast.success('Certification created successfully!');
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -349,14 +349,9 @@ export default function CampaignForm({
         return;
       }
 
-      campaignMutate();
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
       console.warn('update campaign');
-      // const updatedCampaign = campaignData.result.campaign;
-      // const updatedCampaigns = campaigns?.map((item) =>
-      //   item.id === updatedCampaign.id ? { ...item, ...updatedCampaign } : item
-      // );
 
-      // setCampaigns(updatedCampaigns as Campaign[]);
       toast.success('Campaign updated successfully!');
     } catch (error) {
       toast.error(`Failed to update campaign: ${error}`);

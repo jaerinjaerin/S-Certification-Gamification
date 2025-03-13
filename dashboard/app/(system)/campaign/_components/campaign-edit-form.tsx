@@ -67,7 +67,7 @@ export default function CampaignEditForm({
   initialData,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { setSelectedNumberOfStages } = useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
@@ -164,10 +164,8 @@ export default function CampaignEditForm({
 
       console.warn('update campaign');
 
-      campaignMutate();
-      mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`
-      );
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
+      await mutate(`/api/cms/campaign/${campaignId}`);
       toast.success('Campaign updated successfully!');
       routeToPage('/campaign');
     } catch (error) {

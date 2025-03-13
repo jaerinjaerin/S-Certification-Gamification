@@ -64,13 +64,14 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
+import { mutate } from 'swr';
 
 interface CampaignFormProps {
   initialData: any;
 }
 
 export default function CampaignForm({ initialData }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { selectedNumberOfStages, setSelectedNumberOfStages } =
     useCampaignState();
@@ -409,8 +410,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
       }
 
       await Promise.all(copyPromises);
-      campaignMutate();
-      // setCampaigns((c) => [...c, campaign]);
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
 
       toast.success('Certification created successfully!');
     } catch (error) {
