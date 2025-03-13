@@ -25,7 +25,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -76,6 +76,13 @@ export default function PolicySheet({
     return false;
   };
   const isAllChecked = checkAllCheckbox();
+  const privacyChecked = form.watch("privacy");
+  const [accordionValue, setAccordionValue] = useState<string>("privacy");
+  useEffect(() => {
+    if (privacyChecked) {
+      setAccordionValue("term");
+    }
+  }, [privacyChecked]);
 
   return (
     <Sheet open={openSheet} onOpenChange={setOpenSheet}>
@@ -90,7 +97,12 @@ export default function PolicySheet({
         <SheetHeader>
           <SheetTitle aria-hidden className="hidden"></SheetTitle>
           <SheetDescription>
-            <Accordion type="single" collapsible defaultValue="privacy">
+            <Accordion
+              type="single"
+              collapsible
+              value={accordionValue}
+              onValueChange={setAccordionValue}
+            >
               <div></div>
               <Form {...form}>
                 <form>
