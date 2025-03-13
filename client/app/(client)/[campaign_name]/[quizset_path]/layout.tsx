@@ -2,7 +2,6 @@ import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
-import { NextIntlClientProvider } from "next-intl";
 import { redirect } from "next/navigation";
 
 export default async function SumtotalUserLayout({
@@ -30,9 +29,6 @@ export default async function SumtotalUserLayout({
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
-
-  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
-  const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
   const agreementContent = await fetchAgreementContent(domainCode);
 
