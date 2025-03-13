@@ -8,7 +8,7 @@ export async function getCampaigns(role: string) {
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
       const roles = await prisma.role.findUnique({
-        where: { id: role },
+        where: { name: role },
         include: {
           permissions: {
             select: { permission: { select: { domains: true } } },
@@ -29,16 +29,18 @@ export async function getCampaigns(role: string) {
       };
     }
 
-    const campaigns = await prisma.campaign.findMany({
+    const result = await prisma.campaign.findMany({
       where,
-      include: { settings: true },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        startedAt: true,
+        endedAt: true,
+        deleted: true,
+      },
       orderBy: { createdAt: 'asc' },
     });
-
-    const result = campaigns.map((c) => ({
-      ...c,
-      ...setHoursFromZeroToEnd(c.startedAt, c.endedAt),
-    }));
 
     return { result };
   } catch (error: unknown) {
@@ -55,6 +57,7 @@ export async function getCampaign(id: string | null) {
     //
     const campaign = await prisma.campaign.findUnique({
       where: { id },
+      include: { settings: true },
     });
 
     let result = null;
@@ -65,7 +68,7 @@ export async function getCampaign(id: string | null) {
       };
     }
 
-    return { result: campaign };
+    return { result };
   } catch (error: unknown) {
     console.error('Error get campaigns: ', error);
     return { result: null };
