@@ -1,4 +1,5 @@
 import { getBadgeEmailTemplete } from "@/templete/email";
+import { QuizStageEx } from "@/types/apiTypes";
 import * as Sentry from "@sentry/nextjs";
 
 export class QuizBadgeHandler {
@@ -47,7 +48,8 @@ export class QuizBadgeHandler {
     userId: string,
     badgeImageUrl: string,
     translationMessage: { [key: string]: string },
-    currentQuizStageIndex: number
+    currentQuizStageIndex: number,
+    currentQuizStage: QuizStageEx | null
   ) => {
     try {
       // console.log("sendBadgeEmail");
@@ -55,7 +57,8 @@ export class QuizBadgeHandler {
       const bodyHtml: string = getBadgeEmailTemplete(
         badgeImageUrl,
         translationMessage,
-        currentQuizStageIndex
+        currentQuizStageIndex,
+        currentQuizStage
       );
 
       const response = await fetch(

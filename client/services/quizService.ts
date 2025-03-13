@@ -80,7 +80,11 @@ export const validateAndCorrectQuizSetPath = async (
   let wasCorrected = false;
 
   try {
-    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+    const codes = extractCodesFromPath(quizSetPath);
+    if (codes == null) {
+      throw new Error("Invalid quizset path");
+    }
+    const { domainCode, languageCode } = codes;
 
     // 도메인 검증
     const domainsResponse = await apiClient.get<ApiListResponse<Domain>>(

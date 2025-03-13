@@ -96,6 +96,7 @@ const Filters = ({
 
   useEffect(() => {
     if (campaign && filterData) {
+      console.log('🚀 ~ useEffect ~ campaign:', campaign);
       initializeFilters(
         filterData.filters,
         form,

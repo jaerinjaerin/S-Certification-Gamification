@@ -1,16 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/utils/utils';
-import { CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar';
 import { ControllerRenderProps } from 'react-hook-form';
 import { FormValues } from '../_type/formSchema';
 import { SelectProps } from '@radix-ui/react-select';
@@ -18,47 +8,6 @@ import { SelectProps } from '@radix-ui/react-select';
 const CustomFormLabel = ({ children }: { children: React.ReactNode }) => {
   return (
     <FormLabel className="text-secondary font-normal">{children}</FormLabel>
-  );
-};
-
-const DatePickerPopover = ({
-  field,
-  error,
-}: {
-  field: ControllerRenderProps<FormValues>;
-  error?: string;
-}) => {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={'secondary'}
-          className={cn(
-            'max-w-[20rem] max-h-10 w-full h-full justify-start py-3 items-center shadow-none text-left font-normal ',
-            !field.value && 'text-muted-foreground',
-            error && 'border-destructive'
-          )}
-        >
-          <CalendarIcon />
-          {field.value ? (
-            format(field.value as Date, 'PPP')
-          ) : (
-            <span className="font-medium">Pick a date</span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-auto p-0 "
-        align="start"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Calendar
-          mode="single"
-          selected={field.value as Date}
-          onSelect={field.onChange}
-        />
-      </PopoverContent>
-    </Popover>
   );
 };
 
@@ -120,5 +69,4 @@ export {
   // CustomInput,
   SelectComponent,
   CustomSelectTrigger,
-  DatePickerPopover,
 };
