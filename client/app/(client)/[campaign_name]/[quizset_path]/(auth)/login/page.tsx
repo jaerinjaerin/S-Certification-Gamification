@@ -13,7 +13,7 @@ import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { usePolicy } from "@/providers/policyProvider";
-import { cn, isSheetLanguage } from "@/utils/utils";
+import { cn } from "@/utils/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +22,7 @@ import {
 } from "@radix-ui/react-alert-dialog";
 import { AutoTextSize } from "auto-text-size";
 import { signIn, useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function Login({
@@ -43,7 +43,6 @@ export default function Login({
     domainName,
   } = usePolicy();
   const regionName = subsidiary && subsidiary.region.name;
-  const locale = useLocale();
 
   const isPolicyAcceptCountry = regionName === "MENA" || regionName === "Korea";
   const [openSheet, setOpenSheet] = useState(isPolicyAcceptCountry);
@@ -114,7 +113,6 @@ export default function Login({
               )}
               {isPolicyAcceptCountry && (
                 <PolicySheet
-                  isSheetLanguage={isSheetLanguage(locale)}
                   processSignIn={processSignIn}
                   loading={loading}
                   privacyContent={PRIVACY_CONTENT}

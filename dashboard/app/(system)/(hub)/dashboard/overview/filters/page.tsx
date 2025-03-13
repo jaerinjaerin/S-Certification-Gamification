@@ -6,11 +6,18 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { downloadOverview } from '@/app/actions/dashboard/overview-download-action';
 import { downloadFileByBase64 } from '@/lib/download';
 import { updateSearchParamsOnUrl } from '@/lib/url';
+import { endOfDayTime, startOfDayTime } from '@/lib/date';
+import { addDays } from 'date-fns';
 
 const OverviewFilterForm = () => {
   const { campaign } = useStateVariables();
 
   const onSubmit = (formData: FieldValues, action?: boolean) => {
+    formData.date = {
+      from: startOfDayTime(formData.date.from),
+      to: endOfDayTime(addDays(formData.date.to, -1)),
+    };
+    console.log('🚀 ~ onSubmit ~ formData:', formData);
     updateSearchParamsOnUrl(formData);
   };
 

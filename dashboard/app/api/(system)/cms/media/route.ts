@@ -136,11 +136,9 @@ export async function POST(request: NextRequest) {
 
     const index = `${count + 1}`;
     const format = file.type.split('/')[1];
-    console.log('🚀 ~ POST ~ index:', index);
-    let imagePath = getPath(campaign.name, `images/${group}`);
+    let imagePath = getPath(campaign.slug, `images/${group}`);
     imagePath = `${imagePath}/${group}_${index}.${format}`;
 
-    console.log('🚀 ~ POST ~ imagePath:', imagePath);
     // 파일 업로드
     await uploadToS3({ key: imagePath, file, isNoCache: true });
     // const pathsToInvalidate = [

@@ -19,14 +19,3 @@ export function formatToMMSS(value: number) {
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
-
-export function isSheetLanguage(locale: string) {
-  const isMENALanguage = defaultLanguagesByRegion.MENA.includes(locale);
-  const isKoreaLanguage = locale === "ko";
-
-  if (isKoreaLanguage || isMENALanguage) {
-    return true;
-  }
-  // return boolean
-  return false;
-}

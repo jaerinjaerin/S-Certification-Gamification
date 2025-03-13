@@ -17,8 +17,8 @@ export default function GetBadgeAnnouncment({
   const badgeImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${badgeStage.badgeImage?.imagePath}`;
   const congratulationMessage =
     stageName === "3"
-      ? translation("congratulation 1")
-      : translation("congratulation 2");
+      ? translation("congratulation_1")
+      : translation("congratulation _2");
 
   return (
     <div className={cn("w-full shrink-0", className)}>

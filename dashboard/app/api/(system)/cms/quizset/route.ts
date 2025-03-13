@@ -269,6 +269,7 @@ export async function POST(request: NextRequest) {
     };
 
     const missingStages = checkMissingStages(questions, maxStage);
+    console.log('missingStages: ', missingStages);
 
     console.log(
       missingStages.length === 0

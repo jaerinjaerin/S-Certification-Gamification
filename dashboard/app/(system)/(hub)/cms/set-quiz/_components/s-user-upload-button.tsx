@@ -1,11 +1,11 @@
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
 import { Button } from '@/components/ui/button';
-import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import UploadExcelFileModal from './upload-excel-file-modal';
 import { ChevronDown, DownloadIcon } from 'lucide-react';
 import { PopoverWithButton } from '../../_components/custom-popover';
@@ -50,7 +50,7 @@ export function SPlusUserUploadButton({
                   </Button>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Activity ID</span>
+                  <span className="font-medium">Activity ID / Badge</span>
                   <Button
                     className="size-[32px] shadow-none"
                     size="icon"
@@ -88,12 +88,12 @@ export function SPlusUserUploadButton({
           <DropdownMenuItem asChild>
             <UploadExcelFileModal
               variant="activityId"
-              title="Upload Activity ID"
+              title="Upload Activity ID / Badge"
               onDropdownClose={onClose}
-              description="ActivityID allows only one file to be uploaded at a time."
+              description="Activity ID and Badge allows only one file to be uploaded at a time."
             >
               <Button className="w-full justify-start" variant="ghost">
-                Activity ID
+                Activity ID / Badge
               </Button>
             </UploadExcelFileModal>
           </DropdownMenuItem>

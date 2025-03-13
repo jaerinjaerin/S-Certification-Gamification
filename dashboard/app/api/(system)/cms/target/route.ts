@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
 
     //
     // excel 파일 업로드
-    const path = getPath(campaign.name, 'target');
-    const key = `${path}/target_${campaign.name}.xlsx`;
+    const path = getPath(campaign.slug, 'target');
+    const key = `${path}/target_${campaign.slug}.xlsx`;
     await uploadToS3({ key, file, isNoCache: true });
     const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
     invalidateCache(distributionId, [`/${key}`]);
