@@ -256,6 +256,11 @@ export async function POST(request: NextRequest) {
       })
     );
 
+    invalidateCache(process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!, [
+      `/${destinationKey}`,
+      `/${destinationKeyForWeb}`,
+    ]);
+
     if (uploadedFile) {
       uploadedFile = await prisma.uploadedFile.update({
         where: {
@@ -276,14 +281,6 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-
-    // 사용 예제
-    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
-    const pathsToInvalidate = [
-      `/certification/${campaign.slug}/jsons/channels.json`,
-    ]; // 무효화할 경로
-
-    invalidateCache(distributionId, pathsToInvalidate);
 
     return NextResponse.json(
       {
