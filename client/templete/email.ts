@@ -1,7 +1,10 @@
+import { QuizStageEx } from "@/types/apiTypes";
+
 export const getBadgeEmailTemplete = (
   badgeImageUrl: string,
   translationMessage: { [key: string]: string },
-  currentQuestionIndex: number
+  currentQuestionIndex: number,
+  currentQuizStage: QuizStageEx
 ) => {
   return `<!DOCTYPE html>
 <html style="font-weight: 400">
@@ -160,7 +163,7 @@ export const getBadgeEmailTemplete = (
                 "
                 >
                   ${
-                    currentQuestionIndex === 2
+                    currentQuizStage.badgeType === "FIRST"
                       ? translationMessage["email_badge_description_2"]
                       : translationMessage["email_badge_description_3"]
                   }
