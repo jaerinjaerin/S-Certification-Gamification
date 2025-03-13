@@ -14,7 +14,7 @@ import { handleDownload } from '../../(hub)/cms/_utils/utils';
 import { mutate } from 'swr';
 
 export default function CertificationClientComponent() {
-  const { role, campaigns, setCampaign } = useStateVariables(); //role이 null이면 ADMIN
+  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
   const { routeToPage, isRouting } = useNavigation();
 
   if (campaigns?.length === 0) {
@@ -180,7 +180,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
               <Button
                 className="p-0 aspect-square size-[1.875rem] rounded-sm"
                 variant="ghost"
-                onClick={() => {
+                onClick={async () => {
+                  await setCampaign(campaign.id);
                   routeToPage(`/campaign/edit/${campaign.id}`);
                 }}
               >
