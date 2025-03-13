@@ -237,7 +237,7 @@ const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
               ? true
               : false
             : false,
-          stage: row['Stage'] ? Number(row['Stage']) : 0,
+          stage: row['Stage'] ? Number(row['Stage']) : null,
           product: row['Product'] || null,
           category: row['Category'] || null,
           specificFeature: row['SpecificFeature'] || null,
@@ -252,55 +252,65 @@ const parseSheet = (sheet: XLSX.WorkSheet, isExtra: boolean): ParsingResult => {
           options: [], // 각 문제별로 options을 따로 저장
         };
 
-        if (groupedData[no].enabled) {
-          if (row['NewOrder'] == null) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has NewOrder!`,
-            });
-          }
-          if (groupedData[no].timeLimitSeconds == null) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no timeLimitSeconds!`,
-            });
-          }
-          if (groupedData[no].text == null || groupedData[no].text === '') {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no text!`,
-            });
-          }
-          if (groupedData[no].stage == null) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no stage!`,
-            });
-          }
-          if (groupedData[no].originQuestionIndex == null) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order!`,
-            });
-          }
-          if (groupedData[no].orderInStage == null) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order in stage!`,
-            });
-          }
-          if (
-            !['SINGLE_CHOICE', 'MULTI_CHOICE', 'TRUE_FALSE'].includes(
-              groupedData[no].questionType
-            )
-          ) {
-            errors.push({
-              line: headerIndex + groupedData[no].originQuestionIndex,
-              message: `⚠️ Warning: Question ${groupedData[no].questionType} has invalid question type!`,
-            });
-          }
+        // if (groupedData[no].enabled) {
+        if (
+          groupedData[no].stage == null ||
+          groupedData[no].stage === '' ||
+          groupedData[no].stage === 0
+        ) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no stage!`,
+          });
+        }
+        if (row['NewOrder'] == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has NewOrder!`,
+          });
+        }
+        if (groupedData[no].timeLimitSeconds == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no timeLimitSeconds!`,
+          });
+        }
+        if (groupedData[no].text == null || groupedData[no].text === '') {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no text!`,
+          });
+        }
+        if (groupedData[no].stage == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no stage!`,
+          });
+        }
+        if (groupedData[no].originQuestionIndex == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order!`,
+          });
+        }
+        if (groupedData[no].orderInStage == null) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].originQuestionIndex} has no order in stage!`,
+          });
+        }
+        if (
+          !['SINGLE_CHOICE', 'MULTI_CHOICE', 'TRUE_FALSE'].includes(
+            groupedData[no].questionType
+          )
+        ) {
+          errors.push({
+            line: headerIndex + groupedData[no].originQuestionIndex,
+            message: `⚠️ Warning: Question ${groupedData[no].questionType} has invalid question type!`,
+          });
         }
       }
+      // }
 
       // 옵션 데이터 올바르게 매칭
       if (row['Answer']) {

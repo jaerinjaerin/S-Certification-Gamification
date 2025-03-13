@@ -79,11 +79,11 @@ export default async function QuizLayout({
   );
 
   console.log("getQuizSet quizResponse", quizResponse);
-  // // const quizResponse: ApiResponse<QuizSetEx> = await fetchQuizSet(
-  // //   params.campaign_name,
-  // //   params.quizset_path,
-  // //   userId
-  // // );
+  // const quizResponse: ApiResponse<QuizSetEx> = await fetchQuizSet(
+  //   params.campaign_name,
+  //   params.quizset_path,
+  //   userId
+  // );
   if (quizResponse.status === 404) {
     redirect(`/${params.campaign_name}/not-ready`);
   }
@@ -111,7 +111,7 @@ export default async function QuizLayout({
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
-  // console.log("QuizLayout quizSet", quizSet);
+  console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
     redirect(`/${params.campaign_name}/not-ready`);
   }
