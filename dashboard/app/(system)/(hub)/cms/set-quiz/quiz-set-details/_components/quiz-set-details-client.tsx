@@ -127,7 +127,7 @@ export default function QuizSetDetailsClient() {
 
       <div>
         <h3 className="text-size-17px font-semibold mb-[1.375rem]">
-          Imported Questions
+          Questions
         </h3>
         <div>
           {quizSet?.quizStages.map((stage: QuizStageEx, index: number) => {
