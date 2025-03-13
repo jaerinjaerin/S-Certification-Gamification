@@ -13,6 +13,6 @@ export const jsonToFile = ({
 };
 
 // 기준 키 경로
-export const getPath = (campaignName: string, folderName: string) => {
-  return `certification/${campaignName.toLowerCase()}/${folderName}`;
+export const getPath = (campaignSlug: string, folderName: string) => {
+  return `certification/${campaignSlug.toLowerCase()}/${folderName}`;
 };

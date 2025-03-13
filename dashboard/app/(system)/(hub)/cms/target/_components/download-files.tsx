@@ -10,7 +10,7 @@ const DownloadTarget = () => {
 
   const onDownload = async () => {
     if (state.targets && campaign) {
-      window.location.href = `/api/cms/target/data?${serializeJsonToQuery({ campaignName: campaign.name })}`;
+      window.location.href = `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`;
     }
   };
 

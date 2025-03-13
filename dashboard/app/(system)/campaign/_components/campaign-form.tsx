@@ -58,6 +58,7 @@ import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
 import { mutate } from 'swr';
+import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
@@ -533,7 +534,7 @@ export default function CampaignForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(startOfDayTime(date));
                                 setStartDatePickerOpen(false);
                               }}
                             />
@@ -579,7 +580,7 @@ export default function CampaignForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(endOfDayTime(date));
                                 setEndDatePickerOpen(false);
                               }}
                               fromDate={form.getValues('startDate')}
