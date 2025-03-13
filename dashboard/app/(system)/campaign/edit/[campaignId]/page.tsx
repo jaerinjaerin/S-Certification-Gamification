@@ -11,7 +11,7 @@ export default function EditCampaignPage({
 }) {
   const { campaignId } = params;
   const { data, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`,
+    `/api/cms/campaign/${campaignId}`,
     fetcher
   );
 

@@ -10,12 +10,12 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaignName = searchParams.get('campaignName') as string;
+    const campaignSlug = searchParams.get('campaignSlug') as string;
 
     await prisma.$connect();
 
-    const path = getPath(campaignName, 'target');
-    const key = `${path}/target_${campaignName}.xlsx`;
+    const path = getPath(campaignSlug, 'target');
+    const key = `${path}/target_${campaignSlug}.xlsx`;
 
     const response = await getFromS3({ key, isNoCache: true });
     if (!response?.Body) {

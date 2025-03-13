@@ -11,7 +11,6 @@ export const useNavigation = (): NavigationHook => {
   const [isRouting, setIsRouting] = useState(false);
 
   const routeToPage = (path: string) => {
-    console.log('Routing to:', path);
     setIsRouting(true);
     router.push(path);
   };

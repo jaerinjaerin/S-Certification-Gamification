@@ -90,35 +90,30 @@ export default function QuizSetDetailsClient() {
   return (
     <div className="space-y-[5.875rem]">
       <div>
-        <h3 className="text-size-17px font-semibold mb-[1.375rem]">
-          User Information
-        </h3>
-        <div className="flex items-center gap-3 mb-[1.688rem]">
-          <InfoComponent
-            className="break-all text-pretty !h-fit"
-            title="Quiz Set File"
-            content={QUIZSET_FILE_NAME}
-          />
-          <div className="flex items-center gap-2">
+        <div
+          className={'flex items-center justify-between gap-4 mb-[1.375rem]'}
+        >
+          <h3 className="text-size-17px font-semibold ">Information</h3>
+          <div className="flex right items-center gap-2">
             <span className="text-nowrap text-secondary">
-              date : {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
+              Updated :{' '}
+              {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
             </span>
             <Button
               onClick={() =>
                 handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL)
               }
-              className="bg-white text-zinc-950 shadow-none size-8"
+              className="bg-white text-zinc-950 shadow-none size-8 hover:bg-stone-200"
+              variant={'default'}
             >
               <Download />
             </Button>
           </div>
         </div>
-        <InfoComponent
-          className="mb-[1.188rem]"
-          title="Domain"
-          content={domain}
-        />
-        <div className="flex space-x-[5.125rem]">
+
+        <div className="flex flex-col gap-3">
+          <InfoComponent title="Quiz Set File" content={QUIZSET_FILE_NAME} />
+          <InfoComponent title="Domain" content={domain} />
           <InfoComponent
             title="Job Group"
             content={quizSet?.jobCodes[0].toUpperCase()}
@@ -129,6 +124,7 @@ export default function QuizSetDetailsClient() {
           />
         </div>
       </div>
+
       <div>
         <h3 className="text-size-17px font-semibold mb-[1.375rem]">
           Imported Questions
@@ -345,10 +341,12 @@ const InfoComponent = ({
 }) => {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-secondary text-size-14px text-nowrap">{title}</span>
+      <span className="text-secondary text-size-14px text-nowrap text-stone-500 w-32">
+        {title}
+      </span>
       <div
         className={cn(
-          'w-[20rem] h-10 flex items-center border rounded-md border-zinc-200 p-3 !text-zinc-500 text-size-14px shadow-none',
+          'w-[20rem] h-10 flex items-center p-3 !text-zinc-500 text-size-14px shadow-none font-bold',
           className
         )}
       >

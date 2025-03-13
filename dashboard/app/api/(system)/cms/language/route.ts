@@ -12,12 +12,11 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const campaign = searchParams.get('campaignName') as string;
+    const campaignSlug = searchParams.get('campaignSlug') as string;
 
     const languages = await prisma.language.findMany({});
 
-    console.log('🚀 ~ GET ~ languages:', languages);
-    const campaignName = (campaign || 'unknown').toLowerCase();
+    const campaignName = (campaignSlug || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'ui_language');
 
     const result = await Promise.all(
@@ -82,7 +81,7 @@ export async function POST(request: NextRequest) {
       where: { code: { in: codes } },
     });
 
-    const campaignName = (campaign.name || 'unknown').toLowerCase();
+    const campaignName = (campaign.slug || 'unknown').toLowerCase();
     const path = getPath(campaignName, 'ui_language');
     // excel 파일 업로드
     await Promise.all(

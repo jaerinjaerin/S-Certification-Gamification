@@ -17,7 +17,6 @@ import {
 } from '../ui/select';
 import { useStateVariables } from '../provider/state-provider';
 import { Fragment } from 'react';
-import { Campaign } from '@prisma/client';
 import { Button } from '../ui/button';
 
 const CurrentBreadCrumb = () => {
@@ -29,14 +28,11 @@ const CurrentBreadCrumb = () => {
     .filter(Boolean)
     .map((name) => name.replaceAll('-', ' '));
 
-  const handleChangeCampaign = (value: string) => {
+  const handleChangeCampaign = async (value: string) => {
     if (!campaigns) return;
     if (value === '/campaign') router.push(value);
     //
-    const selectedCampaign = campaigns.find((c: Campaign) => c.id === value);
-    if (selectedCampaign) {
-      setCampaign(selectedCampaign);
-    }
+    await setCampaign(value);
   };
 
   const UppercaseFormat = (text: string) => {
@@ -72,9 +68,9 @@ const CurrentBreadCrumb = () => {
                     >
                       Certification List
                     </SelectItem>
-                    {campaigns?.map((c: Campaign) => (
+                    {campaigns?.map((c: { id: string; name: string }) => (
                       <SelectItem key={c.id} value={c.id}>
-                        {c.slug}
+                        {c.name}
                       </SelectItem>
                     ))}
                   </>
