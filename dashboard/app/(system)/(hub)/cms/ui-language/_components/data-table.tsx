@@ -61,7 +61,7 @@ export const columns: ColumnDef<LanguageProps>[] = [
 export function DataTable() {
   const { campaign } = useStateVariables();
   const { data: languageData, isLoading: loading } = useSWR(
-    `/api/cms/language?${searchParamsToQuery({ campaignName: campaign?.name })}`,
+    `/api/cms/language?${searchParamsToQuery({ campaignSlug: campaign?.slug })}`,
     swrFetcher
   );
 
