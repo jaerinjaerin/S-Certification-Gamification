@@ -1,12 +1,12 @@
 import {
   CustomDialogContent,
+  Dialog,
   DialogClose,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Dialog } from '@/components/ui/dialog';
 import { DropzoneProps, FileWithExtraInfo } from '../../_types/type';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
@@ -115,7 +115,7 @@ function AssetPreviewView({
 }: AssetPreviewViewProps) {
   return (
     <div className="mx-auto w-full max-w-[25rem]">
-      <p className="text-secondary">Quiz Set File</p>
+      <p className="text-secondary">Asset File</p>
       <div className="mt-2 flex justify-center">
         {files?.map((file) => (
           <div key={file.name} className="w-full">

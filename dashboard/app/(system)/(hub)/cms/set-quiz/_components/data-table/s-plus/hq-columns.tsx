@@ -68,20 +68,6 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     ),
   },
   {
-    accessorKey: 'Quiz Language',
-    header: 'Quiz Language',
-    cell: ({ row }) => {
-      if (row.original.quizSet?.language) {
-        return <div>{row.original.quizSet.language.name}</div>;
-      }
-      // quizLanuage 와 ui Language를 동일하게 사용하고 있음
-      if (row.original.uiLanguage) {
-        return <div>{row.original.uiLanguage.name}</div>;
-      }
-      return <div>-</div>;
-    },
-  },
-  {
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
@@ -205,8 +191,8 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     header: 'UI Language',
 
     cell: ({ row }) => {
-      if (row.original.uiLanguage?.code) {
-        return <div>{row.original.uiLanguage.code}</div>;
+      if (row.original.uiLanguage?.name) {
+        return <div>{row.original.uiLanguage.name}</div>;
       }
       return <UILinkButton />;
     },
