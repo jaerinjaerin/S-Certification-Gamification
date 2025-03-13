@@ -4,6 +4,7 @@ import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
+import { redirect } from "next/navigation";
 
 export default async function SumtotalUserLayout({
   children,
@@ -14,7 +15,13 @@ export default async function SumtotalUserLayout({
 }) {
   // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
-  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
+  const codes = extractCodesFromPath(quizset_path);
+  if (codes == null) {
+    redirect(`/${campaign_name}/not-ready`);
+  }
+
+  const { domainCode, languageCode } = codes;
+
   // const supportedLanguages = await fetchSupportedLanguages();
   // const supportedLanguages = await fetchSupportedLanguageCodes();
   const supportedLanguages =
@@ -33,8 +40,6 @@ export default async function SumtotalUserLayout({
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
   const agreementContent = await fetchAgreementContent(domainCode);
-
-  console.log("translatedMessages 2323", translatedMessages);
 
   return (
     <div>

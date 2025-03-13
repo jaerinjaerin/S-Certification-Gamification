@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Spinner from "@/components/ui/spinner";
 import { ERROR_CODES } from "@/constants/error-codes";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -78,7 +79,7 @@ export default function GuestRegisterPage({
   useGAPageView();
   const router = useRouter();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const translation = useTranslations();
   const { campaign } = useCampaign();
   const locale = useLocale();
@@ -115,6 +116,10 @@ export default function GuestRegisterPage({
   const [jobs, setJobs] = useState<Job[]>(defaultJobs);
   const [quizLanguages, setQuizLanguages] = useState<QuizLanguage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [checkRegisteredLoading, setCheckRegisteredLoading] =
+    useState<boolean>(false);
+
+  console.log("status", status);
 
   const {
     privacyContent,
@@ -186,7 +191,10 @@ export default function GuestRegisterPage({
   }, [campaignPath]);
 
   const checkRegistered = async (userId: string) => {
+    console.log("checkRegistered", userId);
     try {
+      setCheckRegisteredLoading(true);
+      console.log("setCheckRegisteredLoading", true);
       // setCheckingRegisterd(true);
       const quizLogResponse = await fetchQuizLog(userId, campaign.name);
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
@@ -198,6 +206,8 @@ export default function GuestRegisterPage({
       console.error("Failed to fetch data", error);
     } finally {
       // setCheckingRegisterd(false);
+      console.log("setCheckRegisteredLoading", false);
+      setCheckRegisteredLoading(false);
     }
   };
 
@@ -324,7 +334,8 @@ export default function GuestRegisterPage({
       (!selectedChannel && (!channelName || channelName.trim().length < 2)) ||
       !selectedJobId ||
       !quizLanguageCode ||
-      (!loadingCreate && !!campaignPath)
+      (!loadingCreate && !!campaignPath) ||
+      !checkRegisteredLoading
     );
   };
 
@@ -382,7 +393,12 @@ export default function GuestRegisterPage({
               value={`${translation("country")}*`}
             >
               <SelectTrigger
-                disabled={loading || loadingCreate || countries == null}
+                disabled={
+                  loading ||
+                  loadingCreate ||
+                  countries == null ||
+                  checkRegisteredLoading
+                }
                 className={cn(
                   selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
                 )}
@@ -549,6 +565,7 @@ export default function GuestRegisterPage({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        {(checkRegisteredLoading || status === "loading") && <Spinner />}
       </div>
     </>
   );

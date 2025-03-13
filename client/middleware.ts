@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { AuthType } from "@prisma/client";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -51,13 +52,19 @@ export async function middleware(request: NextRequest) {
    * 로그인한 사용자가 /login 페이지에 접근하려는 경우
    */
   if (session && pathname.includes("/login")) {
-    // const authType = session.user?.authType;
-    // if (authType === AuthType.SUMTOTAL) {
-    const url = campaignQuizSetPath
-      ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
-      : `${basePath}/${campaignName}${search}`;
+    const authType = session.user?.authType;
+    if (authType === AuthType.SUMTOTAL) {
+      // return NextResponse.redirect(new URL("/error", request.url));
+      const url = `${basePath}/${campaignName}/check_quizset`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      return NextResponse.redirect(new URL(url, request.url));
+    } else {
+      // const url = campaignQuizSetPath
+      //   ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
+      //   : `${basePath}/${campaignName}${search}`;
+      const url = `${basePath}/${campaignName}/register`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
 
-    return NextResponse.redirect(new URL(url, request.url));
+      return NextResponse.redirect(new URL(url, request.url));
+    }
   }
 
   if (session && campaignQuizSetPath && segments.length === 2) {

@@ -24,7 +24,11 @@ export async function getQuizSet(
       );
     }
 
-    const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
+    const codes = extractCodesFromPath(quizsetPath);
+    if (codes == null) {
+      throw new ApiError(400, "BAD_REQUEST", "Invalid quizset path");
+    }
+    const { domainCode, languageCode } = codes;
 
     const user = await prisma.user.findFirst({
       where: { id: userId },
@@ -184,7 +188,7 @@ export async function getQuizSet(
       }
       // console.log("activityBadges:", activityBadges);
       // console.log("campaign:", campaign.settings);
-      console.log("quizSet:", quizSet);
+      // console.log("quizSet:", quizSet);
 
       const campaignSettings = await prisma.campaignSettings.findFirst({
         where: {
@@ -192,7 +196,7 @@ export async function getQuizSet(
         },
       });
 
-      console.log("campaignSettings:", campaignSettings);
+      // console.log("campaignSettings:", campaignSettings);
 
       if (campaignSettings) {
         const maxStage = campaignSettings.totalStages;

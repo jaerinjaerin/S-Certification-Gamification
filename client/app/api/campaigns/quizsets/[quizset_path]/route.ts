@@ -36,7 +36,11 @@ export async function GET(request: NextRequest, props: Props) {
       );
     }
 
-    const { domainCode, languageCode } = extractCodesFromPath(quizsetPath);
+    const codes = extractCodesFromPath(quizsetPath);
+    if (codes == null) {
+      throw new ApiError(400, "BAD_REQUEST", "Invalid quizset path");
+    }
+    const { domainCode, languageCode } = codes;
 
     const user = await prisma.user.findFirst({
       where: { id: userId },

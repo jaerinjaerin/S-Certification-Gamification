@@ -16,12 +16,9 @@ export default async function GuestLayout({
 
   // console.log("GuestLayout locale", locale);
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${serviceLangCode}.json`;
-  console.log("GuestLayout url", url);
   const messages = await fetch(url, { cache: "force-cache" })
     .then((res) => res.json())
     .catch((error) => console.error("get message error", error));
-
-  console.log("GuestLayout messages", messages);
 
   return (
     <div lang={locale}>
