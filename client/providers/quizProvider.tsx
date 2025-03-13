@@ -68,8 +68,8 @@ export const QuizProvider = ({
 }) => {
   const translation = useTranslations();
 
-  console.log("QuizProvider", quizSet);
-  console.log("QuizProvider", quizStageLogs);
+  // console.log("QuizProvider", quizSet);
+  // console.log("QuizProvider", quizStageLogs);
 
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);

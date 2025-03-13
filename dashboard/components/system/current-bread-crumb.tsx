@@ -6,7 +6,7 @@ import {
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
 import { usePathname, useRouter } from 'next/navigation';
-import { Slash } from 'lucide-react';
+import { MoveLeft, Slash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Select,
@@ -18,6 +18,7 @@ import {
 import { useStateVariables } from '../provider/state-provider';
 import { Fragment } from 'react';
 import { Campaign } from '@prisma/client';
+import { Button } from '../ui/button';
 
 const CurrentBreadCrumb = () => {
   const router = useRouter();
@@ -48,27 +49,39 @@ const CurrentBreadCrumb = () => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <Select
-            value={campaign?.id || ''}
-            onValueChange={handleChangeCampaign}
-          >
-            <SelectTrigger className="w-full focus:ring-0">
-              <SelectValue placeholder={campaign?.name || ''} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem
-                value="/campaign"
-                className="font-bold border-b text-base"
-              >
-                Certification List
-              </SelectItem>
-              {campaigns?.map((c: Campaign) => (
-                <SelectItem key={c.id} value={c.id}>
-                  {c.slug}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {pathname.includes('/quiz-set-details') ? (
+            <Button variant="secondary" onClick={() => router.back()}>
+              <MoveLeft /> Back
+            </Button>
+          ) : (
+            <Select
+              value={campaign?.id || ''}
+              onValueChange={handleChangeCampaign}
+            >
+              <SelectTrigger className="w-full focus:ring-0">
+                <SelectValue placeholder={campaign?.name || ''} />
+              </SelectTrigger>
+              <SelectContent>
+                {pathname.includes('/quiz-set-details') ? (
+                  <>back</>
+                ) : (
+                  <>
+                    <SelectItem
+                      value="/campaign"
+                      className="font-bold border-b text-base"
+                    >
+                      Certification List
+                    </SelectItem>
+                    {campaigns?.map((c: Campaign) => (
+                      <SelectItem key={c.id} value={c.id}>
+                        {c.slug}
+                      </SelectItem>
+                    ))}
+                  </>
+                )}
+              </SelectContent>
+            </Select>
+          )}
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <Slash />

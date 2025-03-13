@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decrypt } from '@/utils/encrypt';
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
+import { Job, User, UserQuizLog } from '@prisma/client';
+import { extendedQuery } from '@/lib/sql';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,13 +16,17 @@ export async function GET(request: NextRequest) {
     const { where: condition, period } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
+    const jobGroup: Job[] = await extendedQuery(
+      prisma,
+      'Job',
+      jobId ? { code: jobId } : {},
+      { select: ['id', 'code'] }
+    );
 
-    const logs = await prisma.userQuizLog.findMany({
-      where: {
+    const logs: UserQuizLog[] = await extendedQuery(
+      prisma,
+      'UserQuizLog',
+      {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },
         ...(storeId
@@ -29,15 +35,17 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      select: { userId: true, lastCompletedStage: true },
-    });
+      { select: ['userId', 'lastCompletedStage'] }
+    );
 
-    const users = await prisma.user.findMany({
-      where: {
+    const users: User[] = await extendedQuery(
+      prisma,
+      'User',
+      {
         id: { in: logs.map((log) => log.userId) },
       },
-      select: { id: true, providerUserId: true },
-    });
+      { select: ['id', 'providerUserId'] }
+    );
 
     const userMap = new Map(
       users.map((user) => {

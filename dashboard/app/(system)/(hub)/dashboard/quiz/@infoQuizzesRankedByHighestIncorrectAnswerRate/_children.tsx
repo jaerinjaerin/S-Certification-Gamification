@@ -21,7 +21,7 @@ const QuizQuizzesRankedChild = () => {
   const { data: rankData, isLoading } = useSWR(
     `/api/dashboard/quiz/info/quizzes-ranked-by-highest-incorrect-answer-rate?${searchParams.toString()}&campaign=${campaign?.id}`,
     swrFetcher,
-    { fallbackData: { result: [] } }
+    { revalidateOnFocus: false, fallbackData: { result: [] } }
   );
 
   const data = rankData.result;

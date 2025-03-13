@@ -3,6 +3,7 @@ import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
+import { redirect } from "next/navigation";
 
 export default async function SumtotalUserLayout({
   children,
@@ -12,7 +13,18 @@ export default async function SumtotalUserLayout({
   params: { campaign_name: string; quizset_path: string };
 }) {
   const timeZone = "Seoul/Asia";
-  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
+  const codes = extractCodesFromPath(quizset_path);
+  if (codes == null) {
+    redirect(`/${campaign_name}/not-ready`);
+  }
+
+  const { domainCode, languageCode } = codes;
+
+  // const supportedLanguages = await fetchSupportedLanguages();
+  // const supportedLanguages = await fetchSupportedLanguageCodes();
+  // const supportedLanguages =
+  //   (await getLanguageCodes())?.result?.item ??
+  //   defaultLanguages.map((lang) => lang.code);
 
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(
