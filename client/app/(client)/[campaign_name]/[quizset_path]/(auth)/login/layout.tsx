@@ -1,6 +1,4 @@
-import { auth } from "@/auth";
 import { mapBrowserLanguageToLocale } from "@/i18n/locale";
-import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
@@ -15,14 +13,12 @@ export default async function SumtotalUserLayout({
 }) {
   const timeZone = "Seoul/Asia";
   const codes = extractCodesFromPath(quizset_path);
-  // const session = await auth();
-  // const authType = session?.user?.authType;
-  // console.log("🥕 authType", authType);
+
   if (codes == null) {
     redirect(`/${campaign_name}/not-ready`);
   }
 
-  const { domainCode, languageCode } = codes;
+  const { languageCode } = codes;
 
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(

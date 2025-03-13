@@ -53,7 +53,7 @@ export default async function QuizLayout({
       redirect("/error/not-found");
     }
 
-    const { domainCode, languageCode } = codes;
+    const { languageCode } = codes;
 
     // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
     const normalizedLanguageCode = languageCode.replace(
