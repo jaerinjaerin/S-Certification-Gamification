@@ -26,7 +26,7 @@ import useCreateItem from "@/hooks/useCreateItem";
 import useGetContents from "@/hooks/useGetContents";
 import { useCampaign } from "@/providers/campaignProvider";
 import { fetchQuizLog } from "@/services/quizService";
-import { cn, isSheetLanguage } from "@/utils/utils";
+import { cn } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
@@ -537,7 +537,7 @@ export default function GuestRegisterPage({
                   }
                 >
                   {/* <SelectValue placeholder={translation("job_group")} /> */}
-                  <SelectValue placeholder={"퀴즈 언어 선택 (번역정보 필요)"} />
+                  <SelectValue placeholder={translation("quiz_language")} />
                 </SelectTrigger>
                 <SelectContent className="font-medium font-one">
                   {quizLanguages.map((lang) => (
@@ -562,7 +562,6 @@ export default function GuestRegisterPage({
           )}
           {isPolicyAcceptCountry && (
             <PolicySheet
-              isSheetLanguage={isSheetLanguage(locale)}
               processSignIn={routeQuizPage}
               loading={loading || loadingCreate}
               privacyContent={PRIVACY_CONTENT}

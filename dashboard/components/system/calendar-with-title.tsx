@@ -1,6 +1,5 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
@@ -9,6 +8,7 @@ import {
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+import { CalendarRange } from '@/components/ui/calendar-range';
 
 // const dateOptions = {
 //   locale: 'en-US',
@@ -65,7 +65,7 @@ export function CalendarForm({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
+          <CalendarRange
             mode="range" // 날짜 범위 선택 모드
             numberOfMonths={2}
             selected={field.value}

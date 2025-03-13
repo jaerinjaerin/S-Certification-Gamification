@@ -3,58 +3,6 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import XLSX from "xlsx";
 
-const matchingTable = {
-  Albanian: "sq",
-  "Arabic(MENA)": "ar-AE",
-  Azerbaijan: "az",
-  Bengali: "bn",
-  Bosnian: "bs",
-  Bulgarian: "bg",
-  Croatian: "hr-HR",
-  Czech: "cs",
-  Danish: "da",
-  English: "en-US",
-  "!English": "en-GB",
-  Estonian: "et",
-  Finnish: "fi",
-  // "French(Canada)": "fr-CA",
-  "French(SEF)": "fr-FR",
-  Georgian: "ka",
-  "German(SEAS)": "de-DE",
-  Greek: "el",
-  Hebrew: "he",
-  Hongkong: "zh-HK",
-  Taiwan: "zh-TW",
-  Hungarian: "hu",
-  Indonesian: "id",
-  Italian: "it-IT",
-  Japanese: "ja",
-  Khmer: "km",
-  Lao: "lo",
-  Latvian: "lv",
-  Lithuanian: "lt",
-  Macedonian: "mk",
-  Myanmar: "my",
-  Norwegian: "nb",
-  // PRC: "zh-CN",
-  Polish: "pl",
-  "Portuguese(Brazil)": "pt-BR",
-  Portuguese: "pt-PT",
-  Romanian: "ro",
-  "Russian(SECE)": "ru",
-  Serbian: "sr-Cyrl",
-  Slovak: "sk-SK",
-  Slovenian: "sl",
-  "Spanish(LTN_SECH-Chile))": "es-LTN",
-  Spanish: "es-ES",
-  Swedish: "sv",
-  Thai: "th",
-  Turkish: "tr",
-  Ukrainian: "uk",
-  Uzbek: "uz",
-  Vietnamese: "vi",
-};
-
 const convertLangPackXlsxToJson = (data) => {
   return data.reduce((acc, el) => {
     if (el[0] && el[1]) {
@@ -79,21 +27,13 @@ const convertLangPackFolerToJson = async () => {
       const workbook = XLSX.readFile(filePath);
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
+
       const jsonData = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
-        range: 2,
+        range: 1,
       });
 
-      const matchingValue = file.split("_Paradigm")[0].trim();
-
-      let key;
-      if (matchingTable[matchingValue]) {
-        key = matchingTable[matchingValue];
-      } else {
-        key = matchingTable[file.split("_")[0].trim()];
-      }
-
-      console.log(file, key, matchingValue);
+      const key = file.split(".")[0];
       const strings = convertLangPackXlsxToJson(jsonData);
 
       fs.writeFileSync(
