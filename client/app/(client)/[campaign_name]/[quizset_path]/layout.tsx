@@ -12,19 +12,12 @@ export default async function SumtotalUserLayout({
   children: React.ReactNode;
   params: { campaign_name: string; quizset_path: string };
 }) {
-  const timeZone = "Seoul/Asia";
   const codes = extractCodesFromPath(quizset_path);
   if (codes == null) {
     redirect(`/${campaign_name}/not-ready`);
   }
 
   const { domainCode, languageCode } = codes;
-
-  // const supportedLanguages = await fetchSupportedLanguages();
-  // const supportedLanguages = await fetchSupportedLanguageCodes();
-  // const supportedLanguages =
-  //   (await getLanguageCodes())?.result?.item ??
-  //   defaultLanguages.map((lang) => lang.code);
 
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(
@@ -33,7 +26,7 @@ export default async function SumtotalUserLayout({
   );
 
   const locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
-  console.log("QuizSetLayout locale:", locale);
+  console.log("QuizSetLoginLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
@@ -45,21 +38,15 @@ export default async function SumtotalUserLayout({
 
   return (
     <div>
-      <NextIntlClientProvider
-        timeZone={timeZone}
-        messages={translatedMessages}
-        locale={locale}
+      <PolicyProvider
+        privacyContent={privacyContent?.contents}
+        termContent={termContent?.contents}
+        agreementContent={agreementContent && agreementContent?.contents}
+        domainName={domainInformation?.name}
+        subsidiary={domainInformation?.subsidiary}
       >
-        <PolicyProvider
-          privacyContent={privacyContent?.contents}
-          termContent={termContent?.contents}
-          agreementContent={agreementContent && agreementContent?.contents}
-          domainName={domainInformation?.name}
-          subsidiary={domainInformation?.subsidiary}
-        >
-          {children}
-        </PolicyProvider>
-      </NextIntlClientProvider>
+        {children}
+      </PolicyProvider>
     </div>
   );
 }
