@@ -1,6 +1,7 @@
 import { convertUi } from '@/app/(system)/(hub)/cms/_utils/convert-excel-json';
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getS3Client } from '@/lib/aws/s3-client';
 import { prisma } from '@/model/prisma';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
@@ -184,6 +185,11 @@ export async function POST(request: NextRequest) {
         Body: jsonString,
       })
     );
+
+    invalidateCache(process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!, [
+      `/${destinationKey}`,
+      `/${key}`,
+    ]);
 
     return NextResponse.json(
       { success: true, result: { language, uploadedFile } },
