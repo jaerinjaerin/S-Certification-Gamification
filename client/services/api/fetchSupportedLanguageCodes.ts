@@ -1,5 +1,6 @@
 import { defaultLanguages } from "@/core/config/default";
 import * as Sentry from "@sentry/nextjs";
+import { prisma } from "@/prisma-client";
 
 // let cachedLanguages: string[] | null = null;
 // let lastFetchLangTime: number | null = null;
@@ -7,24 +8,9 @@ import * as Sentry from "@sentry/nextjs";
 
 export async function fetchSupportedLanguageCodes(): Promise<string[]> {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/languages`,
-      {
-        cache: "force-cache", // 항상 새로운 데이터를 가져옴
-      }
-    );
+    const languages = await prisma.language.findMany();
 
-    if (!response.ok) {
-      console.warn(`⚠️ 데이터 없음: 언어코드셋`);
-      throw new Error(`HTTP error. status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    if (!result || !result.items) {
-      throw new Error("No data returned from /api/languages");
-    }
-
-    return result.items
+    return languages
       .filter((item) => !item.name.includes("deprecated"))
       .map((item) => item.code)
       .sort();
