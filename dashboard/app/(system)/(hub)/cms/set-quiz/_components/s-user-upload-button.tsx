@@ -88,9 +88,9 @@ export function SPlusUserUploadButton({
           <DropdownMenuItem asChild>
             <UploadExcelFileModal
               variant="activityId"
-              title="Upload Activity ID"
+              title="Upload Activity ID / Badge"
               onDropdownClose={onClose}
-              description="ActivityID allows only one file to be uploaded at a time."
+              description="Activity ID and Badge allows only one file to be uploaded at a time."
             >
               <Button className="w-full justify-start" variant="ghost">
                 Activity ID / Badge
