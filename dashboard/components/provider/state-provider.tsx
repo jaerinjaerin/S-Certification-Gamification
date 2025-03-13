@@ -3,31 +3,78 @@
 import { swrFetcher } from '@/lib/fetch';
 import { Campaign, Role } from '@prisma/client';
 import { Session } from 'next-auth';
-import { redirect, usePathname } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
   useContext,
   useState,
   ReactNode,
   useEffect,
+  useCallback,
+  useMemo,
+  useRef,
 } from 'react';
-import useSWR, { KeyedMutator } from 'swr';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'; // 다이얼로그 추가
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
+import { getCampaign } from '@/app/actions/campaign-action';
+import useSWR from 'swr';
+
+type CampaignData = {
+  id: string;
+  name: string;
+  createdAt: Date;
+  startedAt: Date;
+  endedAt: Date;
+  deleted: boolean;
+};
+
+type CampaignProps = Omit<Campaign, 'startedAt' | 'endedAt'> & {
+  startedAt: string;
+  endedAt: string;
+};
 
 type StateVariables = {
   filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
-  campaigns: Campaign[] | null;
-  campaign: Campaign | null;
-  setCampaign: React.Dispatch<React.SetStateAction<Campaign | null>>;
-  campaignMutate: KeyedMutator<{ result: { campaigns: Campaign[] } }>;
+  campaigns: CampaignData[] | null;
+  campaign: CampaignProps | null;
+  setCampaign: (cid: string) => Promise<void>;
 };
 
 const StateVariablesContext = createContext<StateVariables | undefined>(
   undefined
 );
+
+// localStorage/sessionStorage 래퍼 함수
+const storage = {
+  get: (): any => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const item = sessionStorage.getItem('campaign');
+      return item ? JSON.parse(item) : null;
+    } catch (error) {
+      console.error(`Error getting campaign from sessionStorage:`, error);
+      return null;
+    }
+  },
+  set: (value: any): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      sessionStorage.setItem('campaign', JSON.stringify(value));
+    } catch (error) {
+      console.error(`Error setting campaign in sessionStorage:`, error);
+    }
+  },
+  remove: (): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      sessionStorage.removeItem('campaign');
+    } catch (error) {
+      console.error(`Error removing campaign from sessionStorage:`, error);
+    }
+  },
+};
 
 export const StateVariablesProvider = ({
   children,
@@ -40,80 +87,124 @@ export const StateVariablesProvider = ({
   filter: AllFilterData | null;
   session: Session | null;
   role: (Role & any) | null;
-  campaigns: Campaign[];
+  campaigns: CampaignData[];
 }) => {
+  const router = useRouter();
   const pathname = usePathname();
-  const [campaigns, setCampaigns] = useState<Campaign[]>(initCampaigns);
-  const [campaign, setCampaign] = useState<Campaign | null>(() => {
-    if (typeof window !== 'undefined') {
-      const storedCampaign = sessionStorage.getItem('campaign');
-      return storedCampaign ? JSON.parse(storedCampaign) : null;
-    }
-    return null;
-  });
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // 다이얼로그 상태 추가
-
-  const { data: campaignData, mutate: campaignMutate } = useSWR(
-    `/api/cms/campaign?role=${role?.name || 'ADMIN'}`,
-    swrFetcher,
-    { fallbackData: { result: { campaigns: initCampaigns } } }
+  // 캠페인 데이터를 위한 레퍼런스 객체 사용
+  const [campaigns, setCampaigns] = useState<CampaignData[]>(initCampaigns);
+  const [campaign, setCampaignState] = useState<CampaignProps | null>(
+    storage.get
   );
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const dialogTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 이전 pathname 추적
+  const prevPathnameRef = useRef<string | null>(null);
+
+  // SWR 캐시 키 최적화
+  const swrKey = useMemo(() => {
+    return `/api/cms/campaign?role=${role?.name || 'ADMIN'}`;
+  }, [role?.name]);
+
+  const { data: campaignData } = useSWR(swrKey, swrFetcher, {
+    fallbackData: { result: { campaigns: initCampaigns } },
+    // revalidateOnFocus: false,
+    dedupingInterval: 5000,
+    revalidateIfStale: false, // 오래된 데이터 자동 재검증 비활성화
+    shouldRetryOnError: false, // 에러 시 재시도 비활성화
+  });
+
+  // 메모이제이션된 setCampaign 핸들러 - ID만 저장
+  const setCampaign = useCallback(async (cid: string | null) => {
+    if (cid) {
+      const { result: newCampaign } = await getCampaign(cid);
+      if (newCampaign) setCampaignState(newCampaign);
+
+      storage.set(newCampaign);
+    } else {
+      storage.remove();
+    }
+  }, []);
+
+  // 다이얼로그 닫는 핸들러 메모이제이션
+  const handleCloseDialog = useCallback(() => {
+    setIsDialogOpen(false);
+    setCampaign(null);
+    //
+    router.replace('/campaign');
+  }, [setCampaign]);
 
   // campaignData가 변경될 때 campaign 검증 및 다이얼로그 처리
   useEffect(() => {
-    if (campaignData) {
+    if (campaignData?.result?.campaigns) {
       const campaignsCalled = campaignData.result.campaigns;
       setCampaigns(campaignsCalled);
 
-      const existed = campaignsCalled.find(
-        (c: Campaign) => c.id === campaign?.id
-      );
+      if (campaign) {
+        const existed = campaignsCalled.find(
+          (c: CampaignData) => c.id === campaign.id
+        );
 
-      if (!existed && campaign !== null) {
-        setIsDialogOpen(true);
+        if (!existed) {
+          setIsDialogOpen(true);
+        } else {
+          if (existed.id !== campaign.id) {
+            setCampaign(existed);
+          }
+        }
       }
     }
-  }, [campaignData]);
 
-  // 다이얼로그 닫을 때 캠페인 리스트로 이동
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-    setCampaign(null);
-  };
+    return () => {
+      // 타임아웃 클린업
+      if (dialogTimeoutRef.current) {
+        clearTimeout(dialogTimeoutRef.current);
+        dialogTimeoutRef.current = null;
+      }
+    };
+  }, [campaignData, campaign]);
 
-  // campaign 변경 시 sessionStorage 업데이트
+  // pathname이 변경될 때 리다이렉트 처리 - 최적화
   useEffect(() => {
-    if (campaign) {
-      sessionStorage.setItem('campaign', JSON.stringify(campaign));
-    } else {
-      sessionStorage.removeItem('campaign'); // 값이 없으면 제거
-    }
-  }, [campaign]);
+    // 같은 pathname으로의 중복 처리 방지
+    if (pathname === prevPathnameRef.current) return;
+    prevPathnameRef.current = pathname;
 
-  // 캠페인 데이터 없으면 `/campaign` 페이지로 리다이렉트
-  useEffect(() => {
+    // 불필요한 리다이렉트 방지
     if (pathname === '/campaign/create' || pathname === '/role') return;
-    if (!campaign && pathname !== '/campaign') {
+
+    const shouldRedirect = !campaign && pathname !== '/campaign';
+
+    if (shouldRedirect) {
       redirect('/campaign');
     }
   }, [campaign, pathname]);
 
+  // 컨텍스트 값 메모이제이션 - 성능 최적화
+  const contextValue = useMemo(
+    () => ({
+      filter,
+      session,
+      role,
+      campaigns,
+      campaign,
+      setCampaign,
+    }),
+    [filter, session, role, campaigns, campaign, setCampaign]
+  );
+
   return (
-    <StateVariablesContext.Provider
-      value={{
-        filter,
-        session,
-        role,
-        campaigns,
-        campaign,
-        setCampaign,
-        campaignMutate,
-      }}
-    >
+    <StateVariablesContext.Provider value={contextValue}>
       {children}
 
-      {/* 캠페인 삭제 시 다이얼로그 표시 */}
-      <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) handleCloseDialog();
+        }}
+      >
         <DialogContent>
           <DialogTitle>Certification Deleted</DialogTitle>
           <p>
@@ -129,7 +220,7 @@ export const StateVariablesProvider = ({
   );
 };
 
-// Custom hook for consuming the global state
+// 메모이제이션된 커스텀 훅
 export const useStateVariables = () => {
   const context = useContext(StateVariablesContext);
   if (!context) {

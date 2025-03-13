@@ -132,14 +132,16 @@ export async function POST(request: NextRequest) {
     for (const destinationKey of destinationKeys) {
       console.log(`destinationKey: ${destinationKey}`);
       const fileName = destinationKey.split('/').pop();
-      const lanbguageCode = fileName?.split('.')[0];
-      const language = await prisma.language.findFirst({
-        where: {
-          code: lanbguageCode,
-        },
-      });
+      const lanbguageCode = fileName?.split('.')[0].split('_')[0];
 
-      if (destinationKey.split('/').pop()?.includes('.xlsx')) {
+      const isXlsx = fileName?.includes('.xlsx');
+      if (isXlsx) {
+        const language = await prisma.language.findFirst({
+          where: {
+            code: lanbguageCode,
+          },
+        });
+
         if (language) {
           await prisma.uploadedFile.create({
             data: {

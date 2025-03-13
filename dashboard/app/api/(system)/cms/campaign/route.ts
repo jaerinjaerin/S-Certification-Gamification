@@ -1,6 +1,5 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
-import { setHoursFromZeroToEnd } from '@/lib/time';
 import { prisma } from '@/model/prisma';
 import { containsBannedWords } from '@/utils/slug';
 import { Prisma } from '@prisma/client';
@@ -156,7 +155,7 @@ export async function GET(request: NextRequest) {
     let where = {} as Prisma.CampaignWhereInput;
     if (role !== 'ADMIN') {
       const roles = await prisma.role.findUnique({
-        where: { id: role },
+        where: { name: role },
         include: {
           permissions: {
             select: { permission: { select: { domains: true } } },
@@ -177,17 +176,18 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    const campaignData = await prisma.campaign.findMany({
+    const campaigns = await prisma.campaign.findMany({
       where,
-      include: { settings: true },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        startedAt: true,
+        endedAt: true,
+        deleted: true,
+      },
       orderBy: { createdAt: 'asc' },
     });
-
-    // 시간 조정
-    const campaigns = campaignData.map((c) => ({
-      ...c,
-      ...setHoursFromZeroToEnd(c.startedAt, c.endedAt),
-    }));
 
     return NextResponse.json(
       { success: true, result: { campaigns } },

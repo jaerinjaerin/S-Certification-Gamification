@@ -57,7 +57,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+    const codes = extractCodesFromPath(quizSetPath);
+    if (codes == null) {
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "Bad request",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Invalid quizset path",
+          },
+        },
+        { status: 400 }
+      );
+    }
+    const { domainCode, languageCode } = codes;
 
     const domain = await prisma.domain.findFirst({
       where: {

@@ -57,6 +57,7 @@ import { format } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
 import { mutate } from 'swr';
+import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
@@ -67,7 +68,7 @@ export default function CampaignEditForm({
   initialData,
   campaignId,
 }: CampaignFormProps) {
-  const { campaigns, campaignMutate } = useStateVariables();
+  const { campaigns, role } = useStateVariables();
   const { routeToPage } = useNavigation();
   const { setSelectedNumberOfStages } = useCampaignState();
   const [isLoading, setIsLoading] = useState(false);
@@ -164,10 +165,8 @@ export default function CampaignEditForm({
 
       console.warn('update campaign');
 
-      campaignMutate();
-      mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/cms/campaign/${campaignId}`
-      );
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
+      await mutate(`/api/cms/campaign/${campaignId}`);
       toast.success('Campaign updated successfully!');
       routeToPage('/campaign');
     } catch (error) {
@@ -283,7 +282,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(startOfDayTime(date));
                                 setStartDatePickerOpen(false);
                               }}
                             />
@@ -329,7 +328,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(date);
+                                field.onChange(endOfDayTime(date));
                                 setEndDatePickerOpen(false);
                               }}
                               fromDate={form.getValues('startDate')}

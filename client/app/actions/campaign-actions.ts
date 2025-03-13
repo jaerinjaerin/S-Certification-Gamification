@@ -35,7 +35,7 @@ export async function getCampaignByName(
         Sentry.captureMessage(`Campaign not found: ${campaignName}`);
         return {
           success: false,
-          status: 500,
+          status: 404,
           error: {
             message: "An unexpected error occurred",
             code: "UNEXPECTED_ERROR",

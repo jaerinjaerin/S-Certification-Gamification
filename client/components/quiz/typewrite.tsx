@@ -37,7 +37,7 @@ export function TypewriteTextVer({ question }: { question: string }) {
   return (
     <div
       className={cn(
-        "text-lg font-bold font-one",
+        "text-lg font-bold font-one break-words",
         isArabic && "text-right",
         isMyanmar && "leading-loose"
       )}

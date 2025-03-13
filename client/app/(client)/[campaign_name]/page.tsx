@@ -55,12 +55,12 @@ export default async function CampaignPage({
   }
 
   // 퀴즈로그가 없고 삼플 유저라면 에러페이지로 이동
-  return (
-    <div>
-      <h1>퀴즈 셋이 없습니다.</h1>
-      <p>퀴즈로그가 없고 삼플 유저인 경우 (실제로 이런 경우는 거의 없음)</p>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>퀴즈 셋이 없습니다.</h1>
+  //     <p>퀴즈로그가 없고 삼플 유저인 경우 (실제로 이런 경우는 거의 없음)</p>
+  //   </div>
+  // );
 
   redirect("error/not-found");
 }
