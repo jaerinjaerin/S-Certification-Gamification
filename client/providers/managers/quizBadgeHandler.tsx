@@ -49,7 +49,7 @@ export class QuizBadgeHandler {
     badgeImageUrl: string,
     translationMessage: { [key: string]: string },
     currentQuizStageIndex: number,
-    currentQuizStage: QuizStageEx
+    currentQuizStage: QuizStageEx | null
   ) => {
     try {
       // console.log("sendBadgeEmail");

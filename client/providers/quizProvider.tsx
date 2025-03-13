@@ -503,10 +503,6 @@ export const QuizProvider = ({
       return false;
     }
 
-    if (!currentQuizStage) {
-      return false;
-    }
-
     const result = await new QuizBadgeHandler().sendBadgeEmail(
       userId,
       badgeImageUrl,

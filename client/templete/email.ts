@@ -4,7 +4,7 @@ export const getBadgeEmailTemplete = (
   badgeImageUrl: string,
   translationMessage: { [key: string]: string },
   currentQuestionIndex: number,
-  currentQuizStage: QuizStageEx
+  currentQuizStage: QuizStageEx | null
 ) => {
   return `<!DOCTYPE html>
 <html style="font-weight: 400">
@@ -163,7 +163,8 @@ export const getBadgeEmailTemplete = (
                 "
                 >
                   ${
-                    currentQuizStage.badgeType === "FIRST"
+                    currentQuizStage?.badgeType === "FIRST" ||
+                    currentQuizStage?.badgeType === null
                       ? translationMessage["email_badge_description_2"]
                       : translationMessage["email_badge_description_3"]
                   }
