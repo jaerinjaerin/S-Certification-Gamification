@@ -26,7 +26,7 @@ import useCreateItem from "@/hooks/useCreateItem";
 import useGetContents from "@/hooks/useGetContents";
 import { useCampaign } from "@/providers/campaignProvider";
 import { fetchQuizLog } from "@/services/quizService";
-import { cn, isSheetLanguage } from "@/utils/utils";
+import { cn } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
 import { useSession } from "next-auth/react";
@@ -562,7 +562,6 @@ export default function GuestRegisterPage({
           )}
           {isPolicyAcceptCountry && (
             <PolicySheet
-              isSheetLanguage={isSheetLanguage(locale)}
               processSignIn={routeQuizPage}
               loading={loading || loadingCreate}
               privacyContent={PRIVACY_CONTENT}

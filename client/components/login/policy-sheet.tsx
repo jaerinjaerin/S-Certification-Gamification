@@ -34,7 +34,6 @@ import { Button } from "../ui/button";
 
 interface PolicySheetProps {
   children: React.ReactNode;
-  isSheetLanguage?: boolean;
   processSignIn: (() => Promise<void>) | (() => void);
   loading: boolean;
   privacyContent: string;
@@ -52,7 +51,6 @@ const FormSchema = z.object({
 
 export default function PolicySheet({
   children,
-  isSheetLanguage,
   processSignIn,
   loading,
   privacyContent,
@@ -103,15 +101,13 @@ export default function PolicySheet({
                       accordionTitle: `${translation("privacy")}`,
                       contents: `${privacyContent}`,
                       formKey: "privacy",
-                      formLabelText: isSheetLanguage
-                        ? translation.rich("mena_check_1", {
-                            strong: (chunks) => (
-                              <span className="text-blue-500 font-bold inline-block">
-                                {chunks}
-                              </span>
-                            ),
-                          })
-                        : "I have read and agree to the Samsung Plus Privacy Policy",
+                      formLabelText: translation.rich("mena_check_1", {
+                        strong: (chunks) => (
+                          <span className="text-blue-500 font-bold inline-block">
+                            {chunks}
+                          </span>
+                        ),
+                      }),
                     }}
                   />
                   <AccordionFormItem
@@ -121,15 +117,13 @@ export default function PolicySheet({
                       accordionTitle: `${translation("term")}`,
                       contents: `${termContent}`,
                       formKey: "term",
-                      formLabelText: isSheetLanguage
-                        ? translation.rich("mena_check_2", {
-                            strong: (chunks) => (
-                              <span className="text-blue-500 font-bold inline-block">
-                                {chunks}
-                              </span>
-                            ),
-                          })
-                        : "I have read and agree to the Samsung Plus Terms and Conditions",
+                      formLabelText: translation.rich("mena_check_2", {
+                        strong: (chunks) => (
+                          <span className="text-blue-500 font-bold inline-block">
+                            {chunks}
+                          </span>
+                        ),
+                      }),
                     }}
                   />
                 </form>
@@ -152,13 +146,11 @@ export default function PolicySheet({
             }}
             className="text-sm"
           >
-            <span>{isSheetLanguage ? translation("accept") : "accept"}</span>
+            <span>{translation("accept")}</span>
           </Button>
           <SheetClose asChild>
             <Button variant={"primary"} disabled={loading} className="text-sm">
-              <span>
-                {isSheetLanguage ? translation("mena_Decline") : "decline"}
-              </span>
+              <span>{translation("mena_Decline")}</span>
             </Button>
           </SheetClose>
         </SheetFooter>
