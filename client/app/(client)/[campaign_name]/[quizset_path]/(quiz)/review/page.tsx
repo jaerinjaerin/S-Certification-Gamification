@@ -3,9 +3,10 @@ import { ErrorAlertDialog } from "@/components/quiz/alert-dialog";
 import Qusetion from "@/components/quiz/question-area";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
+import { arabicCountries } from "@/core/config/default";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuizQuestionLogs } from "@/hooks/api/log/useQuizQuestionLogs";
-import useCheckLocale from "@/hooks/useCheckLocale";
+import { usePolicy } from "@/providers/policyProvider";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
 import { QuestionOption, UserQuizQuestionLog } from "@prisma/client";
@@ -23,6 +24,8 @@ export default function ReviewPage() {
   const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([]);
   const [errorMessage] = useState<string | undefined>(undefined);
   const [loading] = useState(false);
+  const { domainName } = usePolicy();
+  const isArabicCountry = arabicCountries.includes(domainName);
 
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
@@ -30,8 +33,6 @@ export default function ReviewPage() {
   // const reviewQuizQuestionLogs = quizQuestionLogs.filter(
   //   (log) => log.quizStageIndex + 1 === searchStage
   // );
-
-  const { isArabic } = useCheckLocale();
 
   const questions = quizSet.quizStages.filter(
     (quiz) => quiz.order === searchStage
@@ -152,6 +153,7 @@ export default function ReviewPage() {
         </div>
       </div>
       <Qusetion
+        isArabicCountry={isArabicCountry}
         question={question.text}
         bgImageUrl={
           question.backgroundImage?.imagePath
@@ -175,7 +177,7 @@ export default function ReviewPage() {
                   key={option.id}
                   className={cn(
                     "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
-                    isArabic && "text-right",
+                    isArabicCountry && "text-right",
                     selectedOptionIds.includes(option.id) &&
                       !option.isCorrect &&
                       "bg-[#EE3434] text-white pointer-events-none",
