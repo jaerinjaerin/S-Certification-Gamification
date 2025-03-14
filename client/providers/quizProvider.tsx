@@ -157,6 +157,7 @@ export const QuizProvider = ({
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
   // console.log("QuizProvider", quizSet);
+  console.log("currentQuizStage", currentQuizStage);
 
   useEffect(() => {
     console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
@@ -508,7 +509,8 @@ export const QuizProvider = ({
       badgeImageUrl,
       translationMessage,
       currentQuizStageIndex,
-      currentQuizStage
+      currentQuizStage,
+      campaignSlug.toLowerCase() === "s25" ? true : false
     );
 
     return result;

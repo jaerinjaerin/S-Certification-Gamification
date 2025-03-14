@@ -1,8 +1,5 @@
-import { redirect } from 'next/navigation';
-
 const UserBoard = () => {
-  redirect(`/dashboard/user/stats`);
-  return null;
+  return <div>UserBoard</div>;
 };
 
 export default UserBoard;

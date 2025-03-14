@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@/app/constants/error-codes';
 import { auth } from '@/auth';
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getS3Client } from '@/lib/aws/s3-client';
 import {
   processExcelBuffer,
@@ -848,6 +849,10 @@ export async function POST(request: NextRequest) {
         Body: fileBuffer,
       })
     );
+
+    invalidateCache(process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!, [
+      `/${destinationKey}`,
+    ]);
 
     let quizSetFile = await prisma.quizSetFile.findFirst({
       where: {

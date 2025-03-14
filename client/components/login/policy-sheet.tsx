@@ -25,7 +25,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -34,7 +34,6 @@ import { Button } from "../ui/button";
 
 interface PolicySheetProps {
   children: React.ReactNode;
-  isSheetLanguage?: boolean;
   processSignIn: (() => Promise<void>) | (() => void);
   loading: boolean;
   privacyContent: string;
@@ -52,7 +51,6 @@ const FormSchema = z.object({
 
 export default function PolicySheet({
   children,
-  isSheetLanguage,
   processSignIn,
   loading,
   privacyContent,
@@ -78,6 +76,13 @@ export default function PolicySheet({
     return false;
   };
   const isAllChecked = checkAllCheckbox();
+  const privacyChecked = form.watch("privacy");
+  const [accordionValue, setAccordionValue] = useState<string>("privacy");
+  useEffect(() => {
+    if (privacyChecked) {
+      setAccordionValue("term");
+    }
+  }, [privacyChecked]);
 
   return (
     <Sheet open={openSheet} onOpenChange={setOpenSheet}>
@@ -92,7 +97,12 @@ export default function PolicySheet({
         <SheetHeader>
           <SheetTitle aria-hidden className="hidden"></SheetTitle>
           <SheetDescription>
-            <Accordion type="single" collapsible defaultValue="privacy">
+            <Accordion
+              type="single"
+              collapsible
+              value={accordionValue}
+              onValueChange={setAccordionValue}
+            >
               <div></div>
               <Form {...form}>
                 <form>
@@ -103,15 +113,13 @@ export default function PolicySheet({
                       accordionTitle: `${translation("privacy")}`,
                       contents: `${privacyContent}`,
                       formKey: "privacy",
-                      formLabelText: isSheetLanguage
-                        ? translation.rich("mena_check_1", {
-                            strong: (chunks) => (
-                              <span className="text-blue-500 font-bold inline-block">
-                                {chunks}
-                              </span>
-                            ),
-                          })
-                        : "I have read and agree to the Samsung Plus Privacy Policy",
+                      formLabelText: translation.rich("mena_check_1", {
+                        strong: (chunks) => (
+                          <span className="text-blue-500 font-bold inline-block">
+                            {chunks}
+                          </span>
+                        ),
+                      }),
                     }}
                   />
                   <AccordionFormItem
@@ -121,15 +129,13 @@ export default function PolicySheet({
                       accordionTitle: `${translation("term")}`,
                       contents: `${termContent}`,
                       formKey: "term",
-                      formLabelText: isSheetLanguage
-                        ? translation.rich("mena_check_2", {
-                            strong: (chunks) => (
-                              <span className="text-blue-500 font-bold inline-block">
-                                {chunks}
-                              </span>
-                            ),
-                          })
-                        : "I have read and agree to the Samsung Plus Terms and Conditions",
+                      formLabelText: translation.rich("mena_check_2", {
+                        strong: (chunks) => (
+                          <span className="text-blue-500 font-bold inline-block">
+                            {chunks}
+                          </span>
+                        ),
+                      }),
                     }}
                   />
                 </form>
@@ -152,13 +158,11 @@ export default function PolicySheet({
             }}
             className="text-sm"
           >
-            <span>{isSheetLanguage ? translation("accept") : "accept"}</span>
+            <span>{translation("accept")}</span>
           </Button>
           <SheetClose asChild>
             <Button variant={"primary"} disabled={loading} className="text-sm">
-              <span>
-                {isSheetLanguage ? translation("mena_Decline") : "decline"}
-              </span>
+              <span>{translation("mena_Decline")}</span>
             </Button>
           </SheetClose>
         </SheetFooter>

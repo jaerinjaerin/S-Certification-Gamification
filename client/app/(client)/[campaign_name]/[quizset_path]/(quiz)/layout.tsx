@@ -2,14 +2,19 @@ import { getQuizLog } from "@/app/actions/log-actions";
 import { getQuizSet } from "@/app/actions/quiz-actions";
 import { auth } from "@/auth";
 import RefreshButton from "@/components/error/refresh-button";
+import {
+  getServiceLanguageCode,
+  mapBrowserLanguageToLocale,
+} from "@/i18n/locale";
 import { QuizProvider } from "@/providers/quizProvider";
-// import { fetchQuizLog } from "@/services/quizService";
 import { fetchUserInfo } from "@/services/userService";
 import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
+import { extractCodesFromPath } from "@/utils/pathUtils";
 import { hasSavedDetails } from "@/utils/userHelper";
 import { AuthType, UserQuizLog, UserQuizStageLog } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { Session } from "next-auth";
+import { NextIntlClientProvider } from "next-intl";
 import { redirect } from "next/navigation";
 
 export default async function QuizLayout({
@@ -21,11 +26,53 @@ export default async function QuizLayout({
 }) {
   const session: Session | null = await auth();
   const userId = session?.user.id;
+  const authType = session?.user.authType;
+  const timeZone = "Seoul/Asia";
+
+  let locale: string = "en";
+
   console.log("userId", userId);
 
   if (!userId) {
     redirect("/login");
   }
+
+  console.log("🥕 authType", session.user.authType);
+
+  // guest 유저의 경우
+  if (authType === "GUEST") {
+    console.log("🥕 params.campaign_name", params.campaign_name);
+    locale = await getServiceLanguageCode(params.campaign_name ?? "s25");
+  }
+
+  // sumtotal 유저의 경우
+
+  if (authType === "SUMTOTAL") {
+    const codes = extractCodesFromPath(params.quizset_path);
+
+    if (!codes) {
+      redirect("/error/not-found");
+    }
+
+    const { languageCode } = codes;
+
+    // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+    const normalizedLanguageCode = languageCode.replace(
+      /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+      "$1",
+    );
+
+    locale = await mapBrowserLanguageToLocale(
+      normalizedLanguageCode,
+      params.campaign_name,
+    );
+    console.log("QuizSetLoginLayout locale:", locale);
+  }
+
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
+  const messages = await fetch(url, { cache: "force-cache" })
+    .then((res) => res.json())
+    .catch((error) => console.error("get message error", error));
 
   // ================== Quiz Log Setup ==================
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
@@ -44,10 +91,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz log",
       params.campaign_name,
-      quizLogResponse
+      quizLogResponse,
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
+      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`,
     );
     return <RefreshButton />;
   }
@@ -75,7 +122,7 @@ export default async function QuizLayout({
   const quizResponse: ApiResponseV2<QuizSetEx> = await getQuizSet(
     params.quizset_path,
     userId,
-    params.campaign_name
+    params.campaign_name,
   );
 
   console.log("getQuizSet quizResponse", quizResponse);
@@ -101,10 +148,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz set",
       params.quizset_path,
-      quizResponse
+      quizResponse,
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz set: ${params.campaign_name}`
+      `Server error while fetching quiz set: ${params.campaign_name}`,
     );
     return <RefreshButton />;
   }
@@ -123,17 +170,23 @@ export default async function QuizLayout({
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
-      <QuizProvider
-        campaignName={params.campaign_name}
-        quizSetPath={params.quizset_path}
-        quizSet={quizSet}
-        quizLog={quizLog}
-        quizStageLogs={quizStageLogs}
-        userId={userId}
-        authType={session?.user.authType || AuthType.GUEST}
+      <NextIntlClientProvider
+        timeZone={timeZone}
+        messages={messages}
+        locale={locale}
       >
-        {children}
-      </QuizProvider>
+        <QuizProvider
+          campaignName={params.campaign_name}
+          quizSetPath={params.quizset_path}
+          quizSet={quizSet}
+          quizLog={quizLog}
+          quizStageLogs={quizStageLogs}
+          userId={userId}
+          authType={session?.user.authType || AuthType.GUEST}
+        >
+          {children}
+        </QuizProvider>
+      </NextIntlClientProvider>
     </div>
   );
 }

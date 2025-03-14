@@ -38,6 +38,7 @@ export async function getCampaigns(role: string) {
         startedAt: true,
         endedAt: true,
         deleted: true,
+        slug: true,
       },
       orderBy: { createdAt: 'asc' },
     });

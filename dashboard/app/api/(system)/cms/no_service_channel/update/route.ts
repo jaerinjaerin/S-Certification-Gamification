@@ -203,13 +203,9 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    // 사용 예제
-    const distributionId: string = process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!;
-    const pathsToInvalidate = [
-      `/certification/${campaign.slug}/jsons/channels.json`,
-    ]; // 무효화할 경로
-
-    invalidateCache(distributionId, pathsToInvalidate);
+    invalidateCache(process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!, [
+      `/${destinationKeyForWeb}`,
+    ]);
 
     return NextResponse.json(
       {

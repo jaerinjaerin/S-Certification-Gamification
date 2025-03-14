@@ -9,9 +9,7 @@ export default async function GuestLayout({
   params: { campaign_name: string };
 }) {
   const timeZone = "Seoul/Asia";
-  const locale = await getServiceLanguageCode();
-  console.log("GuestLayout locale:", locale);
-
+  const locale = await getServiceLanguageCode(campaign_name ?? "s25");
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const messages = await fetch(url, { cache: "force-cache" })
     .then((res) => res.json())

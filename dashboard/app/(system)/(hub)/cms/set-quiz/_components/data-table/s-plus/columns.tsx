@@ -15,7 +15,6 @@ import {
   QuizSetLink,
   StatusBadge,
 } from '../../data-table-widgets';
-import { cn } from '@/utils/utils';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -126,30 +125,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     sortingFn: 'auto',
   },
   {
-    accessorKey: 'Quiz Language',
-    header: 'Quiz Language',
-    accessorFn: (row) => {
-      if (row.quizSet?.language) {
-        return row.quizSet.language.name;
-      }
-      if (row.uiLanguage) {
-        return row.uiLanguage.name;
-      }
-      return '-';
-    },
-    cell: ({ row }) => {
-      if (row.original.quizSet?.language) {
-        return <div>{row.original.quizSet.language.name}</div>;
-      }
-      // quizLanuage 와 ui Language를 동일하게 사용하고 있음
-      if (row.original.uiLanguage) {
-        return <div>{row.original.uiLanguage.name}</div>;
-      }
-      return <div>-</div>;
-    },
-    sortingFn: 'auto',
-  },
-  {
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
@@ -163,26 +138,23 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
               className="size-[2.375rem]"
               onClick={() => {
                 window.navigator.clipboard.writeText(url);
-                alert('copy to clipboard');
+                alert('copy to clipboard:\n' + url);
               }}
+              title={url}
             >
               <Copy />
             </Button>
-            <a
-              target="_blank"
-              href={url}
-              className={cn(
-                'size-[2.375rem] border border-zinc-200 rounded-md flex items-center justify-center shadow-sm bg-white text-secondary hover:bg-black/5',
-                !url && 'disabled:bg-black/5'
-              )}
+            <Button
+              variant={'secondary'}
+              className="size-[2.375rem]"
+              onClick={() => {
+                window.open(url, '_blank');
+              }}
+              title={url}
             >
               <ExternalLink className="size-4" />
-            </a>
-            {/* <a href={url}>{url}</a> */}
+            </Button>
           </div>
-          // <a href={url} target="_blank">
-          //   {url}
-          // </a>
         );
       }
       return <div>-</div>;
@@ -270,8 +242,8 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'uiLanguage',
     header: 'UI Language',
     cell: ({ row }) => {
-      if (row.original.uiLanguage?.code) {
-        return <div>{row.original.uiLanguage.code}</div>;
+      if (row.original.uiLanguage?.name) {
+        return <div>{row.original.uiLanguage.name}</div>;
       }
       return <UILinkButton />;
     },

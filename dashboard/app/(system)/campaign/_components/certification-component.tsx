@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
 import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
 import { useStateVariables } from '@/components/provider/state-provider';
@@ -12,6 +11,7 @@ import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { handleDownload } from '../../(hub)/cms/_utils/utils';
 import { mutate } from 'swr';
+import { logout } from '@/lib/auth';
 
 export default function CertificationClientComponent() {
   const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
@@ -19,10 +19,24 @@ export default function CertificationClientComponent() {
 
   if (campaigns?.length === 0) {
     return (
-      <div className="text-size-24px font-bold h-full flex items-center justify-center whitespace-pre-line text-center">
-        {
-          'You have no ongoing campaigns.\n로그인 했지만 인증제에 참여하지 않는 도메인 권한자에게 보여지는 메시지 필요.'
-        }
+      <div className="flex items-center h-full px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <div className="w-full space-y-6 text-center">
+          <div className="space-y-3">
+            <h1 className="text-2xl font-bold">
+              You have no ongoing certifications
+            </h1>
+            <p className="text-gray-500 whitespace-pre-line">
+              {`There are currently no certifications in progress.\nTo start a new certification, please contact your administrator or check the available certification programs.`}
+            </p>
+          </div>
+          <Button
+            onClick={async () => {
+              await logout();
+            }}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
     );
   }

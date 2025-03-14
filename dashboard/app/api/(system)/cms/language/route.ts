@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { invalidateCache } from '@/lib/aws/cloudfront';
 import { getPath } from '@/lib/file';
 import { getFromS3, uploadToS3 } from '@/lib/s3-client';
 import { extractLanguageCode } from '@/lib/text';
@@ -109,6 +110,8 @@ export async function POST(request: NextRequest) {
         return uploadToS3({ key, file, isNoCache: true });
       })
     );
+
+    invalidateCache(process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID!, [`/${path}/`]);
 
     const result = languages.map((language) => {
       return {
