@@ -1,16 +1,23 @@
+import React from 'react';
 import UserFilterForm from './filters/page';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const UserLayout = ({ children }: Props) => {
+const UserStats = ({
+  infoDomain,
+  statisticsOutcome,
+  statisticsProgressOfExperts,
+}: {
+  infoDomain: React.ReactNode;
+  statisticsOutcome: React.ReactNode;
+  statisticsProgressOfExperts: React.ReactNode;
+}) => {
   return (
     <div className="space-y-3">
       <UserFilterForm />
-      <div className="mt-3">{children}</div>
+      {infoDomain}
+      {statisticsProgressOfExperts}
+      {statisticsOutcome}
     </div>
   );
 };
 
-export default UserLayout;
+export default UserStats;

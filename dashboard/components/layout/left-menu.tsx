@@ -39,7 +39,7 @@ const getMenuItems = (role: Role): MenuItems => {
       {
         label: 'User',
         icon: Users,
-        href: '/dashboard/user/stats',
+        href: '/dashboard/user',
         // children: [
         //   {
         //     label: 'Stats',
