@@ -24,16 +24,15 @@ export async function GET(request: NextRequest) {
     const questions: Question[] = await prisma.$queryRaw`
       SELECT q.*
       FROM "Question" q
-      JOIN "Language" l ON q."languageId" = l."id"
-      WHERE q."id" = q."originalQuestionId"
-      AND l."code" = 'en-US'
+      WHERE q."id" = q."originalQuestionId" 
+      AND q."campaignId" = ${restWhere.campaignId}
       ORDER BY q."order" ASC
     `;
 
     const where = {
       ...restWhere,
       category: { not: null },
-      questionId: { in: questions.map((q) => q.id) },
+      originalQuestionId: { in: questions.map((q) => q.id) },
       jobId: { in: jobGroup.map((job) => job.id) },
       ...(storeId
         ? storeId === '4'
