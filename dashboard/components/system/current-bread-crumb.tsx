@@ -55,7 +55,9 @@ const CurrentBreadCrumb = () => {
               onValueChange={handleChangeCampaign}
             >
               <SelectTrigger className="w-full focus:ring-0">
-                <SelectValue placeholder={campaign?.name || ''} />
+                <SelectValue
+                  placeholder={`${campaign?.name || ''} (${campaign?.slug || ''})`}
+                />
               </SelectTrigger>
               <SelectContent>
                 {pathname.includes('/quiz-set-details') ? (
@@ -68,11 +70,13 @@ const CurrentBreadCrumb = () => {
                     >
                       Certification List
                     </SelectItem>
-                    {campaigns?.map((c: { id: string; name: string }) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name}
-                      </SelectItem>
-                    ))}
+                    {campaigns?.map(
+                      (c: { id: string; name: string; slug: string }) => (
+                        <SelectItem key={c.id} value={c.id}>
+                          {`${c.name} (${c.slug})`}
+                        </SelectItem>
+                      )
+                    )}
                   </>
                 )}
               </SelectContent>

@@ -122,7 +122,7 @@ export const convertTarget = async (
       const updatedRow: Record<string, string | number> = {};
 
       Object.entries(row!).forEach(([key, value]) => {
-        updatedRow[key] = value === '' || value === '-' ? 0 : value;
+        updatedRow[key] = key === 'code' ? value : (value ?? 0);
       });
 
       return updatedRow;

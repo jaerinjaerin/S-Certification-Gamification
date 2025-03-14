@@ -22,6 +22,7 @@ import useSWR from 'swr';
 type CampaignData = {
   id: string;
   name: string;
+  slug: string;
   createdAt: Date;
   startedAt: Date;
   endedAt: Date;

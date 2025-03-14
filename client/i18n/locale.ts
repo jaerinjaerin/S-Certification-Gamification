@@ -5,9 +5,13 @@ import { headers } from "next/headers";
 import { defaultLocale } from "./config";
 
 // langCode를 매칭하는 함수
-export async function mapBrowserLanguageToLocale(searchLanguageCode: string) {
+export async function mapBrowserLanguageToLocale(
+  searchLanguageCode: string,
+  campaignSlug: string,
+) {
   // languages.json 배열
-  const supportedLanguagesCodes = await fetchSupportedLanguageCodes();
+  const supportedLanguagesCodes =
+    await fetchSupportedLanguageCodes(campaignSlug);
 
   // languages.json에 searchLanguageCode가 있다면 리턴
   if (supportedLanguagesCodes.includes(searchLanguageCode)) {
@@ -31,7 +35,7 @@ export async function mapBrowserLanguageToLocale(searchLanguageCode: string) {
 }
 
 // 🟢 S3 {languageCode}.json의 languageCode를 리턴하는 함수
-export async function getServiceLanguageCode() {
+export async function getServiceLanguageCode(campaignSlug: string) {
   const browswerLanguageCode = await getBrowserLanguageCode(); // es, es-419, es-MX, es-AR, es-HN ...
   console.log("browswerLanguageCode:", browswerLanguageCode);
   // 브라우저의 언어코드가 없으면 기본 언어코드를 리턴
@@ -40,7 +44,10 @@ export async function getServiceLanguageCode() {
   }
 
   // 브라우저에서 리턴한 언어코드 - S3 파일 언어코드와 매칭시키는 함수
-  const result = await mapBrowserLanguageToLocale(browswerLanguageCode);
+  const result = await mapBrowserLanguageToLocale(
+    browswerLanguageCode,
+    campaignSlug,
+  );
   return result;
 }
 

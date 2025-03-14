@@ -185,6 +185,7 @@ export async function GET(request: NextRequest) {
         startedAt: true,
         endedAt: true,
         deleted: true,
+        slug: true,
       },
       orderBy: { createdAt: 'asc' },
     });

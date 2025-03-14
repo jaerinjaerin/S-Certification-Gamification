@@ -9,12 +9,15 @@ interface PrismaWhereCondition {
  * @param where - The Prisma where condition object
  * @returns An object containing the SQL WHERE clause and parameter values
  */
-function prismaWhereToSQL(where: PrismaWhereCondition): {
+function prismaWhereToSQL(
+  where: PrismaWhereCondition,
+  columnTypes?: { [key: string]: ColumnTypeInfo }
+): {
   sql: string;
   params: any[];
 } {
   const params: any[] = [];
-  const sql = buildWhereClause(where, params);
+  const sql = buildWhereClause(where, params, columnTypes);
 
   return {
     sql: sql ? `WHERE ${sql}` : '',
@@ -28,7 +31,11 @@ function prismaWhereToSQL(where: PrismaWhereCondition): {
  * @param params - Array to collect parameter values
  * @returns The SQL WHERE clause string
  */
-function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
+function buildWhereClause(
+  where: PrismaWhereCondition,
+  params: any[],
+  columnTypes?: { [key: string]: ColumnTypeInfo }
+): string {
   if (!where || Object.keys(where).length === 0) {
     return '';
   }
@@ -43,7 +50,7 @@ function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
       if (key === 'AND' || key === 'OR') {
         if (Array.isArray(value) && value.length > 0) {
           const subConditions = value
-            .map((subWhere) => buildWhereClause(subWhere, params))
+            .map((subWhere) => buildWhereClause(subWhere, params, columnTypes))
             .filter(Boolean);
           if (subConditions.length > 0) {
             conditions.push(`(${subConditions.join(` ${key} `)})`);
@@ -53,11 +60,28 @@ function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
       }
 
       if (key === 'NOT') {
-        const notClause = buildWhereClause(value, params);
+        const notClause = buildWhereClause(value, params, columnTypes);
         if (notClause) {
           conditions.push(`NOT (${notClause})`);
         }
         continue;
+      }
+
+      // Find the actual column info, case-insensitive match
+      let columnType;
+      if (columnTypes) {
+        const exactMatch = columnTypes[key];
+        if (exactMatch) {
+          columnType = exactMatch;
+        } else {
+          // Try case-insensitive match
+          const columnName = Object.keys(columnTypes).find(
+            (k) => k.toLowerCase() === key.toLowerCase()
+          );
+          if (columnName) {
+            columnType = columnTypes[columnName];
+          }
+        }
       }
 
       // Handle field conditions
@@ -66,7 +90,12 @@ function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
         value !== null &&
         !Array.isArray(value)
       ) {
-        const fieldConditions = processFieldConditions(key, value, params);
+        const fieldConditions = processFieldConditions(
+          key,
+          value,
+          params,
+          columnType
+        );
         if (fieldConditions) {
           conditions.push(fieldConditions);
         }
@@ -76,7 +105,15 @@ function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
           conditions.push(`${escapeIdentifier(key)} IS NULL`);
         } else {
           params.push(value);
-          conditions.push(`${escapeIdentifier(key)} = $${params.length}`);
+
+          // Apply type casting for enums
+          if (columnType?.isEnum) {
+            conditions.push(
+              `${escapeIdentifier(key)} = ($${params.length}::"${columnType.schemaType}")`
+            );
+          } else {
+            conditions.push(`${escapeIdentifier(key)} = $${params.length}`);
+          }
         }
       }
     }
@@ -85,20 +122,16 @@ function buildWhereClause(where: PrismaWhereCondition, params: any[]): string {
   return conditions.join(' AND ');
 }
 
-/**
- * Processes field conditions for a specific field
- * @param field - The field name
- * @param conditions - The conditions object for the field
- * @param params - Array to collect parameter values
- * @returns The SQL condition string for the field
- */
 function processFieldConditions(
   field: string,
   conditions: any,
-  params: any[]
+  params: any[],
+  columnType?: ColumnTypeInfo
 ): string {
   const fieldConditions: string[] = [];
   const escapedField = escapeIdentifier(field);
+  const isEnum = columnType?.isEnum || false;
+  const enumType = isEnum ? columnType?.schemaType : '';
 
   for (const op in conditions) {
     if (Object.prototype.hasOwnProperty.call(conditions, op)) {
@@ -110,7 +143,13 @@ function processFieldConditions(
             fieldConditions.push(`${escapedField} IS NULL`);
           } else {
             params.push(value);
-            fieldConditions.push(`${escapedField} = $${params.length}`);
+            if (isEnum) {
+              fieldConditions.push(
+                `${escapedField} = ($${params.length}::"${enumType}")`
+              );
+            } else {
+              fieldConditions.push(`${escapedField} = $${params.length}`);
+            }
           }
           break;
         case 'not':
@@ -118,41 +157,60 @@ function processFieldConditions(
             fieldConditions.push(`${escapedField} IS NOT NULL`);
           } else {
             params.push(value);
-            fieldConditions.push(`${escapedField} <> $${params.length}`);
+            if (isEnum) {
+              fieldConditions.push(
+                `${escapedField} <> ($${params.length}::"${enumType}")`
+              );
+            } else {
+              fieldConditions.push(`${escapedField} <> $${params.length}`);
+            }
           }
           break;
         case 'in':
           if (Array.isArray(value) && value.length > 0) {
-            // For PostgreSQL, we can use unnest for array parameters
-            params.push(value);
-            fieldConditions.push(`${escapedField} = ANY($${params.length})`);
+            if (isEnum) {
+              const placeholders = value.map((_, idx) => {
+                params.push(value[idx]);
+                return `($${params.length}::"${enumType}")`;
+              });
+              fieldConditions.push(
+                `${escapedField} IN (${placeholders.join(', ')})`
+              );
+            } else {
+              params.push(value);
+              fieldConditions.push(`${escapedField} = ANY($${params.length})`);
+            }
           }
           break;
         case 'notIn':
           if (Array.isArray(value) && value.length > 0) {
-            params.push(value);
-            fieldConditions.push(
-              `NOT (${escapedField} = ANY($${params.length}))`
-            );
+            if (isEnum) {
+              const placeholders = value.map((_, idx) => {
+                params.push(value[idx]);
+                return `($${params.length}::"${enumType}")`;
+              });
+              fieldConditions.push(
+                `${escapedField} NOT IN (${placeholders.join(', ')})`
+              );
+            } else {
+              params.push(value);
+              fieldConditions.push(
+                `NOT (${escapedField} = ANY($${params.length}))`
+              );
+            }
           }
           break;
         case 'lt':
         case 'lte':
         case 'gt':
         case 'gte':
-          if (value instanceof Date || !isNaN(Date.parse(value))) {
-            const dateValue =
-              value instanceof Date
-                ? value.toISOString()
-                : new Date(value).toISOString();
-            params.push(dateValue);
-            const operator = { lt: '<', lte: '<=', gt: '>', gte: '>=' }[op];
+          params.push(value);
+          const operator = { lt: '<', lte: '<=', gt: '>', gte: '>=' }[op];
+          if (isEnum) {
             fieldConditions.push(
-              `${escapedField} ${operator} $${params.length}::timestamptz`
+              `${escapedField} ${operator} ($${params.length}::"${enumType}")`
             );
           } else {
-            params.push(value);
-            const operator = { lt: '<', lte: '<=', gt: '>', gte: '>=' }[op];
             fieldConditions.push(
               `${escapedField} ${operator} $${params.length}`
             );
@@ -175,22 +233,94 @@ function processFieldConditions(
           fieldConditions.push(`${escapedField} ILIKE $${params.length}`);
           break;
         case 'isNull':
-          if (value === true) {
-            fieldConditions.push(`${escapedField} IS NULL`);
-          } else {
-            fieldConditions.push(`${escapedField} IS NOT NULL`);
-          }
+          fieldConditions.push(
+            `${escapedField} ${value ? 'IS NULL' : 'IS NOT NULL'}`
+          );
           break;
         default:
-          // For unknown operators, try a direct comparison
           params.push(value);
-          fieldConditions.push(`${escapedField} = $${params.length}`);
+          if (isEnum) {
+            fieldConditions.push(
+              `${escapedField} = ($${params.length}::"${enumType}")`
+            );
+          } else {
+            fieldConditions.push(`${escapedField} = $${params.length}`);
+          }
           break;
       }
     }
   }
 
   return fieldConditions.length > 0 ? `(${fieldConditions.join(' AND ')})` : '';
+}
+
+interface ColumnTypeInfo {
+  name: string; // 컬럼명
+  type: string; // 컬럼의 데이터 타입 (예: "integer", "text", "USER-DEFINED" 등)
+  isEnum: boolean; // Enum 여부 확인 (true이면 Enum 타입)
+  schemaType: string; // PostgreSQL의 Enum 타입 이름 (예: "AuthType")
+}
+
+export async function getColumnTypesInfo(
+  prisma: PrismaClient,
+  tableName: string,
+  schemaName: string = 'public'
+): Promise<{ [key: string]: ColumnTypeInfo }> {
+  // 문자열 리터럴을 사용하여 쿼리 작성
+  const columnInfoQuery = `
+    SELECT 
+      c.column_name, 
+      c.data_type,
+      CASE 
+        WHEN c.data_type = 'USER-DEFINED' THEN t.typname
+        ELSE c.data_type 
+      END AS type_name,
+      (t.typtype = 'e') AS is_enum,
+      t.typname AS schema_type
+    FROM information_schema.columns c
+    LEFT JOIN pg_catalog.pg_type t ON t.oid = (
+      SELECT a.atttypid 
+      FROM pg_catalog.pg_attribute a
+      JOIN pg_catalog.pg_class cl ON cl.oid = a.attrelid
+      JOIN pg_catalog.pg_namespace n ON n.oid = cl.relnamespace
+      WHERE cl.relname = $1 
+      AND n.nspname = $2
+      AND a.attname = c.column_name
+    )
+    WHERE c.table_name = $1 
+    AND c.table_schema = $2;
+  `;
+
+  try {
+    // 쿼리 실행
+    const columnInfo = await prisma.$queryRawUnsafe<
+      {
+        column_name: string;
+        data_type: string;
+        type_name: string;
+        is_enum: boolean;
+        schema_type: string;
+      }[]
+    >(columnInfoQuery, tableName, schemaName);
+
+    const columnTypes: { [key: string]: ColumnTypeInfo } = {};
+
+    // 결과 처리
+    for (const column of columnInfo) {
+      columnTypes[column.column_name] = {
+        name: column.column_name,
+        type: column.type_name,
+        // 여기서 boolean 타입 확인
+        isEnum: typeof column.is_enum === 'boolean' ? column.is_enum : false,
+        schemaType: column.schema_type || '',
+      };
+    }
+
+    return columnTypes;
+  } catch (error) {
+    console.error('Error fetching column types:', error);
+    return {};
+  }
 }
 
 /**
@@ -219,7 +349,10 @@ export async function queryRawWithWhere<T>(
   select: string[] = ['*'],
   debug: boolean = false
 ): Promise<T[]> {
-  const { sql: whereClause, params } = prismaWhereToSQL(where);
+  // 테이블의 컬럼 타입 정보 가져오기
+  const columnTypes = await getColumnTypesInfo(prisma, tableName);
+
+  const { sql: whereClause, params } = prismaWhereToSQL(where, columnTypes);
   const columns = select
     .map((col) => (col === '*' ? '*' : escapeIdentifier(col)))
     .join(', ');
@@ -229,6 +362,7 @@ export async function queryRawWithWhere<T>(
   if (debug) {
     console.log('SQL Query:', query);
     console.log('Parameters:', params);
+    console.log('Column Types:', columnTypes);
   }
 
   try {
@@ -282,7 +416,9 @@ export async function extendedQuery<T>(
     offset?: number;
   } = {}
 ): Promise<T[]> {
-  const { sql: whereClause, params } = prismaWhereToSQL(where);
+  // 테이블의 컬럼 타입 정보 가져오기
+  const columnTypes = await getColumnTypesInfo(prisma, tableName);
+  const { sql: whereClause, params } = prismaWhereToSQL(where, columnTypes);
   const columns = (options.select || ['*'])
     .map((col) => (col === '*' ? '*' : escapeIdentifier(col)))
     .join(', ');

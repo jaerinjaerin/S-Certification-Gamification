@@ -41,7 +41,8 @@ export default async function QuizLayout({
 
   // guest 유저의 경우
   if (authType === "GUEST") {
-    locale = await getServiceLanguageCode();
+    console.log("🥕 params.campaign_name", params.campaign_name);
+    locale = await getServiceLanguageCode(params.campaign_name ?? "s25");
   }
 
   // sumtotal 유저의 경우
@@ -58,10 +59,13 @@ export default async function QuizLayout({
     // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
     const normalizedLanguageCode = languageCode.replace(
       /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-      "$1"
+      "$1",
     );
 
-    locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
+    locale = await mapBrowserLanguageToLocale(
+      normalizedLanguageCode,
+      params.campaign_name,
+    );
     console.log("QuizSetLoginLayout locale:", locale);
   }
 
@@ -87,10 +91,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz log",
       params.campaign_name,
-      quizLogResponse
+      quizLogResponse,
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
+      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`,
     );
     return <RefreshButton />;
   }
@@ -118,7 +122,7 @@ export default async function QuizLayout({
   const quizResponse: ApiResponseV2<QuizSetEx> = await getQuizSet(
     params.quizset_path,
     userId,
-    params.campaign_name
+    params.campaign_name,
   );
 
   console.log("getQuizSet quizResponse", quizResponse);
@@ -144,10 +148,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz set",
       params.quizset_path,
-      quizResponse
+      quizResponse,
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz set: ${params.campaign_name}`
+      `Server error while fetching quiz set: ${params.campaign_name}`,
     );
     return <RefreshButton />;
   }

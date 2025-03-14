@@ -55,7 +55,7 @@ const UserProgress = () => {
 
   //
   const { data: progressData, isLoading } = useSWR(
-    `/api/dashboard/user/progress?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
+    `/api/dashboard/report/user?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
     swrFetcher,
     { fallbackData: { result: { data: [], total: 0 } } }
   );
@@ -82,7 +82,7 @@ const UserProgress = () => {
 
   const onDownload = () => {
     if (state.fieldValues) {
-      const url = `/api/dashboard/user/progress/download?${searchParams.toString()}`;
+      const url = `/api/dashboard/report/user/download?${searchParams.toString()}`;
       window.location.href = url;
     }
   };

@@ -1,18 +1,13 @@
 'use client';
-
-import { signOut } from 'next-auth/react';
-import React from 'react';
-
 import { IconExit } from '@/components/icons/bien';
 import { SquareUser } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { logout } from '@/lib/auth';
 
 export interface UserMenuProps {
   className?: string;
@@ -39,15 +34,7 @@ export function UserMenu({ className }: UserMenuProps) {
             <form
               onSubmit={async (event) => {
                 event.preventDefault();
-
-                const callbackUrl = `${window.location.protocol}//${window.location.host}`;
-                const signOutUrl = `${process.env.NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT}${callbackUrl}`;
-                sessionStorage.clear();
-                // 삼플 유저 로그아웃
-                await signOut({
-                  redirect: false, // NextAuth의 기본 리디렉션을 방지
-                });
-                window.location.href = signOutUrl;
+                await logout();
               }}
               className="flex items-center size-7 select-none w-full"
             >
