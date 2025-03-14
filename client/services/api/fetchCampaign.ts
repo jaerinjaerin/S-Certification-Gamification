@@ -26,8 +26,6 @@ export async function fetchCampaign(
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns?campaign_name=${campaignName}`;
     const response = await fetch(url, { method: "GET", cache: "force-cache" });
 
-    console.log(`🔗 API 요청: ${response.status}`);
-
     if (!response.ok) {
       console.warn(`⚠️ 데이터 없음 fetchQuizLog: ${campaignName}, ${url}`);
       return {

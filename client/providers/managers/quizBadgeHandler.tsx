@@ -1,14 +1,29 @@
 import { getBadgeEmailTemplete } from "@/templete/email";
+import { QuizStageEx } from "@/types/apiTypes";
 import * as Sentry from "@sentry/nextjs";
 
 export class QuizBadgeHandler {
   issueBadge = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      const registered = await this.postActivityRegister(activityId);
-      const attended = await this.postActivityEnd(activityId, elapsedSeconds);
+      const registered = await this.postActivityRegister(
+        userId,
+        campaignId,
+        domainId,
+        activityId
+      );
+      const attended = await this.postActivityEnd(
+        userId,
+        campaignId,
+        domainId,
+        activityId,
+        elapsedSeconds
+      );
 
       console.log("issueBadge registered", registered);
       console.log("issueBadge attended", attended);
@@ -33,15 +48,46 @@ export class QuizBadgeHandler {
     userId: string,
     badgeImageUrl: string,
     translationMessage: { [key: string]: string },
-    currentQuizStageIndex: number
+    currentQuizStageIndex: number,
+    currentQuizStage: QuizStageEx | null,
+    isOldCampaign: boolean = false
   ) => {
     try {
       // console.log("sendBadgeEmail");
+
+      const galaxyAIExpert: string = translationMessage["galaxy_ai_expert"];
+      const emailBadgeDate: string = translationMessage["email_badge_date"];
+      const emailBadgeDescriptionA: string =
+        translationMessage["email_badge_description_1"];
+
+      let emailBadgeDescriptionB: string =
+        translationMessage["email_badge_description_2"];
+      if (isOldCampaign) {
+        if (currentQuizStageIndex === 2) {
+          emailBadgeDescriptionB =
+            translationMessage["email_badge_description_2"];
+        } else if (currentQuizStageIndex === 3) {
+          emailBadgeDescriptionB =
+            translationMessage["email_badge_description_3"];
+        }
+      } else {
+        currentQuizStage?.badgeType === "FIRST" ||
+        currentQuizStage?.badgeType === null
+          ? translationMessage["email_badge_description_2"]
+          : translationMessage["email_badge_description_3"];
+      }
+
+      const emailBadgeDescriptionC: string =
+        translationMessage["email_badge_description_4"];
+
       const subject: string = "You have earned the Galaxy AI Expert Badge.";
       const bodyHtml: string = getBadgeEmailTemplete(
         badgeImageUrl,
-        translationMessage,
-        currentQuizStageIndex
+        galaxyAIExpert,
+        emailBadgeDate,
+        emailBadgeDescriptionA,
+        emailBadgeDescriptionB,
+        emailBadgeDescriptionC
       );
 
       const response = await fetch(
@@ -83,7 +129,12 @@ export class QuizBadgeHandler {
     }
   };
 
-  postActivityRegister = async (activityId: string): Promise<boolean> => {
+  postActivityRegister = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
@@ -91,7 +142,10 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
           }),
         }
       );
@@ -120,6 +174,9 @@ export class QuizBadgeHandler {
   };
 
   postActivityEnd = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -130,7 +187,10 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
             elapsedSeconds: 120,

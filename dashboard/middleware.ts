@@ -6,11 +6,9 @@ export const config = {
     '/((?!api|monitoring|error|_next/static|_next/image|favicon.ico|.*.png$|.*.php$).*)',
   ],
 };
+
 export async function middleware(request: NextRequest) {
   const session = await auth();
-
-  // console.log(session);
-
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -18,8 +16,18 @@ export async function middleware(request: NextRequest) {
   if (!session && !pathname.includes('/login')) {
     const url = '/login';
     return NextResponse.redirect(new URL(url, request.url));
-  } else if (session && pathname.includes('/login')) {
   }
 
-  return NextResponse.next();
+  // 로그인된 상태에서 '/' 경로로 접근할 때 '/campaign'으로 리다이렉트
+  if (session && pathname === '/') {
+    const url = '/campaign';
+    return NextResponse.redirect(new URL(url, request.url));
+  }
+
+  const response = NextResponse.next();
+  // 헤더에 pathname 추가
+  response.headers.set('x-current-path', pathname);
+  response.headers.set('x-current-url', request.url);
+
+  return response;
 }

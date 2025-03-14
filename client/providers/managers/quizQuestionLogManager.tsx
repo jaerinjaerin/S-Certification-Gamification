@@ -31,6 +31,8 @@ export type QuizLog = {
   storeId: string | null | undefined;
   jobId: string;
   languageId: string | null | undefined;
+  originalQuestionId: string | undefined;
+  originalIndex: number | undefined;
 };
 
 class QuizQuestionLogManager {
@@ -52,6 +54,10 @@ class QuizQuestionLogManager {
     this.stageIndex = stageIndex;
     this.logs = [];
     // console.log(`[QuizLogManager] Stage ${stageIndex} started. Logs reset.`);
+  }
+
+  clear() {
+    this.logs = [];
   }
 
   reset(): void {
@@ -182,7 +188,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {

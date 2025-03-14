@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { buildWhereWithValidKeys } from '@/app/api/(system)/dashboard/_lib/where';
+import { buildWhereWithValidKeys } from '@/lib/where';
 import { prisma } from '@/model/prisma';
+import { Prisma } from '@prisma/client';
 
 // userId 확인 후 중복 제거, quizStageIndex값이 높으면 업데이트
 export function removeDuplicateUsers(users: Record<string, any>[]) {
@@ -76,4 +77,43 @@ export const domainCheckOnly = async (where: any) => {
   }
 
   return nwhere;
+};
+
+// Experts by group initial data
+export const initialExpertsData: ImprovedDataStructure = [
+  {
+    group: 'plus',
+    items: [
+      { title: 'ff', value: 0 },
+      { title: 'fsm', value: 0 },
+    ],
+  },
+  {
+    group: 'ses',
+    items: [
+      { title: 'ff', value: 0 },
+      { title: 'fsm', value: 0 },
+    ],
+  },
+];
+
+// ff, fsm으로 구분하여 id 반환
+export const getJobIds = async (jobId?: string) => {
+  const jobGroup = await prisma.$queryRaw<{ id: string; code: string }[]>(
+    Prisma.sql`
+      SELECT id, code 
+      FROM "Job"
+      ${jobId ? Prisma.sql`WHERE code = ${jobId}` : Prisma.empty}
+    `
+  );
+
+  const groupedJobByCode = jobGroup.reduce(
+    (acc, { id, code }) => {
+      (acc[code] ||= []).push(id);
+      return acc;
+    },
+    {} as Record<string, string[]>
+  );
+
+  return { ff: [], fsm: [], ...groupedJobByCode };
 };

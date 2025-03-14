@@ -1,6 +1,6 @@
+import { getCampaignByName } from "@/app/actions/campaign-actions";
 import RefreshButton from "@/components/error/refresh-button";
 import { CampaignProvider } from "@/providers/campaignProvider";
-import { fetchCampaign } from "@/services/api/fetchCampaign";
 import * as Sentry from "@sentry/nextjs";
 import { redirect } from "next/navigation";
 
@@ -12,12 +12,17 @@ export default async function CampaignLayout({
   params: { campaign_name: string };
 }) {
   // ✅ 서버에서 fetchCampaign을 사용하여 캠페인 정보를 가져옴
-  const response = await fetchCampaign(params.campaign_name);
+  // const response = await fetchCampaign(params.campaign_name);
+  const response = await getCampaignByName(params.campaign_name);
   // console.log("CampaignLayout response", response);
 
   // 🚀 404 에러면 바로 not-found 페이지로 이동
   if (response.status === 404) {
-    console.error("Campaign not found", params.campaign_name, response);
+    console.error(
+      "CampaignLayout Campaign not found",
+      params.campaign_name,
+      response
+    );
     Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
     redirect("/error/not-found");
   }
@@ -33,9 +38,20 @@ export default async function CampaignLayout({
     return <RefreshButton />;
   }
 
+  const campaign = response.result?.item;
+  if (!campaign) {
+    console.error(
+      "CampaignLayout Campaign not found",
+      params.campaign_name,
+      response
+    );
+    Sentry.captureMessage(`Campaign not found: ${params.campaign_name}`);
+    redirect("/error/not-found");
+  }
+
   return (
     <div className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto text-base">
-      <CampaignProvider campaign={response.item!}>{children}</CampaignProvider>
+      <CampaignProvider campaign={campaign}>{children}</CampaignProvider>
     </div>
   );
 }

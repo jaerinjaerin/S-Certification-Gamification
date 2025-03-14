@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
-import { Question } from '@prisma/client';
+import { querySearchParams } from '@/lib/query';
+import { Job, Question } from '@prisma/client';
+import { extendedQuery } from '@/lib/sql';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,12 +14,12 @@ export async function GET(request: NextRequest) {
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, storeId, ...restWhere } = condition;
 
-    await prisma.$connect();
-
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
+    const jobGroup: Job[] = await extendedQuery(
+      prisma,
+      'Job',
+      jobId ? { code: jobId } : {},
+      { select: ['id', 'code'] }
+    );
 
     const questions: Question[] = await prisma.$queryRaw`
       SELECT q.*
@@ -115,10 +117,8 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { result: [], message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

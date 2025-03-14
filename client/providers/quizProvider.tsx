@@ -1,5 +1,4 @@
 "use client";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { QuestionEx, QuizSetEx, QuizStageEx } from "@/types/apiTypes";
 import { EndStageResult, ScoreData } from "@/types/type";
 import {
@@ -10,9 +9,7 @@ import {
   UserQuizStageLog,
 } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
-import assert from "assert";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useCampaign } from "./campaignProvider";
 import { QuizBadgeHandler } from "./managers/quizBadgeHandler";
@@ -24,47 +21,43 @@ import { QuizStageLogHandler } from "./managers/quizStageLogHandler";
 interface QuizContextType {
   userId: string;
   quizSet: QuizSetEx;
-  quizStageLogs: UserQuizStageLog[];
-  // quizQuestionLogs: UserQuizQuestionLog[];
   quizLog: UserQuizLog | null;
+  quizStageLogs: UserQuizStageLog[];
   currentQuizStageIndex: number;
   currentQuestionIndex: number;
-  currentQuizStage: QuizStageEx;
-  lastCompletedQuizStage: QuizStageEx | null;
+  currentQuizStage: QuizStageEx | null;
   currentStageQuestions: QuestionEx[];
+  lastCompletedQuizStage: QuizStageEx | null;
   isBadgeStage(): boolean;
   isComplete(): boolean;
   isLastQuestionOnState(): boolean;
-  isLastStage(): boolean;
-  endStage(remainingHearts: number): Promise<EndStageResult>;
-  failStage(): Promise<void>;
-  nextQuestion(): boolean;
-  nextStage(): boolean;
-  canNextQuestion(): boolean;
+  finalizeCurrentStage(remainingHearts: number): Promise<EndStageResult>;
+  handleStageFailure(): Promise<void>;
   logUserAnswer(
     questionId: string,
     selectedOptionIds: string[],
     elapsedSeconds: number,
     isCorrect: boolean
   ): void;
-  getCorrectOptionIds(questionId: string): string[];
   isLoading: boolean;
   quizStagesTotalScore: number;
   getAllStageMaxScore(): number;
+  clearUserAnswerLogs(): void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
 
 export const QuizProvider = ({
+  campaignName,
   userId,
   authType,
   children,
   quizSet,
   quizLog,
   quizStageLogs,
-  // quizQuestionLogs,
   quizSetPath,
 }: {
+  campaignName: string;
   userId: string;
   authType: AuthType;
   children: React.ReactNode;
@@ -72,25 +65,49 @@ export const QuizProvider = ({
   quizSet: QuizSetEx;
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
-  // quizQuestionLogs: UserQuizQuestionLog[] | null;
 }) => {
-  const { routeToPage } = usePathNavigator();
   const translation = useTranslations();
-  const pathname = usePathname();
+
+  // console.log("QuizProvider", quizSet);
+  // console.log("QuizProvider", quizStageLogs);
 
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
+
+  // 네트워크 오류로 인해 quizStageLog만 저장되고 quizLog가 저장되지 않은 경우에 대한 처리 추가
   const [_quizStageLogs, setQuizStageLogs] = useState<UserQuizStageLog[]>(
-    quizStageLogs ?? []
+    quizStageLogs != null
+      ? quizStageLogs.filter(
+          (log) => log.quizStageIndex <= (_quizLog?.lastCompletedStage ?? -1)
+        )
+      : []
   );
-  // const [_quizQuestionLogs] = useState<UserQuizQuestionLog[]>(
-  // quizQuestionLogs ?? []
-  // );
-  const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
-    (quizStageLogs ?? []).reduce(
-      (total, stageLog: UserQuizStageLog) => total + (stageLog.score ?? 0),
+
+  const getQuizStagesTotalScore = (stageLogs: UserQuizStageLog[] | null) => {
+    if (stageLogs == null) {
+      return 0;
+    }
+
+    const quizStageIndex =
+      quizLog?.lastCompletedStage == null ? -1 : quizLog?.lastCompletedStage;
+
+    const filteredQuizStageLogs = stageLogs.filter(
+      (log) => log.quizStageIndex <= quizStageIndex
+    );
+    const score = filteredQuizStageLogs.reduce(
+      (total, stageLog: UserQuizStageLog) => {
+        return total + (stageLog.score ?? 0);
+      },
       0
-    )
+    );
+
+    console.log("getQuizStagesTotalScore", quizStageIndex, score);
+
+    return score;
+  };
+
+  const [quizStagesTotalScore, setQuizStagesTotalScore] = useState<number>(
+    getQuizStagesTotalScore(quizStageLogs)
   );
 
   const [currentQuizStageIndex, setCurrentQuizStageIndex] = useState(
@@ -101,22 +118,31 @@ export const QuizProvider = ({
   );
 
   // TODO: 방어 코드. 코드가 정리되면 제거
-  if (
-    currentQuizStageIndex >= quizSet.quizStages.length &&
-    pathname.includes("/quiz")
-  ) {
-    routeToPage("map");
-  }
+  // if (
+  //   currentQuizStageIndex >= quizSet.quizStages.length &&
+  //   pathname.includes("/quiz")
+  // ) {
+  //   // redirect(`/${campaignName}/${quizSetPath}/map`);
+  //   console.log(
+  //     "redirect to map",
+  //     currentQuizStageIndex,
+  //     quizSet.quizStages.length
+  //   );
+  //   router.push("map");
+  // }
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx>(
-    quizSet.quizStages[currentQuizStageIndex]
-  );
-  const [lastCompletedQuizStage] = useState<QuizStageEx | null>(
-    quizLog?.lastCompletedStage != null
-      ? quizSet.quizStages[quizLog?.lastCompletedStage]
+  const [currentQuizStage, setCurrentQuizStage] = useState<QuizStageEx | null>(
+    quizSet.quizStages.length > currentQuizStageIndex
+      ? quizSet.quizStages[currentQuizStageIndex]
       : null
   );
+  const [lastCompletedQuizStage, setLastCompletedQuizStage] =
+    useState<QuizStageEx | null>(
+      quizLog?.lastCompletedStage != null
+        ? quizSet.quizStages[quizLog?.lastCompletedStage]
+        : null
+    );
   const [currentStageQuestions, setCurrentStageQuestions] = useState<
     QuestionEx[]
   >(quizSet.quizStages[currentQuizStageIndex]?.questions ?? []);
@@ -131,6 +157,19 @@ export const QuizProvider = ({
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
   // console.log("QuizProvider", quizSet);
+  console.log("currentQuizStage", currentQuizStage);
+
+  useEffect(() => {
+    console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
+  }, [currentQuizStageIndex]);
+
+  useEffect(() => {
+    console.log("currentQuizStage 업데이트됨:", currentQuizStage);
+  }, [currentQuizStage]);
+
+  useEffect(() => {
+    console.log("currentStageQuestions 업데이트됨:", currentStageQuestions);
+  }, [currentStageQuestions]);
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);
@@ -150,6 +189,7 @@ export const QuizProvider = ({
     const quizLogHandler = new QuizLogHandler();
     const newQuizLog = await quizLogHandler.create({
       userId,
+      campaignId: campaign.id,
       quizSetPath: quizSetPath,
     });
 
@@ -160,105 +200,142 @@ export const QuizProvider = ({
     isCreatingQuizLogRef.current = false;
   };
 
-  const endStage = async (remainingHearts: number): Promise<EndStageResult> => {
-    const quizScoreHandler = new QuizScoreHandler();
+  const finalizeCurrentStage = async (
+    remainingHearts: number
+  ): Promise<EndStageResult> => {
+    try {
+      const quizScoreHandler = new QuizScoreHandler();
 
-    // 현재 스테이지의 점수 계산
-    const score = quizScoreHandler.calculateStageScore(
-      quizQuestionLogManager.getLogs(),
-      remainingHearts
-    );
-    const totalQuizScore = quizStagesTotalScore + score;
-
-    // 현재 스테이지의 총 소요시간 계산
-    const stageElapsedSeconds = quizQuestionLogManager.getTotalElapsedSeconds();
-    const totalQuizTime = getQuizTotalElapsedSeconds() + stageElapsedSeconds;
-
-    setIsLoading(true);
-
-    // 뱃지 스테이지 여부 확인
-    const isBadgeAcquired = isBadgeStage()
-      ? await processBadgeAcquisition(stageElapsedSeconds)
-      : false;
-
-    // 랭킹 및 그래프 데이터 가져오기
-    let scoreData: ScoreData | null = null;
-    if (isBadgeStage() || isLastStage()) {
-      scoreData = await quizScoreHandler.fetchRankAndGraphData(
-        authType,
-        campaign.id,
-        currentQuizStageIndex,
-        totalQuizScore
+      // 현재 스테이지의 점수 계산
+      const score = quizScoreHandler.calculateStageScore(
+        quizQuestionLogManager.getLogs(),
+        remainingHearts
       );
-      // console.log("scoreData", scoreData);
+      const totalQuizScore = quizStagesTotalScore + score;
+
+      // 현재 스테이지의 총 소요시간 계산
+      const stageElapsedSeconds =
+        quizQuestionLogManager.getTotalElapsedSeconds();
+      const totalQuizTime = getQuizTotalElapsedSeconds() + stageElapsedSeconds;
+
+      setIsLoading(true);
+
+      // 뱃지 스테이지 여부 확인
+      const isBadgeAcquired = isBadgeStage()
+        ? await processBadgeAcquisition(stageElapsedSeconds, campaignName)
+        : false;
+      console.log("isBadgeAcquired", isBadgeAcquired);
+
+      // 랭킹 및 그래프 데이터 가져오기
+      let scoreData: ScoreData | null = null;
+      if (isBadgeStage() || isLastStage()) {
+        scoreData = await quizScoreHandler.fetchRankAndGraphData(
+          authType,
+          campaign.id,
+          currentQuizStageIndex,
+          totalQuizScore
+        );
+        // console.log("scoreData", scoreData);
+      }
+
+      // 퀴즈 답변 로그 전송 중인지 확인
+      if (quizQuestionLogManager.isQueueProcessing()) {
+        await quizQuestionLogManager.waitForQueueToComplete();
+      }
+
+      // 퀴즈 스테이지 로그 생성
+      const quizStageLogHandler = new QuizStageLogHandler();
+      const newQuizStageLog = await quizStageLogHandler.create({
+        userId: userId ?? _quizLog?.userId ?? "",
+        campaignId: campaign.id,
+        quizSetId: quizSet.id,
+        quizStageIndex: currentQuizStageIndex,
+        quizStageId: currentQuizStage?.id ?? "",
+        authType: authType,
+        score,
+        totalScore: totalQuizScore,
+        percentile: scoreData?.percentile || null,
+        scoreRange: scoreData?.userBin?.range || null,
+        elapsedSeconds: stageElapsedSeconds,
+        remainingHearts,
+        isBadgeStage: isBadgeStage(),
+        isBadgeAcquired,
+        badgeActivityId:
+          authType === AuthType.SUMTOTAL
+            ? getCurrentStageBadgeActivityId(campaignName)
+            : null,
+        badgeType: currentQuizStage?.badgeType || null,
+        quizLog: _quizLog,
+      });
+
+      // 퀴즈 로그 업데이트
+      const quizLogHandler = new QuizLogHandler();
+      const updatedQuizLog = await quizLogHandler.update({
+        quizStageIndex: currentQuizStageIndex,
+        isBadgeAcquired,
+        totalScore: totalQuizScore,
+        elapsedSeconds: totalQuizTime,
+        quizLogId: _quizLog?.id ?? "",
+        quizStagesLength: quizSet.quizStages.length,
+      });
+      // console.info("scoreData", scoreData);
+
+      console.log("newQuizStageLog", newQuizStageLog);
+      // ################ DATA 업데이트 모두 완료 ################
+      // 퀴즈 로그 State 업데이트
+      setQuizStagesTotalScore(totalQuizScore);
+      // setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
+      setQuizStageLogs((prevLogs) => {
+        const logMap = new Map();
+
+        [...prevLogs, newQuizStageLog].forEach((log) => {
+          // 같은 quizStageIndex가 있다면 updatedAt이 더 큰 값을 유지
+          if (
+            !logMap.has(log.quizStageIndex) ||
+            logMap.get(log.quizStageIndex).updatedAt < log.updatedAt
+          ) {
+            logMap.set(log.quizStageIndex, log);
+          }
+        });
+
+        return Array.from(logMap.values());
+      });
+
+      setQuizLog(updatedQuizLog);
+      setLastCompletedQuizStage(
+        updatedQuizLog.lastCompletedStage != null
+          ? quizSet.quizStages[updatedQuizLog.lastCompletedStage]
+          : null
+      );
+
+      if (!isLastStage()) {
+        nextStage();
+      }
+
+      setIsLoading(false);
+
+      return {
+        score: scoreData ?? {
+          data: [],
+          sampleSize: null,
+          userBin: null,
+          userScore: totalQuizScore,
+          percentile: 50,
+        },
+        isBadgeAcquired: isBadgeAcquired,
+        badgeStage: isBadgeStage(),
+        badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",
+        nextStageIndex: updatedQuizLog.isCompleted
+          ? null
+          : currentQuizStageIndex + 1,
+      };
+    } catch (error) {
+      console.error("finalizeCurrentStage에서 에러 발생:", error);
+      throw error;
     }
-
-    // 퀴즈 답변 로그 전송 중인지 확인
-    if (quizQuestionLogManager.isQueueProcessing()) {
-      await quizQuestionLogManager.waitForQueueToComplete();
-    }
-
-    // 퀴즈 스테이지 로그 생성
-    const quizStageLogHandler = new QuizStageLogHandler();
-    await quizStageLogHandler.create({
-      userId: userId ?? _quizLog?.userId ?? "",
-      campaignId: campaign.id,
-      quizSetId: quizSet.id,
-      quizStageIndex: currentQuizStageIndex,
-      quizStageId: currentQuizStage?.id ?? "",
-      authType: authType,
-      score,
-      totalScore: totalQuizScore,
-      percentile: scoreData?.percentile || null,
-      scoreRange: scoreData?.userBin?.range || null,
-      elapsedSeconds: stageElapsedSeconds,
-      remainingHearts,
-      isBadgeStage: isBadgeStage(),
-      isBadgeAcquired,
-      badgeActivityId:
-        authType === AuthType.SUMTOTAL
-          ? getCurrentStageBadgeActivityId()
-          : null,
-      quizLog: _quizLog,
-    });
-
-    // 퀴즈 로그 업데이트
-    const quizLogHandler = new QuizLogHandler();
-    await quizLogHandler.update({
-      quizStageIndex: currentQuizStageIndex,
-      isBadgeAcquired,
-      totalScore: totalQuizScore,
-      elapsedSeconds: totalQuizTime,
-      quizLogId: _quizLog?.id ?? "",
-      quizStagesLength: quizSet.quizStages.length,
-    });
-    // console.info("scoreData", scoreData);
-
-    // 퀴즈 로그 State 업데이트
-    // setQuizStagesTotalScore(totalQuizScore);
-    // setQuizStageLogs([..._quizStageLogs, newQuizStageLog]);
-    // setQuizLog(updatedQuizLog);
-
-    // 다음 스테이지로 이동
-    // quizQuestionLogManager.reset();
-
-    setIsLoading(false);
-
-    return {
-      score: scoreData ?? {
-        data: [],
-        sampleSize: null,
-        userBin: null,
-        userScore: totalQuizScore,
-        percentile: 50,
-      },
-      isBadgeAcquired: isBadgeAcquired,
-      badgeStage: isBadgeStage(),
-      badgeImageURL: currentQuizStage?.badgeImage?.imagePath ?? "",
-    };
   };
 
-  const failStage = async (): Promise<void> => {
+  const handleStageFailure = async (): Promise<void> => {
     setIsLoading(true);
 
     // 퀴즈 답변 로그 전송 중인지 확인
@@ -266,7 +343,7 @@ export const QuizProvider = ({
       await quizQuestionLogManager.waitForQueueToComplete();
     }
 
-    // quizQuestionLogManager.init(currentQuizStageIndex);
+    quizQuestionLogManager.init(currentQuizStageIndex);
 
     setIsLoading(false);
   };
@@ -282,31 +359,19 @@ export const QuizProvider = ({
     return currentQuizStage?.questions.length - 1 === currentQuestionIndex;
   };
 
-  const canNextQuestion = (): boolean => {
-    if (isLastQuestionOnState()) {
-      return false;
-    }
-    return true;
-  };
-
-  const nextQuestion = (): boolean => {
-    // console.log("nextQuestion", currentQuestionIndex);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    return true;
-  };
-
-  const nextStage = (): boolean => {
-    if (isLastStage()) {
-      return false;
-    }
+  const nextStage = (): void => {
     const nextQuizStageIndex = currentQuizStageIndex + 1;
+    console.log("nextStage", currentQuizStageIndex, nextQuizStageIndex);
+
     setCurrentQuizStageIndex(nextQuizStageIndex);
     setCurrentQuizStage(quizSet.quizStages[nextQuizStageIndex]);
     setCurrentStageQuestions(quizSet.quizStages[nextQuizStageIndex].questions);
     setCurrentQuestionIndex(0);
-
     quizQuestionLogManager.init(nextQuizStageIndex);
-    return true;
+  };
+
+  const clearUserAnswerLogs = (): void => {
+    quizQuestionLogManager.clear();
   };
 
   const isBadgeStage = (): boolean => {
@@ -314,10 +379,26 @@ export const QuizProvider = ({
   };
 
   const isLastStage = (): boolean => {
+    console.log(
+      "isLastStage",
+      quizSet.quizStages.length - 1,
+      currentQuizStageIndex
+    );
     return quizSet.quizStages.length - 1 === currentQuizStageIndex;
   };
 
-  const getCurrentStageBadgeActivityId = (): string | null => {
+  const getCurrentStageBadgeActivityId = (
+    campaignSlug: string
+  ): string | null => {
+    if (campaignSlug.toLowerCase() !== "s25") {
+      const badgeActivityId = currentQuizStage?.badgeActivityId;
+      if (badgeActivityId != null && badgeActivityId !== "") {
+        return badgeActivityId;
+      }
+    }
+
+    // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.
+    // 대체 로직은 위의 로직을 사용
     if (
       _quizLog?.quizSetPath?.toLocaleLowerCase() ===
       "NAT_2756_de-DE"?.toLocaleLowerCase()
@@ -379,14 +460,15 @@ export const QuizProvider = ({
   };
 
   const processBadgeAcquisition = async (
-    elapsedSeconds: number
+    elapsedSeconds: number,
+    campaignSlug: string
   ): Promise<boolean> => {
     // 썸토탈 뱃지 발급
     if (authType === AuthType.SUMTOTAL) {
-      const activityId = getCurrentStageBadgeActivityId();
+      const activityId = getCurrentStageBadgeActivityId(campaignSlug);
 
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      console.log("activityId", activityId, _quizLog?.quizSetPath);
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      // console.log("activityId", activityId, _quizLog?.quizSetPath);
       if (!activityId) {
         Sentry.captureMessage(
           `[processBadgeAcquisition] Activity ID is not found : ${quizLog?.quizSetPath}`
@@ -395,6 +477,9 @@ export const QuizProvider = ({
       }
 
       const result = await new QuizBadgeHandler().issueBadge(
+        userId,
+        campaign.id,
+        quizSet.domainId ?? "",
         activityId,
         elapsedSeconds
       );
@@ -423,14 +508,20 @@ export const QuizProvider = ({
       userId,
       badgeImageUrl,
       translationMessage,
-      currentQuizStageIndex
+      currentQuizStageIndex,
+      currentQuizStage,
+      campaignSlug.toLowerCase() === "s25" ? true : false
     );
 
     return result;
   };
 
   const isComplete = (): boolean => {
-    return _quizLog?.isCompleted ?? false;
+    if (_quizLog) {
+      return _quizLog.lastCompletedStage === quizSet.quizStages.length - 1;
+    }
+    return false;
+    // return _quizLog?.isCompleted ?? false;
   };
 
   const logUserAnswer = (
@@ -481,22 +572,9 @@ export const QuizProvider = ({
       channelId: _quizLog?.channelId,
       channelName: _quizLog?.channelName,
       channelSegmentId: _quizLog?.channelSegmentId,
+      originalQuestionId: question.originalQuestionId,
+      originalIndex: question.originalIndex,
     });
-  };
-
-  const getCorrectOptionIds = (questionId: string): string[] => {
-    const question = currentQuizStage?.questions.find(
-      (q: Question) => q.id === questionId
-    );
-
-    if (!question) {
-      // throw new Error("Question not found");
-      assert(false, "Question not found");
-    }
-
-    return question.options
-      .filter((option: QuestionOption) => option.isCorrect)
-      .map((option: QuestionOption) => option.id);
   };
 
   const getAllStageMaxScore = () => {
@@ -520,7 +598,6 @@ export const QuizProvider = ({
         isLoading,
         quizSet,
         quizStageLogs: _quizStageLogs,
-        // quizQuestionLogs: _quizQuestionLogs,
         quizLog: _quizLog,
         quizStagesTotalScore,
         currentQuizStageIndex,
@@ -529,17 +606,13 @@ export const QuizProvider = ({
         lastCompletedQuizStage,
         currentStageQuestions,
         isComplete,
-        isLastStage,
-        endStage,
-        failStage,
-        nextStage,
+        finalizeCurrentStage,
+        handleStageFailure,
         logUserAnswer,
         isLastQuestionOnState,
-        nextQuestion,
-        canNextQuestion,
         isBadgeStage,
-        getCorrectOptionIds,
         getAllStageMaxScore,
+        clearUserAnswerLogs,
       }}
     >
       {children}

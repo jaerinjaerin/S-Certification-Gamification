@@ -6,7 +6,7 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { AuthType } from "@prisma/client";
+import { AuthType, Campaign } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,15 +19,10 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { userId, quizSetPath } = body;
+  const { userId, quizSetPath, campaignId } = body;
 
   try {
-    // const url = request.url;
-    // const { searchParams } = new URL(url);
-    // const quizsetPath = searchParams.get("quizset_path");
-    // // console.log("quizSet post", quizsetPath);
-
-    if (!quizSetPath) {
+    if (!quizSetPath || !campaignId || !userId) {
       Sentry.captureMessage("Quiz set path is required");
       return NextResponse.json(
         {
@@ -42,10 +37,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { domainCode, languageCode } = extractCodesFromPath(quizSetPath);
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: campaignId,
+      },
+    });
 
-    // console.log("domainCode", domainCode);
-    // console.log("languageCode", languageCode);
+    if (campaign == null) {
+      return NextResponse.json(
+        {
+          status: 404,
+          message: "Not found",
+          error: {
+            code: "NOT_FOUND",
+            details: "Campaign not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    const codes = extractCodesFromPath(quizSetPath);
+    if (codes == null) {
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "Bad request",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Invalid quizset path",
+          },
+        },
+        { status: 400 }
+      );
+    }
+    const { domainCode, languageCode } = codes;
 
     const domain = await prisma.domain.findFirst({
       where: {
@@ -119,6 +145,209 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (campaign.name.toLowerCase() !== "s25") {
+      const job = await prisma.job.findFirst({
+        where: {
+          id: user?.jobId ?? sumtotalUserOthersJobId,
+        },
+      });
+
+      const language = await prisma.language.findFirst({
+        where: {
+          code: languageCode,
+        },
+      });
+
+      if (!language) {
+        Sentry.captureMessage("Language not found", (scope) => {
+          scope.setContext("operation", {
+            type: "api",
+            endpoint: "/api/logs/quizzes/sets",
+            method: "POST",
+            description: "Language not found",
+          });
+          scope.setTag("userId", userId);
+          scope.setTag("quizSetPath", quizSetPath);
+          return scope;
+        });
+
+        return NextResponse.json(
+          {
+            status: 404,
+            message: "Not found",
+            error: {
+              code: "NOT_FOUND",
+              details: "Language not found",
+            },
+          },
+          { status: 404 }
+        );
+      }
+
+      const quizSet = await prisma.quizSet.findFirst({
+        where: {
+          domainId: domain?.id,
+          campaignId,
+          languageId: language?.id,
+          jobCodes: {
+            has: job?.code,
+          },
+        },
+      });
+
+      if (!quizSet) {
+        return NextResponse.json(
+          {
+            status: 404,
+            message: "Not found",
+            error: {
+              code: "NOT_FOUND",
+              details: "Quiz set not found",
+            },
+          },
+          { status: 404 }
+        );
+      }
+
+      // // console.log("user:", user);
+
+      let userQuizLog = await prisma.userQuizLog.findFirst({
+        where: {
+          userId: userId,
+          campaignId: quizSet.campaignId,
+        },
+      });
+
+      if (userQuizLog) {
+        console.warn("Warn already exists user quiz log:", userQuizLog);
+        userQuizLog = await prisma.userQuizLog.update({
+          where: {
+            id: userQuizLog.id,
+          },
+          data: {
+            // userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      } else {
+        userQuizLog = await prisma.userQuizLog.create({
+          data: {
+            userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      }
+
+      let userQuizStatistics = await prisma.userQuizStatistics.findFirst({
+        where: {
+          userId: userId,
+          campaignId: quizSet.campaignId,
+        },
+      });
+
+      if (userQuizStatistics) {
+        userQuizStatistics = await prisma.userQuizStatistics.update({
+          where: {
+            id: userQuizStatistics.id,
+          },
+          data: {
+            // userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      } else {
+        userQuizStatistics = await prisma.userQuizStatistics.create({
+          data: {
+            userId: userId,
+            authType: user?.authType || AuthType.UNKNOWN,
+            campaignId,
+            isCompleted: false,
+            isBadgeAcquired: false,
+
+            jobId: job?.id,
+            quizSetId: quizSet.id,
+            languageId: language?.id,
+            quizSetPath: quizSetPath,
+
+            domainId: domain?.id,
+            regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+            subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+            storeId: user?.storeId,
+            storeSegmentText: user?.storeSegmentText,
+            channelId: user?.channelId,
+            channelName: user?.channelName,
+            channelSegmentId: user?.channelSegmentId,
+          },
+        });
+      }
+
+      return NextResponse.json(
+        {
+          item: {
+            quizLog: userQuizLog,
+          },
+        },
+        { status: 200 }
+      );
+    }
+
+    // DEPRECATED: 구버전 (S25) 캠페인 로직입니다.
+    // 대체 로직은 위의 로직을 사용
     const job = await prisma.job.findFirst({
       where: {
         id: user?.jobId ?? sumtotalUserOthersJobId,
@@ -161,17 +390,18 @@ export async function POST(request: NextRequest) {
     const quizSet = await prisma.quizSet.findFirst({
       where: {
         domainId: domain?.id,
+        campaignId,
         jobCodes: {
           has: job?.code,
         },
       },
-      include: {
-        quizStages: {
-          include: {
-            badgeImage: true, // Include badgeImage relation in quizStages
-          },
-        },
-      },
+      // include: {
+      //   quizStages: {
+      //     include: {
+      //       badgeImage: true, // Include badgeImage relation in quizStages
+      //     },
+      //   },
+      // },
     });
 
     // // console.log("quizSet:", quizsetPath, quizSet);
@@ -192,80 +422,147 @@ export async function POST(request: NextRequest) {
 
     // // console.log("user:", user);
 
-    const result = await prisma.$transaction(async (tx) => {
-      const userQuizLog = await tx.userQuizLog.create({
-        data: {
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: confirmedQuizSetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      const userQuizStatistics = await tx.userQuizStatistics.create({
-        data: {
-          id: userQuizLog.id,
-          userId: userId,
-          authType: user?.authType || AuthType.UNKNOWN,
-          campaignId: quizSet.campaignId,
-          isCompleted: false,
-          isBadgeAcquired: false,
-
-          jobId: job?.id,
-          quizSetId: quizSet.id,
-          languageId: language?.id,
-          quizSetPath: confirmedQuizSetPath,
-
-          domainId: domain?.id,
-          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
-          subsidiaryId: domain?.subsidiary?.id ?? user?.subsidiaryId,
-
-          storeId: user?.storeId,
-          storeSegmentText: user?.storeSegmentText,
-          channelId: user?.channelId,
-          channelName: user?.channelName,
-          channelSegmentId: user?.channelSegmentId,
-        },
-      });
-
-      return { userQuizLog, userQuizStatistics };
+    let userQuizLog = await prisma.userQuizLog.findFirst({
+      where: {
+        userId: userId,
+        campaignId: quizSet.campaignId,
+      },
     });
 
-    // // console.log("userQuizLog:", result.userQuizLog);
-    // // console.log("userQuizStatistics:", result.userQuizStatistics);
+    if (userQuizLog) {
+      console.warn("Warn already exists user quiz log:", userQuizLog);
+      userQuizLog = await prisma.userQuizLog.update({
+        where: {
+          id: userQuizLog.id,
+        },
+        data: {
+          // userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    } else {
+      userQuizLog = await prisma.userQuizLog.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    }
+
+    let userQuizStatistics = await prisma.userQuizStatistics.findFirst({
+      where: {
+        userId: userId,
+        campaignId: quizSet.campaignId,
+      },
+    });
+
+    if (userQuizStatistics) {
+      userQuizStatistics = await prisma.userQuizStatistics.update({
+        where: {
+          id: userQuizStatistics.id,
+        },
+        data: {
+          // userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    } else {
+      userQuizStatistics = await prisma.userQuizStatistics.create({
+        data: {
+          userId: userId,
+          authType: user?.authType || AuthType.UNKNOWN,
+          campaignId,
+          isCompleted: false,
+          isBadgeAcquired: false,
+
+          jobId: job?.id,
+          quizSetId: quizSet.id,
+          languageId: language?.id,
+          quizSetPath: confirmedQuizSetPath,
+
+          domainId: domain?.id,
+          regionId: domain?.subsidiary?.region?.id ?? user?.regionId,
+          subsidiaryId: domain?.subsidiaryId ?? user?.subsidiaryId,
+
+          storeId: user?.storeId,
+          storeSegmentText: user?.storeSegmentText,
+          channelId: user?.channelId,
+          channelName: user?.channelName,
+          channelSegmentId: user?.channelSegmentId,
+        },
+      });
+    }
 
     return NextResponse.json(
       {
         item: {
-          quizLog: result.userQuizLog,
+          quizLog: userQuizLog,
         },
       },
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("Error creating user campaign domain log:", error);
+    console.error("Error creating user quiz log:", error);
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
         type: "api",
         endpoint: "/api/logs/quizzes/sets",
         method: "POST",
-        description: "Failed to create user campaign domain log",
+        description: "Failed to create user quiz log",
       });
       scope.setTag("userId", userId);
       scope.setTag("quizSetPath", quizSetPath);
@@ -273,19 +570,10 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 export async function GET(request: NextRequest) {
-  // export async function GET(request: NextRequest) {
-  // console.log("GET - QuizSet Log");
-  // const session = await auth();
-  // if (!session) {
-  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  // }
-
   const url = request.url;
   const { searchParams } = new URL(url);
   const userId = searchParams.get("user_id");
@@ -300,14 +588,34 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const campaign = await prisma.campaign.findFirst({
-      where: {
-        name: {
-          equals: campaignName,
-          mode: "insensitive", // 대소문자 구분 없이 검색
+    // const campaign = await prisma.campaign.findFirst({
+    //   where: {
+    //     name: {
+    //       equals: campaignName,
+    //       mode: "insensitive", // 대소문자 구분 없이 검색
+    //     },
+    //   },
+    // });
+    let campaign: Campaign | null = null;
+    if (campaignName.toLowerCase() !== "s25") {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
         },
-      },
-    });
+      });
+    } else {
+      campaign = await prisma.campaign.findFirst({
+        where: {
+          name: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+    }
 
     // // console.log("campaign:", campaign);
 
@@ -353,36 +661,6 @@ export async function GET(request: NextRequest) {
         quizSetId: userQuizLog.quizSetId,
       },
     });
-
-    // // console.log("userQuizStageLogs:", userQuizStageLogs);
-
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     userId: userId,
-    //     quizSetId: userQuizLog.quizSetId,
-    //   },
-    //   orderBy: {
-    //     createdAt: "asc",
-    //   },
-    // });
-
-    // const userQuizQuestionLogs = await prisma.userQuizQuestionLog.findMany({
-    //   where: {
-    //     userId: userId,
-    //     quizSetId: userQuizLog.quizSetId,
-    //   },
-    //   orderBy: [
-    //     {
-    //       questionId: "asc", // questionId를 기준으로 정렬
-    //     },
-    //     {
-    //       createdAt: "desc", // 최신 항목을 우선 정렬
-    //     },
-    //   ],
-    //   distinct: ["questionId"], // questionId별로 중복 제거
-    // });
-
-    // console.log("userQuizQuestionLogs:", userQuizQuestionLogs);
 
     return NextResponse.json(
       {

@@ -1,3 +1,6 @@
+import useCheckLocale from "@/hooks/useCheckLocale";
+import { cn } from "@/utils/utils";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -5,9 +8,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
-import { useTranslations } from "next-intl";
-import useCheckLocale from "@/hooks/useCheckLocale";
-import { cn } from "@/utils/utils";
 
 export default function TutorialCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -27,7 +27,7 @@ export default function TutorialCarousel() {
     });
   }, [api]);
 
-  const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/map_guide.png`;
+  const mapGuideImageUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/map_guide.png`;
 
   return (
     <Carousel className="w-full font-medium font-one" setApi={setApi}>

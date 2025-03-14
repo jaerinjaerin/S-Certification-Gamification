@@ -1,55 +1,62 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
-import { buildWhereWithValidKeys } from '../../../_lib/where';
-import { UserQuizBadgeStageStatistics } from '@prisma/client';
-import { removeDuplicateUsers } from '@/lib/data';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
+import { CampaignSettings, UserQuizBadgeStageStatistics } from '@prisma/client';
+import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { queryRawWithWhere } from '@/lib/sql';
+
+export const dynamic = 'force-dynamic';
 
 async function fetchUserStatistics(
   where: any,
-  jobGroup: { id: string; code: string }[],
+  stageIndexes: number[],
+  jobGroup: string[],
   moreWhere: any
-) {
-  return prisma.userQuizBadgeStageStatistics.findMany({
-    where: {
-      ...buildWhereWithValidKeys(where, [
-        'campaignId',
-        'regionId',
-        'subsidiaryId',
-        'domainId',
-        'authType',
-        'channelSegmentId',
-        'createdAt',
-      ]),
-      quizStageIndex: { in: [2, 3] },
-      jobId: { in: jobGroup.map((job) => job.id) },
-      ...moreWhere,
-    },
+): Promise<UserQuizBadgeStageStatistics[]> {
+  return queryRawWithWhere(prisma, 'UserQuizBadgeStageStatistics', {
+    ...buildWhereWithValidKeys(where, [
+      'campaignId',
+      'regionId',
+      'subsidiaryId',
+      'domainId',
+      'authType',
+      'channelSegmentId',
+      'createdAt',
+    ]),
+    quizStageIndex: { in: stageIndexes },
+    jobId: { in: jobGroup },
+    ...moreWhere,
   });
 }
 
 async function processUserData(
   users: UserQuizBadgeStageStatistics[],
-  jobGroup: { id: string; code: string }[],
+  stageIndexes: { ff: number[]; fsm: number[] },
+  jobGroup: Record<string, string[]>,
   jobData: any,
   isSES: boolean = false
 ) {
   // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
   removeDuplicateUsers(users).forEach((user) => {
-    const jobNameBase = jobGroup.find((j) => j.id === user.jobId)?.code;
+    const jobNameBase =
+      (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+        jobGroup[key].includes(user.jobId)
+      ) || null;
+
     if (!jobNameBase) return;
 
     const jobName = isSES ? `${jobNameBase} (SES)` : jobNameBase;
+    const stage = jobNameBase === 'ff' ? stageIndexes.ff : stageIndexes.fsm;
 
     jobData.forEach(
       (item: { name: string; expert: number; advanced: number }) => {
         if (item.name === jobName.toUpperCase()) {
-          if (user.quizStageIndex === 3) {
+          if (user.quizStageIndex === stage[1]) {
             item.advanced += 1;
-          } else if (user.quizStageIndex === 2) {
+          } else if (user.quizStageIndex === stage[0]) {
             item.expert += 1;
           }
         }
@@ -64,7 +71,42 @@ export async function GET(request: NextRequest) {
     const { where: condition } = querySearchParams(searchParams);
     const { jobId, ...where } = condition;
 
-    await prisma.$connect();
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      {
+        campaignId: where.campaignId,
+      }
+    );
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    const stageGroups = {
+      ff: jobGroups[0].stageIndex,
+      fsm: jobGroups[1].stageIndex,
+    };
 
     // bar chart
     const jobData = [
@@ -73,20 +115,30 @@ export async function GET(request: NextRequest) {
       { name: 'FSM (SES)', expert: 0, advanced: 0 },
       { name: 'FF (SES)', expert: 0, advanced: 0 },
     ];
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
 
-    const plusUsers = await fetchUserStatistics(where, jobGroup, {
-      OR: [{ storeId: { not: '4' } }, { storeId: null }],
-    });
-    processUserData(plusUsers, jobGroup, jobData);
+    const plusUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          OR: [{ storeId: { not: '4' } }, { storeId: null }],
+        })
+      )
+    );
 
-    const sesUsers = await fetchUserStatistics(where, jobGroup, {
-      storeId: '4',
+    plusUsers.forEach((plusUser, index) => {
+      processUserData(plusUser, stageGroups, jobGroup, jobData);
     });
-    processUserData(sesUsers, jobGroup, jobData, true);
+    //
+    const sesUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          storeId: '4',
+        })
+      )
+    );
+
+    sesUsers.forEach((sesUser, index) => {
+      processUserData(sesUser, stageGroups, jobGroup, jobData, true);
+    });
 
     // pie chart
     const pie = [
@@ -102,14 +154,15 @@ export async function GET(request: NextRequest) {
 
     const count = pie.reduce((acc, item) => acc + item.value, 0);
 
-    return NextResponse.json({ result: { pie, bar: jobData }, count });
+    return NextResponse.json({ result: { pie, bar: jobData, count } });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      {
+        result: { pie: [], bar: [], count: 0 },
+        message: 'Internal server error',
+      },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

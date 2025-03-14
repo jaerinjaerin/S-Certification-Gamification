@@ -12,12 +12,12 @@ import {
 import { samsungplusAppDeepLink } from "@/core/config/links";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useQuiz } from "@/providers/quizProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
 import { cn } from "@/utils/utils";
 import { AuthType } from "@prisma/client";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function ScoreRankAnnouncement({
   className,
@@ -25,7 +25,7 @@ export default function ScoreRankAnnouncement({
   className?: string;
 }) {
   const translation = useTranslations();
-  const { routeToPage } = usePathNavigator();
+  const router = useRouter();
   const {
     quizStagesTotalScore,
     lastCompletedQuizStage,
@@ -48,7 +48,7 @@ export default function ScoreRankAnnouncement({
     }
 
     const GRAPH_NUMBER = Math.ceil(topRank / 10) * 10;
-    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
+    return `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/rank_graph/graph=${GRAPH_NUMBER}.png`;
   };
   const { isArabic, isMyanmar } = useCheckLocale();
 
@@ -155,7 +155,7 @@ export default function ScoreRankAnnouncement({
               <span>S+</span>
             </Button>
           )}
-          <Button variant={"primary"} onClick={() => routeToPage("map")}>
+          <Button variant={"primary"} onClick={() => router.push("map")}>
             <span>
               {isLastStage
                 ? translation("return_map")

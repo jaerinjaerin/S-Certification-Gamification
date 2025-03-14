@@ -76,5 +76,5 @@ export const usePathNavigator = () => {
     window.location.href = errorUrl;
   };
 
-  return { generateTargetUrl, routeToPage, routeToError };
+  return { generateTargetUrl, routeToError };
 };

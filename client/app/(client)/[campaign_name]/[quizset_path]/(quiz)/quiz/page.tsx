@@ -7,35 +7,58 @@ import {
 import CountDownBar from "@/components/quiz/countdown-bar";
 import Qusetion from "@/components/quiz/question-area";
 import SuccessNotify from "@/components/quiz/success-notify";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCheckOS } from "@/hooks/useCheckOS";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useQuiz } from "@/providers/quizProvider";
-import { usePathNavigator } from "@/route/usePathNavigator";
-import { QuestionEx } from "@/types/apiTypes";
+import { QuestionEx, QuizStageEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
 import { QuestionOption } from "@prisma/client";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { redirect, useRouter } from "next/navigation";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
   useGAPageView();
-  const {
-    currentQuestionIndex,
-    currentQuizStage,
-    currentStageQuestions,
-    endStage,
-    failStage,
-    nextQuestion,
-    canNextQuestion,
-    logUserAnswer,
-    isComplete,
-  } = useQuiz();
   const translation = useTranslations();
-  const { routeToPage } = usePathNavigator();
+  const router = useRouter();
+
+  const {
+    currentQuestionIndex: questionIndexFromContext,
+    currentQuizStage: quizStageFromContext,
+    currentStageQuestions: stageQuestionsFromContext,
+    isComplete,
+
+    finalizeCurrentStage,
+    handleStageFailure,
+    logUserAnswer,
+    clearUserAnswerLogs,
+  } = useQuiz();
+
+  if (!quizStageFromContext) {
+    redirect("map");
+  }
+
+  // 최초 렌더링 시점에서 한 번만 값 가져오기
+  const [currentQuizStage] = useState<QuizStageEx>(quizStageFromContext);
+  const [currentStageQuestions] = useState<QuestionEx[]>(
+    stageQuestionsFromContext
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(
+    questionIndexFromContext
+  );
 
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
   const currentStageTotalQuestions = currentStageQuestions?.length;
@@ -43,7 +66,7 @@ export default function QuizPage() {
   const selectedOptionIdsRef = useRef<string[]>([]);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
 
-  const LIFE_COUNT = currentQuizStage?.lifeCount ?? 5; // currentQuizStage.lifeCount
+  const LIFE_COUNT = currentQuizStage.lifeCount ?? 5; // currentQuizStage.lifeCount
   const [gameOver, setGameOver] = useState(false);
   const [lifeCount, setLifeCount] = useState<number>(LIFE_COUNT);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
@@ -55,6 +78,7 @@ export default function QuizPage() {
     undefined
   );
   const { isAndroid, isWindows } = useCheckOS();
+  const [error, setError] = useState<string | null>(null);
 
   const animationRef = useRef<boolean | null>(null); // 애니메이션 상태 관리
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -101,6 +125,8 @@ export default function QuizPage() {
   };
 
   const handleConfirmAnswer = async (question: any, optionId: string) => {
+    if (lifeCount === 0) return;
+
     const isSelected = selectedOptionIdsRef.current.includes(optionId);
     if (isSelected) return;
 
@@ -153,30 +179,73 @@ export default function QuizPage() {
     }
 
     setLoading(true);
-    console.log("endStage", lifeCount);
-    await endStage(lifeCount); // 남은 하트수
-    resetSelectedOptionIds();
+    console.log("finalizeCurrentStage", lifeCount);
+    tryFinalizeCurrentStageProcess(lifeCount);
+  };
 
-    // nextStage();
-    routeToPage("complete");
+  const canNextQuestion = (): boolean => {
+    if (currentQuestionIndex + 1 >= currentStageTotalQuestions) {
+      return false;
+    }
+    return true;
+  };
+
+  const nextQuestion = (): void => {
+    setCurrentQuestionIndex((prev) => prev + 1);
+  };
+
+  /**
+   * useStage로 연결되어 있는 값들은 초기화하지 않음. Complete 페이지에서 초기화 진행함.
+   * 이유: useStage에 연결되어 있는 값을 초기화하면 Complete 화면으로 넘어가기 전에 UI가 초기화되어 다음 퀴즈가 잠깐 보여지는 문제가 있음
+   */
+  const tryFinalizeCurrentStageProcess = async (lifeCount: number) => {
+    try {
+      await finalizeCurrentStage(lifeCount); // 남은 하트수
+      resetSelectedOptionIds();
+      router.push("complete");
+    } catch (error) {
+      console.error("fail retFyfinalizeProcess", error);
+      showFinalizeCurrentStageProcessAlert();
+    }
+  };
+
+  const showFinalizeCurrentStageProcessAlert = () => {
+    // confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
+    setError(translation("network_error"));
   };
 
   const handleGameOver = useCallback(async () => {
     setLoading(true);
-    await failStage();
+    await handleStageFailure();
     setLoading(false);
     stopCountdown();
     setGameOver(true);
   }, [stopCountdown, setGameOver]);
 
-  const handleRestart = useCallback(() => {
+  const handleRestartQuizStage = () => {
+    resetCountdown();
+    startCountdown();
+    setLifeCount(LIFE_COUNT);
+    setGameOver(false);
+    clearUserAnswerLogs();
+    setCurrentQuestionIndex(0);
+  };
+
+  const handleGotoMap = () => {
+    resetCountdown();
+    setLifeCount(LIFE_COUNT);
+    setGameOver(false);
+    router.push("map");
+  };
+
+  const handleRestartCountdown = useCallback(() => {
     resetCountdown();
     startCountdown();
   }, [resetCountdown, startCountdown]);
 
   const handleLifeDecrease = useCallback(() => {
     setLifeCount((prev) => prev - 1);
-    handleRestart();
+    handleRestartCountdown();
   }, [resetCountdown, setLifeCount, startCountdown]);
 
   useEffect(() => {
@@ -184,34 +253,6 @@ export default function QuizPage() {
       setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
     }
   }, [currentQuizStage, currentStageQuestions]);
-
-  useEffect(() => {
-    setLoading(true);
-
-    if (isComplete()) {
-      routeToPage("/map");
-      return;
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    handleRestart();
-  }, [currentQuestionIndex, resetCountdown, startCountdown]);
-
-  useEffect(() => {
-    if (count <= 0) {
-      handleLifeDecrease();
-      triggerAnimation();
-    }
-  }, [count, handleLifeDecrease]);
-
-  useEffect(() => {
-    if (lifeCount === 0) {
-      handleGameOver();
-      stopAnimation();
-    }
-  }, [lifeCount, handleGameOver]);
 
   function getAnimateState(option: QuestionOption) {
     if (isOptionSelected(option.id)) {
@@ -229,6 +270,36 @@ export default function QuizPage() {
       scale: 1,
     };
   }
+
+  useEffect(() => {
+    setLoading(true);
+
+    // 퀴즈를 완료한 후에 퀴즈 페이지 진입 시, Map페이지로 이동
+    if (isComplete()) {
+      router.push("map");
+      return;
+    }
+
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    handleRestartCountdown();
+  }, [currentQuestionIndex, resetCountdown, startCountdown]);
+
+  useEffect(() => {
+    if (count <= 0) {
+      handleLifeDecrease();
+      triggerAnimation();
+    }
+  }, [count, handleLifeDecrease]);
+
+  useEffect(() => {
+    if (lifeCount === 0) {
+      handleGameOver();
+      stopAnimation();
+    }
+  }, [lifeCount, handleGameOver]);
 
   return (
     <div className="min-h-svh bg-slate-300/20">
@@ -328,10 +399,32 @@ export default function QuizPage() {
               );
             })}
       </div>
-      <GameOverAlertDialog gameOver={gameOver} />
+      <GameOverAlertDialog
+        gameOver={gameOver}
+        onRestart={handleRestartQuizStage}
+        onGotoMap={handleGotoMap}
+      />
       <ErrorAlertDialog error={errorMessage} />
       {success && <SuccessNotify />}
       {loading && <Spinner />}
+      <AlertDialog open={!!error}>
+        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle></AlertDialogTitle>
+            <AlertDialogDescription>{error}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setError(null);
+                tryFinalizeCurrentStageProcess(lifeCount);
+              }}
+            >
+              <span>{translation("ok")}</span>
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = 'force-dynamic';
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { querySearchParams } from '../../../_lib/query';
-import { domainCheckOnly } from '@/lib/data';
-import { AuthType } from '@prisma/client';
-import { buildWhereWithValidKeys } from '../../../_lib/where';
+import { querySearchParams } from '@/lib/query';
+import { domainCheckOnly, getJobIds } from '@/lib/data';
+import { AuthType, CampaignSettings, DomainGoal } from '@prisma/client';
+import { buildWhereWithValidKeys } from '@/lib/where';
+import { queryRawWithWhere } from '@/lib/sql';
 
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,22 +14,48 @@ export async function GET(request: NextRequest) {
     const { where: condition, take, skip } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    await prisma.$connect();
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
 
-    // domainId만 확인해서 필터링 생성성
-    const whereForGoal = (await domainCheckOnly(where)) as any;
-    const count = await prisma.domainGoal.count({
-      where: whereForGoal,
-    });
+    const jobGroup = await getJobIds(jobId);
 
-    const domainsGoals = await prisma.domainGoal.findMany({
-      where: whereForGoal,
-    });
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    // domainId만 확인해서 필터링 생성
+    const { createdAt, ...whereForGoal } = (await domainCheckOnly(
+      where
+    )) as any;
+
+    const domainsGoals: DomainGoal[] = await queryRawWithWhere(
+      prisma,
+      'DomainGoal',
+      whereForGoal
+    );
+    const count = domainsGoals.length;
 
     const domains = await prisma.domain.findMany({
       where: {
@@ -47,26 +71,32 @@ export async function GET(request: NextRequest) {
       skip,
     });
 
-    const experts = await prisma.userQuizBadgeStageStatistics.groupBy({
-      by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
-      where: {
-        ...buildWhereWithValidKeys(where, [
-          'campaignId',
-          'authType',
-          'channelSegmentId',
-          'createdAt',
-        ]),
-        domainId: { in: domains.map((domain) => domain.id) },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      _count: { quizStageIndex: true },
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.groupBy({
+          by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
+          where: {
+            ...buildWhereWithValidKeys(where, [
+              'campaignId',
+              'authType',
+              'channelSegmentId',
+              'createdAt',
+            ]),
+            domainId: { in: domains.map((domain) => domain.id) },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          _count: { quizStageIndex: true },
+        })
+      )
+    );
+
+    const experts = userBadges.flat();
 
     const expertData = domains.reduce(
       (acc: any, domain: any) => {
@@ -106,7 +136,10 @@ export async function GET(request: NextRequest) {
         const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
         const expertType = quizStageIndex === 2 ? 'Expert' : 'Advanced';
         const storeType = storeId === '4' ? 'Ses' : '';
-        const jobName = jobGroup.find((job) => job.id === jobId)?.code;
+        const jobName =
+          (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+            jobGroup[key].includes((jobId as never) || '')
+          ) || null;
 
         //goal
         const { ff, fsm, ffSes, fsmSes } = domainsGoals.find(
@@ -182,14 +215,12 @@ export async function GET(request: NextRequest) {
       })
       .sort((a, b) => (a?.order || 0) - (b?.order || 0));
 
-    return NextResponse.json({ result, total: count });
+    return NextResponse.json({ result: { data: result, total: count } });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { result: { data: [], total: 0 }, message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

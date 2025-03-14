@@ -1,10 +1,12 @@
-export const dynamic = 'force-dynamic';
-
 import { prisma } from '@/model/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
-import { querySearchParams } from '../../../_lib/query';
-import { removeDuplicateUsers } from '@/lib/data';
+import { querySearchParams } from '@/lib/query';
+import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { CampaignSettings } from '@prisma/client';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,12 +14,36 @@ export async function GET(request: NextRequest) {
     const { where: condition, period } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    await prisma.$connect();
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
-    const jobGroup = await prisma.job.findMany({
-      where: jobId ? { code: jobId } : {},
-      select: { id: true, code: true },
-    });
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
 
     // 오늘과 6일 전 설정
     const today = addDays(
@@ -32,26 +58,32 @@ export async function GET(request: NextRequest) {
     //   )
     // );
 
-    let experts = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...where,
-        createdAt: {
-          gte: startOfDay(beforeWeek), // 6일 전부터
-          lte: endOfDay(today), // 오늘까지
-        },
-        quizStageIndex: { in: [2, 3] },
-        jobId: { in: jobGroup.map((job) => job.id) },
-        ...(storeId
-          ? storeId === '4'
-            ? { storeId }
-            : { OR: [{ storeId }, { storeId: null }] }
-          : {}),
-      },
-      orderBy: { createdAt: 'asc' }, // 날짜 순 정렬
-    });
+    const userBadges: any = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        extendedQuery(
+          prisma,
+          'UserQuizBadgeStageStatistics',
+          {
+            ...where,
+            createdAt: {
+              gte: startOfDay(beforeWeek), // 6일 전부터
+              lte: endOfDay(today), // 오늘까지
+            },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          { orderBy: { createdAt: 'asc' } }
+        )
+      )
+    );
 
     // 중복 userId 제거
-    experts = removeDuplicateUsers(experts);
+    const experts = removeDuplicateUsers(userBadges.flat());
 
     // 날짜 범위를 생성
     const getDateRange = (start: Date, end: Date) => {
@@ -76,7 +108,7 @@ export async function GET(request: NextRequest) {
     const result = experts.reduce((acc, item) => {
       const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
       const match = acc.find(
-        (entry) => entry.date === dateKey.replace(/-/g, '.')
+        (entry: any) => entry.date === dateKey.replace(/-/g, '.')
       ); // 날짜 일치 항목 찾기
       if (match) {
         if (item.quizStageIndex === 2) {
@@ -93,10 +125,11 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      {
+        result: [],
+        message: 'Internal server error',
+      },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

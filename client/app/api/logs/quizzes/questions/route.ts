@@ -37,15 +37,28 @@ export async function POST(request: NextRequest) {
     domainId,
     languageId,
     jobId,
-    regionId,
-    subsidiaryId,
     channelSegmentId,
     storeId,
     channelId,
     channelName,
+    originalQuestionId,
+    originalIndex,
   } = body;
 
   try {
+    const domain = await prisma.domain.findFirst({
+      where: {
+        id: domainId,
+      },
+      include: {
+        subsidiary: {
+          include: {
+            region: true,
+          },
+        },
+      },
+    });
+
     const savedUserQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst(
       {
         where: {
@@ -62,37 +75,6 @@ export async function POST(request: NextRequest) {
 
     let tryNumber = savedUserQuizQuestionLog?.tryNumber ?? 0;
     tryNumber += 1;
-
-    // const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
-    //   data: {
-    //     authType,
-    //     isCorrect,
-    //     campaignId,
-    //     userId,
-    //     quizSetId,
-    //     questionId,
-    //     quizStageId,
-    //     selectedOptionIds,
-    //     correctOptionIds,
-    //     quizStageIndex,
-    //     category,
-    //     specificFeature,
-    //     product,
-    //     questionType,
-    //     elapsedSeconds,
-    //     createdAt,
-
-    //     domainId,
-    //     languageId,
-    //     jobId,
-    //     regionId,
-    //     subsidiaryId,
-    //     channelSegmentId,
-    //     storeId,
-    //     channelId,
-    //     channelName,
-    //   },
-    // });
 
     // const result = await prisma.$transaction(async (tx) => {
     const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
@@ -116,13 +98,15 @@ export async function POST(request: NextRequest) {
         domainId,
         languageId,
         jobId,
-        regionId,
-        subsidiaryId,
+        regionId: domain?.subsidiary?.regionId,
+        subsidiaryId: domain?.subsidiaryId,
         channelSegmentId,
         storeId,
         channelId,
         channelName,
         tryNumber,
+        originalQuestionId,
+        originalIndex,
       },
     });
 
@@ -149,13 +133,15 @@ export async function POST(request: NextRequest) {
         domainId,
         languageId,
         jobId,
-        regionId,
-        subsidiaryId,
+        regionId: domain?.subsidiary?.regionId,
+        subsidiaryId: domain?.subsidiaryId,
         channelSegmentId,
         storeId,
         channelId,
         channelName,
         tryNumber,
+        originalQuestionId,
+        originalIndex,
       },
     });
 

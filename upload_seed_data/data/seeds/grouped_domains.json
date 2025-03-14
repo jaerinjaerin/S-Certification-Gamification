@@ -1615,6 +1615,15 @@
       "domainHierarchy": "Samsung"
     },
     {
+      "domainId": "1000000",
+      "domainName": "SoftBank",
+      "domainCode": "SoftBank",
+      "parentDomainName": "SEJ",
+      "parentDomainId": 336303,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
       "domainId": 349994,
       "domainName": "Ukraine",
       "domainCode": "NAT_2804",

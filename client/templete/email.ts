@@ -1,7 +1,13 @@
 export const getBadgeEmailTemplete = (
   badgeImageUrl: string,
-  translationMessage: { [key: string]: string },
-  currentQuestionIndex: number
+  galaxyAIExpert: string,
+  emailBadgeDate: string,
+  emailBadgeDescriptionA: string,
+  emailBadgeDescriptionB: string,
+  emailBadgeDescriptionC: string
+  // translationMessage: { [key: string]: string },
+  // currentQuestionIndex: number,
+  // currentQuizStage: QuizStageEx | null
 ) => {
   return `<!DOCTYPE html>
 <html style="font-weight: 400">
@@ -14,7 +20,7 @@ export const getBadgeEmailTemplete = (
     />
 
     <style type="text/css" style="font-weight: 400">
-      @import url(https://assets.samsungplus.net/certification/s25/fonts/sharpSans/SamsungSharpSans-Regular.woff);
+      @import url(https://assets.samsungplus.net/certification/common/fonts/sharpSans/SamsungSharpSans-Regular.woff);
 
       .colored-black {
         color:#ffffff;
@@ -86,7 +92,7 @@ export const getBadgeEmailTemplete = (
                   "
                 >
                   
-                  S+ ${translationMessage["galaxy_ai_expert"]}
+                  S+ ${galaxyAIExpert}
                 </h1>
               </div>
             </div>
@@ -120,10 +126,10 @@ export const getBadgeEmailTemplete = (
                   "
                 ></div>
                 <h3 class="colored-black" style="text-align: center">
-                  S+ ${translationMessage["galaxy_ai_expert"]}
+                  S+ ${galaxyAIExpert}
                 </h3>
                 <h5 class="colored-black" style="text-align: center">
-                ${translationMessage["email_badge_date"]}
+                ${emailBadgeDate}
                 </h5>
               </div>
 
@@ -144,7 +150,7 @@ export const getBadgeEmailTemplete = (
                     padding-bottom:5px;
                   "
                 >
-                  ${translationMessage["email_badge_description_1"]}
+                  ${emailBadgeDescriptionA}
                 </p>
                 <p
                   class="colored-black"
@@ -159,11 +165,7 @@ export const getBadgeEmailTemplete = (
                   word-wrap: break-word;
                 "
                 >
-                  ${
-                    currentQuestionIndex === 2
-                      ? translationMessage["email_badge_description_2"]
-                      : translationMessage["email_badge_description_3"]
-                  }
+                  ${emailBadgeDescriptionB}
                 </p>
               </div>
             </div>
@@ -212,7 +214,7 @@ export const getBadgeEmailTemplete = (
                     margin: 0 0 15px;
                   "
                 >
-${translationMessage["email_badge_description_4"]}</pre
+${emailBadgeDescriptionC}</pre
                 >
                 <pre
                   style="
@@ -237,7 +239,7 @@ Copyright ⓒ 2024 SAMSUNG all rights reserved.</pre
     <!-- <div class="email-container">
       <div class="header">S+ Galaxy AI Expert(Paradigm)</div>
       <img
-        src="https://assets.samsungplus.net/certification/s25/images/badge/badge_stage4.png"
+        src="https://assets.samsungplus.net/certification/common/images/badge/badge_stage4.png"
         alt="Galaxy AI Expert Badge"
         class="badge-image"
       />
