@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 
 interface CreateQuizLogParams {
   userId: string;
+  campaignId: string;
   quizSetPath: string;
 }
 
@@ -20,7 +21,7 @@ export class QuizLogHandler {
     params: CreateQuizLogParams,
     tryNumber: number = 3
   ): Promise<UserQuizLog | null> => {
-    const { userId, quizSetPath } = params;
+    const { userId, quizSetPath, campaignId } = params;
     let attempts = 0;
 
     while (attempts < tryNumber) {
@@ -31,7 +32,7 @@ export class QuizLogHandler {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId, quizSetPath }),
+            body: JSON.stringify({ userId, quizSetPath, campaignId }),
           }
         );
 
@@ -62,7 +63,7 @@ export class QuizLogHandler {
             scope.setTag("quizSetPath", quizSetPath);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           return null;
         }
@@ -109,8 +110,8 @@ export class QuizLogHandler {
         );
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch user profile");
+          // const errorData = await response.json();
+          throw new Error("Failed to fetch quiz log");
         }
 
         const data = await response.json();
@@ -130,7 +131,7 @@ export class QuizLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           throw new Error(
             "An unexpected error occurred while registering quiz log"

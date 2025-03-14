@@ -1395,14 +1395,6 @@
     "channels": []
   },
   {
-    "id": "48",
-    "name": "Germany",
-    "code": "NAT_2276",
-    "subsidiaryId": "47",
-    "regionId": "508369",
-    "channels": []
-  },
-  {
     "id": "335253",
     "name": "Greece",
     "code": "NAT_2300",
@@ -1760,6 +1752,30 @@
     "code": "NAT_2288",
     "subsidiaryId": "349948",
     "regionId": "508375",
+    "channels": []
+  },
+  {
+    "id": "349994",
+    "name": "Ukraine",
+    "code": "NAT_2804",
+    "subsidiaryId": "349947",
+    "regionId": "508370",
+    "channels": []
+  },
+  {
+    "id": "333980",
+    "name": "Austria",
+    "code": "NAT_2040",
+    "subsidiaryId": "335247",
+    "regionId": "508369",
+    "channels": []
+  },
+  {
+    "id": "333984",
+    "name": "Brazil",
+    "code": "NAT_2076",
+    "subsidiaryId": "333983",
+    "regionId": "508373",
     "channels": []
   }
 ]

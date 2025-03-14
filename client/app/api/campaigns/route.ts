@@ -1,8 +1,9 @@
 import { prisma } from "@/prisma-client";
 import * as Sentry from "@sentry/nextjs";
-import { NextResponse } from "next/dist/server/web/spec-extension/response";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+  // console.warn("GET /api/campaigns");
   const { searchParams } = new URL(request.url);
   const campaignName = searchParams.get("campaign_name");
 
@@ -15,6 +16,27 @@ export async function GET(request: Request) {
   }
 
   try {
+    if (campaignName.toLowerCase() !== "s25") {
+      const campaign = await prisma.campaign.findFirst({
+        where: {
+          slug: {
+            equals: campaignName,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
+        },
+      });
+
+      if (campaign == null) {
+        Sentry.captureMessage(`Campaign not found: ${campaignName}`);
+        return NextResponse.json(
+          { message: "Campaign not found" },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({ item: campaign }, { status: 200 });
+    }
+
     const campaign = await prisma.campaign.findFirst({
       where: {
         name: {
@@ -25,7 +47,7 @@ export async function GET(request: Request) {
     });
 
     if (campaign == null) {
-      Sentry.captureMessage("Campaign not found");
+      Sentry.captureMessage(`Campaign not found: ${campaignName}`);
       return NextResponse.json(
         { message: "Campaign not found" },
         { status: 404 }

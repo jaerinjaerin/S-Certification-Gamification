@@ -72,5 +72,8 @@
   "email_badge_description_1": "Tebrikler!",
   "email_badge_description_2": "Galaxy AI Expert Rozeti kazandınız.",
   "email_badge_description_3": "Galaxy AI Expert Advanced Rozeti kazandınız.",
-  "email_badge_description_4": "Bu mesaj, Samsung+ tarafından otomatik olarak gönderilmiştir. Bu mesajı yanıtlamayın."
+  "email_badge_description_4": "Bu mesaj, Samsung+ tarafından otomatik olarak gönderilmiştir. Bu mesajı yanıtlamayın.",
+  "mena_check_1": "<strong>Samsung Plus Gizlilik Politikasını</strong> okudum ve kabul ediyorum",
+  "mena_check_2": "<strong>Samsung Plus Hüküm ve Koşullarını</strong> okudum ve kabul ediyorum",
+  "mena_Decline": "Kabul Etmiyorum"
 }

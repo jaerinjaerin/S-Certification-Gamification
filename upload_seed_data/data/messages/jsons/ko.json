@@ -72,5 +72,8 @@
   "email_badge_description_1": "축하합니다!",
   "email_badge_description_2": "갤럭시 AI전문가 배지를 획득하셨습니다",
   "email_badge_description_3": "갤럭시 AI전문가 Advanced 배지를 획득하셨습니다",
-  "email_badge_description_4": "이 메시지는 Samsung+ 서비스에서 자동으로 전송되었습니다. 이 메시지에 답장하지 마세요."
+  "email_badge_description_4": "이 메시지는 Samsung+ 서비스에서 자동으로 전송되었습니다. 이 메시지에 답장하지 마세요.",
+  "mena_check_1": "동의합니다.",
+  "mena_check_2": "간주합니다.",
+  "mena_Decline": "동의 취소"
 }

@@ -1,32 +1,47 @@
-import { fetchSupportedLanguages } from "@/i18n/locale";
-import AuthProvider from "@/providers/authProvider";
+import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
+import { redirect } from "next/navigation";
 
 export default async function SumtotalUserLayout({
   children,
-  params: { quizset_path },
+  params: { campaign_name, quizset_path },
 }: {
   children: React.ReactNode;
-  params: { quizset_path: string };
+  params: { campaign_name: string; quizset_path: string };
 }) {
-  // console.log("SumtotalUserLayout quizset_path", quizset_path);
   const timeZone = "Seoul/Asia";
-  const { domainCode, languageCode } = extractCodesFromPath(quizset_path);
-  const supportedLanguages = await fetchSupportedLanguages();
-  const locale = supportedLanguages.find((lang) => {
-    const pattern = new RegExp(`^${lang}(-[a-zA-Z]+)?$`);
-    return pattern.test(languageCode);
-  });
+  const codes = extractCodesFromPath(quizset_path);
+  if (codes == null) {
+    redirect(`/${campaign_name}/not-ready`);
+  }
+
+  const { domainCode, languageCode } = codes;
+
+  // const supportedLanguages = await fetchSupportedLanguages();
+  // const supportedLanguages = await fetchSupportedLanguageCodes();
+  // const supportedLanguages =
+  //   (await getLanguageCodes())?.result?.item ??
+  //   defaultLanguages.map((lang) => lang.code);
+
+  // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+  const normalizedLanguageCode = languageCode.replace(
+    /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+    "$1"
+  );
+
+  const locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
+  console.log("QuizSetLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
 
-  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/messages/${locale}.json`;
+  const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
   const domainInformation = await fetchInformationAboutDomain(domainCode);
+  const agreementContent = await fetchAgreementContent(domainCode);
 
   return (
     <div>
@@ -35,16 +50,15 @@ export default async function SumtotalUserLayout({
         messages={translatedMessages}
         locale={locale}
       >
-        <AuthProvider>
-          <PolicyProvider
-            privacyContent={privacyContent?.contents}
-            termContent={termContent?.contents}
-            domainName={domainInformation?.name}
-            subsidiary={domainInformation?.subsidiary}
-          >
-            {children}
-          </PolicyProvider>
-        </AuthProvider>
+        <PolicyProvider
+          privacyContent={privacyContent?.contents}
+          termContent={termContent?.contents}
+          agreementContent={agreementContent && agreementContent?.contents}
+          domainName={domainInformation?.name}
+          subsidiary={domainInformation?.subsidiary}
+        >
+          {children}
+        </PolicyProvider>
       </NextIntlClientProvider>
     </div>
   );
@@ -53,7 +67,10 @@ export default async function SumtotalUserLayout({
 async function fetchInformationAboutDomain(domainCode: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`,
+      {
+        cache: "force-cache",
+      }
     );
     if (!response.ok) {
       throw new Error(
@@ -70,8 +87,26 @@ async function fetchInformationAboutDomain(domainCode: string) {
 
     return result.items[0];
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "http_request",
+        endpoint: "/api/domains?domain_code",
+        method: "POST",
+        description: "Failed to fetch information about domain",
+      });
+      scope.setTag("domainCode", domainCode);
+      return scope;
+    });
   }
+}
+
+async function fetchAgreementContent(domainCode: string) {
+  if (domainCode !== "NAT_2410") {
+    return null;
+  }
+
+  const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/agreement/${domainCode}.json`;
+  return await fetchContent(url);
 }
 
 async function fetchPrivacyContent(domainCode: string) {
@@ -86,7 +121,7 @@ async function fetchTermContent(domainCode: string) {
 
 async function fetchContent(url: string) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) {
       throw new Error(`fetchError: ${response.status}`);
     }
@@ -96,6 +131,16 @@ async function fetchContent(url: string) {
     }
     return result;
   } catch (error) {
-    Sentry.captureException(error);
+    console.error(`fetchContent error: ${url}, ${error}`);
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "request/json",
+        method: "POST",
+        description: "Failed to fetch content",
+      });
+      scope.setTag("url", url);
+      return scope;
+    });
   }
 }

@@ -1,5 +1,6 @@
 // src/types/apiTypes.ts
 
+import { ErrorCode } from "@/constants/error-codes";
 import {
   Domain,
   Image,
@@ -9,7 +10,6 @@ import {
   QuizBadge,
   QuizSet,
   QuizStage,
-  Subsidiary,
   UserQuizLog,
   UserQuizQuestionLog,
   UserQuizStageLog,
@@ -17,7 +17,8 @@ import {
 
 export interface QuizSetEx extends QuizSet {
   domain: Domain;
-  subsidiary: Subsidiary | null;
+  // subsidiary: Subsidiary | null;
+  language: Language | null;
   quizStages: QuizStageEx[];
 }
 
@@ -35,7 +36,15 @@ export interface QuestionEx extends Question {
 export interface QuizLogResponse {
   quizLog: UserQuizLog | null;
   quizStageLogs: UserQuizStageLog[] | null;
-  quizQuestionLogs: UserQuizQuestionLog[] | null;
+  // quizQuestionLogs: UserQuizQuestionLog[] | null;
+}
+
+export interface QuizQuestionLogsResponse {
+  items: UserQuizQuestionLog[] | null;
+}
+
+export interface QuizStageLogResponse {
+  item: UserQuizStageLog | null;
 }
 
 export interface DomainsResponse {
@@ -50,10 +59,34 @@ export interface ApiResponse<T> {
   item: T | null;
   success: boolean;
   message?: string;
+  status?: number;
+}
+
+export interface ApiResponseV2<T> {
+  success: boolean;
+  status: number | null;
+  result?: {
+    item: T | null;
+  };
+  error?: {
+    message: string;
+    code: string;
+  };
 }
 
 export interface ApiListResponse<T> {
   items: T[] | null;
   success: boolean;
   message?: string;
+}
+
+export interface ApiResponseV3<T> {
+  success: boolean;
+  result: {
+    item: T | null;
+  };
+  error?: {
+    message: string;
+    code: ErrorCode;
+  };
 }

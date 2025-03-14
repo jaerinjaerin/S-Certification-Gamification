@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
 export async function GET(request: NextRequest) {
-  // console.log("GET - Domain");
+  // console.warn("GET /api/domains");
   const { searchParams } = new URL(request.url);
   const domainCode = searchParams.get("domain_code");
 
@@ -20,9 +20,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const response = NextResponse.json({ items: domains }, { status: 200 });
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    return NextResponse.json({ items: domains }, { status: 200 });
+    // response.headers.set("Cache-Control", "public, max-age=3600");
+    // return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
     Sentry.captureException(error);

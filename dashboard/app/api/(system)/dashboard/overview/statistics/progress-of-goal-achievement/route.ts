@@ -1,62 +1,128 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { addWeeks, endOfWeek, isBefore, startOfWeek } from "date-fns";
-import { querySearchParams } from "../../../_lib/query";
-import { buildWhereWithValidKeys } from "../../../_lib/where";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { addWeeks, endOfWeek, isBefore, startOfWeek } from 'date-fns';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
+import { domainCheckOnly, getJobIds, removeDuplicateUsers } from '@/lib/data';
+import {
+  CampaignSettings,
+  DomainGoal,
+  UserQuizBadgeStageStatistics,
+} from '@prisma/client';
+import { queryRawWithWhere } from '@/lib/sql';
+
+export const dynamic = 'force-dynamic';
+
+async function processUserQuizBadgeStageStatistics(
+  weeklyWhere: any,
+  moreWhere: any,
+  jobName: string,
+  stageIndex: number,
+  jobGroup: string[],
+  jobData: any,
+  isSES: boolean = false
+) {
+  const users = await queryRawWithWhere(
+    prisma,
+    'UserQuizBadgeStageStatistics',
+    {
+      ...weeklyWhere,
+      quizStageIndex: stageIndex,
+      jobId: { in: jobGroup },
+      ...moreWhere,
+    }
+  );
+
+  // userId 중복 제거
+  removeDuplicateUsers(users as UserQuizBadgeStageStatistics[]).forEach(
+    (user) => {
+      const lowJobName = isSES
+        ? `${jobName.toLowerCase()}(ses)`
+        : jobName.toLowerCase();
+
+      if (lowJobName in jobData) {
+        jobData[lowJobName] += 1;
+      }
+    }
+  );
+}
 
 const weeklyGoalRate = [10, 30, 50, 60, 70, 80, 90, 100];
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
-
-    await prisma.$connect();
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
     // 캠페인 데이터 가져오기
-    const campaign = await prisma.campaign.findUnique({
-      where: { id: where.campaignId },
+    const [campaign]: Campaign[] = await queryRawWithWhere(prisma, 'Campaign', {
+      id: where.campaignId,
     });
 
     if (!campaign?.startedAt || !campaign?.endedAt) {
-      return NextResponse.json(
-        { error: "Invalid campaign date range" },
-        { status: 400 }
-      );
+      throw new Error('Invalid campaign date range');
     }
 
-    const domain_goal = await prisma.domainGoal.findMany({
-      where: buildWhereWithValidKeys(where, ["campaignId", "createdAt"]),
-    });
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      {
+        campaignId: where.campaignId,
+      }
+    );
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    // userId가 중복되는 데이터가 있어서 그룹으로 데이터 가져옴
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: settings.ffFirstBadgeStageIndex || -1,
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: settings.fsmFirstBadgeStageIndex || -1,
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    // domainId만 확인해서 필터링 생성성
+    const { createdAt, ...whereForGoal } = await domainCheckOnly(where);
+    const domain_goal = await queryRawWithWhere(
+      prisma,
+      'DomainGoal',
+      whereForGoal
+    );
 
     const goalTotalScore = Array.isArray(domain_goal)
-      ? domain_goal.reduce(
+      ? (domain_goal as DomainGoal[]).reduce(
           (sum, { ff = 0, ffSes = 0, fsm = 0, fsmSes = 0 }) =>
             sum + ff + fsm + ffSes + fsmSes,
           0
         )
       : 0;
 
-    let today = new Date();
-    today = addWeeks(today, 2);
+    const today = new Date();
     const startDate = startOfWeek(campaign.startedAt); // 캠페인 시작 주
     let weekIndex = 0;
     const weeklyJobData = [];
     const defaultJobData = {
       ff: 0,
       fsm: 0,
-      "ff(ses)": 0,
-      "fsm(ses)": 0,
+      'ff(ses)': 0,
+      'fsm(ses)': 0,
     };
-    let jobData = JSON.parse(JSON.stringify(defaultJobData));
-
-    const jobGroup = await prisma.job.findMany({
-      select: { id: true, group: true },
-    });
 
     // 8주 데이터 생성
     for (let i = 0; i < 8; i++) {
+      const jobData = JSON.parse(JSON.stringify(defaultJobData));
       const currentWeekStart = addWeeks(startDate, i);
       const weekEnd = endOfWeek(currentWeekStart);
 
@@ -66,47 +132,48 @@ export async function GET(request: NextRequest) {
 
       if (isCurrentWeekValid && isWithinCampaign) {
         const weeklyWhere = {
-          ...where,
-          updatedAt: {
-            gte: currentWeekStart,
+          ...buildWhereWithValidKeys(where, [
+            'campaignId',
+            'regionId',
+            'subsidiaryId',
+            'domainId',
+            'authType',
+            'channelSegmentId',
+          ]),
+          createdAt: {
+            gte: startDate,
             lt: weekEnd,
           },
         };
 
-        const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: {
-            ...weeklyWhere,
-            isBadgeAcquired: true,
-            storeId: { not: "4" },
-          },
-        });
+        // plus
+        await Promise.all(
+          jobGroups.map(({ key, stageIndex, jobIds }) =>
+            processUserQuizBadgeStageStatistics(
+              weeklyWhere,
+              { OR: [{ storeId: null }, { storeId: { not: '4' } }] },
+              key,
+              stageIndex,
+              jobIds,
+              jobData
+            )
+          )
+        );
 
-        plus.forEach((user) => {
-          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-          if (jobName) {
-            const lowJobName = jobName.toLowerCase() as keyof typeof jobData;
-            if (lowJobName in jobData) {
-              jobData[lowJobName] += 1;
-            }
-          }
-        });
-
-        const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-          where: { ...weeklyWhere, isBadgeAcquired: true, storeId: "4" },
-        });
-
-        ses.forEach((user) => {
-          const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-          if (jobName) {
-            const lowJobName =
-              `${jobName.toLowerCase()}(ses)` as keyof typeof jobData;
-            if (lowJobName in jobData) {
-              jobData[lowJobName] += 1;
-            }
-          }
-        });
-      } else {
-        jobData = defaultJobData;
+        // ses
+        await Promise.all(
+          jobGroups.map(({ key, stageIndex, jobIds }) =>
+            processUserQuizBadgeStageStatistics(
+              weeklyWhere,
+              { storeId: '4' },
+              key,
+              stageIndex,
+              jobIds,
+              jobData,
+              true
+            )
+          )
+        );
       }
 
       // 결과 저장
@@ -114,6 +181,10 @@ export async function GET(request: NextRequest) {
         date: `${currentWeekStart.toISOString()} - ${weekEnd.toISOString()}`,
         name: `W${weekIndex + 1}`,
         job: JSON.parse(JSON.stringify(jobData)),
+        total: Object.values(jobData).reduce(
+          (sum, value) => (sum as number) + (value as number),
+          0
+        ),
         target: weeklyGoalRate[weekIndex] || 0,
       });
 
@@ -131,19 +202,21 @@ export async function GET(request: NextRequest) {
       const expertTotal = Object.values(
         foundJobElement.job as Record<string, number>
       ).reduce((sum, value) => sum + value, 0);
-      cumulativeRate = expertTotal / goalTotalScore;
+      cumulativeRate =
+        expertTotal > 0 ? (expertTotal / goalTotalScore) * 100 : 0;
     }
 
     return NextResponse.json({
       result: { jobData: weeklyJobData, goalTotalScore, cumulativeRate },
     });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      {
+        result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
+        message: 'Internal server error',
+      },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

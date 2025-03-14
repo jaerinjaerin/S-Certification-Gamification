@@ -1,67 +1,160 @@
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { initialExpertsData } from "@/app/(system)/dashboard/overview/(infos)/@experts-by-group/_lib/state";
-import { querySearchParams } from "../../../_lib/query";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-// UserQuizStatistics 사용
-// isCompleted 이면 퀴즈 완료
-// jodId와 storeId 정보를 가지고 그룹핑 해야함
-// jobId로 Job 정보 참조. job의 group을 사용
-// storeId가 4인 경우 SES 유저. 아니면 SES 유저 아님
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '@/lib/query';
+import { buildWhereWithValidKeys } from '@/lib/where';
+import { UserQuizBadgeStageStatistics } from '@prisma/client';
+import {
+  getJobIds,
+  initialExpertsData,
+  removeDuplicateUsers,
+} from '@/lib/data';
+import { queryRawWithWhere } from '@/lib/sql';
+
+export const dynamic = 'force-dynamic';
+
+async function fetchUserStatistics(
+  where: any,
+  stageIndex: number,
+  jobGroup: string[],
+  moreWhere: any
+): Promise<UserQuizBadgeStageStatistics[]> {
+  return queryRawWithWhere(prisma, 'UserQuizBadgeStageStatistics', {
+    ...buildWhereWithValidKeys(where, [
+      'campaignId',
+      'regionId',
+      'subsidiaryId',
+      'domainId',
+      'authType',
+      'channelSegmentId',
+      'createdAt',
+    ]),
+    quizStageIndex: stageIndex,
+    jobId: { in: jobGroup },
+    ...moreWhere,
+  });
+
+  // return prisma.userQuizBadgeStageStatistics.findMany({
+  //   where: {
+  //     ...buildWhereWithValidKeys(where, [
+  //       'campaignId',
+  //       'regionId',
+  //       'subsidiaryId',
+  //       'domainId',
+  //       'authType',
+  //       'channelSegmentId',
+  //       'createdAt',
+  //     ]),
+  //     quizStageIndex: stageIndex,
+  //     jobId: { in: jobGroup },
+  //     ...moreWhere,
+  //   },
+  // });
+}
+
+async function processUserStatistics(
+  users: UserQuizBadgeStageStatistics[],
+  jobGroup: Record<string, string[]>,
+  expertsData: any
+) {
+  // quizStageIndex기준 낮은 index일 때 중복되는 userId를 가진 아이템 제거
+  removeDuplicateUsers(users).forEach((user) => {
+    const jobName =
+      (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+        jobGroup[key].includes(user.jobId)
+      ) || null;
+    if (jobName) {
+      expertsData.items.forEach((item: { title: string; value: number }) => {
+        if (item.title === jobName) {
+          item.value++;
+        }
+      });
+    }
+  });
+}
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where } = querySearchParams(searchParams);
+    const { where: condition } = querySearchParams(searchParams);
+    const { jobId, ...where } = condition;
 
-    await prisma.$connect();
+    const settings = await prisma.campaignSettings.findFirst({
+      where: { campaignId: where.campaignId },
+    });
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
 
     const expertsData: ImprovedDataStructure = JSON.parse(
       JSON.stringify(initialExpertsData)
     );
 
-    const jobGroup = await prisma.job.findMany({
-      select: { id: true, group: true },
-    });
+    const jobGroup = await getJobIds(jobId);
 
-    const plus = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, isBadgeAcquired: true, storeId: { not: "4" } },
-    });
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: settings.ffFirstBadgeStageIndex! || -1,
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: settings.fsmFirstBadgeStageIndex! || -1,
+        jobIds: jobGroup.fsm,
+      },
+    ];
 
-    plus.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        expertsData[0].items.forEach((item) => {
-          if (item.title === jobName) {
-            item.value++;
-          }
-        });
-      }
-    });
+    const plusUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          OR: [{ storeId: { not: '4' } }, { storeId: null }],
+        })
+      )
+    );
 
-    const ses = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: { ...where, isBadgeAcquired: true, storeId: "4" },
+    plusUsers.forEach((plusUser, index) => {
+      processUserStatistics(plusUser, jobGroup, expertsData[0]);
     });
+    //
+    const sesUsers = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        fetchUserStatistics(where, stageIndex, jobIds, {
+          storeId: '4',
+        })
+      )
+    );
 
-    ses.forEach((user) => {
-      const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-      if (jobName) {
-        expertsData[1].items.forEach((item) => {
-          if (item.title === jobName) {
-            item.value++;
-          }
-        });
-      }
+    sesUsers.forEach((sesUser, index) => {
+      processUserStatistics(sesUser, jobGroup, expertsData[1]);
     });
 
     return NextResponse.json({ result: expertsData });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      {
+        result: [
+          {
+            group: 'plus',
+            items: [
+              { title: 'ff', value: 0 },
+              { title: 'fsm', value: 0 },
+            ],
+          },
+          {
+            group: 'ses',
+            items: [
+              { title: 'ff', value: 0 },
+              { title: 'fsm', value: 0 },
+            ],
+          },
+        ],
+        message: 'Internal server error',
+      },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

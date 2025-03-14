@@ -1,15 +1,15 @@
-"use client";
+'use client';
 import {
   LayoutDashboard,
-  Users,
   Sheet,
+  Users,
   NotebookPen,
-  Tag,
   Images,
-  Settings2,
-  ChevronDown,
+  Languages,
+  Goal,
   ChevronUp,
-} from "lucide-react";
+  ChevronDown,
+} from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -19,48 +19,61 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+} from '@/components/ui/sidebar';
+import { usePathname, useRouter } from 'next/navigation';
+import { useStateVariables } from '../provider/state-provider';
+import { Role } from '@prisma/client';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 // 메뉴 데이터를 배열로 정의
-const menuItems: MenuItems = [
-  {
-    title: "Dashboard",
-    items: [
-      { label: "Overview", icon: LayoutDashboard, href: "/dashboard/overview" },
-      { label: "User", icon: Users, href: "/dashboard/user" },
-      { label: "Quiz", icon: Sheet, href: "/dashboard/quiz" },
-    ],
-  },
-  {
-    title: "CMS",
+const getMenuItems = (role: Role): MenuItems => {
+  const dashboard = {
+    title: 'Dashboard',
     items: [
       {
-        label: "Questions",
-        icon: NotebookPen,
-        children: [
-          { label: "Question Bank", href: "/cms/questions/question-bank" },
-          { label: "Translation", href: "/cms/questions/translation" },
-        ],
+        label: 'Overview',
+        icon: LayoutDashboard,
+        href: '/dashboard/overview',
       },
-      { label: "Certification", icon: Tag, href: "/cms/certification" },
-      { label: "Media Library", icon: Images, href: "/cms/media-library" },
       {
-        label: "Settings",
-        icon: Settings2,
-        children: [
-          { label: "User Setting", href: "/cms/settings/user-setting" },
-          { label: "Question Setting", href: "/cms/settings/question-setting" },
-        ],
+        label: 'User',
+        icon: Users,
+        href: '/dashboard/user/stats',
+        // children: [
+        //   {
+        //     label: 'Stats',
+        //     href: createUrl('/user/stats'),
+        //   },
+        // ],
+      },
+      {
+        label: 'Quiz',
+        icon: Sheet,
+        href: '/dashboard/quiz',
       },
     ],
-  },
-];
+  };
+
+  const cms = {
+    title: 'CMS',
+    items: [
+      { label: 'Set Quiz', icon: NotebookPen, href: '/cms/set-quiz' },
+      { label: 'Media Library', icon: Images, href: '/cms/media-library' },
+      { label: 'UI Language', icon: Languages, href: '/cms/ui-language' },
+      { label: 'Target', icon: Goal, href: '/cms/target' },
+    ],
+  };
+
+  // role에 따른 반환 최적화
+  if (role) return [dashboard];
+  return [dashboard, cms];
+};
 
 // Menu 컴포넌트
 const LeftMenu = () => {
   const router = useRouter();
+  const { role } = useStateVariables();
   const pathname = usePathname();
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
@@ -71,7 +84,7 @@ const LeftMenu = () => {
   return (
     <Sidebar variant="inset" collapsible="none">
       <SidebarContent className="p-2">
-        {menuItems.map((group, groupIndex) => (
+        {getMenuItems(role).map((group, groupIndex) => (
           <SidebarGroup key={groupIndex}>
             <SidebarGroupLabel asChild>
               <div className="!text-size-14px mx-2 my-0.5 mb-1">
@@ -80,18 +93,24 @@ const LeftMenu = () => {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               {group.items.map((item, itemIndex) => {
+                const isActive = item.href?.includes(pathname);
                 return (
                   <SidebarMenu key={itemIndex} className="mb-1">
                     {/* 상위 메뉴 */}
                     <SidebarMenuButton
-                      isActive={pathname === item.href}
+                      isActive={isActive}
                       disabled={!item?.children && !item?.href}
-                      className="flex items-center justify-between !px-4 !py-6"
+                      className={cn(
+                        'flex items-center justify-between !px-4 !py-6',
+                        isActive && 'pointer-events-none'
+                      )}
                       onClick={() => {
                         if (item?.children) {
                           toggleSection(item.label);
                         } else if (item?.href) {
-                          router.push(item.href);
+                          if (!isActive) {
+                            router.push(item.href);
+                          }
                         }
                       }}
                     >
@@ -113,7 +132,7 @@ const LeftMenu = () => {
                         {item.children.map((child, childIndex) => (
                           <SidebarMenuButton
                             key={childIndex}
-                            isActive={pathname === child.href}
+                            isActive={child.href?.includes(pathname)}
                             className="pl-11 py-5"
                             onClick={() => {
                               if (child?.href) router.push(child.href);

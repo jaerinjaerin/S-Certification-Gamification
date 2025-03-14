@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Якими є ключові функції Galaxy S25? (виберіть три варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Справжній AI-компаньйон",
+        "answerStatus": 1
+      },
+      {
+        "text": "Найвища производительність",
+        "answerStatus": 1
+      },
+      {
+        "text": "Унікальна можливість камери",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ваш компаньйон зі здорового способу життя",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "У яких кольорах представлений Galaxy S25 Ultra? (вибрати всі варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Титановий срібно-блакитний",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титановий сірий",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титановий срібно-білий",
+        "answerStatus": 1
+      },
+      {
+        "text": "Титановий чорний",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Я чув про функцію, яка дає змогу одночасно знаходити ресторан і надсилати повідомлення. Як вона називається?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Панель Now Bar та сповіщення Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action (Дії між застосунками)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "У чому полягають ключові переваги знімання портретів?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ви можете записувати ще яскравіші нічні відео з меншим рівнем шуму.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Тепер ви маєте можливість відфільтровувати небажані звуки, залишаючи лише ті, що вам потрібні.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви можете завершувати завдання, використовуючи декілька застосунків одночасно, просто промовляючи команди телефонам серії Galaxy S25.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви з легкістю можете створювати портрети, на яких відображений природна текстура шкіри",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Як ви можете пояснити результат знімання нічного відео?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ви можете записувати ще яскравіші нічні відео з меншим рівнем шуму.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Тепер ви маєте можливість відфільтровувати небажані звуки, залишаючи лише ті, що вам потрібні.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви можете завершувати завдання, використовуючи декілька застосунків одночасно, просто промовляючи команди телефонам серії Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви з легкістю можете створювати портрети, на яких відображений точний тон шкіри та її природна текстура.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що з наведеного нижче є ключовою особливістю нового Watch, яку слід підкреслити як можливість спільного використання під час демонстрації варіантів використання в повсякденному житті? (виберіть усі правильні відповіді)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Кришталево чистий звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Показник Енергії",
+        "answerStatus": 0
+      },
+      {
+        "text": "Перегони",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що з наведеного нижче є ключовою особливістю Buds3 Pro та Buds3, яку слід підкреслити як можливість спільного використання під час демонстрації варіантів використання в повсякденному житті?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Інтуїтивно зрозумілий інтерфейс UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Оптимізація звучання\n(Оптимізований звук)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Спеціальна пропозиція в разі придбання кількох пристроїв",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is the feature NOT supported in Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Overlay PDF translation",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcribe & Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Real time translate while voice recording",
+        "answerStatus": 1
+      },
+      {
+        "text": "Summarize & Auto format",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Що мені слід зробити, щоб підготуватися до використання Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Вам необхідно ввійти у ваш обліковий запис Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Вам необхідно придбати підписку",
+        "answerStatus": 0
+      },
+      {
+        "text": "Вам необхідно завантажити спеціальний застосунок Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Нічого",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Чому мені слід оновити мій Galaxy до версії One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ця версія майже нічим не відрізняється від попередньої — One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Якщо порівняти з попередньою версією ПЗ, One UI 7.0 дає вам більше можливостей для користування функціями вашого телефона на основі АІ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Що можна видалити, скориставшись програмою Audio Eraser/Контроль Звуку? (вибрати всі варіанти)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Музику",
+        "answerStatus": 0
+      },
+      {
+        "text": "Вітер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Шум",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Якими є основні функції Galaxy S25? (вибрати всі варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action/Дії між застосунками",
+        "answerStatus": 1
+      },
+      {
+        "text": "Портрет і Мій фільтр",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser/Контроль Звуку",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "У чому полягають ключові вдосконалення Galaxy S25? (виберіть три варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action/Дії між застосунками",
+        "answerStatus": 1
+      },
+      {
+        "text": "Мультимодальність",
+        "answerStatus": 1
+      },
+      {
+        "text": "Акумулятор",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор 3 нм",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Яким процесором обладнані телефони серії Galaxy S25?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Процесор 6 нм",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор 5 нм",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор 4 нм",
+        "answerStatus": 0
+      },
+      {
+        "text": "Процесор 3 нм",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "У чому полягають удосконалення Galaxy S25 Ultra? (Виберіть три варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Надширококутна камера 50 Мп",
+        "answerStatus": 1
+      },
+      {
+        "text": "Вага",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (для переднього дисплея)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Процесор",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що з наведеного нижче НЕ є ключовою характеристикою нового Watch? (виберіть один варіант)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Незамінний пристрій нового рівня\n(продуктивність)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Контроль сну на основі ШІ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Розмір дисплея",
+        "answerStatus": 1
+      },
+      {
+        "text": "Персоналізовані тренування",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що з наведеного нижче є ключовою особливістю Buds3 Pro та Buds3, яку слід підкреслити, розповідаючи про них клієнтам, що раніше ніколи не користувалися вкладними навушниками (покупці, які здійснюють придбання вперше)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Кришталево чистий звук",
+        "answerStatus": 0
+      },
+      {
+        "text": "Адаптивна система шумопоглинання (Adaptive ANC)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Комфортне носіння",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is the new feature in Tab S10 supporting vivid outdoor viewing?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-reflection",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Large Display",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Чи є функція, яка дає змогу простіше й швидше ділитися фото й відео з друзями?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Функція Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Переклад у режимі реального часу",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Чи потрібно мені бути поруч із іншим пристроєм, щоб скористатися функцією Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Анітрохи. Усе відбувається в хмарному середовищі.",
+        "answerStatus": 1
+      },
+      {
+        "text": "На жаль, так. Вам доведеться стояти на місці до завершення передавання даних.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Якими ключовими функціями ви б порекомендували мені скористатися? (вибрати всі варіанти)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action/Дії між застосунками",
+        "answerStatus": 0
+      },
+      {
+        "text": "Портрет і Мої фільтри",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser/Контроль Звуку",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усім згаданим вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що мені слід казати, щоб скористатися функцією дії між застосунками в телефонах серії Galaxy S25? (як приклад)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Знайди китайський ресторан поблизу й надішли його адресу Тоні",
+        "answerStatus": 1
+      },
+      {
+        "text": "Привіт, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Який прогноз погоди на сьогодні?",
+        "answerStatus": 0
+      },
+      {
+        "text": "Привіт, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Як застосувати фільтр під час знімання фото? (виберіть два варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "використовуючи завчасно встановлений фільтр програми «Камера»",
+        "answerStatus": 1
+      },
+      {
+        "text": "використовуючи режим «Нічний» у програмі «Камера»",
+        "answerStatus": 0
+      },
+      {
+        "text": "використовуючи режим «Мій фільтр» для фото в «Галереї»",
+        "answerStatus": 1
+      },
+      {
+        "text": "використовуючи режим «Сповільнене знімання» в програмі «Камера»",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Мені дуже подобається користуватися пером S Pen. У вас є які-небудь рекомендації для мене?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Яку інформацію/рекомендації я можу отримати завдяки сповіщенням Now Brief? (виберіть три варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Показник життєвих сил",
+        "answerStatus": 1
+      },
+      {
+        "text": "Графік",
+        "answerStatus": 1
+      },
+      {
+        "text": "Будильник",
+        "answerStatus": 1
+      },
+      {
+        "text": "домашня адреса",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Виберіть функцію, пов’язану зі здоров’ям/сном у новому Watch (виберіть усі правильні відповіді)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Показник Енергії",
+        "answerStatus": 0
+      },
+      {
+        "text": "Персональний тренер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Самомотивація та вдосконалення",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Виберіть найдоцільнішу функцію Buds3, якою можна скористатися під час зустрічі з іноземцем, що розмовляє іншою мовою.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Перекладач",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Комфортне носіння",
+        "answerStatus": 0
+      },
+      {
+        "text": "Кришталево чистий звук",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "What is new about the new Book Cover Keyboard of Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Back Light ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dedicated AI Key",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note launcher",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Якими є критерії для визначення показника життєвих сил? (вибрати всі варіанти)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Сон",
+        "answerStatus": 0
+      },
+      {
+        "text": "Активність",
+        "answerStatus": 0
+      },
+      {
+        "text": "ЧСС",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Якими є основні переваги обміну з доплатою? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ви можете скористатися щомісячним планом фінансування",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ви маєте можливість миттєво зменшити фінансове навантаження / витрати на придбання найновішого смартфона",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ви можете отримати вдвічі більше пам’яті за ту саму ціну",
+        "answerStatus": 0
+      },
+      {
+        "text": "Придбаваючи один пристрій, ви отримуєте другий безплатно",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Я користують телефоном серії S22. У чому полягають ключові вдосконалення Galaxy S25? (виберіть два варіанти)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Процесор 3 нм",
+        "answerStatus": 1
+      },
+      {
+        "text": "Якість зображення",
+        "answerStatus": 1
+      },
+      {
+        "text": "Кількість камер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Розміри",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Розкажіть, будь ласка, про функції, які притаманні лише Galaxy S25 Ultra. (вибрати всі варіанти)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Вбудоване перо S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Камера зі 100х зумом і роздільною здатністю 50 Мп",
+        "answerStatus": 0
+      },
+      {
+        "text": "Збільшений екран / збільшена ємність акумулятора",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Чи існує можливість перенесення моїх файлів на інші пристрої, окрім пристроїв Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Гаманець",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Яка функція дає змогу відтворювати зняті відео в уповільненому режимі?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Відео в режимі нічної зйомки",
+        "answerStatus": 0
+      },
+      {
+        "text": "Контроль звуку/Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Функція миттєвої уповільненої зйомки",
+        "answerStatus": 1
+      },
+      {
+        "text": "Автоматичне обрізання",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Щодня я роблю десятки дзвінків, але часто забуваю, про що йшла мова. Ви можете порекомендувати будь-які функції, що стали б у пригоді в такій ситуації?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Переклад у режимі реального часу",
+        "answerStatus": 0
+      },
+      {
+        "text": "Сповіщення Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Мультимодальний пошук",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Я часто гублю чи впускаю мій телефон. Я вагаюся щодо придбання дорогого пристрою, оскільки він може зламатися.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Рекомендую скористатися програмою Samsung Care+",
+        "answerStatus": 1
+      },
+      {
+        "text": "Рекомендую скористатися програмою «Гаманець Samsung»",
+        "answerStatus": 0
+      },
+      {
+        "text": "Рекомендую скористатися функцією Quick Share",
+        "answerStatus": 0
+      },
+      {
+        "text": "Рекомендую придбати дешевшу модель",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "На які пристрої НЕ поширюється програма Samsung Care+?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Смартфон",
+        "answerStatus": 0
+      },
+      {
+        "text": "Смарт-годинник",
+        "answerStatus": 0
+      },
+      {
+        "text": "Настільний ПК",
+        "answerStatus": 1
+      },
+      {
+        "text": "Планшет",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Що робити, якщо кільце Ring перестане зніматися з пальця?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Нанесіть змазку, наприклад крем для рук, очищувальну олію чи мило, щоб зменшити тертя, що полегшить її зняття.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Занурте палець у холодну воду, щоб тимчасово звузити кровоносні судини й зменшити палець. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Підніміть руку більш ніж на 5 хвилин, щоб зменшити набряк.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Яка з відповідей на наведене нижче запитання є найбільш слушною?\nGalaxy Ring — це новий носимий пристрій. Зокрема, відстеження здоров’я на основі ШІ та ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Показник життєвих сил",
+        "answerStatus": 0
+      },
+      {
+        "text": "Картка з рекомендаціями",
+        "answerStatus": 0
+      },
+      {
+        "text": "Тренування сну",
+        "answerStatus": 1
+      },
+      {
+        "text": "Подвійне торкання",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Що з наведеного нижче є ключовою характеристикою Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Персональний тренер",
+        "answerStatus": 0
+      },
+      {
+        "text": "Зручне постійне носіння",
+        "answerStatus": 0
+      },
+      {
+        "text": "Подвійне торкання  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Усе згадане вище",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

@@ -5,6 +5,7 @@ import { createContext, useContext } from "react";
 type PolicyContextType = {
   privacyContent: string;
   termContent: string;
+  agreementContent: string | null;
   domainName: string;
   subsidiary: any;
 };
@@ -17,6 +18,7 @@ export const PolicyProvider = ({
   children,
   privacyContent,
   termContent,
+  agreementContent,
   domainName,
   subsidiary,
 }: PolicyProviderProps) => {
@@ -27,6 +29,7 @@ export const PolicyProvider = ({
         termContent,
         domainName,
         subsidiary,
+        agreementContent,
       }}
     >
       {children}

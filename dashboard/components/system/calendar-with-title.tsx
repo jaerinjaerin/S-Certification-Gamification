@@ -1,27 +1,27 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { CalendarIcon } from 'lucide-react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
-const dateOptions = {
-  locale: "en-US",
-  options: {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  } as Intl.DateTimeFormatOptions,
-};
+// const dateOptions = {
+//   locale: 'en-US',
+//   options: {
+//     year: 'numeric',
+//     month: 'short',
+//     day: '2-digit',
+//   } as Intl.DateTimeFormatOptions,
+// };
 
 export function CalendarForm({
   label,
-  width = "20rem",
+  width = '20rem',
   minDate,
   maxDate,
   field,
@@ -34,19 +34,14 @@ export function CalendarForm({
 }) {
   // 날짜 범위를 문자열로 표시
   const getDateRangeText = () => {
-    if (!field?.value?.from && !field?.value?.to) return "Pick a date";
+    if (!field?.value?.from && !field?.value?.to) return 'Pick a date';
+    const startedAt = minDate || new Date();
     const from = field.value.from
-      ? field.value.from.toLocaleDateString(
-          dateOptions.locale,
-          dateOptions.options
-        )
-      : "Start";
+      ? field.value.from.toLocaleDateString()
+      : startedAt.toLocaleDateString();
     const to = field.value.to
-      ? field.value.to.toLocaleDateString(
-          dateOptions.locale,
-          dateOptions.options
-        )
-      : "End";
+      ? field.value.to.toLocaleDateString()
+      : (maxDate || new Date()).toLocaleDateString();
     return `${from} - ${to}`;
   };
 
@@ -58,10 +53,10 @@ export function CalendarForm({
           <Button
             variant="outline"
             className={cn(
-              "block",
-              !field?.value?.from && "text-muted-foreground"
+              'block',
+              !field?.value?.from && 'text-muted-foreground'
             )}
-            style={{ minWidth: "7rem", width }}
+            style={{ minWidth: '7rem', width }}
           >
             <div className="flex items-center space-x-2">
               <CalendarIcon className="h-4 w-4 opacity-50" />
@@ -72,20 +67,9 @@ export function CalendarForm({
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="range" // 날짜 범위 선택 모드
+            numberOfMonths={2}
             selected={field.value}
             onSelect={field.onChange}
-            disabled={(date) => {
-              if (minDate && maxDate) {
-                return date < minDate || date > maxDate;
-              }
-              if (minDate) {
-                return date < minDate;
-              }
-              if (maxDate) {
-                return date > maxDate;
-              }
-              return false;
-            }}
             initialFocus
           />
         </PopoverContent>

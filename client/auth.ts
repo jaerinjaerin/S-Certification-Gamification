@@ -55,6 +55,7 @@ export const {
         let storeSegmentText: string | null = null;
         let channelId: string | null = null;
         let channelSegmentId: string | null = null;
+        let channelName: string | null = null;
 
         if (accessToken) {
           const result = await fetchOrganizationDetails(accessToken, profile);
@@ -64,6 +65,7 @@ export const {
             storeSegmentText = result.storeSegmentText;
             channelId = result.channelId;
             channelSegmentId = result.channelSegmentId;
+            channelName = result.channelName;
           }
         }
 
@@ -130,6 +132,7 @@ export const {
           channelSegmentId: channelSegmentId,
           regionId: regionId,
           subsidiaryId: subsidiaryId,
+          channelName: channelName,
         };
       },
     },
@@ -172,7 +175,43 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // // console.log("auth callbacks jwt", token, profile, user, account);
+      // console.log("auth callbacks jwt", token, profile, user, account);
+      /*
+       {
+        id: 'cd6ac648-b5d5-4e0b-9073-249bb5fbd813',
+        name: 'tina.lee@cheilpengtai.com',
+        email: null,
+        emailVerified: null,
+        image: null,
+        createdAt: 2025-02-03T09:30:13.746Z,
+        updatedAt: 2025-02-03T09:30:13.746Z,
+        emailId: 'eHfxfMMP4X5hpzfSCNgRgV6vuqty7cxapIZBoVl5mgE=',
+        authType: 'SUMTOTAL',
+        providerUserId: 'tIRw7YwCdAvn6R+Ha45xdA==',
+        providerPersonId: 'F2i8ia++APY1d8lDVNh/aw==',
+        jobId: '4',
+        domainId: '29',
+        domainCode: 'OrgCode-7',
+        languageId: null,
+        regionId: null,
+        subsidiaryId: null,
+        storeId: '4',
+        storeSegmentText: '',
+        channelId: '2',
+        channelSegmentId: '2',
+        channelName: '4'
+      } {
+        access_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkEwQjVCMUFCMTUzMjI1MzRDNUIxQUU3QTdEMjZDRkI3NDYzNTIwMzNSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6Im9MV3hxeFV5SlRURnNhNTZmU2JQdDBZMUlETSJ9.eyJuYmYiOjE3Mzg1NzcwMjEsImV4cCI6MTczODU4NDIyMSwiaXNzIjoiaHR0cHM6Ly9zYW1zdW5nLnN1bXRvdGFsLmhvc3QvYXBpc2VjdXJpdHkiLCJhdWQiOlsiZXh0YXBpcyIsImh0dHBzOi8vc2Ftc3VuZy5zdW10b3RhbC5ob3N0L2FwaXNlY3VyaXR5L3Jlc291cmNlcyJdLCJjbGllbnRfaWQiOiJTQU1TVU5HRUxFQ1RST05JQ1NfUFJPRF9hZGVlMjBmZGZkNDM0ZTlmYjU1YmE2NmQ4OTFiYWQ3OCIsInN1YiI6ImhxX2FwaS50ZXN0MSIsImF1dGhfdGltZSI6MTczODU3NzAyMCwiaWRwIjoibG9jYWwiLCJuYW1lIjoiaHFfYXBpLnRlc3QxIiwidXNlcm5hbWUiOiJocV9hcGkudGVzdDEiLCJtYXNrZWR1c2VyaWQiOiIyM0UzOEI2NEU0NjgwRTBBQkZBM0JDQjBGNjg3NURCNiIsInJvbGUiOiJQb3J0YWwgVXNlciIsInRlbmFudCI6IlNBTVNVTkdFTEVDVFJPTklDU19QUk9EIiwiYnJva2Vyc2Vzc2lvbiI6IjAzZWFiNjk0NGUwYTQzZGU5ZTFiMTg3MDEwNGI5ZjI1IiwiY3VsdHVyZSI6ImVuLVVTIiwibGFuZ3VhZ2UiOiJlbi11cyIsImRhdGVmb3JtYXQiOiJNTS9kZC95eXl5IiwidGltZWZvcm1hdCI6ImhoOm1tIGEiLCJ1c2VyaWQiOiIyMTM1MTU2IiwicGVyc29ucGsiOiIxNDg0MjAzIiwiZ3Vlc3RhY2NvdW50IjoiMCIsInVzZXJ0aW1lem9uZWlkIjoiQXNpYS9TZW91bCIsInR3b0xldHRlcklTT0xhbmd1YWdlTmFtZSI6ImVuIiwiaXNydGwiOiJGYWxzZSIsInBlcnNvbmd1aWQiOiI0ZjM3YjM0Mi0wZjYyLTQxMzItOTM1MS0wMGYzN2NhNTMzM2EiLCJ1c2VyaWRoYXNoIjoiMTg5Nzk0NDQyMyIsIndmbXVzZXIiOiJUcnVlIiwicHJvcGVybmFtZSI6IlRlc3QrVGVzdCIsImp0aSI6IkU5NEM4MzU1NjU5NUEyRTFCQUNDRjI0NUVDN0JGMzhDIiwiaWF0IjoxNzM4NTc3MDIxLCJzY29wZSI6WyJhbGxhcGlzIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.Qm3kck46-MxC2mMeZzVgUZVd2hdePq7t2dnnDcISe4gB9vEog5bJ6c_Eck0C_W7DzDb0kMZdt6HWAj98pvFZxayRIHQqa3ZHpBab07SXEIKUwrzI_1tk6Z5Um4ZQGaDj4h2HqFzmQZkzEf4y2gE0qhUClQ2JV8ReMiWMgIaOMENwc3AWz69McTsQGqDxt64UwORks5U44YTuopxPz8ePf6ucGJss4482lTT5nDaH4WuK7xiWWvzlWf-EbGUxzWCeaMfIldtT-jd3YKCQGdCYtP_rUkJf-lkyx1yA6mrVHpCpX1mwMsLH9B2yvcL05QxjgcoNk0M5CvfdD00zpa57Jw',
+        expires_in: 7200,
+        token_type: 'bearer',
+        refresh_token: '595745B523E6A7B73888900B39891AEF4E43B390E28E89AADF48346EA17077A9',
+        scope: 'allapis offline_access',
+        expires_at: 1738584221,
+        provider: 'sumtotal',
+        type: 'oauth',
+        providerAccountId: 'tIRw7YwCdAvn6R+Ha45xdA=='
+      }
+      */
       if (account) {
         token.provider = account.provider;
       }

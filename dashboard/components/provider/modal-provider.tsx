@@ -1,5 +1,5 @@
-"use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+'use client';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 type ModalContextType = {
   setContent: (content: ReactNode | null) => void;
@@ -14,7 +14,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ModalContext.Provider value={{ setContent }}>
-      <div className="h-screen overflow-y-scroll">
+      <div>
         {content && (
           <div
             className="absolute z-50 h-full inset-0 flex items-center justify-center bg-zinc-950/70"
@@ -37,7 +37,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error("useModal must be used within a ModalProvider");
+    throw new Error('useModal must be used within a ModalProvider');
   }
   return context;
 };

@@ -31,6 +31,8 @@ export type QuizLog = {
   storeId: string | null | undefined;
   jobId: string;
   languageId: string | null | undefined;
+  originalQuestionId: string | undefined;
+  originalIndex: number | undefined;
 };
 
 class QuizQuestionLogManager {
@@ -52,6 +54,10 @@ class QuizQuestionLogManager {
     this.stageIndex = stageIndex;
     this.logs = [];
     // console.log(`[QuizLogManager] Stage ${stageIndex} started. Logs reset.`);
+  }
+
+  clear() {
+    this.logs = [];
   }
 
   reset(): void {
@@ -78,6 +84,7 @@ class QuizQuestionLogManager {
     }
 
     if (this.logs.find((l) => l.questionId === log.questionId)) {
+      console.log("이미 로그가 있습니다.");
       return;
     }
 
@@ -109,7 +116,7 @@ class QuizQuestionLogManager {
 
   private async attemptToSendLog(log: QuizLog): Promise<void> {
     let attempts = 0;
-    const maxAttempts = 2;
+    const maxAttempts = 3;
 
     while (attempts < maxAttempts) {
       attempts++;
@@ -127,7 +134,7 @@ class QuizQuestionLogManager {
         );
 
         if (result.ok) {
-          // console.log("[QuizLogManager] Log successfully sent:", log);
+          console.log("[QuizLogManager] Log successfully sent:", log);
           return;
         }
 
@@ -181,7 +188,7 @@ class QuizQuestionLogManager {
     return this.isProcessingQueue;
   }
 
-  async waitForQueueToComplete(timeout: number = 10000): Promise<void> {
+  async waitForQueueToComplete(timeout: number = 20000): Promise<void> {
     const start = Date.now();
 
     while (this.isProcessingQueue) {

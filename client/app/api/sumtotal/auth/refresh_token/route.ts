@@ -59,9 +59,9 @@ export async function GET() {
 
     // 3. 응답 확인
     if (!tokenResponse.ok) {
-      const error = await tokenResponse.json();
+      // const error = await tokenResponse.json();
       return NextResponse.json(
-        { error: error.error_description },
+        { error: "Faile to fetch refeshToken" },
         { status: tokenResponse.status }
       );
     }

@@ -1,4 +1,9 @@
-import { AuthType, UserQuizLog } from "@prisma/client";
+import {
+  AuthType,
+  BadgeType,
+  UserQuizLog,
+  UserQuizStageLog,
+} from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 
 interface CreateQuizStageLogParams {
@@ -17,6 +22,7 @@ interface CreateQuizStageLogParams {
   isBadgeStage: boolean;
   isBadgeAcquired: boolean;
   badgeActivityId: string | null;
+  badgeType: BadgeType | null;
   quizLog: UserQuizLog | null;
 }
 
@@ -24,7 +30,7 @@ export class QuizStageLogHandler {
   create = async (
     params: CreateQuizStageLogParams,
     tryNumber: number = 3
-  ): Promise<void> => {
+  ): Promise<UserQuizStageLog> => {
     const {
       userId,
       campaignId,
@@ -41,6 +47,7 @@ export class QuizStageLogHandler {
       isBadgeStage,
       isBadgeAcquired,
       badgeActivityId,
+      badgeType,
       quizLog,
     } = params;
 
@@ -82,19 +89,19 @@ export class QuizStageLogHandler {
               channelId: quizLog?.channelId,
               channelName: quizLog?.channelName,
               channelSegmentId: quizLog?.channelSegmentId,
+              badgeType,
             }),
           }
         );
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.message || "Failed to create quiz stage log"
-          );
+          // const errorData = await response.json();
+          throw new Error("Failed to create quiz stage log");
         }
 
+        const data = await response.json();
         // 성공적으로 처리되었으면 함수 종료
-        return;
+        return data.item;
       } catch (error) {
         console.error(`Attempt ${attempts} failed:`, error);
 
@@ -111,7 +118,7 @@ export class QuizStageLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          await Sentry.flush(1000);
+          // await Sentry.flush(1000);
 
           throw new Error(
             "Max attempts reached: An unexpected error occurred while registering quiz log"

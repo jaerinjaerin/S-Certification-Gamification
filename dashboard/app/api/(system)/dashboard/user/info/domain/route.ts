@@ -1,56 +1,61 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { prisma } from "@/prisma-client";
-import { NextRequest, NextResponse } from "next/server";
-import { querySearchParams } from "../../../_lib/query";
-import { AuthType } from "@prisma/client";
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { querySearchParams } from '@/lib/query';
+import { domainCheckOnly, getJobIds } from '@/lib/data';
+import { AuthType, CampaignSettings, DomainGoal } from '@prisma/client';
+import { buildWhereWithValidKeys } from '@/lib/where';
+import { queryRawWithWhere } from '@/lib/sql';
 
-// UserQuizStatistics, DomainGoal사용
-// DomainGoal - ff,fsm,ffses,fsmses의 합이 국가별 총 목표수
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where, take, skip } = querySearchParams(searchParams);
+    const { where: condition, take, skip } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
 
-    await prisma.$connect();
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
 
-    const defaultJobData = {
-      ff: 0,
-      fsm: 0,
-      "ff(ses)": 0,
-      "fsm(ses)": 0,
-      ff_advanced: 0,
-      fsm_advanced: 0,
-      "ff(ses)_advanced": 0,
-      "fsm(ses)_advanced": 0,
-    };
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
 
-    const jobGroup = await prisma.job.findMany({
-      select: { id: true, group: true },
-    });
+    const jobGroup = await getJobIds(jobId);
 
-    const count = await prisma.domainGoal.count({
-      where,
-    });
-
-    const domainsGoals = await prisma.domainGoal.findMany({
-      where,
-      take,
-      skip,
-    });
-
-    const experts = await prisma.userQuizBadgeStageStatistics.findMany({
-      where: {
-        ...where,
-        isBadgeAcquired: true,
-        domainId: {
-          in: domainsGoals
-            .map((goal) => goal.domainId)
-            .filter((id): id is string => id !== null),
-        },
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
       },
-    });
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    // domainId만 확인해서 필터링 생성
+    const { createdAt, ...whereForGoal } = (await domainCheckOnly(
+      where
+    )) as any;
+
+    const domainsGoals: DomainGoal[] = await queryRawWithWhere(
+      prisma,
+      'DomainGoal',
+      whereForGoal
+    );
+    const count = domainsGoals.length;
 
     const domains = await prisma.domain.findMany({
       where: {
@@ -60,136 +65,162 @@ export async function GET(request: NextRequest) {
             .filter((id): id is string => id !== null),
         },
       },
+      include: { subsidiary: { include: { region: true } } },
+      orderBy: { order: 'asc' },
+      take,
+      skip,
     });
 
-    const subsidiaries = await prisma.subsidiary.findMany({
-      where: {
-        id: {
-          in: domains
-            .map((domain) => domain.subsidiaryId)
-            .filter((id): id is string => id !== null),
-        },
-      },
-    });
+    const userBadges = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        prisma.userQuizBadgeStageStatistics.groupBy({
+          by: ['domainId', 'authType', 'quizStageIndex', 'jobId', 'storeId'],
+          where: {
+            ...buildWhereWithValidKeys(where, [
+              'campaignId',
+              'authType',
+              'channelSegmentId',
+              'createdAt',
+            ]),
+            domainId: { in: domains.map((domain) => domain.id) },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          _count: { quizStageIndex: true },
+        })
+      )
+    );
 
-    const regions = await prisma.region.findMany({
-      where: {
-        id: {
-          in: subsidiaries
-            .map((subsidiary) => subsidiary.regionId)
-            .filter((id): id is string => id !== null),
-        },
-      },
-    });
+    const experts = userBadges.flat();
 
-    // Step 4: 데이터 매핑
-    const result = domains.map((domain) => {
-      const domainGoal = domainsGoals.find(
-        (goal) => goal.domainId === domain.id
-      );
-      const goalTotal =
-        (domainGoal?.ff || 0) +
-        (domainGoal?.fsm || 0) +
-        (domainGoal?.ffSes || 0) +
-        (domainGoal?.fsmSes || 0);
-
-      const subsidiary = subsidiaries.find(
-        (sub) => sub.id === domain.subsidiaryId
-      );
-      const region = regions.find((reg) => reg.id === subsidiary?.regionId);
-
-      const expertByDomain = experts.filter(
-        (exp) => exp.domainId === domain.id
-      );
-      const advancedByDomain = expertByDomain.filter(
-        (exp) => exp.quizStageId === "stage_3"
-      );
-
-      //   expers data
-      const jobData = JSON.parse(JSON.stringify(defaultJobData));
-      const plus = experts.filter(
-        (exp) => exp.storeId !== "4" && exp.domainId === domain.id
-      );
-      plus.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          const lowJobName =
-            jobName.toLowerCase() as keyof typeof jobData as string;
-          if (lowJobName in jobData) {
-            if (user.quizStageId === "stage_3") {
-              jobData[`${lowJobName}_advanced`] += 1;
-            }
-            jobData[lowJobName] += 1;
-          }
+    const expertData = domains.reduce(
+      (acc: any, domain: any) => {
+        const expert = experts.find((expert) => expert.domainId === domain.id);
+        if (!expert) {
+          acc[domain.id] = {
+            goal: 0,
+            plusExpert: 0,
+            plusAdvanced: 0,
+            noneExpert: 0,
+            noneAdvanced: 0,
+            ffExpert: 0,
+            ffAdvanced: 0,
+            fsmExpert: 0,
+            fsmAdvanced: 0,
+            ffSesExpert: 0,
+            ffSesAdvanced: 0,
+            fsmSesExpert: 0,
+            fsmSesAdvanced: 0,
+          };
+          return acc;
         }
-      });
 
-      const ses = experts.filter(
-        (exp) => exp.storeId === "4" && exp.domainId === domain.id
-      );
+        const {
+          _count,
+          domainId,
+          authType: auth,
+          quizStageIndex,
+          jobId,
+          storeId,
+        } = expert;
 
-      ses.forEach((user) => {
-        const jobName = jobGroup.find((j) => j.id === user.jobId)?.group;
-        if (jobName) {
-          const lowJobName =
-            `${jobName.toLowerCase()}(ses)` as keyof typeof jobData as string;
-          if (lowJobName in jobData) {
-            if (user.quizStageId === "stage_3") {
-              jobData[`${lowJobName}_advanced`] += 1;
-            }
-            jobData[lowJobName] += 1;
-          }
+        //
+        if (!domainId) return acc;
+
+        //
+        const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
+        const expertType = quizStageIndex === 2 ? 'Expert' : 'Advanced';
+        const storeType = storeId === '4' ? 'Ses' : '';
+        const jobName =
+          (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
+            jobGroup[key].includes((jobId as never) || '')
+          ) || null;
+
+        //goal
+        const { ff, fsm, ffSes, fsmSes } = domainsGoals.find(
+          (goal) => goal.domainId === domainId
+        ) || { ff: 0, fsm: 0, ffSes: 0, fsmSes: 0 };
+        const goal = ff + fsm + ffSes + fsmSes;
+        //
+
+        if (!acc[domainId]) {
+          acc[domainId] = {
+            goal: 0,
+            plusExpert: 0,
+            plusAdvanced: 0,
+            noneExpert: 0,
+            noneAdvanced: 0,
+            ffExpert: 0,
+            ffAdvanced: 0,
+            fsmExpert: 0,
+            fsmAdvanced: 0,
+            ffSesExpert: 0,
+            ffSesAdvanced: 0,
+            fsmSesExpert: 0,
+            fsmSesAdvanced: 0,
+          };
         }
-      });
 
-      const plusExperts = experts.filter(
-        (exp) =>
-          exp.authType === AuthType.SUMTOTAL && exp.domainId === domain.id
-      );
+        const entry = acc[domainId];
+        entry.goal += goal;
+        entry[`${authType}${expertType}`] += _count.quizStageIndex;
+        entry[`${jobName}${storeType}${expertType}`] += _count.quizStageIndex;
 
-      const plusExpertsAdvanced = plusExperts.filter(
-        (exp) => exp.quizStageId === "stage_3"
-      );
+        return acc;
+      },
+      {} as Record<string, any>
+    );
 
-      const noneExperts = experts.filter(
-        (exp) =>
-          exp.authType !== AuthType.SUMTOTAL && exp.domainId === domain.id
-      );
+    const result = Object.entries(expertData)
+      .map(([domainId, value]: any) => {
+        const domain = domains.find((domain) => domain.id === domainId);
+        if (!domain) return;
 
-      const noneExpertsAdvanced = noneExperts.filter(
-        (exp) => exp.quizStageId === "stage_3"
-      );
+        const expertTotal = value.plusExpert + value.noneExpert;
+        const advancedTotal = value.plusAdvanced + value.noneAdvanced;
+        const achievement =
+          value.goal > 0 ? (expertTotal / value.goal) * 100 : 0;
 
-      return {
-        domain: { id: domain.id, name: domain.name },
-        subsidiary: subsidiary
-          ? { id: subsidiary.id, name: subsidiary.name }
-          : null,
-        region: region ? { id: region.id, name: region.name } : null,
-        goal: goalTotal,
-        expert: `${expertByDomain.length}(${advancedByDomain.length})`,
-        achievement: (expertByDomain.length / goalTotal) * 100,
-        expertDetail: {
-          date: domain.updatedAt,
-          country: domain.name,
-          plus: `${plusExperts.length} (${plusExpertsAdvanced.length})`,
-          none: `${noneExperts.length} (${noneExpertsAdvanced.length})`,
-          ff: `${jobData.ff} (${jobData.ff_advanced})`,
-          fsm: `${jobData.fsm} (${jobData.fsm_advanced})`,
-          "ff(ses)": `${jobData["ff(ses)"]} (${jobData["ff(ses)_advanced"]})`,
-          "fsm(ses)": `${jobData["fsm(ses)"]} (${jobData["fsm(ses)_advanced"]})`,
-        },
-      };
-    });
+        return {
+          order: domain.order,
+          domain: { id: domain.id, name: domain.name },
+          subsidiary: domain.subsidiary
+            ? { id: domain.subsidiary.id, name: domain.subsidiary.name }
+            : null,
+          region: domain.subsidiary?.region
+            ? {
+                id: domain.subsidiary.region.id,
+                name: domain.subsidiary.region.name,
+              }
+            : null,
+          goal: value.goal,
+          expert: `${expertTotal}(${advancedTotal})`,
+          achievement,
+          expertDetail: {
+            date: domain.updatedAt,
+            country: domain.name,
+            plus: `${value.plusExpert} (${value.plusAdvanced})`,
+            none: `${value.noneExpert} (${value.noneAdvanced})`,
+            ff: `${value.ffExpert} (${value.ffAdvanced})`,
+            fsm: `${value.fsmExpert} (${value.fsmAdvanced})`,
+            'ff(ses)': `${value.ffSesExpert} (${value.ffSesAdvanced})`,
+            'fsm(ses)': `${value.fsmSesExpert} (${value.fsmSesAdvanced})`,
+          },
+        };
+      })
+      .sort((a, b) => (a?.order || 0) - (b?.order || 0));
 
-    return NextResponse.json({ result, total: count });
+    return NextResponse.json({ result: { data: result, total: count } });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { result: { data: [], total: 0 }, message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

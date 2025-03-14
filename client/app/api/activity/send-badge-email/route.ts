@@ -74,12 +74,6 @@ export async function POST(request: NextRequest) {
     };
 
     const data = await sesClient.send(new SendEmailCommand(params));
-    // console.log(
-    //   "Email sent successfully:",
-    //   data,
-    //   data?.$metadata?.httpStatusCode,
-    //   typeof data?.$metadata?.httpStatusCode
-    // );
 
     if (data?.$metadata?.httpStatusCode == 200) {
       return NextResponse.json(
@@ -107,7 +101,5 @@ export async function POST(request: NextRequest) {
       return scope;
     });
     return NextResponse.json({ error: error }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

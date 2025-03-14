@@ -72,5 +72,8 @@
   "email_badge_description_1": "Félicitations !",
   "email_badge_description_2": "Vous avez obtenu le Badge Expert Galaxy AI.",
   "email_badge_description_3": "Vous avez obtenu le Badge Expert Avancé Galaxy AI.",
-  "email_badge_description_4": "Ce message a été envoyé automatiquement par le service Samsung+. Merci de ne pas répondez à ce message."
+  "email_badge_description_4": "Ce message a été envoyé automatiquement par le service Samsung+. Merci de ne pas répondez à ce message.",
+  "mena_check_1": "J'ai lu et j'accepte la <strong>politique de confidentialité de Samsung Plus</strong>",
+  "mena_check_2": "J'ai lu et j'accepte les <strong>Terms et Conditions de Samsung Plus</strong>",
+  "mena_Decline": "Je ne suis pas d’accord"
 }

@@ -1,6 +1,7 @@
 import { sumtotalUserOthersJobId } from "@/core/config/default";
 import { OAuth2Config, OAuthUserConfig } from "@auth/core/providers";
 
+import * as Sentry from "@sentry/nextjs";
 // userinfo: 'https://samsung.sumtotal.host/apis/documentation?urls.primaryName=apis%2Fv2%2Fswagger#/User/V2Advanced_GetUsers',
 export interface Address {
   email1: string;
@@ -421,6 +422,7 @@ export type OrganizationDetailsResultData = {
   storeSegmentText: string | null;
   channelId: string | null;
   channelSegmentId: string | null;
+  channelName: string | null;
 };
 
 export async function fetchOrganizationDetails(
@@ -432,22 +434,43 @@ export async function fetchOrganizationDetails(
   let storeSegmentText: string | null = null;
   let channelId: string | null = null;
   let channelSegmentId: string | null = null;
+  let channelName: string | null = null;
 
   if (!accessToken) {
     console.error("Access token is required");
-    return { jobId, storeId, storeSegmentText, channelId, channelSegmentId };
+    return {
+      jobId,
+      storeId,
+      storeSegmentText,
+      channelId,
+      channelSegmentId,
+      channelName,
+    };
   }
 
-  const orgIds: string[] = profile.personOrganization
-    .filter((org) => org.deleted !== 1)
-    .map((org) => org.organizationId.toString());
+  console.log("fetchOrganizationDetails profile:", profile);
+
+  // const orgIds: string[] =
+  //   profile.personOrganization != null
+  //     ? profile.personOrganization
+  //         .filter((org) => org.deleted !== 1)
+  //         .map((org) => org.organizationId.toString())
+  //     : [];
+
+  const orgIds: string[] =
+    profile?.personOrganization && Array.isArray(profile.personOrganization)
+      ? profile.personOrganization
+          .filter(
+            (org) => org && org.deleted !== 1 && org.organizationId != null
+          )
+          .map((org) => org.organizationId.toString())
+      : [];
 
   const fetchOrganizationData = async (orgId: string): Promise<any> => {
     try {
       const response = await fetch(
         `https://samsung.sumtotal.host/apis/api/v1/organizations/search?organizationId=${orgId}`,
         {
-          cache: "no-store",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
@@ -455,11 +478,27 @@ export async function fetchOrganizationDetails(
         }
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
+        throw new Error(
+          `fetchOrganizationData Failed to fetch data: orgId: ${orgId}, ${response.statusText}`
+        );
       }
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching data for orgId ${orgId}:`, error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: `api/v1/organizations/search?organizationId=${orgId}`,
+          method: "GET",
+          description: "Failed to fetch organization data by orgId",
+        });
+        scope.setTag("orgId", orgId);
+        return scope;
+      });
+      console.info("profile:", profile, "accessToken:", accessToken);
+      console.error(
+        `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
+        error
+      );
       return null;
     }
   };
@@ -480,11 +519,27 @@ export async function fetchOrganizationDetails(
         }
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
+        throw new Error(
+          `fetchOrganizationDataByParentName Failed to fetch data: parentName: ${parentName} ${response.statusText}`
+        );
       }
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching data for parentName ${parentName}:`, error);
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "http_request",
+          endpoint: `/apis/api/v1/organizations/search?orgName=${parentName}`,
+          method: "GET",
+          description: "Failed to fetch organization data by parent name",
+        });
+        scope.setTag("parentName", parentName);
+        return scope;
+      });
+      console.info("profile:", profile, "accessToken:", accessToken);
+      console.error(
+        `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
+        error
+      );
       return null;
     }
   };
@@ -496,11 +551,21 @@ export async function fetchOrganizationDetails(
 
   try {
     // Fetch organization data
-    const results = await Promise.all(orgIds.map(fetchOrganizationData));
+    const results = (
+      await Promise.all(orgIds.map(fetchOrganizationData))
+    ).filter((result) => result != null);
+
+    console.log(
+      "fetchOrganizationDetails results:",
+      JSON.stringify(results, null, 2)
+    );
+
     const filteredResults = filterResultsByLatestDate(
       results,
       profile.personOrganization
     );
+
+    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -514,6 +579,7 @@ export async function fetchOrganizationDetails(
 
       if (integer1 === 7) {
         jobId = text9;
+        channelName = text9;
         if (!isValidJobId(text9)) {
           jobId = sumtotalUserOthersJobId;
         }
@@ -526,25 +592,47 @@ export async function fetchOrganizationDetails(
       }
     });
 
+    console.log("fetchOrganizationDetails jobId:", jobId);
+    console.log(
+      "fetchOrganizationDetails parentOrganizationNames:",
+      parentOrganizationNames
+    );
+
     // Fetch parent organization details if needed
     if (parentOrganizationNames) {
       const parentData = await fetchOrganizationDataByParentName(
         parentOrganizationNames
       );
 
-      if (parentData && parentData.data.length > 0) {
+      if (parentData && parentData.data != null && parentData.data.length > 0) {
         const { text7, text8, integer1 } = parentData.data[0]?.optionalInfo;
 
         if (integer1 === 4) {
           channelId = text7;
           channelSegmentId = text8;
         }
+      } else {
+        console.info("profile:", profile, "accessToken:", accessToken);
+        console.error(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
+    console.info("profile:", profile, "accessToken:", accessToken);
     console.error("Error processing organization details:", error);
   }
 
+  console.log("fetchOrganizationDetails jobId:", jobId);
+  console.log("fetchOrganizationDetails storeId:", storeId);
+  console.log("fetchOrganizationDetails channelId:", channelId);
+  console.log("fetchOrganizationDetails channelName:", channelName);
+
   // Return the collected information
-  return { jobId, storeId, storeSegmentText, channelId, channelSegmentId };
+  return {
+    jobId,
+    storeId,
+    storeSegmentText,
+    channelId,
+    channelSegmentId,
+    channelName,
+  };
 }

@@ -97,10 +97,14 @@ build_stg_admin:
       --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
       --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
       --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_CLIENT_URL=$NEXT_PUBLIC_CLIENT_URL \
       --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
       --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
       --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
+      --build-arg ASSETS_S3_BUCKET_NAME=$ASSETS_S3_BUCKET_NAME \
+      --build-arg AWS_CLOUDFRONT_DISTRIBUTION_ID=$AWS_CLOUDFRONT_DISTRIBUTION_ID \
+      --build-arg ASSETS_S3_BUCKET_REGION=$ASSETS_S3_BUCKET_REGION \
       --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
       --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
       --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
@@ -204,6 +208,7 @@ build_prd_admin:
       --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
       --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
       --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_CLIENT_URL=$NEXT_PUBLIC_CLIENT_URL \
       --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
       --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
       --build-arg AWS_SES_REGION=$AWS_SES_REGION \
@@ -244,7 +249,22 @@ deploy_stg_client:
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
@@ -274,12 +294,15 @@ deploy_stg_admin:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
         sudo docker pull $ADMIN_IMAGE && \
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
   rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/admin"'
+      when: always
     - if: '$ENV == "staging" && $SERVICE =~ /admin/'
       when: always
     - when: never
@@ -303,43 +326,70 @@ deploy_prd_client:
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
         sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_C "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_D "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_E "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_F "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_C "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_D "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
       "
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_E "\
-        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker image prune --all --force && \
-        sudo docker pull $CLIENT_IMAGE && \
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_F "\
         sudo docker stop $CLIENT_NAME || true && \
         sudo docker rm $CLIENT_NAME || true && \
         sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
@@ -369,12 +419,30 @@ deploy_prd_admin:
     - |
       ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
         sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
-        sudo docker pull $ADMIN_IMAGE && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
+        sudo docker stop $ADMIN_NAME || true && \
+        sudo docker rm $ADMIN_NAME || true && \
+        sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
         sudo docker stop $ADMIN_NAME || true && \
         sudo docker rm $ADMIN_NAME || true && \
         sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
       "
   rules:
+    - if: '$CI_COMMIT_BRANCH == "release/admin"'
+      when: always
     - if: '$ENV == "production" && $SERVICE =~ /admin/'
       when: always
     - when: never

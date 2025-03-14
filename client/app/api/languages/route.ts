@@ -4,12 +4,15 @@ import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 
 export async function GET() {
+  // console.warn("GET /api/languages");
   try {
     const languages = await prisma.language.findMany();
+    // console.log("languages");
 
-    const response = NextResponse.json({ items: languages }, { status: 200 });
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
+    return NextResponse.json({ items: languages }, { status: 200 });
+    // const response = NextResponse.json({ items: languages }, { status: 200 });
+    // response.headers.set("Cache-Control", "public, max-age=3600");
+    // return response;
   } catch (error) {
     console.error("Error Domain Data:", error);
     Sentry.captureException(error);

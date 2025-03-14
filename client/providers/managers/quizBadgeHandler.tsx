@@ -1,20 +1,45 @@
 import { getBadgeEmailTemplete } from "@/templete/email";
+import { QuizStageEx } from "@/types/apiTypes";
 import * as Sentry from "@sentry/nextjs";
 
 export class QuizBadgeHandler {
   issueBadge = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
     try {
-      // console.log("issueBadge");
-      const registered = await this.postActivitieRegister(activityId);
-      const result = await this.postActivityEnd(activityId, elapsedSeconds);
+      const registered = await this.postActivityRegister(
+        userId,
+        campaignId,
+        domainId,
+        activityId
+      );
+      const attended = await this.postActivityEnd(
+        userId,
+        campaignId,
+        domainId,
+        activityId,
+        elapsedSeconds
+      );
 
-      return false;
+      console.log("issueBadge registered", registered);
+      console.log("issueBadge attended", attended);
+
+      return registered && attended;
     } catch (error) {
-      Sentry.captureException(error);
-      await Sentry.flush(2000); // 최대 2초 대기
+      Sentry.captureException(error, (scope) => {
+        scope.setContext("operation", {
+          type: "api",
+          endpoint: "issueBadge",
+          description: "Failed to issue badge",
+        });
+        scope.setTag("activityId", activityId);
+        return scope;
+      });
+      // await Sentry.flush(2000); // 최대 2초 대기
       return false;
     }
   };
@@ -23,7 +48,8 @@ export class QuizBadgeHandler {
     userId: string,
     badgeImageUrl: string,
     translationMessage: { [key: string]: string },
-    currentQuizStageIndex: number
+    currentQuizStageIndex: number,
+    currentQuizStage: QuizStageEx | null
   ) => {
     try {
       // console.log("sendBadgeEmail");
@@ -31,7 +57,8 @@ export class QuizBadgeHandler {
       const bodyHtml: string = getBadgeEmailTemplete(
         badgeImageUrl,
         translationMessage,
-        currentQuizStageIndex
+        currentQuizStageIndex,
+        currentQuizStage
       );
 
       const response = await fetch(
@@ -53,7 +80,7 @@ export class QuizBadgeHandler {
         throw new Error(errorData.message || "Failed to fetch sendBadgeEmail");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
       // console.log("sendBadgeEmail data", data);
 
       return true;
@@ -73,7 +100,12 @@ export class QuizBadgeHandler {
     }
   };
 
-  postActivitieRegister = async (activityId: string): Promise<boolean> => {
+  postActivityRegister = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
+    activityId: string
+  ): Promise<boolean> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
@@ -81,10 +113,15 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
           }),
         }
       );
+
+      console.log("postActivityRegister", activityId, response);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -92,7 +129,7 @@ export class QuizBadgeHandler {
         throw new Error(errorData.message || "Failed to register activities");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
 
       return true;
     } catch (err: any) {
@@ -108,6 +145,9 @@ export class QuizBadgeHandler {
   };
 
   postActivityEnd = async (
+    userId: string,
+    campaignId: string,
+    domainId: string,
     activityId: string,
     elapsedSeconds: number
   ): Promise<boolean> => {
@@ -118,7 +158,10 @@ export class QuizBadgeHandler {
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
-            activityId: activityId,
+            userId,
+            activityId,
+            campaignId,
+            domainId,
             status: "Attended",
             // elapsedSeconds: elapsedSeconds,
             elapsedSeconds: 120,
@@ -126,13 +169,15 @@ export class QuizBadgeHandler {
         }
       );
 
+      console.log("postActivityEnd", activityId, response);
+
       if (!response.ok) {
         const errorData = await response.json();
         // TODO: 활동 등록 오류 저장해 놓기
         throw new Error(errorData.message || "Failed to update activity");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
       // console.log("data", data);
 
       return true;
