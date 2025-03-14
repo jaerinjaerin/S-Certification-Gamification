@@ -17,7 +17,6 @@ const OverviewFilterForm = () => {
       from: startOfDayTime(formData.date.from),
       to: endOfDayTime(addDays(formData.date.to, -1)),
     };
-    console.log('🚀 ~ onSubmit ~ formData:', formData);
     updateSearchParamsOnUrl(formData);
   };
 

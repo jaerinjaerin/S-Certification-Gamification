@@ -23,6 +23,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import { swrFetcher } from '@/lib/fetch';
 import { usePageIndex } from '@/components/hook/use-page-index';
+import { useMemo } from 'react';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -54,16 +55,16 @@ const UserProgress = () => {
   const pageSize = 50; // 페이지당 데이터 개수
 
   //
-  const { data: progressData, isLoading } = useSWR(
-    `/api/dashboard/report/user?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
-    swrFetcher,
-    { fallbackData: { result: { data: [], total: 0 } } }
-  );
+  const fallbackData = useMemo(() => ({ result: { data: [], total: 0 } }), []);
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/report/user?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`;
+  }, [searchParams, campaign?.id, pageIndex, pageSize]);
 
-  const { data, total } = progressData.result || {
-    data: [],
-    total: 0,
-  };
+  const { data: progressData, isLoading } = useSWR(swrKey, swrFetcher, {
+    fallbackData,
+  });
+
+  const { data, total } = useMemo(() => progressData.result, [progressData]);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
