@@ -6,159 +6,168 @@ const path = require("path");
 const prisma = new PrismaClient();
 
 async function main() {
-  const domains = await prisma.domain.findMany({
-    include: {
-      subsidiary: {
-        include: {
-          region: true,
-        },
-      },
-    },
-  });
+  // const domains = await prisma.domain.findMany({
+  //   include: {
+  //     subsidiary: {
+  //       include: {
+  //         region: true,
+  //       },
+  //     },
+  //   },
+  // });
 
-  const languageCode = "en-US";
-  const language = await prisma.language.findFirst({
-    where: { code: languageCode },
-  });
+  // const languageCode = "en-US";
+  // const language = await prisma.language.findFirst({
+  //   where: { code: languageCode },
+  // });
 
-  if (!language) {
-    console.error("❌ Language not found");
-    return;
-  }
+  // if (!language) {
+  //   console.error("❌ Language not found");
+  //   return;
+  // }
 
-  console.log("✅ Language ID:", language.id);
+  // console.log("✅ Language ID:", language.id);
 
-  const hqQuestions = await prisma.question.findMany({
-    where: { languageId: language.id },
-  });
+  // const hqQuestions = await prisma.question.findMany({
+  //   where: { languageId: language.id },
+  // });
 
   const questions = await prisma.question.findMany();
-
-  console.log("✅ HQ Questions:", hqQuestions.length);
   console.log("✅ Questions:", questions.length);
 
-  const startDate = new Date("2025-01-20");
-  const endDate = new Date("2025-02-10");
+  const questionDatas = questions.map((q) => {
+    return {
+      id: q.id,
+      originalQuestionId: q.originalQuestionId,
+      originalIndex: q.originalIndex,
+    };
+  });
 
-  // 결과 저장할 객체
-  const dailyLogs = {};
+  for await (const questionData of questionDatas) {
+    const result = await prisma.userQuizQuestionStatistics.updateMany({
+      where: { questionId: questionData.id },
+      // where: { questionId: { in: questionDatas.map(q => q.id) } },
 
-  let currentDate = new Date(startDate);
+      data: {
+        originalQuestionId: questionData.originalQuestionId,
+        originalIndex: questionData.originalIndex,
+      },
+    });
 
-  while (currentDate <= endDate) {
-    const startOfDay = new Date(currentDate);
-    startOfDay.setHours(0, 0, 0, 0);
-
-    const endOfDay = new Date(currentDate);
-    endOfDay.setHours(23, 59, 59, 999);
-
-    console.log(
-      `🔍 Processing date: ${startOfDay.toISOString().split("T")[0]}`
-    );
-
-    let skip = 0;
-    const batchSize = 100; // 한 번에 가져올 데이터 개수
-
-    let hasMoreData = true;
-
-    while (hasMoreData) {
-      const logs = await prisma.userQuizQuestionStatistics.findMany({
-        where: {
-          createdAt: {
-            gte: startOfDay,
-            lte: endOfDay,
-          },
-          originalQuestionId: null,
-        },
-        orderBy: { createdAt: "asc" },
-        skip,
-        take: batchSize,
-      });
-
-      if (logs.length === 0) {
-        hasMoreData = false;
-        break;
-      }
-
-      // for await (const log of logs) {
-      //   if (log.originalQuestionId != null) {
-      //     const question = questions.find((q) => q.id === log.questionId);
-      //     if (question) {
-      //       const originQuestion = hqQuestions.find(
-      //         (q) => q.id === question.originalQuestionId
-      //       );
-
-      //       console.log("originQuestion", originQuestion);
-
-      //       if (originQuestion) {
-      //         const domain = domains.find((d) => d.id === log.domainId);
-      //         await prisma.userQuizQuestionStatistics.update({
-      //           where: { id: log.id },
-      //           data: {
-      //             originalQuestionId: originQuestion.id,
-      //             originalIndex: originQuestion.originalIndex,
-      //             regionId: domain.subsidiary.regionId,
-      //             subsidiaryId: domain.subsidiaryId,
-      //           },
-      //         });
-      //       }
-      //     }
-
-      //     if (!question) {
-      //       console.error(`❌ Question not found: ${log.originalQuestionId}`);
-      //     }
-      //   }
-      // }
-      const result = await Promise.all(
-        logs.map(async (log) => {
-          const question = questions.find((q) => q.id === log.questionId);
-          if (question) {
-            const originQuestion = hqQuestions.find(
-              (q) => q.id === question.originalQuestionId
-            );
-
-            if (originQuestion) {
-              const domain = domains.find((d) => d.id === log.domainId);
-
-              if (domain.subsidiary == null) {
-                console.error(`❌ Domain not found: ${log.domainId}`);
-              }
-
-              return prisma.userQuizQuestionStatistics.update({
-                where: { id: log.id },
-                data: {
-                  originalQuestionId: originQuestion.id,
-                  originalIndex: originQuestion.originalIndex,
-                  regionId: domain.subsidiary?.regionId,
-                  subsidiaryId: domain.subsidiaryId,
-                },
-              });
-            }
-          }
-
-          if (!question) {
-            console.error(`❌ Question not found: ${log.originalQuestionId}`);
-          }
-        })
-      );
-
-      console.log("✅ Updated logs:", result.length);
-
-      const dateKey = startOfDay.toISOString().split("T")[0];
-      if (!dailyLogs[dateKey]) dailyLogs[dateKey] = [];
-      dailyLogs[dateKey].push(...logs);
-
-      console.log(`📅 ${dateKey}: Processed ${logs.length} entries`);
-
-      skip += batchSize; // 다음 배치 처리
-
-      // DB 부담 방지를 위해 일정 시간 대기 (500ms)
-      await new Promise((resolve) => setTimeout(resolve, 200));
-    }
-
-    // 다음 날짜로 이동
-    currentDate.setDate(currentDate.getDate() + 1);
+    console.log("✅ Updated logs:", result);
   }
+
+  // console.log("✅ HQ Questions:", hqQuestions.length);
+  // console.log("✅ Questions:", questions.length);
+
+  // const startDate = new Date("2025-01-20");
+  // const endDate = new Date("2025-02-10");
+
+  // // 결과 저장할 객체
+  // const dailyLogs = {};
+
+  // let currentDate = new Date(startDate);
+
+  // while (currentDate <= endDate) {
+  //   const startOfDay = new Date(currentDate);
+  //   startOfDay.setHours(0, 0, 0, 0);
+
+  //   const endOfDay = new Date(currentDate);
+  //   endOfDay.setHours(23, 59, 59, 999);
+
+  //   console.log(
+  //     `🔍 Processing date: ${startOfDay.toISOString().split("T")[0]}`
+  //   );
+
+  //   let skip = 0;
+  //   const batchSize = 100; // 한 번에 가져올 데이터 개수
+
+  //   let hasMoreData = true;
+
+  //   while (hasMoreData) {
+  //     const logs = await prisma.userQuizQuestionStatistics.findMany({
+  //       where: {
+  //         createdAt: {
+  //           gte: startOfDay,
+  //           lte: endOfDay,
+  //         },
+  //         originalQuestionId: null,
+  //       },
+  //       orderBy: { createdAt: "asc" },
+  //       skip,
+  //       take: batchSize,
+  //     });
+
+  //     if (logs.length === 0) {
+  //       hasMoreData = false;
+  //       break;
+  //     }
+
+  //     // for await (const log of logs) {
+  //     //   if (log.originalQuestionId != null) {
+  //     //     const question = questions.find((q) => q.id === log.questionId);
+  //     //     if (question) {
+  //     //       const originQuestion = hqQuestions.find(
+  //     //         (q) => q.id === question.originalQuestionId
+  //     //       );
+
+  //     //       console.log("originQuestion", originQuestion);
+
+  //     //       if (originQuestion) {
+  //     //         const domain = domains.find((d) => d.id === log.domainId);
+  //     //         await prisma.userQuizQuestionStatistics.update({
+  //     //           where: { id: log.id },
+  //     //           data: {
+  //     //             originalQuestionId: originQuestion.id,
+  //     //             originalIndex: originQuestion.originalIndex,
+  //     //             regionId: domain.subsidiary.regionId,
+  //     //             subsidiaryId: domain.subsidiaryId,
+  //     //           },
+  //     //         });
+  //     //       }
+  //     //     }
+
+  //     //     if (!question) {
+  //     //       console.error(`❌ Question not found: ${log.originalQuestionId}`);
+  //     //     }
+  //     //   }
+  //     // }
+
+  //     const questionDatas: {"id": string, "originalQuestionId": string, "originalIndex": number}[] = questions.map((q) => {
+  //       return {
+  //         id: q.id,
+  //         originalQuestionId: q.originalQuestionId,
+  //         originalIndex: q.originalIndex,
+  //       }
+  //     });
+
+  //     for await (const questionData of questionDatas) {
+  //       await prisma.userQuizQuestionStatistics.update({
+  //         where: { questionId: questionData.id },
+  //         data: {
+  //           originalQuestionId: questionData.originalQuestionId,
+  //           originalIndex: questionData.originalIndex,
+  //         },
+  //       })
+  //     }
+
+  //     console.log("✅ Updated logs:", result.length);
+
+  //     const dateKey = startOfDay.toISOString().split("T")[0];
+  //     if (!dailyLogs[dateKey]) dailyLogs[dateKey] = [];
+  //     dailyLogs[dateKey].push(...logs);
+
+  //     console.log(`📅 ${dateKey}: Processed ${logs.length} entries`);
+
+  //     skip += batchSize; // 다음 배치 처리
+
+  //     // DB 부담 방지를 위해 일정 시간 대기 (500ms)
+  //     await new Promise((resolve) => setTimeout(resolve, 200));
+  //   }
+
+  //   // 다음 날짜로 이동
+  //   currentDate.setDate(currentDate.getDate() + 1);
+  // }
 
   console.log("✅ Finished processing all dates");
 }
