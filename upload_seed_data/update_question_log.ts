@@ -32,7 +32,20 @@ async function main() {
   //   where: { languageId: language.id },
   // });
 
-  const questions = await prisma.question.findMany();
+  const campaign = await prisma.campaign.findFirst({
+    where: {
+      name: {
+        equals: "s25",
+        mode: "insensitive", // 대소문자 구분 없이 검색
+      },
+    },
+  });
+
+  const questions = await prisma.question.findMany({
+    where: {
+      campaignId: campaign.id,
+    },
+  });
   console.log("✅ Questions:", questions.length);
 
   const questionDatas = questions.map((q) => {
