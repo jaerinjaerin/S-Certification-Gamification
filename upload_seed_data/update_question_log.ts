@@ -34,10 +34,7 @@ async function main() {
 
   const campaign = await prisma.campaign.findFirst({
     where: {
-      name: {
-        equals: "s25",
-        mode: "insensitive", // 대소문자 구분 없이 검색
-      },
+      slug: "s25",
     },
   });
 
