@@ -48,7 +48,7 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
   template: {
     items: [
       { label: 'QuizSet', name: 'QuizSet' },
-      { label: 'ActivityID', name: 'Activity ID' },
+      { label: 'ActivityID', name: 'Activity ID / Badge' },
       { label: 'NonSUser', name: 'Non S+ Users' },
       { label: 'UILanguage', name: 'UI Language' },
       { label: 'Target', name: 'Target' },
@@ -59,7 +59,7 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
   data: {
     items: [
       { label: 'quizset', name: 'QuizSet' },
-      { label: 'activity-id', name: 'Activity ID' },
+      { label: 'activity-id', name: 'Activity ID / Badge' },
     ],
     title: 'Download Data',
     description: 'You can download data from the desired category all at once.',
