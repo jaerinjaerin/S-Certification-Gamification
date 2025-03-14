@@ -11,7 +11,8 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Markdown } from "../markdown/markdown";
-import useCheckLocale from "@/hooks/useCheckLocale";
+// import useCheckLocale from "@/hooks/useCheckLocale";
+import { arabicCountries } from "@/core/config/default";
 
 export default function PrivacyOrTermPopup({
   popupProps,
@@ -24,7 +25,8 @@ export default function PrivacyOrTermPopup({
     domainName: string;
   };
 }) {
-  const { isArabic } = useCheckLocale();
+  // const { isArabic } = useCheckLocale();
+  const isArabicCountry = arabicCountries.includes(popupProps.domainName);
   const {
     contents,
     popupTitle,
@@ -46,12 +48,12 @@ export default function PrivacyOrTermPopup({
           className={cn(
             "max-h-[50svh] overflow-hidden overflow-y-scroll font-one font-medium "
           )}
-          dir={isArabic ? "rtl" : "ltr"}
+          dir={isArabicCountry ? "rtl" : "ltr"}
         >
           <Markdown
             className={cn(
               "text-xs",
-              isArabic && "text-right",
+              isArabicCountry && "text-right",
               domainName === "Myanmar" && "leading-loose"
             )}
           >

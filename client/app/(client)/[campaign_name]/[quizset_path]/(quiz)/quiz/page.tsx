@@ -17,10 +17,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import Spinner from "@/components/ui/spinner";
+import { arabicCountries } from "@/core/config/default";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCheckOS } from "@/hooks/useCheckOS";
 import { useCountdown } from "@/hooks/useCountdown";
+import { usePolicy } from "@/providers/policyProvider";
 import { useQuiz } from "@/providers/quizProvider";
 import { QuestionEx, QuizStageEx } from "@/types/apiTypes";
 import { cn, sleep } from "@/utils/utils";
@@ -40,12 +42,13 @@ export default function QuizPage() {
     currentQuizStage: quizStageFromContext,
     currentStageQuestions: stageQuestionsFromContext,
     isComplete,
-
     finalizeCurrentStage,
     handleStageFailure,
     logUserAnswer,
     clearUserAnswerLogs,
   } = useQuiz();
+  const { domainName } = usePolicy();
+  const isArabicCountry = arabicCountries.includes(domainName);
 
   if (!quizStageFromContext) {
     redirect("map");
@@ -87,7 +90,7 @@ export default function QuizPage() {
 
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
-  const { isArabic, isMyanmar } = useCheckLocale();
+  const { isMyanmar } = useCheckLocale();
   const [, forceUpdate] = useState(0);
 
   // 애니메이션 트리거
@@ -339,6 +342,7 @@ export default function QuizPage() {
         <CountDownBar progress={TIME_PROGRESS} />
       </div>
       <Qusetion
+        isArabicCountry={isArabicCountry}
         question={question.text}
         bgImageUrl={
           question.backgroundImage?.imagePath
@@ -366,7 +370,7 @@ export default function QuizPage() {
                     "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
                     isCorrectAnswer && "pointer-events-none",
                     isOptionSelected(option.id) && "pointer-events-none",
-                    isArabic && "text-right",
+                    isArabicCountry && "text-right",
                     isMyanmar && "leading-loose"
                   )}
                   initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}

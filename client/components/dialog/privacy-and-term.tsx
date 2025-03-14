@@ -7,6 +7,7 @@ export default function PolicyFooter({ className }: { className?: string }) {
   const { privacyContent, termContent, domainName } = usePolicy();
 
   const translation = useTranslations();
+
   return (
     <div className={cn("font-medium text-sm", className)}>
       <PrivacyOrTermPopup

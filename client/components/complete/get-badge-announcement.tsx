@@ -18,7 +18,7 @@ export default function GetBadgeAnnouncment({
   const congratulationMessage =
     stageName === "3"
       ? translation("congratulation_1")
-      : translation("congratulation _2");
+      : translation("congratulation_2");
 
   return (
     <div className={cn("w-full shrink-0", className)}>
