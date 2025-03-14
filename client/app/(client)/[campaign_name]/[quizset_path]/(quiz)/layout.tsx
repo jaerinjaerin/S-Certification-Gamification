@@ -62,7 +62,10 @@ export default async function QuizLayout({
       "$1",
     );
 
-    locale = await mapBrowserLanguageToLocale(normalizedLanguageCode);
+    locale = await mapBrowserLanguageToLocale(
+      normalizedLanguageCode,
+      params.campaign_name,
+    );
     console.log("QuizSetLoginLayout locale:", locale);
   }
 
