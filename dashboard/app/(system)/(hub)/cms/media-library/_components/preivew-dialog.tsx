@@ -61,7 +61,7 @@ export function PreviewDialog({
       >
         {loading && <LoadingFullScreen />}
         <DialogHeader>
-          <DialogTitle className="text-size-24px font-medium">
+          <DialogTitle className="text-size-24px font-medium ">
             {type === 'add' ? 'Add Asset' : 'Edit Asset'}
           </DialogTitle>
         </DialogHeader>

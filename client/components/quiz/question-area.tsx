@@ -5,10 +5,12 @@ export default function Qusetion({
   question,
   bgImageUrl,
   charImageUrl,
+  isArabicCountry,
 }: {
   question: string;
   bgImageUrl: string;
   charImageUrl: string;
+  isArabicCountry: boolean;
 }) {
   return (
     <div
@@ -20,7 +22,10 @@ export default function Qusetion({
       }}
     >
       <SpeechBubble>
-        <TypewriteTextVer question={question} />
+        <TypewriteTextVer
+          question={question}
+          isArabicCountry={isArabicCountry}
+        />
       </SpeechBubble>
       <div
         style={{

@@ -31,6 +31,7 @@ import { useTranslations } from "next-intl";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
 import { Button } from "../ui/button";
+import { arabicCountries } from "@/core/config/default";
 
 interface PolicySheetProps {
   children: React.ReactNode;
@@ -60,7 +61,8 @@ export default function PolicySheet({
   setOpenSheet,
 }: PolicySheetProps) {
   const translation = useTranslations();
-  const { isArabic } = useCheckLocale();
+  // const { isArabic } = useCheckLocale();
+  const isArabicCountry = arabicCountries.includes(domainName);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -144,7 +146,7 @@ export default function PolicySheet({
           </SheetDescription>
         </SheetHeader>
         <SheetFooter
-          className={cn("mt-[26px]", isArabic && "sm:flex-row-reverse")}
+          className={cn("mt-[26px]", isArabicCountry && "sm:flex-row-reverse")}
         >
           <Button
             variant={"primary"}
@@ -212,6 +214,7 @@ function AccordionFormItem({
   const { form, accordionTitle, domainName, contents, formKey, formLabelText } =
     accordionProps;
   const { isArabic } = useCheckLocale();
+  const isArabicCountry = arabicCountries.includes(domainName);
 
   return (
     <FormField
@@ -227,7 +230,8 @@ function AccordionFormItem({
                 <Markdown
                   className={cn(
                     "text-sm font-one font-medium text-[#4E4E4E] break-words",
-                    isArabic && "text-right",
+                    isArabicCountry && "text-right",
+                    // isArabic && "text-right",
                     domainName === "Myanmar" && "leading-loose"
                   )}
                 >
@@ -237,7 +241,8 @@ function AccordionFormItem({
 
               <div
                 className={cn("flex items-center gap-2")}
-                dir={isArabic ? "rtl" : "ltr"}
+                // dir={isArabic ? "rtl" : "ltr"}
+                dir={isArabicCountry ? "rtl" : "ltr"}
               >
                 <FormItem
                   key={formKey}
@@ -256,7 +261,8 @@ function AccordionFormItem({
                       "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#0F0F0F]",
                       isArabic && "text-right"
                     )}
-                    dir={isArabic ? "rtl" : "ltr"}
+                    // dir={isArabic ? "rtl" : "ltr"}
+                    dir={isArabicCountry ? "rtl" : "ltr"}
                   >
                     {formLabelText}
                   </FormLabel>

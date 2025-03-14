@@ -5,13 +5,19 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/utils/utils";
 import useCheckLocale from "@/hooks/useCheckLocale";
 
-export function TypewriteTextVer({ question }: { question: string }) {
+export function TypewriteTextVer({
+  question,
+  isArabicCountry,
+}: {
+  question: string;
+  isArabicCountry: boolean;
+}) {
   const [letterIndex, setLetterIndex] = useState(0);
   const [letter, setLetter] = useState("");
   const SWAP_DELAY_IN_MS = 20;
   const path = usePathname();
   const QUIZ_PATH = path.includes("quiz");
-  const { isArabic, isMyanmar } = useCheckLocale();
+  const { isMyanmar } = useCheckLocale();
 
   const init = () => {
     setLetter("");
@@ -38,7 +44,7 @@ export function TypewriteTextVer({ question }: { question: string }) {
     <div
       className={cn(
         "text-lg font-bold font-one break-words",
-        isArabic && "text-right",
+        isArabicCountry && "text-right",
         isMyanmar && "leading-loose"
       )}
     >
