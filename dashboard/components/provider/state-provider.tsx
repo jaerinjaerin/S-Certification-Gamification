@@ -104,13 +104,17 @@ export const StateVariablesProvider = ({
   // 이전 pathname 추적
   const prevPathnameRef = useRef<string | null>(null);
 
+  const fallbackData = useMemo(
+    () => ({ result: { campaigns: initCampaigns } }),
+    []
+  );
   // SWR 캐시 키 최적화
   const swrKey = useMemo(() => {
     return `/api/cms/campaign?role=${role?.name || 'ADMIN'}`;
   }, [role?.name]);
 
   const { data: campaignData } = useSWR(swrKey, swrFetcher, {
-    fallbackData: { result: { campaigns: initCampaigns } },
+    fallbackData,
     // revalidateOnFocus: false,
     dedupingInterval: 5000,
     revalidateIfStale: false, // 오래된 데이터 자동 재검증 비활성화

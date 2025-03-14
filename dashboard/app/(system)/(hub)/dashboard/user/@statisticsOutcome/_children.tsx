@@ -26,33 +26,35 @@ import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { LoaderWithBackground } from '@/components/loader';
 import { swrFetcher } from '@/lib/fetch';
+import { useMemo } from 'react';
 
 const UserOutcomeChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data: scoreytimeData, isLoading } = useSWR(
-    [
+  const fallbackData: [any, any] = useMemo(
+    () => [{ result: [] }, { result: [] }],
+    []
+  );
+  const swrKey = useMemo(() => {
+    return [
       `/api/dashboard/user/statistics/outcome/average-score?${searchParams.toString()}&campaign=${campaign?.id}`,
       `/api/dashboard/user/statistics/outcome/total-quiz-completion-time?${searchParams.toString()}&campaign=${campaign?.id}`,
-    ],
+    ];
+  }, [searchParams, campaign?.id]);
+  const { data: scoreytimeData, isLoading } = useSWR(
+    swrKey,
     ([scoreUrl, timeUrl]) =>
       Promise.all([swrFetcher(scoreUrl), swrFetcher(timeUrl)]),
     {
       revalidateOnFocus: false,
-      fallbackData: [
-        {
-          result: [],
-        },
-        {
-          result: [],
-        },
-      ],
+      fallbackData,
     }
   );
-  const [{ result: score }, { result: time }] = scoreytimeData || [
-    { result: [] },
-    { result: [] },
-  ];
+
+  const [{ result: score }, { result: time }] = useMemo(
+    () => (Array.isArray(scoreytimeData) ? scoreytimeData : fallbackData),
+    [scoreytimeData]
+  );
 
   return (
     <ChartContainer>

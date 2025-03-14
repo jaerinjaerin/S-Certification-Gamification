@@ -13,10 +13,9 @@ import {
   flexRender,
   Table as TableProps,
 } from '@tanstack/react-table';
-import { formatSnakeToTitleCase } from '@/lib/text';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { LoaderWithBackground } from '@/components/loader';
+import { formatSnakeToTitleCase } from '@/lib/text';
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -62,99 +61,85 @@ export const columns: ColumnDef<any>[] = [
   },
 ];
 
-const IncorrectTable = ({
-  table,
-  loading,
-  pageIndex = 1,
-  pageSize = 0,
-}: {
-  table: TableProps<any>;
-  loading: boolean;
-  pageIndex?: number;
-  pageSize?: number;
-}) => {
+const IncorrectTable = ({ table }: { table: TableProps<any> }) => {
   return (
-    <>
-      {loading && <LoaderWithBackground />}
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead
-                    key={header.id}
-                    className={cn(
-                      'text-nowrap font-medium text-center text-size-14px text-zinc-500',
-                      header.id === 'errorRate' && 'cursor-pointer'
-                    )}
-                    onClick={
-                      header.id === 'errorRate'
-                        ? header.column.getToggleSortingHandler()
-                        : undefined
-                    }
-                    style={{
-                      width: header.id === 'question' ? '50%' : 'auto',
-                    }}
-                  >
-                    <div className="flex items-center">
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      {header.id === 'errorRate' && (
-                        <>
-                          {!header.column.getIsSorted() && (
-                            <ChevronsUpDown className="ml-2 h-4 w-4" />
-                          )}
-                          {header.column.getIsSorted() === 'asc' && (
-                            <ArrowUp className="ml-2 h-4 w-4" />
-                          )}
-                          {header.column.getIsSorted() === 'desc' && (
-                            <ArrowDown className="ml-2 h-4 w-4" />
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => {
-              const id = row.id + pageIndex * pageSize;
+    <Table>
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id} className="h-[2.5625rem]">
+            {headerGroup.headers.map((header) => {
               return (
-                <TableRow key={id} className="h-[2.5625rem]">
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        className="font-medium text-center text-size-14px text-zinc-950"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                <TableHead
+                  key={header.id}
+                  className={cn(
+                    'text-nowrap font-medium text-size-14px text-zinc-500',
+                    header.id === 'errorRate' && 'cursor-pointer'
+                  )}
+                  onClick={
+                    header.id === 'errorRate'
+                      ? header.column.getToggleSortingHandler()
+                      : undefined
+                  }
+                  style={{
+                    width: header.id === 'question' ? '50%' : 'auto',
+                  }}
+                >
+                  <div className="flex items-center justify-center">
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {header.id === 'errorRate' && (
+                      <>
+                        {!header.column.getIsSorted() && (
+                          <ChevronsUpDown className="ml-2 h-4 w-4" />
                         )}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
+                        {header.column.getIsSorted() === 'asc' && (
+                          <ArrowUp className="ml-2 h-4 w-4" />
+                        )}
+                        {header.column.getIsSorted() === 'desc' && (
+                          <ArrowDown className="ml-2 h-4 w-4" />
+                        )}
+                      </>
+                    )}
+                  </div>
+                </TableHead>
               );
-            })
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                {loading ? '' : 'No results.'}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </>
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
+
+      <TableBody>
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row, index) => {
+            return (
+              <TableRow key={row.id} className="h-[2.5625rem]">
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      className="font-medium text-center text-size-14px text-zinc-950"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={columns.length} className="h-24 text-center">
+              No results.
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };
 

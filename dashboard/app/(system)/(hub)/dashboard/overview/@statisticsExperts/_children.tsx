@@ -16,6 +16,7 @@ import CardCustomHeader from '@/components/system/chart-header';
 import { swrFetcher } from '@/lib/fetch';
 import { CampaignSettings } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import {
   Bar,
   BarChart,
@@ -38,22 +39,21 @@ const OverviewExpertsChild = () => {
   const { campaign } = useStateVariables() as { campaign: Campaign };
   const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
-  const { data: expertsData, isLoading } = useSWR(
-    `/api/dashboard/overview/statistics/experts?${searchParams.toString()}&campaign=${campaign?.id}`,
-    swrFetcher,
-    {
-      revalidateOnFocus: false,
-      fallbackData: {
-        result: {
-          pie: [],
-          bar: [],
-          count: 0,
-        },
-      },
-    }
+  const fallbackData = useMemo(
+    () => ({ result: { pie: [], bar: [], count: 0 } }),
+    []
   );
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/overview/statistics/experts?${searchParams.toString()}&campaign=${campaign?.id}`;
+  }, [searchParams, campaign?.id]);
 
-  const data = removeAdvanced(expertsData.result, settings?.secondBadgeName);
+  const { data: expertsData, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
+
+  const experts = useMemo(() => expertsData.result, [expertsData]);
+  const data = removeAdvanced(experts, settings?.secondBadgeName);
 
   return (
     <ChartContainer>

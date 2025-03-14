@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useTargetData } from '../_provider/target-data-provider';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { LoadingFullScreen } from '@/components/loader';
@@ -64,12 +64,17 @@ export const columns: ColumnDef<TargetProps>[] = [
 
 export function DataTable() {
   const { campaign } = useStateVariables();
-  const { data: targetData, isLoading: loading } = useSWR(
-    `/api/cms/target?${searchParamsToQuery({ campaignId: campaign?.id })}`,
-    swrFetcher
-  );
   const { state, dispatch } = useTargetData();
-  const { result: data } = targetData || { result: [] };
+  const fallbackData = useMemo(() => ({ result: [] }), []);
+  const swrKey = useMemo(
+    () =>
+      `/api/cms/target?${searchParamsToQuery({ campaignId: campaign?.id })}`,
+    [campaign]
+  );
+  const { data: targetData, isLoading: loading } = useSWR(swrKey, swrFetcher, {
+    fallbackData,
+  });
+  const { result: data } = useMemo(() => targetData, [targetData]);
 
   useEffect(() => {
     if (data.length > 0) {

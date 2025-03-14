@@ -28,18 +28,22 @@ import { LoaderWithBackground } from '@/components/loader';
 import { CampaignSettings } from '@prisma/client';
 import { capitalize } from '@/lib/text';
 import { swrFetcher } from '@/lib/fetch';
+import { useMemo } from 'react';
 
 export function UserProgressExpertsChild() {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
-  const { data: progressData, isLoading } = useSWR(
-    `/api/dashboard/user/statistics/progress-of-experts?${searchParams.toString()}&campaign=${campaign?.id}`,
-    swrFetcher,
-    { revalidateOnFocus: false, fallbackData: { result: [] } }
-  );
+  const fallbackData = useMemo(() => ({ result: [] }), []);
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/user/statistics/progress-of-experts?${searchParams.toString()}&campaign=${campaign?.id}`;
+  }, [searchParams, campaign?.id]);
+  const { data: progressData, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
 
-  const data = progressData.result;
+  const data = useMemo(() => progressData.result, [progressData]);
 
   return (
     <ChartContainer>

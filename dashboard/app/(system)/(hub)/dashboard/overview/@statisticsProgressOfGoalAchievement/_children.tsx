@@ -27,30 +27,30 @@ import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { LoaderWithBackground } from '@/components/loader';
 import { swrFetcher } from '@/lib/fetch';
+import { useMemo } from 'react';
 
 export const OverviewGoalAchievementChild = () => {
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data: progressData, isLoading } = useSWR(
-    `/api/dashboard/overview/statistics/progress-of-goal-achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
-    swrFetcher,
-    {
-      revalidateOnFocus: false,
-      fallbackData: {
-        result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
-      },
-    }
+  const fallbackData = useMemo(
+    () => ({
+      result: { jobData: [], goalTotalScore: 0, cumulativeRate: 0 },
+    }),
+    []
   );
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/overview/statistics/progress-of-goal-achievement?${searchParams.toString()}&campaign=${campaign?.id}`;
+  }, [searchParams, campaign?.id]);
+  const { data: progressData, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
 
   const {
     jobData: data,
     goalTotalScore: expertRange,
     cumulativeRate: count,
-  } = progressData.result || {
-    jobData: [],
-    goalTotalScore: 0,
-    cumulativeRate: 0,
-  };
+  } = useMemo(() => progressData.result, [progressData]);
 
   return (
     <ChartContainer>

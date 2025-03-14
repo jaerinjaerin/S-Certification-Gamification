@@ -6,39 +6,42 @@ import { swrFetcher } from '@/lib/fetch';
 import { capitalize } from '@/lib/text';
 import { CampaignSettings } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import useSWR from 'swr';
 
 const OverviewExpertsByGroupInfoChild = () => {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
-  const { data: groupedExperts, isLoading } = useSWR(
-    `/api/dashboard/overview/info/experts-by-group?${searchParams.toString()}&campaign=${campaign?.id}`,
-    swrFetcher,
-    {
-      revalidateOnFocus: false,
-      fallbackData: {
-        result: [
-          {
-            group: 'plus',
-            items: [
-              { title: 'ff', value: 0 },
-              { title: 'fsm', value: 0 },
-            ],
-          },
-          {
-            group: 'ses',
-            items: [
-              { title: 'ff', value: 0 },
-              { title: 'fsm', value: 0 },
-            ],
-          },
-        ],
-      },
-    }
+  const fallbackData = useMemo(
+    () => ({
+      result: [
+        {
+          group: 'plus',
+          items: [
+            { title: 'ff', value: 0 },
+            { title: 'fsm', value: 0 },
+          ],
+        },
+        {
+          group: 'ses',
+          items: [
+            { title: 'ff', value: 0 },
+            { title: 'fsm', value: 0 },
+          ],
+        },
+      ],
+    }),
+    []
   );
-  // const count = data.result?.count;
-  const data = groupedExperts.result;
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/overview/info/experts-by-group?${searchParams.toString()}&campaign=${campaign?.id}`;
+  }, [searchParams, campaign?.id]);
+  const { data: groupedExperts, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
+  const data = useMemo(() => groupedExperts.result || [], [groupedExperts]);
 
   return (
     <InfoCardStyleContainer
