@@ -1,5 +1,4 @@
 'use server';
-import { setHoursFromZeroToEnd } from '@/lib/time';
 import { prisma } from '@/model/prisma';
 import { Prisma } from '@prisma/client';
 
@@ -61,13 +60,7 @@ export async function getCampaign(id: string | null) {
       include: { settings: true },
     });
 
-    let result = null;
-    if (campaign) {
-      result = {
-        ...campaign,
-        ...setHoursFromZeroToEnd(campaign.startedAt, campaign.endedAt),
-      };
-    }
+    const result = campaign;
 
     return { result };
   } catch (error: unknown) {
