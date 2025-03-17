@@ -11,7 +11,6 @@ const OverviewFilterForm = () => {
   const { campaign } = useStateVariables();
 
   const onSubmit = (formData: FieldValues, action?: boolean) => {
-    console.log('🚀 ~ onSubmit ~ formData:', formData);
     formData.date = {
       from: startOfDay(formData.date.from),
       to: endOfDay(formData.date.to),
