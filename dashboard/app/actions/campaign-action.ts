@@ -55,14 +55,12 @@ export async function getCampaign(id: string | null) {
       return { result: null };
     }
     //
-    const campaign = await prisma.campaign.findUnique({
+    const campaign: Campaign = await prisma.campaign.findUnique({
       where: { id },
       include: { settings: true },
     });
 
-    const result = campaign;
-
-    return { result };
+    return { result: campaign };
   } catch (error: unknown) {
     console.error('Error get campaigns: ', error);
     return { result: null };

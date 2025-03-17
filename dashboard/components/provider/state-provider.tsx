@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { swrFetcher } from '@/lib/fetch';
-import { Campaign, Role } from '@prisma/client';
+import { Campaign, CampaignSettings, Role } from '@prisma/client';
 import { Session } from 'next-auth';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import {
@@ -29,10 +29,7 @@ type CampaignData = {
   deleted: boolean;
 };
 
-type CampaignProps = Omit<Campaign, 'startedAt' | 'endedAt'> & {
-  startedAt: string;
-  endedAt: string;
-};
+type CampaignProps = Campaign & { settings: CampaignSettings };
 
 type StateVariables = {
   filter: AllFilterData | null;
