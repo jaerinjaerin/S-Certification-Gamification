@@ -101,7 +101,6 @@ const AddUserPermission = () => {
     isLoading: loading,
     mutate,
   } = useSWR(swrKey, swrFetcher, { fallbackData });
-  console.log('🚀 ~ AddUserPermission ~ permissionData:', permissionData);
 
   const { result: data, roles } = useMemo(
     () => permissionData,
