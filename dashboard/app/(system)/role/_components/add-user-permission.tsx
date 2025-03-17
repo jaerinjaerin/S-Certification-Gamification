@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -94,22 +94,22 @@ const columns: ColumnDef<UserPermission>[] = [
 
 const AddUserPermission = () => {
   const [openAlert, setOpenAlert] = useState(false);
+  const fallbackData = useMemo(() => ({ result: [], roles: null }), []);
+  const swrKey = useMemo(() => '/api/cms/role/user-permission', []);
   const {
     data: permissionData,
     isLoading: loading,
-    // mutate,
-  } = useSWR('/api/cms/role/user-permission', swrFetcher, { suspense: false });
+    mutate,
+  } = useSWR(swrKey, swrFetcher, { fallbackData });
+  console.log('🚀 ~ AddUserPermission ~ permissionData:', permissionData);
 
-  const {
-    result: data,
-    roles,
-  }: {
-    result: UserPermission[];
-    roles: { id: string; name: string; domainName: string }[] | null;
-  } = permissionData || { result: [], roles: null };
+  const { result: data, roles } = useMemo(
+    () => permissionData,
+    [permissionData]
+  );
 
   const table = useReactTable({
-    data, // 현재 페이지 데이터
+    data: data || [], // 현재 페이지 데이터
     columns: [
       ...columns,
       {
@@ -126,9 +126,8 @@ const AddUserPermission = () => {
                     '/api/cms/role/user-permission',
                     { data: { id } }
                   );
-                  //   console.log('Delete success:', response.data);
                   //   mutation
-                  // mutate();
+                  mutate(swrKey);
                 } catch (error) {
                   console.error('Error deleting user:', error);
                 }
@@ -150,7 +149,7 @@ const AddUserPermission = () => {
       );
       //   console.log('Add success:', response);
       //   mutation
-      // mutate();
+      mutate(swrKey);
     } catch (error: any) {
       if (error.status === 400) {
         // 중복값 확인

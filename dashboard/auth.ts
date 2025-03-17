@@ -154,7 +154,7 @@ export const {
     },
     session: async (params): Promise<Session | DefaultSession> => {
       const { session } = params;
-      // // console.log("auth callbacks session", session);
+      // console.log('auth callbacks session', params);
 
       // JWT 전략일 경우 token을 사용
       if ('token' in params) {
@@ -197,5 +197,36 @@ export const {
     signIn: '/login',
     error: '/error',
     verifyRequest: '/verify-request',
+  },
+  events: {
+    async signIn({ user, account, profile }) {
+      // sumtotal 프로바이더로 로그인한 경우
+      if (account?.provider === 'sumtotal' && user?.id) {
+        try {
+          // 현재 사용자 정보 조회
+          const dbUser = await prisma.user.findUnique({
+            where: { id: user.id },
+          });
+
+          // loginName이 없거나 업데이트가 필요한 경우
+          const { userLogin } = profile as {
+            userLogin: { username: string };
+          };
+          if (!dbUser?.loginName && userLogin?.username) {
+            const loginName = encrypt(userLogin.username, true);
+
+            // 사용자 정보 업데이트
+            await prisma.user.update({
+              where: { id: user.id },
+              data: { loginName },
+            });
+
+            // console.log(`Updated loginName for user ${user.id}`);
+          }
+        } catch (error) {
+          console.error('Error in signIn event handler:', error);
+        }
+      }
+    },
   },
 });
