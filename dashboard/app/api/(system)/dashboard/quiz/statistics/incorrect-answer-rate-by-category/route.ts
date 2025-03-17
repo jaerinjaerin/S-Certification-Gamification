@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { prisma } from '@/model/prisma';
-import { NextRequest, NextResponse } from 'next/server';
 import { querySearchParams } from '@/lib/query';
-import { AuthType, Job, Question } from '@prisma/client';
 import { extendedQuery } from '@/lib/sql';
+import { prisma } from '@/model/prisma';
+import { AuthType, Job, Question } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,10 +26,11 @@ export async function GET(request: NextRequest) {
     const questions: Question[] = await prisma.$queryRaw`
       SELECT q.*
       FROM "Question" q
-      JOIN "Language" l ON q."languageId" = l."id"
+      -- JOIN "Language" l ON q."languageId" = l."id"
       WHERE q."id" = q."originalQuestionId"
       AND q."campaignId" = ${restWhere.campaignId}
-      AND l."code" = 'en-US'
+      -- AND l."code" = 'en-US'
+      AND q."domainId" = '29'
       ORDER BY q."order" ASC
     `;
 
