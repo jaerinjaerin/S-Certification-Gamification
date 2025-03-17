@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from '@/model/prisma';
 import type { Adapter } from '@auth/core/adapters';
 import { PrismaAdapter } from '@auth/prisma-adapter';
@@ -23,6 +21,11 @@ declare module 'next-auth' {
     } & DefaultSession['user'];
   }
 }
+
+console.log(
+  'process.env.SUMTOTAL_CALLBACK_URL: ',
+  process.env.SUMTOTAL_CALLBACK_URL
+);
 
 export const {
   handlers: { GET, POST },

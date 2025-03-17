@@ -22,12 +22,13 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    // 필터링된 `questionId` 가져오기
+    // 필터링된 `originalQuestionId` 가져오기
     const questions: Question[] = await prisma.$queryRaw`
       SELECT q.*
       FROM "Question" q
       JOIN "Language" l ON q."languageId" = l."id"
       WHERE q."id" = q."originalQuestionId"
+      AND q."campaignId" = ${restWhere.campaignId}
       AND l."code" = 'en-US'
       ORDER BY q."order" ASC
     `;
@@ -35,7 +36,7 @@ export async function GET(request: NextRequest) {
     const where = {
       ...restWhere,
       category: { not: null },
-      questionId: { in: questions.map((q) => q.id) },
+      originalQuestionId: { in: questions.map((q) => q.id) },
       jobId: { in: jobGroup.map((job) => job.id) },
       ...(storeId
         ? storeId === '4'
@@ -46,82 +47,94 @@ export async function GET(request: NextRequest) {
 
     // `correct` 및 `incorrect` 개수 조회 (필터 적용됨)
     const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['category', 'questionId', 'authType', 'jobId'],
-      where: { ...where, isCorrect: true },
+      by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+      where: {
+        ...where,
+        isCorrect: true,
+      },
       _count: { isCorrect: true },
     });
 
     const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['category', 'questionId', 'authType', 'jobId'],
-      where: { ...where, isCorrect: false },
+      by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+      where: {
+        ...where,
+        isCorrect: false,
+      },
       _count: { isCorrect: true },
     });
 
     // 히트맵 데이터 그룹화
     const groupedMap = new Map();
 
-    corrects.forEach(({ category, questionId, authType, jobId, _count }) => {
-      const jobName = jobGroup.find((job) => job.id === jobId)?.code;
-      if (!jobName) return;
+    corrects.forEach(
+      ({ category, originalQuestionId, authType, jobId, _count }) => {
+        const jobName = jobGroup.find((job) => job.id === jobId)?.code;
+        if (!jobName) return;
 
-      const authName = authType === AuthType.SUMTOTAL ? 'plus' : 'none';
-      const mapName = `${category}:${authName}-${jobName}`;
+        const authName = authType === AuthType.SUMTOTAL ? 'plus' : 'none';
+        const mapName = `${category}:${authName}-${jobName}`;
 
-      if (!groupedMap.has(mapName)) {
-        groupedMap.set(mapName, {
-          correct: 0,
-          incorrect: 0,
-          rate: 0,
-          questions: new Map(), // `questions`을 `Map`으로 변경하여 `questionId`별로 저장
-        });
+        if (!groupedMap.has(mapName)) {
+          groupedMap.set(mapName, {
+            correct: 0,
+            incorrect: 0,
+            rate: 0,
+            questions: new Map(), // `questions`을 `Map`으로 변경하여 `originalQuestionId`별로 저장
+          });
+        }
+
+        const categoryItem = groupedMap.get(mapName);
+        categoryItem.correct += _count.isCorrect;
+
+        if (!categoryItem.questions.has(originalQuestionId)) {
+          categoryItem.questions.set(originalQuestionId, {
+            correct: 0,
+            incorrect: 0,
+            errorRate: 0,
+          });
+        }
+
+        // 각 `originalQuestionId`에 대해 `correct` 값을 누적 저장
+        categoryItem.questions.get(originalQuestionId).correct +=
+          _count.isCorrect;
       }
+    );
 
-      const categoryItem = groupedMap.get(mapName);
-      categoryItem.correct += _count.isCorrect;
+    incorrects.forEach(
+      ({ category, originalQuestionId, authType, jobId, _count }) => {
+        const jobName = jobGroup.find((job) => job.id === jobId)?.code;
+        if (!jobName) return;
 
-      if (!categoryItem.questions.has(questionId)) {
-        categoryItem.questions.set(questionId, {
-          correct: 0,
-          incorrect: 0,
-          errorRate: 0,
-        });
+        const authName = authType === AuthType.SUMTOTAL ? 'plus' : 'none';
+        const mapName = `${category}:${authName}-${jobName}`;
+
+        if (!groupedMap.has(mapName)) {
+          groupedMap.set(mapName, {
+            correct: 0,
+            incorrect: 0,
+            rate: 0,
+            questions: new Map(), // `questions`을 `Map`으로 변경하여 `originalQuestionId`별로 저장
+          });
+        }
+
+        const categoryItem = groupedMap.get(mapName);
+        categoryItem.incorrect += _count.isCorrect;
+
+        if (!categoryItem.questions.has(originalQuestionId)) {
+          categoryItem.questions.set(originalQuestionId, {
+            correct: 0,
+            incorrect: 0,
+            errorRate: 0,
+          });
+          //
+        }
+
+        // 각 `originalQuestionId`에 대해 `incorrect` 값을 누적 저장
+        categoryItem.questions.get(originalQuestionId).incorrect +=
+          _count.isCorrect;
       }
-
-      // 각 `questionId`에 대해 `correct` 값을 누적 저장
-      categoryItem.questions.get(questionId).correct += _count.isCorrect;
-    });
-
-    incorrects.forEach(({ category, questionId, authType, jobId, _count }) => {
-      const jobName = jobGroup.find((job) => job.id === jobId)?.code;
-      if (!jobName) return;
-
-      const authName = authType === AuthType.SUMTOTAL ? 'plus' : 'none';
-      const mapName = `${category}:${authName}-${jobName}`;
-
-      if (!groupedMap.has(mapName)) {
-        groupedMap.set(mapName, {
-          correct: 0,
-          incorrect: 0,
-          rate: 0,
-          questions: new Map(), // `questions`을 `Map`으로 변경하여 `questionId`별로 저장
-        });
-      }
-
-      const categoryItem = groupedMap.get(mapName);
-      categoryItem.incorrect += _count.isCorrect;
-
-      if (!categoryItem.questions.has(questionId)) {
-        categoryItem.questions.set(questionId, {
-          correct: 0,
-          incorrect: 0,
-          errorRate: 0,
-        });
-        //
-      }
-
-      // 각 `questionId`에 대해 `incorrect` 값을 누적 저장
-      categoryItem.questions.get(questionId).incorrect += _count.isCorrect;
-    });
+    );
 
     // 각 카테고리별 오답율
     groupedMap.forEach((data) => {

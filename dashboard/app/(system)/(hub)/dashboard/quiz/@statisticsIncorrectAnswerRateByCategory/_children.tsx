@@ -67,17 +67,25 @@ const QuizIncorrectAnswerRateChild = () => {
             const data = props.data as DefaultHeatMapDatum & {
               meta: { questions: any[] };
             };
-            const questions = data.meta.questions;
+            const questions = data.meta.questions.filter(
+              (q) => q.errorRate > 0
+            );
+            console.log(
+              '🚀 ~ QuizIncorrectAnswerRateChild ~ questions:',
+              questions
+            );
             const category = props.serieId;
             const group = props.data.x;
 
-            setContent(
-              <DetailIncorrectTable
-                category={category}
-                group={group}
-                questions={questions}
-              />
-            );
+            if (questions.length > 0) {
+              setContent(
+                <DetailIncorrectTable
+                  category={category}
+                  group={group}
+                  questions={questions}
+                />
+              );
+            }
           }}
           axisTop={null}
           axisBottom={{
