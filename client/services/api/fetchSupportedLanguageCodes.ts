@@ -1,18 +1,22 @@
 import { defaultLanguages } from "@/core/config/default";
-import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/prisma-client";
+import * as Sentry from "@sentry/nextjs";
 
 // let cachedLanguages: string[] | null = null;
 // let lastFetchLangTime: number | null = null;
 // const LANG_CACHE_DURATION = 60000; // 60초 (1분) 캐싱
 
 export async function fetchSupportedLanguageCodes(
-  campaignSlug: string,
+  campaignSlug: string
 ): Promise<string[]> {
+  console.log("fetchSupportedLanguageCodes", campaignSlug);
   try {
-    const campaign = await prisma.campaign.findUnique({
+    const campaign = await prisma.campaign.findFirst({
       where: {
-        slug: campaignSlug,
+        slug: {
+          equals: campaignSlug,
+          mode: "insensitive", // 대소문자 구분 없이 검색
+        },
       },
       include: {
         domainWebLanguages: {
@@ -24,8 +28,13 @@ export async function fetchSupportedLanguageCodes(
     });
 
     if (!campaign || !campaign.domainWebLanguages) {
+      console.error(
+        "No campaign or domainWebLanguages found",
+        campaign,
+        campaign?.domainWebLanguages
+      );
       throw new Error(
-        `No campaign or domainWebLanguages found for slug ${campaignSlug}`,
+        `No campaign or domainWebLanguages found for slug ${campaignSlug}`
       );
     }
     const languageCodes = campaign.domainWebLanguages
