@@ -175,7 +175,7 @@ export const {
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // console.log("auth callbacks jwt", token, profile, user, account);
+      console.log("auth callbacks jwt", token, profile, user, account);
       /*
        {
         id: 'cd6ac648-b5d5-4e0b-9073-249bb5fbd813',
@@ -214,6 +214,25 @@ export const {
       */
       if (account) {
         token.provider = account.provider;
+        // prisma.account
+        const userAccount = await prisma.account.findFirst({
+          where: {
+            userId: user.id,
+          },
+        });
+
+        if (userAccount) {
+          await prisma.account.update({
+            where: {
+              id: userAccount.id,
+            },
+            data: {
+              access_token: account.access_token,
+              refresh_token: account.refresh_token,
+              expires_at: account.expires_at,
+            },
+          });
+        }
       }
       if (user) {
         token.authType = (user as User).authType;

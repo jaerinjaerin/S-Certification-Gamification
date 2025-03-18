@@ -108,7 +108,18 @@ export async function POST(request: Request) {
         account.access_token
       );
 
-      const data = await response.json();
+      const contentType = response.headers.get("content-type");
+
+      let rawLog = "";
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        console.log("Error response:", data);
+        rawLog = JSON.stringify(data);
+      } else {
+        const text = await response.text(); // JSON이 아닐 경우 텍스트로 읽기
+        console.log("Non-JSON error response:", text);
+        rawLog = text;
+      }
 
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
         method: "POST",
@@ -125,7 +136,7 @@ export async function POST(request: Request) {
           accessToken: account.access_token,
           status: response.status,
           message: response.statusText || "Failed to update activity/progress",
-          rawLog: JSON.stringify(data),
+          rawLog,
         }),
       });
 
@@ -194,10 +205,10 @@ export async function POST(request: Request) {
         activityId,
         campaignId,
         domainId,
-        message: "An unexpected error occurred",
+        message: "Fail to progress activity",
         rawLog: JSON.stringify({
           message: errorMessage,
-          stack: errorStack,
+          // stack: errorStack,
           name: errorName,
         }),
       }),
