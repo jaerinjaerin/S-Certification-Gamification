@@ -59,12 +59,12 @@ export default async function QuizLayout({
     // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
     const normalizedLanguageCode = languageCode.replace(
       /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-      "$1",
+      "$1"
     );
 
     locale = await mapBrowserLanguageToLocale(
       normalizedLanguageCode,
-      params.campaign_name,
+      params.campaign_name
     );
     console.log("QuizSetLoginLayout locale:", locale);
   }
@@ -84,6 +84,15 @@ export default async function QuizLayout({
     quizLogResponse.status >= 400 &&
     quizLogResponse.status < 500
   ) {
+    console.error(
+      "Client error while fetching quiz log",
+      params.campaign_name,
+      quizLogResponse
+    );
+
+    Sentry.captureMessage(
+      `Client error while fetching quiz log: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
@@ -91,10 +100,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz log",
       params.campaign_name,
-      quizLogResponse,
+      quizLogResponse
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`,
+      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
     );
     return <RefreshButton />;
   }
@@ -122,7 +131,7 @@ export default async function QuizLayout({
   const quizResponse: ApiResponseV2<QuizSetEx> = await getQuizSet(
     params.quizset_path,
     userId,
-    params.campaign_name,
+    params.campaign_name
   );
 
   console.log("getQuizSet quizResponse", quizResponse);
@@ -132,6 +141,15 @@ export default async function QuizLayout({
   //   userId
   // );
   if (quizResponse.status === 404) {
+    console.error(
+      "Quiz set not found",
+      userId,
+      params.campaign_name,
+      params.quizset_path
+    );
+    Sentry.captureMessage(
+      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
@@ -148,10 +166,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz set",
       params.quizset_path,
-      quizResponse,
+      quizResponse
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz set: ${params.campaign_name}`,
+      `Server error while fetching quiz set: ${params.campaign_name}`
     );
     return <RefreshButton />;
   }
@@ -160,6 +178,16 @@ export default async function QuizLayout({
   const quizSet = quizResponse.result?.item;
   console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
+    console.error(
+      "Quiz set not found",
+      quizResponse,
+      params.campaign_name,
+      params.quizset_path,
+      userId
+    );
+    Sentry.captureMessage(
+      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 

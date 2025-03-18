@@ -13,6 +13,7 @@ export default async function SumtotalUserLayout({
 }) {
   const codes = extractCodesFromPath(quizset_path);
   if (codes == null) {
+    console.error("Invalid quizset path", campaign_name, quizset_path);
     redirect(`/${campaign_name}/not-ready`);
   }
 
@@ -21,12 +22,12 @@ export default async function SumtotalUserLayout({
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(
     /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-    "$1",
+    "$1"
   );
 
   const locale = await mapBrowserLanguageToLocale(
     normalizedLanguageCode,
-    campaign_name,
+    campaign_name
   );
   console.log("QuizSetLoginLayout locale:", locale);
 
@@ -56,18 +57,18 @@ async function fetchInformationAboutDomain(domainCode: string) {
       `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`,
       {
         cache: "force-cache",
-      },
+      }
     );
     if (!response.ok) {
       throw new Error(
-        `fetch information about domain error: ${response.status}`,
+        `fetch information about domain error: ${response.status}`
       );
     }
 
     const result = await response.json();
     if (!result) {
       throw new Error(
-        `fetchError: information about domain response.json() error`,
+        `fetchError: information about domain response.json() error`
       );
     }
 
