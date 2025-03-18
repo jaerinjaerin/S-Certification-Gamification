@@ -91,7 +91,7 @@ const UserProgress = () => {
 
   const onDownloadBadgeLog = () => {
     if (state.fieldValues) {
-      const url = `/api/dashboard/report/badge/download?${searchParams.toString()}`;
+      const url = `/api/dashboard/report/badge/download?${searchParams.toString()}&campaignId=${campaign?.id}`;
       window.location.href = url;
     }
   };

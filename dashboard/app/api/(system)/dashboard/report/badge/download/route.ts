@@ -10,7 +10,11 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
-    const { where: condition, period } = querySearchParams(searchParams);
+    const {
+      where: condition,
+      period,
+      params,
+    } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
     const jobGroup: Job[] = await extendedQuery(
@@ -20,11 +24,21 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
+    // console.log('searchParams:', searchParams);
+    // console.log('where:', where);
+    // console.log('params:', params);
+
     const logs: BadgeLog[] = await prisma.badgeLog.findMany({
-      // where: where,
+      where: {
+        campaignId: params.campaignId,
+      },
+      // where: {
+      //   ...where,
+
+      // },
     });
 
-    console.log('logs:', logs);
+    // console.log('logs:', logs);
 
     // const logs: UserQuizLog[] = await extendedQuery(
     //   prisma,
