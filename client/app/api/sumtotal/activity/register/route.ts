@@ -203,12 +203,19 @@ export async function POST(request: Request) {
             accessToken: account.access_token,
             accountUserId: account.providerAccountId,
             status: response.status,
-            message: response.statusText || "success",
+            message:
+              `${response.statusText} - isRegistered: ${data.isRegistered}` ||
+              `success - isRegistered: ${data.isRegistered}`,
             rawLog: JSON.stringify(data),
           }),
         });
 
-        Sentry.captureMessage("response", data);
+        // Sentry.captureMessage("response", data);
+
+        if (data.isRegistered === false) {
+          return NextResponse.json(data, { status: 500 });
+        }
+
         return NextResponse.json(data, { status: 200 });
       } catch (error) {
         console.error(`Error during attempt ${attempt + 1}:`, error);
