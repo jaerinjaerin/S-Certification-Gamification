@@ -9,19 +9,23 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { swrFetcher } from '@/lib/fetch';
+import { useMemo } from 'react';
 
 const QuizIncorrectAnswerRateChild = () => {
   const { setContent } = useModal();
 
   const { campaign } = useStateVariables();
   const searchParams = useSearchParams();
-  const { data: categoryData, isLoading } = useSWR(
-    `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParams.toString()}&campaign=${campaign?.id}`,
-    swrFetcher,
-    { revalidateOnFocus: false, fallbackData: { result: [] } }
-  );
+  const fallbackData = useMemo(() => ({ result: [] }), []);
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/quiz/statistics/incorrect-answer-rate-by-category?${searchParams.toString()}&campaign=${campaign?.id}`;
+  }, [searchParams, campaign?.id]);
+  const { data: categoryData, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
 
-  const data = categoryData.result;
+  const data = useMemo(() => categoryData.result || [], [categoryData]);
 
   return (
     <ChartContainer>
@@ -63,17 +67,25 @@ const QuizIncorrectAnswerRateChild = () => {
             const data = props.data as DefaultHeatMapDatum & {
               meta: { questions: any[] };
             };
-            const questions = data.meta.questions;
+            const questions = data.meta.questions.filter(
+              (q) => q.errorRate > 0
+            );
+            console.log(
+              '🚀 ~ QuizIncorrectAnswerRateChild ~ questions:',
+              questions
+            );
             const category = props.serieId;
             const group = props.data.x;
 
-            setContent(
-              <DetailIncorrectTable
-                category={category}
-                group={group}
-                questions={questions}
-              />
-            );
+            if (questions.length > 0) {
+              setContent(
+                <DetailIncorrectTable
+                  category={category}
+                  group={group}
+                  questions={questions}
+                />
+              );
+            }
           }}
           axisTop={null}
           axisBottom={{

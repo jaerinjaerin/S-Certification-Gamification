@@ -17,7 +17,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       <div>
         {content && (
           <div
-            className="absolute z-50 h-full inset-0 flex items-center justify-center bg-zinc-950/70"
+            className="fixed z-50 inset-0 h-full flex items-center justify-center bg-zinc-950/70"
             onClick={closeModal} // 배경 클릭 시 닫기
           >
             <div

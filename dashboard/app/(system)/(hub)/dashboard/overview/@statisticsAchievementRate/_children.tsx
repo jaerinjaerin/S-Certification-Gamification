@@ -28,30 +28,29 @@ import { LoaderWithBackground } from '@/components/loader';
 import { capitalize } from '@/lib/text';
 import { CampaignSettings } from '@prisma/client';
 import { swrFetcher } from '@/lib/fetch';
+import { useMemo } from 'react';
 
 const OverviewAchievementRateChild = () => {
   const { campaign } = useStateVariables();
   const settings = (campaign as Campaign)?.settings as CampaignSettings;
   const searchParams = useSearchParams();
-  const { data: dataycountData, isLoading } = useSWR(
-    [
+  const fallbackData: [any, any] = useMemo(
+    () => [{ result: { count: 0 } }, { result: [] }],
+    []
+  );
+  const swrKey = useMemo(() => {
+    return [
       `/api/dashboard/overview/info/achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
       `/api/dashboard/overview/statistics/achievement?${searchParams.toString()}&campaign=${campaign?.id}`,
-    ],
+    ];
+  }, [searchParams, campaign?.id]);
+  const { data: dataycountData, isLoading } = useSWR(
+    swrKey,
     ([infoUrl, statisticsUrl]) =>
       Promise.all([swrFetcher(infoUrl), swrFetcher(statisticsUrl)]),
     {
       revalidateOnFocus: false,
-      fallbackData: [
-        {
-          result: {
-            count: 0,
-          },
-        },
-        {
-          result: [],
-        },
-      ],
+      fallbackData,
     }
   );
 
@@ -60,7 +59,10 @@ const OverviewAchievementRateChild = () => {
       result: { count },
     },
     { result: data },
-  ] = dataycountData || [{ result: { count: 0 } }, { result: [] }];
+  ] = useMemo(
+    () => (Array.isArray(dataycountData) ? dataycountData : fallbackData),
+    [dataycountData]
+  );
 
   return (
     <ChartContainer>

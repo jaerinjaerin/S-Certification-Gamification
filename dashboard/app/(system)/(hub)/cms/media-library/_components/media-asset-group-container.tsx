@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useMediaData } from '../_provider/media-data-provider';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import MediaAssetGroup from './media-asset-group';
@@ -9,15 +9,21 @@ import useSWR from 'swr';
 const MediaAssetGroupContainer = () => {
   const { campaign } = useStateVariables();
   const { dispatch } = useMediaData();
-  const { data } = useSWR(
-    `/api/cms/media?${searchParamsToQuery({ campaignId: campaign?.id })}`,
-    swrFetcher
+  const fallbackData = useMemo(
+    () => ({
+      result: { badge: [], character: [], background: [] },
+    }),
+    []
   );
+  const swrKey = useMemo(
+    () => `/api/cms/media?${searchParamsToQuery({ campaignId: campaign?.id })}`,
+    [campaign]
+  );
+  const { data } = useSWR(swrKey, swrFetcher, { fallbackData });
+
   const {
     result: { badge, character, background },
-  }: { result: MediaDataProps } = data || {
-    result: { badge: [], character: [], background: [] },
-  };
+  }: { result: MediaDataProps } = useMemo(() => data, [data]);
 
   useEffect(() => {
     if (data) {

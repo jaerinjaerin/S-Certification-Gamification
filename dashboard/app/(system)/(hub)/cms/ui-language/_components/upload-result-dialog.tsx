@@ -34,6 +34,7 @@ export default function UploadResultDialog({
   onOpenChange,
   open,
   totalFiles,
+  isLoading,
 }: UploadResultDialogProps) {
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
@@ -163,8 +164,9 @@ export default function UploadResultDialog({
               className="shadow-none"
               variant={'action'}
               onClick={onOpenChange}
+              disabled={isLoading}
             >
-              Confirm
+              {isLoading ? 'Uploading...' : 'Confirm'}
             </Button>
           </DialogClose>
         </DialogFooter>

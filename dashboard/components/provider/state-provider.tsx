@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { swrFetcher } from '@/lib/fetch';
-import { Campaign, Role } from '@prisma/client';
+import { Campaign, CampaignSettings, Role } from '@prisma/client';
 import { Session } from 'next-auth';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import {
@@ -29,10 +29,7 @@ type CampaignData = {
   deleted: boolean;
 };
 
-type CampaignProps = Omit<Campaign, 'startedAt' | 'endedAt'> & {
-  startedAt: string;
-  endedAt: string;
-};
+type CampaignProps = Campaign & { settings: CampaignSettings };
 
 type StateVariables = {
   filter: AllFilterData | null;
@@ -104,13 +101,17 @@ export const StateVariablesProvider = ({
   // 이전 pathname 추적
   const prevPathnameRef = useRef<string | null>(null);
 
+  const fallbackData = useMemo(
+    () => ({ result: { campaigns: initCampaigns } }),
+    []
+  );
   // SWR 캐시 키 최적화
   const swrKey = useMemo(() => {
     return `/api/cms/campaign?role=${role?.name || 'ADMIN'}`;
   }, [role?.name]);
 
   const { data: campaignData } = useSWR(swrKey, swrFetcher, {
-    fallbackData: { result: { campaigns: initCampaigns } },
+    fallbackData,
     // revalidateOnFocus: false,
     dedupingInterval: 5000,
     revalidateIfStale: false, // 오래된 데이터 자동 재검증 비활성화

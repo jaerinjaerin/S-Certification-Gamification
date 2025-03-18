@@ -4,10 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // const { searchParams } = request.nextUrl;
-
-    await prisma.$connect();
-
     const userRoles = await prisma.userRole.findMany({
       include: {
         user: true,
@@ -24,10 +20,11 @@ export async function GET() {
 
     const result = userRoles.map((userRole) => {
       const { role, user } = userRole;
+      const loginName = user?.loginName ? decrypt(user.loginName, true) : '';
       return {
         id: userRole.id,
         userId: user.id,
-        loginName: decrypt(user.loginName || '', true),
+        loginName,
         roleName: role.name,
         permissions: role.permissions.flatMap((perm) =>
           perm.permission.domains.flatMap((domain) => ({
@@ -46,16 +43,12 @@ export async function GET() {
       { message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
     const { id } = await request.json();
-
-    await prisma.$connect();
 
     const { role, user } = await prisma.userRole.delete({
       where: { id },
@@ -99,7 +92,5 @@ export async function DELETE(request: NextRequest) {
       { message: 'Internal server error' },
       { status: 500 }
     );
-  } finally {
-    prisma.$disconnect();
   }
 }

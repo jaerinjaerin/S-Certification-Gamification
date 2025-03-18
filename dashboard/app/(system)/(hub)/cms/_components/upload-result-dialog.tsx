@@ -36,6 +36,7 @@ export default function UploadResultDialog({
   isLoading,
   totalFiles,
 }: UploadResultDialogProps) {
+  console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
     const iconContainerClasses = cn(
@@ -101,17 +102,28 @@ export default function UploadResultDialog({
 
         <div className="flex flex-col gap-5">
           <div className="flex gap-2 items-center">
-            <CircleX strokeWidth={3} className="size-[0.813rem] font-bold" />
-            {variant !== 'activityId' && (
-              <span>
-                {uploadFilesResult.filter((item) => !item.success).length} files
-                failed to upload.
-              </span>
+            {variant !== 'activityId' && variant !== 'non-s' && (
+              <>
+                <CircleX
+                  strokeWidth={3}
+                  className="size-[0.813rem] font-bold"
+                />
+                <span>
+                  {uploadFilesResult.filter((item) => !item.success).length}{' '}
+                  files failed to upload.
+                </span>
+              </>
             )}
             {variant === 'activityId' && uploadFilesResult[0].success && (
-              <span>
-                {`${uploadFilesResult.flatMap((item) => item.result.failures).length} items failed to upload.`}
-              </span>
+              <>
+                <CircleX
+                  strokeWidth={3}
+                  className="size-[0.813rem] font-bold"
+                />
+                <span>
+                  {`${uploadFilesResult.flatMap((item) => item.result.failures).length} items failed to upload.`}
+                </span>
+              </>
             )}
           </div>
 
@@ -148,24 +160,46 @@ export default function UploadResultDialog({
               </table>
             )}
             {variant === 'non-s' && (
-              // <FilesTableComponent>
-              //   {uploadFilesResult.map((item, index) => {
-              //     console.log('🥕 non-s', item);
-              //     return (
-              //       <tr key={index} className="border-t border-t-zinc-200">
-              //         <Td>{index + 1}</Td>
-              //         <Td>{item.result.uploadedFile.path.split('/').pop()}</Td>
-              //         <Td>
-              //           <div className="flex items-center gap-2.5 text-red-600 font-medium">
-              //             <CircleAlert className="size-4 shrink-0" />
-              //             <span>{item.result.failures[0]}</span>
-              //           </div>
-              //         </Td>
-              //       </tr>
-              //     );
-              //   })}
-              // </FilesTableComponent>
-              <></>
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <Td>Order</Td>
+                    <Td>File Result</Td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {uploadFilesResult.map((item, index) => {
+                    if (item.success && !isEmpty(item.result.failures)) {
+                      return item.result.failures.map(
+                        (failure: any, failureIndex: number) => {
+                          return (
+                            <tr
+                              key={failureIndex}
+                              className="border-t border-t-zinc-200"
+                            >
+                              <Td>{failureIndex + 1}</Td>
+                              <Td className="text-red-500 flex items-center gap-2">
+                                <CircleAlert className="size-4 shrink-0" />
+                                {failure}
+                              </Td>
+                            </tr>
+                          );
+                        }
+                      );
+                    } else if (!item.success) {
+                      return (
+                        <tr key={index} className="border-t border-t-zinc-200">
+                          <Td>{index + 1}</Td>
+                          <Td className="text-red-500 flex items-center gap-2">
+                            <CircleAlert className="size-4 shrink-0" />
+                            {item.error.message}
+                          </Td>
+                        </tr>
+                      );
+                    }
+                  })}
+                </tbody>
+              </table>
             )}
             {variant === 'activityId' && (
               <table className="w-full">

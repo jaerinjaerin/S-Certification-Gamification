@@ -96,7 +96,6 @@ const Filters = ({
 
   useEffect(() => {
     if (campaign && filterData) {
-      console.log('🚀 ~ useEffect ~ campaign:', campaign);
       initializeFilters(
         filterData.filters,
         form,
@@ -109,8 +108,8 @@ const Filters = ({
       const toDate = campaign.endedAt;
       if (fromDate && toDate) {
         form.setValue('date', {
-          from: new Date(fromDate),
-          to: new Date(toDate),
+          from: fromDate,
+          to: toDate,
         });
       }
       //

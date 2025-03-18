@@ -43,7 +43,7 @@
   "badge_deliver": "Merkkisi myöntäminen on käynnissä. Se tulee näkyviin viiden minuutin kuluessa.",
   "badge_deliver2": "Tunnusmerkkiäsi myönnetään. Voit tarkistaa myöntämäsi tunnuksen tarkistamalla sähköpostisi",
   "next_stage": "Seuraava vaihe",
-  "reture_map": "Palaa karttaan",
+  "return_map": "Palaa karttaan",
   "base_score": "Peruspistemäärä",
   "base_score_description": "Jokainen oikea vastaus on 20 pisteen arvoinen",
   "combo_score": "Yhdistelmäpistemäärä",

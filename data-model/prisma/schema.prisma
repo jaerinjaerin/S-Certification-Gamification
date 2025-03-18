@@ -144,7 +144,7 @@ model Campaign {
   activityBadges ActivityBadge[]
   quizBadges QuizBadge[]
   images Image[]
-  domainGoals DomainGoal[]
+  // domainGoals DomainGoal[]
   contentCopyHistoryId String? @unique
   contentCopyHistory    ContentCopyHistory? @relation(fields: [contentCopyHistoryId], references: [id])
 }
@@ -232,7 +232,7 @@ model DomainGoal {
   domainId     String
   regionId     String?
   subsidiaryId String?
-  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  // campaign     Campaign?    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model QuizSet {

@@ -43,7 +43,7 @@
   "badge_deliver": "A jelvényed folyamatban van. Várj 5 percet, hogy megjelenjen.",
   "badge_deliver2": "A jelvény kiadása folyamatban van. A kiállított jelvény ellenőrzéséhez kérjük, ellenőrizze postáját",
   "next_stage": "Következő szakasz",
-  "reture_map": "Visszatérés a térképre",
+  "return_map": "Visszatérés a térképre",
   "base_score": "Alappontszám",
   "base_score_description": "Minden helyes válasz 20 pontot ér",
   "combo_score": "Pont szorzó",

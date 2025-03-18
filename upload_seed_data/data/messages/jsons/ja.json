@@ -43,7 +43,7 @@
   "badge_deliver": "バッジを発行中です。表示されるまで5分ほどかかります。",
   "badge_deliver2": "バッジが発行されています。発行されたバッジを確認するには、メールを確認してください。",
   "next_stage": "次のステップ",
-  "reture_map": "マップに戻る",
+  "return_map": "マップに戻る",
   "base_score": "ベーススコア",
   "base_score_description": "正解ごとに20ポイントを獲得できます",
   "combo_score": "コンボスコア",

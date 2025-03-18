@@ -43,7 +43,7 @@
   "badge_deliver": "배지가 발급되고 있습니다. 배지가 나타나기까지 최대 5분이 소요 됩니다.",
   "badge_deliver2": "배지가 발급되고 있습니다. 발급된 배지를 확인하시려면 메일을 확인하세요",
   "next_stage": "다음단계",
-  "reture_map": "Map으로 돌아가기",
+  "return_map": "Map으로 돌아가기",
   "base_score": "기본 점수",
   "base_score_description": "각 정답 당 20점",
   "combo_score": "콤보 점수",
