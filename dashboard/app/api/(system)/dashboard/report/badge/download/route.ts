@@ -65,8 +65,15 @@ export async function GET(request: NextRequest) {
     //   stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
     // }));
 
+    const campaigns = await prisma.campaign.findMany();
+    const domains = await prisma.domain.findMany();
+
     const result = logs.map((log, index) => ({
       no: index + 1,
+      certification: campaigns.find(
+        (campaign) => campaign.id === log.campaignId
+      )?.slug,
+      domain: domains.find((domain) => domain.id === log.domainId)?.name,
       api: log.apiType,
       status: log.status,
       message: log.message,
@@ -76,14 +83,14 @@ export async function GET(request: NextRequest) {
       accessToken: log.accessToken,
       raw: log.rawLog,
       createdAt: log.createdAt,
-      campaignId: log.campaignId,
-      domainId: log.domainId,
     }));
 
     const blob = await createNormalExcelBlob({
       sheetName: 'User Stage Progress',
       columns: [
         { header: 'No', key: 'no', width: 10 },
+        { header: 'certification', key: 'certification', width: 10 },
+        { header: 'domain', key: 'domain', width: 10 },
         { header: 'api', key: 'api', width: 30 },
         { header: 'status', key: 'status', width: 10 },
         { header: 'message', key: 'message', width: 10 },
@@ -93,8 +100,6 @@ export async function GET(request: NextRequest) {
         { header: 'accessToken', key: 'accessToken', width: 10 },
         { header: 'raw', key: 'raw', width: 10 },
         { header: 'createdAt', key: 'createdAt', width: 10 },
-        { header: 'campaignId', key: 'campaignId', width: 10 },
-        { header: 'domainId', key: 'domainId', width: 10 },
       ],
       data: result,
     });
