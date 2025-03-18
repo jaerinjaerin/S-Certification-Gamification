@@ -200,6 +200,7 @@ export async function POST(request: Request) {
             userId,
             campaignId,
             domainId,
+            accessToken: account.access_token,
             accountUserId: account.providerAccountId,
             status: response.status,
             message: response.statusText || "success",
