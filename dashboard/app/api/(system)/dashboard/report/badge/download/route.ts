@@ -32,10 +32,9 @@ export async function GET(request: NextRequest) {
       where: {
         campaignId: params.campaignId,
       },
-      // where: {
-      //   ...where,
-
-      // },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
     // console.log('logs:', logs);
@@ -96,7 +95,7 @@ export async function GET(request: NextRequest) {
       activityId: log.activityId,
       accessToken: log.accessToken,
       raw: log.rawLog,
-      createdAt: log.createdAt,
+      createdAt: log.createdAt.toISOString(),
     }));
 
     const blob = await createNormalExcelBlob({
