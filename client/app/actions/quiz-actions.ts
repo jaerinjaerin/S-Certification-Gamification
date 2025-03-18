@@ -8,7 +8,7 @@ import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Question } from "@prisma/client";
+import { BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 export async function getQuizSet(
   quizsetPath: string,
@@ -267,10 +267,18 @@ export async function getQuizSet(
     }
 
     // console.log("quizSet:", quizSet);
+    let language: Language | null = null;
 
-    let language = await prisma.language.findFirst({
-      where: { code: languageCode },
-    });
+    const newLanguageCodes = newLanguages.map((lang) => lang.code);
+    if (newLanguageCodes.includes(languageCode)) {
+      language = await prisma.language.findFirst({
+        where: { code: defaultLanguageCode },
+      });
+    } else {
+      language = await prisma.language.findFirst({
+        where: { code: languageCode },
+      });
+    }
 
     // console.log("language:", language);
 

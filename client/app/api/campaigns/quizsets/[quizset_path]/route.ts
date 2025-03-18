@@ -251,13 +251,22 @@ export async function GET(request: NextRequest, props: Props) {
 
     // console.log("quizSet:", quizSet);
 
-    let language = await prisma.language.findFirst({
-      where: { code: languageCode },
-    });
+    let language: Language | null = null;
 
-    // console.log("language:", language);
+    const newLanguageCodes = newLanguages.map((lang) => lang.code);
+    if (newLanguageCodes.includes(languageCode)) {
+      language = await prisma.language.findFirst({
+        where: { code: defaultLanguageCode },
+      });
+    } else {
+      language = await prisma.language.findFirst({
+        where: { code: languageCode },
+      });
+    }
 
-    if (!language) {
+    console.log("language:", language);
+
+    if (language == null) {
       language = await prisma.language.findFirst({
         where: { code: defaultLanguageCode },
       });
