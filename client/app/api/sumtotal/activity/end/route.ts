@@ -108,7 +108,18 @@ export async function POST(request: Request) {
         account.access_token
       );
 
-      const data = await response.json();
+      const contentType = response.headers.get("content-type");
+
+      let rawLog = "";
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        console.log("Error response:", data);
+        rawLog = JSON.stringify(data);
+      } else {
+        const text = await response.text(); // JSON이 아닐 경우 텍스트로 읽기
+        console.log("Non-JSON error response:", text);
+        rawLog = text;
+      }
 
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
         method: "POST",
@@ -125,7 +136,7 @@ export async function POST(request: Request) {
           accessToken: account.access_token,
           status: response.status,
           message: response.statusText || "Failed to update activity/progress",
-          rawLog: JSON.stringify(data),
+          rawLog,
         }),
       });
 
@@ -164,13 +175,13 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error end activity:", error);
     let errorMessage = "Unknown error";
-    let errorStack = "No stack trace";
+    // let errorStack = "No stack trace";
     let errorName = "Error";
 
     if (error instanceof Error) {
       // ② error가 Error 객체인지 확인
       errorMessage = error.message;
-      errorStack = error.stack || "No stack trace";
+      // errorStack = error.stack || "No stack trace";
       errorName = error.name;
     } else if (typeof error === "string") {
       // ③ error가 문자열일 경우
@@ -178,7 +189,7 @@ export async function POST(request: Request) {
     } else if (typeof error === "object" && error !== null) {
       // ④ error가 객체인 경우
       errorMessage = (error as any).message || "Unknown object error";
-      errorStack = (error as any).stack || "No stack trace";
+      // errorStack = (error as any).stack || "No stack trace";
       errorName = (error as any).name || "Error";
     }
 
@@ -194,10 +205,10 @@ export async function POST(request: Request) {
         activityId,
         campaignId,
         domainId,
-        message: "An unexpected error occurred",
+        message: "Fail to progress activity",
         rawLog: JSON.stringify({
           message: errorMessage,
-          stack: errorStack,
+          // stack: errorStack,
           name: errorName,
         }),
       }),
