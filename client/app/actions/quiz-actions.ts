@@ -7,6 +7,7 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
+import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";

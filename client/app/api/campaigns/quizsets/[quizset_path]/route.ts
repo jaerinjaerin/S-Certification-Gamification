@@ -4,8 +4,9 @@ import {
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
+import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Question } from "@prisma/client";
+import { BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
