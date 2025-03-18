@@ -212,24 +212,24 @@ export async function POST(request: Request) {
       } catch (error) {
         console.error(`Error during attempt ${attempt + 1}:`, error);
         if (attempt === 1) {
-          let errorMessage = "Unknown error";
-          let errorStack = "No stack trace";
-          let errorName = "Error";
+          // let errorMessage = "Unknown error";
+          // let errorStack = "No stack trace";
+          // let errorName = "Error";
 
-          if (error instanceof Error) {
-            // ② error가 Error 객체인지 확인
-            errorMessage = error.message;
-            errorStack = error.stack || "No stack trace";
-            errorName = error.name;
-          } else if (typeof error === "string") {
-            // ③ error가 문자열일 경우
-            errorMessage = error;
-          } else if (typeof error === "object" && error !== null) {
-            // ④ error가 객체인 경우
-            errorMessage = (error as any).message || "Unknown object error";
-            errorStack = (error as any).stack || "No stack trace";
-            errorName = (error as any).name || "Error";
-          }
+          // if (error instanceof Error) {
+          //   // ② error가 Error 객체인지 확인
+          //   errorMessage = error.message;
+          //   errorStack = error.stack || "No stack trace";
+          //   errorName = error.name;
+          // } else if (typeof error === "string") {
+          //   // ③ error가 문자열일 경우
+          //   errorMessage = error;
+          // } else if (typeof error === "object" && error !== null) {
+          //   // ④ error가 객체인 경우
+          //   errorMessage = (error as any).message || "Unknown object error";
+          //   errorStack = (error as any).stack || "No stack trace";
+          //   errorName = (error as any).name || "Error";
+          // }
 
           // fetch(
           //   `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,

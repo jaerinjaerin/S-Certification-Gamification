@@ -175,13 +175,13 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error end activity:", error);
     let errorMessage = "Unknown error";
-    let errorStack = "No stack trace";
+    // let errorStack = "No stack trace";
     let errorName = "Error";
 
     if (error instanceof Error) {
       // ② error가 Error 객체인지 확인
       errorMessage = error.message;
-      errorStack = error.stack || "No stack trace";
+      // errorStack = error.stack || "No stack trace";
       errorName = error.name;
     } else if (typeof error === "string") {
       // ③ error가 문자열일 경우
@@ -189,7 +189,7 @@ export async function POST(request: Request) {
     } else if (typeof error === "object" && error !== null) {
       // ④ error가 객체인 경우
       errorMessage = (error as any).message || "Unknown object error";
-      errorStack = (error as any).stack || "No stack trace";
+      // errorStack = (error as any).stack || "No stack trace";
       errorName = (error as any).name || "Error";
     }
 
