@@ -1,5 +1,11 @@
 'use client';
+import { usePageIndex } from '@/components/hook/use-page-index';
+import { LoaderWithBackground } from '@/components/loader';
+import Pagination from '@/components/pagenation';
+import { useStateVariables } from '@/components/provider/state-provider';
 import ChartContainer from '@/components/system/chart-container';
+import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -8,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { swrFetcher } from '@/lib/fetch';
 import {
   ColumnDef,
   flexRender,
@@ -15,15 +22,9 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
-import Pagination from '@/components/pagenation';
-import useSWR from 'swr';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
-import { swrFetcher } from '@/lib/fetch';
-import { usePageIndex } from '@/components/hook/use-page-index';
 import { useMemo } from 'react';
+import useSWR from 'swr';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -84,6 +85,13 @@ const UserProgress = () => {
   const onDownload = () => {
     if (state.fieldValues) {
       const url = `/api/dashboard/report/user/download?${searchParams.toString()}`;
+      window.location.href = url;
+    }
+  };
+
+  const onDownloadBadgeLog = () => {
+    if (state.fieldValues) {
+      const url = `/api/dashboard/report/badge/download?${searchParams.toString()}`;
       window.location.href = url;
     }
   };
@@ -165,6 +173,9 @@ const UserProgress = () => {
       ) : (
         <></>
       )}
+      <Button onClick={onDownloadBadgeLog} className="mt-5">
+        Download BadgeLog
+      </Button>
     </ChartContainer>
   );
 };
