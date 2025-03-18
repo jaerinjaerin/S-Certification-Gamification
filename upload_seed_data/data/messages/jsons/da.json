@@ -43,7 +43,7 @@
   "badge_deliver": "Dit badge er ved at blive udstedt. Der kan gå op til 5 minutter, før det vises.",
   "badge_deliver2": "Dit badge bliver udstedt. For at tjekke dit udstedte badge, tjek venligst din mail",
   "next_stage": "Næste etape",
-  "reture_map": "Tilbage til kort",
+  "return_map": "Tilbage til kort",
   "base_score": "Grundlæggende score",
   "base_score_description": "Hvert korrekt svar er 20 point værd",
   "combo_score": "Kombinations-score",

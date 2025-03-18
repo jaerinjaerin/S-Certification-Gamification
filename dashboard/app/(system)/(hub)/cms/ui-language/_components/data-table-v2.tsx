@@ -22,7 +22,7 @@ import {
 } from '@tanstack/react-table';
 import { Download } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 import { useLanguageData } from '../_provider/language-data-provider';
 
@@ -33,29 +33,40 @@ interface UiLanguageDataTableProps {
 
 export function UiLanguageDataTable() {
   const { campaign } = useStateVariables();
-  const { data: result, isLoading: loading } = useSWR(
-    `/api/cms/ui_language?${searchParamsToQuery({ campaignId: campaign?.id })}`,
-    swrFetcher
+  const fallbackData = useMemo(
+    () => ({ result: { groupedLanguages: [] } }),
+    []
+  );
+  const swrKey = useMemo(
+    () =>
+      `/api/cms/ui_language?${searchParamsToQuery({ campaignId: campaign?.id })}`,
+    [campaign]
+  );
+  const { dispatch } = useLanguageData();
+  const { data: languageData, isLoading: loading } = useSWR(
+    swrKey,
+    swrFetcher,
+    {
+      fallbackData,
+    }
   );
 
-  const { state, dispatch } = useLanguageData();
-  // const { result: data } = languageData || { result: [] };
+  const { result: data } = useMemo(() => languageData, [languageData]);
 
   useEffect(() => {
-    console.log('result:', result);
-    if (result && result.result.groupedLanguages) {
+    if (data?.groupedLanguages) {
       dispatch({
         type: 'SET_LANGUAGE_LIST',
-        payload: result.result.groupedLanguages,
+        payload: data.groupedLanguages,
       });
     }
-  }, [result]);
+  }, [data]);
 
   if (loading) {
     return <LoadingFullScreen />;
   }
 
-  if (!result.result.groupedLanguages) {
+  if (!data.groupedLanguages) {
     return null;
   }
 
@@ -65,7 +76,7 @@ export function UiLanguageDataTable() {
         <div className=" text-sm text-zinc-950">
           Total :
           <strong className="font-bold">
-            {` ${result.result.groupedLanguages.length}`}
+            {` ${data.groupedLanguages.length}`}
           </strong>
         </div>
       </div>
@@ -82,8 +93,8 @@ export function UiLanguageDataTable() {
           </Colum>
         </div>
 
-        {result.result.groupedLanguages.length ? (
-          result.result.groupedLanguages.map(
+        {data.groupedLanguages.length ? (
+          data.groupedLanguages.map(
             (
               groupedData: { file: UploadedFile; language: Language },
               index: number

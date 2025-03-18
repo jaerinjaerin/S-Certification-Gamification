@@ -53,11 +53,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
+import { endOfDay, format, startOfDay } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
 import { mutate } from 'swr';
-import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
@@ -140,11 +139,12 @@ export default function CampaignEditForm({
   const editSubmit = async (data: any) => {
     setIsLoading(true);
 
+    // 인증제 기간 0시부터 23시 59분 59초 999로 설정
     const requestBody: Record<string, any> = {
       campaignId: campaignId,
       name: data.certificationName,
-      startedAt: data.startDate,
-      endedAt: data.endDate,
+      startedAt: startOfDay(data.startDate),
+      endedAt: endOfDay(data.endDate),
     };
 
     try {
@@ -282,7 +282,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(startOfDayTime(date));
+                                field.onChange(date);
                                 setStartDatePickerOpen(false);
                               }}
                             />
@@ -328,7 +328,7 @@ export default function CampaignEditForm({
                               mode="single"
                               selected={field.value as Date}
                               onSelect={(date) => {
-                                field.onChange(endOfDayTime(date));
+                                field.onChange(date);
                                 setEndDatePickerOpen(false);
                               }}
                               fromDate={form.getValues('startDate')}
@@ -526,49 +526,69 @@ export default function CampaignEditForm({
           <Button variant="secondary" onClick={() => routeToPage('/campaign')}>
             Cancel
           </Button>
-
-          {form.formState.isValid ? (
-            <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <AlertDialogTrigger asChild>
+          <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="action"
+                form="certification-form"
+                disabled={
+                  isEmpty(form.formState.dirtyFields) ||
+                  isEqualBetweenObject(initialData, form.getValues()) ||
+                  isLoading
+                }
+              >
+                Save
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="p-4 gap-[2.125rem] sm:rounded-md border border-zinc-200 max-w-[27.063rem]">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-base font-medium text-left">
+                  Alert
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
+                  Are you sure you want to proceed with the update?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">
+                <AlertDialogCancel
+                  className={cn(buttonVariants({ variant: 'secondary' }))}
+                >
+                  Cancel
+                </AlertDialogCancel>
                 <Button variant="action" form="certification-form">
-                  Save
+                  {isLoading ? 'Saving...' : 'Save'}
                 </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="p-4 gap-[2.125rem] sm:rounded-md border border-zinc-200 max-w-[27.063rem]">
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="text-base font-medium text-left">
-                    Alert
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
-                    Once you create a certification, you cannot change the Slug,
-                    Media to Copy, Target to Copy, or UI Language to Copy. Are
-                    you sure you want to save?
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter className="!flex-row !justify-center items-center !space-x-0 gap-3">
-                  <AlertDialogCancel
-                    className={cn(buttonVariants({ variant: 'secondary' }))}
-                  >
-                    Cancel
-                  </AlertDialogCancel>
-                  <Button variant="action" form="certification-form">
-                    {isLoading ? 'Saving...' : 'Save'}
-                  </Button>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          ) : (
-            <Button
-              variant="action"
-              form="certification-form"
-              disabled={isEmpty(form.formState.dirtyFields) || isLoading}
-            >
-              Save
-            </Button>
-          )}
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
       {isLoading && <LoadingFullScreen />}
     </>
   );
 }
+
+// 2개의 오브젝트 비교
+const isEqualBetweenObject = (
+  oa: Record<string, any>,
+  ob: Record<string, any>
+): boolean => {
+  return Object.keys(oa).every((key) => {
+    const valueA = oa[key];
+    const valueB = ob[key];
+
+    if (valueA instanceof Date && valueB instanceof Date) {
+      return valueA.getTime() === valueB.getTime(); // ✅ 날짜 비교는 getTime() 사용
+    }
+
+    if (typeof valueA === 'object' && typeof valueB === 'object') {
+      return isEqualBetweenObject(valueA, valueB); // 재귀 호출 (중첩 객체 비교)
+    }
+
+    // console.log(
+    //   `🔍 Checking key: ${key}, A: ${valueA}, B: ${valueB}, Match: ${valueA === valueB}`
+    // );
+
+    return valueA === valueB;
+  });
+};

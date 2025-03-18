@@ -32,6 +32,7 @@ import { LoaderWithBackground } from '@/components/loader';
 import { swrFetcher } from '@/lib/fetch';
 import { useStateVariables } from '@/components/provider/state-provider';
 import { usePageIndex } from '@/components/hook/use-page-index';
+import { useMemo } from 'react';
 
 const columns: ColumnDef<DomainProps>[] = [
   {
@@ -148,17 +149,16 @@ const UserDomainChild = () => {
     searchParams,
     'domainPageIndex'
   );
+  const fallbackData = useMemo(() => ({ result: { data: [], total: 0 } }), []);
+  const swrKey = useMemo(() => {
+    return `/api/dashboard/user/info/domain?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`;
+  }, [searchParams, campaign?.id, pageIndex, pageSize]);
+  const { data: domainData, isLoading } = useSWR(swrKey, swrFetcher, {
+    revalidateOnFocus: false,
+    fallbackData,
+  });
 
-  const { data: domainData, isLoading } = useSWR(
-    `/api/dashboard/user/info/domain?${searchParams.toString()}&campaign=${campaign?.id}&take=${pageSize}&page=${pageIndex}`,
-    swrFetcher,
-    {
-      revalidateOnFocus: false,
-      fallbackData: { result: { data: [], total: 0 } },
-    }
-  );
-
-  const { data, total } = domainData.result;
+  const { data, total } = useMemo(() => domainData.result, [domainData]);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터

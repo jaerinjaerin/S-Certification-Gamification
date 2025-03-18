@@ -4,8 +4,9 @@ import {
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
+import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Question } from "@prisma/client";
+import { BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -251,13 +252,22 @@ export async function GET(request: NextRequest, props: Props) {
 
     // console.log("quizSet:", quizSet);
 
-    let language = await prisma.language.findFirst({
-      where: { code: languageCode },
-    });
+    let language: Language | null = null;
 
-    // console.log("language:", language);
+    const newLanguageCodes = newLanguages.map((lang) => lang.code);
+    if (newLanguageCodes.includes(languageCode)) {
+      language = await prisma.language.findFirst({
+        where: { code: defaultLanguageCode },
+      });
+    } else {
+      language = await prisma.language.findFirst({
+        where: { code: languageCode },
+      });
+    }
 
-    if (!language) {
+    console.log("language:", language);
+
+    if (language == null) {
       language = await prisma.language.findFirst({
         where: { code: defaultLanguageCode },
       });

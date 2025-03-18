@@ -8,7 +8,6 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { LoaderWithBackground } from '@/components/loader';
 import { CardCustomHeaderWithoutDesc } from '@/components/system/chart-header';
 import IncorrectTable, { columns } from '../../_components/incorrect-table';
 import { Button } from '@/components/ui/button';
@@ -26,12 +25,11 @@ const DetailIncorrectTable = ({
   questions: any[];
 }) => {
   const { setContent } = useModal();
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any[] | null>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
-    data, // 현재 페이지 데이터
+    data: data || [], // 현재 페이지 데이터
     columns, // 테이블 컬럼 정의
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(), // 정렬 모델 활성화
@@ -44,17 +42,15 @@ const DetailIncorrectTable = ({
   useEffect(() => {
     if (questions) {
       setData(questions);
-      setLoading(false);
     }
 
     return () => {
-      setLoading(true);
+      setData(null);
     };
   }, [questions]);
 
   return (
     <div>
-      {loading && <LoaderWithBackground />}
       <div className="flex items-center justify-between px-3">
         <CardCustomHeaderWithoutDesc title="Incorrect answer details" />
         <Button variant="ghost" onClick={() => setContent(null)}>
@@ -73,7 +69,7 @@ const DetailIncorrectTable = ({
       <div className="mt-5 border rounded-md max-h-[28.3rem]">
         <ScrollArea className="w-full">
           <div className="max-h-[25.6rem]">
-            <IncorrectTable table={table} loading={loading} />
+            <IncorrectTable table={table} />
           </div>
         </ScrollArea>
       </div>

@@ -21,7 +21,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { searchParamsToQuery, swrFetcher } from '@/lib/fetch';
 import { LoadingFullScreen } from '@/components/loader';
 import useSWR from 'swr';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export const columns: ColumnDef<LanguageProps>[] = [
   {
@@ -60,13 +60,20 @@ export const columns: ColumnDef<LanguageProps>[] = [
 
 export function DataTable() {
   const { campaign } = useStateVariables();
+  const { state, dispatch } = useLanguageData();
+  const fallbackData = useMemo(() => ({ result: [] }), []);
+  const swrKey = useMemo(
+    () =>
+      `/api/cms/language?${searchParamsToQuery({ campaignSlug: campaign?.slug })}`,
+    [campaign]
+  );
   const { data: languageData, isLoading: loading } = useSWR(
-    `/api/cms/language?${searchParamsToQuery({ campaignSlug: campaign?.slug })}`,
-    swrFetcher
+    swrKey,
+    swrFetcher,
+    { fallbackData }
   );
 
-  const { state, dispatch } = useLanguageData();
-  const { result: data } = languageData || { result: [] };
+  const { result: data } = useMemo(() => languageData, [languageData]);
 
   useEffect(() => {
     if (data.length > 0) {

@@ -3,9 +3,11 @@ import GetBadgeAnnouncment from "@/components/complete/get-badge-announcement";
 import ScoreAnnouncement from "@/components/complete/score-announcement";
 import ScoreRankAnnouncement from "@/components/complete/score-rank-announcement";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
+import { useCampaign } from "@/providers/campaignProvider";
 import { useQuiz } from "@/providers/quizProvider";
 import { sleep } from "@/utils/utils";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
@@ -14,8 +16,32 @@ export default function QuizComplete() {
   useGAPageView();
   const router = useRouter();
   const { quizStageLogs, lastCompletedQuizStage } = useQuiz();
+  const { campaign } = useCampaign();
+  const translation = useTranslations();
 
+  const isOldCampaign = campaign.slug.toLowerCase() === "s25";
   const isBadgeStage = lastCompletedQuizStage?.isBadgeStage ?? false;
+
+  const congratulationMessage = (): string => {
+    if (!isBadgeStage) {
+      return "";
+    }
+
+    if (isOldCampaign) {
+      if (lastCompletedQuizStage?.name === "3") {
+        return translation("congratulation_1");
+      } else if (lastCompletedQuizStage?.name === "4") {
+        return translation("congratulation_2");
+      }
+    } else {
+      if (isBadgeStage) {
+        return lastCompletedQuizStage?.badgeType === "FIRST"
+          ? translation("congratulation_1")
+          : translation("congratulation_2");
+      }
+    }
+    return "";
+  };
 
   const [switchlIndex, setSwitchIndex] = useState(0);
   const carouselIndex = isBadgeStage ? 2 : 0;
@@ -65,6 +91,7 @@ export default function QuizComplete() {
           {isBadgeStage && (
             <>
               <GetBadgeAnnouncment
+                congratulationMessage={congratulationMessage()}
                 stageName={lastCompletedQuizStage?.name ?? ""}
                 badgeStage={lastCompletedQuizStage}
                 className="w-full h-full shrink-0"

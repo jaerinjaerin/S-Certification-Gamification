@@ -54,11 +54,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
+import { endOfDay, format, startOfDay } from 'date-fns';
 import useCampaignState from '../store/campaign-state';
 import { LoadingFullScreen } from '@/components/loader';
 import { mutate } from 'swr';
-import { endOfDayTime, startOfDayTime } from '@/lib/date';
 
 interface CampaignFormProps {
   initialData: any;
@@ -364,6 +363,10 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
     try {
       setIsLoading(true);
 
+      // 인증제 기간 0시부터 23시 59분 59초 999로 설정
+      data.startDate = startOfDay(data.startDate);
+      data.endDate = endOfDay(data.endDate);
+
       const campaignData = await campaignService.createCampaign(data);
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);
@@ -573,7 +576,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                             mode="single"
                             selected={field.value as Date}
                             onSelect={(date) => {
-                              field.onChange(startOfDayTime(date));
+                              field.onChange(date);
                               setStartDatePickerOpen(false);
                             }}
                           />
@@ -619,7 +622,7 @@ export default function CampaignForm({ initialData }: CampaignFormProps) {
                             mode="single"
                             selected={field.value as Date}
                             onSelect={(date) => {
-                              field.onChange(endOfDayTime(date));
+                              field.onChange(date);
                               setEndDatePickerOpen(false);
                             }}
                             fromDate={form.getValues('startDate')}

@@ -162,8 +162,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
           </time>
         </button>
         <div className="flex gap-3">
-          {isEditAble ? (
-            <>
+          {isEditAble && (
+            <div>
               <CustomAlertDialog
                 trigger={
                   <Button
@@ -191,20 +191,18 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
                   },
                 ]}
               />
-              <Button
-                className="p-0 aspect-square size-[1.875rem] rounded-sm"
-                variant="ghost"
-                onClick={async () => {
-                  await setCampaign(campaign.id);
-                  routeToPage(`/campaign/edit/${campaign.id}`);
-                }}
-              >
-                <Pen className="text-blue-600" />
-              </Button>
-            </>
-          ) : (
-            <div className="w-[4.5rem]" />
+            </div>
           )}
+          <Button
+            className="p-0 aspect-square size-[1.875rem] rounded-sm"
+            variant="ghost"
+            onClick={async () => {
+              await setCampaign(campaign.id);
+              routeToPage(`/campaign/edit/${campaign.id}`);
+            }}
+          >
+            <Pen className="text-blue-600" />
+          </Button>
         </div>
       </div>
 

@@ -16,7 +16,8 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/home") ||
     pathname.includes("/register") ||
     pathname.includes("/site") ||
-    pathname.includes("/not-ready")
+    pathname.includes("/not-ready") ||
+    pathname.includes("/invalid-access")
   ) {
     return NextResponse.next();
   }
@@ -55,7 +56,8 @@ export async function middleware(request: NextRequest) {
     const authType = session.user?.authType;
     if (authType === AuthType.SUMTOTAL) {
       // return NextResponse.redirect(new URL("/error", request.url));
-      const url = `${basePath}/${campaignName}/check_quizset`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      // const url = `${basePath}/${campaignName}/check_quizset`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      const url = `${basePath}/${campaignName}`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
       return NextResponse.redirect(new URL(url, request.url));
     } else {
       // const url = campaignQuizSetPath

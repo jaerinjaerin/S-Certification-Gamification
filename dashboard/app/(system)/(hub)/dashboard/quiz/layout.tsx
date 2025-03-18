@@ -13,9 +13,6 @@ const QuizLayout = ({
       <QuizFilterForm />
       {statisticsIncorrectAnswerRateByCategory}
       {infoQuizzesRankedByHighestIncorrectAnswerRate}
-      {/* <QuizFilterForm />
-      <QuizIncorrectAnswerRate params={params} />
-      <QuizQuizzesRanked params={params} /> */}
     </div>
   );
 };

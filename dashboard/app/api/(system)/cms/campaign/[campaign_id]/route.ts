@@ -53,17 +53,17 @@ export async function PUT(request: NextRequest) {
     }
 
     // 이미 시작한 캠페인이면 수정 불가
-    if (campaign.startedAt < new Date()) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            message: '이미 시작된 캠페인은 수정할 수 없습니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
+    // if (campaign.startedAt < new Date()) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       error: {
+    //         message: '이미 시작된 캠페인은 수정할 수 없습니다.',
+    //       },
+    //     },
+    //     { status: 400 }
+    //   );
+    // }
 
     // 업데이트할 데이터 필터링 (값이 있는 경우에만 업데이트)
     const campaignUpdateData = filterNullish({

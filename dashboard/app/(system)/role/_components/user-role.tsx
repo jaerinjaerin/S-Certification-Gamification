@@ -23,6 +23,7 @@ import { Delete } from '@/components/dialog';
 import axios from 'axios';
 import { swrFetcher } from '@/lib/fetch';
 import useSWR from 'swr';
+import { useMemo } from 'react';
 
 const columns: ColumnDef<UserRole>[] = [
   {
@@ -73,12 +74,17 @@ const columns: ColumnDef<UserRole>[] = [
 ];
 
 const UserRole = () => {
+  const fallbackData = useMemo(() => ({ result: [] }), []);
   const {
     data: roleData,
-    isLoading: loading,
+    isLoading,
     mutate,
-  } = useSWR('/api/cms/role/user-role', swrFetcher);
-  const { result: data }: { result: UserRole[] } = roleData || { result: [] };
+  } = useSWR('/api/cms/role/user-role', swrFetcher, { fallbackData });
+  const { result: data }: { result: UserRole[] } = useMemo(
+    () => roleData,
+    [roleData]
+  );
+  console.log('🚀 ~ UserRole ~ data:', data);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -117,7 +123,7 @@ const UserRole = () => {
 
   return (
     <ChartContainer>
-      {loading && <LoaderWithBackground />}
+      {isLoading && <LoaderWithBackground />}
       <CardCustomHeaderWithoutDesc title="User Role" />
       <div className="border rounded-md border-zinc-200">
         <Table>
@@ -168,7 +174,7 @@ const UserRole = () => {
                   colSpan={columns.length + 1}
                   className="h-24 text-center"
                 >
-                  {loading ? '' : 'No results.'}
+                  {isLoading ? '' : 'No results.'}
                 </TableCell>
               </TableRow>
             )}

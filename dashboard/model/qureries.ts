@@ -37,6 +37,9 @@ export async function getUserPermissions(user: User): Promise<Role | null> {
   //   console.error(`Failed to fetch permissions`);
   // }
 
+  // const session = await auth();
+  // console.log('🚀 ~ getUserPermissions ~ session:', session);
+
   try {
     // 사용자 역할 찾기
     const userRole = await prisma.userRole.findFirst({
