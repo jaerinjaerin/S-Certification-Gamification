@@ -3,7 +3,7 @@
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
-import { Job, Question } from '@prisma/client';
+import { Job } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -21,16 +21,32 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    const questions: Question[] = await prisma.$queryRaw`
-      SELECT q.*
-      FROM "Question" q
-      -- JOIN "Language" l ON q."languageId" = l."id"
-      WHERE q."id" = q."originalQuestionId"
-      AND q."campaignId" = ${restWhere.campaignId}
-      AND q."domainId" = '29'
-      -- AND l."code" = 'en-US'
-      ORDER BY q."order" ASC
-    `;
+    // const questions: Question[] = await prisma.$queryRaw`
+    //   SELECT q.*
+    //   FROM "Question" q
+    //   -- JOIN "Language" l ON q."languageId" = l."id"
+    //   WHERE q."id" = q."originalQuestionId"
+    //   AND q."campaignId" = ${restWhere.campaignId}
+    //   AND q."domainId" = '29'
+    //   -- AND l."code" = 'en-US'
+    //   ORDER BY q."order" ASC
+    // `;
+
+    const hqQuizSet = await prisma.quizSet.findFirst({
+      where: {
+        campaignId: restWhere.campaignId,
+        domainId: '29',
+        languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
+        jobCodes: {
+          equals: ['ff'],
+        },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    const questions = hqQuizSet?.questions || [];
 
     const where = {
       ...restWhere,

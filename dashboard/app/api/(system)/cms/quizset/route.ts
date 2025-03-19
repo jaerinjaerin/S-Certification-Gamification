@@ -116,7 +116,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // if (!['all', 'ff', 'fsm'].includes(jobGroup)) {
     if (!['ff', 'fsm'].includes(jobGroup)) {
       console.error('Invalid job code');
       return NextResponse.json(
@@ -131,21 +130,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // HQ 문제는
-    if (domainCode === 'OrgCode-7') {
-      if (jobGroup !== 'ff') {
-        return NextResponse.json(
-          {
-            success: false,
-            error: {
-              message: `${file.name}: Invalid job code. Must be "ff"`,
-              code: ERROR_CODES.INVALID_JOB_GROUP,
-            },
-          },
-          { status: 400 }
-        );
-      }
-
+    // HQ 문제 언어 체크
+    if (domainCode === 'OrgCode-7' && jobGroup === 'ff') {
       if (languageCode !== 'en') {
         return NextResponse.json(
           {
@@ -313,14 +299,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const hqQuestions = await prisma.question.findMany({
+    // const hqQuestions = await prisma.question.findMany({
+    //   where: {
+    //     domainId: hqDomain.id,
+    //     campaignId: campaignId,
+    //   },
+    // });
+
+    const hqQuizSet = await prisma.quizSet.findFirst({
       where: {
-        domainId: hqDomain.id,
         campaignId: campaignId,
+        domainId: hqDomain.id,
+        languageId: language.id,
+        jobCodes: {
+          equals: ['ff'],
+        },
+      },
+      include: {
+        questions: true,
       },
     });
 
-    const isHqQuestions = domainCode === hqDomainCode;
+    const hqQuestions = hqQuizSet?.questions ?? [];
+
+    const isHqQuestions = domainCode === hqDomainCode && jobGroup === 'ff';
     const isHqQuestionsRegistered = hqQuestions && hqQuestions.length > 0;
     if (!isHqQuestions && !isHqQuestionsRegistered) {
       console.error('HQ Questions not registered');

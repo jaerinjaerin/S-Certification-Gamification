@@ -134,7 +134,7 @@ export default async function QuizLayout({
     params.campaign_name
   );
 
-  console.log("getQuizSet quizResponse", quizResponse);
+  // console.log("getQuizSet quizResponse", quizResponse);
   // const quizResponse: ApiResponse<QuizSetEx> = await fetchQuizSet(
   //   params.campaign_name,
   //   params.quizset_path,

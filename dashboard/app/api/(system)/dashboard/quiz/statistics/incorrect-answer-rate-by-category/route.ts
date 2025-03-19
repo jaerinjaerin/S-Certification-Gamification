@@ -3,7 +3,7 @@
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
-import { AuthType, Job, Question } from '@prisma/client';
+import { AuthType, Job } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -22,17 +22,33 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
+    const hqQuizSet = await prisma.quizSet.findFirst({
+      where: {
+        campaignId: restWhere.campaignId,
+        domainId: '29',
+        languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
+        jobCodes: {
+          equals: ['ff'],
+        },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    const questions = hqQuizSet?.questions || [];
+
     // 필터링된 `originalQuestionId` 가져오기
-    const questions: Question[] = await prisma.$queryRaw`
-      SELECT q.*
-      FROM "Question" q
-      -- JOIN "Language" l ON q."languageId" = l."id"
-      WHERE q."id" = q."originalQuestionId"
-      AND q."campaignId" = ${restWhere.campaignId}
-      -- AND l."code" = 'en-US'
-      AND q."domainId" = '29'
-      ORDER BY q."order" ASC
-    `;
+    // const questions: Question[] = await prisma.$queryRaw`
+    //   SELECT q.*
+    //   FROM "Question" q
+    //   -- JOIN "Language" l ON q."languageId" = l."id"
+    //   WHERE q."id" = q."originalQuestionId"
+    //   AND q."campaignId" = ${restWhere.campaignId}
+    //   -- AND l."code" = 'en-US'
+    //   AND q."domainId" = '29'
+    //   ORDER BY q."order" ASC
+    // `;
 
     const where = {
       ...restWhere,
