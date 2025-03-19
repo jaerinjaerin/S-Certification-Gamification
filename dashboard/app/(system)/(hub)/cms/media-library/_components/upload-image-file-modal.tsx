@@ -41,6 +41,12 @@ export function UploadImageFileModal({
   const BADGE_MAX_SIZE = 56 * 1024; // 56kb
   const CHARACTER_MAX_SIZE = 200 * 1024; // 200kb
 
+  const MAX_WIDTHS = {
+    badge: 300,
+    character: 960,
+    background: 960,
+  };
+
   // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
   useEffect(() => {
     if (preview && preview[0] && id) {
@@ -61,34 +67,49 @@ export function UploadImageFileModal({
     };
   }, [preview, id]);
 
+  const getDimensionErrorMessage = (group: MediaGroupName) => {
+    switch (group) {
+      case 'badge':
+        return `Maximum Badge image width: ${MAX_WIDTHS.badge}px`;
+      case 'character':
+        return `Maximum Character image width: ${MAX_WIDTHS.character}px`;
+      case 'background':
+        return `Maximum Background image width: ${MAX_WIDTHS.background}px`;
+      default:
+        return 'Invalid image dimensions';
+    }
+  };
+
   const checkImageDimensions = (file: File): Promise<boolean> => {
     return new Promise((resolve) => {
       const img = new Image();
       img.src = URL.createObjectURL(file);
       img.onload = () => {
         URL.revokeObjectURL(img.src);
-        resolve(img.width <= 300);
+        resolve(img.width <= MAX_WIDTHS[group]);
       };
     });
   };
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    if (group === 'badge') {
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
       for (const file of acceptedFiles) {
         const isValidDimension = await checkImageDimensions(file);
         if (!isValidDimension) {
-          setErrors(['Maximum Badge image size: 300px X 300px']);
+          setErrors([getDimensionErrorMessage(group)]);
           setIsOpen(true);
           return;
         }
       }
-    }
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, { preview: URL.createObjectURL(file) })
-      )
-    );
-  }, []);
+
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, { preview: URL.createObjectURL(file) })
+        )
+      );
+    },
+    [group]
+  );
 
   const onDropRejected = (fileRejections: FileRejection[]) => {
     const getErrorMessage = (code: string) => {
@@ -96,9 +117,7 @@ export function UploadImageFileModal({
         case 'file-invalid-type':
           return 'The uploaded file does not match the required format.';
         case 'file-too-large':
-          return group === 'badge'
-            ? `File size must be less than ${BADGE_MAX_SIZE / 1024}KB.`
-            : `File size must be less than ${CHARACTER_MAX_SIZE / 1024}KB.`;
+          return 'File size is too large';
         case 'too-many-files':
           return 'Only one file can be uploaded.';
         default:
