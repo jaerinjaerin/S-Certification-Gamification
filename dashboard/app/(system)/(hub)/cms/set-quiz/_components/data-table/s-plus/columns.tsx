@@ -180,7 +180,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (row.original.activityBadges) {
         return (
           <div className="flex flex-col gap-2.5">
-            {/* <ActivityIdBadge id={10000} stage={3} /> */}
             {row.original.activityBadges.map((badge, index) => {
               const stageNum = getStageNumFromActivityBadge(
                 badge as ActivityBadgeEx,
@@ -191,7 +190,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
                 badge.activityId == null ||
                 badge.activityId === ''
               ) {
-                return <></>;
+                return <div key={`empty-${index}`}></div>;
               }
               return (
                 <ActivityIdBadge
