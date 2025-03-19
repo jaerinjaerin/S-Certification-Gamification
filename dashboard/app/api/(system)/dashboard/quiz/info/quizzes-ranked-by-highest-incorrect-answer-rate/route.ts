@@ -37,9 +37,7 @@ export async function GET(request: NextRequest) {
         campaignId: restWhere.campaignId,
         domainId: '29',
         languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
-        jobCodes: {
-          equals: ['ff'],
-        },
+        jobCodes: { has: 'ff' },
       },
       include: {
         questions: true,
@@ -47,6 +45,7 @@ export async function GET(request: NextRequest) {
     });
 
     const questions = hqQuizSet?.questions || [];
+    console.log('questions:', questions);
 
     const where = {
       ...restWhere,
