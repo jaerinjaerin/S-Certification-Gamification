@@ -37,14 +37,21 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'subsidiary',
     header: 'Subsidiary',
-    cell: ({ row }) => (
-      <div className="uppercase flex items-center gap-1">
-        <span>HQ</span>
-        <span className="bg-blue-600 inline-block rounded-2xl px-[11px] py-[5px]">
-          <Flag className="size-4" color="white" />
-        </span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const jobCode =
+        row.original.quizSet?.jobCodes[0] ??
+        row.original.activityBadges?.map((badge) => badge.jobCode)[0];
+      return (
+        <div className="uppercase flex items-center gap-1">
+          <span>HQ</span>
+          {jobCode === 'ff' && (
+            <span className="bg-blue-600 inline-block rounded-2xl px-[11px] py-[5px]">
+              <Flag className="size-4" color="white" />
+            </span>
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'domain',

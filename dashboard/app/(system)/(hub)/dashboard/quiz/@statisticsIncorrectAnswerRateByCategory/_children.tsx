@@ -34,10 +34,10 @@ const QuizIncorrectAnswerRateChild = () => {
         title="Incorrect answer rate by category"
         description="The darker the color, the more incorrect answers there were for that question type."
       />
-      <div className="w-full h-[30rem] px-10 cursor-pointer">
+      <div className="w-[99%] h-[30rem] cursor-pointer">
         <ResponsiveHeatMapCanvas
           data={data || []}
-          margin={{ top: 20, right: 120, bottom: 60, left: 120 }}
+          margin={{ top: 20, right: 50, bottom: 60, left: 150 }}
           valueFormat="^-02.0f"
           theme={{
             labels: {
@@ -49,7 +49,7 @@ const QuizIncorrectAnswerRateChild = () => {
               ticks: {
                 line: { stroke: 'transparent' },
                 text: {
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight: 700,
                   fill: '#09090B',
                 },
@@ -102,7 +102,7 @@ const QuizIncorrectAnswerRateChild = () => {
             tickRotation: -45,
             legend: 'Category',
             legendPosition: 'middle',
-            legendOffset: -100,
+            legendOffset: -140,
             truncateTickAt: 0,
           }}
           colors={{

@@ -48,7 +48,7 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
   template: {
     items: [
       { label: 'QuizSet', name: 'QuizSet' },
-      { label: 'ActivityID', name: 'Activity ID / Badge' },
+      { label: 'ActivityID_Badge', name: 'Activity ID / Badge' },
       { label: 'NonSUser', name: 'Non S+ Users' },
       { label: 'UILanguage', name: 'UI Language' },
       { label: 'Target', name: 'Target' },
