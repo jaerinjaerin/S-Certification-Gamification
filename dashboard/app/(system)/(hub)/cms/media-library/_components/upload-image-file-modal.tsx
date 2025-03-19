@@ -38,7 +38,7 @@ export function UploadImageFileModal({
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const BADGE_MAX_SIZE = 30 * 1024; // 30kb
+  const BADGE_MAX_SIZE = 56 * 1024; // 56kb
   const CHARACTER_MAX_SIZE = 200 * 1024; // 200kb
 
   // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
@@ -61,7 +61,28 @@ export function UploadImageFileModal({
     };
   }, [preview, id]);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const checkImageDimensions = (file: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(img.src);
+        resolve(img.width <= 300);
+      };
+    });
+  };
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (group === 'badge') {
+      for (const file of acceptedFiles) {
+        const isValidDimension = await checkImageDimensions(file);
+        if (!isValidDimension) {
+          setErrors(['Maximum Badge image size: 300px X 300px']);
+          setIsOpen(true);
+          return;
+        }
+      }
+    }
     setFiles(
       acceptedFiles.map((file) =>
         Object.assign(file, { preview: URL.createObjectURL(file) })
@@ -76,8 +97,8 @@ export function UploadImageFileModal({
           return 'The uploaded file does not match the required format.';
         case 'file-too-large':
           return group === 'badge'
-            ? `File size must be less than ${BADGE_MAX_SIZE / 1024} KB.`
-            : `File size must be less than ${CHARACTER_MAX_SIZE / 1024} KB.`;
+            ? `File size must be less than ${BADGE_MAX_SIZE / 1024}KB.`
+            : `File size must be less than ${CHARACTER_MAX_SIZE / 1024}KB.`;
         case 'too-many-files':
           return 'Only one file can be uploaded.';
         default:
