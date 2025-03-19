@@ -72,7 +72,9 @@ export function UploadImageFileModal({
         case 'file-invalid-type':
           return 'The uploaded file does not match the required format.';
         case 'file-too-large':
-          return 'File is too large.';
+          return group === 'badge'
+            ? 'File size must be less than 30KB.'
+            : 'File size must be less than 200KB.';
         case 'too-many-files':
           return 'Only one file can be uploaded.';
         default:
@@ -94,6 +96,7 @@ export function UploadImageFileModal({
       multiple: false,
       noClick: true,
       onDropRejected,
+      maxSize: group === 'badge' ? 30 * 1024 : 200 * 1024, // 30kb, 200kb
     });
 
   useEffect(() => {
