@@ -37,11 +37,8 @@ export default async function QuizLayout({
     redirect("/login");
   }
 
-  console.log("🥕 authType", session.user.authType);
-
   // guest 유저의 경우
   if (authType === "GUEST") {
-    console.log("🥕 params.campaign_name", params.campaign_name);
     locale = await getServiceLanguageCode(params.campaign_name ?? "s25");
   }
 

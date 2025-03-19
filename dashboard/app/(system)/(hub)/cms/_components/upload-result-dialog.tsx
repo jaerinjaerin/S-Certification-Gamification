@@ -36,7 +36,6 @@ export default function UploadResultDialog({
   isLoading,
   totalFiles,
 }: UploadResultDialogProps) {
-  console.log('🥕 uploadFilesResult', uploadFilesResult);
   const renderResultIcon = () => {
     const hasSuccessfulUploads = uploadFilesResult.some((item) => item.success);
     const iconContainerClasses = cn(
