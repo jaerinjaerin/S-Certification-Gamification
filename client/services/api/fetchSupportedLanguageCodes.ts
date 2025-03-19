@@ -12,6 +12,9 @@ export async function fetchSupportedLanguageCodes(
   console.log("fetchSupportedLanguageCodes", campaignSlug);
   try {
     const campaign = await prisma.campaign.findFirst({
+      // where: {
+      //   slug: campaignSlug,
+      // },
       where: {
         slug: {
           equals: campaignSlug,

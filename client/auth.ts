@@ -214,6 +214,25 @@ export const {
       */
       if (account) {
         token.provider = account.provider;
+        // prisma.account
+        const userAccount = await prisma.account.findFirst({
+          where: {
+            userId: user.id,
+          },
+        });
+
+        if (userAccount) {
+          await prisma.account.update({
+            where: {
+              id: userAccount.id,
+            },
+            data: {
+              access_token: account.access_token,
+              refresh_token: account.refresh_token,
+              expires_at: account.expires_at,
+            },
+          });
+        }
       }
       if (user) {
         token.authType = (user as User).authType;

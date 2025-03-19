@@ -31,7 +31,7 @@ export async function POST(request: Request) {
           campaignId,
           domainId,
           status: 401,
-          message: "Unauthorized",
+          message: "Unauthorized(no session)",
         }),
       });
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -86,6 +86,41 @@ export async function POST(request: Request) {
         console.log("response", response);
 
         if (!response.ok) {
+          const contentType = response.headers.get("content-type");
+
+          let rawLog = "";
+          if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            console.log("Error response:", data);
+            rawLog = JSON.stringify(data);
+          } else {
+            const text = await response.text(); // JSON이 아닐 경우 텍스트로 읽기
+            console.log("Non-JSON error response:", text);
+            rawLog = text;
+          }
+
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                apiType: BadgeApiType.REGISTER,
+                activityId,
+                userId,
+                campaignId,
+                domainId,
+                accountUserId: account.providerAccountId,
+                accessToken: account.access_token,
+                status: response.status,
+                message: response.statusText || "Fail to register activity",
+                rawLog,
+              }),
+            }
+          );
+
           if (response.status === 401 && attempt === 0 && !isTokenRefreshed) {
             // Refresh the token if the first attempt fails with a 401
             if (account.refresh_token != null && account.refresh_token !== "") {
@@ -100,49 +135,49 @@ export async function POST(request: Request) {
                 continue; // Retry the request with the new token
               } catch (error) {
                 console.error("Error refreshing token:", error);
-                let errorMessage = "Unknown error";
-                let errorStack = "No stack trace";
-                let errorName = "Error";
+                // let errorMessage = "Unknown error";
+                // let errorStack = "No stack trace";
+                // let errorName = "Error";
 
-                if (error instanceof Error) {
-                  // ② error가 Error 객체인지 확인
-                  errorMessage = error.message;
-                  errorStack = error.stack || "No stack trace";
-                  errorName = error.name;
-                } else if (typeof error === "string") {
-                  // ③ error가 문자열일 경우
-                  errorMessage = error;
-                } else if (typeof error === "object" && error !== null) {
-                  // ④ error가 객체인 경우
-                  errorMessage =
-                    (error as any).message || "Unknown object error";
-                  errorStack = (error as any).stack || "No stack trace";
-                  errorName = (error as any).name || "Error";
-                }
+                // if (error instanceof Error) {
+                //   // ② error가 Error 객체인지 확인
+                //   errorMessage = error.message;
+                //   errorStack = error.stack || "No stack trace";
+                //   errorName = error.name;
+                // } else if (typeof error === "string") {
+                //   // ③ error가 문자열일 경우
+                //   errorMessage = error;
+                // } else if (typeof error === "object" && error !== null) {
+                //   // ④ error가 객체인 경우
+                //   errorMessage =
+                //     (error as any).message || "Unknown object error";
+                //   errorStack = (error as any).stack || "No stack trace";
+                //   errorName = (error as any).name || "Error";
+                // }
 
-                fetch(
-                  `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      apiType: BadgeApiType.REGISTER,
-                      status: 500,
-                      userId,
-                      campaignId,
-                      domainId,
-                      activityId,
-                      message: "An unexpected error occurred",
-                      rawLog: JSON.stringify({
-                        message: errorMessage,
-                        stack: errorStack,
-                        name: errorName,
-                      }),
-                    }),
-                  }
-                );
+                // fetch(
+                //   `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,
+                //   {
+                //     method: "POST",
+                //     headers: {
+                //       "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify({
+                //       apiType: BadgeApiType.REGISTER,
+                //       status: 500,
+                //       userId,
+                //       campaignId,
+                //       domainId,
+                //       activityId,
+                //       message: "An unexpected error occurred",
+                //       rawLog: JSON.stringify({
+                //         message: errorMessage,
+                //         // stack: errorStack,
+                //         name: errorName,
+                //       }),
+                //     }),
+                //   }
+                // );
               }
             }
           }
@@ -165,60 +200,68 @@ export async function POST(request: Request) {
             userId,
             campaignId,
             domainId,
+            accessToken: account.access_token,
             accountUserId: account.providerAccountId,
             status: response.status,
-            message: response.statusText || "success",
+            message:
+              `${response.statusText} - isRegistered: ${data.isRegistered}` ||
+              `success - isRegistered: ${data.isRegistered}`,
             rawLog: JSON.stringify(data),
           }),
         });
 
-        Sentry.captureMessage("response", data);
+        // Sentry.captureMessage("response", data);
+
+        if (data.isRegistered === false) {
+          return NextResponse.json(data, { status: 500 });
+        }
+
         return NextResponse.json(data, { status: 200 });
       } catch (error) {
         console.error(`Error during attempt ${attempt + 1}:`, error);
         if (attempt === 1) {
-          let errorMessage = "Unknown error";
-          let errorStack = "No stack trace";
-          let errorName = "Error";
+          // let errorMessage = "Unknown error";
+          // let errorStack = "No stack trace";
+          // let errorName = "Error";
 
-          if (error instanceof Error) {
-            // ② error가 Error 객체인지 확인
-            errorMessage = error.message;
-            errorStack = error.stack || "No stack trace";
-            errorName = error.name;
-          } else if (typeof error === "string") {
-            // ③ error가 문자열일 경우
-            errorMessage = error;
-          } else if (typeof error === "object" && error !== null) {
-            // ④ error가 객체인 경우
-            errorMessage = (error as any).message || "Unknown object error";
-            errorStack = (error as any).stack || "No stack trace";
-            errorName = (error as any).name || "Error";
-          }
+          // if (error instanceof Error) {
+          //   // ② error가 Error 객체인지 확인
+          //   errorMessage = error.message;
+          //   errorStack = error.stack || "No stack trace";
+          //   errorName = error.name;
+          // } else if (typeof error === "string") {
+          //   // ③ error가 문자열일 경우
+          //   errorMessage = error;
+          // } else if (typeof error === "object" && error !== null) {
+          //   // ④ error가 객체인 경우
+          //   errorMessage = (error as any).message || "Unknown object error";
+          //   errorStack = (error as any).stack || "No stack trace";
+          //   errorName = (error as any).name || "Error";
+          // }
 
-          fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                apiType: BadgeApiType.REGISTER,
-                status: 500,
-                userId,
-                campaignId,
-                domainId,
-                activityId,
-                message: "An unexpected error occurred",
-                rawLog: JSON.stringify({
-                  message: errorMessage,
-                  stack: errorStack,
-                  name: errorName,
-                }),
-              }),
-            }
-          );
+          // fetch(
+          //   `${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`,
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify({
+          //       apiType: BadgeApiType.REGISTER,
+          //       status: 500,
+          //       userId,
+          //       campaignId,
+          //       domainId,
+          //       activityId,
+          //       message: "An unexpected error occurred",
+          //       rawLog: JSON.stringify({
+          //         message: errorMessage,
+          //         // stack: errorStack,
+          //         name: errorName,
+          //       }),
+          //     }),
+          //   }
+          // );
 
           // If the second attempt also fails, capture the error and return a failure response
           Sentry.captureException(error);
@@ -232,45 +275,45 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error in PUT handler:", error);
 
-    let errorMessage = "Unknown error";
-    let errorStack = "No stack trace";
-    let errorName = "Error";
+    // let errorMessage = "Unknown error";
+    // let errorStack = "No stack trace";
+    // let errorName = "Error";
 
-    if (error instanceof Error) {
-      // ② error가 Error 객체인지 확인
-      errorMessage = error.message;
-      errorStack = error.stack || "No stack trace";
-      errorName = error.name;
-    } else if (typeof error === "string") {
-      // ③ error가 문자열일 경우
-      errorMessage = error;
-    } else if (typeof error === "object" && error !== null) {
-      // ④ error가 객체인 경우
-      errorMessage = (error as any).message || "Unknown object error";
-      errorStack = (error as any).stack || "No stack trace";
-      errorName = (error as any).name || "Error";
-    }
+    // if (error instanceof Error) {
+    //   // ② error가 Error 객체인지 확인
+    //   errorMessage = error.message;
+    //   errorStack = error.stack || "No stack trace";
+    //   errorName = error.name;
+    // } else if (typeof error === "string") {
+    //   // ③ error가 문자열일 경우
+    //   errorMessage = error;
+    // } else if (typeof error === "object" && error !== null) {
+    //   // ④ error가 객체인 경우
+    //   errorMessage = (error as any).message || "Unknown object error";
+    //   errorStack = (error as any).stack || "No stack trace";
+    //   errorName = (error as any).name || "Error";
+    // }
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        apiType: BadgeApiType.REGISTER,
-        status: 500,
-        userId,
-        campaignId,
-        domainId,
-        activityId,
-        message: "An unexpected error occurred",
-        rawLog: JSON.stringify({
-          message: errorMessage,
-          stack: errorStack,
-          name: errorName,
-        }),
-      }),
-    });
+    // fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     apiType: BadgeApiType.REGISTER,
+    //     status: 500,
+    //     userId,
+    //     campaignId,
+    //     domainId,
+    //     activityId,
+    //     message: "An unexpected error occurred",
+    //     rawLog: JSON.stringify({
+    //       message: errorMessage,
+    //       // stack: errorStack,
+    //       name: errorName,
+    //     }),
+    //   }),
+    // });
 
     Sentry.captureException(error);
     return NextResponse.json(

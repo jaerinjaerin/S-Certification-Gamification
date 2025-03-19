@@ -355,7 +355,13 @@ export async function getQuizSet(
       },
     };
   } catch (error) {
-    console.error("Error fetching question data:", error);
+    console.error(
+      "Error fetching question data:",
+      quizsetPath,
+      userId,
+      campaignSlug,
+      error
+    );
 
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {

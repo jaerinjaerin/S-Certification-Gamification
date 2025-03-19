@@ -673,7 +673,7 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("API Get - QuizSet :", campaignName, error);
+    console.error("API Get - QuizSet :", campaignName, userId, error);
 
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {

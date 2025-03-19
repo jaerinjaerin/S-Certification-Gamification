@@ -194,7 +194,10 @@ export default function GuestRegisterPage({
       setCheckRegisteredLoading(true);
       console.log("setCheckRegisteredLoading", true);
       // setCheckingRegisterd(true);
-      const quizLogResponse = await fetchQuizLog(userId, campaign.name);
+      const quizLogResponse = await fetchQuizLog(
+        userId,
+        campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug
+      );
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
       if (quizLog) {
@@ -325,7 +328,8 @@ export default function GuestRegisterPage({
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
         campaignId: campaign.id,
-        campaignSlug: campaign.name,
+        campaignSlug:
+          campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug,
       },
     });
   };

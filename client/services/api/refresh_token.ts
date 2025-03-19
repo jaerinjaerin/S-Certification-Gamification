@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/prisma-client";
+import { BadgeApiType } from "@prisma/client";
 
 // Refresh token 함수
 export async function refreshToken(accountId: string, refreshToken: string) {
@@ -25,7 +26,37 @@ export async function refreshToken(accountId: string, refreshToken: string) {
 
     if (!response.ok) {
       // const data = await response.json();
+      const contentType = response.headers.get("content-type");
+
+      let rawLog = "";
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        console.log("Error response:", data);
+        rawLog = JSON.stringify(data);
+      } else {
+        const text = await response.text(); // JSON이 아닐 경우 텍스트로 읽기
+        console.log("Non-JSON error response:", text);
+        rawLog = text;
+      }
+
       console.error("Refreshed tokens:", response);
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          apiType: BadgeApiType.PROGRESS,
+          status: response.status,
+          // userId,
+          // activityId,
+          // campaignId,
+          // domainId,
+          message: response.statusText,
+          rawLog,
+        }),
+      });
+
       throw new Error("Failed to refresh token");
     }
 
