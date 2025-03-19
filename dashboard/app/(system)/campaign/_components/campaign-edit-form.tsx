@@ -155,7 +155,6 @@ export default function CampaignEditForm({
       });
 
       const campaignData = await response.json();
-      console.log('🥕 campaignData', campaignData);
 
       if (!campaignData?.success) {
         console.error('Failed to create campaign', campaignData);

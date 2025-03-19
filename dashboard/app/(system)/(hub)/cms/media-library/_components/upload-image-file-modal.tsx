@@ -38,6 +38,9 @@ export function UploadImageFileModal({
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
+  const BADGE_MAX_SIZE = 30 * 1024; // 30kb
+  const CHARACTER_MAX_SIZE = 200 * 1024; // 200kb
+
   // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
   useEffect(() => {
     if (preview && preview[0] && id) {
@@ -72,7 +75,9 @@ export function UploadImageFileModal({
         case 'file-invalid-type':
           return 'The uploaded file does not match the required format.';
         case 'file-too-large':
-          return 'File is too large.';
+          return group === 'badge'
+            ? `File size must be less than ${BADGE_MAX_SIZE / 1024} KB.`
+            : `File size must be less than ${CHARACTER_MAX_SIZE / 1024} KB.`;
         case 'too-many-files':
           return 'Only one file can be uploaded.';
         default:
@@ -94,6 +99,7 @@ export function UploadImageFileModal({
       multiple: false,
       noClick: true,
       onDropRejected,
+      maxSize: group === 'badge' ? BADGE_MAX_SIZE : CHARACTER_MAX_SIZE,
     });
 
   useEffect(() => {
