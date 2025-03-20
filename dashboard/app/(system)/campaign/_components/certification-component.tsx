@@ -213,7 +213,8 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
 
 const DownloadManualButton = () => {
   const handleDownloadFile = () => {
-    const FILE_NAME = `Admin_Manual.pptx`;
+    // const FILE_NAME = `Admin_Manual.pptx`;
+    const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
     handleDownload(FILE_NAME, DOWNLOAD_URL);
   };
