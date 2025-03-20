@@ -48,11 +48,11 @@ export async function refreshToken(accountId: string, refreshToken: string) {
         body: JSON.stringify({
           apiType: BadgeApiType.PROGRESS,
           status: response.status,
-          // userId,
-          // activityId,
-          // campaignId,
-          // domainId,
-          message: response.statusText,
+          userId: "",
+          activityId: "",
+          campaignId: "",
+          domainId: "",
+          message: `${response.statusText} - Failed to refresh token`,
           rawLog,
         }),
       });
