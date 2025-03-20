@@ -1,4 +1,3 @@
-import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
@@ -18,18 +17,19 @@ export default async function SumtotalUserLayout({
   }
 
   const { domainCode, languageCode } = codes;
+  console.log("SumtotalUserLayout:", domainCode, languageCode);
 
-  // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
-  const normalizedLanguageCode = languageCode.replace(
-    /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-    "$1"
-  );
+  // // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+  // const normalizedLanguageCode = languageCode.replace(
+  //   /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+  //   "$1"
+  // );
 
-  const locale = await mapBrowserLanguageToLocale(
-    normalizedLanguageCode,
-    campaign_name
-  );
-  console.log("QuizSetLoginLayout locale:", locale);
+  // const locale = await mapBrowserLanguageToLocale(
+  //   normalizedLanguageCode,
+  //   campaign_name
+  // );
+  // console.log("QuizSetLoginLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);

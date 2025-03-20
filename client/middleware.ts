@@ -32,11 +32,6 @@ export async function middleware(request: NextRequest) {
 
   const campaignName = segments[0];
   const campaignQuizSetPath = segments[1];
-  // const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
-  //   segments[1]
-  // )
-  //   ? segments[1]
-  //   : null;
 
   /**
    * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
@@ -55,16 +50,10 @@ export async function middleware(request: NextRequest) {
   if (session && pathname.includes("/login")) {
     const authType = session.user?.authType;
     if (authType === AuthType.SUMTOTAL) {
-      // return NextResponse.redirect(new URL("/error", request.url));
-      // const url = `${basePath}/${campaignName}/check_quizset`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
       const url = `${basePath}/${campaignName}`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
       return NextResponse.redirect(new URL(url, request.url));
     } else {
-      // const url = campaignQuizSetPath
-      //   ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
-      //   : `${basePath}/${campaignName}${search}`;
       const url = `${basePath}/${campaignName}/register`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
-
       return NextResponse.redirect(new URL(url, request.url));
     }
   }

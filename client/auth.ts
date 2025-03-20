@@ -23,6 +23,7 @@ declare module "next-auth" {
 export const {
   handlers: { GET, POST },
   auth,
+  signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
@@ -171,11 +172,17 @@ export const {
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 365 * 24 * 60 * 60, //365일
+    maxAge: 24 * 60 * 60, //24 시간
+    // maxAge: 60, // 1분
+    // maxAge: 20, // 20초
+    // maxAge: 2 * 60 * 60, // 2시간
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
-      // console.log("auth callbacks jwt", token, profile, user, account);
+      if (profile || user || account) {
+        console.log("auth callbacks jwt", token, profile, user, account);
+      }
+
       /*
        {
         id: 'cd6ac648-b5d5-4e0b-9073-249bb5fbd813',

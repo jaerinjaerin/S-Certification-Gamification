@@ -30,7 +30,7 @@ export default async function SumtotalUserLayout({
     normalizedLanguageCode,
     campaign_name
   );
-  console.log("QuizSetLoginLayout locale:", locale);
+  // console.log("QuizSetLoginLayout locale:", locale);
 
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);

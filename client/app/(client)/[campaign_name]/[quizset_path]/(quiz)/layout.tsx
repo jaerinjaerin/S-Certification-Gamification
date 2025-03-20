@@ -29,6 +29,36 @@ export default async function QuizLayout({
   const authType = session?.user.authType;
   const timeZone = "Seoul/Asia";
 
+  // try {
+  //   // if (session?.user.id && session?.user.authType === AuthType.SUMTOTAL) {
+  //   //   const response = await fetch(
+  //   //     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
+  //   //   );
+
+  //   //   console.log("response", response);
+
+  //   //   if (response.status >= 400 && response.status < 500) {
+  //   //     console.log("Sign out");
+  //   //     await signOut({
+  //   //       redirect: false,
+  //   //     });
+
+  //   //     redirect("/login");
+  //   //   }
+  //   // }
+
+  //   const expired = await checkAccessTokenExpired(session!.user.id);
+  //   if (expired) {
+  //     // await signOut({
+  //     //   redirect: false,
+  //     // });
+  //     redirect("/login");
+  //   }
+  // } catch (error) {
+  //   console.error("checkSumTotalTokenExpiration error", error);
+  // }
+  // console.log("session", session, session?.user.authType === AuthType.SUMTOTAL);
+
   let locale: string = "en";
 
   console.log("userId", userId);
@@ -63,7 +93,7 @@ export default async function QuizLayout({
       normalizedLanguageCode,
       params.campaign_name
     );
-    console.log("QuizSetLoginLayout locale:", locale);
+    // console.log("QuizSetLoginLayout locale:", locale);
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
@@ -75,7 +105,7 @@ export default async function QuizLayout({
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
 
   // const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  console.log("QuizLayout quizLogResponse", quizLogResponse);
+  // console.log("QuizLayout quizLogResponse", quizLogResponse);
   if (
     quizLogResponse.status != null &&
     quizLogResponse.status >= 400 &&
@@ -173,7 +203,7 @@ export default async function QuizLayout({
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
-  console.log("QuizLayout quizSet", quizSet);
+  // console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
     console.error(
       "Quiz set not found",
