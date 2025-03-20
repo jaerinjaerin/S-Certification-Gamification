@@ -7,12 +7,16 @@ import React from "react";
 
 const checkSumTotalTokenExpiration = async () => {
   const session = await getSession();
+  console.log("session", session, session?.user.authType === AuthType.SUMTOTAL);
   if (session?.user.authType === AuthType.SUMTOTAL) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
     );
 
+    console.log("response", response);
+
     if (response.status >= 400 && response.status < 500) {
+      console.log("Sign out");
       await signOut({
         redirect: false,
       });
@@ -21,7 +25,7 @@ const checkSumTotalTokenExpiration = async () => {
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  checkSumTotalTokenExpiration();
+  // checkSumTotalTokenExpiration();
   const baseUrl = `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth`;
   return <SessionProvider basePath={baseUrl}>{children}</SessionProvider>;
 };

@@ -9,11 +9,18 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
+import { AuthType } from "@prisma/client";
+import { getSession, signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef } from "react";
 
-export default function QuizMap() {
+export default function QuizMap({
+  params,
+}: {
+  params: { campaign_name: string; quizset_path: string };
+}) {
+  // //
   useGAPageView();
   const {
     quizSet,
@@ -36,6 +43,35 @@ export default function QuizMap() {
       block: "center",
     });
   }, [currentQuizStageIndex]);
+
+  const checkSumTotalTokenExpiration = async () => {
+    const session = await getSession();
+    console.log(
+      "session",
+      session,
+      session?.user.authType === AuthType.SUMTOTAL
+    );
+    if (session?.user.authType === AuthType.SUMTOTAL) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
+      );
+
+      console.log("response", response);
+
+      if (response.status >= 400 && response.status < 500) {
+        console.log("Sign out");
+        await signOut({
+          redirect: true,
+
+          callbackUrl: `/${params.campaign_name}/${params.quizset_path}/login`,
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkSumTotalTokenExpiration();
+  }, []);
 
   const routeNextQuizStage = async () => {
     setLoading(true);
