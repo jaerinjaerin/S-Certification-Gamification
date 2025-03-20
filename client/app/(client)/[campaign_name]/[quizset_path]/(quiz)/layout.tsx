@@ -29,6 +29,36 @@ export default async function QuizLayout({
   const authType = session?.user.authType;
   const timeZone = "Seoul/Asia";
 
+  // try {
+  //   // if (session?.user.id && session?.user.authType === AuthType.SUMTOTAL) {
+  //   //   const response = await fetch(
+  //   //     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
+  //   //   );
+
+  //   //   console.log("response", response);
+
+  //   //   if (response.status >= 400 && response.status < 500) {
+  //   //     console.log("Sign out");
+  //   //     await signOut({
+  //   //       redirect: false,
+  //   //     });
+
+  //   //     redirect("/login");
+  //   //   }
+  //   // }
+
+  //   const expired = await checkAccessTokenExpired(session!.user.id);
+  //   if (expired) {
+  //     // await signOut({
+  //     //   redirect: false,
+  //     // });
+  //     redirect("/login");
+  //   }
+  // } catch (error) {
+  //   console.error("checkSumTotalTokenExpiration error", error);
+  // }
+  // console.log("session", session, session?.user.authType === AuthType.SUMTOTAL);
+
   let locale: string = "en";
 
   console.log("userId", userId);

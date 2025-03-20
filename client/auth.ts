@@ -23,6 +23,7 @@ declare module "next-auth" {
 export const {
   handlers: { GET, POST },
   auth,
+  signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
