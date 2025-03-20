@@ -8,10 +8,8 @@ export async function fetchQuizSet(
 ): Promise<ApiResponse<QuizSetEx>> {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${quizsetPath}?user_id=${userId}&campaign_slug=${campaignSlug}`;
-    // const response = await fetch(url, { method: "GET", cache: "force-cache" });
     const response = await fetch(url, {
       method: "GET",
-      // next: { revalidate: 3600 },
     });
 
     if (!response.ok) {

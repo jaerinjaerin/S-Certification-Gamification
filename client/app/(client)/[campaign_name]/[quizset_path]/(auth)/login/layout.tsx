@@ -23,12 +23,12 @@ export default async function SumtotalUserLayout({
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(
     /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-    "$1",
+    "$1"
   );
 
   const locale = await mapBrowserLanguageToLocale(
     normalizedLanguageCode,
-    campaign_name,
+    campaign_name
   );
   console.log("QuizSetLoginLayout locale:", locale);
 
@@ -50,7 +50,7 @@ export default async function SumtotalUserLayout({
 
 async function fetchContent(url: string) {
   try {
-    const response = await fetch(url, { cache: "force-cache" });
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`fetchError: ${response.status}`);
     }
