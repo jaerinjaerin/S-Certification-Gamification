@@ -67,7 +67,7 @@ export default async function QuizLayout({
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
-  const messages = await fetch(url, { cache: "force-cache" })
+  const messages = await fetch(url)
     .then((res) => res.json())
     .catch((error) => console.error("get message error", error));
 
