@@ -6,6 +6,15 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
 
+  const randdom1or2 = Math.floor(Math.random() * 2) + 1;
+  console.log("randdom1or2", randdom1or2);
+  if (randdom1or2 === 1) {
+    return NextResponse.json(
+      { message: "Account is still valid" },
+      { status: 400 }
+    );
+  }
+
   if (!userId) {
     return NextResponse.json(
       { message: "Missing required parameter: userId" },
