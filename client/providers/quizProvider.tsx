@@ -159,17 +159,17 @@ export const QuizProvider = ({
   // console.log("QuizProvider", quizSet);
   // console.log("currentQuizStage", currentQuizStage);
 
-  useEffect(() => {
-    console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
-  }, [currentQuizStageIndex]);
+  // useEffect(() => {
+  //   console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
+  // }, [currentQuizStageIndex]);
 
-  useEffect(() => {
-    console.log("currentQuizStage 업데이트됨:", currentQuizStage);
-  }, [currentQuizStage]);
+  // useEffect(() => {
+  //   console.log("currentQuizStage 업데이트됨:", currentQuizStage);
+  // }, [currentQuizStage]);
 
-  useEffect(() => {
-    console.log("currentStageQuestions 업데이트됨:", currentStageQuestions);
-  }, [currentStageQuestions]);
+  // useEffect(() => {
+  //   console.log("currentStageQuestions 업데이트됨:", currentStageQuestions);
+  // }, [currentStageQuestions]);
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);

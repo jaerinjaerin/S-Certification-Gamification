@@ -23,14 +23,14 @@ export default async function SumtotalUserLayout({
   // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
   const normalizedLanguageCode = languageCode.replace(
     /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-    "$1",
+    "$1"
   );
 
   const locale = await mapBrowserLanguageToLocale(
     normalizedLanguageCode,
-    campaign_name,
+    campaign_name
   );
-  console.log("QuizSetLoginLayout locale:", locale);
+  // console.log("QuizSetLoginLayout locale:", locale);
 
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);

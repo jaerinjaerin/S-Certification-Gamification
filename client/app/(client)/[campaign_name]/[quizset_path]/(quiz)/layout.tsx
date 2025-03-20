@@ -63,7 +63,7 @@ export default async function QuizLayout({
       normalizedLanguageCode,
       params.campaign_name
     );
-    console.log("QuizSetLoginLayout locale:", locale);
+    // console.log("QuizSetLoginLayout locale:", locale);
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
@@ -75,7 +75,7 @@ export default async function QuizLayout({
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
 
   // const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  console.log("QuizLayout quizLogResponse", quizLogResponse);
+  // console.log("QuizLayout quizLogResponse", quizLogResponse);
   if (
     quizLogResponse.status != null &&
     quizLogResponse.status >= 400 &&
@@ -173,7 +173,7 @@ export default async function QuizLayout({
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
-  console.log("QuizLayout quizSet", quizSet);
+  // console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
     console.error(
       "Quiz set not found",

@@ -29,7 +29,7 @@ export default async function SumtotalUserLayout({
     normalizedLanguageCode,
     campaign_name
   );
-  console.log("QuizSetLoginLayout locale:", locale);
+  // console.log("QuizSetLoginLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
