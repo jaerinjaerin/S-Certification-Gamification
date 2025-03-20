@@ -163,7 +163,8 @@ export default function QuizMap({
           <AlertDialogFooter>
             <AlertDialogAction asChild>
               <Button variant={"primary"} onClick={processSignOut}>
-                <span>{translation("ok")}</span>
+                {/* <span>{translation("ok")}</span> */}
+                <span>OK</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
