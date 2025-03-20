@@ -1,3 +1,4 @@
+import { removeDuplicateUsers } from '@/lib/data';
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    const logs: UserQuizStatistics[] = await extendedQuery(
+    let logs: UserQuizStatistics[] = await extendedQuery(
       prisma,
       'UserQuizStatistics',
       {
@@ -35,6 +36,8 @@ export async function GET(request: NextRequest) {
       },
       { select: ['userId', 'lastCompletedStage'] }
     );
+
+    logs = removeDuplicateUsers(logs);
 
     const users: User[] = await extendedQuery(
       prisma,
