@@ -58,7 +58,7 @@ export const {
       console.warn("auth log warn", code, message);
     },
     debug(code, ...message) {
-      console.debug("auth log debug", code, message);
+      console.warn("auth log debug", code, message);
     },
   },
   providers: [
@@ -85,10 +85,10 @@ export const {
         //   if (profile.toString().includes("exceeded")) {
         // console.error("profile error:", profile);
         const accessToken = tokens.access_token;
-        if (accessToken) {
-          const decoded = decodeJwt(accessToken);
-          console.log("decoded", decoded);
-        }
+        // if (accessToken) {
+        //   const decoded = decodeJwt(accessToken);
+        //   console.log("decoded", decoded);
+        // }
         // const decoded = jwt.verify(accessToken);
         // console.log("decoded:", decoded);
 
@@ -119,10 +119,7 @@ export const {
         let channelName: string | null = null;
 
         if (accessToken) {
-          if (
-            typeof profile === "object" &&
-            profile?.personOrganization != null
-          ) {
+          if (profile?.personOrganization != null) {
             const result = await fetchOrganizationDetails(accessToken, profile);
             if (result) {
               jobId = result.jobId;
@@ -134,7 +131,7 @@ export const {
             }
           }
 
-          if (typeof profile === "object" && profile?.userId == null) {
+          if (profile?.userId == null) {
             console.error("profile.userId is null", profile);
             const decoded = decodeJwt(accessToken);
             if (decoded?.userid) {
