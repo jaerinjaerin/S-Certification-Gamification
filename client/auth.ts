@@ -17,6 +17,7 @@ declare module "next-auth" {
       id: string;
       provider: string;
       authType: AuthType;
+      isTokenExpired?: boolean; // 토큰 만료 상태 추가
     } & DefaultSession["user"];
   }
 }
@@ -118,19 +119,26 @@ export const {
         let channelName: string | null = null;
 
         if (accessToken) {
-          const result = await fetchOrganizationDetails(accessToken, profile);
-          if (result) {
-            jobId = result.jobId;
-            storeId = result.storeId;
-            storeSegmentText = result.storeSegmentText;
-            channelId = result.channelId;
-            channelSegmentId = result.channelSegmentId;
-            channelName = result.channelName;
+          if (
+            typeof profile === "object" &&
+            profile?.personOrganization != null
+          ) {
+            const result = await fetchOrganizationDetails(accessToken, profile);
+            if (result) {
+              jobId = result.jobId;
+              storeId = result.storeId;
+              storeSegmentText = result.storeSegmentText;
+              channelId = result.channelId;
+              channelSegmentId = result.channelSegmentId;
+              channelName = result.channelName;
+            }
           }
 
-          if (profile?.userId == null) {
+          if (typeof profile === "object" && profile?.userId == null) {
+            console.error("profile.userId is null", profile);
             const decoded = decodeJwt(accessToken);
             if (decoded?.userid) {
+              console.error("decoded?.userid", decoded?.userid);
               return {
                 id: encrypt(decoded?.userid, true),
                 emailId: null,
@@ -295,56 +303,28 @@ export const {
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, //24 시간
+    maxAge: 24 * 60 * 60, // 24시간
     // maxAge: 60, // 1분
     // maxAge: 20, // 20초
     // maxAge: 2 * 60 * 60, // 2시간
   },
   callbacks: {
     jwt: async ({ token, profile, user, account }) => {
+      console.log("🚀 ~ jwt: ~ token:", token);
       if (profile || user || account) {
-        console.log("auth callbacks jwt", token, profile, user, account);
+        // console.log("auth callbacks jwt", token, profile, user, account);
       }
 
-      /*
-       {
-        id: 'cd6ac648-b5d5-4e0b-9073-249bb5fbd813',
-        name: 'tina.lee@cheilpengtai.com',
-        email: null,
-        emailVerified: null,
-        image: null,
-        createdAt: 2025-02-03T09:30:13.746Z,
-        updatedAt: 2025-02-03T09:30:13.746Z,
-        emailId: 'eHfxfMMP4X5hpzfSCNgRgV6vuqty7cxapIZBoVl5mgE=',
-        authType: 'SUMTOTAL',
-        providerUserId: 'tIRw7YwCdAvn6R+Ha45xdA==',
-        providerPersonId: 'F2i8ia++APY1d8lDVNh/aw==',
-        jobId: '4',
-        domainId: '29',
-        domainCode: 'OrgCode-7',
-        languageId: null,
-        regionId: null,
-        subsidiaryId: null,
-        storeId: '4',
-        storeSegmentText: '',
-        channelId: '2',
-        channelSegmentId: '2',
-        channelName: '4'
-      } {
-        access_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkEwQjVCMUFCMTUzMjI1MzRDNUIxQUU3QTdEMjZDRkI3NDYzNTIwMzNSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6Im9MV3hxeFV5SlRURnNhNTZmU2JQdDBZMUlETSJ9.eyJuYmYiOjE3Mzg1NzcwMjEsImV4cCI6MTczODU4NDIyMSwiaXNzIjoiaHR0cHM6Ly9zYW1zdW5nLnN1bXRvdGFsLmhvc3QvYXBpc2VjdXJpdHkiLCJhdWQiOlsiZXh0YXBpcyIsImh0dHBzOi8vc2Ftc3VuZy5zdW10b3RhbC5ob3N0L2FwaXNlY3VyaXR5L3Jlc291cmNlcyJdLCJjbGllbnRfaWQiOiJTQU1TVU5HRUxFQ1RST05JQ1NfUFJPRF9hZGVlMjBmZGZkNDM0ZTlmYjU1YmE2NmQ4OTFiYWQ3OCIsInN1YiI6ImhxX2FwaS50ZXN0MSIsImF1dGhfdGltZSI6MTczODU3NzAyMCwiaWRwIjoibG9jYWwiLCJuYW1lIjoiaHFfYXBpLnRlc3QxIiwidXNlcm5hbWUiOiJocV9hcGkudGVzdDEiLCJtYXNrZWR1c2VyaWQiOiIyM0UzOEI2NEU0NjgwRTBBQkZBM0JDQjBGNjg3NURCNiIsInJvbGUiOiJQb3J0YWwgVXNlciIsInRlbmFudCI6IlNBTVNVTkdFTEVDVFJPTklDU19QUk9EIiwiYnJva2Vyc2Vzc2lvbiI6IjAzZWFiNjk0NGUwYTQzZGU5ZTFiMTg3MDEwNGI5ZjI1IiwiY3VsdHVyZSI6ImVuLVVTIiwibGFuZ3VhZ2UiOiJlbi11cyIsImRhdGVmb3JtYXQiOiJNTS9kZC95eXl5IiwidGltZWZvcm1hdCI6ImhoOm1tIGEiLCJ1c2VyaWQiOiIyMTM1MTU2IiwicGVyc29ucGsiOiIxNDg0MjAzIiwiZ3Vlc3RhY2NvdW50IjoiMCIsInVzZXJ0aW1lem9uZWlkIjoiQXNpYS9TZW91bCIsInR3b0xldHRlcklTT0xhbmd1YWdlTmFtZSI6ImVuIiwiaXNydGwiOiJGYWxzZSIsInBlcnNvbmd1aWQiOiI0ZjM3YjM0Mi0wZjYyLTQxMzItOTM1MS0wMGYzN2NhNTMzM2EiLCJ1c2VyaWRoYXNoIjoiMTg5Nzk0NDQyMyIsIndmbXVzZXIiOiJUcnVlIiwicHJvcGVybmFtZSI6IlRlc3QrVGVzdCIsImp0aSI6IkU5NEM4MzU1NjU5NUEyRTFCQUNDRjI0NUVDN0JGMzhDIiwiaWF0IjoxNzM4NTc3MDIxLCJzY29wZSI6WyJhbGxhcGlzIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.Qm3kck46-MxC2mMeZzVgUZVd2hdePq7t2dnnDcISe4gB9vEog5bJ6c_Eck0C_W7DzDb0kMZdt6HWAj98pvFZxayRIHQqa3ZHpBab07SXEIKUwrzI_1tk6Z5Um4ZQGaDj4h2HqFzmQZkzEf4y2gE0qhUClQ2JV8ReMiWMgIaOMENwc3AWz69McTsQGqDxt64UwORks5U44YTuopxPz8ePf6ucGJss4482lTT5nDaH4WuK7xiWWvzlWf-EbGUxzWCeaMfIldtT-jd3YKCQGdCYtP_rUkJf-lkyx1yA6mrVHpCpX1mwMsLH9B2yvcL05QxjgcoNk0M5CvfdD00zpa57Jw',
-        expires_in: 7200,
-        token_type: 'bearer',
-        refresh_token: '595745B523E6A7B73888900B39891AEF4E43B390E28E89AADF48346EA17077A9',
-        scope: 'allapis offline_access',
-        expires_at: 1738584221,
-        provider: 'sumtotal',
-        type: 'oauth',
-        providerAccountId: 'tIRw7YwCdAvn6R+Ha45xdA=='
-      }
-      */
       if (account) {
         token.provider = account.provider;
-        // prisma.account
+
+        // SumTotal 계정인 경우 expires_at 정보 저장
+        if (account.provider === "sumtotal") {
+          token.accessTokenExpires = account.expires_at;
+          token.refreshToken = account.refresh_token;
+        }
+
+        // DB에 토큰 정보 업데이트
         const userAccount = await prisma.account.findFirst({
           where: {
             userId: user.id,
@@ -364,16 +344,41 @@ export const {
           });
         }
       }
+
+      if (token.provider === "sumtotal" && !account && token?.sub) {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/account?user_id=${token.sub}`
+        );
+
+        if (response.ok) {
+          const { result: responseData } = await response.json();
+
+          if (responseData) {
+            token.accessTokenExpires = responseData.expires_at;
+            token.refreshToken = responseData.refresh_token;
+          }
+        } else {
+          console.error("API 호출 실패", response.status);
+        }
+      }
+
       if (user) {
         token.authType = (user as User).authType;
       }
+
+      // 토큰이 만료되었는지 확인
+      if (token.provider === "sumtotal" && token.accessTokenExpires) {
+        // const nowKST = new Date().getTime() + 9 * 60 * 60 * 1000;
+        // const now = Math.floor(nowKST / 1000);
+        const now = new Date().getTime() / 1000;
+        token.isTokenExpired = (token.accessTokenExpires as number) < now;
+      }
+
       return token;
     },
     session: async (params): Promise<Session | DefaultSession> => {
       const { session } = params;
-      // // console.log("auth callbacks session", session);
 
-      // JWT 전략일 경우 token을 사용
       if ("token" in params) {
         const { token } = params;
 
@@ -381,10 +386,27 @@ export const {
           session.user.id = token.sub;
           session.user.provider = (token as any).provider;
           session.user.authType = (token as any).authType;
+          session.user.isTokenExpired = (token as any).isTokenExpired;
+        }
+
+        if (
+          (token as any).provider === "sumtotal" &&
+          (token as any).isTokenExpired
+        ) {
+          try {
+            console.error(
+              "Token is expired",
+              session.user?.id,
+              token.accessTokenExpires
+            );
+          } catch (error) {
+            console.error("Token is expired", error);
+          }
+
+          return null as any;
         }
       }
 
-      // Database 전략일 경우 추가 로직이 필요하면 여기서 처리
       if ("user" in params) {
         const { user } = params;
 
@@ -396,18 +418,20 @@ export const {
       return session;
     },
     authorized: ({ auth }) => {
-      // console.log("next-auth authorized", auth);
-      return !!auth?.user; // this ensures there is a logged in user for -every- request
+      if ((auth?.user as any).isTokenExpired) {
+        return false;
+      }
+      return !!auth?.user;
     },
-    // redirect: async ({ url, baseUrl }) => {
-    //   // console.log("next-auth redirect", url, baseUrl);
-    //   const result = url.startsWith(baseUrl) ? url : baseUrl;
-    //   return result;
-    // },
   },
   pages: {
     signIn: "/login",
     error: "/error",
     verifyRequest: "/verify-request",
+  },
+  events: {
+    async signOut() {
+      console.log("User signed out");
+    },
   },
 });
