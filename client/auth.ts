@@ -119,17 +119,22 @@ export const {
         let channelName: string | null = null;
 
         if (accessToken) {
-          const result = await fetchOrganizationDetails(accessToken, profile);
-          if (result) {
-            jobId = result.jobId;
-            storeId = result.storeId;
-            storeSegmentText = result.storeSegmentText;
-            channelId = result.channelId;
-            channelSegmentId = result.channelSegmentId;
-            channelName = result.channelName;
+          if (
+            typeof profile === "object" &&
+            profile?.personOrganization != null
+          ) {
+            const result = await fetchOrganizationDetails(accessToken, profile);
+            if (result) {
+              jobId = result.jobId;
+              storeId = result.storeId;
+              storeSegmentText = result.storeSegmentText;
+              channelId = result.channelId;
+              channelSegmentId = result.channelSegmentId;
+              channelName = result.channelName;
+            }
           }
 
-          if (profile?.userId == null) {
+          if (typeof profile === "object" && profile?.userId == null) {
             console.error("profile.userId is null", profile);
             const decoded = decodeJwt(accessToken);
             if (decoded?.userid) {
@@ -388,6 +393,16 @@ export const {
           (token as any).provider === "sumtotal" &&
           (token as any).isTokenExpired
         ) {
+          try {
+            console.error(
+              "Token is expired",
+              session.user?.id,
+              token.accessTokenExpires
+            );
+          } catch (error) {
+            console.error("Token is expired", error);
+          }
+
           return null as any;
         }
       }
