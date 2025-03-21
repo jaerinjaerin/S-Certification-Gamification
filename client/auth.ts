@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthType, User } from "@prisma/client";
 import NextAuth, { DefaultSession, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import * as uuid from "uuid";
 import {
   fetchOrganizationDetails,
   SumtotalProfile,
@@ -101,10 +102,47 @@ export const {
         // console.log("storeSegmentText:", storeSegmentText);
         // console.log("channelId:", channelId);
         // console.log("regionId:", regionId);
-        // console.log("subsidiaryId:", subsidiaryId);
+        // console.error("profile.userId:", profile.userId);
+        try {
+          encrypt(profile.userId, true);
+          if (profile.userId) {
+            encrypt(profile.businessAddress.email1, true);
+          }
+          if (profile.personId) {
+            encrypt(profile.personId.toString(), true);
+          }
+        } catch (error) {
+          console.error("encrypt error:", error);
+          console.error("profile:", profile);
+        }
+
+        let userId: string | null = null;
+        if (profile.userId) {
+          userId = encrypt(profile.userId, true);
+        }
+        if (userId == null) {
+          if (profile.businessAddress.email1) {
+            console.error(
+              "use profile.businessAddress.email1:",
+              profile.businessAddress.email1
+            );
+            userId = encrypt(profile.businessAddress.email1, true);
+          }
+        }
+        if (userId == null) {
+          if (profile.personId) {
+            console.error("use profile.personId:", profile.personId);
+            userId = encrypt(profile.personId.toString(), true);
+          }
+        }
+        if (userId == null) {
+          console.error("use uuid.v4()");
+          userId = uuid.v4();
+        }
 
         return {
-          id: encrypt(profile.userId, true),
+          // id: profile.userId ? encrypt(profile.userId, true) : uuid.v4(),
+          id: userId,
           emailId:
             profile.businessAddress.email1 != null
               ? encrypt(profile.businessAddress.email1, true)
