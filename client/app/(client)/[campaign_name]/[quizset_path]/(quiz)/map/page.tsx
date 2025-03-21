@@ -4,16 +4,6 @@ import Connection from "@/components/map/connection";
 import Gradient from "@/components/map/gradient";
 import { StageMarker } from "@/components/map/stage-marker";
 import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
@@ -22,7 +12,7 @@ import { cn, fixedClass } from "@/utils/utils";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 
 export default function QuizMap({
   params,
@@ -40,7 +30,7 @@ export default function QuizMap({
   const { loading, setLoading, renderLoader } = useLoader();
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const router = useRouter();
-  const [needSignOut, setNeedSignOut] = useState<boolean>(false);
+  // const [needSignOut, setNeedSignOut] = useState<boolean>(false);
 
   useEffect(() => {
     const targetStage = itemsRef.current[currentQuizStageIndex];
@@ -148,7 +138,7 @@ export default function QuizMap({
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
       {loading && renderLoader()}
-      <AlertDialog
+      {/* <AlertDialog
         open={!!needSignOut}
         onOpenChange={() => setNeedSignOut(false)}
       >
@@ -162,13 +152,12 @@ export default function QuizMap({
           <AlertDialogFooter>
             <AlertDialogAction asChild>
               <Button variant={"primary"} onClick={processSignOut}>
-                {/* <span>{translation("ok")}</span> */}
                 <span>OK</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
     </div>
   );
 }
