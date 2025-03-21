@@ -21,6 +21,23 @@ declare module "next-auth" {
   }
 }
 
+function decodeJwt(token: string): Record<string, any> | null {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error("Invalid JWT format", err);
+    return null;
+  }
+}
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -60,29 +77,37 @@ export const {
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      profile: async (profile: SumtotalProfile | string, tokens) => {
-        console.log("profile:", profile);
+      profile: async (profile: SumtotalProfile, tokens) => {
+        // console.log("profile:", profile);
 
-        if (typeof profile === "string") {
-          if (profile.toString().includes("exceeded")) {
-            console.error("profile error:", profile);
-            return {
-              id: uuid.v4(),
-              emailId: "",
-              name: null,
-              image: null,
-              authType: AuthType.SUMTOTAL,
-              providerUserId: "",
-              providerPersonId: null,
-              domainId: null,
-              domainCode: null,
-            };
-          }
+        // if (typeof profile === "string") {
+        //   if (profile.toString().includes("exceeded")) {
+        // console.error("profile error:", profile);
+        const accessToken = tokens.access_token;
+        if (accessToken) {
+          const decoded = decodeJwt(accessToken);
+          console.log("decoded", decoded);
         }
+        // const decoded = jwt.verify(accessToken);
+        // console.log("decoded:", decoded);
+
+        // return {
+        //   id: uuid.v4(),
+        //   emailId: "",
+        //   name: null,
+        //   image: null,
+        //   authType: AuthType.SUMTOTAL,
+        //   providerUserId: "",
+        //   providerPersonId: null,
+        //   domainId: null,
+        //   domainCode: null,
+        // };
+        //   }
+        // }
         // // console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
 
-        const accessToken = tokens.access_token;
+        // const accessToken = tokens.access_token;
         // job 및 store 추출
 
         let jobId: string | null = null;
@@ -101,6 +126,33 @@ export const {
             channelId = result.channelId;
             channelSegmentId = result.channelSegmentId;
             channelName = result.channelName;
+          }
+
+          if (profile?.userId == null) {
+            const decoded = decodeJwt(accessToken);
+            if (decoded?.userid) {
+              return {
+                id: encrypt(decoded?.userid, true),
+                emailId: null,
+                name: null,
+                image: null,
+                authType: AuthType.SUMTOTAL,
+                providerUserId: encrypt(decoded?.userid, true),
+                providerPersonId: decoded?.personpk
+                  ? encrypt(decoded?.personpk.toString(), true)
+                  : null,
+                domainId: null,
+                domainCode: null,
+                jobId: null,
+                storeId: null,
+                storeSegmentText: null,
+                channelId: null,
+                channelSegmentId: null,
+                regionId: null,
+                subsidiaryId: null,
+                channelName: null,
+              };
+            }
           }
         }
 
@@ -136,46 +188,46 @@ export const {
         // console.log("channelId:", channelId);
         // console.log("regionId:", regionId);
         // console.error("profile.userId:", profile.userId);
-        try {
-          encrypt(profile.userId, true);
-          if (profile.userId) {
-            encrypt(profile.businessAddress.email1, true);
-          }
-          if (profile.personId) {
-            encrypt(profile.personId.toString(), true);
-          }
-        } catch (error) {
-          console.error("encrypt error:", error);
-          console.error("profile:", profile);
-        }
+        // try {
+        //   encrypt(profile.userId, true);
+        //   if (profile.userId) {
+        //     encrypt(profile.businessAddress.email1, true);
+        //   }
+        //   if (profile.personId) {
+        //     encrypt(profile.personId.toString(), true);
+        //   }
+        // } catch (error) {
+        //   console.error("encrypt error:", error);
+        //   console.error("profile:", profile);
+        // }
 
-        let userId: string | null = null;
-        if (profile.userId) {
-          userId = encrypt(profile.userId, true);
-        }
-        if (userId == null) {
-          if (profile.businessAddress.email1) {
-            console.error(
-              "use profile.businessAddress.email1:",
-              profile.businessAddress.email1
-            );
-            userId = encrypt(profile.businessAddress.email1, true);
-          }
-        }
-        if (userId == null) {
-          if (profile.personId) {
-            console.error("use profile.personId:", profile.personId);
-            userId = encrypt(profile.personId.toString(), true);
-          }
-        }
-        if (userId == null) {
-          console.error("use uuid.v4()");
-          userId = uuid.v4();
-        }
+        // let userId: string | null = null;
+        // if (profile.userId) {
+        //   userId = encrypt(profile.userId, true);
+        // }
+        // if (userId == null) {
+        //   if (profile.businessAddress.email1) {
+        //     console.error(
+        //       "use profile.businessAddress.email1:",
+        //       profile.businessAddress.email1
+        //     );
+        //     userId = encrypt(profile.businessAddress.email1, true);
+        //   }
+        // }
+        // if (userId == null) {
+        //   if (profile.personId) {
+        //     console.error("use profile.personId:", profile.personId);
+        //     userId = encrypt(profile.personId.toString(), true);
+        //   }
+        // }
+        // if (userId == null) {
+        //   console.error("use uuid.v4()");
+        //   userId = uuid.v4();
+        // }
 
         return {
-          // id: profile.userId ? encrypt(profile.userId, true) : uuid.v4(),
-          id: userId,
+          id: profile.userId ? encrypt(profile.userId, true) : uuid.v4(),
+          // id: userId,
           emailId:
             profile.businessAddress.email1 != null
               ? encrypt(profile.businessAddress.email1, true)
