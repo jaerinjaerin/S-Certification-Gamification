@@ -21,6 +21,23 @@ declare module "next-auth" {
   }
 }
 
+function decodeJwt(token: string): Record<string, any> | null {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error("Invalid JWT format", err);
+    return null;
+  }
+}
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -68,8 +85,6 @@ export const {
             channelSegmentId = result.channelSegmentId;
             channelName = result.channelName;
           }
-<<<<<<< Updated upstream
-=======
 
           if (profile?.userId == null) {
             console.error("profile.userId is null", profile);
@@ -99,7 +114,6 @@ export const {
               };
             }
           }
->>>>>>> Stashed changes
         }
 
         // 확인 regionId, subsidiaryId
