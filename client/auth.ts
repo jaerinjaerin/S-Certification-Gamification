@@ -68,6 +68,38 @@ export const {
             channelSegmentId = result.channelSegmentId;
             channelName = result.channelName;
           }
+<<<<<<< Updated upstream
+=======
+
+          if (profile?.userId == null) {
+            console.error("profile.userId is null", profile);
+            const decoded = decodeJwt(accessToken);
+            if (decoded?.userid) {
+              console.error("decoded?.userid", decoded?.userid);
+              return {
+                id: encrypt(decoded?.userid, true),
+                emailId: null,
+                name: null,
+                image: null,
+                authType: AuthType.SUMTOTAL,
+                providerUserId: encrypt(decoded?.userid, true),
+                providerPersonId: decoded?.personpk
+                  ? encrypt(decoded?.personpk.toString(), true)
+                  : null,
+                domainId: null,
+                domainCode: null,
+                jobId: null,
+                storeId: null,
+                storeSegmentText: null,
+                channelId: null,
+                channelSegmentId: null,
+                regionId: null,
+                subsidiaryId: null,
+                channelName: null,
+              };
+            }
+          }
+>>>>>>> Stashed changes
         }
 
         // 확인 regionId, subsidiaryId
