@@ -310,7 +310,8 @@ export async function POST(request: NextRequest) {
       where: {
         campaignId: campaignId,
         domainId: hqDomain.id,
-        languageId: language.id,
+        // languageId: language.id,
+        // languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
         jobCodes: {
           equals: ['ff'],
         },
@@ -321,7 +322,9 @@ export async function POST(request: NextRequest) {
     });
 
     const hqQuestions = hqQuizSet?.questions ?? [];
+    console.log('hqQuestions: ', domainCode, hqQuestions, jobGroup);
 
+    // const isHqQuestions = domainCode === hqDomainCode && jobGroup === 'ff';
     const isHqQuestions = domainCode === hqDomainCode && jobGroup === 'ff';
     const isHqQuestionsRegistered = hqQuestions && hqQuestions.length > 0;
     if (!isHqQuestions && !isHqQuestionsRegistered) {
