@@ -27,6 +27,22 @@ export const {
   signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
+  // logger: {
+  //   error: console.error,
+  //   warn: console.warn,
+  //   debug: console.log,
+  // },
+  logger: {
+    error(code, ...message) {
+      console.error("auth log error", code, message);
+    },
+    warn(code, ...message) {
+      console.warn("auth log warn", code, message);
+    },
+    debug(code, ...message) {
+      console.debug("auth log debug", code, message);
+    },
+  },
   providers: [
     {
       id: "sumtotal",
@@ -44,8 +60,25 @@ export const {
       userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
-      profile: async (profile: SumtotalProfile, tokens) => {
-        // console.log("profile:", profile);
+      profile: async (profile: SumtotalProfile | string, tokens) => {
+        console.log("profile:", profile);
+
+        if (typeof profile === "string") {
+          if (profile.toString().includes("exceeded")) {
+            console.error("profile error:", profile);
+            return {
+              id: uuid.v4(),
+              emailId: "",
+              name: null,
+              image: null,
+              authType: AuthType.SUMTOTAL,
+              providerUserId: "",
+              providerPersonId: null,
+              domainId: null,
+              domainCode: null,
+            };
+          }
+        }
         // // console.log("accessToken:", tokens.access_token);
         // 이 값이 User 모델에 저장됨. 여기에 전달되는 값은 User 스키마에 정의된 필드만 사용 가능
 
