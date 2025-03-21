@@ -4,8 +4,12 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
+  let session = await auth();
+  if (session?.user.isTokenExpired) {
+    session = null;
+  }
 
+  console.log("🚀 ~ middleware ~ session:", session);
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
