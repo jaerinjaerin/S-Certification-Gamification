@@ -9,16 +9,16 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
-import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef } from "react";
 
-export default function QuizMap({
-  params,
-}: {
-  params: { campaign_name: string; quizset_path: string };
-}) {
+// export default function QuizMap({
+//   params,
+// }: {
+//   params: { campaign_name: string; quizset_path: string };
+// }) {
+export default function QuizMap() {
   useGAPageView();
   const {
     quizSet,
@@ -78,15 +78,15 @@ export default function QuizMap({
   //   checkSumTotalTokenExpiration();
   // }, []);
 
-  const processSignOut = async () => {
-    setLoading(true);
-    sessionStorage.clear();
-    const signOutUrl = `${window.location.protocol}//${window.location.host}/${params.campaign_name}/${params.quizset_path}/login`;
-    await signOut({
-      redirect: false, // NextAuth의 기본 리디렉션을 방지
-    });
-    window.location.href = signOutUrl;
-  };
+  // const processSignOut = async () => {
+  //   setLoading(true);
+  //   sessionStorage.clear();
+  //   const signOutUrl = `${window.location.protocol}//${window.location.host}/${params.campaign_name}/${params.quizset_path}/login`;
+  //   await signOut({
+  //     redirect: false, // NextAuth의 기본 리디렉션을 방지
+  //   });
+  //   window.location.href = signOutUrl;
+  // };
 
   const routeNextQuizStage = async () => {
     setLoading(true);
