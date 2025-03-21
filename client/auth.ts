@@ -129,8 +129,10 @@ export const {
           }
 
           if (profile?.userId == null) {
+            console.error("profile.userId is null", profile);
             const decoded = decodeJwt(accessToken);
             if (decoded?.userid) {
+              console.error("decoded?.userid", decoded?.userid);
               return {
                 id: encrypt(decoded?.userid, true),
                 emailId: null,

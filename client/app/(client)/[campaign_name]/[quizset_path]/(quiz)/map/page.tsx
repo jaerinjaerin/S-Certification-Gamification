@@ -19,8 +19,7 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuiz } from "@/providers/quizProvider";
 import { QuizStageEx } from "@/types/apiTypes";
 import { cn, fixedClass } from "@/utils/utils";
-import { AuthType } from "@prisma/client";
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -54,40 +53,40 @@ export default function QuizMap({
     });
   }, [currentQuizStageIndex]);
 
-  const isCheckSumTotalTokenExpirationRef = useRef(false); // 실행 상태를 추적
+  // const isCheckSumTotalTokenExpirationRef = useRef(false); // 실행 상태를 추적
 
-  const checkSumTotalTokenExpiration = async () => {
-    if (isCheckSumTotalTokenExpirationRef.current) {
-      // console.log("createQuizLog is already running");
-      return; // 이미 실행 중인 경우 종료
-    }
+  // const checkSumTotalTokenExpiration = async () => {
+  //   if (isCheckSumTotalTokenExpirationRef.current) {
+  //     // console.log("createQuizLog is already running");
+  //     return; // 이미 실행 중인 경우 종료
+  //   }
 
-    isCheckSumTotalTokenExpirationRef.current = true; // 실행 상태 설정
+  //   isCheckSumTotalTokenExpirationRef.current = true; // 실행 상태 설정
 
-    try {
-      const session = await getSession();
-      if (session?.user.authType === AuthType.SUMTOTAL) {
-        setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
-        );
+  //   try {
+  //     const session = await getSession();
+  //     if (session?.user.authType === AuthType.SUMTOTAL) {
+  //       setLoading(true);
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
+  //       );
 
-        if (response.status >= 400 && response.status < 500) {
-          console.log("Sign out");
-          setNeedSignOut(true);
-        }
-      }
-    } catch (error) {
-      console.error("checkSumTotalTokenExpiration error", error);
-    } finally {
-      isCheckSumTotalTokenExpirationRef.current = false;
-      setLoading(false);
-    }
-  };
+  //       if (response.status >= 400 && response.status < 500) {
+  //         console.log("Sign out");
+  //         setNeedSignOut(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("checkSumTotalTokenExpiration error", error);
+  //   } finally {
+  //     isCheckSumTotalTokenExpirationRef.current = false;
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    checkSumTotalTokenExpiration();
-  }, []);
+  // useEffect(() => {
+  //   checkSumTotalTokenExpiration();
+  // }, []);
 
   const processSignOut = async () => {
     setLoading(true);
