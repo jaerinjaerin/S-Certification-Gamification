@@ -99,7 +99,9 @@ export default async function QuizLayout({
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
   const messages = await fetch(url)
     .then((res) => res.json())
-    .catch((error) => console.error("get message error", error));
+    .catch((error) =>
+      console.error("get message error", locale, params.campaign_name, error)
+    );
 
   // ================== Quiz Log Setup ==================
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
