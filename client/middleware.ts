@@ -5,9 +5,6 @@ import { NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
   let session = await auth();
-  if (session?.user.isTokenExpired) {
-    session = null;
-  }
 
   // console.log("🚀 ~ middleware ~ session:", session);
   const { pathname, search } = request.nextUrl;
@@ -19,6 +16,10 @@ export async function middleware(request: NextRequest) {
     session?.user.id,
     session?.user.isTokenExpired
   );
+
+  if (session?.user.isTokenExpired) {
+    session = null;
+  }
 
   if (
     pathname.includes("/error") ||
