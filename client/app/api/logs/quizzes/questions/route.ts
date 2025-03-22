@@ -59,22 +59,31 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const savedUserQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst(
-      {
-        where: {
-          userId: userId as string,
-          quizSetId: quizSetId as string,
-          quizStageId: quizStageId as string,
-          questionId: questionId as string,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      }
-    );
+    // const savedUserQuizQuestionLog = await prisma.userQuizQuestionLog.findFirst(
+    //   {
+    //     where: {
+    //       userId: userId as string,
+    //       quizSetId: quizSetId as string,
+    //       quizStageId: quizStageId as string,
+    //       questionId: questionId as string,
+    //     },
+    //     orderBy: {
+    //       createdAt: "desc",
+    //     },
+    //   }
+    // );
 
-    let tryNumber = savedUserQuizQuestionLog?.tryNumber ?? 0;
-    tryNumber += 1;
+    // let tryNumber = savedUserQuizQuestionLog?.tryNumber ?? 0;
+    // tryNumber += 1;
+    // const tryNumber =
+    //   (await prisma.userQuizQuestionLog.count({
+    //     where: {
+    //       userId: userId as string,
+    //       quizSetId: quizSetId as string,
+    //       quizStageId: quizStageId as string,
+    //       questionId: questionId as string,
+    //     },
+    //   })) + 1;
 
     // const result = await prisma.$transaction(async (tx) => {
     const userQuizQuestionLog = await prisma.userQuizQuestionLog.create({
@@ -104,46 +113,46 @@ export async function POST(request: NextRequest) {
         storeId,
         channelId,
         channelName,
-        tryNumber,
+        tryNumber: 1,
         originalQuestionId,
         originalIndex,
       },
     });
 
     // const userQuizQuestionStatistics =
-    await prisma.userQuizQuestionStatistics.create({
-      data: {
-        // id: userQuizQuestionLog.id,
-        authType,
-        isCorrect,
-        campaignId,
-        userId,
-        quizSetId,
-        questionId,
-        quizStageId,
-        selectedOptionIds,
-        correctOptionIds,
-        quizStageIndex,
-        category,
-        specificFeature,
-        product,
-        questionType,
-        elapsedSeconds,
-        createdAt,
-        domainId,
-        languageId,
-        jobId,
-        regionId: domain?.subsidiary?.regionId,
-        subsidiaryId: domain?.subsidiaryId,
-        channelSegmentId,
-        storeId,
-        channelId,
-        channelName,
-        tryNumber,
-        originalQuestionId,
-        originalIndex,
-      },
-    });
+    // await prisma.userQuizQuestionStatistics.create({
+    //   data: {
+    //     // id: userQuizQuestionLog.id,
+    //     authType,
+    //     isCorrect,
+    //     campaignId,
+    //     userId,
+    //     quizSetId,
+    //     questionId,
+    //     quizStageId,
+    //     selectedOptionIds,
+    //     correctOptionIds,
+    //     quizStageIndex,
+    //     category,
+    //     specificFeature,
+    //     product,
+    //     questionType,
+    //     elapsedSeconds,
+    //     createdAt,
+    //     domainId,
+    //     languageId,
+    //     jobId,
+    //     regionId: domain?.subsidiary?.regionId,
+    //     subsidiaryId: domain?.subsidiaryId,
+    //     channelSegmentId,
+    //     storeId,
+    //     channelId,
+    //     channelName,
+    //     tryNumber,
+    //     originalQuestionId,
+    //     originalIndex,
+    //   },
+    // });
 
     //   return { userQuizQuestionLog, userQuizQuestionStatistics };
     // });

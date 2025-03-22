@@ -2,7 +2,8 @@ import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
-import { BadgeLog, Job } from '@prisma/client';
+import { decrypt } from '@/utils/encrypt';
+import { BadgeLog, Job, User } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -36,6 +37,20 @@ export async function GET(request: NextRequest) {
         createdAt: 'asc',
       },
     });
+
+    const userIds = logs
+      .map((log) => log.userId)
+      .filter((id): id is string => id !== null);
+    let users: User[] = [];
+    if (userIds && userIds.length > 0) {
+      users = await prisma.user.findMany({
+        where: {
+          id: {
+            in: userIds,
+          },
+        },
+      });
+    }
 
     // console.log('logs:', logs);
 
@@ -81,22 +96,29 @@ export async function GET(request: NextRequest) {
     const campaigns = await prisma.campaign.findMany();
     const domains = await prisma.domain.findMany();
 
-    const result = logs.map((log, index) => ({
-      no: index + 1,
-      certification: campaigns.find(
-        (campaign) => campaign.id === log.campaignId
-      )?.slug,
-      domain: domains.find((domain) => domain.id === log.domainId)?.name,
-      api: log.apiType,
-      status: log.status,
-      message: log.message,
-      userId: log.userId,
-      accountId: log.accountUserId,
-      activityId: log.activityId,
-      accessToken: log.accessToken,
-      raw: log.rawLog,
-      createdAt: log.createdAt.toISOString(),
-    }));
+    const result = logs.map((log, index) => {
+      const providerUserId = users.find(
+        (user) => user.id === log.userId
+      )?.providerUserId;
+      const eId = providerUserId ? decrypt(providerUserId, true) : null;
+      return {
+        no: index + 1,
+        certification: campaigns.find(
+          (campaign) => campaign.id === log.campaignId
+        )?.slug,
+        domain: domains.find((domain) => domain.id === log.domainId)?.name,
+        api: log.apiType,
+        status: log.status,
+        message: log.message,
+        userId: log.userId,
+        eId,
+        accountId: log.accountUserId,
+        activityId: log.activityId,
+        accessToken: log.accessToken,
+        raw: log.rawLog,
+        createdAt: log.createdAt.toISOString(),
+      };
+    });
 
     const blob = await createNormalExcelBlob({
       sheetName: 'User Stage Progress',
@@ -108,6 +130,7 @@ export async function GET(request: NextRequest) {
         { header: 'status', key: 'status', width: 10 },
         { header: 'message', key: 'message', width: 10 },
         { header: 'userId', key: 'userId', width: 10 },
+        { header: 'eId', key: 'eId', width: 10 },
         { header: 'accountId', key: 'accountId', width: 10 },
         { header: 'activityId', key: 'activityId', width: 10 },
         { header: 'accessToken', key: 'accessToken', width: 10 },

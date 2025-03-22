@@ -138,8 +138,6 @@ export default function GuestRegisterPage({
       console.log("jsonUrl", jsonUrl);
       const res = await fetch(jsonUrl, {
         method: "GET",
-        // cache: "force-cache",
-        // cache: "no-store",
       });
 
       const data = await res.json();

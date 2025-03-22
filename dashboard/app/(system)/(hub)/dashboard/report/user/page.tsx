@@ -48,7 +48,6 @@ const columns: ColumnDef<UserListProps>[] = [
 const UserProgress = () => {
   const searchParams = useSearchParams();
   const { campaign } = useStateVariables();
-  const state = { fieldValues: Object.fromEntries(searchParams.entries()) };
   const [pageIndex, setPageIndex] = usePageIndex(
     searchParams,
     'progressPageIndex'
@@ -83,15 +82,17 @@ const UserProgress = () => {
   });
 
   const onDownload = () => {
-    if (state.fieldValues) {
-      const url = `/api/dashboard/report/user/download?${searchParams.toString()}`;
+    if (campaign) {
+      const queryString = searchParams.toString();
+      const url = `/api/dashboard/report/user/download${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
       window.location.href = url;
     }
   };
 
   const onDownloadBadgeLog = () => {
-    if (state.fieldValues) {
-      const url = `/api/dashboard/report/badge/download?${searchParams.toString()}&campaignId=${campaign?.id}`;
+    if (campaign) {
+      const queryString = searchParams.toString();
+      const url = `/api/dashboard/report/badge/download${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
       window.location.href = url;
     }
   };
