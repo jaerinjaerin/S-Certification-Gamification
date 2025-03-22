@@ -437,7 +437,7 @@ export async function fetchOrganizationDetails(
   let channelName: string | null = null;
 
   if (!accessToken) {
-    console.warn("Access token is required");
+    console.info("Access token is required");
     return {
       jobId,
       storeId,
@@ -495,7 +495,7 @@ export async function fetchOrganizationDetails(
         return scope;
       });
       console.info("profile:", profile, "accessToken:", accessToken);
-      console.warn(
+      console.info(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
       );
@@ -536,7 +536,7 @@ export async function fetchOrganizationDetails(
         return scope;
       });
       console.info("profile:", profile, "accessToken:", accessToken);
-      console.warn(
+      console.info(
         `fetchOrganizationDataByParentName Error fetching data for parentName: ${parentName}, accessToken: ${accessToken}:`,
         error
       );
@@ -613,12 +613,12 @@ export async function fetchOrganizationDetails(
         }
       } else {
         console.info("profile:", profile, "accessToken:", accessToken);
-        console.warn(`Parent organization details not found: ${parentData}`);
+        console.info(`Parent organization details not found: ${parentData}`);
       }
     }
   } catch (error) {
     console.info("profile:", profile, "accessToken:", accessToken);
-    console.warn("Error processing organization details:", error);
+    console.info("Error processing organization details:", error);
   }
 
   console.log("fetchOrganizationDetails jobId:", jobId);
