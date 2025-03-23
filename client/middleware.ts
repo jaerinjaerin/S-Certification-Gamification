@@ -13,13 +13,13 @@ export async function middleware(request: NextRequest) {
   console.error(
     "move page",
     pathname,
-    session?.user.id,
-    session?.user.isTokenExpired
+    session?.user.id
+    // session?.user.isTokenExpired
   );
 
-  if (session?.user.isTokenExpired) {
-    session = null;
-  }
+  // if (session?.user.isTokenExpired) {
+  //   session = null;
+  // }
 
   if (
     pathname.includes("/error") ||

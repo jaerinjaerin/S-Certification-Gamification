@@ -17,7 +17,7 @@ declare module "next-auth" {
       id: string;
       provider: string;
       authType: AuthType;
-      isTokenExpired?: boolean; // 토큰 만료 상태 추가
+      // isTokenExpired?: boolean; // 토큰 만료 상태 추가
     } & DefaultSession["user"];
   }
 }
@@ -58,7 +58,7 @@ export const {
       console.warn("auth log warn", code, message);
     },
     debug(code, ...message) {
-      console.debug("auth log debug", code, message);
+      // console.warn("auth log debug", code, message);
     },
   },
   providers: [
@@ -296,7 +296,7 @@ export const {
         // const nowKST = new Date().getTime() + 9 * 60 * 60 * 1000;
         // const now = Math.floor(nowKST / 1000);
         const now = new Date().getTime() / 1000;
-        token.isTokenExpired = (token.accessTokenExpires as number) < now;
+        // token.isTokenExpired = (token.accessTokenExpires as number) < now;
       }
 
       return token;
@@ -311,25 +311,25 @@ export const {
           session.user.id = token.sub;
           session.user.provider = (token as any).provider;
           session.user.authType = (token as any).authType;
-          session.user.isTokenExpired = (token as any).isTokenExpired;
+          // session.user.isTokenExpired = (token as any).isTokenExpired;
         }
 
-        if (
-          (token as any).provider === "sumtotal" &&
-          (token as any).isTokenExpired
-        ) {
-          try {
-            console.error(
-              "Token is expired",
-              session.user?.id,
-              token.accessTokenExpires
-            );
-          } catch (error) {
-            console.error("Token is expired", error);
-          }
+        // if (
+        //   (token as any).provider === "sumtotal" &&
+        //   (token as any).isTokenExpired
+        // ) {
+        //   try {
+        //     console.error(
+        //       "Token is expired",
+        //       session.user?.id,
+        //       token.accessTokenExpires
+        //     );
+        //   } catch (error) {
+        //     console.error("Token is expired", error);
+        //   }
 
-          return null as any;
-        }
+        //   return null as any;
+        // }
       }
 
       if ("user" in params) {
@@ -343,9 +343,9 @@ export const {
       return session;
     },
     authorized: ({ auth }) => {
-      if ((auth?.user as any).isTokenExpired) {
-        return false;
-      }
+      // if ((auth?.user as any).isTokenExpired) {
+      //   return false;
+      // }
       return !!auth?.user;
     },
   },

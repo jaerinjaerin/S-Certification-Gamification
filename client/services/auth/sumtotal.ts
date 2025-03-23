@@ -448,7 +448,7 @@ export async function fetchOrganizationDetails(
     };
   }
 
-  console.log("fetchOrganizationDetails profile:", profile);
+  // console.log("fetchOrganizationDetails profile:", profile);
 
   // const orgIds: string[] =
   //   profile.personOrganization != null
@@ -494,8 +494,8 @@ export async function fetchOrganizationDetails(
         scope.setTag("orgId", orgId);
         return scope;
       });
-      console.info("profile:", profile, "accessToken:", accessToken);
-      console.info(
+      // console.info("profile:", profile, "accessToken:", accessToken);
+      console.warn(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
       );
@@ -555,17 +555,17 @@ export async function fetchOrganizationDetails(
       await Promise.all(orgIds.map(fetchOrganizationData))
     ).filter((result) => result != null);
 
-    console.log(
-      "fetchOrganizationDetails results:",
-      JSON.stringify(results, null, 2)
-    );
+    // console.log(
+    //   "fetchOrganizationDetails results:",
+    //   JSON.stringify(results, null, 2)
+    // );
 
     const filteredResults = filterResultsByLatestDate(
       results,
       profile.personOrganization
     );
 
-    console.info("fetchOrganizationDetails filteredResults:", filteredResults);
+    // console.info("fetchOrganizationDetails filteredResults:", filteredResults);
 
     let parentOrganizationNames: string | null = null;
 
@@ -592,11 +592,11 @@ export async function fetchOrganizationDetails(
       }
     });
 
-    console.log("fetchOrganizationDetails jobId:", jobId);
-    console.log(
-      "fetchOrganizationDetails parentOrganizationNames:",
-      parentOrganizationNames
-    );
+    // console.log("fetchOrganizationDetails jobId:", jobId);
+    // console.log(
+    //   "fetchOrganizationDetails parentOrganizationNames:",
+    //   parentOrganizationNames
+    // );
 
     // Fetch parent organization details if needed
     if (parentOrganizationNames) {
@@ -621,10 +621,10 @@ export async function fetchOrganizationDetails(
     console.info("Error processing organization details:", error);
   }
 
-  console.log("fetchOrganizationDetails jobId:", jobId);
-  console.log("fetchOrganizationDetails storeId:", storeId);
-  console.log("fetchOrganizationDetails channelId:", channelId);
-  console.log("fetchOrganizationDetails channelName:", channelName);
+  // console.log("fetchOrganizationDetails jobId:", jobId);
+  // console.log("fetchOrganizationDetails storeId:", storeId);
+  // console.log("fetchOrganizationDetails channelId:", channelId);
+  // console.log("fetchOrganizationDetails channelName:", channelName);
 
   // Return the collected information
   return {
