@@ -45,9 +45,9 @@ export async function middleware(request: NextRequest) {
   const campaignName = segments[0];
   const campaignQuizSetPath = segments[1];
 
-  if (campaignName.includes("login")) {
-    return NextResponse.redirect(new URL("/error/not-found", request.url));
-  }
+  // if (campaignName.includes("login")) {
+  //   return NextResponse.redirect(new URL("/error/not-found", request.url));
+  // }
 
   /**
    * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우

@@ -19,9 +19,9 @@ export default async function CampaignPage({
 
   const session = await auth();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
 
   const historyResponse = await fetch(
     // `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
@@ -39,7 +39,12 @@ export default async function CampaignPage({
     userQuizLog = historyData?.item?.quizLog;
   }
 
-  console.log("CampaignPage quizHistory", userQuizLog, session?.user);
+  console.error(
+    "CampaignPage quizHistory",
+    userQuizLog,
+    session?.user,
+    session
+  );
 
   // 퀴즈로그가 있으면 해당 퀴즈셋으로 이동
   if (userQuizLog?.quizSetPath) {
