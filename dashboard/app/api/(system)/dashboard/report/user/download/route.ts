@@ -1,10 +1,9 @@
-import { removeDuplicateUsers } from '@/lib/data';
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
 import { decrypt } from '@/utils/encrypt';
-import { Job, User, UserQuizStatistics } from '@prisma/client';
+import { AuthType, Job, User, UserQuizLog } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -22,9 +21,11 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    let logs: UserQuizStatistics[] = await extendedQuery(
+    console.log('searchParams:', searchParams);
+
+    const logs: UserQuizLog[] = await extendedQuery(
       prisma,
-      'UserQuizStatistics',
+      'UserQuizLog',
       {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },
@@ -34,10 +35,8 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      { select: ['userId', 'lastCompletedStage'] }
+      { select: ['userId', 'lastCompletedStage', 'authType'] }
     );
-
-    logs = removeDuplicateUsers(logs);
 
     const users: User[] = await extendedQuery(
       prisma,
@@ -45,28 +44,46 @@ export async function GET(request: NextRequest) {
       {
         id: { in: logs.map((log) => log.userId) },
       },
-      { select: ['id', 'providerUserId'] }
+      { select: ['id', 'providerUserId', 'emailId', 'authType'] }
     );
+
+    // const userMap = new Map(
+    //   users.map((user) => {
+    //     const employeeId = user.providerUserId
+    //       ? decrypt(user.providerUserId, true)
+    //       : null;
+    //     return [user.id, employeeId];
+    //   })
+    // );
 
     const userMap = new Map(
       users.map((user) => {
-        const employeeId = user.providerUserId
-          ? decrypt(user.providerUserId, true)
-          : null;
-        return [user.id, employeeId];
+        const identifier =
+          user.authType === 'SUMTOTAL'
+            ? user.providerUserId
+              ? decrypt(user.providerUserId, true)
+              : null
+            : user.emailId
+              ? decrypt(user.emailId, true)
+              : null;
+        return [user.id, identifier];
       })
     );
 
-    const result = logs.map((log, index) => ({
-      no: index + 1,
-      eid: userMap.get(log.userId) || null,
-      stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
-    }));
+    const result = logs.map((log, index) => {
+      return {
+        no: index + 1,
+        authType: log.authType === AuthType.SUMTOTAL ? 'SumTotal' : 'Email',
+        eid: userMap.get(log.userId) || null,
+        stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
+      };
+    });
 
     const blob = await createNormalExcelBlob({
       sheetName: 'User Stage Progress',
       columns: [
         { header: 'No', key: 'no', width: 10 },
+        { header: 'Auth Type', key: 'authType', width: 30 },
         { header: 'Employee ID', key: 'eid', width: 30 },
         { header: 'Stage', key: 'stage', width: 10 },
       ],
