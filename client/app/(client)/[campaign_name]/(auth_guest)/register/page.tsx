@@ -407,7 +407,7 @@ export default function GuestRegisterPage({
                 isArabic && "text-right"
               )}
             >
-              {translation("select_inforamiton")}
+              {translation("select_information")}
               <span className="block text-[#0037FF]">
                 {translation("mandatory_fields")}
               </span>

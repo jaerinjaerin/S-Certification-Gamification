@@ -39,12 +39,7 @@ export default async function CampaignPage({
     userQuizLog = historyData?.item?.quizLog;
   }
 
-  console.error(
-    "CampaignPage quizHistory",
-    userQuizLog,
-    session?.user,
-    session
-  );
+  console.log("CampaignPage quizHistory", userQuizLog, session?.user, session);
 
   // 퀴즈로그가 있으면 해당 퀴즈셋으로 이동
   if (userQuizLog?.quizSetPath) {

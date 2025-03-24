@@ -495,7 +495,7 @@ export async function fetchOrganizationDetails(
         return scope;
       });
       // console.info("profile:", profile, "accessToken:", accessToken);
-      console.warn(
+      console.info(
         `fetchOrganizationData Error fetching data for orgId: ${orgId}:`,
         error
       );

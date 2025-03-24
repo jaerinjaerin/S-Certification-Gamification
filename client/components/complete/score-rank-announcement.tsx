@@ -89,7 +89,7 @@ export default function ScoreRankAnnouncement({
                 <p className="font-extrabold">
                   {translation("remaining_attempts")}
                 </p>
-                {translation("remaiing_attempts_description")}
+                {translation("remaining_attempts_description")}
               </div>
             </div>
             <DialogFooter>
