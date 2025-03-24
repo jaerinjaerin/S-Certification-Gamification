@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth].ts",
-    "next.config.js"
+    "next.config.js",
+    "extract_question_log.js",
+    "update_question_log.js"
   ],
   "exclude": ["node_modules"]
 }
