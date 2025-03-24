@@ -159,13 +159,13 @@ export default function QuizMap({
           <AlertDialogHeader>
             <AlertDialogTitle></AlertDialogTitle>
             <AlertDialogDescription>
-              Please log in again to continue
+              {translation("alert_relogin_required")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction asChild>
               <Button variant={"primary"} onClick={processSignOut}>
-                <span>OK</span>
+                <span>{translation("ok")}</span>
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
