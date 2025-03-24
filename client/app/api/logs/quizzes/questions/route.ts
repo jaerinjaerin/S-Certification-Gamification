@@ -218,9 +218,9 @@ export async function GET(request: NextRequest) {
         {
           questionId: "asc",
         },
-        {
-          tryNumber: "desc", // 높은 tryNumber 우선
-        },
+        // {
+        //   tryNumber: "desc", // 높은 tryNumber 우선
+        // },
         {
           createdAt: "desc", // 최신 데이터 우선
         },
