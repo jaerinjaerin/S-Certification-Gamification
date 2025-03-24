@@ -25,8 +25,11 @@ function filterUsersWithoutStatus200(inputFile, outputFile) {
 
   // status 200이 없는 userId만 필터링하고, certification이 s25인 항목 제거
   const filteredUsers = data.filter(
-    (row) => !userStatusMap.get(row.userId) && row.certification !== "s25"
+    // (row) => !userStatusMap.get(row.userId) && row.certification !== "s25"
+    (row) => !userStatusMap.get(row.userId)
   );
+
+  console.log(`필터링된 데이터: ${filteredUsers.map((row) => row.userId)}`);
 
   // userId 기준으로 유니크한 데이터만 남기기
   const uniqueUsers = new Map();
