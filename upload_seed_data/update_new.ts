@@ -156,6 +156,7 @@ async function main() {
     { domainCode: "NAT_2710", activityIds: [252722, 252723] },
     { domainCode: "NAT_2834", activityIds: [252727, 252729] },
     { domainCode: "NAT_2392", activityIds: [255056, 255057] },
+    { domainCode: "SoftBank", activityIds: [256705, 256706] },
   ];
 
   const createSeeds = async () => {

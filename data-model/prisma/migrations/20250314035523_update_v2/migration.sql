@@ -3,6 +3,7 @@
 
   - A unique constraint covering the columns `[slug]` on the table `Campaign` will be added. If there are existing duplicate values, this will fail.
   - A unique constraint covering the columns `[settingsId]` on the table `Campaign` will be added. If there are existing duplicate values, this will fail.
+  - A unique constraint covering the columns `[contentCopyHistoryId]` on the table `Campaign` will be added. If there are existing duplicate values, this will fail.
 
 */
 -- CreateEnum
@@ -18,10 +19,14 @@ CREATE TYPE "BadgeType" AS ENUM ('FIRST', 'SECOND');
 ALTER TABLE "QuestionOption" DROP CONSTRAINT "QuestionOption_questionId_fkey";
 
 -- DropForeignKey
+ALTER TABLE "QuizSet" DROP CONSTRAINT "QuizSet_campaignId_fkey";
+
+-- DropForeignKey
 ALTER TABLE "QuizStage" DROP CONSTRAINT "QuizStage_quizSetId_fkey";
 
 -- AlterTable
-ALTER TABLE "Campaign" ADD COLUMN     "deleted" BOOLEAN DEFAULT false,
+ALTER TABLE "Campaign" ADD COLUMN     "contentCopyHistoryId" TEXT,
+ADD COLUMN     "deleted" BOOLEAN DEFAULT false,
 ADD COLUMN     "deletedAt" TIMESTAMP(3),
 ADD COLUMN     "settingsId" TEXT,
 ADD COLUMN     "slug" TEXT NOT NULL DEFAULT 's25';
@@ -81,6 +86,22 @@ CREATE TABLE "CampaignSettings" (
     "fsmSecondBadgeStageIndex" INTEGER,
 
     CONSTRAINT "CampaignSettings_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ContentCopyHistory" (
+    "id" TEXT NOT NULL,
+    "campaignId" TEXT NOT NULL,
+    "targetCampaignId" TEXT,
+    "targetCampaignName" TEXT,
+    "imageCampaignId" TEXT,
+    "imageCampaignName" TEXT,
+    "uiLanguageCampaignId" TEXT,
+    "uiLanguageCampaignName" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ContentCopyHistory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -209,7 +230,7 @@ CREATE TABLE "BadgeLog" (
 CREATE TABLE "DomainWebLanguage" (
     "id" TEXT NOT NULL,
     "campaignId" TEXT,
-    "domainId" TEXT NOT NULL,
+    "domainId" TEXT,
     "languageId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -253,8 +274,14 @@ CREATE UNIQUE INDEX "Campaign_slug_key" ON "Campaign"("slug");
 -- CreateIndex
 CREATE UNIQUE INDEX "Campaign_settingsId_key" ON "Campaign"("settingsId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Campaign_contentCopyHistoryId_key" ON "Campaign"("contentCopyHistoryId");
+
 -- AddForeignKey
 ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_settingsId_fkey" FOREIGN KEY ("settingsId") REFERENCES "CampaignSettings"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_contentCopyHistoryId_fkey" FOREIGN KEY ("contentCopyHistoryId") REFERENCES "ContentCopyHistory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Domain" ADD CONSTRAINT "Domain_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -266,7 +293,16 @@ ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_domainId_fkey" FOREIGN KEY ("domai
 ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "QuizSet" ADD CONSTRAINT "QuizSet_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "QuizSetFile" ADD CONSTRAINT "QuizSetFile_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuizBadge" ADD CONSTRAINT "QuizBadge_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Image" ADD CONSTRAINT "Image_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuizStage" ADD CONSTRAINT "QuizStage_quizSetId_fkey" FOREIGN KEY ("quizSetId") REFERENCES "QuizSet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -302,10 +338,16 @@ ALTER TABLE "UserRoleMapping" ADD CONSTRAINT "UserRoleMapping_roleId_fkey" FOREI
 ALTER TABLE "ActivityBadge" ADD CONSTRAINT "ActivityBadge_badgeImageId_fkey" FOREIGN KEY ("badgeImageId") REFERENCES "QuizBadge"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "ActivityBadge" ADD CONSTRAINT "ActivityBadge_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UploadedFile" ADD CONSTRAINT "UploadedFile_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_domainId_fkey" FOREIGN KEY ("domainId") REFERENCES "Domain"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "DomainWebLanguage" ADD CONSTRAINT "DomainWebLanguage_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
