@@ -1,7 +1,9 @@
-export const chartColorPrimary = "var(--chart-primary)";
-export const chartColorSecondary = "var(--chart-secondary)";
-export const chartColorTertiary = "var(--chart-tertiary)";
-export const chartColorQuaternary = "var(--chart-quaternary)";
-export const chartColorOthers = "rgba(164, 164, 164, 1)";
-export const chartColorHoverBackground = "rgba(0, 0, 0, 0.05)";
-export const chartColorLineStroke = "var(--chart-line-stroke)";
+export const chartColorGoal = 'var(--chart-goal)';
+export const chartColorExpert = 'var(--chart-expert)';
+export const chartColorAdvanced = 'var(--chart-advanced)';
+export const chartColorFsmSes = 'var(--chart-fsm-ses)';
+export const chartColorFsm = 'var(--chart-fsm)';
+export const chartColorFfSes = 'var(--chart-ff-ses)';
+export const chartColorFf = 'var(--chart-ff)';
+export const chartColorHoverBackground = 'rgba(0, 0, 0, 0.05)';
+export const chartColorExpertLine = 'var(--chart-expert-line)';
