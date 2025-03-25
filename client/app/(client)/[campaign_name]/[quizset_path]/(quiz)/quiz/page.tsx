@@ -22,6 +22,7 @@ import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCheckOS } from "@/hooks/useCheckOS";
 import { useCountdown } from "@/hooks/useCountdown";
+import { useCampaign } from "@/providers/campaignProvider";
 import { usePolicy } from "@/providers/policyProvider";
 import { useQuiz } from "@/providers/quizProvider";
 import { QuestionEx, QuizStageEx } from "@/types/apiTypes";
@@ -49,6 +50,12 @@ export default function QuizPage() {
   } = useQuiz();
   const { domainName } = usePolicy();
   const isArabicCountry = arabicCountries.includes(domainName);
+  const { isMyanmar, isArabic } = useCheckLocale();
+  const { campaign } = useCampaign();
+
+  // campaign.name에 따라 적절한 값 사용
+  const isArabicLocale =
+    campaign.name.toLowerCase() === "s25" ? isArabic : isArabicCountry;
 
   if (!quizStageFromContext) {
     redirect("map");
@@ -90,7 +97,7 @@ export default function QuizPage() {
 
   const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
   const ANIMATON_DURATION = 3_000;
-  const { isMyanmar } = useCheckLocale();
+
   const [, forceUpdate] = useState(0);
 
   // 애니메이션 트리거
@@ -232,6 +239,10 @@ export default function QuizPage() {
     setGameOver(false);
     clearUserAnswerLogs();
     setCurrentQuestionIndex(0);
+    resetSelectedOptionIds(); // 선택된 옵션을 초기화하기 위해 추가
+    setIsCorrectAnswer(false); // 정답 상태를 초기화하기 위해 추가
+    stopAnimation(); // 진행 중인 애니메이션을 중지하기 위해 추가
+    forceUpdate((prev) => prev + 1); // 옵션들을 강제로 다시 렌더링하기 위해 추가
   };
 
   const handleGotoMap = () => {
@@ -342,7 +353,7 @@ export default function QuizPage() {
         <CountDownBar progress={TIME_PROGRESS} />
       </div>
       <Qusetion
-        isArabicCountry={isArabicCountry}
+        isArabicCountry={isArabicLocale}
         question={question.text}
         bgImageUrl={
           question.backgroundImage?.imagePath
@@ -370,7 +381,7 @@ export default function QuizPage() {
                     "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
                     isCorrectAnswer && "pointer-events-none",
                     isOptionSelected(option.id) && "pointer-events-none",
-                    isArabicCountry && "text-right",
+                    isArabicLocale && "text-right",
                     isMyanmar && "leading-loose"
                   )}
                   initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}

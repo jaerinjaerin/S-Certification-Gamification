@@ -12,10 +12,10 @@ import {
   YAxis,
 } from 'recharts';
 import {
+  chartColorAdvanced,
+  chartColorExpert,
+  chartColorExpertLine,
   chartColorHoverBackground,
-  chartColorLineStroke,
-  chartColorPrimary,
-  chartColorSecondary,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import CustomTooltip from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
@@ -76,7 +76,7 @@ export function UserProgressExpertsChild() {
             <Brush
               dataKey="date"
               height={20}
-              stroke={chartColorPrimary}
+              stroke={chartColorExpert}
               startIndex={0}
               endIndex={5}
             />
@@ -87,7 +87,7 @@ export function UserProgressExpertsChild() {
             name={capitalize(settings?.firstBadgeName || 'Expert')}
             dataKey="expert"
             stackId="a"
-            fill={chartColorPrimary}
+            fill={chartColorExpert}
           />
           {(settings?.ffSecondBadgeStageIndex ||
             settings?.fsmSecondBadgeStageIndex) && (
@@ -95,16 +95,21 @@ export function UserProgressExpertsChild() {
               name={capitalize(settings?.secondBadgeName || 'Advanced')}
               dataKey="advanced"
               stackId="a"
-              fill={chartColorSecondary}
+              fill={chartColorAdvanced}
             />
           )}
 
           <Line
             name="Total"
             type="linear"
-            strokeDasharray={2}
+            strokeDasharray="2 4"
             dataKey="total"
-            stroke={chartColorLineStroke}
+            dot={{
+              stroke: chartColorExpertLine,
+              strokeWidth: 1,
+              strokeDasharray: 0,
+            }}
+            stroke={chartColorExpertLine}
           />
         </ComposedChart>
       </ResponsiveContainer>

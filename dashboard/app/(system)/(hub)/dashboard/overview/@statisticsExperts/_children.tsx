@@ -5,8 +5,8 @@ import CustomTooltip, {
 } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
 import {
   chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
+  chartColorExpert,
+  chartColorAdvanced,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { LoaderWithBackground } from '@/components/loader';
@@ -33,7 +33,7 @@ import {
 } from 'recharts';
 import useSWR from 'swr';
 
-const COLORS = [chartColorPrimary, chartColorSecondary];
+const COLORS = [chartColorExpert, chartColorAdvanced];
 
 const OverviewExpertsChild = () => {
   const { campaign } = useStateVariables() as { campaign: Campaign };
@@ -71,10 +71,9 @@ const OverviewExpertsChild = () => {
                 data={data?.pie}
                 innerRadius={50}
                 outerRadius={120}
-                fill={chartColorPrimary}
+                fill={COLORS[0]}
                 dataKey="value"
                 label={({ name, value }) => {
-                  console.log('🚀 ~ OverviewExpertsChild ~ name:', name);
                   return `${name}: ${value.toLocaleString()}`;
                 }} // 각 영역에 Label 추가
               >
@@ -154,7 +153,7 @@ const OverviewExpertsChild = () => {
                 dataKey="expert"
                 name={settings?.firstBadgeName || 'Expert'}
                 stackId="a"
-                fill={chartColorPrimary}
+                fill={COLORS[0]}
               >
                 <LabelList
                   dataKey="expert"
@@ -167,7 +166,7 @@ const OverviewExpertsChild = () => {
                   dataKey="advanced"
                   name={settings.secondBadgeName}
                   stackId="a"
-                  fill={chartColorSecondary}
+                  fill={COLORS[1]}
                 >
                   <LabelList
                     dataKey="advanced"
@@ -192,7 +191,7 @@ const renderLabelContent = (props: any) => {
   const { x, y, width, value } = props;
   const padding = 5;
 
-  if (width < 30) {
+  if (width < 40) {
     return null;
   } else {
     return (

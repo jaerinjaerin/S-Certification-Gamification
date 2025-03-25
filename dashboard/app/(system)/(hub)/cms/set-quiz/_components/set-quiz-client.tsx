@@ -22,6 +22,7 @@ import {
   handleDownloadQuizSet,
   handleDownloadUploadedFile,
 } from '../_lib/handle-download-data';
+import { useState } from 'react';
 
 export function SetQuizClient() {
   const {
@@ -37,6 +38,51 @@ export function SetQuizClient() {
     QUIZSET_DATA_URL,
     fetcher
   );
+  const [downloadStates, setDownloadStates] = useState({
+    isDownloadingQuizSet: false,
+    isDownloadingActivityId: false,
+    isDownloadingNonS: false,
+  });
+
+  const getStateKey = (id: 'ACTIVITYID' | 'NON_SPLUS_DOMAINS' | 'QUIZSET') => {
+    switch (id) {
+      case 'ACTIVITYID':
+        return 'isDownloadingActivityId';
+      case 'NON_SPLUS_DOMAINS':
+        return 'isDownloadingNonS';
+      case 'QUIZSET':
+        return 'isDownloadingQuizSet';
+      default:
+        return '';
+    }
+  };
+
+  const handleDownload = async (
+    id: 'ACTIVITYID' | 'NON_SPLUS_DOMAINS' | 'QUIZSET'
+  ) => {
+    const stateKey = getStateKey(id);
+    setDownloadStates((prev) => ({ ...prev, [stateKey]: true }));
+
+    if (id === 'QUIZSET') {
+      await handleDownloadQuizSet(data);
+    } else {
+      await handleDownloadUploadedFile(campaign?.id, id);
+    }
+
+    setDownloadStates((prev) => ({ ...prev, [stateKey]: false }));
+  };
+
+  // const handleDownloadQuizSetFile = async () => {
+  //   setDownloadStates({
+  //     ...downloadStates,
+  //     isDownloadingQuizSet: true,
+  //   });
+  //   await handleDownloadQuizSet(data);
+  //   setDownloadStates({
+  //     ...downloadStates,
+  //     isDownloadingQuizSet: false,
+  //   });
+  // };
 
   if (isLoading) {
     return <LoadingFullScreen />;
@@ -71,17 +117,15 @@ export function SetQuizClient() {
         </div>
         {tabState === 's' && (
           <SPlusUserUploadButton
-            handleDownloadQuizSet={() => handleDownloadQuizSet(data)}
-            handleDownloadActivityId={() =>
-              handleDownloadUploadedFile(campaign?.id, 'ACTIVITYID')
-            }
+            downloadStates={downloadStates}
+            handleDownloadQuizSet={() => handleDownload('QUIZSET')}
+            handleDownloadActivityId={() => handleDownload('ACTIVITYID')}
           />
         )}
         {tabState === 'non-s' && (
           <NonSPlusUserUploadButton
-            handleDownloadNonS={() =>
-              handleDownloadUploadedFile(campaign?.id, 'NON_SPLUS_DOMAINS')
-            }
+            downloadStates={downloadStates}
+            handleDownloadNonS={() => handleDownload('NON_SPLUS_DOMAINS')}
           />
         )}
       </div>
