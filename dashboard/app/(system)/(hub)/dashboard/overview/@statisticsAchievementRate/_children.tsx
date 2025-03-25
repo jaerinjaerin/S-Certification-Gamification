@@ -13,8 +13,8 @@ import {
 } from 'recharts';
 import {
   chartColorHoverBackground,
-  chartColorPrimary,
-  chartColorSecondary,
+  chartColorGoal,
+  chartColorExpert,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { legendCapitalizeFormatter } from '@/app/(system)/(hub)/dashboard/_lib/text';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
@@ -93,7 +93,7 @@ const OverviewAchievementRateChild = () => {
             <Brush
               dataKey="name"
               height={20}
-              stroke={chartColorPrimary}
+              stroke={chartColorGoal}
               startIndex={0}
               endIndex={9}
             />
@@ -101,20 +101,17 @@ const OverviewAchievementRateChild = () => {
 
           <Bar
             dataKey="goal"
-            fill={chartColorPrimary}
+            fill={chartColorGoal}
             activeBar={
-              <Rectangle fill={chartColorPrimary} stroke={chartColorPrimary} />
+              <Rectangle fill={chartColorGoal} stroke={chartColorGoal} />
             }
           />
           <Bar
             dataKey="expert"
-            fill={chartColorSecondary}
+            fill={chartColorExpert}
             name={capitalize(settings?.firstBadgeName || 'Expert')}
             activeBar={
-              <Rectangle
-                fill={chartColorSecondary}
-                stroke={chartColorSecondary}
-              />
+              <Rectangle fill={chartColorExpert} stroke={chartColorExpert} />
             }
           />
         </BarChart>

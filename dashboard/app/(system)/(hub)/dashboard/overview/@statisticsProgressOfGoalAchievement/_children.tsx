@@ -11,12 +11,12 @@ import {
   YAxis,
 } from 'recharts';
 import {
+  chartColorFf,
+  chartColorFfSes,
+  chartColorFsm,
+  chartColorFsmSes,
+  chartColorGoal,
   chartColorHoverBackground,
-  chartColorLineStroke,
-  chartColorPrimary,
-  chartColorQuaternary,
-  chartColorSecondary,
-  chartColorTertiary,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import { ProgressTooltip } from '@/app/(system)/(hub)/dashboard/_components/charts/chart-tooltip';
@@ -90,25 +90,25 @@ export const OverviewGoalAchievementChild = () => {
             name="FF"
             dataKey="job.ff" // `FF`의 데이터 값
             stackId="a"
-            fill={chartColorPrimary}
+            fill={chartColorFf}
           />
           <Bar
             name="FSM"
             dataKey="job.fsm" // `FSM`의 데이터 값
             stackId="a"
-            fill={chartColorSecondary}
+            fill={chartColorFsm}
           />
           <Bar
             name="FF(SES)"
             dataKey="job.ff(ses)" // `FF(SES)`의 데이터 값
             stackId="a"
-            fill={chartColorTertiary}
+            fill={chartColorFfSes}
           />
           <Bar
             name="FSM(SES)"
             dataKey="job.fsm(ses)" // `FSM(SES)`의 데이터 값
             stackId="a"
-            fill={chartColorQuaternary}
+            fill={chartColorFsmSes}
           />
           <Line
             yAxisId="percentage"
@@ -116,7 +116,7 @@ export const OverviewGoalAchievementChild = () => {
             strokeDasharray={2}
             type="linear"
             dataKey="target"
-            stroke={chartColorLineStroke}
+            stroke={chartColorGoal}
           />
         </ComposedChart>
       </ResponsiveContainer>
