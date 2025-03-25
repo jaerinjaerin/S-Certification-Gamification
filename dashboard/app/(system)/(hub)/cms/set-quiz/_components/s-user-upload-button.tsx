@@ -7,16 +7,21 @@ import {
 
 import { Button } from '@/components/ui/button';
 import UploadExcelFileModal from './upload-excel-file-modal';
-import { ChevronDown, DownloadIcon } from 'lucide-react';
+import { ChevronDown, DownloadIcon, Loader2 } from 'lucide-react';
 import { PopoverWithButton } from '../../_components/custom-popover';
 import { useState } from 'react';
 
 export function SPlusUserUploadButton({
   handleDownloadQuizSet,
   handleDownloadActivityId,
+  downloadStates,
 }: {
-  handleDownloadQuizSet: () => void;
-  handleDownloadActivityId: () => void;
+  handleDownloadQuizSet: () => Promise<void>;
+  handleDownloadActivityId: () => Promise<void>;
+  downloadStates: {
+    isDownloadingQuizSet: boolean;
+    isDownloadingActivityId: boolean;
+  };
 }) {
   const [open, setOpen] = useState(false);
 
@@ -45,8 +50,13 @@ export function SPlusUserUploadButton({
                     size="icon"
                     variant="download"
                     onClick={handleDownloadQuizSet}
+                    disabled={downloadStates.isDownloadingQuizSet}
                   >
-                    <DownloadIcon className="!w-3 !h-3" />
+                    {downloadStates.isDownloadingQuizSet ? (
+                      <Loader2 className="!w-3 !h-3 animate-spin" />
+                    ) : (
+                      <DownloadIcon className="!w-3 !h-3" />
+                    )}
                   </Button>
                 </div>
                 <div className="flex justify-between items-center">
@@ -56,8 +66,13 @@ export function SPlusUserUploadButton({
                     size="icon"
                     variant="download"
                     onClick={handleDownloadActivityId}
+                    disabled={downloadStates.isDownloadingActivityId}
                   >
-                    <DownloadIcon className="!w-3 !h-3" />
+                    {downloadStates.isDownloadingActivityId ? (
+                      <Loader2 className="!w-3 !h-3 animate-spin" />
+                    ) : (
+                      <DownloadIcon className="!w-3 !h-3" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -105,12 +120,20 @@ export function SPlusUserUploadButton({
 
 export function NonSPlusUserUploadButton({
   handleDownloadNonS,
+  downloadStates,
 }: {
   handleDownloadNonS: () => void;
+  downloadStates: {
+    isDownloadingNonS: boolean;
+  };
 }) {
   return (
     <div className="flex gap-3">
-      <Button variant="secondary" onClick={handleDownloadNonS}>
+      <Button
+        variant="secondary"
+        onClick={handleDownloadNonS}
+        disabled={downloadStates.isDownloadingNonS}
+      >
         Download Data
       </Button>
       <UploadExcelFileModal
