@@ -57,15 +57,20 @@ export async function GET(request: NextRequest) {
       {
         id: { in: logs.map((log) => log.userId) },
       },
-      { select: ['id', 'providerUserId'] }
+      { select: ['id', 'providerUserId', 'authType', 'emailId'] }
     );
 
     const userMap = new Map(
       users.map((user) => {
-        const employeeId = user.providerUserId
-          ? decrypt(user.providerUserId, true)
-          : null;
-        return [user.id, employeeId];
+        const identifier =
+          user.authType === 'SUMTOTAL'
+            ? user.providerUserId
+              ? decrypt(user.providerUserId, true)
+              : null
+            : user.emailId
+              ? decrypt(user.emailId, true)
+              : null;
+        return [user.id, identifier];
       })
     );
 
