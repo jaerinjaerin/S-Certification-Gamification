@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 
-import { DownloadIcon } from 'lucide-react';
+import { DownloadIcon, Loader2 } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/popover';
 import { ButtonVariant } from '../_types/type';
 import { handleDownload } from '../_utils/utils';
+import { useState } from 'react';
 
 // popover가 나타나는 버튼컴포넌트
 type PopoverWithButtonProps = {
@@ -44,7 +45,7 @@ type PopoverConfig = {
   description: string;
 };
 
-const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
+const downloadConfig: Record<'template', PopoverConfig> = {
   template: {
     items: [
       { label: 'QuizSet', name: 'QuizSet' },
@@ -56,28 +57,25 @@ const downloadConfig: Record<'template' | 'data', PopoverConfig> = {
     title: 'Download Templates',
     description: 'You can download the templates for the quiz.',
   },
-  data: {
-    items: [
-      { label: 'quizset', name: 'QuizSet' },
-      { label: 'activity-id', name: 'Activity ID / Badge' },
-    ],
-    title: 'Download Data',
-    description: 'You can download data from the desired category all at once.',
-  },
 };
 
 export function DownloadFileListPopoverButton({
   type,
   buttonVariant = 'secondary',
 }: {
-  type: 'template' | 'data';
+  type: 'template';
   buttonVariant?: ButtonVariant;
 }) {
-  const handleDownloadFile = (label: string) => {
+  const [loadingItem, setLoadingItem] = useState<string | null>(null);
+
+  const handleDownloadFile = async (label: string) => {
+    setLoadingItem(label);
     const FILE_NAME = `${label}_template.xlsx`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/templates/${FILE_NAME}`;
-    handleDownload(FILE_NAME, DOWNLOAD_URL);
+    await handleDownload(FILE_NAME, DOWNLOAD_URL);
+    setLoadingItem(null);
   };
+
   return (
     <PopoverWithButton
       options={{
@@ -106,8 +104,13 @@ export function DownloadFileListPopoverButton({
                     size="icon"
                     variant="download"
                     onClick={() => handleDownloadFile(item.label)}
+                    disabled={loadingItem === item.label}
                   >
-                    <DownloadIcon className="!w-3 !h-3" />
+                    {loadingItem === item.label ? (
+                      <Loader2 className="animate-spin !w-3 !h-3" />
+                    ) : (
+                      <DownloadIcon className="!w-3 !h-3" />
+                    )}
                   </Button>
                 </div>
               ))}
