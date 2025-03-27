@@ -14,7 +14,7 @@ import {
 import { chartHeight } from '@/app/(system)/(hub)/dashboard/_lib/chart-variable';
 import {
   chartColorHoverBackground,
-  chartColorPrimary,
+  chartColorExpert,
 } from '@/app/(system)/(hub)/dashboard/_lib/chart-colors';
 import CustomTooltip, {
   CustomTimeTooltip,
@@ -83,7 +83,7 @@ const UserOutcomeChild = () => {
                 cursor={{ fill: chartColorHoverBackground }}
                 content={<CustomTooltip />}
               />
-              <Bar dataKey="score" fill={chartColorPrimary} />
+              <Bar dataKey="score" fill={chartColorExpert} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -105,13 +105,13 @@ const UserOutcomeChild = () => {
                 <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
                   <stop
                     offset="0%"
-                    stopColor={chartColorPrimary}
-                    stopOpacity={1}
+                    stopColor={chartColorExpert}
+                    stopOpacity={0.4}
                   />
                   <stop
                     offset="100%"
-                    stopColor={chartColorPrimary}
-                    stopOpacity={0}
+                    stopColor={chartColorExpert}
+                    stopOpacity={0.05}
                   />
                 </linearGradient>
               </defs>
@@ -122,10 +122,10 @@ const UserOutcomeChild = () => {
               <Area
                 type="linear"
                 dataKey="time"
-                stroke={chartColorPrimary}
+                stroke={chartColorExpert}
                 fill="url(#gradientColor)" // 그라데이션을 fill에 적용
               />
-              <Line type="linear" dataKey="time" stroke={chartColorPrimary} />
+              <Line type="linear" dataKey="time" stroke={chartColorExpert} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>

@@ -1,9 +1,8 @@
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
-import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
 import { decrypt } from '@/utils/encrypt';
-import { BadgeLog, Job, User } from '@prisma/client';
+import { BadgeLog, User } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -18,12 +17,12 @@ export async function GET(request: NextRequest) {
     } = querySearchParams(searchParams);
     const { jobId, storeId, ...where } = condition;
 
-    const jobGroup: Job[] = await extendedQuery(
-      prisma,
-      'Job',
-      jobId ? { code: jobId } : {},
-      { select: ['id', 'code'] }
-    );
+    // const jobGroup: Job[] = await extendedQuery(
+    //   prisma,
+    //   'Job',
+    //   jobId ? { code: jobId } : {},
+    //   { select: ['id', 'code'] }
+    // );
 
     // console.log('searchParams:', searchParams);
     // console.log('where:', where);
@@ -32,6 +31,7 @@ export async function GET(request: NextRequest) {
     const logs: BadgeLog[] = await prisma.badgeLog.findMany({
       where: {
         campaignId: params.campaignId,
+        createdAt: where.createdAt,
       },
       orderBy: {
         createdAt: 'asc',
@@ -51,47 +51,6 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-
-    // console.log('logs:', logs);
-
-    // const logs: UserQuizLog[] = await extendedQuery(
-    //   prisma,
-    //   'UserQuizLog',
-    //   {
-    //     ...where,
-    //     jobId: { in: jobGroup.map((job) => job.id) },
-    //     ...(storeId
-    //       ? storeId === '4'
-    //         ? { storeId }
-    //         : { OR: [{ storeId }, { storeId: null }] }
-    //       : {}),
-    //   },
-    //   { select: ['userId', 'lastCompletedStage'] }
-    // );
-
-    // const users: User[] = await extendedQuery(
-    //   prisma,
-    //   'users',
-    //   {
-    //     id: { in: logs.map((log) => log.userId) },
-    //   },
-    //   { select: ['id', 'providerUserId'] }
-    // );
-
-    // const userMap = new Map(
-    //   users.map((user) => {
-    //     const employeeId = user.providerUserId
-    //       ? decrypt(user.providerUserId, true)
-    //       : null;
-    //     return [user.id, employeeId];
-    //   })
-    // );
-
-    // const result = logs.map((log, index) => ({
-    //   no: index + 1,
-    //   eid: userMap.get(log.userId) || null,
-    //   stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
-    // }));
 
     const campaigns = await prisma.campaign.findMany();
     const domains = await prisma.domain.findMany();

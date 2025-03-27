@@ -68,7 +68,7 @@ export async function handleDownloadUploadedFile(
     const QUIZSET_FILE_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}${downloadPath}`;
     const QUIZSET_FILE_NAME = downloadPath.split('/').pop();
 
-    handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL);
+    await handleDownload(QUIZSET_FILE_NAME, QUIZSET_FILE_URL);
   } catch (error) {
     toast.error(`Failed to download activity ID data: ${error}`);
   }

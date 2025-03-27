@@ -241,8 +241,8 @@ function AccordionFormItem({
 
               <div
                 className={cn("flex items-center gap-2")}
-                // dir={isArabic ? "rtl" : "ltr"}
-                dir={isArabicCountry ? "rtl" : "ltr"}
+                dir={isArabic ? "rtl" : "ltr"}
+                // dir={isArabicCountry ? "rtl" : "ltr"}
               >
                 <FormItem
                   key={formKey}
@@ -261,8 +261,8 @@ function AccordionFormItem({
                       "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[#0F0F0F]",
                       isArabic && "text-right"
                     )}
-                    // dir={isArabic ? "rtl" : "ltr"}
-                    dir={isArabicCountry ? "rtl" : "ltr"}
+                    dir={isArabic ? "rtl" : "ltr"}
+                    // dir={isArabicCountry ? "rtl" : "ltr"}
                   >
                     {formLabelText}
                   </FormLabel>

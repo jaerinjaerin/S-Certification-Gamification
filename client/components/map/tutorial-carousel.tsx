@@ -86,7 +86,7 @@ export default function TutorialCarousel() {
                     style={{ wordBreak: "break-word" }}
                     dir={isArabic ? "rtl" : "ltr"}
                   >
-                    <li>{translation("you_have_5_attemps")}</li>
+                    <li>{translation("you_have_5_attempts")}</li>
                     <li>{translation("giveup_or_interrupt_quiz")}</li>
                     <li>{translation("answer_first_attempt")}</li>
                   </ol>

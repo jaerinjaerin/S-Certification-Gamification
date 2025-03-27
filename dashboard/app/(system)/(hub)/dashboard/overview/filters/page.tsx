@@ -21,6 +21,11 @@ const OverviewFilterForm = () => {
   const onDownload = async (formData: FieldValues) => {
     try {
       if (formData && campaign) {
+        formData.date = {
+          from: startOfDay(formData.date.from),
+          to: endOfDay(formData.date.to),
+        };
+
         const result = await downloadOverview({
           ...formData,
           campaign: campaign.id,
