@@ -122,14 +122,16 @@ const UserProgress = () => {
           onClick={onDownloadBadgeLog}
           className="mt-5"
         >
-          Download BadgeLog
+          {loadingBadgeLog ? 'Downloading...' : 'Download BadgeLog'}
         </Button>
         <Button
           disabled={loadingFailedBadgeLog}
           onClick={onDownloadFailedBadgeLog}
           className="mt-5"
         >
-          Download Failed BadgeLog
+          {loadingFailedBadgeLog
+            ? 'Downloading...'
+            : 'Download Failed BadgeLog'}
         </Button>
       </div>
       <ChartContainer>

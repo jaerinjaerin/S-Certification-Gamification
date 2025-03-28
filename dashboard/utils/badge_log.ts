@@ -62,6 +62,21 @@ function truncateForSummary(text: string, maxLength: number = 200): string {
   return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
 }
 
+function toKSTDateString(utcString: string): string {
+  const utcDate = new Date(utcString);
+  const kst = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // UTC + 9시간
+
+  // YYYY-MM-DD HH:mm:ss 포맷
+  const yyyy = kst.getFullYear();
+  const mm = String(kst.getMonth() + 1).padStart(2, '0');
+  const dd = String(kst.getDate()).padStart(2, '0');
+  const hh = String(kst.getHours()).padStart(2, '0');
+  const min = String(kst.getMinutes()).padStart(2, '0');
+  const sec = String(kst.getSeconds()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd} ${hh}:${min}:${sec}`;
+}
+
 export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
   const buffer = await blob.arrayBuffer();
   const workbook = xlsx.read(buffer, { type: 'array' });
@@ -79,6 +94,7 @@ export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
   // 2. userId별로 그룹화
   const userMap = new Map<string, RawRow[]>();
   data.forEach((row) => {
+    if (row.userId == null || row.userId === '') return;
     const userId = String(row.userId);
     if (!userMap.has(userId)) {
       userMap.set(userId, []);
@@ -117,7 +133,7 @@ export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
     domain: row.domain || '',
     eId: row.eId || '',
     activityId: row.activityId || '',
-    createdAt: row.createdAt || '',
+    createdAt: toKSTDateString(row.createdAt!),
   }));
 
   // 5. 날짜별 요약 (DateSummary)
