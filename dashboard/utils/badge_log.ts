@@ -41,6 +41,14 @@ interface DateSummaryRow {
   raws: string;
 }
 
+interface DateStatusSummaryRow {
+  date: string;
+  status: number;
+  userCount: number;
+}
+
+const dateStatusSummaryMap = new Map<string, Map<number, Set<string>>>();
+
 function setColumnWidths(worksheet: xlsx.WorkSheet, data: any[]): void {
   const headers = Object.keys(data[0] || {});
   worksheet['!cols'] = headers.map((key) => {
@@ -183,12 +191,58 @@ export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
   });
   const onePerUserList = Array.from(onePerUserMap.values());
 
+  failedUsers.forEach((row) => {
+    if (!row.createdAt || row.status === 200) return;
+
+    const kst = new Date(row.createdAt);
+    kst.setHours(kst.getHours() + 9);
+    const date = kst.toISOString().split('T')[0];
+    const status = row.status!;
+    const userId = String(row.userId);
+
+    if (!dateStatusSummaryMap.has(date)) {
+      dateStatusSummaryMap.set(date, new Map());
+    }
+
+    const statusMap = dateStatusSummaryMap.get(date)!;
+
+    if (!statusMap.has(status)) {
+      statusMap.set(status, new Set());
+    }
+
+    statusMap.get(status)!.add(userId);
+  });
+
+  const dateStatusSummaryArray: DateStatusSummaryRow[] = [];
+
+  dateStatusSummaryMap.forEach((statusMap, date) => {
+    statusMap.forEach((userSet, status) => {
+      dateStatusSummaryArray.push({
+        date,
+        status,
+        userCount: userSet.size,
+      });
+    });
+  });
+
   // 7. 엑셀 시트 구성
   const newWorkbook = xlsx.utils.book_new();
 
   const badgeSheet = xlsx.utils.json_to_sheet(badgeSummaryList);
   setColumnWidths(badgeSheet, badgeSummaryList);
   xlsx.utils.book_append_sheet(newWorkbook, badgeSheet, 'BadgeSummary');
+
+  const dateSummarySheet = xlsx.utils.json_to_sheet(dateSummaryArray);
+  setColumnWidths(dateSummarySheet, dateSummaryArray);
+  xlsx.utils.book_append_sheet(newWorkbook, dateSummarySheet, '날짜별 요약');
+
+  const dateStatusSheet = xlsx.utils.json_to_sheet(dateStatusSummaryArray);
+  setColumnWidths(dateStatusSheet, dateStatusSummaryArray);
+  xlsx.utils.book_append_sheet(
+    newWorkbook,
+    dateStatusSheet,
+    '날짜별 상태 요약'
+  );
 
   const failedSheet = xlsx.utils.json_to_sheet(failedUsers);
   setColumnWidths(failedSheet, failedUsers);
@@ -201,10 +255,6 @@ export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
     onePerUserSheet,
     'FilteredOnePerUser'
   );
-
-  const dateSummarySheet = xlsx.utils.json_to_sheet(dateSummaryArray);
-  setColumnWidths(dateSummarySheet, dateSummaryArray);
-  xlsx.utils.book_append_sheet(newWorkbook, dateSummarySheet, '날짜별 요약');
 
   // 8. Blob으로 변환해서 반환
   const wbout = xlsx.write(newWorkbook, { type: 'array', bookType: 'xlsx' });

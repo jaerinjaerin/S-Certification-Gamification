@@ -108,9 +108,11 @@ const UserProgress = () => {
       return;
     }
     if (campaign) {
+      setLoadingFailedBadgeLog(true);
       const queryString = searchParams.toString();
       const url = `/api/dashboard/report/badge/download_failed${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
       window.location.href = url;
+      setLoadingFailedBadgeLog(false);
     }
   };
 
