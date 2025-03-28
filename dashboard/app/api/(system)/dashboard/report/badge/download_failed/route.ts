@@ -1,6 +1,7 @@
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
 import { prisma } from '@/model/prisma';
+import { filterUsersWithoutStatus200 } from '@/utils/badge_log';
 import { decrypt } from '@/utils/encrypt';
 import { BadgeLog, User } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
     const logs: BadgeLog[] = await prisma.badgeLog.findMany({
       where: {
         campaignId: params.campaignId,
-        createdAt: params.createdAt,
+        createdAt: where.createdAt,
       },
       orderBy: {
         createdAt: 'asc',
@@ -92,11 +93,14 @@ export async function GET(request: NextRequest) {
       data: result,
     });
 
+    // 👉 분석 실행 후 새 blob 생성
+    const processedBlob = await filterUsersWithoutStatus200(blob);
+
     const { createdAt, campaignId, authType, ...args } = condition;
     const range = `${period.from.toISOString().split('T')[0]}_to_${period.to.toISOString().split('T')[0]}`;
     const filename = `badge_log_${range}${args ? Object.values(args).reduce((acc, item) => `${acc}_${item}`, '') : ''}.xlsx`;
 
-    return new Response(blob, {
+    return new Response(processedBlob, {
       status: 200,
       headers: {
         'Content-Type': 'application/octet-stream',
