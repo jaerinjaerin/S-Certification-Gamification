@@ -67,10 +67,17 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   }>({ readyRows: [], notReadyRows: [] });
 
   const { readyRows, notReadyRows } = rowState;
+  const campaignStartedAt = data[0].campaign.startedAt;
+  const isPastStartDate = new Date(campaignStartedAt) < new Date();
+  const filteredColumns = isPastStartDate
+    ? columns.filter((col) => {
+        return (col as any).accessorKey !== 'delete';
+      })
+    : columns;
 
   const table = useReactTable({
     data,
-    columns,
+    columns: filteredColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

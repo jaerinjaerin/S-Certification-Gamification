@@ -68,6 +68,9 @@ export async function getQuizLog(userId: string, campaignName: string) {
       },
     });
 
+    console.log("userQuizLog", userQuizLog);
+    console.log("userQuizStageLogs", userQuizStageLogs);
+
     return {
       status: 200,
       item: {

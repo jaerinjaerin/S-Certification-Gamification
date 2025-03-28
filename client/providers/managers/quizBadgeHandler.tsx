@@ -1,6 +1,9 @@
 import { getBadgeEmailTemplete } from "@/templete/email";
 import { QuizStageEx } from "@/types/apiTypes";
 import * as Sentry from "@sentry/nextjs";
+import fetchRetry from "fetch-retry";
+
+const fetch = fetchRetry(global.fetch);
 
 export class QuizBadgeHandler {
   issueBadge = async (
@@ -17,7 +20,12 @@ export class QuizBadgeHandler {
         domainId,
         activityId
       );
-      const attended = await this.postActivityEnd(
+
+      if (!registered) {
+        return false;
+      }
+
+      const attended = await this.postActivityProcess(
         userId,
         campaignId,
         domainId,
@@ -39,7 +47,6 @@ export class QuizBadgeHandler {
         scope.setTag("activityId", activityId);
         return scope;
       });
-      // await Sentry.flush(2000); // 최대 2초 대기
       return false;
     }
   };
@@ -93,6 +100,8 @@ export class QuizBadgeHandler {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/activity/send-badge-email`,
         {
+          retries: 2,
+          retryDelay: 500,
           method: "POST",
           cache: "no-store",
           body: JSON.stringify({
@@ -120,12 +129,7 @@ export class QuizBadgeHandler {
       );
       Sentry.captureException(err);
 
-      // Sentry 전송을 명시적으로 대기
-      await Sentry.flush(2000); // 최대 2초 대기
-
       return false;
-      // TODO: 이메일 전송 오류 저장해 놓기
-      // throw new Error(err.message || "An unexpected error occurred");
     }
   };
 
@@ -139,8 +143,13 @@ export class QuizBadgeHandler {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/register`,
         {
+          retries: 2,
+          retryDelay: 1000,
           method: "POST",
           cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             userId,
             activityId,
@@ -150,30 +159,26 @@ export class QuizBadgeHandler {
         }
       );
 
-      console.log("postActivityRegister", activityId, response);
+      console.log("postActivityRegister response", response);
 
       if (!response.ok) {
         const errorData = await response.json();
-        // TODO: 활동 등록 오류 저장해 놓기
         throw new Error(errorData.message || "Failed to register activities");
       }
 
-      // const data = await response.json();
-
       return true;
     } catch (err: any) {
-      console.error(err.message || "An unexpected error occurred");
+      const errorMessage = err.message || "An unexpected error occurred";
+
       Sentry.captureMessage(
-        `Failed to register activity: ${err.message}, ${activityId}`
+        `Failed to register activity after retries: ${errorMessage}, ${activityId}`
       );
       Sentry.captureException(err);
       return false;
-      // TODO: 활동 등록 오류 저장해 놓기
-      // throw new Error(err.message || "An unexpected error occurred");
     }
   };
 
-  postActivityEnd = async (
+  postActivityProcess = async (
     userId: string,
     campaignId: string,
     domainId: string,
@@ -184,34 +189,34 @@ export class QuizBadgeHandler {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_PATH}/api/sumtotal/activity/end`,
         {
+          retries: 2,
+          retryDelay: 1000,
           method: "POST",
           cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             userId,
             activityId,
             campaignId,
             domainId,
             status: "Attended",
-            // elapsedSeconds: elapsedSeconds,
-            elapsedSeconds: 120,
+            elapsedSeconds: 120, // 혹은 elapsedSeconds
           }),
         }
       );
 
-      console.log("postActivityEnd", activityId, response);
-
       if (!response.ok) {
         const errorData = await response.json();
-        // TODO: 활동 등록 오류 저장해 놓기
         throw new Error(errorData.message || "Failed to update activity");
       }
 
-      // const data = await response.json();
-      // console.log("data", data);
-
       return true;
     } catch (err: any) {
-      console.error(err.message || "An unexpected error occurred");
+      const errorMessage = err.message || "An unexpected error occurred";
+      console.error(`postActivityProcess `, errorMessage);
+
       Sentry.captureException(err, (scope) => {
         scope.setContext("operation", {
           type: "http_request",
@@ -223,8 +228,6 @@ export class QuizBadgeHandler {
         return scope;
       });
       return false;
-      // TODO: 활동 등록 오류 저장해 놓기
-      // throw new Error(err.message || "An unexpected error occurred");
     }
   };
 }

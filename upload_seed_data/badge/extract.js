@@ -1,54 +1,60 @@
 const fs = require("fs");
 const xlsx = require("xlsx");
 
-function filterUsersWithoutStatus200(inputFile, outputFile) {
+function filterUsersAllStatusNot200(inputFile, outputFile) {
   // 엑셀 파일 읽기
   const workbook = xlsx.readFile(inputFile);
   const sheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[sheetName];
 
   // 데이터를 JSON 형식으로 변환
-  const data = xlsx.utils.sheet_to_json(worksheet);
+  const data = xlsx.utils.sheet_to_json(worksheet, { defval: "" }); // defval: ""로 빈 셀도 유지
 
-  // userId별 status 200 존재 여부 확인
-  const userStatusMap = new Map();
+  // 컬럼 순서 가져오기
+  const originalHeaders = xlsx.utils.sheet_to_json(worksheet, {
+    header: 1,
+  })[0]; // 첫 번째 row (헤더)
+
+  // userId로 그룹핑
+  const groupedByUser = new Map();
 
   data.forEach((row) => {
     const userId = row.userId;
-    if (!userStatusMap.has(userId)) {
-      userStatusMap.set(userId, false); // 기본적으로 200 없음
+    if (!groupedByUser.has(userId)) {
+      groupedByUser.set(userId, []);
     }
-    if (row.status === 200) {
-      userStatusMap.set(userId, true); // 200이 존재하면 true로 변경
-    }
+    groupedByUser.get(userId).push(row);
   });
 
-  // status 200이 없는 userId만 필터링하고, certification이 s25인 항목 제거
-  const filteredUsers = data.filter(
-    (row) => !userStatusMap.get(row.userId) && row.certification !== "s25"
-  );
+  const result = [];
 
-  // userId 기준으로 유니크한 데이터만 남기기
-  const uniqueUsers = new Map();
-  filteredUsers.forEach((row) => {
-    if (!uniqueUsers.has(row.userId)) {
-      uniqueUsers.set(row.userId, row);
+  // 각 userId 그룹별로 확인
+  for (const [userId, rows] of groupedByUser.entries()) {
+    const hasAll200 = rows.every((row) => row.status === 200);
+    if (rows.length !== 2) {
+      console.log(userId, rows.length, hasAll200);
     }
+    if (!hasAll200) {
+      rows.forEach((row) => {
+        result.push(row);
+      });
+    }
+  }
+
+  // 새로운 시트 생성 - 원래 컬럼 순서 유지
+  const newWorksheet = xlsx.utils.json_to_sheet(result, {
+    header: originalHeaders,
+    skipHeader: false,
   });
 
-  const uniqueUserList = Array.from(uniqueUsers.values());
-
-  // 새로운 엑셀 파일 생성
-  const newWorksheet = xlsx.utils.json_to_sheet(uniqueUserList);
+  // 워크북 저장
   const newWorkbook = xlsx.utils.book_new();
   xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, "FilteredUsers");
-
-  // 파일 저장
   xlsx.writeFile(newWorkbook, outputFile);
   console.log(`필터링된 데이터가 ${outputFile} 파일로 저장되었습니다.`);
 }
 
 // 실행
-const inputFile = "badge_log_2025323_1827.xlsx"; // 기존 엑셀 파일
-const outputFile = "filtered.xlsx"; // 저장할 새로운 엑셀 파일
-filterUsersWithoutStatus200(inputFile, outputFile);
+const inputFile = "badge_log_2025-03-23_extract.xlsx";
+const outputFile = "filtered.xlsx";
+filterUsersAllStatusNot200(inputFile, outputFile);
