@@ -264,7 +264,7 @@ export async function POST(request: Request, props: Props) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error register user quiz log:", error);
+    console.error("Error register user quiz log:", error, body);
 
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
