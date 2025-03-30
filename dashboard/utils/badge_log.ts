@@ -47,8 +47,6 @@ interface DateStatusSummaryRow {
   userCount: number;
 }
 
-const dateStatusSummaryMap = new Map<string, Map<number, Set<string>>>();
-
 function setColumnWidths(worksheet: xlsx.WorkSheet, data: any[]): void {
   const headers = Object.keys(data[0] || {});
   worksheet['!cols'] = headers.map((key) => {
@@ -190,6 +188,8 @@ export async function filterUsersWithoutStatus200(blob: Blob): Promise<Blob> {
     }
   });
   const onePerUserList = Array.from(onePerUserMap.values());
+
+  const dateStatusSummaryMap = new Map<string, Map<number, Set<string>>>();
 
   failedUsers.forEach((row) => {
     if (!row.createdAt || row.status === 200) return;
