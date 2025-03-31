@@ -42,16 +42,18 @@ function decrypt(encryptedData, useFixedIV = false) {
 }
 
 const ids = [
-  "VN_USER_23165",
-  "IND05595",
-  "IND12427",
-  "IND14577",
-  "IND15553",
-  "IND16148",
-  "VN_USER_24361",
-  "IND16518",
-  "IND07547",
-  "IND12248",
+  "1794738",
+  "2147426",
+  // "VN_USER_23165",
+  // "IND05595",
+  // "IND12427",
+  // "IND14577",
+  // "IND15553",
+  // "IND16148",
+  // "VN_USER_24361",
+  // "IND16518",
+  // "IND07547",
+  // "IND12248",
 ];
 
 function encrypt(email, useFixedIV = false) {

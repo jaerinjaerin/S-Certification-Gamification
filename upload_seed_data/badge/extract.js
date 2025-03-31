@@ -23,6 +23,7 @@ function filterUsersWithoutStatus200(inputFile, outputFile) {
     if (row.message === "OK - isRegistered: false") {
       row.status = 422;
     }
+    groupedByUser.get(userId).push(row);
   });
 
   // userId별 그룹화

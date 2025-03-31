@@ -63,7 +63,6 @@ export class QuizLogHandler {
             scope.setTag("quizSetPath", quizSetPath);
             return scope;
           });
-          // await Sentry.flush(1000);
 
           return null;
         }
@@ -131,7 +130,6 @@ export class QuizLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          // await Sentry.flush(1000);
 
           throw new Error(
             "An unexpected error occurred while registering quiz log"
