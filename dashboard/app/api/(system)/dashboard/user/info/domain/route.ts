@@ -100,8 +100,11 @@ export async function GET(request: NextRequest) {
 
     const expertData = domains.reduce(
       (acc: any, domain: any) => {
-        const expert = experts.find((expert) => expert.domainId === domain.id);
-        if (!expert) {
+        const domainExperts = experts.filter(
+          (expert) => expert.domainId === domain.id
+        );
+
+        if (!acc[domain.id]) {
           acc[domain.id] = {
             goal: 0,
             plusExpert: 0,
@@ -117,65 +120,65 @@ export async function GET(request: NextRequest) {
             fsmSesExpert: 0,
             fsmSesAdvanced: 0,
           };
-          return acc;
         }
 
-        const {
-          _count,
-          domainId,
-          authType: auth,
-          quizStageIndex,
-          jobId,
-          storeId,
-        } = expert;
+        const goalObj = domainsGoals.find(
+          (goal) => goal.domainId === domain.id
+        ) || {
+          ff: 0,
+          fsm: 0,
+          ffSes: 0,
+          fsmSes: 0,
+        };
+        const totalGoal =
+          goalObj.ff + goalObj.fsm + goalObj.ffSes + goalObj.fsmSes;
+        acc[domain.id].goal += totalGoal;
 
-        //
-        if (!domainId) return acc;
+        for (const expert of domainExperts) {
+          const {
+            _count,
+            domainId,
+            authType: auth,
+            quizStageIndex,
+            jobId,
+            storeId,
+          } = expert;
 
-        //
-        const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
-        const expertType = quizStageIndex === 2 ? 'Expert' : 'Advanced';
-        const storeType = storeId === '4' ? 'Ses' : '';
-        const jobName =
-          (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find((key) =>
-            jobGroup[key].includes((jobId as never) || '')
-          ) || null;
+          if (!domainId) continue;
 
-        //goal
-        const { ff, fsm, ffSes, fsmSes } = domainsGoals.find(
-          (goal) => goal.domainId === domainId
-        ) || { ff: 0, fsm: 0, ffSes: 0, fsmSes: 0 };
-        const goal = ff + fsm + ffSes + fsmSes;
-        //
+          const authType = auth === AuthType.SUMTOTAL ? 'plus' : 'none';
+          const storeType = storeId === '4' ? 'Ses' : '';
 
-        if (!acc[domainId]) {
-          acc[domainId] = {
-            goal: 0,
-            plusExpert: 0,
-            plusAdvanced: 0,
-            noneExpert: 0,
-            noneAdvanced: 0,
-            ffExpert: 0,
-            ffAdvanced: 0,
-            fsmExpert: 0,
-            fsmAdvanced: 0,
-            ffSesExpert: 0,
-            ffSesAdvanced: 0,
-            fsmSesExpert: 0,
-            fsmSesAdvanced: 0,
-          };
+          const jobName =
+            (Object.keys(jobGroup) as Array<keyof typeof jobGroup>).find(
+              (key) => jobGroup[key].includes((jobId as never) || '')
+            ) || null;
+          const jobGroupInfo = jobGroups.find((job) => job.key === jobName);
+          const expertType =
+            jobGroupInfo && quizStageIndex === jobGroupInfo.stageIndex[0]
+              ? 'Expert'
+              : 'Advanced';
+
+          const entry = acc[domainId];
+          const count = _count.quizStageIndex;
+
+          entry[`${authType}${expertType}`] += count;
+
+          if (jobName) {
+            const key = `${jobName}${storeType}${expertType}`;
+            if (entry[key] === undefined) {
+              entry[key] = 0;
+            }
+            entry[key] += count;
+          }
         }
-
-        const entry = acc[domainId];
-        entry.goal += goal;
-        entry[`${authType}${expertType}`] += _count.quizStageIndex;
-        entry[`${jobName}${storeType}${expertType}`] += _count.quizStageIndex;
 
         return acc;
       },
       {} as Record<string, any>
     );
 
+    console.log('🚀 ~ GET ~ expertData:', expertData);
     const result = Object.entries(expertData)
       .map(([domainId, value]: any) => {
         const domain = domains.find((domain) => domain.id === domainId);
