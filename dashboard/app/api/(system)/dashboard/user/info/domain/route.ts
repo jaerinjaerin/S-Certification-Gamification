@@ -178,7 +178,6 @@ export async function GET(request: NextRequest) {
       {} as Record<string, any>
     );
 
-    console.log('🚀 ~ GET ~ expertData:', expertData);
     const result = Object.entries(expertData)
       .map(([domainId, value]: any) => {
         const domain = domains.find((domain) => domain.id === domainId);

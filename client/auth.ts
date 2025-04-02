@@ -75,7 +75,7 @@ export const {
         },
       },
       token: "https://samsung.sumtotal.host/apisecurity/connect/token",
-      userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users",
+      userinfo: "https://samsung.sumtotal.host/apis/api/v2/advanced/users/",
       clientId: process.env.SUMTOTAL_CLIENT_ID,
       clientSecret: process.env.SUMTOTAL_CLIENT_SECRET,
       profile: async (profile: SumtotalProfile, tokens) => {
