@@ -108,9 +108,11 @@ const UserProgress = () => {
       return;
     }
     if (campaign) {
+      setLoadingFailedBadgeLog(true);
       const queryString = searchParams.toString();
       const url = `/api/dashboard/report/badge/download_failed${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
       window.location.href = url;
+      setLoadingFailedBadgeLog(false);
     }
   };
 
@@ -122,14 +124,16 @@ const UserProgress = () => {
           onClick={onDownloadBadgeLog}
           className="mt-5"
         >
-          Download BadgeLog
+          {loadingBadgeLog ? 'Downloading...' : 'Download BadgeLog'}
         </Button>
         <Button
           disabled={loadingFailedBadgeLog}
           onClick={onDownloadFailedBadgeLog}
           className="mt-5"
         >
-          Download Failed BadgeLog
+          {loadingFailedBadgeLog
+            ? 'Downloading...'
+            : 'Download Failed BadgeLog'}
         </Button>
       </div>
       <ChartContainer>

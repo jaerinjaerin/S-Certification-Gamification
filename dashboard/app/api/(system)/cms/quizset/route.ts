@@ -802,7 +802,7 @@ export async function POST(request: NextRequest) {
         } else {
           // 기존 옵션에 변경 사항이 있으면 업데이트
           const sortedOptions = options.sort((a, b) => a.order - b.order);
-          for (var index = 0; index < sortedOptions.length; index++) {
+          for (let index = 0; index < sortedOptions.length; index++) {
             const option = options[index];
             if (
               option.text !== questionJson.options[index].text ||

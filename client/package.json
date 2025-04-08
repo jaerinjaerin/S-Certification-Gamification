@@ -48,6 +48,7 @@
     "cuid": "^3.0.0",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.5.1",
+    "fetch-retry": "^6.0.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.468.0",
     "motion": "^11.13.5",
