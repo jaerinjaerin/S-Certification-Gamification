@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
           'channelId',
           'channelSegmentId',
           'channelName',
+          'domainId',
         ],
       }
     );
@@ -63,18 +64,12 @@ export async function GET(request: NextRequest) {
           'channelId',
           'channelSegmentId',
           'channelName',
+          'domainId',
         ],
       }
     );
 
-    // const userMap = new Map(
-    //   users.map((user) => {
-    //     const employeeId = user.providerUserId
-    //       ? decrypt(user.providerUserId, true)
-    //       : null;
-    //     return [user.id, employeeId];
-    //   })
-    // );
+    const domains = await prisma.domain.findMany();
 
     const userMap = new Map(
       users.map((user) => {
@@ -94,6 +89,7 @@ export async function GET(request: NextRequest) {
       return {
         no: index + 1,
         authType: log.authType === AuthType.SUMTOTAL ? 'SumTotal' : 'Email',
+        domain: domains.find((domain) => domain.id === log.domainId)?.name,
         eid: userMap.get(log.userId) || null,
         stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
         channelId: log.channelId?.toString() || '',
@@ -111,6 +107,7 @@ export async function GET(request: NextRequest) {
       columns: [
         { header: 'No', key: 'no', width: 10 },
         { header: 'Auth Type', key: 'authType', width: 30 },
+        { header: 'Domain', key: 'domain', width: 10 },
         { header: 'Employee ID', key: 'eid', width: 30 },
         { header: 'Stage', key: 'stage', width: 10 },
         { header: 'ChannelId', key: 'channelId', width: 20 },
