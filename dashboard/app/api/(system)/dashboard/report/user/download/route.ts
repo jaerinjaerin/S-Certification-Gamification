@@ -1,3 +1,4 @@
+import { getChannelName, getChannelSegmentName } from '@/lib/channel';
 import { createNormalExcelBlob } from '@/lib/excel';
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
@@ -35,7 +36,16 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      { select: ['userId', 'lastCompletedStage', 'authType'] }
+      {
+        select: [
+          'userId',
+          'lastCompletedStage',
+          'authType',
+          'channelId',
+          'channelSegmentId',
+          'channelName',
+        ],
+      }
     );
 
     const users: User[] = await extendedQuery(
@@ -44,7 +54,17 @@ export async function GET(request: NextRequest) {
       {
         id: { in: logs.map((log) => log.userId) },
       },
-      { select: ['id', 'providerUserId', 'emailId', 'authType'] }
+      {
+        select: [
+          'id',
+          'providerUserId',
+          'emailId',
+          'authType',
+          'channelId',
+          'channelSegmentId',
+          'channelName',
+        ],
+      }
     );
 
     // const userMap = new Map(
@@ -71,11 +91,22 @@ export async function GET(request: NextRequest) {
     );
 
     const result = logs.map((log, index) => {
+      let channelName = log.channelId ? getChannelName(log.channelId) : '';
+      if (log.authType === AuthType.GUEST && log.channelName) {
+        channelName = log.channelName;
+      }
+
       return {
         no: index + 1,
         authType: log.authType === AuthType.SUMTOTAL ? 'SumTotal' : 'Email',
         eid: userMap.get(log.userId) || null,
         stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
+        channel: channelName,
+        channelSegment: log.channelSegmentId
+          ? getChannelSegmentName(log.channelSegmentId)
+          : '',
+        channelId: log.channelId?.toString() || '',
+        channelSegmentId: log.channelSegmentId?.toString() || '',
       };
     });
 
@@ -86,6 +117,10 @@ export async function GET(request: NextRequest) {
         { header: 'Auth Type', key: 'authType', width: 30 },
         { header: 'Employee ID', key: 'eid', width: 30 },
         { header: 'Stage', key: 'stage', width: 10 },
+        { header: 'Channel', key: 'channel', width: 50 },
+        { header: 'ChannelSegment', key: 'channelSegment', width: 50 },
+        { header: 'ChannelId', key: 'channelId', width: 20 },
+        { header: 'ChannelSegmentId', key: 'channelSegmentId', width: 20 },
       ],
       data: result,
     });
