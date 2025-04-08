@@ -91,22 +91,18 @@ export async function GET(request: NextRequest) {
     );
 
     const result = logs.map((log, index) => {
-      let channelName = log.channelId ? getChannelName(log.channelId) : '';
-      if (log.authType === AuthType.GUEST && log.channelName) {
-        channelName = log.channelName;
-      }
-
       return {
         no: index + 1,
         authType: log.authType === AuthType.SUMTOTAL ? 'SumTotal' : 'Email',
         eid: userMap.get(log.userId) || null,
         stage: log.lastCompletedStage ? log.lastCompletedStage + 1 : 0,
-        channel: channelName,
+        channelId: log.channelId?.toString() || '',
+        channelSegmentId: log.channelSegmentId?.toString() || '',
+        channel: log.channelId ? getChannelName(log.channelId) : '',
         channelSegment: log.channelSegmentId
           ? getChannelSegmentName(log.channelSegmentId)
           : '',
-        channelId: log.channelId?.toString() || '',
-        channelSegmentId: log.channelSegmentId?.toString() || '',
+        channelName: log.authType === AuthType.GUEST ? log.channelName : '',
       };
     });
 
@@ -117,10 +113,11 @@ export async function GET(request: NextRequest) {
         { header: 'Auth Type', key: 'authType', width: 30 },
         { header: 'Employee ID', key: 'eid', width: 30 },
         { header: 'Stage', key: 'stage', width: 10 },
-        { header: 'Channel', key: 'channel', width: 50 },
-        { header: 'ChannelSegment', key: 'channelSegment', width: 50 },
         { header: 'ChannelId', key: 'channelId', width: 20 },
         { header: 'ChannelSegmentId', key: 'channelSegmentId', width: 20 },
+        { header: 'Channel', key: 'channel', width: 50 },
+        { header: 'ChannelSegment', key: 'channelSegment', width: 50 },
+        { header: 'ChannelName', key: 'channelName', width: 20 },
       ],
       data: result,
     });
