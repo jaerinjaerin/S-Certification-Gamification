@@ -8,6 +8,7 @@ import {
   QuizData,
 } from '@/lib/quiz-excel-parser';
 import { prisma } from '@/model/prisma';
+import { decrypt } from '@/utils/encrypt';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { BadgeType, FileType, QuestionType } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -538,6 +539,18 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const updatedByNameResult = await prisma.user.findUnique({
+      where: { id: quizSet.updaterId ?? quizSet.createrId },
+      select: { loginName: true },
+    });
+
+    quizSet = {
+      ...quizSet,
+      updatedBy: updatedByNameResult?.loginName
+        ? decrypt(updatedByNameResult.loginName, true)
+        : null,
+    } as typeof quizSet & { updatedBy: string | null };
+
     // =============================================
     // 2. stages 생성
     // =============================================
@@ -969,7 +982,7 @@ export async function GET(request: Request) {
       },
     });
 
-    const quizSets = await prisma.quizSet.findMany({
+    let quizSets = await prisma.quizSet.findMany({
       where: {
         campaignId: campaignId,
       },
@@ -999,6 +1012,22 @@ export async function GET(request: Request) {
         // },
       },
     });
+
+    quizSets = await Promise.all(
+      quizSets.map(async (qs) => {
+        const updatedByNameResult = await prisma.user.findUnique({
+          where: { id: qs.updaterId ?? qs.createrId },
+          select: { loginName: true },
+        });
+
+        return {
+          ...qs,
+          updatedBy: updatedByNameResult?.loginName
+            ? decrypt(updatedByNameResult.loginName, true)
+            : null,
+        };
+      })
+    );
 
     const quizSetFiles = await prisma.quizSetFile.findMany({
       where: {
