@@ -1,8 +1,9 @@
+import { removeDuplicateUsers } from '@/lib/data';
 import { querySearchParams } from '@/lib/query';
-import { extendedQuery } from '@/lib/sql';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
 import { decrypt } from '@/utils/encrypt';
-import { Job, User, UserQuizLog } from '@prisma/client';
+import { Job, User, UserQuizStatistics } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -20,8 +21,10 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    const count = await prisma.userQuizStatistics.count({
-      where: {
+    const userLogs: UserQuizStatistics[] = await queryRawWithWhere(
+      prisma,
+      'UserQuizStatistics',
+      {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },
         ...(storeId
@@ -29,12 +32,13 @@ export async function GET(request: NextRequest) {
             ? { storeId }
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
-      },
-    });
+      }
+    );
+    const count = removeDuplicateUsers(userLogs).length;
 
-    const logs: UserQuizLog[] = await extendedQuery(
+    const logs: UserQuizStatistics[] = await extendedQuery(
       prisma,
-      'UserQuizLog',
+      'UserQuizStatistics',
       {
         ...where,
         jobId: { in: jobGroup.map((job) => job.id) },
@@ -53,15 +57,20 @@ export async function GET(request: NextRequest) {
       {
         id: { in: logs.map((log) => log.userId) },
       },
-      { select: ['id', 'providerUserId'] }
+      { select: ['id', 'providerUserId', 'authType', 'emailId'] }
     );
 
     const userMap = new Map(
       users.map((user) => {
-        const employeeId = user.providerUserId
-          ? decrypt(user.providerUserId, true)
-          : null;
-        return [user.id, employeeId];
+        const identifier =
+          user.authType === 'SUMTOTAL'
+            ? user.providerUserId
+              ? decrypt(user.providerUserId, true)
+              : null
+            : user.emailId
+              ? decrypt(user.emailId, true)
+              : null;
+        return [user.id, identifier];
       })
     );
 

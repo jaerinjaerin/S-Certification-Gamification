@@ -9,6 +9,7 @@ import * as Sentry from "@sentry/nextjs";
 export async function fetchSupportedLanguageCodes(
   campaignSlug: string
 ): Promise<string[]> {
+  console.log("fetchSupportedLanguageCodes", campaignSlug);
   try {
     const campaign = await prisma.campaign.findFirst({
       // where: {
@@ -30,6 +31,11 @@ export async function fetchSupportedLanguageCodes(
     });
 
     if (!campaign || !campaign.domainWebLanguages) {
+      console.error(
+        "No campaign or domainWebLanguages found",
+        campaign,
+        campaign?.domainWebLanguages
+      );
       throw new Error(
         `No campaign or domainWebLanguages found for slug ${campaignSlug}`
       );

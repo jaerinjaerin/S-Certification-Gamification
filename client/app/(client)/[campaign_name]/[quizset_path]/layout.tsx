@@ -1,4 +1,3 @@
-import { mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { PolicyProvider } from "@/providers/policyProvider";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import * as Sentry from "@sentry/nextjs";
@@ -13,22 +12,24 @@ export default async function SumtotalUserLayout({
 }) {
   const codes = extractCodesFromPath(quizset_path);
   if (codes == null) {
+    console.error("Invalid quizset path", campaign_name, quizset_path);
     redirect(`/${campaign_name}/not-ready`);
   }
 
   const { domainCode, languageCode } = codes;
+  console.log("SumtotalUserLayout:", domainCode, languageCode);
 
-  // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
-  const normalizedLanguageCode = languageCode.replace(
-    /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-    "$1",
-  );
+  // // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
+  // const normalizedLanguageCode = languageCode.replace(
+  //   /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
+  //   "$1"
+  // );
 
-  const locale = await mapBrowserLanguageToLocale(
-    normalizedLanguageCode,
-    campaign_name,
-  );
-  console.log("QuizSetLoginLayout locale:", locale);
+  // const locale = await mapBrowserLanguageToLocale(
+  //   normalizedLanguageCode,
+  //   campaign_name
+  // );
+  // console.log("QuizSetLoginLayout locale:", locale);
 
   const privacyContent = await fetchPrivacyContent(domainCode);
   const termContent = await fetchTermContent(domainCode);
@@ -53,21 +54,18 @@ export default async function SumtotalUserLayout({
 async function fetchInformationAboutDomain(domainCode: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`,
-      {
-        cache: "force-cache",
-      },
+      `${process.env.NEXT_PUBLIC_API_URL}/api/domains?domain_code=${domainCode}`
     );
     if (!response.ok) {
       throw new Error(
-        `fetch information about domain error: ${response.status}`,
+        `fetch information about domain error: ${response.status}`
       );
     }
 
     const result = await response.json();
     if (!result) {
       throw new Error(
-        `fetchError: information about domain response.json() error`,
+        `fetchError: information about domain response.json() error`
       );
     }
 
@@ -107,7 +105,7 @@ async function fetchTermContent(domainCode: string) {
 
 async function fetchContent(url: string) {
   try {
-    const response = await fetch(url, { cache: "force-cache" });
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`fetchError: ${response.status}`);
     }

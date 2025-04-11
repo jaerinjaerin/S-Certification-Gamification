@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth].ts",
-    "next.config.js"
+    "next.config.js",
+    "badge/extract.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,11 @@
 'use client';
+import { usePageIndex } from '@/components/hook/use-page-index';
+import { LoaderWithBackground } from '@/components/loader';
+import Pagination from '@/components/pagenation';
+import { useStateVariables } from '@/components/provider/state-provider';
 import ChartContainer from '@/components/system/chart-container';
+import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -8,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { swrFetcher } from '@/lib/fetch';
 import {
   ColumnDef,
   flexRender,
@@ -15,15 +22,9 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { LoaderWithBackground } from '@/components/loader';
-import { CardCustomHeaderWithDownload } from '@/components/system/chart-header';
-import Pagination from '@/components/pagenation';
-import useSWR from 'swr';
-import { useStateVariables } from '@/components/provider/state-provider';
 import { useSearchParams } from 'next/navigation';
-import { swrFetcher } from '@/lib/fetch';
-import { usePageIndex } from '@/components/hook/use-page-index';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import useSWR from 'swr';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -47,7 +48,6 @@ const columns: ColumnDef<UserListProps>[] = [
 const UserProgress = () => {
   const searchParams = useSearchParams();
   const { campaign } = useStateVariables();
-  const state = { fieldValues: Object.fromEntries(searchParams.entries()) };
   const [pageIndex, setPageIndex] = usePageIndex(
     searchParams,
     'progressPageIndex'
@@ -65,6 +65,9 @@ const UserProgress = () => {
   });
 
   const { data, total } = useMemo(() => progressData.result, [progressData]);
+  const [loadingFailedBadgeLog, setLoadingFailedBadgeLog] =
+    useState<boolean>(false);
+  const [loadingBadgeLog, setLoadingBadgeLog] = useState<boolean>(false);
 
   const table = useReactTable({
     data, // 현재 페이지 데이터
@@ -82,90 +85,135 @@ const UserProgress = () => {
   });
 
   const onDownload = () => {
-    if (state.fieldValues) {
-      const url = `/api/dashboard/report/user/download?${searchParams.toString()}`;
+    if (campaign) {
+      const queryString = searchParams.toString();
+      const url = `/api/dashboard/report/user/download${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
       window.location.href = url;
     }
   };
 
-  return (
-    <ChartContainer>
-      {isLoading && <LoaderWithBackground />}
-      <CardCustomHeaderWithDownload
-        title="Stage Progress"
-        onDownload={onDownload}
-      />
-      <div className="border rounded-md border-zinc-200">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="h-[2.5625rem]">
-                {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    className="font-medium text-center text-size-14px text-zinc-500"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => {
-                const id = row.id + pageIndex * pageSize;
-                return (
-                  <TableRow key={id} className="h-[2.5625rem]">
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className="font-medium text-center text-size-14px text-zinc-950"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  {isLoading ? '' : 'No results.'}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+  const onDownloadBadgeLog = () => {
+    if (loadingBadgeLog) {
+      return;
+    }
+    if (campaign) {
+      const queryString = searchParams.toString();
+      const url = `/api/dashboard/report/badge/download${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
+      window.location.href = url;
+    }
+  };
 
-      {/* 페이지네이션 컴포넌트 */}
-      {table.getRowModel().rows?.length ? (
-        <div className="py-5">
-          <Pagination
-            totalItems={total}
-            pageSize={pageSize}
-            currentPage={pageIndex}
-            onPageChange={setPageIndex}
-          />
+  const onDownloadFailedBadgeLog = () => {
+    if (loadingFailedBadgeLog) {
+      return;
+    }
+    if (campaign) {
+      setLoadingFailedBadgeLog(true);
+      const queryString = searchParams.toString();
+      const url = `/api/dashboard/report/badge/download_failed${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
+      window.location.href = url;
+      setLoadingFailedBadgeLog(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5">
+        <Button
+          disabled={loadingBadgeLog}
+          onClick={onDownloadBadgeLog}
+          className="mt-5"
+        >
+          {loadingBadgeLog ? 'Downloading...' : 'Download BadgeLog'}
+        </Button>
+        <Button
+          disabled={loadingFailedBadgeLog}
+          onClick={onDownloadFailedBadgeLog}
+          className="mt-5"
+        >
+          {loadingFailedBadgeLog
+            ? 'Downloading...'
+            : 'Download Failed BadgeLog'}
+        </Button>
+      </div>
+      <ChartContainer>
+        {isLoading && <LoaderWithBackground />}
+        <CardCustomHeaderWithDownload
+          title="Stage Progress"
+          onDownload={onDownload}
+        />
+        <div className="border rounded-md border-zinc-200">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="h-[2.5625rem]">
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="font-medium text-center text-size-14px text-zinc-500"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => {
+                  const id = row.id + pageIndex * pageSize;
+                  return (
+                    <TableRow key={id} className="h-[2.5625rem]">
+                      {row.getVisibleCells().map((cell) => {
+                        return (
+                          <TableCell
+                            key={cell.id}
+                            className="font-medium text-center text-size-14px text-zinc-950"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    {isLoading ? '' : 'No results.'}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
-      ) : (
-        <></>
-      )}
-    </ChartContainer>
+
+        {/* 페이지네이션 컴포넌트 */}
+        {table.getRowModel().rows?.length ? (
+          <div className="py-5">
+            <Pagination
+              totalItems={total}
+              pageSize={pageSize}
+              currentPage={pageIndex}
+              onPageChange={setPageIndex}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </ChartContainer>
+    </div>
   );
 };
 

@@ -68,9 +68,6 @@ export const QuizProvider = ({
 }) => {
   const translation = useTranslations();
 
-  // console.log("QuizProvider", quizSet);
-  // console.log("QuizProvider", quizStageLogs);
-
   const { campaign } = useCampaign();
   const [_quizLog, setQuizLog] = useState<UserQuizLog | null>(quizLog);
 
@@ -156,20 +153,7 @@ export const QuizProvider = ({
 
   const isCreatingQuizLogRef = useRef(false); // 실행 상태를 추적
 
-  // console.log("QuizProvider", quizSet);
-  console.log("currentQuizStage", currentQuizStage);
-
-  useEffect(() => {
-    console.log("currentQuizStageIndex가 업데이트됨:", currentQuizStageIndex);
-  }, [currentQuizStageIndex]);
-
-  useEffect(() => {
-    console.log("currentQuizStage 업데이트됨:", currentQuizStage);
-  }, [currentQuizStage]);
-
-  useEffect(() => {
-    console.log("currentStageQuestions 업데이트됨:", currentStageQuestions);
-  }, [currentStageQuestions]);
+  const badgeStateMap = new Map<string, boolean>(); // key = ${userId}-${campaignName}-${currentQuizStageIndex}
 
   useEffect(() => {
     // console.log("QuizProvider useEffect", userId, _quizLog?.id);
@@ -221,9 +205,25 @@ export const QuizProvider = ({
       setIsLoading(true);
 
       // 뱃지 스테이지 여부 확인
-      const isBadgeAcquired = isBadgeStage()
-        ? await processBadgeAcquisition(stageElapsedSeconds, campaignName)
-        : false;
+      // const isBadgeAcquired = isBadgeStage()
+      //   ? await processBadgeAcquisition(stageElapsedSeconds, campaignName)
+      //   : false;
+      const badgeKey = `${userId}-${campaignName}-${currentQuizStageIndex}`;
+      let isBadgeAcquired = false;
+      if (isBadgeStage()) {
+        const badgeState = badgeStateMap.get(badgeKey);
+        if (badgeState) {
+          console.info("badgeStateMap", badgeState);
+          isBadgeAcquired = badgeState;
+        } else {
+          console.info(" do processBadgeAcquisition");
+          isBadgeAcquired = await processBadgeAcquisition(
+            stageElapsedSeconds,
+            campaignName
+          );
+          badgeStateMap.set(badgeKey, isBadgeAcquired);
+        }
+      }
       console.log("isBadgeAcquired", isBadgeAcquired);
 
       // 랭킹 및 그래프 데이터 가져오기

@@ -67,10 +67,17 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
   }>({ readyRows: [], notReadyRows: [] });
 
   const { readyRows, notReadyRows } = rowState;
+  const campaignStartedAt = data[0].campaign.startedAt;
+  const isPastStartDate = new Date(campaignStartedAt) < new Date();
+  const filteredColumns = isPastStartDate
+    ? columns.filter((col) => {
+        return (col as any).accessorKey !== 'delete';
+      })
+    : columns;
 
   const table = useReactTable({
     data,
-    columns,
+    columns: filteredColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -109,7 +116,15 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     }));
   }, [table, rows]);
 
-  const noSortData = ['url', 'quiz set', 'activity id', 'badge', 'ui language'];
+  const noSortData = [
+    'url',
+    'quiz set',
+    'activity id',
+    'badge',
+    'ui language',
+    'quizSet.updatedBy',
+    'quizSet.updatedAt',
+  ];
 
   return (
     <div>
@@ -198,6 +213,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                           header.id.toLowerCase() === 'activityid' ||
                           header.id.toLowerCase() === 'badge' ||
                           header.id.toLowerCase() === 'uilanguage' ||
+                          header.id.toLowerCase() === 'quizset-updatedby' ||
+                          header.id.toLowerCase() === 'quizset-updatedat' ||
                           header.id.toLowerCase() === 'delete'
                         ) ? (
                           <>

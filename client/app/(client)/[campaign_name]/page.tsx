@@ -19,17 +19,15 @@ export default async function CampaignPage({
 
   const session = await auth();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
 
   const historyResponse = await fetch(
     // `${process.env.NEXT_PUBLIC_API_URL}/api/users/${session?.user.id}/logs/campaigns/${data.item.id}`,
     `${process.env.NEXT_PUBLIC_API_URL}/api/logs/quizzes/sets?user_id=${session?.user.id}&campaign_name=${params.campaign_name}`,
     {
       method: "GET",
-      cache: "force-cache",
-      // cache: "no-store",
     }
   );
 
@@ -41,7 +39,7 @@ export default async function CampaignPage({
     userQuizLog = historyData?.item?.quizLog;
   }
 
-  // // console.log("CampaignPage quizHistory", userQuizLog, session?.user);
+  console.log("CampaignPage quizHistory", userQuizLog, session?.user, session);
 
   // 퀴즈로그가 있으면 해당 퀴즈셋으로 이동
   if (userQuizLog?.quizSetPath) {
@@ -62,5 +60,10 @@ export default async function CampaignPage({
   //   </div>
   // );
 
-  redirect("error/not-found");
+  console.error(
+    "CampaignPage error (퀴즈로그가 없고 삼플 유저라면 에러페이지로 이동)",
+    userQuizLog,
+    session?.user
+  );
+  redirect("error/invalid-access");
 }

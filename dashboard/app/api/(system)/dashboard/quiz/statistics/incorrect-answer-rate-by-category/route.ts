@@ -3,7 +3,7 @@
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
-import { AuthType, Job, Question } from '@prisma/client';
+import { AuthType, Job } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -22,17 +22,35 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
+    const hqQuizSet = await prisma.quizSet.findFirst({
+      where: {
+        campaignId: restWhere.campaignId,
+        domainId: '29',
+        // languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
+        jobCodes: { has: 'ff' },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    const questions = hqQuizSet?.questions || [];
+
+    console.log('hqQuizSet:', hqQuizSet);
+    console.log('questions:', questions);
+    console.log('searchParams:', searchParams);
+
     // 필터링된 `originalQuestionId` 가져오기
-    const questions: Question[] = await prisma.$queryRaw`
-      SELECT q.*
-      FROM "Question" q
-      -- JOIN "Language" l ON q."languageId" = l."id"
-      WHERE q."id" = q."originalQuestionId"
-      AND q."campaignId" = ${restWhere.campaignId}
-      -- AND l."code" = 'en-US'
-      AND q."domainId" = '29'
-      ORDER BY q."order" ASC
-    `;
+    // const questions: Question[] = await prisma.$queryRaw`
+    //   SELECT q.*
+    //   FROM "Question" q
+    //   -- JOIN "Language" l ON q."languageId" = l."id"
+    //   WHERE q."id" = q."originalQuestionId"
+    //   AND q."campaignId" = ${restWhere.campaignId}
+    //   -- AND l."code" = 'en-US'
+    //   AND q."domainId" = '29'
+    //   ORDER BY q."order" ASC
+    // `;
 
     const where = {
       ...restWhere,
@@ -47,23 +65,43 @@ export async function GET(request: NextRequest) {
     };
 
     // `correct` 및 `incorrect` 개수 조회 (필터 적용됨)
-    const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['category', 'originalQuestionId', 'authType', 'jobId'],
-      where: {
-        ...where,
-        isCorrect: true,
-      },
-      _count: { isCorrect: true },
-    });
+    const corrects =
+      restWhere.campaignId === 'ac2fb618-384f-41aa-ab06-51546aeacd32'
+        ? await prisma.userQuizQuestionStatistics.groupBy({
+            by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+            where: {
+              ...where,
+              isCorrect: true,
+            },
+            _count: { isCorrect: true },
+          })
+        : await prisma.userQuizQuestionLog.groupBy({
+            by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+            where: {
+              ...where,
+              isCorrect: true,
+            },
+            _count: { isCorrect: true },
+          });
 
-    const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['category', 'originalQuestionId', 'authType', 'jobId'],
-      where: {
-        ...where,
-        isCorrect: false,
-      },
-      _count: { isCorrect: true },
-    });
+    const incorrects =
+      restWhere.campaignId === 'ac2fb618-384f-41aa-ab06-51546aeacd32'
+        ? await prisma.userQuizQuestionStatistics.groupBy({
+            by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+            where: {
+              ...where,
+              isCorrect: false,
+            },
+            _count: { isCorrect: true },
+          })
+        : await prisma.userQuizQuestionLog.groupBy({
+            by: ['category', 'originalQuestionId', 'authType', 'jobId'],
+            where: {
+              ...where,
+              isCorrect: false,
+            },
+            _count: { isCorrect: true },
+          });
 
     // 히트맵 데이터 그룹화
     const groupedMap = new Map();

@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --chart-primary: #8979ff;
-  --chart-secondary: #ff928a;
-  --chart-tertiary: #3cc3df;
-  --chart-quaternary: #ffae4c;
-  --chart-line-stroke: #ff7300;
+  --chart-goal: #f87171;
+  --chart-expert: #8b5cf6;
+  --chart-advanced: #c4b5fd;
+  --chart-fsm-ses: #0ea5e9;
+  --chart-fsm: #7dd3fc;
+  --chart-ff-ses: #f59e0b;
+  --chart-ff: #fdba74;
+  --chart-expert-line: #94a3b8;
 }
 
 body {

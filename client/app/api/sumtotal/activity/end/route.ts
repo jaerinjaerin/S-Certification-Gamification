@@ -4,6 +4,11 @@ import { prisma } from "@/prisma-client";
 import { BadgeApiType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
+import {
+  createBadgeLog,
+  extractRawLogFromResponse,
+  normalizeError,
+} from "../_lib/log";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -21,21 +26,16 @@ export async function POST(request: Request) {
     const session = await auth();
 
     if (!session) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          apiType: BadgeApiType.PROGRESS,
-          activityId,
-          userId,
-          campaignId,
-          domainId,
-          status: 401,
-          message: "Unauthorized",
-        }),
+      createBadgeLog({
+        apiType: BadgeApiType.PROGRESS,
+        activityId,
+        userId,
+        campaignId,
+        domainId,
+        status: 401,
+        message: "Unauthorized",
       });
+
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
@@ -50,20 +50,14 @@ export async function POST(request: Request) {
     // console.log("account", account);
 
     if (!account) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          apiType: BadgeApiType.PROGRESS,
-          activityId,
-          userId,
-          campaignId,
-          domainId,
-          status: 404,
-          message: "Account not found",
-        }),
+      createBadgeLog({
+        apiType: BadgeApiType.PROGRESS,
+        activityId,
+        userId,
+        campaignId,
+        domainId,
+        status: 404,
+        message: "Account not found",
       });
 
       return NextResponse.json(
@@ -77,131 +71,88 @@ export async function POST(request: Request) {
       ? new Date(now.getTime() - elapsedSeconds * 1000)
       : new Date();
 
-    // try {
-    const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/v1/learner/activities/${activityId}/progress`,
-      {
-        method: "PUT",
-        // mode: 'no-cors',
-        cache: "no-store",
-        body: JSON.stringify({
-          status,
-          date: updatedTime.toISOString(),
-          elapsedSeconds,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${account.access_token}`, // 액세스 토큰 사용
-        },
-      }
-    );
+    const accessToken = account.access_token;
 
-    // console.log("activity/progress response", response);
-
-    if (!response.ok) {
-      // const errorData = await response.json();
-      console.error(
-        "activity/progress response",
-        response,
-        account.userId,
-        account.providerAccountId,
-        account.access_token
+    const tryNumber = 2;
+    for (let attempt = 0; attempt < tryNumber; attempt++) {
+      const response = await fetch(
+        `https://samsung.sumtotal.host/apis/api/v1/learner/activities/${activityId}/progress`,
+        {
+          method: "PUT",
+          cache: "no-store",
+          body: JSON.stringify({
+            status,
+            date: updatedTime.toISOString(),
+            elapsedSeconds,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
 
-      const data = await response.json();
+      if (response.ok) {
+        const data = await response.json();
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        createBadgeLog({
           apiType: BadgeApiType.PROGRESS,
           activityId,
           userId,
           campaignId,
           domainId,
           accountUserId: account.providerAccountId,
-          accessToken: account.access_token,
+          accessToken,
           status: response.status,
-          message: response.statusText || "Failed to update activity/progress",
+          message: response.statusText || "success",
           rawLog: JSON.stringify(data),
-        }),
-      });
+        });
 
-      return NextResponse.json(
-        {
-          message: response.statusText || "Failed to update activity/progress",
-        },
-        { status: response.status }
-      );
-    }
+        return NextResponse.json(data, { status: 200 });
+      }
 
-    const data = await response.json();
-    // console.log("data", data);
-    Sentry.captureMessage("response", data);
-
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      const rawLog = await extractRawLogFromResponse(response);
+      createBadgeLog({
         apiType: BadgeApiType.PROGRESS,
         activityId,
         userId,
         campaignId,
         domainId,
         accountUserId: account.providerAccountId,
-        accessToken: account.access_token,
+        accessToken,
         status: response.status,
-        message: response.statusText || "success",
-        rawLog: JSON.stringify(data),
-      }),
-    });
+        message: response.statusText || "Failed to update activity/progress",
+        rawLog,
+      });
 
-    return NextResponse.json(data, { status: 200 });
+      const isLastAttempt = attempt === tryNumber - 1;
+      if (isLastAttempt) {
+        return NextResponse.json(
+          {
+            message:
+              response.statusText || "Failed to update activity/progress",
+          },
+          { status: response.status }
+        );
+      }
+    }
   } catch (error) {
     console.error("Error end activity:", error);
-    let errorMessage = "Unknown error";
-    let errorStack = "No stack trace";
-    let errorName = "Error";
-
-    if (error instanceof Error) {
-      // ② error가 Error 객체인지 확인
-      errorMessage = error.message;
-      errorStack = error.stack || "No stack trace";
-      errorName = error.name;
-    } else if (typeof error === "string") {
-      // ③ error가 문자열일 경우
-      errorMessage = error;
-    } else if (typeof error === "object" && error !== null) {
-      // ④ error가 객체인 경우
-      errorMessage = (error as any).message || "Unknown object error";
-      errorStack = (error as any).stack || "No stack trace";
-      errorName = (error as any).name || "Error";
-    }
-
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sumtotal/activity/log`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        apiType: BadgeApiType.PROGRESS,
-        status: 500,
-        userId,
-        activityId,
-        campaignId,
-        domainId,
-        message: "An unexpected error occurred",
-        rawLog: JSON.stringify({
-          message: errorMessage,
-          stack: errorStack,
-          name: errorName,
-        }),
+    const { name, message } = await normalizeError(error);
+    createBadgeLog({
+      apiType: BadgeApiType.PROGRESS,
+      status: 500,
+      userId,
+      activityId,
+      campaignId,
+      domainId,
+      message: "Fail to progress activity",
+      rawLog: JSON.stringify({
+        message,
+        name,
       }),
     });
+
     Sentry.captureException(error);
     return NextResponse.json(
       { message: "An unexpected error occurred" },

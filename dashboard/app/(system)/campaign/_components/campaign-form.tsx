@@ -364,7 +364,6 @@ export default function CampaignForm({
   const inputStyle =
     'border-zinc-200 shadow-none h-full max-h-10 p-3 text-size-14px text-zinc-500 disabled:bg-zinc-200 placeholder:text-zinc-500';
 
-  console.log('🥕 form.fomstate.errors', form.formState.errors);
   return (
     <>
       <div className="w-full m-6">

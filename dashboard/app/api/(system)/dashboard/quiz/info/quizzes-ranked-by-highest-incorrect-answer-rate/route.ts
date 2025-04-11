@@ -3,7 +3,7 @@
 import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
-import { Job, Question } from '@prisma/client';
+import { Job } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -21,16 +21,31 @@ export async function GET(request: NextRequest) {
       { select: ['id', 'code'] }
     );
 
-    const questions: Question[] = await prisma.$queryRaw`
-      SELECT q.*
-      FROM "Question" q
-      -- JOIN "Language" l ON q."languageId" = l."id"
-      WHERE q."id" = q."originalQuestionId"
-      AND q."campaignId" = ${restWhere.campaignId}
-      AND q."domainId" = '29'
-      -- AND l."code" = 'en-US'
-      ORDER BY q."order" ASC
-    `;
+    // const questions: Question[] = await prisma.$queryRaw`
+    //   SELECT q.*
+    //   FROM "Question" q
+    //   -- JOIN "Language" l ON q."languageId" = l."id"
+    //   WHERE q."id" = q."originalQuestionId"
+    //   AND q."campaignId" = ${restWhere.campaignId}
+    //   AND q."domainId" = '29'
+    //   -- AND l."code" = 'en-US'
+    //   ORDER BY q."order" ASC
+    // `;
+
+    const hqQuizSet = await prisma.quizSet.findFirst({
+      where: {
+        campaignId: restWhere.campaignId,
+        domainId: '29',
+        // languageId: 'bd97b21f-2beb-44b7-878d-e3fc4f81d23c',
+        jobCodes: { has: 'ff' },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    const questions = hqQuizSet?.questions || [];
+    console.log('questions:', questions);
 
     const where = {
       ...restWhere,
@@ -45,21 +60,39 @@ export async function GET(request: NextRequest) {
     };
 
     // 모든 isCorrect가 있는 데이터 가져오기
-    const corrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
-      where: { ...where, isCorrect: true },
-      _count: {
-        isCorrect: true,
-      },
-    });
+    const corrects =
+      restWhere.campaignId === 'ac2fb618-384f-41aa-ab06-51546aeacd32'
+        ? await prisma.userQuizQuestionStatistics.groupBy({
+            by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
+            where: { ...where, isCorrect: true },
+            _count: {
+              isCorrect: true,
+            },
+          })
+        : await prisma.userQuizQuestionLog.groupBy({
+            by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
+            where: { ...where, isCorrect: true },
+            _count: {
+              isCorrect: true,
+            },
+          });
 
-    const incorrects = await prisma.userQuizQuestionStatistics.groupBy({
-      by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
-      where: { ...where, isCorrect: false },
-      _count: {
-        isCorrect: true,
-      },
-    });
+    const incorrects =
+      restWhere.campaignId === 'ac2fb618-384f-41aa-ab06-51546aeacd32'
+        ? await prisma.userQuizQuestionStatistics.groupBy({
+            by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
+            where: { ...where, isCorrect: false },
+            _count: {
+              isCorrect: true,
+            },
+          })
+        : await prisma.userQuizQuestionLog.groupBy({
+            by: ['originalQuestionId'], // 그룹화 기준 필드는 originalQuestionId만 포함
+            where: { ...where, isCorrect: false },
+            _count: {
+              isCorrect: true,
+            },
+          });
 
     const groupedMap = new Map();
 

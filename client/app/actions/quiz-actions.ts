@@ -7,8 +7,9 @@ import {
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
+import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Question } from "@prisma/client";
+import { BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 export async function getQuizSet(
   quizsetPath: string,
@@ -34,6 +35,7 @@ export async function getQuizSet(
       where: { id: userId },
     });
     if (!user) {
+      console.error("getQuizSet User not found:", userId);
       throw new ApiError(404, "NOT_FOUND", "User not found");
     }
 
@@ -49,6 +51,7 @@ export async function getQuizSet(
     });
 
     if (!domain) {
+      console.error("getQuizSet Domain not found:", domainCode);
       throw new ApiError(404, "NOT_FOUND", "Domain not found");
     }
 
@@ -66,6 +69,7 @@ export async function getQuizSet(
       });
 
       if (!campaign) {
+        console.error("getQuizSet Campaign not found:", campaign);
         throw new ApiError(404, "NOT_FOUND", "getQuizSet Campaign not found");
       }
 
@@ -74,8 +78,16 @@ export async function getQuizSet(
       });
 
       if (!language) {
+        console.error("getQuizSet Language not found:", language);
         throw new ApiError(404, "NOT_FOUND", "Language not found");
       }
+
+      console.log("getQuizSet:", {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        languageId: language.id,
+        jobCodes: { has: jobCode },
+      });
 
       const quizSet = await prisma.quizSet.findFirst({
         where: {
@@ -124,6 +136,21 @@ export async function getQuizSet(
       });
 
       if (!quizSet) {
+        console.error(
+          "getQuizSet Quiz set not found:",
+          "userId",
+          userId,
+          "quizsetPath",
+          quizsetPath,
+          "campaignSlug",
+          campaignSlug,
+          "campaignId",
+          campaign.id,
+          "domainId",
+          domain.id,
+          "languageId",
+          language.id
+        );
         throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
       }
 
@@ -241,10 +268,18 @@ export async function getQuizSet(
     }
 
     // console.log("quizSet:", quizSet);
+    let language: Language | null = null;
 
-    let language = await prisma.language.findFirst({
-      where: { code: languageCode },
-    });
+    const newLanguageCodes = newLanguages.map((lang) => lang.code);
+    if (newLanguageCodes.includes(languageCode)) {
+      language = await prisma.language.findFirst({
+        where: { code: defaultLanguageCode },
+      });
+    } else {
+      language = await prisma.language.findFirst({
+        where: { code: languageCode },
+      });
+    }
 
     // console.log("language:", language);
 

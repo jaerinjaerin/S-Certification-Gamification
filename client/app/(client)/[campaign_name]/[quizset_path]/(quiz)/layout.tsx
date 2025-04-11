@@ -29,6 +29,36 @@ export default async function QuizLayout({
   const authType = session?.user.authType;
   const timeZone = "Seoul/Asia";
 
+  // try {
+  //   // if (session?.user.id && session?.user.authType === AuthType.SUMTOTAL) {
+  //   //   const response = await fetch(
+  //   //     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
+  //   //   );
+
+  //   //   console.log("response", response);
+
+  //   //   if (response.status >= 400 && response.status < 500) {
+  //   //     console.log("Sign out");
+  //   //     await signOut({
+  //   //       redirect: false,
+  //   //     });
+
+  //   //     redirect("/login");
+  //   //   }
+  //   // }
+
+  //   const expired = await checkAccessTokenExpired(session!.user.id);
+  //   if (expired) {
+  //     // await signOut({
+  //     //   redirect: false,
+  //     // });
+  //     redirect("/login");
+  //   }
+  // } catch (error) {
+  //   console.error("checkSumTotalTokenExpiration error", error);
+  // }
+  // console.log("session", session, session?.user.authType === AuthType.SUMTOTAL);
+
   let locale: string = "en";
 
   console.log("userId", userId);
@@ -37,11 +67,8 @@ export default async function QuizLayout({
     redirect("/login");
   }
 
-  console.log("🥕 authType", session.user.authType);
-
   // guest 유저의 경우
   if (authType === "GUEST") {
-    console.log("🥕 params.campaign_name", params.campaign_name);
     locale = await getServiceLanguageCode(params.campaign_name ?? "s25");
   }
 
@@ -59,31 +86,42 @@ export default async function QuizLayout({
     // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
     const normalizedLanguageCode = languageCode.replace(
       /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-      "$1",
+      "$1"
     );
 
     locale = await mapBrowserLanguageToLocale(
       normalizedLanguageCode,
-      params.campaign_name,
+      params.campaign_name
     );
-    console.log("QuizSetLoginLayout locale:", locale);
+    // console.log("QuizSetLoginLayout locale:", locale);
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
-  const messages = await fetch(url, { cache: "force-cache" })
+  const messages = await fetch(url)
     .then((res) => res.json())
-    .catch((error) => console.error("get message error", error));
+    .catch((error) =>
+      console.error("get message error", locale, params.campaign_name, error)
+    );
 
   // ================== Quiz Log Setup ==================
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
 
   // const quizLogResponse = await fetchQuizLog(userId, params.campaign_name);
-  console.log("QuizLayout quizLogResponse", quizLogResponse);
+  // console.log("QuizLayout quizLogResponse", quizLogResponse);
   if (
     quizLogResponse.status != null &&
     quizLogResponse.status >= 400 &&
     quizLogResponse.status < 500
   ) {
+    console.error(
+      "Client error while fetching quiz log",
+      params.campaign_name,
+      quizLogResponse
+    );
+
+    Sentry.captureMessage(
+      `Client error while fetching quiz log: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
@@ -91,10 +129,10 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz log",
       params.campaign_name,
-      quizLogResponse,
+      quizLogResponse
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`,
+      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
     );
     return <RefreshButton />;
   }
@@ -122,16 +160,25 @@ export default async function QuizLayout({
   const quizResponse: ApiResponseV2<QuizSetEx> = await getQuizSet(
     params.quizset_path,
     userId,
-    params.campaign_name,
+    params.campaign_name
   );
 
-  console.log("getQuizSet quizResponse", quizResponse);
+  // console.log("getQuizSet quizResponse", quizResponse);
   // const quizResponse: ApiResponse<QuizSetEx> = await fetchQuizSet(
   //   params.campaign_name,
   //   params.quizset_path,
   //   userId
   // );
   if (quizResponse.status === 404) {
+    console.error(
+      "Quiz set not found",
+      userId,
+      params.campaign_name,
+      params.quizset_path
+    );
+    Sentry.captureMessage(
+      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
@@ -148,18 +195,28 @@ export default async function QuizLayout({
     console.error(
       "Server error while fetching quiz set",
       params.quizset_path,
-      quizResponse,
+      quizResponse
     );
     Sentry.captureMessage(
-      `Server error while fetching quiz set: ${params.campaign_name}`,
+      `Server error while fetching quiz set: ${params.campaign_name}`
     );
     return <RefreshButton />;
   }
 
   // console.log("fetchQuizSet quizResponse", quizResponse);
   const quizSet = quizResponse.result?.item;
-  console.log("QuizLayout quizSet", quizSet);
+  // console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
+    console.error(
+      "Quiz set not found",
+      quizResponse,
+      params.campaign_name,
+      params.quizset_path,
+      userId
+    );
+    Sentry.captureMessage(
+      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
+    );
     redirect(`/${params.campaign_name}/not-ready`);
   }
 

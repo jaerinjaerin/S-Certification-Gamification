@@ -4,10 +4,22 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
+  let session = await auth();
 
+  // console.log("🚀 ~ middleware ~ session:", session);
   const { pathname, search } = request.nextUrl;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  console.error(
+    "move page",
+    pathname,
+    session?.user.id
+    // session?.user.isTokenExpired
+  );
+
+  // if (session?.user.isTokenExpired) {
+  //   session = null;
+  // }
 
   if (
     pathname.includes("/error") ||
@@ -16,7 +28,8 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/home") ||
     pathname.includes("/register") ||
     pathname.includes("/site") ||
-    pathname.includes("/not-ready")
+    pathname.includes("/not-ready") ||
+    pathname.includes("/invalid-access")
   ) {
     return NextResponse.next();
   }
@@ -31,11 +44,10 @@ export async function middleware(request: NextRequest) {
 
   const campaignName = segments[0];
   const campaignQuizSetPath = segments[1];
-  // const campaignQuizSetPath: string | null = isValidCampaignQuizSetId(
-  //   segments[1]
-  // )
-  //   ? segments[1]
-  //   : null;
+
+  // if (campaignName.includes("login")) {
+  //   return NextResponse.redirect(new URL("/error/not-found", request.url));
+  // }
 
   /**
    * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
@@ -54,15 +66,10 @@ export async function middleware(request: NextRequest) {
   if (session && pathname.includes("/login")) {
     const authType = session.user?.authType;
     if (authType === AuthType.SUMTOTAL) {
-      // return NextResponse.redirect(new URL("/error", request.url));
-      const url = `${basePath}/${campaignName}/check_quizset`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      const url = `${basePath}/${campaignName}`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
       return NextResponse.redirect(new URL(url, request.url));
     } else {
-      // const url = campaignQuizSetPath
-      //   ? `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`
-      //   : `${basePath}/${campaignName}${search}`;
       const url = `${basePath}/${campaignName}/register`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
-
       return NextResponse.redirect(new URL(url, request.url));
     }
   }

@@ -6,6 +6,8 @@ import Spinner from "@/components/ui/spinner";
 import { arabicCountries } from "@/core/config/default";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import { useQuizQuestionLogs } from "@/hooks/api/log/useQuizQuestionLogs";
+import useCheckLocale from "@/hooks/useCheckLocale";
+import { useCampaign } from "@/providers/campaignProvider";
 import { usePolicy } from "@/providers/policyProvider";
 import { useQuiz } from "@/providers/quizProvider";
 import { cn } from "@/utils/utils";
@@ -26,6 +28,12 @@ export default function ReviewPage() {
   const [loading] = useState(false);
   const { domainName } = usePolicy();
   const isArabicCountry = arabicCountries.includes(domainName);
+  const { isArabic } = useCheckLocale();
+  const { campaign } = useCampaign();
+
+  // campaign.name에 따라 적절한 값 사용
+  const isArabicLocale =
+    campaign.name.toLowerCase() === "s25" ? isArabic : isArabicCountry;
 
   const searchParams = useSearchParams();
   const searchStage = Number(searchParams.get("stage"));
@@ -153,7 +161,7 @@ export default function ReviewPage() {
         </div>
       </div>
       <Qusetion
-        isArabicCountry={isArabicCountry}
+        isArabicCountry={isArabicLocale}
         question={question.text}
         bgImageUrl={
           question.backgroundImage?.imagePath
@@ -177,7 +185,7 @@ export default function ReviewPage() {
                   key={option.id}
                   className={cn(
                     "rounded-[20px] py-4 px-6 bg-white hover:cursor-pointer",
-                    isArabicCountry && "text-right",
+                    isArabicLocale && "text-right",
                     selectedOptionIds.includes(option.id) &&
                       !option.isCorrect &&
                       "bg-[#EE3434] text-white pointer-events-none",

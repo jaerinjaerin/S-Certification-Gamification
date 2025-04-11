@@ -212,14 +212,23 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
 }
 
 const DownloadManualButton = () => {
-  const handleDownloadFile = () => {
-    const FILE_NAME = `Admin_Manual.pptx`;
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadFile = async () => {
+    setIsDownloading(true);
+    // const FILE_NAME = `Admin_Manual.pptx`;
+    const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
-    handleDownload(FILE_NAME, DOWNLOAD_URL);
+    await handleDownload(FILE_NAME, DOWNLOAD_URL);
+    setIsDownloading(false);
   };
 
   return (
-    <Button onClick={handleDownloadFile} variant={'secondary'}>
+    <Button
+      onClick={handleDownloadFile}
+      variant={'secondary'}
+      disabled={isDownloading}
+    >
       Download Manual
     </Button>
   );

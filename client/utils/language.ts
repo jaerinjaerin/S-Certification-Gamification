@@ -1,0 +1,15 @@
+export const newLanguages = [
+  { code: "ar", name: "Arabic" },
+  { code: "de", name: "German" },
+  { code: "en", name: "English(USA)" },
+  { code: "es", name: "Spanish(Spain)" },
+  { code: "es-419", name: "Spanish(LTN)" },
+  { code: "fr", name: "French(France)" },
+  { code: "hr", name: "Croatian" },
+  { code: "it", name: "Italian" },
+  { code: "ky", name: "Kyrgyz" },
+  { code: "pt", name: "Portuguese(Portugal)" },
+  { code: "sk", name: "Slovak" },
+  { code: "sr", name: "Serbian" },
+  { code: "tg", name: "Tajiki" },
+];

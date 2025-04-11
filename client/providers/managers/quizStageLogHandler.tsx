@@ -118,7 +118,6 @@ export class QuizStageLogHandler {
             scope.setTag("isBadgeAcquired", isBadgeAcquired);
             return scope;
           });
-          // await Sentry.flush(1000);
 
           throw new Error(
             "Max attempts reached: An unexpected error occurred while registering quiz log"
