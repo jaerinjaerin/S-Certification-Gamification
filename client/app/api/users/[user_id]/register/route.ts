@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { ERROR_CODES } from "@/constants/error-codes";
 import { defaultLanguageCode } from "@/core/config/default";
 import { prisma } from "@/prisma-client";
+import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
@@ -73,6 +74,38 @@ export async function POST(request: Request, props: Props) {
           },
         },
         { status: 404 }
+      );
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: ERROR_CODES.USER_NOT_FOUND,
+            message: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    if (user.authType === AuthType.SUMTOTAL) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: ERROR_CODES.WRONG_AUTH_TYPE,
+            message: "Unauthorized",
+          },
+        },
+        { status: 403 }
       );
     }
 
