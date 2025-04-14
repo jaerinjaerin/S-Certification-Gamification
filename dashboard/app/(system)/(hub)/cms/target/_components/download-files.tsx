@@ -19,10 +19,19 @@ const DownloadTarget = () => {
       try {
         setIsDownloading(true);
 
-        await handleDownload(
-          `target-${campaign.slug}.xlsx`,
+        const response = await fetch(
           `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`
         );
+        const data = await response.json();
+        const filePath = data.data;
+        const fileName = filePath.split('/').pop();
+        const fileUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${filePath}`;
+        await handleDownload(fileName, fileUrl);
+
+        // await handleDownload(
+        //   `target_${campaign.slug}.xlsx`,
+        //   `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`
+        // );
       } catch (error) {
         console.error('Download failed:', error);
         toast.error('Download failed');
