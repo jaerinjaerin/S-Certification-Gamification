@@ -6,6 +6,7 @@ import { useStateVariables } from '@/components/provider/state-provider';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { handleDownload } from '../../_utils/utils';
 
 const DownloadTarget = () => {
   const { campaign } = useStateVariables();
@@ -17,23 +18,11 @@ const DownloadTarget = () => {
       // window.location.href = `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`;
       try {
         setIsDownloading(true);
-        const response = await fetch(
-          `/api/cms/target/data?${serializeJsonToQuery({
-            campaignSlug: campaign.slug,
-          })}`
+
+        await handleDownload(
+          `target-${campaign.slug}.xlsx`,
+          `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`
         );
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'target.zip';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
       } catch (error) {
         console.error('Download failed:', error);
         toast.error('Download failed');
