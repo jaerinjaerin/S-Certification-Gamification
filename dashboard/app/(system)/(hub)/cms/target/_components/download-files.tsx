@@ -20,7 +20,7 @@ const DownloadTarget = () => {
         setIsDownloading(true);
 
         await handleDownload(
-          `target-${campaign.slug}.xlsx`,
+          `target_${campaign.slug}.xlsx`,
           `/api/cms/target/data?${serializeJsonToQuery({ campaignSlug: campaign.slug })}`
         );
       } catch (error) {
