@@ -29,6 +29,7 @@ import { columns } from './columns';
 import { cn } from '@/lib/utils';
 import { hqColumns } from './hq-columns';
 import { isEmpty } from '../../../../_utils/utils';
+import UploadedActivityInfo from './uploaded-activity';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -146,6 +147,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             Not Ready :
             <strong className="font-bold">{` ${notReadyRows.length}`}</strong>
           </div>
+          <UploadedActivityInfo />
         </div>
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
