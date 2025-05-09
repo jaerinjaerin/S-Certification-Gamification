@@ -311,6 +311,7 @@ export default function GuestRegisterPage({
       setErrorMessage(translation("required_quiz_language")); // 번역 필요
       return;
     }
+
     createItem({
       url: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/users/${session?.user.id}/register`,
       body: {
@@ -323,7 +324,7 @@ export default function GuestRegisterPage({
         // languageCode: languageCode,
         languageCode: quizLanguageCode,
         channelId: selectedChannel?.channelId,
-        channelName: channelName?.trim(),
+        channelName: channelInput ? channelName?.trim() : selectedChannel?.name,
         channelSegmentId: selectedChannelSegmentId,
         campaignId: campaign.id,
         campaignSlug:

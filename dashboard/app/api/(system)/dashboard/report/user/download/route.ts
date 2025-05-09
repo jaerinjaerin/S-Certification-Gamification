@@ -4,7 +4,7 @@ import { querySearchParams } from '@/lib/query';
 import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
 import { decrypt } from '@/utils/encrypt';
-import { AuthType, Job, User, UserQuizLog } from '@prisma/client';
+import { AuthType, Job, User, UserQuizStatistics } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -23,12 +23,17 @@ export async function GET(request: NextRequest) {
     );
 
     console.log('searchParams:', searchParams);
+    console.log('where:', where);
 
-    const logs: UserQuizLog[] = await extendedQuery(
+    const _createdAt = where.createdAt;
+    delete where.createdAt;
+
+    const logs: UserQuizStatistics[] = await extendedQuery(
       prisma,
-      'UserQuizLog',
+      'UserQuizStatistics',
       {
         ...where,
+        updatedAt: _createdAt,
         jobId: { in: jobGroup.map((job) => job.id) },
         ...(storeId
           ? storeId === '4'

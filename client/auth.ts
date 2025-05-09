@@ -205,7 +205,7 @@ export const {
         const encryptedEmail = encrypt(email as string, true);
 
         let user = await prisma.user.findFirst({
-          where: { emailId: encryptedEmail },
+          where: { emailId: encryptedEmail, authType: AuthType.GUEST },
         });
 
         // 사용자 계정이 없으면 생성
