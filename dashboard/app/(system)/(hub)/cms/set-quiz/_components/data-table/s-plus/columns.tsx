@@ -15,6 +15,7 @@ import {
   QuizSetLink,
   StatusBadge,
 } from '../../data-table-widgets';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
   // {
@@ -33,6 +34,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   //   ),
   //   cell: () => <ActiveToggle />,
   // },
+
   {
     accessorKey: 'No',
     header: 'No',
@@ -245,6 +247,37 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
         return <div>{row.original.uiLanguage.name}</div>;
       }
       return <UILinkButton />;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedby',
+    header: 'Updated By',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return <div>{quizSet.updatedBy}</div>;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedat',
+    header: 'Updated At',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return (
+        <div className="text-xs">
+          {format(
+            quizSet.updatedAt ?? quizSet.createdAt,
+            'yyyy.MM.dd HH:mm:ss'
+          )}
+        </div>
+      );
     },
     sortingFn: 'auto',
   },

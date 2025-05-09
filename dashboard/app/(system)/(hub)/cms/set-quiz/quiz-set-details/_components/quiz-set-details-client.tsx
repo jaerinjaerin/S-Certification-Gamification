@@ -25,7 +25,7 @@ import useSWR from 'swr';
 import { handleDownload } from '../../../_utils/utils';
 import { fetcher } from '../../../lib/fetcher';
 import { QuizSetDetailsResponse } from '../../_type/type';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 
 type accessKeyType = {
   order: string;
@@ -96,8 +96,15 @@ export default function QuizSetDetailsClient() {
           <h3 className="text-size-17px font-semibold ">Information</h3>
           <div className="flex right items-center gap-2">
             <span className="text-nowrap text-secondary">
-              Updated :{' '}
-              {dayjs(quizSetFile?.updatedAt).format('YY.MM.DD HH:mm:ss')}
+              Updated By : {quizSet?.updatedBy}
+            </span>
+            <span>/</span>
+            <span className="text-nowrap text-secondary">
+              At :{' '}
+              {format(
+                quizSet?.updatedAt ?? quizSet?.createdAt ?? new Date(),
+                'yyyy.MM.dd HH:mm:ss'
+              )}
             </span>
             <Button
               onClick={() =>

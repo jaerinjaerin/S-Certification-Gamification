@@ -20,7 +20,10 @@ export const uploadFileNameValidator = (file: File) => {
     },
   };
 
-  return file.name.toLowerCase().startsWith(`target`)
-    ? successResult
-    : errorResult('Invalid target file name.');
+  const fileName = file.name.toLowerCase();
+  const fileNameWithoutExt = fileName.split('.')[0]; // 확장자 제거
+
+  const isValid = /^target$|^target_.*$/i.test(fileNameWithoutExt);
+
+  return isValid ? successResult : errorResult('Invalid target file name.');
 };
