@@ -24,13 +24,15 @@ export async function GET(request: NextRequest) {
     console.log('searchParams:', searchParams);
     console.log('where:', where);
 
+    const _createdAt = where.createdAt;
+    delete where.createdAt;
+
     const logs: UserQuizStatistics[] = await extendedQuery(
       prisma,
       'UserQuizStatistics',
       {
-        // ...where,
-        campaignId: where.campaignId,
-        updatedAt: where.createdAt,
+        ...where,
+        updatedAt: _createdAt,
         jobId: { in: jobGroup.map((job) => job.id) },
         ...(storeId
           ? storeId === '4'
