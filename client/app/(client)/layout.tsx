@@ -1,13 +1,9 @@
 import AuthProvider from "@/providers/authProvider";
 import Link from "next/link";
 
-export default async function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="flex justify-center">
       {process.env.ENV !== "production" && (
         <Link
           href="/home"
