@@ -1,76 +1,66 @@
 "use client";
 
-import PolicyFooter from "@/components/dialog/privacy-and-term";
-import PolicySheet from "@/components/login/policy-sheet";
-import {
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+import LoginButton from "@/components/login/login-button";
+import PolicyRenderer from "@/components/policy-renderer";
+
 import useLoader from "@/components/ui/loader";
-import Spinner from "@/components/ui/spinner";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
-import { usePolicy } from "@/providers/policyProvider";
+import useDomainRegionInfo from "@/hooks/useGetDomainInfo";
+import { swrFetcher } from "@/utils/fetcher";
+import { extractCodesFromPath } from "@/utils/pathUtils";
+
 import { cn } from "@/utils/utils";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogDescription,
-  AlertDialogTitle,
-} from "@radix-ui/react-alert-dialog";
+
 import { AutoTextSize } from "auto-text-size";
 import { signIn, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Login({
-  params,
-}: {
-  params: { campaign_name: string; quizset_path: string };
-}) {
+export default function Login({ params }: { params: { campaign_name: string; quizset_path: string } }) {
   useGAPageView();
+
   const { status } = useSession();
   const translation = useTranslations();
   const { isArabic } = useCheckLocale();
-  const { loading, setLoading, renderLoader } = useLoader();
-  const {
-    subsidiary,
-    privacyContent,
-    agreementContent,
-    termContent,
-    domainName,
-  } = usePolicy();
-  const regionName = subsidiary && subsidiary.region.name;
+  const { loading, Loader, startLoading, stopLoading } = useLoader();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const codes = extractCodesFromPath(params.quizset_path);
+  const domainCode = codes?.domainCode;
 
-  const isPolicyAcceptCountry = regionName === "MENA" || regionName === "Korea";
-  const [openSheet, setOpenSheet] = useState(isPolicyAcceptCountry);
-  const PRIVACY_CONTENT = agreementContent
-    ? `${agreementContent} === ${privacyContent}`
-    : privacyContent;
+  const { openSheet, isPolicyAcceptCountry, loadingDomain, setOpenSheet } = useDomainRegionInfo(domainCode);
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
+  useEffect(() => {
+    if (isPolicyAcceptCountry) {
+      setOpenSheet(true);
+    }
+  }, [isPolicyAcceptCountry, setOpenSheet]);
 
   const processSignIn = async () => {
-    setLoading(true);
+    startLoading();
 
     try {
-      console.log("로그인 시도");
       await signIn("sumtotal", {
         callbackUrl: `${window.location.origin}/${params.campaign_name}/${params.quizset_path}/map`,
       });
     } catch (error) {
       console.error("로그인 오류:", error);
       setErrorMessage(translation("unexpected_error"));
-      setLoading(false);
+      stopLoading();
     }
   };
 
-  if (status === "loading") {
-    return <Spinner />;
+  const handleClickLoginButton = async () => {
+    if (isPolicyAcceptCountry) {
+      setOpenSheet(true);
+    } else {
+      await processSignIn();
+    }
+  };
+
+  if (status === "loading" || loadingDomain) {
+    return Loader(true);
   }
 
   return (
@@ -86,78 +76,43 @@ export default function Login({
           }}
         >
           <div className="flex flex-col items-center h-full py-[20px] relative">
-            <span className="block text-lg font-bold">
-              {translation("galaxy_ai_expert")}
-            </span>
-            <div
-              className={cn("flex flex-col items-center my-auto gap-[49px]")}
-            >
+            <span className="block text-lg font-bold">{translation("galaxy_ai_expert")}</span>
+            <div className={cn("flex flex-col items-center my-auto gap-[49px]")}>
               <div className="font-bold text-center text-4xl/normal sm:text-5xl/normal text-balance px-[20px] max-w-[420px] min-w-[280px] w-full h-[200px] ">
-                <AutoTextSize mode="box">
-                  {translation("be_a_galaxy_ai_expert")}
-                </AutoTextSize>
+                <AutoTextSize mode="box">{translation("be_a_galaxy_ai_expert")}</AutoTextSize>
               </div>
-              {!isPolicyAcceptCountry && (
-                <Button
-                  variant={"primary"}
-                  disabled={loading}
-                  onClick={processSignIn}
-                  className={cn(
-                    "disabled:bg-disabled ",
-                    isArabic && "flex-row-reverse"
-                  )}
-                >
-                  <span>S+</span>
-                  <span>{translation("login")}</span>
-                </Button>
-              )}
-              {isPolicyAcceptCountry && (
-                <PolicySheet
-                  processSignIn={processSignIn}
-                  loading={loading}
-                  privacyContent={PRIVACY_CONTENT}
-                  termContent={termContent}
-                  domainName={domainName}
-                  openSheet={openSheet}
-                  setOpenSheet={setOpenSheet}
-                >
-                  <Button
-                    variant={"primary"}
-                    disabled={loading}
-                    className={cn(
-                      "disabled:bg-disabled ",
-                      isArabic && "flex-row-reverse"
-                    )}
-                  >
-                    <span>S+</span>
-                    <span>{translation("login")}</span>
-                  </Button>
-                </PolicySheet>
-              )}
+              <LoginButton disabled={loading} isArabic={isArabic} translationLogin={translation("login")} onClick={handleClickLoginButton}>
+                <span>S+</span>
+              </LoginButton>
             </div>
-            <PolicyFooter />
+
+            {isPolicyAcceptCountry && (
+              <PolicyRenderer
+                view="sheet"
+                onClick={processSignIn}
+                loading={loading}
+                open={openSheet}
+                setOpenSheet={setOpenSheet}
+                domainCode={domainCode}
+              />
+            )}
+
+            <div className={cn("font-medium text-sm")}>
+              <PolicyRenderer view="dialog" dialogType="privacy" domainCode={domainCode} />
+              <span className="mx-2">|</span>
+              <PolicyRenderer view="dialog" dialogType="term" domainCode={domainCode} />
+            </div>
           </div>
         </div>
       </div>
-      {loading && renderLoader()}
-      <AlertDialog
+
+      {Loader()}
+      <ResultAlertDialog
         open={!!errorMessage}
-        onOpenChange={() => setErrorMessage(undefined)}
-      >
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle></AlertDialogTitle>
-            <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Button variant={"primary"} onClick={() => {}}>
-                <span>{translation("ok")}</span>
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        description={errorMessage ?? null}
+        onConfirm={() => setErrorMessage(null)}
+        translationOk={translation("ok")}
+      />
     </>
   );
 }

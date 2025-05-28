@@ -1,34 +1,13 @@
 import { cn } from "@/utils/utils";
 import { useTranslations } from "next-intl";
-import PrivacyOrTermPopup from "./privacy-term-popup";
-import { usePolicy } from "@/providers/policyProvider";
+import PolicyRenderer from "../policy-renderer";
 
-export default function PolicyFooter({ className }: { className?: string }) {
-  const { privacyContent, termContent, domainName } = usePolicy();
-
-  const translation = useTranslations();
-
+export default function PolicyFooter({ className, domainCode }: { className?: string; domainCode: string }) {
   return (
     <div className={cn("font-medium text-sm", className)}>
-      <PrivacyOrTermPopup
-        popupProps={{
-          popupTitle: `${translation("privacy")}`,
-          contents: `${privacyContent}`,
-          actionButtonText: `${translation("accept")}`,
-          triggerChildren: `${translation("privacy")}`,
-          domainName: domainName,
-        }}
-      />
+      <PolicyRenderer view="dialog" dialogType="privacy" domainCode={domainCode} />
       <span className="mx-2">|</span>
-      <PrivacyOrTermPopup
-        popupProps={{
-          popupTitle: `${translation("term")}`,
-          contents: `${termContent}`,
-          actionButtonText: `${translation("ok")}`,
-          triggerChildren: `${translation("term")}`,
-          domainName: domainName,
-        }}
-      />
+      <PolicyRenderer view="dialog" dialogType="term" domainCode={domainCode} />
     </div>
   );
 }

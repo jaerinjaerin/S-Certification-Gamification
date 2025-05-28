@@ -1,38 +1,42 @@
 "use client";
-import PolicySheet from "@/components/login/policy-sheet";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+// React
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// Next-auth
+import { useSession } from "next-auth/react";
+
+// Next-intl
+import { useLocale, useTranslations } from "next-intl";
+
+// Components
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+import LoginButton from "@/components/login/login-button";
+import PolicyRenderer from "@/components/policy-renderer";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Spinner from "@/components/ui/spinner";
-import { ERROR_CODES } from "@/constants/error-codes";
+
+// Hooks
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import useCreateItem from "@/hooks/useCreateItem";
-import useGetContents from "@/hooks/useGetContents";
-import { useCampaign } from "@/providers/campaignProvider";
+import useDomainRegionInfo from "@/hooks/useGetDomainInfo";
+
+// Services
 import { fetchQuizLog } from "@/services/quizService";
+
+// Utils
 import { cn } from "@/utils/utils";
-import { UserQuizLog } from "@prisma/client";
 import assert from "assert";
-import { useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
+// Constants
+import { ERROR_CODES } from "@/constants/error-codes";
+
+// Providers
+import { useCampaign } from "@/providers/campaignProvider";
+
+// Types
+import { UserQuizLog } from "@prisma/client";
 
 interface Job {
   name: string;
@@ -71,11 +75,7 @@ interface DomainDetail {
   languages: JobQuizLanguage;
 }
 
-export default function GuestRegisterPage({
-  params,
-}: {
-  params: { campaign_name: string };
-}) {
+export default function GuestRegisterPage({ params }: { params: { campaign_name: string } }) {
   useGAPageView();
   const router = useRouter();
 
@@ -86,20 +86,14 @@ export default function GuestRegisterPage({
   const { isArabic } = useCheckLocale();
 
   // state
-  const [selectedCountry, setSelectedCountry] = useState<DomainDetail | null>(
-    null
-  );
+  const [selectedCountry, setSelectedCountry] = useState<DomainDetail | null>(null);
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [channelName, setChannelName] = useState<string | null>(null);
-  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<
-    string | null
-  >(null);
+  const [selectedChannelSegmentId, setSelectedChannelSegmentId] = useState<string | null>(null);
   const [channelInput, setChannelInput] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  const [languageCode, setLanguageCode] = useState<string | undefined>(
-    undefined
-  ); // 브라우저에서 주는 언어코드
+  const [languageCode, setLanguageCode] = useState<string | undefined>(undefined); // 브라우저에서 주는 언어코드
   const [quizLanguageCode, setQuizLanguageCode] = useState<string | null>(null); // 브라우저에서 주는 언어코드
 
   // select box options
@@ -114,21 +108,18 @@ export default function GuestRegisterPage({
   const [jobs, setJobs] = useState<Job[]>(defaultJobs);
   const [quizLanguages, setQuizLanguages] = useState<QuizLanguage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [checkRegisteredLoading, setCheckRegisteredLoading] =
-    useState<boolean>(false);
+  const [checkRegisteredLoading, setCheckRegisteredLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  console.log("status", status);
+  const { openSheet, setOpenSheet, isPolicyAcceptCountry } = useDomainRegionInfo(selectedCountry?.code);
 
-  const {
-    privacyContent,
-    termContent,
-    agreementContent,
-    isPolicyAcceptCountry,
-  } = useGetContents(selectedCountry?.code);
-
-  const PRIVACY_CONTENT = agreementContent
-    ? `${agreementContent} === ${privacyContent}`
-    : privacyContent;
+  const handleClickLoginButton = async () => {
+    if (isPolicyAcceptCountry) {
+      setOpenSheet(true);
+    } else {
+      await routeQuizPage();
+    }
+  };
 
   const fetchConutries = async () => {
     try {
@@ -172,13 +163,7 @@ export default function GuestRegisterPage({
     }
   }, [session?.user.id]);
 
-  const {
-    isLoading: loadingCreate,
-    error: errorCreate,
-    item: campaignPath,
-    createItem,
-  } = useCreateItem<string>();
-  // console.log("로딩크리에이트트트트틑", loadingCreate);
+  const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
   useEffect(() => {
     if (campaignPath) {
@@ -190,12 +175,7 @@ export default function GuestRegisterPage({
     console.log("checkRegistered", userId);
     try {
       setCheckRegisteredLoading(true);
-      console.log("setCheckRegisteredLoading", true);
-      // setCheckingRegisterd(true);
-      const quizLogResponse = await fetchQuizLog(
-        userId,
-        campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug
-      );
+      const quizLogResponse = await fetchQuizLog(userId, campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug);
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
       if (quizLog) {
@@ -204,7 +184,6 @@ export default function GuestRegisterPage({
     } catch (error) {
       console.error("Failed to fetch data", error);
     } finally {
-      // setCheckingRegisterd(false);
       console.log("setCheckRegisteredLoading", false);
       setCheckRegisteredLoading(false);
     }
@@ -270,7 +249,6 @@ export default function GuestRegisterPage({
     }
     setSelectedChannel(channel);
     setSelectedChannelSegmentId(channel.channelSegmentId);
-    // setSelectedJobId(channel.job.id);
   };
 
   const selectJob = (jobId: string) => {
@@ -296,7 +274,7 @@ export default function GuestRegisterPage({
     }
   };
 
-  const routeQuizPage = () => {
+  const routeQuizPage = async () => {
     if (!selectedCountry) {
       setErrorMessage(translation("required_country")); // 번역 필요
       return;
@@ -320,22 +298,16 @@ export default function GuestRegisterPage({
         regionId: selectedCountry?.regionId,
         jobId: jobs.find((j) => j.value === selectedJobId)?.id,
         storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
-        // languageCode: languageCode,
         languageCode: quizLanguageCode,
         channelId: selectedChannel?.channelId,
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
         campaignId: campaign.id,
-        campaignSlug:
-          campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug,
+        campaignSlug: campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug,
       },
     });
   };
 
-  // const errorMessage = error || errorCreate;
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
   useEffect(() => {
     if (errorCreate) {
       if (errorCreate.code === ERROR_CODES.UNAUTHORIZED) {
@@ -346,14 +318,6 @@ export default function GuestRegisterPage({
   }, [errorCreate]);
 
   const isDisabled = () => {
-    console.log(
-      "isDisabled",
-      selectedCountry,
-      selectedChannel,
-      selectedJobId,
-      quizLanguageCode,
-      checkRegisteredLoading
-    );
     if (oldCampaign()) {
       return (
         loadingCreate ||
@@ -377,8 +341,6 @@ export default function GuestRegisterPage({
     );
   };
 
-  console.log(isDisabled());
-
   return (
     <>
       <div
@@ -401,16 +363,9 @@ export default function GuestRegisterPage({
           {/* header */}
           <div className="flex flex-col space-y-[26px] text-center w-full">
             <h1 className="text-2xl">{translation("enter_details")}</h1>
-            <p
-              className={cn(
-                "text-left text-muted-foreground font-one font-medium text-base  block",
-                isArabic && "text-right"
-              )}
-            >
+            <p className={cn("text-left text-muted-foreground font-one font-medium text-base  block", isArabic && "text-right")}>
               {translation("select_information")}
-              <span className="block text-[#0037FF]">
-                {translation("mandatory_fields")}
-              </span>
+              <span className="block text-[#0037FF]">{translation("mandatory_fields")}</span>
             </p>
           </div>
           {/* combobox */}
@@ -431,21 +386,10 @@ export default function GuestRegisterPage({
               value={`${translation("country")}*`}
             >
               <SelectTrigger
-                disabled={
-                  loading ||
-                  loadingCreate ||
-                  countries == null ||
-                  checkRegisteredLoading
-                }
-                className={cn(
-                  selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                disabled={loading || loadingCreate || countries == null || checkRegisteredLoading}
+                className={cn(selectedCountry !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedCountry === null
-                    ? `${translation("country")}*`
-                    : selectedCountry.name}
-                </SelectValue>
+                <SelectValue>{selectedCountry === null ? `${translation("country")}*` : selectedCountry.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px] font-one font-medium">
                 {countries.map((country, idx) => (
@@ -464,15 +408,9 @@ export default function GuestRegisterPage({
             >
               <SelectTrigger
                 disabled={loading || loadingCreate || channels == null}
-                className={cn(
-                  selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]"
-                )}
+                className={cn(selectedChannel !== null && "bg-[#E5E5E5] text-[#5A5A5A]")}
               >
-                <SelectValue>
-                  {selectedChannel === null
-                    ? `${translation("channel")}*`
-                    : selectedChannel.name}
-                </SelectValue>
+                <SelectValue>{selectedChannel === null ? `${translation("channel")}*` : selectedChannel.name}</SelectValue>
               </SelectTrigger>
               <SelectContent className="max-h-[220px] font-one font-medium">
                 {channels?.map((channel) => (
@@ -481,9 +419,7 @@ export default function GuestRegisterPage({
                   </SelectItem>
                 ))}
 
-                <SelectItem value={"input_directly"}>
-                  {translation("input_directly")}
-                </SelectItem>
+                <SelectItem value={"input_directly"}>{translation("input_directly")}</SelectItem>
               </SelectContent>
               {channelInput && (
                 <input
@@ -501,17 +437,9 @@ export default function GuestRegisterPage({
               )}
             </Select>
             {/* job group */}
-            <Select
-              onValueChange={(value) => selectJob(value)}
-              value={selectedJobId || ""}
-            >
+            <Select onValueChange={(value) => selectJob(value)} value={selectedJobId || ""}>
               <SelectTrigger
-                disabled={
-                  loading ||
-                  loadingCreate ||
-                  (selectedChannel === null &&
-                    (channelName === null || channelName.trim().length < 1))
-                }
+                disabled={loading || loadingCreate || (selectedChannel === null && (channelName === null || channelName.trim().length < 1))}
               >
                 <SelectValue placeholder={translation("job_group")} />
               </SelectTrigger>
@@ -524,17 +452,12 @@ export default function GuestRegisterPage({
               </SelectContent>
             </Select>
             {quizLanguages && quizLanguages.length > 0 && (
-              <Select
-                onValueChange={(value) => setQuizLanguageCode(value)}
-                value={quizLanguageCode || ""}
-              >
+              <Select onValueChange={(value) => setQuizLanguageCode(value)} value={quizLanguageCode || ""}>
                 <SelectTrigger
                   disabled={
                     loading ||
                     loadingCreate ||
-                    (selectedChannel === null &&
-                      (channelName === null ||
-                        channelName.trim().length < 1)) ||
+                    (selectedChannel === null && (channelName === null || channelName.trim().length < 1)) ||
                     !selectedJobId
                   }
                 >
@@ -552,61 +475,30 @@ export default function GuestRegisterPage({
             )}
           </div>
 
-          {!isPolicyAcceptCountry && (
-            <Button
-              variant={"primary"}
-              disabled={isDisabled()}
-              onClick={routeQuizPage}
-              className="disabled:bg-disabled"
-            >
-              <span>{translation("save")}</span>
-            </Button>
-          )}
-          {isPolicyAcceptCountry && (
-            <PolicySheet
-              processSignIn={routeQuizPage}
-              loading={loading || loadingCreate}
-              privacyContent={PRIVACY_CONTENT}
-              termContent={termContent}
-              domainName={selectedCountry?.name ?? ""}
-            >
-              <Button
-                variant={"primary"}
-                disabled={isDisabled()}
-                className={cn(
-                  "disabled:bg-disabled ",
-                  isArabic && "flex-row-reverse"
-                )}
-              >
-                <span>{translation("save")}</span>
-              </Button>
-            </PolicySheet>
-          )}
+          <LoginButton disabled={isDisabled()} isArabic={isArabic} translationLogin={translation("save")} onClick={handleClickLoginButton} />
         </div>
-        {/* error alert */}
-        <AlertDialog
+        {isPolicyAcceptCountry && openSheet && (
+          <PolicyRenderer
+            view="sheet"
+            onClick={routeQuizPage}
+            loading={loading}
+            open={openSheet}
+            setOpenSheet={setOpenSheet}
+            domainCode={selectedCountry?.code}
+          />
+        )}
+
+        <ResultAlertDialog
           open={!!errorMessage}
-          onOpenChange={() => setErrorMessage(undefined)}
-        >
-          <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-            <AlertDialogHeader>
-              <AlertDialogTitle></AlertDialogTitle>
-              <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogAction asChild>
-                <Button variant={"primary"} onClick={() => {}}>
-                  <span>{translation("ok")}</span>
-                </Button>
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+          description={errorMessage ?? null}
+          onConfirm={() => {
+            setErrorMessage(null);
+          }}
+          translationOk={translation("ok")}
+        />
+
         {(checkRegisteredLoading || status === "loading") && <Spinner />}
       </div>
     </>
   );
 }
-
-// w-[250px] sm:w-[340px]
-// bg-background px-[25px] pt-[20px] pb-[50px]

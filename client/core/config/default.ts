@@ -121,18 +121,8 @@ export const defaultLanguagesByRegion = {
   Japan: ["ja"],
 };
 
-export const arabicDomains = [
-  "NAT_2818",
-  "NAT_37602",
-  "NAT_2275",
-  "NAT_2400",
-  "NAT_2368",
-];
+export const arabicDomains = ["NAT_2818", "NAT_37602", "NAT_2275", "NAT_2400", "NAT_2368"];
 
-export const arabicCountries = [
-  "Egypt",
-  "Israel",
-  "Palestine",
-  "Jordan",
-  "Iraq",
-];
+export const arabicCountries = ["Egypt", "Israel", "Palestine", "Jordan", "Iraq"];
+
+export const myanmarDomainCode = "NAT_2368";

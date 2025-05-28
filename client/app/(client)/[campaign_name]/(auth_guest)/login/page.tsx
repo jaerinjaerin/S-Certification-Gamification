@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import CodeInputDialog from "@/components/login/code-input-dialog";
 import EmailInputDialog from "@/components/login/email-input-dialog";
-import { ResultAlertDialog } from "@/components/login/result-alert-dialog";
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
 
 // Hooks
 import useCheckLocale from "@/hooks/useCheckLocale";
@@ -106,8 +106,6 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
         const { code, expiresAt } = data;
 
         if (code === "EMAIL_SENT") {
-          // setSuccessSendEmail(translation("email_success"));
-          // setExpiresAt(new Date(expiresAt));
           dispatch({ type: "SET_SUCCESS_SEND_EMAIL", payload: translation("email_success") });
           dispatch({ type: "SET_EXPIRES_AT", payload: new Date(expiresAt) });
           startCountdown();
@@ -119,8 +117,6 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
         const { code, expiresAt } = data;
 
         if (code === "EMAIL_ALREADY_SENT") {
-          // setSuccessSendEmail(translation("email_already_sent"));
-          // setExpiresAt(new Date(expiresAt));
           dispatch({ type: "SET_SUCCESS_SEND_EMAIL", payload: translation("email_already_sent") });
           dispatch({ type: "SET_EXPIRES_AT", payload: new Date(expiresAt) });
           startCountdown();
@@ -177,7 +173,7 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
       {/* {error} */}
       <ResultAlertDialog
         open={!!state.error}
-        descprtion={state.error}
+        description={state.error}
         onConfirm={() => {
           dispatch({ type: "SET_ERROR", payload: null });
         }}
@@ -187,7 +183,7 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
       {/* {success} */}
       <ResultAlertDialog
         open={!!state.successSendEmail}
-        descprtion={state.successSendEmail}
+        description={state.successSendEmail}
         onConfirm={() => {
           dispatch({ type: "SET_SUCCESS_SEND_EMAIL", payload: null });
           dispatch({ type: "SET_STEP", payload: "code" });

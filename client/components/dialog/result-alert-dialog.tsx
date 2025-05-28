@@ -11,17 +11,17 @@ import { Button } from "../ui/button";
 
 type ResultAlertDialogProps = {
   open: boolean;
-  descprtion: string | null;
+  description: string | null;
   onConfirm: () => void;
   translationOk: string;
 };
-export function ResultAlertDialog({ open, descprtion, onConfirm, translationOk }: ResultAlertDialogProps) {
+export function ResultAlertDialog({ open, description, onConfirm, translationOk }: ResultAlertDialogProps) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px] z-[9999]">
         <AlertDialogHeader>
           <AlertDialogTitle></AlertDialogTitle>
-          <AlertDialogDescription>{descprtion}</AlertDialogDescription>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction asChild>

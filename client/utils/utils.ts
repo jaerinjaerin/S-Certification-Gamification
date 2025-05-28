@@ -17,5 +17,20 @@ export function formatToMMSS(value: number) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-export const sleep = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function isEmpty(value: unknown) {
+  if (value === null) {
+    return true;
+  }
+
+  if (Array.isArray(value) || typeof value === "string") {
+    return value.length === 0;
+  }
+
+  if (value && typeof value === "object") {
+    return Object.keys(value).length === 0;
+  }
+
+  return !value;
+}

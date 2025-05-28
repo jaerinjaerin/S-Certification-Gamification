@@ -1,11 +1,8 @@
+import { ExtractCodesFromPathReturn } from "@/types/utils/types";
 import assert from "assert";
 
-export function extractCodesFromPath(path: string): {
-  domainCode: string;
-  languageCode: string;
-} | null {
+export function extractCodesFromPath(path: string): ExtractCodesFromPathReturn | null {
   if (!path || typeof path !== "string") {
-    // throw new Error("Invalid input: path must be a non-empty string");
     assert(false, "Invalid input: path must be a non-empty string");
     return null;
   }
@@ -14,12 +11,7 @@ export function extractCodesFromPath(path: string): {
   const match = path.match(/^(.*)_(.*?)$/);
 
   if (!match) {
-    // throw new Error(
-    //   `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
-    // );
-    console.error(
-      `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
-    );
+    console.error(`Invalid path format: "${path}". Expected format is "domainCode_languageCode".`);
     return null;
   }
 
@@ -27,12 +19,7 @@ export function extractCodesFromPath(path: string): {
 
   // Ensure all parts are non-empty
   if (!domainCode || !languageCode) {
-    // throw new Error(
-    //   `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
-    // );
-    console.error(
-      `Invalid path format: "${path}". Expected format is "domainCode_languageCode".`
-    );
+    console.error(`Invalid path format: "${path}". Expected format is "domainCode_languageCode".`);
     return null;
   }
 

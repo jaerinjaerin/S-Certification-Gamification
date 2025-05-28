@@ -1,48 +1,26 @@
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Markdown } from "@/components/markdown/markdown";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, UseFormReturn } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
 import { Button } from "../ui/button";
-import { arabicCountries } from "@/core/config/default";
+import { arabicDomains } from "@/core/config/default";
 
 interface PolicySheetProps {
-  children: React.ReactNode;
-  processSignIn: (() => Promise<void>) | (() => void);
+  onClick: () => Promise<void>;
   loading: boolean;
+  open: boolean;
+  setOpenSheet: Dispatch<SetStateAction<boolean>>;
   privacyContent: string;
   termContent: string;
-  domainName: string;
-  openSheet?: boolean;
-  setOpenSheet?: Dispatch<SetStateAction<boolean>>;
-  disabledCondition?: boolean;
+  domainCode: string | undefined;
 }
 
 const FormSchema = z.object({
@@ -50,19 +28,11 @@ const FormSchema = z.object({
   term: z.boolean().default(false),
 });
 
-export default function PolicySheet({
-  children,
-  processSignIn,
-  loading,
-  privacyContent,
-  termContent,
-  domainName,
-  openSheet,
-  setOpenSheet,
-}: PolicySheetProps) {
+export default function PolicySheet({ loading, open, setOpenSheet, onClick, domainCode, privacyContent, termContent }: PolicySheetProps) {
   const translation = useTranslations();
-  // const { isArabic } = useCheckLocale();
-  const isArabicCountry = arabicCountries.includes(domainName);
+  const { isArabic } = useCheckLocale();
+  const isArabicCountry = arabicDomains.includes(domainCode ?? "");
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -77,9 +47,11 @@ export default function PolicySheet({
     }
     return false;
   };
+
   const isAllChecked = checkAllCheckbox();
   const privacyChecked = form.watch("privacy");
   const [accordionValue, setAccordionValue] = useState<string>("privacy");
+
   useEffect(() => {
     if (privacyChecked) {
       setAccordionValue("term");
@@ -87,57 +59,42 @@ export default function PolicySheet({
   }, [privacyChecked]);
 
   return (
-    <Sheet open={openSheet} onOpenChange={setOpenSheet}>
-      <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent
-        side={"bottom"}
-        className={cn(
-          "w-full h-fit max-w-[412px] mx-auto ",
-          "flex flex-col justify-end"
-        )}
-      >
+    <Sheet open={open} onOpenChange={setOpenSheet}>
+      <SheetTrigger></SheetTrigger>
+      <SheetContent side={"bottom"} className={cn("w-full h-fit max-w-[412px] mx-auto ", "flex flex-col justify-end")}>
         <SheetHeader>
           <SheetTitle aria-hidden className="hidden"></SheetTitle>
           <SheetDescription>
-            <Accordion
-              type="single"
-              collapsible
-              value={accordionValue}
-              onValueChange={setAccordionValue}
-            >
+            <Accordion type="single" collapsible value={accordionValue} onValueChange={setAccordionValue}>
               <div></div>
               <Form {...form}>
                 <form>
                   <AccordionFormItem
                     accordionProps={{
                       form: form,
-                      domainName: domainName,
-                      accordionTitle: `${translation("privacy")}`,
+                      // domainName: domainName,
+                      title: `${translation("privacy")}`,
                       contents: `${privacyContent}`,
                       formKey: "privacy",
                       formLabelText: translation.rich("mena_check_1", {
-                        strong: (chunks) => (
-                          <span className="text-blue-500 font-bold inline-block">
-                            {chunks}
-                          </span>
-                        ),
+                        strong: (chunks) => <span className="text-blue-500 font-bold inline-block">{chunks}</span>,
                       }),
+                      isArabic,
+                      isArabicCountry,
                     }}
                   />
                   <AccordionFormItem
                     accordionProps={{
                       form: form,
-                      domainName: domainName,
-                      accordionTitle: `${translation("term")}`,
+                      // domainName: domainName,
+                      title: `${translation("term")}`,
                       contents: `${termContent}`,
                       formKey: "term",
                       formLabelText: translation.rich("mena_check_2", {
-                        strong: (chunks) => (
-                          <span className="text-blue-500 font-bold inline-block">
-                            {chunks}
-                          </span>
-                        ),
+                        strong: (chunks) => <span className="text-blue-500 font-bold inline-block">{chunks}</span>,
                       }),
+                      isArabic,
+                      isArabicCountry,
                     }}
                   />
                 </form>
@@ -145,18 +102,16 @@ export default function PolicySheet({
             </Accordion>
           </SheetDescription>
         </SheetHeader>
-        <SheetFooter
-          className={cn("mt-[26px]", isArabicCountry && "sm:flex-row-reverse")}
-        >
+        <SheetFooter className={cn("mt-[26px]", isArabicCountry && "sm:flex-row-reverse")}>
           <Button
             variant={"primary"}
             disabled={loading || !isAllChecked}
             onClick={() => {
-              if (setOpenSheet) {
+              if (open) {
                 setOpenSheet(false);
               }
 
-              processSignIn();
+              onClick();
             }}
             className="text-sm"
           >
@@ -173,48 +128,19 @@ export default function PolicySheet({
   );
 }
 
-function AccordionTitle({
-  title,
-  isArabic,
-}: {
-  title: string;
-  isArabic: boolean;
-}) {
-  return (
-    <AccordionTrigger
-      className={cn(
-        "text-xl font-bold text-[#0F0F0F] focus:outline-none",
-        isArabic && "flex-row-reverse"
-      )}
-    >
-      {title}
-    </AccordionTrigger>
-  );
-}
-
-function AccordionFormItem({
-  accordionProps,
-}: {
+type AccordionFormItemProps = {
   accordionProps: {
-    accordionTitle: string;
-    domainName: string;
+    title: string;
     contents: string;
     formKey: "privacy" | "term";
     formLabelText: string | React.ReactNode;
-    form: UseFormReturn<
-      {
-        privacy: boolean;
-        term: boolean;
-      },
-      any,
-      undefined
-    >;
+    form: UseFormReturn<{ privacy: boolean; term: boolean }, any, undefined>;
+    isArabic: boolean;
+    isArabicCountry: boolean;
   };
-}) {
-  const { form, accordionTitle, domainName, contents, formKey, formLabelText } =
-    accordionProps;
-  const { isArabic } = useCheckLocale();
-  const isArabicCountry = arabicCountries.includes(domainName);
+};
+function AccordionFormItem({ accordionProps }: AccordionFormItemProps) {
+  const { form, title, contents, formKey, formLabelText, isArabic, isArabicCountry } = accordionProps;
 
   return (
     <FormField
@@ -224,15 +150,17 @@ function AccordionFormItem({
       render={({ field }) => {
         return (
           <AccordionItem value={formKey}>
-            <AccordionTitle title={accordionTitle} isArabic={isArabic} />
+            <AccordionTrigger className={cn("text-xl font-bold text-[#0F0F0F] focus:outline-none", isArabic && "flex-row-reverse")}>
+              {title}
+            </AccordionTrigger>
             <AccordionContent className="h-[60svh]  flex flex-col gap-3">
               <div className="overflow-hidden overflow-y-scroll bg-[#F7F7F7] px-[10px]">
                 <Markdown
                   className={cn(
                     "text-sm font-one font-medium text-[#4E4E4E] break-words",
                     isArabicCountry && "text-right",
-                    // isArabic && "text-right",
-                    domainName === "Myanmar" && "leading-loose"
+                    isArabic && "text-right"
+                    // domainName === "Myanmar" && "leading-loose"
                   )}
                 >
                   {contents}
@@ -244,10 +172,7 @@ function AccordionFormItem({
                 dir={isArabic ? "rtl" : "ltr"}
                 // dir={isArabicCountry ? "rtl" : "ltr"}
               >
-                <FormItem
-                  key={formKey}
-                  className="flex flex-row items-start gap-3 space-y-0 w-full"
-                >
+                <FormItem key={formKey} className="flex flex-row items-start gap-3 space-y-0 w-full">
                   <FormControl>
                     <Checkbox
                       checked={field.value}

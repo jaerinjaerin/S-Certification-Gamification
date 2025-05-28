@@ -1,11 +1,11 @@
 import { Button } from "../ui/button";
 import { signIn } from "next-auth/react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { LoginAction, LoginState, LoginStep } from "@/types/login/types";
+import { LoginAction, LoginState } from "@/types/login/types";
 import { cn, formatToMMSS } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch } from "react";
 
 type CodeInputDialogProps = {
   state: LoginState;
