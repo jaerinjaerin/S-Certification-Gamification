@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 import { signIn } from "next-auth/react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { LoginAction, LoginState } from "@/types/login/types";
+import { LoginAction, LoginState } from "@/types/pages/login/types";
 import { cn, formatToMMSS } from "@/utils/utils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";

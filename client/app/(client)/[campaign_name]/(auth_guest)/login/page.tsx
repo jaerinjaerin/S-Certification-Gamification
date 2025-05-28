@@ -17,7 +17,7 @@ import { AutoTextSize } from "auto-text-size";
 import { getLoginEmailTemplete } from "@/templete/email";
 
 // Types
-import { LoginAction, LoginState } from "@/types/login/types";
+import { LoginAction, LoginState } from "@/types/pages/login/types";
 
 import { useTranslations } from "next-intl";
 import React, { useEffect, useReducer } from "react";

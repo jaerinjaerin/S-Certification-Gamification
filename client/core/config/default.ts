@@ -1,3 +1,5 @@
+import { Job } from "@/types/pages/register/types";
+
 export const defaultLanguageCode = "en-US";
 export const sumtotalUserOthersJobId = "7";
 export const sumtotalUserOthersJobCode = "fsm";
@@ -126,3 +128,10 @@ export const arabicDomains = ["NAT_2818", "NAT_37602", "NAT_2275", "NAT_2400", "
 export const arabicCountries = ["Egypt", "Israel", "Palestine", "Jordan", "Iraq"];
 
 export const myanmarDomainCode = "NAT_2368";
+
+export const defaultJobs: Job[] = [
+  { name: "FSM", group: "fsm", value: "8", id: "8" },
+  { name: "FF", group: "ff", value: "9", id: "9" },
+  { name: "FSM(SES)", group: "fsm", value: "10", id: "8", storeId: "4" },
+  { name: "FF(SES)", group: "ff", value: "11", id: "9", storeId: "4" },
+];

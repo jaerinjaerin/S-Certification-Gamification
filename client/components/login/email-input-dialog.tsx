@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Dispatch, SetStateAction } from "react";
-import { LoginAction, LoginState, LoginStep } from "@/types/login/types";
+import { LoginAction, LoginState, LoginStep } from "@/types/pages/login/types";
 
 const isValidEmail = (email) => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
