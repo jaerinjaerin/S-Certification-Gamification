@@ -1,15 +1,17 @@
-import { defaultJobs } from "@/core/config/default";
-import { Channel, DomainDetail, Job, QuizLanguage } from "@/types/pages/register/types";
 import assert from "assert";
-import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
-import useCreateItem from "@/hooks/useCreateItem";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+
+import { ERROR_CODES } from "@/constants/error-codes";
+import { defaultJobs } from "@/core/config/default";
+import useCreateItem from "@/hooks/useCreateItem";
 import { useCampaign } from "@/providers/campaignProvider";
 import { fetchQuizLog } from "@/services/quizService";
+import { Channel, DomainDetail, Job, QuizLanguage } from "@/types/pages/register/types";
+import { getCampaignSlug } from "@/utils/utils";
 import { UserQuizLog } from "@prisma/client";
-import { ERROR_CODES } from "@/constants/error-codes";
 
 export default function useGuestRegisterForm(campaignName: string) {
   const router = useRouter();
@@ -44,6 +46,21 @@ export default function useGuestRegisterForm(campaignName: string) {
 
   const { isLoading: loadingCreate, error: errorCreate, item: campaignPath, createItem } = useCreateItem<string>();
 
+  const fetchCountries = async () => {
+    try {
+      setLoading(true);
+      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaignName}/jsons/channels.json`;
+      const res = await fetch(jsonUrl);
+      const data = await res.json();
+      const sorted = data.sort((a: DomainDetail, b: DomainDetail) => a.name.localeCompare(b.name));
+      setCountries(sorted.filter((c) => c.isReady));
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const getMappedLocale = () => {
       if (locale === "es-419") return "es-LTN";
@@ -75,25 +92,10 @@ export default function useGuestRegisterForm(campaignName: string) {
     }
   }, [errorCreate]);
 
-  const fetchCountries = async () => {
-    try {
-      setLoading(true);
-      const jsonUrl = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaignName}/jsons/channels.json`;
-      const res = await fetch(jsonUrl);
-      const data = await res.json();
-      const sorted = data.sort((a: DomainDetail, b: DomainDetail) => a.name.localeCompare(b.name));
-      setCountries(sorted.filter((c) => c.isReady));
-    } catch (error) {
-      console.error("Failed to fetch data", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const checkRegistered = async (userId: string) => {
     try {
       setCheckRegisteredLoading(true);
-      const quizLogResponse = await fetchQuizLog(userId, campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug);
+      const quizLogResponse = await fetchQuizLog(userId, getCampaignSlug(campaign));
       const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
 
       if (quizLog) {

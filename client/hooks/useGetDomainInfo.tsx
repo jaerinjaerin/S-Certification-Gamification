@@ -11,6 +11,7 @@ export default function useDomainRegionInfo(domainCode: string | undefined) {
   const [regionName, setRegionName] = useState<string>("");
   const [openSheet, setOpenSheet] = useState(false);
   const [isPolicyAcceptCountry, setIsPolicyAcceptCountry] = useState(false);
+  const [domainName, setDomainName] = useState<string>("");
 
   useEffect(() => {
     if (!domainCode) {
@@ -19,6 +20,7 @@ export default function useDomainRegionInfo(domainCode: string | undefined) {
 
     if (!loadingDomain && domainData?.items[0]?.subsidiary?.region?.name) {
       const name = domainData.items[0].subsidiary.region.name;
+      setDomainName(domainData.items[0].name);
       setRegionName(name);
       setIsPolicyAcceptCountry(name === "MENA" || name === "Korea");
     }
@@ -32,5 +34,6 @@ export default function useDomainRegionInfo(domainCode: string | undefined) {
     isPolicyAcceptCountry,
     loadingDomain,
     domainData,
+    domainName,
   };
 }

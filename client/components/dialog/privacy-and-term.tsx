@@ -1,5 +1,4 @@
 import { cn } from "@/utils/utils";
-import { useTranslations } from "next-intl";
 import PolicyRenderer from "../policy-renderer";
 
 export default function PolicyFooter({ className, domainCode }: { className?: string; domainCode: string }) {

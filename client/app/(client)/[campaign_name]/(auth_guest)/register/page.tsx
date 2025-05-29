@@ -10,12 +10,12 @@ import { useTranslations } from "next-intl";
 import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
 import LoginButton from "@/components/login/login-button";
 import PolicyRenderer from "@/components/policy-renderer";
-import Spinner from "@/components/ui/spinner";
 
 // Hooks
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import useDomainRegionInfo from "@/hooks/useGetDomainInfo";
+import useLoader from "@/components/ui/loader";
 
 // Providers
 import { useCampaign } from "@/providers/campaignProvider";
@@ -24,7 +24,10 @@ import { useCampaign } from "@/providers/campaignProvider";
 import RegisterForm, { RegisterFormComboboxContainer, RegisterFormContainer, RegisterFormBackground } from "@/components/register";
 import { useRegisterForm } from "@/providers/register/register-form-provider";
 
-export default function GuestRegisterPage({ params }: { params: { campaign_name: string } }) {
+// Utils
+import { getCampaignSlug } from "@/utils/utils";
+
+export default function GuestRegisterPage() {
   useGAPageView();
 
   const {
@@ -47,6 +50,7 @@ export default function GuestRegisterPage({ params }: { params: { campaign_name:
   const { openSheet, setOpenSheet, isPolicyAcceptCountry } = useDomainRegionInfo(selectedCountry?.code);
   const { data: session, status } = useSession();
   const { campaign } = useCampaign();
+  const { Loader } = useLoader();
 
   const routeQuizPage = async () => {
     if (!selectedCountry) {
@@ -77,7 +81,7 @@ export default function GuestRegisterPage({ params }: { params: { campaign_name:
         channelName: channelName?.trim(),
         channelSegmentId: selectedChannelSegmentId,
         campaignId: campaign.id,
-        campaignSlug: campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug,
+        campaignSlug: getCampaignSlug(campaign),
       },
     });
   };
@@ -98,7 +102,7 @@ export default function GuestRegisterPage({ params }: { params: { campaign_name:
         <LoginButton disabled={isDisabled()} isArabic={isArabic} translationLogin={translation("save")} onClick={handleClickLoginButton} />
       </RegisterFormContainer>
 
-      {(checkRegisteredLoading || status === "loading") && <Spinner />}
+      {Loader(checkRegisteredLoading || status === "loading")}
       {isPolicyAcceptCountry && openSheet && (
         <PolicyRenderer
           view="sheet"

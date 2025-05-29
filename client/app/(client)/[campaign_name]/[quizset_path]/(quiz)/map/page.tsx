@@ -1,48 +1,52 @@
 "use client";
 
-import PolicyFooter from "@/components/dialog/privacy-and-term";
+// React
+import { Fragment, useEffect, useRef, useState } from "react";
+
+// Next
+import { useRouter } from "next/navigation";
+import { getSession, signOut } from "next-auth/react";
+
+// Next-intl
+import { useTranslations } from "next-intl";
+
+// Components
 import Connection from "@/components/map/connection";
 import Gradient from "@/components/map/gradient";
 import { StageMarker } from "@/components/map/stage-marker";
 import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import PolicyRenderer from "@/components/policy-renderer";
 import useLoader from "@/components/ui/loader";
-import useGAPageView from "@/core/monitoring/ga/usePageView";
-import { useQuiz } from "@/providers/quizProvider";
-import { QuizStageEx } from "@/types/apiTypes";
-import { cn, fixedClass } from "@/utils/utils";
-import { AuthType } from "@prisma/client";
-import { getSession, signOut } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
 
-export default function QuizMap({
-  params,
-}: {
-  params: { campaign_name: string; quizset_path: string };
-}) {
-  // export default function QuizMap() {
+// Hooks
+import useGAPageView from "@/core/monitoring/ga/usePageView";
+
+// Providers
+import { useQuiz } from "@/providers/quizProvider";
+
+// Types
+import { QuizStageEx } from "@/types/apiTypes";
+import { AuthType } from "@prisma/client";
+
+// Utils
+import { cn } from "@/utils/utils";
+import { extractCodesFromPath } from "@/utils/pathUtils";
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+
+/// Quiz관련된 내용을 DB에서 가져오는 구조로 바꿀수있을까?
+
+export default function QuizMap({ params }: { params: { campaign_name: string; quizset_path: string } }) {
   useGAPageView();
-  const {
-    quizSet,
-    quizStagesTotalScore,
-    currentQuizStageIndex,
-    quizStageLogs,
-  } = useQuiz();
-  const translation = useTranslations();
-  const { loading, setLoading, renderLoader } = useLoader();
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
   const router = useRouter();
+  const translation = useTranslations();
+  const { quizSet, quizStagesTotalScore, currentQuizStageIndex, quizStageLogs } = useQuiz();
+  const { Loader, startLoading, stopLoading, loading } = useLoader();
+  const codes = extractCodesFromPath(params.quizset_path);
+  const domainCode = codes?.domainCode;
+
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const isCheckSumTotalTokenExpirationRef = useRef(false); // 실행 상태를 추적
   const [needSignOut, setNeedSignOut] = useState<boolean>(false);
 
   useEffect(() => {
@@ -56,11 +60,8 @@ export default function QuizMap({
     });
   }, [currentQuizStageIndex]);
 
-  const isCheckSumTotalTokenExpirationRef = useRef(false); // 실행 상태를 추적
-
   const checkSumTotalTokenExpiration = async () => {
     if (isCheckSumTotalTokenExpirationRef.current) {
-      // console.log("createQuizLog is already running");
       return; // 이미 실행 중인 경우 종료
     }
 
@@ -69,10 +70,7 @@ export default function QuizMap({
     try {
       const session = await getSession();
       if (session?.user.authType === AuthType.SUMTOTAL) {
-        setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth/check-expiry?userId=${session.user.id}`);
 
         if (response.status >= 400 && response.status < 500) {
           console.log("Sign out");
@@ -83,7 +81,7 @@ export default function QuizMap({
       console.error("checkSumTotalTokenExpiration error", error);
     } finally {
       isCheckSumTotalTokenExpirationRef.current = false;
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -92,7 +90,7 @@ export default function QuizMap({
   }, []);
 
   const processSignOut = async () => {
-    setLoading(true);
+    startLoading();
     sessionStorage.clear();
     const signOutUrl = `${window.location.protocol}//${window.location.host}/${params.campaign_name}/${params.quizset_path}/login`;
     await signOut({
@@ -102,75 +100,61 @@ export default function QuizMap({
   };
 
   const routeNextQuizStage = async () => {
-    setLoading(true);
+    startLoading();
     router.push("quiz");
   };
 
   return (
     <div
-      className="flex flex-col items-center h-full min-h-svh"
+      className="flex flex-col items-center py-5 min-h-svh"
       style={{
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
-      <div
-        className={cn(
-          fixedClass,
-          "z-20 pt-[21px] pr-[21px] pl-[39px] flex flex-col"
-        )}
-      >
+      <div className=" w-full flex flex-col pt-[21px] pr-[21px] pl-[39px] relative z-20">
         <TutorialGuidePopup />
         <div className="flex flex-col font-bold">
           <span className="text-2xl">{translation("total_score")}</span>
           <span className="text-5xl/normal">{quizStagesTotalScore}</span>
         </div>
       </div>
-      <div className="flex flex-col-reverse items-center justify-center my-[230px]">
-        {quizSet.quizStages.map((quizStage: QuizStageEx, index: number) => {
-          return (
-            <Fragment key={quizStage.id}>
-              <StageMarker
-                ref={(item) => {
-                  itemsRef.current[index] = item;
-                }}
-                currentQuizStageIndex={currentQuizStageIndex}
-                routeNextQuizStage={routeNextQuizStage}
-                stage={quizStage}
-                // isCompleted={index < currentQuizStageIndex}
-                isCompleted={quizStageLogs.some(
-                  (log) => log.quizStageId === quizStage.id
-                )}
-                setLoading={setLoading}
-              />
-              {quizStage.order !== quizSet.quizStages.length && <Connection />}
-            </Fragment>
-          );
-        })}
+      <div className="flex flex-col-reverse items-center justify-center mt-[120px] mb-[230px]">
+        {quizSet.quizStages.map((quizStage: QuizStageEx, index: number) => (
+          <Fragment key={quizStage.id}>
+            <StageMarker
+              ref={(item) => {
+                itemsRef.current[index] = item;
+              }}
+              currentQuizStageIndex={currentQuizStageIndex}
+              routeNextQuizStage={routeNextQuizStage}
+              stage={quizStage}
+              isCompleted={quizStageLogs.some((log) => log.quizStageId === quizStage.id)}
+              startLoading={startLoading}
+            />
+            {quizStage.order !== quizSet.quizStages.length && <Connection />}
+          </Fragment>
+        ))}
       </div>
-      <PolicyFooter className="fixed z-30 bottom-7 flex justify-center items-start" />
+
+      <div className={cn("font-medium text-sm fixed z-30 bottom-7 flex justify-center items-start")}>
+        <PolicyRenderer view="dialog" dialogType="privacy" domainCode={domainCode} />
+        <span className="mx-2">|</span>
+        <PolicyRenderer view="dialog" dialogType="term" domainCode={domainCode} />
+      </div>
       <Gradient type="transparent-to-color" />
       <Gradient type="color-to-transparent" />
-      {loading && renderLoader()}
-      <AlertDialog
+
+      {Loader()}
+
+      <ResultAlertDialog
         open={!!needSignOut}
-        onOpenChange={() => setNeedSignOut(false)}
-      >
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle></AlertDialogTitle>
-            <AlertDialogDescription>
-              {translation("alert_relogin_required")}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Button variant={"primary"} onClick={processSignOut}>
-                <span>{translation("ok")}</span>
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        description={translation("need_sign_out")}
+        onConfirm={() => {
+          stopLoading();
+          processSignOut();
+        }}
+        translationOk={translation("ok")}
+      />
     </div>
   );
 }

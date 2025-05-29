@@ -8,7 +8,6 @@ import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import useDomainRegionInfo from "@/hooks/useGetDomainInfo";
-import { swrFetcher } from "@/utils/fetcher";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 
 import { cn } from "@/utils/utils";

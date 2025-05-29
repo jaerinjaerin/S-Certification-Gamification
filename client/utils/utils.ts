@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { defaultLanguagesByRegion } from "@/core/config/default";
+import { Campaign } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,3 +34,7 @@ export function isEmpty(value: unknown) {
 
   return !value;
 }
+
+export const getCampaignSlug = (campaign: Campaign) => {
+  return campaign.name.toLowerCase() === "s25" ? campaign.name : campaign.slug;
+};

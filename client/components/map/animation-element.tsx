@@ -26,41 +26,64 @@ export const ActivePointer = () => {
   );
 };
 
-export const Ping = () => {
-  return (
-    <div className="absolute top-1/2 left-1/2 translate-x-1/2">
-      <AnimationCircle delay={0} />
-      <AnimationCircle delay={LOOP_DURATION * 0.15} />
-      <AnimationCircle delay={LOOP_DURATION * 0.45} />
-      <AnimationCircle delay={LOOP_DURATION * 0.7} />
-    </div>
-  );
-};
+// export const Ping = () => {
+//   return (
+//     <div className="absolute top-1/2 left-1/2 translate-x-1/2">
+//       <AnimationCircle delay={0} />
+//       <AnimationCircle delay={LOOP_DURATION * 0.15} />
+//       <AnimationCircle delay={LOOP_DURATION * 0.45} />
+//       <AnimationCircle delay={LOOP_DURATION * 0.7} />
+//     </div>
+//   );
+// };
 
-export const AnimationCircle = ({ delay }) => {
+// export const AnimationCircle = ({ delay }) => {
+//   return (
+//     <motion.span
+//       style={{
+//         translateX: "-50%",
+//         translateY: "-50%",
+//       }}
+//       initial={{
+//         opacity: 0,
+//         scale: 1,
+//       }}
+//       animate={{
+//         opacity: [0, 1, 1, 0],
+//         scale: 1.8,
+//       }}
+//       transition={{
+//         repeat: Infinity,
+//         repeatType: "loop",
+//         times: [0, 0.05, 0.75, 1],
+//         duration: LOOP_DURATION,
+//         ease: "linear",
+//         delay,
+//       }}
+//       className="absolute left-[50%] top-[50%] z-0 size-[130px] rounded-full  bg-gradient-to-br from-[#5AAFFF4D]/50 to-[#80B5FF80]/20 shadow-xl shadow-[#80B5FF80]/40"
+//     />
+//   );
+// };
+
+export const WaveLoader = () => {
   return (
-    <motion.span
-      style={{
-        translateX: "-50%",
-        translateY: "-50%",
-      }}
-      initial={{
-        opacity: 0,
-        scale: 1,
-      }}
-      animate={{
-        opacity: [0, 1, 1, 0],
-        scale: 1.8,
-      }}
-      transition={{
-        repeat: Infinity,
-        repeatType: "loop",
-        times: [0, 0.05, 0.75, 1],
-        duration: LOOP_DURATION,
-        ease: "linear",
-        delay,
-      }}
-      className="absolute left-[50%] top-[50%] z-0 size-[130px] rounded-full border-[1px] border-[#5AAFFF4D] bg-gradient-to-br from-[#5AAFFF4D]/50 to-[#80B5FF80]/20 shadow-xl shadow-[#80B5FF80]/40"
-    />
+    <div className="absolute top-0 left-0 ">
+      {/* Outer Wave */}
+      <motion.div
+        className="absolute rounded-full size-[120px] bg-gradient-to-br from-[#5AAFFF4D]/50 to-[#80B5FF80]/20 shadow-xl shadow-[#80B5FF80]/40"
+        initial={{ scale: 1, opacity: 1 }}
+        animate={{
+          scale: [1, 3],
+          opacity: [1, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          ease: "easeOut",
+          repeat: Infinity,
+          repeatType: "loop",
+          repeatDelay: 0.1,
+        }}
+      />
+    </div>
   );
 };
