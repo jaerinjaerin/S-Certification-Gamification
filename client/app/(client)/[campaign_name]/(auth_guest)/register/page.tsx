@@ -119,7 +119,7 @@ export default function GuestRegisterPage() {
         onConfirm={() => {
           setErrorMessage(null);
         }}
-        translationOk={translation("ok")}
+        confirmText={translation("ok")}
       />
     </RegisterFormBackground>
   );

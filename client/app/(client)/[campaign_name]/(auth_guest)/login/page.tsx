@@ -177,7 +177,7 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
         onConfirm={() => {
           dispatch({ type: "SET_ERROR", payload: null });
         }}
-        translationOk={translation("ok")}
+        confirmText={translation("ok")}
       />
 
       {/* {success} */}
@@ -188,7 +188,7 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
           dispatch({ type: "SET_SUCCESS_SEND_EMAIL", payload: null });
           dispatch({ type: "SET_STEP", payload: "code" });
         }}
-        translationOk={translation("ok")}
+        confirmText={translation("ok")}
       />
     </>
   );
