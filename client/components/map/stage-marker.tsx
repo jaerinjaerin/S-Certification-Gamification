@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
 import { LockIcon } from "../icons/icons";
-import { ActivePointer, Ping, WaveLoader } from "./animation-element";
+import { ActivePointer, WaveLoader } from "./animation-element";
 import { QuizStageEx } from "@/types/apiTypes";
 
 interface StageProps {
@@ -55,7 +55,11 @@ export const StageMarker = forwardRef<HTMLDivElement, StageProps>((props, ref) =
     if (isLocked) return;
 
     startLoading();
-    isCompleted ? router.push(`review?stage=${stageOrder}`) : await routeNextQuizStage();
+    if (isCompleted) {
+      router.push(`review?stage=${stageOrder}`);
+    } else {
+      await routeNextQuizStage();
+    }
   };
 
   const Lock = () => {

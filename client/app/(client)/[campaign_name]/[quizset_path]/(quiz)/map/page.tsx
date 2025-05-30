@@ -33,7 +33,7 @@ import { cn } from "@/utils/utils";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
 
-/// Quiz관련된 내용을 DB에서 가져오는 구조로 바꿀수있을까?
+// ? Quiz관련된 내용을 DB에서 가져오는 구조로 바꿀수있을까?
 
 export default function QuizMap({ params }: { params: { campaign_name: string; quizset_path: string } }) {
   useGAPageView();
@@ -41,7 +41,7 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
   const router = useRouter();
   const translation = useTranslations();
   const { quizSet, quizStagesTotalScore, currentQuizStageIndex, quizStageLogs } = useQuiz();
-  const { Loader, startLoading, stopLoading, loading } = useLoader();
+  const { Loader, startLoading, stopLoading } = useLoader();
   const codes = extractCodesFromPath(params.quizset_path);
   const domainCode = codes?.domainCode;
 
@@ -153,7 +153,7 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
           stopLoading();
           processSignOut();
         }}
-        translationOk={translation("ok")}
+        confirmText={translation("ok")}
       />
     </div>
   );

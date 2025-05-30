@@ -11,17 +11,8 @@ import {
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { cn } from "@/utils/utils";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 
-export function GameOverAlertDialog({
-  gameOver,
-  onRestart,
-  onGotoMap,
-}: {
-  gameOver: boolean;
-  onRestart: () => void;
-  onGotoMap: () => void;
-}) {
+export function GameOverAlertDialog({ gameOver, onRestart, onGotoMap }: { gameOver: boolean; onRestart: () => void; onGotoMap: () => void }) {
   const translation = useTranslations();
   const { isMyanmar } = useCheckLocale();
   return (
@@ -31,14 +22,7 @@ export function GameOverAlertDialog({
           <AlertDialogTitle aria-hidden className="hidden">
             Game Over
           </AlertDialogTitle>
-          <AlertDialogDescription
-            className={cn("text-base", isMyanmar && "leading-9")}
-          >
-            {/* Attempts exhausted. <br />
-            Retry? <br />
-            Selecting “No” will return to stage selection */}
-            {translation("alert_notification")}
-          </AlertDialogDescription>
+          <AlertDialogDescription className={cn("text-base", isMyanmar && "leading-9")}>{translation("alert_notification")}</AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter className="sm:justify-center">
@@ -48,27 +32,6 @@ export function GameOverAlertDialog({
           <AlertDialogAction onClick={() => onRestart()} className="text-wrap">
             {translation("retry")}
           </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
-}
-
-export function ErrorAlertDialog({ error }: { error: string | undefined }) {
-  const translation = useTranslations();
-  const router = useRouter();
-
-  return (
-    <AlertDialog open={!!error}>
-      <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-        <AlertDialogHeader>
-          <AlertDialogTitle className="hidden" aria-hidden></AlertDialogTitle>
-          <AlertDialogDescription>{error}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => router.push("map")}>
-            {translation("back")}
-          </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

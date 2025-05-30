@@ -13,9 +13,9 @@ type ResultAlertDialogProps = {
   open: boolean;
   description: string | null;
   onConfirm: () => void;
-  translationOk: string;
+  confirmText: string;
 };
-export function ResultAlertDialog({ open, description, onConfirm, translationOk }: ResultAlertDialogProps) {
+export function ResultAlertDialog({ open, description, onConfirm, confirmText }: ResultAlertDialogProps) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px] z-[9999]">
@@ -26,7 +26,7 @@ export function ResultAlertDialog({ open, description, onConfirm, translationOk 
         <AlertDialogFooter>
           <AlertDialogAction asChild>
             <Button variant={"primary"} onClick={onConfirm}>
-              <span>{translationOk}</span>
+              <span>{confirmText}</span>
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

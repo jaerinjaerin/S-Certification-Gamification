@@ -1,43 +1,40 @@
 "use client";
 
-import {
-  ErrorAlertDialog,
-  GameOverAlertDialog,
-} from "@/components/quiz/alert-dialog";
-import CountDownBar from "@/components/quiz/countdown-bar";
+// React
+import { useEffect } from "react";
+
+// Next
+import { redirect, useRouter } from "next/navigation";
+
+// Next-intl
+import { useTranslations } from "next-intl";
+
+// Components
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+import { GameOverAlertDialog } from "@/components/quiz/alert-dialog";
 import Qusetion from "@/components/quiz/question-area";
 import SuccessNotify from "@/components/quiz/success-notify";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import Spinner from "@/components/ui/spinner";
-import { arabicCountries } from "@/core/config/default";
+import useLoader from "@/components/ui/loader";
+import { QuizHeader, QuizOptions } from "@/components/quiz";
+
+// Constants
+import { arabicDomains } from "@/core/config/default";
+
+// Hooks
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import { useCheckOS } from "@/hooks/useCheckOS";
-import { useCountdown } from "@/hooks/useCountdown";
+import { useQuizGame } from "@/hooks/quiz/useQuizGame";
+
+// Providers
 import { useCampaign } from "@/providers/campaignProvider";
-import { usePolicy } from "@/providers/policyProvider";
 import { useQuiz } from "@/providers/quizProvider";
-import { QuestionEx, QuizStageEx } from "@/types/apiTypes";
-import { cn, sleep } from "@/utils/utils";
-import { QuestionOption } from "@prisma/client";
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 export default function QuizPage() {
   useGAPageView();
+
   const translation = useTranslations();
   const router = useRouter();
-
   const {
     currentQuestionIndex: questionIndexFromContext,
     currentQuizStage: quizStageFromContext,
@@ -48,245 +45,64 @@ export default function QuizPage() {
     logUserAnswer,
     clearUserAnswerLogs,
   } = useQuiz();
-  const { domainName } = usePolicy();
-  const isArabicCountry = arabicCountries.includes(domainName);
-  const { isMyanmar, isArabic } = useCheckLocale();
-  const { campaign } = useCampaign();
 
-  // campaign.name에 따라 적절한 값 사용
-  const isArabicLocale =
-    campaign.name.toLowerCase() === "s25" ? isArabic : isArabicCountry;
+  const { campaign } = useCampaign();
+  const { Loader, startLoading, stopLoading } = useLoader();
+  const { isMyanmar, isArabic } = useCheckLocale();
+  const { isAndroid, isWindows } = useCheckOS();
+
+  const isArabicCountry = arabicDomains.includes(campaign.name);
+  const isArabicLocale = campaign.name.toLowerCase() === "s25" ? isArabic : isArabicCountry;
 
   if (!quizStageFromContext) {
     redirect("map");
   }
 
-  // 최초 렌더링 시점에서 한 번만 값 가져오기
-  const [currentQuizStage] = useState<QuizStageEx>(quizStageFromContext);
-  const [currentStageQuestions] = useState<QuestionEx[]>(
-    stageQuestionsFromContext
-  );
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(
-    questionIndexFromContext
-  );
+  // 게임에 필요한 로직들을 분리하여 컴포넌트에서는 함수만 호출하도록 함
+  const {
+    // States
+    currentQuestionIndex,
+    lifeCount,
+    gameOver,
+    success,
+    isCorrectAnswer,
+    error,
+    errorMessage,
+    question,
+    currentStageTotalQuestions,
+    defaultLifeCount,
 
-  const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
-  const currentStageTotalQuestions = currentStageQuestions?.length;
+    // Countdown
+    count,
+    remainingTimeProgress,
 
-  const selectedOptionIdsRef = useRef<string[]>([]);
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
+    // Animation
+    animationRef,
+    getAnimateState,
 
-  const LIFE_COUNT = currentQuizStage.lifeCount ?? 5; // currentQuizStage.lifeCount
-  const [gameOver, setGameOver] = useState(false);
-  const [lifeCount, setLifeCount] = useState<number>(LIFE_COUNT);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({ countStart: question.timeLimitSeconds });
-
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
-  const { isAndroid, isWindows } = useCheckOS();
-  const [error, setError] = useState<string | null>(null);
-
-  const animationRef = useRef<boolean | null>(null); // 애니메이션 상태 관리
-  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
-
-  const TIME_PROGRESS = (count / question.timeLimitSeconds) * 100;
-  const ANIMATON_DURATION = 3_000;
-
-  const [, forceUpdate] = useState(0);
-
-  // 애니메이션 트리거
-  const triggerAnimation = () => {
-    if (animationRef.current) return; // 이미 실행 중인 경우 방지
-
-    animationRef.current = true; // 애니메이션 실행 중
-    animationTimeoutRef.current = setTimeout(() => {
-      stopAnimation(); // 최대 2초 후 애니메이션 중단
-    }, ANIMATON_DURATION);
-  };
-
-  // 애니메이션 중단
-  const stopAnimation = () => {
-    animationRef.current = false; // 애니메이션 상태 초기화
-    if (animationTimeoutRef.current) {
-      clearTimeout(animationTimeoutRef.current);
-      animationTimeoutRef.current = null;
-    }
-  };
-
-  function isOptionSelected(optionId: string): boolean {
-    return selectedOptionIdsRef.current.includes(optionId);
-  }
-
-  function isAllCorrectSelected(): boolean {
-    return question.options.every((option) =>
-      option.isCorrect ? isOptionSelected(option.id) : true
-    );
-  }
-
-  const resetSelectedOptionIds = () => {
-    selectedOptionIdsRef.current = [];
-    console.log("Selected options reset:", selectedOptionIdsRef.current);
-  };
-
-  const handleConfirmAnswer = async (question: any, optionId: string) => {
-    if (lifeCount === 0) return;
-
-    const isSelected = selectedOptionIdsRef.current.includes(optionId);
-    if (isSelected) return;
-
-    selectedOptionIdsRef.current = [...selectedOptionIdsRef.current, optionId];
-
-    const result = question.options.find((option) => option.id === optionId);
-    const elapsedSeconds = question.timeLimitSeconds - count;
-
-    if (result.isCorrect) {
-      // 다음문제로 넘어가는 조건: selectedOptionIds, optionId의 isCorrect 수와 question.options.isCorrect 수가 같을 경우 next()
-      if (isAllCorrectSelected()) {
-        setIsCorrectAnswer(true);
-        stopCountdown();
-        setSuccess(true);
-        logUserAnswer(
-          question.id,
-          selectedOptionIdsRef.current,
-          elapsedSeconds,
-          true
-        );
-        stopAnimation();
-        await sleep(1500);
-        await next();
-        setSuccess(false);
-        return;
-      }
-    } else {
-      setLifeCount((lifeCount) => lifeCount - 1);
-      triggerAnimation();
-      logUserAnswer(
-        question.id,
-        selectedOptionIdsRef.current,
-        elapsedSeconds,
-        false
-      );
-    }
-
-    forceUpdate((prev) => prev + 1);
-  };
-
-  const next = async () => {
-    setIsCorrectAnswer(false);
-
-    if (canNextQuestion()) {
-      resetSelectedOptionIds();
-      nextQuestion();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      resetCountdown();
-      return;
-    }
-
-    setLoading(true);
-    console.log("finalizeCurrentStage", lifeCount);
-    tryFinalizeCurrentStageProcess(lifeCount);
-  };
-
-  const canNextQuestion = (): boolean => {
-    if (currentQuestionIndex + 1 >= currentStageTotalQuestions) {
-      return false;
-    }
-    return true;
-  };
-
-  const nextQuestion = (): void => {
-    setCurrentQuestionIndex((prev) => prev + 1);
-  };
-
-  /**
-   * useStage로 연결되어 있는 값들은 초기화하지 않음. Complete 페이지에서 초기화 진행함.
-   * 이유: useStage에 연결되어 있는 값을 초기화하면 Complete 화면으로 넘어가기 전에 UI가 초기화되어 다음 퀴즈가 잠깐 보여지는 문제가 있음
-   */
-  const tryFinalizeCurrentStageProcess = async (lifeCount: number) => {
-    try {
-      await finalizeCurrentStage(lifeCount); // 남은 하트수
-      resetSelectedOptionIds();
-      router.push("complete");
-    } catch (error) {
-      console.error("fail retFyfinalizeProcess", error);
-      showFinalizeCurrentStageProcessAlert();
-    }
-  };
-
-  const showFinalizeCurrentStageProcessAlert = () => {
-    // confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
-    setError(translation("network_error"));
-  };
-
-  const handleGameOver = useCallback(async () => {
-    setLoading(true);
-    await handleStageFailure();
-    setLoading(false);
-    stopCountdown();
-    setGameOver(true);
-  }, [stopCountdown, setGameOver]);
-
-  const handleRestartQuizStage = () => {
-    resetCountdown();
-    startCountdown();
-    setLifeCount(LIFE_COUNT);
-    setGameOver(false);
-    clearUserAnswerLogs();
-    setCurrentQuestionIndex(0);
-    resetSelectedOptionIds(); // 선택된 옵션을 초기화하기 위해 추가
-    setIsCorrectAnswer(false); // 정답 상태를 초기화하기 위해 추가
-    stopAnimation(); // 진행 중인 애니메이션을 중지하기 위해 추가
-    forceUpdate((prev) => prev + 1); // 옵션들을 강제로 다시 렌더링하기 위해 추가
-  };
-
-  const handleGotoMap = () => {
-    resetCountdown();
-    setLifeCount(LIFE_COUNT);
-    setGameOver(false);
-    router.push("map");
-  };
-
-  const handleRestartCountdown = useCallback(() => {
-    resetCountdown();
-    startCountdown();
-  }, [resetCountdown, startCountdown]);
-
-  const handleLifeDecrease = useCallback(() => {
-    setLifeCount((prev) => prev - 1);
-    handleRestartCountdown();
-  }, [resetCountdown, setLifeCount, startCountdown]);
+    // Functions
+    isOptionSelected,
+    handleConfirmAnswer,
+    handleGameOver,
+    handleRestartQuizStage,
+    handleGotoMap,
+    handleLifeDecrease,
+    setErrorMessage,
+    handleRestartCountdown,
+  } = useQuizGame({
+    currentQuizStage: quizStageFromContext,
+    currentStageQuestions: stageQuestionsFromContext,
+    questionIndexFromContext,
+    finalizeCurrentStage,
+    handleStageFailure,
+    logUserAnswer,
+    clearUserAnswerLogs,
+    startLoading,
+    stopLoading,
+  });
 
   useEffect(() => {
-    if (!currentQuizStage || !currentStageQuestions) {
-      setErrorMessage("퀴즈 스테이지를 찾을 수 없습니다.");
-    }
-  }, [currentQuizStage, currentStageQuestions]);
-
-  function getAnimateState(option: QuestionOption) {
-    if (isOptionSelected(option.id)) {
-      return {
-        x: !option.isCorrect ? [0, -5, 5, -5, 5, 0] : 0,
-        scale: !option.isCorrect ? 1 : [1, 1.1, 1],
-        backgroundColor: option.isCorrect ? "#2686F5" : "#EE3434",
-        color: "#ffffff",
-        PointerEvent: "none" as const,
-      };
-    }
-
-    return {
-      x: 0,
-      scale: 1,
-    };
-  }
-
-  useEffect(() => {
-    setLoading(true);
+    startLoading();
 
     // 퀴즈를 완료한 후에 퀴즈 페이지 진입 시, Map페이지로 이동
     if (isComplete()) {
@@ -294,64 +110,37 @@ export default function QuizPage() {
       return;
     }
 
-    setLoading(false);
+    stopLoading();
   }, []);
 
   useEffect(() => {
     handleRestartCountdown();
-  }, [currentQuestionIndex, resetCountdown, startCountdown]);
+  }, [currentQuestionIndex, handleRestartCountdown]);
 
   useEffect(() => {
     if (count <= 0) {
       handleLifeDecrease();
-      triggerAnimation();
     }
   }, [count, handleLifeDecrease]);
 
   useEffect(() => {
     if (lifeCount === 0) {
       handleGameOver();
-      stopAnimation();
     }
   }, [lifeCount, handleGameOver]);
 
   return (
     <div className="min-h-svh bg-slate-300/20">
-      <div className="sticky top-0 z-10">
-        <div className=" p-5 h-[70px] flex items-center gap-[10px] bg-white">
-          <div className="justify-start flex-1 min-w-0 text-xs min-[300px]:text-sm text-pretty">
-            {translation("galaxy_ai_expert")}
-          </div>
-          {/* quiz 현재 상태 */}
-          <div className="flex-none">
-            <motion.div
-              className={cn(
-                "bg-[#2686F5] rounded-[30px] w-[68px] text-white text-center flex justify-center gap-[2px] font-medium text-sm py-1",
-                (isWindows || isAndroid) && "*:translate-y-[1px]"
-              )}
-              key={currentQuestionIndex}
-              initial={{ scale: 1 }}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.5, ease: "easeInOut", stiffness: 500 }}
-            >
-              <span>{currentQuestionIndex + 1}</span>
-              <span>/</span>
-              <span>{currentStageTotalQuestions}</span>
-            </motion.div>
-          </div>
-          {/* 하트 */}
-          <div className="flex justify-end flex-1 min-w-0 gap-1 ">
-            {Array.from({ length: LIFE_COUNT }).map((_, index) => (
-              <AnimatedHeartIcon
-                key={index}
-                index={index}
-                lifeCount={lifeCount}
-              />
-            ))}
-          </div>
-        </div>
-        <CountDownBar progress={TIME_PROGRESS} />
-      </div>
+      <QuizHeader
+        currentQuestionIndex={currentQuestionIndex}
+        currentStageTotalQuestions={currentStageTotalQuestions}
+        defaultLifeCount={defaultLifeCount}
+        lifeCount={lifeCount}
+        remainingTimeProgress={remainingTimeProgress}
+        isWindows={isWindows}
+        isAndroid={isAndroid}
+        translation={translation}
+      />
       <Qusetion
         isArabicCountry={isArabicLocale}
         question={question.text}
@@ -366,201 +155,38 @@ export default function QuizPage() {
             : `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/images/character/stage1_1.png`
         }
       />
-      <div className="pt-[32px] pb-[48px] px-5 flex flex-col gap-4 ">
-        {question.options &&
-          question.options
-            .sort((a, b) => a.order - b.order)
-            .map((option: QuestionOption) => {
-              return (
-                <motion.label
-                  key={option.id}
-                  onClick={() => {
-                    handleConfirmAnswer(question, option.id);
-                  }}
-                  className={cn(
-                    "relative rounded-[20px] py-4 px-6 hover:cursor-pointer font-one font-semibold text-lg overflow-hidden",
-                    isCorrectAnswer && "pointer-events-none",
-                    isOptionSelected(option.id) && "pointer-events-none",
-                    isArabicLocale && "text-right",
-                    isMyanmar && "leading-loose"
-                  )}
-                  initial={{ backgroundColor: "#FFFFFF", color: "#0F0F0F" }}
-                  animate={getAnimateState(option)}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  {option.text}
-                  {process.env.NODE_ENV !== "production" && (
-                    <span>({option.isCorrect ? "o" : "x"})</span>
-                  )}
-                  <input
-                    type="checkbox"
-                    checked={isOptionSelected(option.id)}
-                    readOnly
-                    className="hidden"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  />
-                  {option.isCorrect && animationRef.current && (
-                    <div
-                      className={cn(
-                        "absolute w-full h-full top-0 left-0 rounded-[20px]"
-                      )}
-                    >
-                      <HintAnimation />
-                    </div>
-                  )}
-                </motion.label>
-              );
-            })}
-      </div>
-      <GameOverAlertDialog
-        gameOver={gameOver}
-        onRestart={handleRestartQuizStage}
-        onGotoMap={handleGotoMap}
+      <QuizOptions
+        options={question.options}
+        isCorrectAnswer={isCorrectAnswer}
+        isOptionSelected={isOptionSelected}
+        handleConfirmAnswer={handleConfirmAnswer}
+        getAnimateState={getAnimateState}
+        animationRef={animationRef}
+        isArabicLocale={isArabicLocale}
+        isMyanmar={isMyanmar}
+        question={question}
       />
-      <ErrorAlertDialog error={errorMessage} />
+
       {success && <SuccessNotify />}
-      {loading && <Spinner />}
-      <AlertDialog open={!!error}>
-        <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle></AlertDialogTitle>
-            <AlertDialogDescription>{error}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={() => {
-                setError(null);
-                tryFinalizeCurrentStageProcess(lifeCount);
-              }}
-            >
-              <span>{translation("ok")}</span>
-            </AlertDialogCancel>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {Loader()}
+
+      <GameOverAlertDialog gameOver={gameOver} onRestart={handleRestartQuizStage} onGotoMap={handleGotoMap} />
+      <ResultAlertDialog
+        open={!!errorMessage}
+        description={errorMessage}
+        onConfirm={() => () => router.push("map")}
+        confirmText={translation("back")}
+      />
+
+      <ResultAlertDialog
+        open={!!error}
+        description={error}
+        onConfirm={() => {
+          setErrorMessage(null);
+          finalizeCurrentStage(lifeCount);
+        }}
+        confirmText={translation("ok")}
+      />
     </div>
   );
 }
-
-const AnimatedHeartIcon = ({
-  index,
-  lifeCount,
-  onAnimationEnd,
-}: {
-  index: number;
-  lifeCount: number;
-  onAnimationEnd?: () => void;
-}) => {
-  return (
-    <Fragment key={index}>
-      {index < lifeCount ? (
-        <motion.svg
-          className="size-4"
-          width="19"
-          height="17"
-          viewBox="0 0 19 17"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          onAnimationComplete={onAnimationEnd}
-          initial={{ scale: 1 }}
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{
-            duration: 0.5,
-            ease: "easeInOut",
-          }}
-        >
-          <motion.path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M9.16039 1.95783C7.32765 -0.1848 4.27143 -0.761161 1.97514 1.20085C-0.32116 3.16285 -0.644446 6.44323 1.15885 8.7637C2.65817 10.693 7.19562 14.7621 8.68276 16.0791C8.84914 16.2264 8.93233 16.3001 9.02936 16.3291C9.11405 16.3543 9.20672 16.3543 9.29142 16.3291C9.38845 16.3001 9.47164 16.2264 9.63802 16.0791C11.1252 14.7621 15.6626 10.693 17.1619 8.7637C18.9652 6.44323 18.6814 3.14221 16.3456 1.20085C14.0099 -0.740523 10.9931 -0.1848 9.16039 1.95783Z"
-            fill="#EE3434"
-          />
-        </motion.svg>
-      ) : (
-        <motion.svg
-          className="size-4"
-          width="20"
-          height="19"
-          viewBox="0 0 20 19"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          initial={{ scale: 1, opacity: 1 }}
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [1, 0.8, 1],
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeInOut",
-          }}
-        >
-          <motion.path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10.1604 3.30573C8.32765 1.1631 5.27143 0.586739 2.97514 2.54875C0.67884 4.51075 0.355554 7.79113 2.15885 10.1116C3.65817 12.0409 8.19562 16.11 9.68276 17.427C9.84914 17.5743 9.93233 17.648 10.0294 17.677C10.1141 17.7022 10.2067 17.7022 10.2914 17.677C10.3885 17.648 10.4716 17.5743 10.638 17.427C12.1252 16.11 16.6626 12.0409 18.1619 10.1116C19.9652 7.79113 19.6814 4.49011 17.3456 2.54875C15.0099 0.607378 11.9931 1.1631 10.1604 3.30573Z"
-            stroke="#EE3434"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </motion.svg>
-      )}
-    </Fragment>
-  );
-};
-
-const HintAnimation = () => {
-  return (
-    <div className="relative z-0 flex overflow-hidden ">
-      <TranslateWrapper>
-        <svg
-          width="201"
-          height="100%"
-          viewBox="0 0 201 auto"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            x="0.741943"
-            width="200"
-            height="100%"
-            transform="rotate(0.285261 0.741943 0)"
-            fill="url(#paint0_linear_1561_8491)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_1561_8491"
-              x1="175.172"
-              y1="34.132"
-              x2="90.7222"
-              y2="110.213"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#C3E0F8" stopOpacity="0" />
-              <stop offset="0.525" stopColor="#C3E0F8" stopOpacity="0.6" />
-              <stop offset="1" stopColor="#C3E0F8" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </TranslateWrapper>
-    </div>
-  );
-};
-
-const TranslateWrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <motion.div
-      initial={{ translateX: "-100%" }}
-      animate={{ translateX: "160%" }}
-      transition={{
-        duration: 1.5,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      className="h-full px-2"
-    >
-      {children}
-    </motion.div>
-  );
-};

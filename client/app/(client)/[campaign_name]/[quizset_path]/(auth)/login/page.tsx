@@ -110,7 +110,7 @@ export default function Login({ params }: { params: { campaign_name: string; qui
         open={!!errorMessage}
         description={errorMessage ?? null}
         onConfirm={() => setErrorMessage(null)}
-        translationOk={translation("ok")}
+        confirmText={translation("ok")}
       />
     </>
   );
