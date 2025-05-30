@@ -208,6 +208,9 @@ export const useQuizGame = ({
     handleRestartQuizStage,
     handleGotoMap,
     handleLifeDecrease,
+
     setErrorMessage,
+    setError,
+    tryFinalizeCurrentStageProcess,
   };
 };

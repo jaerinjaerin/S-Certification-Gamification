@@ -87,8 +87,9 @@ export default function QuizPage() {
     handleRestartQuizStage,
     handleGotoMap,
     handleLifeDecrease,
-    setErrorMessage,
+    setError,
     handleRestartCountdown,
+    tryFinalizeCurrentStageProcess,
   } = useQuizGame({
     currentQuizStage: quizStageFromContext,
     currentStageQuestions: stageQuestionsFromContext,
@@ -182,8 +183,8 @@ export default function QuizPage() {
         open={!!error}
         description={error}
         onConfirm={() => {
-          setErrorMessage(null);
-          finalizeCurrentStage(lifeCount);
+          setError(null);
+          tryFinalizeCurrentStageProcess(lifeCount);
         }}
         confirmText={translation("ok")}
       />
