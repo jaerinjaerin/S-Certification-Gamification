@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { ActivityBadgeEx } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
@@ -32,6 +33,26 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
         uiLanguage?.code;
 
       return <StatusBadge isReady={isReady} />;
+    },
+  },
+  {
+    accessorKey: 'active',
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Active</span>
+      </div>
+    ),
+    cell: ({ row }) => {
+      // const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
+      // const isReady =
+      //   quizSet != null &&
+      //   quizSetFile?.id &&
+      //   activityBadges != null &&
+      //   activityBadges.length > 0 &&
+      //   uiLanguage?.code;
+
+      // return <StatusBadge isReady={isReady} />;
+      return <Switch disabled={false} />;
     },
   },
   {

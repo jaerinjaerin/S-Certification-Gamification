@@ -1,5 +1,6 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { ActivityBadgeEx } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
@@ -17,28 +18,51 @@ import {
 } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
-  // {
-  //   accessorKey: 'Active',
-  //   header: () => (
-  //     <div className="flex gap-1 items-center">
-  //       <span>Active</span>
-  //       <TooltipComponent
-  //         side="right"
-  //         trigger={
-  //           <CircleHelp className="size-3 text-secondary cursor-pointer" />
-  //         }
-  //         description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
-  //       />
-  //     </div>
-  //   ),
-  //   cell: () => <ActiveToggle />,
-  // },
   {
     accessorKey: 'No',
     header: 'No',
     accessorFn: (_row, index) => index + 1,
     cell: ({ row }) => <div className="uppercase">{row.index + 1}</div>,
     sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'active',
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Active</span>
+      </div>
+    ),
+    cell: ({ row }) => {
+      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
+      const isReady =
+        quizSet != null &&
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0 &&
+        uiLanguage?.code;
+
+      // const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
+      // const isReady =
+      //   quizSet != null &&
+      //   quizSetFile?.id &&
+      //   activityBadges != null &&
+      //   activityBadges.length > 0 &&
+      //   uiLanguage?.code;
+
+      // if (!isReady) {
+      //   return <Switch disabled checked={false} />;
+      // }
+      if (!quizSet) {
+        return <div>!</div>;
+      }
+
+      return (
+        <Switch
+          checked
+          onChange={() => handleQuizSetActive(quizSet.id, quizSet.active)}
+        />
+      );
+    },
   },
   {
     accessorKey: 'status',
@@ -294,6 +318,28 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     sortingFn: 'auto',
   },
 ];
+
+const handleQuizSetActive = async (quizSetId: string, active: boolean) => {
+  try {
+    // const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
+    //   method: 'DELETE',
+    // });
+    // if (!response.ok) {
+    //   toast.error(`Error deleting quiz set: ${response.statusText}`);
+    //   return;
+    // }
+    // mutate(
+    //   (key) =>
+    //     typeof key === 'string' &&
+    //     key.includes(`quizset?campaignId=${campaignId}`)
+    // );
+    // toast.success('Quiz set deleted successfully');
+    // updateNoServiceChannel(campaignId);
+  } catch (error: any) {
+    toast.error('Error deleting quiz set:', error);
+    console.error('Error deleting quiz set:', error);
+  }
+};
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
   try {

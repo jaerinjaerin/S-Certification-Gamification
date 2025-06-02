@@ -12,23 +12,23 @@ import {
 import { ChevronDown, ChevronsUpDown, ChevronUp, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+import { cn } from '@/lib/utils';
 import {
   ColumnDef,
   ColumnFiltersState,
-  Row,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  Row,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from '@tanstack/react-table';
+import { isEmpty } from '../../../../_utils/utils';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
-import { cn } from '@/lib/utils';
 import { hqColumns } from './hq-columns';
-import { isEmpty } from '../../../../_utils/utils';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -153,33 +153,6 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           />
         </div>
       </div>
-      {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
       <div className="rounded-md border data-table">
         <Table>
           <TableHeader>
