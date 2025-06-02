@@ -30,7 +30,9 @@
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth].ts",
     "next.config.js",
-    "badge/extract.js"
+    "badge/extract.js",
+    "extract_question_log.js",
+    "update_question_log.js"
   ],
   "exclude": ["node_modules"]
 }

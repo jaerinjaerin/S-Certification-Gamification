@@ -396,7 +396,7 @@ model ChannelSegment {
 
 model UserQuizLog {
   id                 String   @id @default(uuid())
-  userId             String
+  userId             String 
   authType           AuthType
   campaignId         String
   isCompleted        Boolean?
@@ -481,6 +481,8 @@ model UserQuizStageLog {
   channelSegmentId String?
   channelName      String?
   badgeType        BadgeType?
+
+  @@index([userId, quizSetId])
 }
 
 model UserQuizQuestionLog {
@@ -517,6 +519,8 @@ model UserQuizQuestionLog {
   tryNumber          Int
   originalQuestionId String?
   originalIndex      Int?
+
+  @@index([userId, quizSetId, quizStageIndex])
 }
 
 model UserQuizStatistics {
