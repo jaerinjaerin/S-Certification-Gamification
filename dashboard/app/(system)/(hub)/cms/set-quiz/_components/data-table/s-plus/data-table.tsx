@@ -12,23 +12,24 @@ import {
 import { ChevronDown, ChevronsUpDown, ChevronUp, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+import { cn } from '@/lib/utils';
 import {
   ColumnDef,
   ColumnFiltersState,
-  Row,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  Row,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from '@tanstack/react-table';
+import { isEmpty } from '../../../../_utils/utils';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { columns } from './columns';
-import { cn } from '@/lib/utils';
 import { hqColumns } from './hq-columns';
-import { isEmpty } from '../../../../_utils/utils';
+import UploadedActivityInfo from './uploaded-activity';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -116,7 +117,15 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     }));
   }, [table, rows]);
 
-  const noSortData = ['url', 'quiz set', 'activity id', 'badge', 'ui language'];
+  const noSortData = [
+    'url',
+    'quiz set',
+    'activity id',
+    'badge',
+    'ui language',
+    'quizSet.updatedBy',
+    'quizSet.updatedAt',
+  ];
 
   return (
     <div>
@@ -138,6 +147,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             Not Ready :
             <strong className="font-bold">{` ${notReadyRows.length}`}</strong>
           </div>
+          <UploadedActivityInfo />
         </div>
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
@@ -153,33 +163,6 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
           />
         </div>
       </div>
-      {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
       <div className="rounded-md border data-table">
         <Table>
           <TableHeader>
@@ -205,6 +188,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                           header.id.toLowerCase() === 'activityid' ||
                           header.id.toLowerCase() === 'badge' ||
                           header.id.toLowerCase() === 'uilanguage' ||
+                          header.id.toLowerCase() === 'quizset-updatedby' ||
+                          header.id.toLowerCase() === 'quizset-updatedat' ||
                           header.id.toLowerCase() === 'delete'
                         ) ? (
                           <>

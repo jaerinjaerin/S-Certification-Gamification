@@ -6,7 +6,7 @@ import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
 import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Language, Question } from "@prisma/client";
+import { AuthType, BadgeType, Language, Question } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,17 +16,15 @@ type Props = {
   };
 };
 
+/**
+ * @deprecated
+ */
 export async function GET(request: NextRequest, props: Props) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("user_id");
+  const authType = searchParams.get("auth_type") as AuthType;
   const campaignSlug = searchParams.get("campaign_slug");
   const quizsetPath = props.params.quizset_path;
-
-  console.log("GET /api/campaigns/quizsets/[quizset_path]", {
-    userId,
-    campaignSlug,
-    quizsetPath,
-  });
 
   try {
     if (!quizsetPath || !userId || !campaignSlug) {
@@ -91,13 +89,19 @@ export async function GET(request: NextRequest, props: Props) {
         throw new ApiError(404, "NOT_FOUND", "Language not found");
       }
 
+      const whereClause: any = {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        languageId: language.id,
+        jobCodes: { has: jobCode },
+      };
+
+      if (authType === AuthType.SUMTOTAL) {
+        whereClause.active = true;
+      }
+
       const quizSet = await prisma.quizSet.findFirst({
-        where: {
-          campaignId: campaign.id,
-          domainId: domain.id,
-          languageId: language.id,
-          jobCodes: { has: jobCode },
-        },
+        where: whereClause,
         include: {
           domain: {
             include: {
@@ -139,6 +143,10 @@ export async function GET(request: NextRequest, props: Props) {
 
       if (!quizSet) {
         throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
+      }
+
+      if (!quizSet.active) {
+        throw new ApiError(403, "FORBIDDEN", "Quiz set is not active");
       }
 
       const activityBadges = await prisma.activityBadge.findMany({

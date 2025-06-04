@@ -1,27 +1,12 @@
-import "next-auth";
+import 'next-auth';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 }
-
-// type QuizSetEx = QuizSet & {
-//   language: Language;
-//   campaign: Campaign;
-//   domain: Domain;
-//   quizStages: QuizStageEx[];
-// };
-
-// type QuizStageEx = QuizStage & {
-//   questions: Questions[];
-// };
-
-// type QuestionEx = QuestionEx & {
-//   options: QuestionOption[];
-// };
 
 type DomainEx = Domain & {
   channelSegments: ChannelSegmentEx[];

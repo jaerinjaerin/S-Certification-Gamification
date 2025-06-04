@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { ERROR_CODES } from "@/constants/error-codes";
 import { defaultLanguageCode } from "@/core/config/default";
 import { prisma } from "@/prisma-client";
+import { AuthType } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
@@ -14,7 +15,6 @@ type Props = {
 export async function POST(request: Request, props: Props) {
   const session = await auth();
   if (!session) {
-    // return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     return NextResponse.json(
       {
         success: false,
@@ -28,11 +28,9 @@ export async function POST(request: Request, props: Props) {
   }
 
   const userId = props.params.user_id;
-  // const session = await auth();
   const body = await request.json();
   const {
     domainId,
-    // domainCode,
     subsidiaryId,
     regionId,
     jobId,
@@ -41,22 +39,10 @@ export async function POST(request: Request, props: Props) {
     channelId,
     channelName,
     channelSegmentId,
-    // campaignId,
     campaignSlug,
   } = body;
 
   try {
-    /*
-    body: {
-      domainCode: selectedCountry.code,
-      subsidiaryId: selectedCountry.subsidiaryId,
-      regionId: selectedCountry.regionId,
-      jobId: selectedJobId,
-      languageCode: languageCode,
-      channelSegmentId: selectedChannelSegmentId,
-    }
-    */
-
     const domain = await prisma.domain.findFirst({
       where: {
         id: domainId,
@@ -73,6 +59,38 @@ export async function POST(request: Request, props: Props) {
           },
         },
         { status: 404 }
+      );
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: ERROR_CODES.USER_NOT_FOUND,
+            message: "User not found",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    if (user.authType === AuthType.SUMTOTAL) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: ERROR_CODES.WRONG_AUTH_TYPE,
+            message: "Unauthorized",
+          },
+        },
+        { status: 403 }
       );
     }
 
@@ -115,8 +133,6 @@ export async function POST(request: Request, props: Props) {
         );
       }
 
-      // const languageCode = language?.code ?? defaultLanguageCode;
-
       await prisma.user.update({
         where: {
           id: userId,
@@ -135,21 +151,6 @@ export async function POST(request: Request, props: Props) {
           channelSegmentId: channelSegmentId,
         },
       });
-
-      // if (user.domain == null || user.job == null) {
-      // if (domain == null || job == null) {
-      //   return NextResponse.json(
-      //     {
-      //       status: 404,
-      //       message: "Not found",
-      //       error: {
-      //         code: "NOT_FOUND",
-      //         details: "Fail create quiz path",
-      //       },
-      //     },
-      //     { status: 404 }
-      //   );
-      // }
 
       const quizSets = await prisma.quizSet.findMany({
         where: {
@@ -202,8 +203,6 @@ export async function POST(request: Request, props: Props) {
       },
     });
 
-    // const languageCode = language?.code ?? defaultLanguageCode;
-
     await prisma.user.update({
       where: {
         id: userId,
@@ -216,16 +215,10 @@ export async function POST(request: Request, props: Props) {
         regionId: regionId,
         subsidiaryId: subsidiaryId,
         storeId: storeId,
-        // storeSegmentText: body.storeSegmentText,
         channelId: channelId,
         channelName: channelName,
         channelSegmentId: channelSegmentId,
       },
-      // include: {
-      //   // domain: true,
-      //   // language: true,
-      //   job: true,
-      // },
     });
 
     // if (user.domain == null || user.job == null) {
@@ -254,9 +247,6 @@ export async function POST(request: Request, props: Props) {
         { status: 404 }
       );
     }
-
-    // const quizPath = `${user.domain.code}_${user.job.code}_${languageCode}`;
-    // const quizPath = `${domain?.code}_${job?.code}_${languageCode}`;
 
     const quizPath = `${domain?.code}_${languageCode}`;
     return NextResponse.json(

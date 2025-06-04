@@ -228,6 +228,30 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
+      const sPlusUserActive = data.SPlusUserActive;
+      if (sPlusUserActive === '1' || sPlusUserActive === '0') {
+        const quizSets = await prisma.quizSet.findMany({
+          where: {
+            campaignId: campaign.id,
+            domainId: domain.id,
+            languageId: language.id,
+          },
+        });
+
+        if (quizSets.length > 0) {
+          quizSets.forEach(async (quizSet) => {
+            await prisma.quizSet.update({
+              where: {
+                id: quizSet.id,
+              },
+              data: {
+                active: sPlusUserActive === '1',
+              },
+            });
+          });
+        }
+      }
+
       // if (data.FF_FirstActivityID && data.FF_FirstBadgeImage != null) {
       if (data.FF_FirstBadgeImage != null) {
         const badgeImage = await prisma.quizBadge.findFirst({

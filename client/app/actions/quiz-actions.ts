@@ -6,15 +6,22 @@ import {
 } from "@/core/config/default";
 import { ApiError } from "@/core/error/api_error";
 import { prisma } from "@/prisma-client";
-import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
+import { ApiListResponseV2, ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
 import { newLanguages } from "@/utils/language";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { BadgeType, Language, Question } from "@prisma/client";
+import {
+  AuthType,
+  BadgeType,
+  Language,
+  Question,
+  QuizSet,
+} from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 export async function getQuizSet(
   quizsetPath: string,
   userId: string,
-  campaignSlug: string
+  campaignSlug: string,
+  authType: AuthType
 ): Promise<ApiResponseV2<QuizSetEx>> {
   try {
     if (!quizsetPath || !userId || !campaignSlug) {
@@ -89,13 +96,19 @@ export async function getQuizSet(
         jobCodes: { has: jobCode },
       });
 
+      const whereClause: any = {
+        campaignId: campaign.id,
+        domainId: domain.id,
+        languageId: language.id,
+        jobCodes: { has: jobCode },
+      };
+
+      if (authType === AuthType.SUMTOTAL) {
+        whereClause.active = true;
+      }
+
       const quizSet = await prisma.quizSet.findFirst({
-        where: {
-          campaignId: campaign.id,
-          domainId: domain.id,
-          languageId: language.id,
-          jobCodes: { has: jobCode },
-        },
+        where: whereClause,
         include: {
           domain: {
             include: {
@@ -213,27 +226,6 @@ export async function getQuizSet(
           }
         }
       }
-      // console.log("activityBadges:", activityBadges);
-      // console.log("campaign:", campaign.settings);
-      // console.log("quizSet:", quizSet);
-
-      // const campaignSettings = await prisma.campaignSettings.findFirst({
-      //   where: {
-      //     campaignId: campaign.id,
-      //   },
-      // });
-
-      // console.log("campaignSettings:", campaignSettings);
-
-      // if (campaignSettings) {
-      //   const maxStage = campaignSettings.totalStages;
-      //   console.log("maxStage:", maxStage, quizSet.quizStages.length);
-      //   if (maxStage) {
-      //     if (quizSet.quizStages.length > maxStage + 1) {
-      //       quizSet.quizStages = quizSet.quizStages.slice(0, maxStage + 1);
-      //     }
-      //   }
-      // }
 
       return {
         success: true,
@@ -366,11 +358,171 @@ export async function getQuizSet(
     Sentry.captureException(error, (scope) => {
       scope.setContext("operation", {
         type: "api",
-        endpoint: "/api/campaigns/quizsets/[quizset_path]",
+        endpoint: "/quiz-actions/getQuizSet",
         method: "POST",
         description: "Failed to fetch question data",
       });
       scope.setTag("user_id", userId);
+      scope.setTag("quizset_path", quizsetPath);
+      return scope;
+    });
+
+    // ApiError 처리
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        status: error.statusCode,
+        error: { code: error.code, message: error.message },
+      };
+    }
+
+    // 예상치 못한 에러 처리
+    return {
+      success: false,
+      status: 500,
+      error: {
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          error instanceof Error ? error.message : "An unknown error occurred",
+      },
+    };
+  }
+}
+
+export async function getQuizSets(
+  quizsetPath: string,
+  campaignSlug: string,
+  authType: AuthType
+): Promise<ApiListResponseV2<QuizSet>> {
+  try {
+    if (!quizsetPath || !campaignSlug) {
+      throw new ApiError(
+        400,
+        "BAD_REQUEST",
+        "Quiz set path and User ID are required"
+      );
+    }
+
+    const codes = extractCodesFromPath(quizsetPath);
+    if (codes == null) {
+      throw new ApiError(400, "BAD_REQUEST", "Invalid quizset path");
+    }
+    const { domainCode, languageCode } = codes;
+
+    const domain = await prisma.domain.findFirst({
+      where: { code: domainCode },
+    });
+
+    if (!domain) {
+      console.error("getQuizSet Domain not found:", domainCode);
+      throw new ApiError(404, "NOT_FOUND", "Domain not found");
+    }
+
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        slug: {
+          equals: campaignSlug,
+          mode: "insensitive", // 대소문자 구분 없이 검색
+        },
+      },
+      include: {
+        settings: true,
+      },
+    });
+
+    if (!campaign) {
+      console.error("getQuizSet Campaign not found:", campaign);
+      throw new ApiError(404, "NOT_FOUND", "getQuizSet Campaign not found");
+    }
+
+    const language = await prisma.language.findFirst({
+      where: { code: languageCode },
+    });
+
+    if (!language) {
+      console.error("getQuizSet Language not found:", language);
+      throw new ApiError(404, "NOT_FOUND", "Language not found");
+    }
+
+    console.log("getQuizSets:", {
+      campaignId: campaign.id,
+      domainId: domain.id,
+      languageId: language.id,
+    });
+
+    const whereClause: any = {
+      campaignId: campaign.id,
+      domainId: domain.id,
+      languageId: language.id,
+    };
+
+    if (authType === AuthType.SUMTOTAL) {
+      whereClause.active = true;
+    }
+
+    const quizSets = await prisma.quizSet.findMany({
+      where: whereClause,
+      include: {
+        domain: {
+          include: {
+            subsidiary: {
+              include: {
+                region: true,
+              },
+            },
+          },
+        },
+        language: true,
+        quizStages: {
+          include: {
+            badgeImage: true,
+            questions: {
+              orderBy: {
+                order: "asc",
+              },
+              where: {
+                enabled: true,
+              },
+              include: {
+                options: {
+                  orderBy: {
+                    order: "asc",
+                  },
+                },
+                backgroundImage: true,
+                characterImage: true,
+              },
+            },
+          },
+          orderBy: {
+            order: "asc",
+          },
+        },
+      },
+    });
+
+    return {
+      success: true,
+      status: 200,
+      result: {
+        items: quizSets as QuizSet[],
+      },
+    };
+  } catch (error) {
+    console.error(
+      "Error fetching question data:",
+      quizsetPath,
+      campaignSlug,
+      error
+    );
+
+    Sentry.captureException(error, (scope) => {
+      scope.setContext("operation", {
+        type: "api",
+        endpoint: "quiz-actions/getQuizSets",
+        method: "POST",
+        description: "Failed to fetch question data",
+      });
       scope.setTag("quizset_path", quizsetPath);
       return scope;
     });
