@@ -44,6 +44,7 @@ export default function GuestRegisterPage() {
     jobs,
     selectedChannel,
     selectedChannelSegmentId,
+    channelInput,
   } = useRegisterForm();
   const { isArabic } = useCheckLocale();
   const translation = useTranslations();
