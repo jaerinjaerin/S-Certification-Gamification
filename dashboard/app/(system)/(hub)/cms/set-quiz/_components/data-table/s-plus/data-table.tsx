@@ -27,7 +27,7 @@ import {
 } from '@tanstack/react-table';
 import { isEmpty } from '../../../../_utils/utils';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
-import { getColumns } from './columns';
+import { columns } from './columns';
 import { hqColumns } from './hq-columns';
 import UploadedActivityInfo from './uploaded-activity';
 
@@ -48,36 +48,11 @@ export default function SplusDataTable({ data }: { data: QuizSetResponse }) {
   );
   const sortedGroupedQuizSets = [...filteredGroupedQuizSets];
 
-  const [quizSets, setQuizSets] = useState(sortedGroupedQuizSets);
-
-  const [loadingIds, setLoadingIds] = useState<Set<string>>(new Set());
-
-  const addLoading = (id: string) =>
-    setLoadingIds((prev) => new Set([...prev, id]));
-  const removeLoading = (id: string) =>
-    setLoadingIds((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(id);
-      return newSet;
-    });
-
-  useEffect(() => {
-    setQuizSets(filteredGroupedQuizSets);
-  }, [data]);
-
   return (
     <>
       <HQDataTable data={HQquizSet} columns={hqColumns} />
-      {!isEmpty(quizSets) && (
-        <DataTable
-          data={quizSets}
-          columns={getColumns(
-            setQuizSets,
-            loadingIds,
-            addLoading,
-            removeLoading
-          )}
-        />
+      {!isEmpty(sortedGroupedQuizSets) && (
+        <DataTable data={sortedGroupedQuizSets} columns={columns} />
       )}
     </>
   );

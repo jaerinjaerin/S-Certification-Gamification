@@ -1,6 +1,5 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
@@ -16,31 +15,10 @@ import {
   ActivityIdBadge,
   QuizSetLink,
   StatusBadge,
+  StatusCircle,
 } from '../../data-table-widgets';
 
-export const getColumns = (
-  setQuizSets: React.Dispatch<React.SetStateAction<GroupedQuizSet[]>>,
-  loadingIds: Set<string>,
-  addLoading: (id: string) => void,
-  removeLoading: (id: string) => void
-): ColumnDef<GroupedQuizSet>[] => [
-  // {
-  //   accessorKey: 'Active',
-  //   header: () => (
-  //     <div className="flex gap-1 items-center">
-  //       <span>Active</span>
-  //       <TooltipComponent
-  //         side="right"
-  //         trigger={
-  //           <CircleHelp className="size-3 text-secondary cursor-pointer" />
-  //         }
-  //         description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
-  //       />
-  //     </div>
-  //   ),
-  //   cell: () => <ActiveToggle />,
-  // },
-
+export const columns: ColumnDef<GroupedQuizSet>[] = [
   {
     accessorKey: 'No',
     header: 'No',
@@ -50,52 +28,9 @@ export const getColumns = (
   },
   {
     accessorKey: 'active',
-    header: () => (
-      <div className="flex gap-1 items-center">
-        <span>Active</span>
-      </div>
-    ),
+    header: 'Active',
     cell: ({ row }) => {
-      const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const active = quizSet?.active ?? false;
-      if (!quizSet) {
-        return <div>!</div>;
-      }
-
-      return (
-        <Switch
-          checked={active}
-          isLoading={loadingIds.has(quizSet.id)}
-          onCheckedChange={async (checked: boolean) => {
-            addLoading(quizSet.id);
-            const result = await handleQuizSetActive(
-              quizSet.campaignId,
-              quizSet.id,
-              !checked
-            );
-            if (result) {
-              await setQuizSets((prevSets) =>
-                prevSets.map((set) => {
-                  if (set.quizSet && set.quizSet.id === quizSet.id) {
-                    return {
-                      ...set,
-                      quizSet: {
-                        ...set.quizSet,
-                        active: result,
-                        domain: set.quizSet.domain,
-                      },
-                    } as GroupedQuizSet;
-                  }
-                  return set;
-                })
-              );
-              removeLoading(quizSet.id);
-            } else {
-              removeLoading(quizSet.id);
-            }
-          }}
-        />
-      );
+      return <StatusCircle isReady={row.original.quizSet?.active ?? false} />;
     },
   },
   {

@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { ActivityBadgeEx } from '@/types';
+import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import { Copy, ExternalLink, Flag } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
@@ -13,10 +13,21 @@ import {
   ActivityIdBadge,
   QuizSetLink,
   StatusBadge,
+  StatusCircle,
 } from '../../data-table-widgets';
-import { format } from 'date-fns';
 
 export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
+  {
+    accessorKey: 'active',
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Active</span>
+      </div>
+    ),
+    cell: ({ row }) => {
+      return <StatusCircle isReady={row.original.quizSet?.active ?? false} />;
+    },
+  },
   {
     accessorKey: 'status',
     header: () => (
@@ -26,25 +37,6 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     ),
     cell: ({ row }) => {
       const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const isReady =
-        quizSet != null &&
-        quizSetFile?.id &&
-        activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code;
-
-      return <StatusBadge isReady={isReady} />;
-    },
-  },
-  {
-    accessorKey: 'active',
-    header: () => (
-      <div className="flex gap-1 items-center">
-        <span>Active</span>
-      </div>
-    ),
-    cell: ({ row }) => {
-      // const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
       // const isReady =
       //   quizSet != null &&
       //   quizSetFile?.id &&
@@ -53,7 +45,19 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
       //   uiLanguage?.code;
 
       // return <StatusBadge isReady={isReady} />;
-      return <Switch disabled={false} />;
+      if (!quizSet || !uiLanguage) {
+        return <StatusBadge status={ReadyStatus.NOT_READY} />;
+      }
+
+      if (
+        quizSetFile?.id &&
+        activityBadges != null &&
+        activityBadges.length > 0
+      ) {
+        return <StatusBadge status={ReadyStatus.READY} />;
+      }
+
+      return <StatusBadge status={ReadyStatus.PARTIALLY_READY} />;
     },
   },
   {

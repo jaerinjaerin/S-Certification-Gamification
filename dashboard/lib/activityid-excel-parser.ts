@@ -11,6 +11,7 @@ export interface ParsedExcelData {
   FSM_SecondActivityID: string;
   FSM_FirstBadgeImage: string;
   FSM_SecondBadgeImage: string;
+  SPlusUserActive: string;
 }
 
 export interface ActivityIdProcessResult {
@@ -44,6 +45,7 @@ export const processActivityExcelBuffer = (
         FSM_SecondActivityID: row['FSM_SecondActivityID']?.toString(),
         FSM_FirstBadgeImage: row['FSM_FirstBadgeImage']?.toString(),
         FSM_SecondBadgeImage: row['FSM_SecondBadgeImage']?.toString(),
+        SPlusUserActive: row['SPlusUserActive']?.toString(),
       }))
       .filter((item) => item.domainCode && item.languageCode); // 빈 값 제거
 
