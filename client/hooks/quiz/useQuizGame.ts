@@ -6,11 +6,12 @@ import { sleep } from "@/utils/utils";
 import { useQuizAnimation } from "./useQuizAnimation";
 import { useCountdown } from "@/hooks/useCountdown";
 import { EndStageResult } from "@/types/type";
+import { useTranslations } from "next-intl";
 
 interface UseQuizGameProps {
-  currentQuizStage: QuizStageEx;
-  currentStageQuestions: QuestionEx[];
   questionIndexFromContext: number;
+  quizStageFromContext: QuizStageEx;
+  stageQuestionsFromContext: QuestionEx[];
   finalizeCurrentStage: (lifeCount: number) => Promise<EndStageResult>;
   handleStageFailure: () => Promise<void>;
   logUserAnswer: (questionId: string, selectedOptionIds: string[], elapsedSeconds: number, isCorrect: boolean) => void;
@@ -20,9 +21,9 @@ interface UseQuizGameProps {
 }
 
 export const useQuizGame = ({
-  currentQuizStage,
-  currentStageQuestions,
   questionIndexFromContext,
+  quizStageFromContext,
+  stageQuestionsFromContext,
   finalizeCurrentStage,
   handleStageFailure,
   logUserAnswer,
@@ -34,7 +35,11 @@ export const useQuizGame = ({
   const selectedOptionIdsRef = useRef<string[]>([]);
 
   // States
+  // 최초 렌더링 시점에서 한 번만 값 가져오기
+  const [currentQuizStage] = useState<QuizStageEx>(quizStageFromContext);
+  const [currentStageQuestions] = useState<QuestionEx[]>(stageQuestionsFromContext);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(questionIndexFromContext);
+
   const defaultLifeCount = currentQuizStage.lifeCount ?? QUIZ_CONSTANTS.LIFE.DEFAULT_COUNT;
   const [lifeCount, setLifeCount] = useState<number>(defaultLifeCount);
   const [gameOver, setGameOver] = useState(false);
@@ -43,16 +48,18 @@ export const useQuizGame = ({
   const [error, setError] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [, forceUpdate] = useState(0);
+  const translation = useTranslations();
 
   // Derived values
   const question: QuestionEx = currentStageQuestions[currentQuestionIndex];
   const currentStageTotalQuestions = currentStageQuestions?.length;
 
   // Countdown
+  const timeLimitSeconds = question.timeLimitSeconds ?? 30;
   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({
-    countStart: question.timeLimitSeconds,
+    countStart: timeLimitSeconds,
   });
-  const remainingTimeProgress = (count / question.timeLimitSeconds) * QUIZ_CONSTANTS.PROGRESS.MAX;
+  const remainingTimeProgress = (count / timeLimitSeconds) * QUIZ_CONSTANTS.PROGRESS.MAX;
 
   // Helper functions
   const isOptionSelected = (optionId: string): boolean => {
@@ -80,7 +87,7 @@ export const useQuizGame = ({
     selectedOptionIdsRef.current = [...selectedOptionIdsRef.current, optionId];
 
     const result = question.options.find((option) => option.id === optionId);
-    const elapsedSeconds = question.timeLimitSeconds - count;
+    const elapsedSeconds = timeLimitSeconds - count;
 
     if (result?.isCorrect) {
       if (isAllCorrectSelected()) {
@@ -115,6 +122,7 @@ export const useQuizGame = ({
     }
 
     startLoading();
+    console.log("finalizeCurrentStage", lifeCount);
     tryFinalizeCurrentStageProcess(lifeCount);
   };
 
@@ -126,9 +134,13 @@ export const useQuizGame = ({
     setCurrentQuestionIndex((prev) => prev + 1);
   };
 
+  /**
+   * useStage로 연결되어 있는 값들은 초기화하지 않음. Complete 페이지에서 초기화 진행함.
+   * 이유: useStage에 연결되어 있는 값을 초기화하면 Complete 화면으로 넘어가기 전에 UI가 초기화되어 다음 퀴즈가 잠깐 보여지는 문제가 있음
+   */
   const tryFinalizeCurrentStageProcess = async (lifeCount: number) => {
     try {
-      await finalizeCurrentStage(lifeCount);
+      await finalizeCurrentStage(lifeCount); // 남은 하트수
       resetSelectedOptionIds();
       router.push("complete");
     } catch (error) {
@@ -138,7 +150,8 @@ export const useQuizGame = ({
   };
 
   const showFinalizeCurrentStageProcessAlert = () => {
-    setError("네트워크 오류가 발생했습니다.");
+    // confirm("퀴즈 스테이지를 종료하는데 실패했습니다. 다시 시도해 주세요.");
+    setError(translation("network_error"));
   };
 
   const handleGameOver = useCallback(async () => {

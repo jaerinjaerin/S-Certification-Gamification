@@ -40,7 +40,7 @@ type PolicyRendererProps = SheetPolicyRendererProps | DialogPolicyRendererProps;
 export default function PolicyRenderer(props: PolicyRendererProps) {
   const translation = useTranslations();
 
-  const { privacyContent, termContent, agreementContent } = usePolicyContent(props.domainCode);
+  const { privacyContent, termContent, agreementContent, isError, isLoading } = usePolicyContent(props.domainCode);
 
   // agreementContent가 있는 경우, privacyContent 위에 추가
   const SHEET_PRIVACY_CONTENT = isEmpty(agreementContent)
@@ -58,7 +58,8 @@ export default function PolicyRenderer(props: PolicyRendererProps) {
         onClick={props.onClick}
         privacyContent={SHEET_PRIVACY_CONTENT}
         termContent={termContent}
-        loading={props.loading}
+        loading={props.loading || isLoading}
+        error={isError}
         domainCode={props.domainCode}
       />
     );
@@ -73,6 +74,8 @@ export default function PolicyRenderer(props: PolicyRendererProps) {
           actionButtonText: `${translation("accept")}`,
           triggerChildren: `${translation("privacy")}`,
           domainCode: props.domainCode,
+          isError,
+          isLoading,
         }}
       />
     );
@@ -87,6 +90,8 @@ export default function PolicyRenderer(props: PolicyRendererProps) {
           actionButtonText: `${translation("ok")}`,
           triggerChildren: `${translation("term")}`,
           domainCode: props.domainCode,
+          isError,
+          isLoading,
         }}
       />
     );

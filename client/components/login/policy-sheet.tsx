@@ -16,6 +16,7 @@ import { arabicDomains } from "@/core/config/default";
 interface PolicySheetProps {
   onClick: () => Promise<void>;
   loading: boolean;
+  error: boolean;
   open: boolean;
   setOpenSheet: Dispatch<SetStateAction<boolean>>;
   privacyContent: string;
@@ -28,7 +29,7 @@ const FormSchema = z.object({
   term: z.boolean().default(false),
 });
 
-export default function PolicySheet({ loading, open, setOpenSheet, onClick, domainCode, privacyContent, termContent }: PolicySheetProps) {
+export default function PolicySheet({ loading, open, setOpenSheet, onClick, domainCode, privacyContent, termContent, error }: PolicySheetProps) {
   const translation = useTranslations();
   const { isArabic } = useCheckLocale();
   const isArabicCountry = arabicDomains.includes(domainCode ?? "");
@@ -74,7 +75,7 @@ export default function PolicySheet({ loading, open, setOpenSheet, onClick, doma
                       form: form,
                       // domainName: domainName,
                       title: `${translation("privacy")}`,
-                      contents: `${privacyContent}`,
+                      contents: error ? `${translation("unexpected_error")}` : `${privacyContent}`,
                       formKey: "privacy",
                       formLabelText: translation.rich("mena_check_1", {
                         strong: (chunks) => <span className="text-blue-500 font-bold inline-block">{chunks}</span>,
@@ -88,7 +89,7 @@ export default function PolicySheet({ loading, open, setOpenSheet, onClick, doma
                       form: form,
                       // domainName: domainName,
                       title: `${translation("term")}`,
-                      contents: `${termContent}`,
+                      contents: error ? `${translation("unexpected_error")}` : `${termContent}`,
                       formKey: "term",
                       formLabelText: translation.rich("mena_check_2", {
                         strong: (chunks) => <span className="text-blue-500 font-bold inline-block">{chunks}</span>,
@@ -105,7 +106,7 @@ export default function PolicySheet({ loading, open, setOpenSheet, onClick, doma
         <SheetFooter className={cn("mt-[26px]", isArabicCountry && "sm:flex-row-reverse")}>
           <Button
             variant={"primary"}
-            disabled={loading || !isAllChecked}
+            disabled={loading || error || !isAllChecked}
             onClick={() => {
               if (open) {
                 setOpenSheet(false);

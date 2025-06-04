@@ -91,9 +91,9 @@ export default function QuizPage() {
     handleRestartCountdown,
     tryFinalizeCurrentStageProcess,
   } = useQuizGame({
-    currentQuizStage: quizStageFromContext,
-    currentStageQuestions: stageQuestionsFromContext,
     questionIndexFromContext,
+    quizStageFromContext,
+    stageQuestionsFromContext,
     finalizeCurrentStage,
     handleStageFailure,
     logUserAnswer,

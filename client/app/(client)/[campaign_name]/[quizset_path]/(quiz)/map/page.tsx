@@ -33,8 +33,6 @@ import { cn } from "@/utils/utils";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
 
-// ? Quiz관련된 내용을 DB에서 가져오는 구조로 바꿀수있을까?
-
 export default function QuizMap({ params }: { params: { campaign_name: string; quizset_path: string } }) {
   useGAPageView();
 
@@ -111,7 +109,7 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
-      <div className=" w-full flex flex-col pt-[21px] pr-[21px] pl-[39px] relative z-20">
+      <div className=" w-full flex flex-col pr-[21px] pl-[39px] relative z-20">
         <TutorialGuidePopup />
         <div className="flex flex-col font-bold">
           <span className="text-2xl">{translation("total_score")}</span>
