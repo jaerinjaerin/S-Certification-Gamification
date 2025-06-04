@@ -1,7 +1,7 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { ActivityBadgeEx } from '@/types';
+import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleHelp, Copy, ExternalLink, Trash2 } from 'lucide-react';
@@ -17,7 +17,12 @@ import {
   StatusBadge,
 } from '../../data-table-widgets';
 
-export const columns: ColumnDef<GroupedQuizSet>[] = [
+export const getColumns = (
+  setQuizSets: React.Dispatch<React.SetStateAction<GroupedQuizSet[]>>,
+  loadingIds: Set<string>,
+  addLoading: (id: string) => void,
+  removeLoading: (id: string) => void
+): ColumnDef<GroupedQuizSet>[] => [
   {
     accessorKey: 'No',
     header: 'No',
@@ -34,32 +39,43 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     ),
     cell: ({ row }) => {
       const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const isReady =
-        quizSet != null &&
-        quizSetFile?.id &&
-        activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code;
-
-      // const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      // const isReady =
-      //   quizSet != null &&
-      //   quizSetFile?.id &&
-      //   activityBadges != null &&
-      //   activityBadges.length > 0 &&
-      //   uiLanguage?.code;
-
-      // if (!isReady) {
-      //   return <Switch disabled checked={false} />;
-      // }
+      const active = quizSet?.active ?? false;
       if (!quizSet) {
         return <div>!</div>;
       }
 
       return (
         <Switch
-          checked
-          onChange={() => handleQuizSetActive(quizSet.id, quizSet.active)}
+          checked={active}
+          isLoading={loadingIds.has(quizSet.id)}
+          onCheckedChange={async (checked: boolean) => {
+            addLoading(quizSet.id);
+            const result = await handleQuizSetActive(
+              quizSet.campaignId,
+              quizSet.id,
+              !checked
+            );
+            if (result) {
+              await setQuizSets((prevSets) =>
+                prevSets.map((set) => {
+                  if (set.quizSet && set.quizSet.id === quizSet.id) {
+                    return {
+                      ...set,
+                      quizSet: {
+                        ...set.quizSet,
+                        active: result,
+                        domain: set.quizSet.domain,
+                      },
+                    } as GroupedQuizSet;
+                  }
+                  return set;
+                })
+              );
+              removeLoading(quizSet.id);
+            } else {
+              removeLoading(quizSet.id);
+            }
+          }}
         />
       );
     },
@@ -98,14 +114,20 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     },
     cell: ({ row }) => {
       const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const isReady =
-        quizSet != null &&
+
+      if (!quizSet || !uiLanguage) {
+        return <StatusBadge status={ReadyStatus.NOT_READY} />;
+      }
+
+      if (
         quizSetFile?.id &&
         activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code;
-      // const isReady = quizSetFile?.id && uiLanguage?.code;
-      return <StatusBadge isReady={isReady} />;
+        activityBadges.length > 0
+      ) {
+        return <StatusBadge status={ReadyStatus.READY} />;
+      }
+
+      return <StatusBadge status={ReadyStatus.PARTIALLY_READY} />;
     },
   },
   {
@@ -152,7 +174,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
-      if (row.original.uiLanguage && row.original.quizSet) {
+      if (
+        row.original.uiLanguage &&
+        row.original.quizSet &&
+        row.original.quizSet.active
+      ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
 
         return (
@@ -319,22 +345,35 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
   },
 ];
 
-const handleQuizSetActive = async (quizSetId: string, active: boolean) => {
+const handleQuizSetActive = async (
+  campaignId: string,
+  quizSetId: string,
+  active: boolean
+): Promise<boolean | undefined> => {
+  console.log(
+    `handleQuizSetActive called with campaignId: ${campaignId}, quizSetId: ${quizSetId}, active: ${active}`
+  );
   try {
-    // const response = await fetch(`/api/cms/quizset?quizSetId=${quizSetId}`, {
-    //   method: 'DELETE',
-    // });
-    // if (!response.ok) {
-    //   toast.error(`Error deleting quiz set: ${response.statusText}`);
-    //   return;
-    // }
-    // mutate(
-    //   (key) =>
-    //     typeof key === 'string' &&
-    //     key.includes(`quizset?campaignId=${campaignId}`)
-    // );
-    // toast.success('Quiz set deleted successfully');
-    // updateNoServiceChannel(campaignId);
+    const response = await fetch(`/api/cms/quizset/${quizSetId}/active`, {
+      method: 'POST',
+      body: JSON.stringify({ quizSetId: quizSetId, active: !active }),
+    });
+    if (!response.ok) {
+      toast.error(`Error updating quiz set status: ${response.statusText}`);
+      throw new Error(`Error updating quiz set status: ${response.statusText}`);
+    }
+    mutate(
+      (key) =>
+        typeof key === 'string' &&
+        key.includes(`quizset?campaignId=${campaignId}`)
+    );
+    toast.success(
+      `Quiz set ${active ? 'deactivated' : 'activated'} successfully`
+    );
+
+    const data = await response.json();
+    const updatedQuizSet = data.result;
+    return updatedQuizSet.active;
   } catch (error: any) {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);

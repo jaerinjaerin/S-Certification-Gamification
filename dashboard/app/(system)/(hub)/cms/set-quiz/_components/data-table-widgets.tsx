@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { ReadyStatus } from '@/types';
+import { QuizSetEx } from '@/types/apiTypes';
 import { cn } from '@/utils/utils';
 import { ChevronRight } from 'lucide-react';
 import { useNavigation } from '../../_hooks/useNavigation';
-import { QuizSetEx } from '@/types/apiTypes';
 
 function ActiveToggle({
   checked,
@@ -32,15 +33,28 @@ function StatusCircle({ isReady }: { isReady: boolean }) {
   );
 }
 
-function StatusBadge({ isReady }: { isReady: boolean }) {
+function StatusBadge({ status }: { status: ReadyStatus }) {
+  const { bgColor, label } = (() => {
+    switch (status) {
+      case ReadyStatus.READY:
+        return { bgColor: 'bg-green-300', label: 'Ready' };
+      case ReadyStatus.PARTIALLY_READY:
+        return { bgColor: 'bg-yellow-300', label: 'Partially Ready' };
+      case ReadyStatus.NOT_READY:
+        return { bgColor: 'bg-red-300', label: 'Not Ready' };
+      default:
+        return { bgColor: 'bg-gray-300', label: 'Unknown' }; // ✅ fallback
+    }
+  })();
+
   return (
     <span
       className={cn(
         'w-fit text-size-14px font-medium px-2 py-[3.5px] text-nowrap rounded-full leading-tight flex items-center justify-center',
-        isReady ? 'bg-green-300' : 'bg-red-300'
+        bgColor
       )}
     >
-      {isReady ? 'Ready' : 'Not Ready'}
+      {label}
     </span>
   );
 }

@@ -466,40 +466,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // if (quizSet) {
-    //   const savedQuizSetFile = await prisma.quizSetFile.findFirst({
-    //     where: {
-    //       campaignId: campaignId,
-    //       languageId: language.id,
-    //       domainId: domain.id,
-    //       quizSetId: quizSet.id,
-    //       jobCodes: {
-    //         equals: jobCodes, // 🔥 jobCodes 배열의 모든 값이 포함된 경우 조회
-    //       },
-    //     },
-    //   });
-
-    // if (savedQuizSetFile) {
-    //   console.log(
-    //     'savedQuizSetFile: ',
-    //     savedQuizSetFile.path.split('/').pop(),
-    //     file.name
-    //   );
-    //   if (savedQuizSetFile.path.split('/').pop() !== file.name) {
-    //     return NextResponse.json(
-    //       {
-    //         success: false,
-    //         error: {
-    //           message: `${file.name}: File name does not match the existing file`,
-    //           code: ERROR_CODES.FILE_NAME_MISMATCH,
-    //         },
-    //       },
-    //       { status: 400 }
-    //     );
-    //   }
-    // }
-    // }
-
     // =============================================
     // 1. quiz set 생성
     // =============================================
@@ -523,6 +489,7 @@ export async function POST(request: NextRequest) {
           jobCodes: jobCodes,
           createrId: session?.user?.id ?? '',
           updaterId: session?.user?.id,
+          active: true,
         },
       });
     } else {
@@ -553,20 +520,6 @@ export async function POST(request: NextRequest) {
 
     for (let i = 0; i < stageNums.length; i++) {
       const stage: number = stageNums[i];
-      // const jsonStageQuestions: any[] = questions.filter(
-      //   (question: any) => question.stage === stage && question.enabled
-      // );
-
-      // jsonStageQuestions.sort((a, b) => a.orderInStage - b.orderInStage);
-
-      // 원본 질문 인덱스로 질문 아이디 매핑
-      // let questionIds = jsonStageQuestions.map((question) => {
-      //   const q: any = createdQuestions.find(
-      //     (q: any) => q.originalIndex === question.originQuestionIndex
-      //   );
-
-      //   return q?.id;
-      // });
 
       let quizStage = await prisma.quizStage.findFirst({
         where: {
@@ -762,15 +715,6 @@ export async function POST(request: NextRequest) {
 
           for (let j = 0; j < questionJson.options.length; j++) {
             const optionJson = questionJson.options[j];
-            // const option = await prisma.questionOption.findFirst({
-            //   where: {
-            //     questionId,
-            //     order: j,
-            //     languageId: language.id,
-            //   },
-            // });
-
-            // if (!option) {
             await prisma.questionOption.create({
               data: {
                 text: optionJson.text.toString(),
@@ -782,22 +726,6 @@ export async function POST(request: NextRequest) {
                 quizSetId: quizSet.id,
               },
             });
-            // } else {
-            //   await prisma.questionOption.update({
-            //     where: {
-            //       id: option.id,
-            //     },
-            //     data: {
-            //       text: optionJson.text.toString(),
-            //       order: j,
-            //       questionId,
-            //       isCorrect: optionJson.answerStatus,
-            //       languageId: language.id,
-            //       campaignId: campaignId,
-            //       quizSetId: quizSet.id,
-            //     },
-            //   });
-            // }
           }
         } else {
           // 기존 옵션에 변경 사항이 있으면 업데이트
@@ -828,22 +756,6 @@ export async function POST(request: NextRequest) {
     // file upload
     // =============================================
     const s3Client = getS3Client();
-
-    // const timestamp = new Date()
-    //   .toISOString()
-    //   .replace(/[-T:.Z]/g, '')
-    //   .slice(0, 12); // YYYYMMDDHHMM 형식
-
-    // // 기존 파일명에서 모든 _YYYYMMDDHHMM 패턴 제거
-    // const baseFileName = file.name
-    //   .replace(/(_\d{12})+/, '')
-    //   .replace(/\.[^/.]+$/, '');
-    // const fileExtension = file.name.match(/\.[^/.]+$/)?.[0] || '';
-
-    // // 최종 파일명 생성 (중복된 날짜 제거 후 새 날짜 추가)
-    // const fileNameWithTimestamp = `${baseFileName}_${timestamp}${fileExtension}`;
-
-    // const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${fileNameWithTimestamp}`;
     const destinationKey = `certification/${campaign.slug}/cms/upload/quizset/${domainCode}/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -1006,15 +918,6 @@ export async function GET(request: Request) {
       },
     });
 
-    // const domainWebLanguages = await prisma.domainWebLanguage.findMany({
-    //   where: {
-    //     campaignId: campaignId,
-    //   },
-    //   include: {
-    //     language: true,
-    //   },
-    // });
-
     const uploadedFiles = await prisma.uploadedFile.findMany({
       where: {
         campaignId: campaignId,
@@ -1028,22 +931,6 @@ export async function GET(request: Request) {
         uploadedFiles.find((file) => file.languageId === lang.id) != null
     );
 
-    // quizSets.sort((a: any, b: any) => a.domain.order - b.domain.order);
-    // 🔹 region → subsidiary → domain 순서로 정렬
-    // quizSets.sort((a: any, b: any) => {
-    //   const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
-    //   const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
-    //   if (regionOrderA !== regionOrderB) return regionOrderA - regionOrderB;
-
-    //   const subsidiaryOrderA = a.domain?.subsidiary?.order ?? Infinity;
-    //   const subsidiaryOrderB = b.domain?.subsidiary?.order ?? Infinity;
-    //   if (subsidiaryOrderA !== subsidiaryOrderB)
-    //     return subsidiaryOrderA - subsidiaryOrderB;
-
-    //   const domainOrderA = a.domain?.order ?? Infinity;
-    //   const domainOrderB = b.domain?.order ?? Infinity;
-    //   return domainOrderA - domainOrderB;
-    // });
     quizSets.sort((a: any, b: any) => {
       const regionOrderA = a.domain?.subsidiary?.region?.order ?? Infinity;
       const regionOrderB = b.domain?.subsidiary?.region?.order ?? Infinity;
