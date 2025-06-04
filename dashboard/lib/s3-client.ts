@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  GetObjectCommand,
+  ListObjectsCommand,
+  PutObjectCommand,
+} from '@aws-sdk/client-s3';
 import { execSync } from 'child_process';
 import { getS3Client } from './aws/s3-client';
 
@@ -92,4 +96,39 @@ const getFromS3 = async ({
   }
 };
 
-export { getCredentials, getFromS3, s3Client, uploadToS3 };
+/**
+ * @param path 폴더 경로
+ * @param isNoCache 캐시 제거 여부
+ * @return path 폴더에 해당하는 파일 리스트
+ */
+const getFromS3Folder = async ({
+  path,
+  isNoCache = false,
+}: {
+  path: string;
+  isNoCache?: boolean;
+}) => {
+  try {
+    const command = new ListObjectsCommand({
+      Bucket: process.env.ASSETS_S3_BUCKET_NAME,
+      Prefix: path,
+      ...(isNoCache
+        ? { ResponseCacheControl: 'no-store, no-cache, must-revalidate' }
+        : {}),
+    });
+
+    const response = await s3Client.send(command);
+
+    const sortedContents = response.Contents?.sort(
+      (a, b) =>
+        (b.LastModified?.getTime() ?? 0) - (a.LastModified?.getTime() ?? 0)
+    );
+
+    return sortedContents?.map((content) => content.Key) ?? [];
+  } catch (error) {
+    console.error(`S3 폴더 내용 가져오기 실패: ${path}`, error);
+    return [];
+  }
+};
+
+export { getCredentials, getFromS3, s3Client, uploadToS3, getFromS3Folder };

@@ -4,6 +4,7 @@ import { Switch } from '@/components/ui/switch';
 import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import { CircleHelp, Copy, ExternalLink, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
@@ -23,6 +24,23 @@ export const getColumns = (
   addLoading: (id: string) => void,
   removeLoading: (id: string) => void
 ): ColumnDef<GroupedQuizSet>[] => [
+  // {
+  //   accessorKey: 'Active',
+  //   header: () => (
+  //     <div className="flex gap-1 items-center">
+  //       <span>Active</span>
+  //       <TooltipComponent
+  //         side="right"
+  //         trigger={
+  //           <CircleHelp className="size-3 text-secondary cursor-pointer" />
+  //         }
+  //         description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
+  //       />
+  //     </div>
+  //   ),
+  //   cell: () => <ActiveToggle />,
+  // },
+
   {
     accessorKey: 'No',
     header: 'No',
@@ -295,6 +313,37 @@ export const getColumns = (
         return <div>{row.original.uiLanguage.name}</div>;
       }
       return <UILinkButton />;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedby',
+    header: 'Updated By',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return <div>{quizSet.updatedBy}</div>;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedat',
+    header: 'Updated At',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return (
+        <div className="text-xs">
+          {format(
+            quizSet.updatedAt ?? quizSet.createdAt,
+            'yyyy.MM.dd HH:mm:ss'
+          )}
+        </div>
+      );
     },
     sortingFn: 'auto',
   },

@@ -29,6 +29,7 @@ import { isEmpty } from '../../../../_utils/utils';
 import { GroupedQuizSet, QuizSetResponse } from '../../../_type/type';
 import { getColumns } from './columns';
 import { hqColumns } from './hq-columns';
+import UploadedActivityInfo from './uploaded-activity';
 
 interface QuizSetDataTableProps {
   data: GroupedQuizSet[] | undefined;
@@ -141,7 +142,15 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
     }));
   }, [table, rows]);
 
-  const noSortData = ['url', 'quiz set', 'activity id', 'badge', 'ui language'];
+  const noSortData = [
+    'url',
+    'quiz set',
+    'activity id',
+    'badge',
+    'ui language',
+    'quizSet.updatedBy',
+    'quizSet.updatedAt',
+  ];
 
   return (
     <div>
@@ -163,6 +172,7 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
             Not Ready :
             <strong className="font-bold">{` ${notReadyRows.length}`}</strong>
           </div>
+          <UploadedActivityInfo />
         </div>
         <div className="relative w-[13.625rem]">
           <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-zinc-500" />
@@ -203,6 +213,8 @@ function DataTable({ data = [], columns }: QuizSetDataTableProps) {
                           header.id.toLowerCase() === 'activityid' ||
                           header.id.toLowerCase() === 'badge' ||
                           header.id.toLowerCase() === 'uilanguage' ||
+                          header.id.toLowerCase() === 'quizset-updatedby' ||
+                          header.id.toLowerCase() === 'quizset-updatedat' ||
                           header.id.toLowerCase() === 'delete'
                         ) ? (
                           <>
