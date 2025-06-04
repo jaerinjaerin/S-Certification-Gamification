@@ -74,6 +74,18 @@ export interface ApiResponseV2<T> {
   };
 }
 
+export interface ApiListResponseV2<T> {
+  success: boolean;
+  status: number | null;
+  result?: {
+    items: T[] | null;
+  };
+  error?: {
+    message: string;
+    code: string;
+  };
+}
+
 export interface ApiListResponse<T> {
   items: T[] | null;
   success: boolean;

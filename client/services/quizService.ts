@@ -3,31 +3,11 @@ import {
   ApiResponse,
   QuizLogResponse,
   QuizQuestionLogsResponse,
-  QuizSetEx,
 } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
 import { Domain, Language } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { apiClient } from "./apiClient";
-
-/**
- * Fetch quiz set details by path and user ID.
- * @param quizsetPath The path of the quiz set.
- * @param userId The ID of the user.
- * @returns ApiResponse with QuizSetEx details.
- */
-export const fetchQuizSet = async (
-  quizsetPath: string,
-  userId: string
-): Promise<ApiResponse<QuizSetEx>> => {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/campaigns/quizsets/${quizsetPath}?user_id=${userId}`;
-    return await apiClient.get<ApiResponse<QuizSetEx>>(url);
-  } catch (error) {
-    console.error(`Failed to fetch quiz set: ${error}`);
-    throw new Error("퀴즈 세트를 가져오는 중 문제가 발생했습니다.");
-  }
-};
 
 /**
  * Fetch quiz logs by user ID and campaign name.

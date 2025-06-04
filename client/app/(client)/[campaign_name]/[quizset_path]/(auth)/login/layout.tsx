@@ -1,5 +1,8 @@
+import { getQuizSets } from "@/app/actions/quiz-actions";
 import { mapBrowserLanguageToLocale } from "@/i18n/locale";
+import { ApiListResponseV2 } from "@/types/apiTypes";
 import { extractCodesFromPath } from "@/utils/pathUtils";
+import { AuthType, QuizSet } from "@prisma/client";
 import * as Sentry from "@sentry/nextjs";
 import { NextIntlClientProvider } from "next-intl";
 import { redirect } from "next/navigation";
@@ -11,6 +14,20 @@ export default async function SumtotalUserLayout({
   children: React.ReactNode;
   params: { campaign_name: string; quizset_path: string };
 }) {
+  const quizResponse: ApiListResponseV2<QuizSet> = await getQuizSets(
+    quizset_path,
+    campaign_name,
+    AuthType.SUMTOTAL
+  );
+
+  if (quizResponse.status !== 200 || quizResponse.result?.items?.length === 0) {
+    console.error("Quiz set not found", campaign_name, quizset_path);
+    Sentry.captureMessage(
+      `Quiz set not found: ${campaign_name}, ${quizset_path}`
+    );
+    redirect(`/${campaign_name}/not-ready`);
+  }
+
   const timeZone = "Seoul/Asia";
   const codes = extractCodesFromPath(quizset_path);
 

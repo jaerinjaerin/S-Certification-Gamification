@@ -253,7 +253,7 @@ model QuizSet {
   questions    Question[]
   questionOptions    QuestionOption[]
   quizSetFiles  QuizSetFile[]
-  active       Boolean?   @default(true)
+  active       Boolean?   @default(false)
 }
 
 model QuizSetFile {
