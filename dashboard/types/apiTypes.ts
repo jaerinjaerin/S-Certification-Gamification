@@ -28,6 +28,7 @@ export interface QuizSetEx extends QuizSet {
   campaign: CampaignEx;
   language: Language | null;
   quizStages: QuizStageEx[];
+  updatedBy: string | null;
   // subsidiary: Subsidiary | null;
 }
 

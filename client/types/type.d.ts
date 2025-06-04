@@ -8,21 +8,6 @@ declare module "next-auth" {
   }
 }
 
-// type QuizSetEx = QuizSet & {
-//   language: Language;
-//   campaign: Campaign;
-//   domain: Domain;
-//   quizStages: QuizStageEx[];
-// };
-
-// type QuizStageEx = QuizStage & {
-//   questions: Questions[];
-// };
-
-// type QuestionEx = QuestionEx & {
-//   options: QuestionOption[];
-// };
-
 type DomainEx = Domain & {
   channelSegments: ChannelSegmentEx[];
 };

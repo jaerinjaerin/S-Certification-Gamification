@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { ActivityBadgeEx } from '@/types';
+import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import { Copy, ExternalLink, Flag } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
@@ -12,9 +13,21 @@ import {
   ActivityIdBadge,
   QuizSetLink,
   StatusBadge,
+  StatusCircle,
 } from '../../data-table-widgets';
 
 export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
+  {
+    accessorKey: 'active',
+    header: () => (
+      <div className="flex gap-1 items-center">
+        <span>Active</span>
+      </div>
+    ),
+    cell: ({ row }) => {
+      return <StatusCircle isReady={row.original.quizSet?.active ?? false} />;
+    },
+  },
   {
     accessorKey: 'status',
     header: () => (
@@ -24,14 +37,27 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     ),
     cell: ({ row }) => {
       const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const isReady =
-        quizSet != null &&
+      // const isReady =
+      //   quizSet != null &&
+      //   quizSetFile?.id &&
+      //   activityBadges != null &&
+      //   activityBadges.length > 0 &&
+      //   uiLanguage?.code;
+
+      // return <StatusBadge isReady={isReady} />;
+      if (!quizSet || !uiLanguage) {
+        return <StatusBadge status={ReadyStatus.NOT_READY} />;
+      }
+
+      if (
         quizSetFile?.id &&
         activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code;
+        activityBadges.length > 0
+      ) {
+        return <StatusBadge status={ReadyStatus.READY} />;
+      }
 
-      return <StatusBadge isReady={isReady} />;
+      return <StatusBadge status={ReadyStatus.PARTIALLY_READY} />;
     },
   },
   {
@@ -203,6 +229,37 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
       }
       return <UILinkButton />;
     },
+  },
+  {
+    accessorKey: 'quizset-updatedby',
+    header: 'Updated By',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return <div>{quizSet.updatedBy}</div>;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedat',
+    header: 'Updated At',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return (
+        <div className="text-xs">
+          {format(
+            quizSet.updatedAt ?? quizSet.createdAt,
+            'yyyy.MM.dd HH:mm:ss'
+          )}
+        </div>
+      );
+    },
+    sortingFn: 'auto',
   },
 ];
 

@@ -1,8 +1,9 @@
 import { TooltipComponent } from '@/app/(system)/campaign/_components/tooltip-component';
 import { Button } from '@/components/ui/button';
-import { ActivityBadgeEx } from '@/types';
+import { ActivityBadgeEx, ReadyStatus } from '@/types';
 import { BadgeType } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import { CircleHelp, Copy, ExternalLink, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
@@ -14,31 +15,23 @@ import {
   ActivityIdBadge,
   QuizSetLink,
   StatusBadge,
+  StatusCircle,
 } from '../../data-table-widgets';
 
 export const columns: ColumnDef<GroupedQuizSet>[] = [
-  // {
-  //   accessorKey: 'Active',
-  //   header: () => (
-  //     <div className="flex gap-1 items-center">
-  //       <span>Active</span>
-  //       <TooltipComponent
-  //         side="right"
-  //         trigger={
-  //           <CircleHelp className="size-3 text-secondary cursor-pointer" />
-  //         }
-  //         description={`When the toggle is turned off, the domain will be marked as not participating in this \n authentication method, and data cannot be uploaded.`}
-  //       />
-  //     </div>
-  //   ),
-  //   cell: () => <ActiveToggle />,
-  // },
   {
     accessorKey: 'No',
     header: 'No',
     accessorFn: (_row, index) => index + 1,
     cell: ({ row }) => <div className="uppercase">{row.index + 1}</div>,
     sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'active',
+    header: 'Active',
+    cell: ({ row }) => {
+      return <StatusCircle isReady={row.original.quizSet?.active ?? false} />;
+    },
   },
   {
     accessorKey: 'status',
@@ -74,14 +67,20 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     },
     cell: ({ row }) => {
       const { quizSet, quizSetFile, activityBadges, uiLanguage } = row.original;
-      const isReady =
-        quizSet != null &&
+
+      if (!quizSet || !uiLanguage) {
+        return <StatusBadge status={ReadyStatus.NOT_READY} />;
+      }
+
+      if (
         quizSetFile?.id &&
         activityBadges != null &&
-        activityBadges.length > 0 &&
-        uiLanguage?.code;
-      // const isReady = quizSetFile?.id && uiLanguage?.code;
-      return <StatusBadge isReady={isReady} />;
+        activityBadges.length > 0
+      ) {
+        return <StatusBadge status={ReadyStatus.READY} />;
+      }
+
+      return <StatusBadge status={ReadyStatus.PARTIALLY_READY} />;
     },
   },
   {
@@ -128,7 +127,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
-      if (row.original.uiLanguage && row.original.quizSet) {
+      if (
+        row.original.uiLanguage &&
+        row.original.quizSet &&
+        row.original.quizSet.active
+      ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
 
         return (
@@ -249,6 +252,37 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     sortingFn: 'auto',
   },
   {
+    accessorKey: 'quizset-updatedby',
+    header: 'Updated By',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return <div>{quizSet.updatedBy}</div>;
+    },
+    sortingFn: 'auto',
+  },
+  {
+    accessorKey: 'quizset-updatedat',
+    header: 'Updated At',
+    cell: ({ row }) => {
+      const { quizSet } = row.original;
+      if (!quizSet) {
+        return;
+      }
+      return (
+        <div className="text-xs">
+          {format(
+            quizSet.updatedAt ?? quizSet.createdAt,
+            'yyyy.MM.dd HH:mm:ss'
+          )}
+        </div>
+      );
+    },
+    sortingFn: 'auto',
+  },
+  {
     accessorKey: 'delete',
     header: 'Delete',
     cell: ({ row }) => {
@@ -294,6 +328,41 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     sortingFn: 'auto',
   },
 ];
+
+const handleQuizSetActive = async (
+  campaignId: string,
+  quizSetId: string,
+  active: boolean
+): Promise<boolean | undefined> => {
+  console.log(
+    `handleQuizSetActive called with campaignId: ${campaignId}, quizSetId: ${quizSetId}, active: ${active}`
+  );
+  try {
+    const response = await fetch(`/api/cms/quizset/${quizSetId}/active`, {
+      method: 'POST',
+      body: JSON.stringify({ quizSetId: quizSetId, active: !active }),
+    });
+    if (!response.ok) {
+      toast.error(`Error updating quiz set status: ${response.statusText}`);
+      throw new Error(`Error updating quiz set status: ${response.statusText}`);
+    }
+    mutate(
+      (key) =>
+        typeof key === 'string' &&
+        key.includes(`quizset?campaignId=${campaignId}`)
+    );
+    toast.success(
+      `Quiz set ${active ? 'deactivated' : 'activated'} successfully`
+    );
+
+    const data = await response.json();
+    const updatedQuizSet = data.result;
+    return updatedQuizSet.active;
+  } catch (error: any) {
+    toast.error('Error deleting quiz set:', error);
+    console.error('Error deleting quiz set:', error);
+  }
+};
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
   try {

@@ -154,6 +154,10 @@ export async function getQuizSet(
         throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
       }
 
+      if (!quizSet.active) {
+        throw new ApiError(403, "FORBIDDEN", "Quiz set is not active");
+      }
+
       const activityBadges = await prisma.activityBadge.findMany({
         where: {
           campaignId: campaign.id,
