@@ -11,7 +11,12 @@ type LoginButtonProps = {
 
 export default function LoginButton({ disabled, isArabic, translationLogin, onClick, children }: LoginButtonProps) {
   return (
-    <Button variant={"primary"} disabled={disabled} className={cn("disabled:bg-disabled ", isArabic && "flex-row-reverse")} onClick={onClick}>
+    <Button
+      variant={"primary"}
+      disabled={disabled}
+      className={cn("disabled:bg-disabled text-wrap ", isArabic && "flex-row-reverse")}
+      onClick={onClick}
+    >
       {children}
       <span>{translationLogin}</span>
     </Button>

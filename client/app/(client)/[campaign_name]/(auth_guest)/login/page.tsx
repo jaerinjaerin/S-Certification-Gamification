@@ -155,7 +155,7 @@ export default function GuestLogin({ params }: { params: { campaign_name: string
           <div className="text-center">
             <EmailInputDialog state={state} dispatch={dispatch} sendEmail={sendEmail}>
               <Button
-                className={cn(isArabic && "flex-row-reverse")}
+                className={cn(isArabic && "flex-row-reverse", "text-wrap")}
                 variant={"primary"}
                 onClick={() => {
                   dispatch({ type: "SET_STEP", payload: "email" });
