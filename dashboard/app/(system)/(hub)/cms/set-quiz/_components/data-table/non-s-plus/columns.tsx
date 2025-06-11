@@ -20,7 +20,8 @@ export const columns: ColumnDef<DomainChannel>[] = [
           description={
             <p>
               <span className="font-bold">Not Ready:</span> The quiz cannot be
-              started because not all data has been uploaded yet. <br />
+              started because not all data has been uploaded yet.
+              <br />
               <span className="font-bold">Ready:</span> All data has been
               uploaded, and the quiz can now be started. In this case, the quiz
               URL will be generated.
@@ -31,6 +32,7 @@ export const columns: ColumnDef<DomainChannel>[] = [
     ),
     cell: ({ row }) => (
       <div>
+        {/* <StatusCircle isReady={row.original.isReady} /> */}
         <StatusCircle isReady={row.original.isReady} />
       </div>
     ),

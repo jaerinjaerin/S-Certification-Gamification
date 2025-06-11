@@ -30,7 +30,11 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'active',
     header: 'Active',
     cell: ({ row }) => {
-      return <StatusCircle isReady={row.original.quizSet?.active ?? false} />;
+      return (
+        <StatusCircle
+          isReady={row.original.quizSet?.splusUserActive ?? false}
+        />
+      );
     },
   },
   {
@@ -130,7 +134,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (
         row.original.uiLanguage &&
         row.original.quizSet &&
-        row.original.quizSet.active
+        row.original.quizSet.splusUserActive
       ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
 

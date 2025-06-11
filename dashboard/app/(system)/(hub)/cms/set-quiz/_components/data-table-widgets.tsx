@@ -37,7 +37,7 @@ function StatusBadge({ status }: { status: ReadyStatus }) {
   const { bgColor, label } = (() => {
     switch (status) {
       case ReadyStatus.READY:
-        return { bgColor: 'bg-green-300', label: 'Ready' };
+        return { bgColor: 'bg-green-400', label: 'Ready' };
       case ReadyStatus.PARTIALLY_READY:
         return { bgColor: 'bg-yellow-300', label: 'Partially Ready' };
       case ReadyStatus.NOT_READY:
