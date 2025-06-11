@@ -27,7 +27,7 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       return (
         <StatusCircle
-          isReady={row.original.quizSet?.splusUserActive ?? false}
+          isReady={row.original.quizSet?.meta?.sPlusUserActive ?? false}
         />
       );
     },

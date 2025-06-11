@@ -253,8 +253,14 @@ model QuizSet {
   questions    Question[]
   questionOptions    QuestionOption[]
   quizSetFiles  QuizSetFile[]
-  // active       Boolean?   @default(false)
-  splusUserActive       Boolean?   @default(false)
+  meta       QuizSetMeta?
+}
+
+model QuizSetMeta {
+  id           String   @id @default(cuid())
+  quizSetId    String   @unique
+  sPlusUserActive Boolean?   @default(false)
+  quizSet      QuizSet  @relation(fields: [quizSetId], references: [id], onDelete: Cascade)
 }
 
 model QuizSetFile {
