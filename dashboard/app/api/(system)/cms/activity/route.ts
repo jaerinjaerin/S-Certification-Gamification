@@ -265,6 +265,11 @@ export async function POST(request: NextRequest) {
             }
           });
         }
+      } else {
+        failures.push({
+          message: `${data.domainCode}, ${data.SPlusUserActive}: SPlusUserActive was not set to 0 or 1`,
+          code: ERROR_CODES.SPLUSUSERACTIVE_ERROR,
+        });
       }
 
       // if (data.FF_FirstActivityID && data.FF_FirstBadgeImage != null) {
