@@ -96,13 +96,21 @@ export async function GET(request: NextRequest, props: Props) {
         jobCodes: { has: jobCode },
       };
 
-      if (authType === AuthType.SUMTOTAL) {
-        whereClause.splusUserActive = true;
-      }
+      // if (authType === AuthType.SUMTOTAL) {
+      //   whereClause.splusUserActive = true;
+      // }
 
       const quizSet = await prisma.quizSet.findFirst({
-        where: whereClause,
+        where: {
+          ...whereClause,
+          ...(authType === AuthType.SUMTOTAL && {
+            meta: {
+              sPlusUserActive: true,
+            },
+          }),
+        },
         include: {
+          meta: true,
           domain: {
             include: {
               subsidiary: {
@@ -145,9 +153,9 @@ export async function GET(request: NextRequest, props: Props) {
         throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
       }
 
-      if (!quizSet.splusUserActive) {
-        throw new ApiError(403, "FORBIDDEN", "Quiz set is not active");
-      }
+      // if (quizSet.meta?.sPlusUserActive === false) {
+      //   throw new ApiError(403, "FORBIDDEN", "Quiz set is not active");
+      // }
 
       const activityBadges = await prisma.activityBadge.findMany({
         where: {

@@ -32,7 +32,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       return (
         <StatusCircle
-          isReady={row.original.quizSet?.splusUserActive ?? false}
+          isReady={row.original.quizSet?.meta?.sPlusUserActive ?? false}
         />
       );
     },
@@ -134,7 +134,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (
         row.original.uiLanguage &&
         row.original.quizSet &&
-        row.original.quizSet.splusUserActive
+        row.original.quizSet.meta?.sPlusUserActive
       ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
 

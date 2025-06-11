@@ -103,13 +103,21 @@ export async function getQuizSet(
         jobCodes: { has: jobCode },
       };
 
-      if (authType === AuthType.SUMTOTAL) {
-        whereClause.splusUserActive = true;
-      }
+      // if (authType === AuthType.SUMTOTAL) {
+      //   whereClause.splusUserActive = true;
+      // }
 
       const quizSet = await prisma.quizSet.findFirst({
-        where: whereClause,
+        where: {
+          ...whereClause,
+          ...(authType === AuthType.SUMTOTAL && {
+            meta: {
+              sPlusUserActive: true,
+            },
+          }),
+        },
         include: {
+          meta: true,
           domain: {
             include: {
               subsidiary: {
