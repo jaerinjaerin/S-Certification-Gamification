@@ -65,6 +65,7 @@
     "react-test-renderer": "^18.3.1",
     "remark-gfm": "^4.0.0",
     "resend": "^4.0.1-alpha.0",
+    "swr": "^2.3.3",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",

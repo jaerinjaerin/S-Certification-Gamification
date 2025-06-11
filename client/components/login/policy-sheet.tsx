@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Checkbox } from "@/components/ui/checkbox";
 import { Markdown } from "@/components/markdown/markdown";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { z } from "zod";
@@ -72,7 +72,6 @@ export default function PolicySheet({ loading, open, setOpenSheet, onClick, doma
                 <form>
                   <AccordionFormItem
                     accordionProps={{
-                      form: form,
                       // domainName: domainName,
                       title: `${translation("privacy")}`,
                       contents: error ? `${translation("unexpected_error")}` : `${privacyContent}`,
@@ -86,7 +85,6 @@ export default function PolicySheet({ loading, open, setOpenSheet, onClick, doma
                   />
                   <AccordionFormItem
                     accordionProps={{
-                      form: form,
                       // domainName: domainName,
                       title: `${translation("term")}`,
                       contents: error ? `${translation("unexpected_error")}` : `${termContent}`,
@@ -135,18 +133,16 @@ type AccordionFormItemProps = {
     contents: string;
     formKey: "privacy" | "term";
     formLabelText: string | React.ReactNode;
-    form: UseFormReturn<{ privacy: boolean; term: boolean }, any, undefined>;
     isArabic: boolean;
     isArabicCountry: boolean;
   };
 };
 function AccordionFormItem({ accordionProps }: AccordionFormItemProps) {
-  const { form, title, contents, formKey, formLabelText, isArabic, isArabicCountry } = accordionProps;
+  const { title, contents, formKey, formLabelText, isArabic, isArabicCountry } = accordionProps;
 
   return (
     <FormField
       key={formKey}
-      control={form.control}
       name={formKey}
       render={({ field }) => {
         return (
