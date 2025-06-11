@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
                 id: quizSet.id,
               },
               data: {
-                active: sPlusUserActive === '1',
+                splusUserActive: sPlusUserActive === '1',
               },
             });
           });

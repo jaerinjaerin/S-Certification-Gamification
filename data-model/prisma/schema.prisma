@@ -253,7 +253,8 @@ model QuizSet {
   questions    Question[]
   questionOptions    QuestionOption[]
   quizSetFiles  QuizSetFile[]
-  active       Boolean?   @default(false)
+  // active       Boolean?   @default(false)
+  splusUserActive       Boolean?   @default(false)
 }
 
 model QuizSetFile {

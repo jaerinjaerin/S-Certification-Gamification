@@ -490,7 +490,7 @@ export async function POST(request: NextRequest) {
           jobCodes: jobCodes,
           createrId: session?.user?.id ?? '',
           updaterId: session?.user?.id,
-          active: false,
+          splusUserActive: false,
         },
       });
     } else {
