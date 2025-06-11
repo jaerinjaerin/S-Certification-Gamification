@@ -104,7 +104,7 @@ export async function getQuizSet(
       };
 
       if (authType === AuthType.SUMTOTAL) {
-        whereClause.active = true;
+        whereClause.splusUserActive = true;
       }
 
       const quizSet = await prisma.quizSet.findFirst({
@@ -457,7 +457,7 @@ export async function getQuizSets(
     };
 
     if (authType === AuthType.SUMTOTAL) {
-      whereClause.active = true;
+      whereClause.splusUserActive = true;
     }
 
     const quizSets = await prisma.quizSet.findMany({

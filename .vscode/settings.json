@@ -3,5 +3,7 @@
   "prettier.singleQuote": false,
   "prettier.semi": true,
   "prettier.jsxSingleQuote": false,
-  "WillLuke.nextjs.hasPrompted": true
+  "WillLuke.nextjs.hasPrompted": true,
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
+  "workbench.colorTheme": "GitHub Dark"
 }

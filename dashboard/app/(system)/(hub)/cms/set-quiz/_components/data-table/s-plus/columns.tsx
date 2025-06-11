@@ -361,7 +361,7 @@ const handleQuizSetActive = async (
 
     const data = await response.json();
     const updatedQuizSet = data.result;
-    return updatedQuizSet.active;
+    return updatedQuizSet.splusUserActive;
   } catch (error: any) {
     toast.error('Error deleting quiz set:', error);
     console.error('Error deleting quiz set:', error);

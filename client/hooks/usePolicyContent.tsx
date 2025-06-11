@@ -6,16 +6,28 @@ function usePolicyContent(domainCode: string | undefined) {
     data: privacyData,
     isLoading: loadingPrivacy,
     error: errorPrivacy,
-  } = useSWRImmutable(domainCode ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/privacy/${domainCode}.json` : null, swrFetcher);
+  } = useSWRImmutable(
+    domainCode
+      ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/privacy/${domainCode}.json`
+      : null,
+    swrFetcher
+  );
 
   const {
     data: termData,
     isLoading: loadingTerm,
     error: errorTerm,
-  } = useSWRImmutable(domainCode ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json` : null, swrFetcher);
+  } = useSWRImmutable(
+    domainCode
+      ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/term/${domainCode}.json`
+      : null,
+    swrFetcher
+  );
 
   const { data: agreementData, error: errorAgreement } = useSWRImmutable(
-    domainCode === "NAT_2410" ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/agreement/${domainCode}.json` : null,
+    domainCode === "NAT_2410"
+      ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/s25/jsons/agreement/${domainCode}.json`
+      : null,
     swrFetcher
   );
 

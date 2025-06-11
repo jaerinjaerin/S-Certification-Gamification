@@ -97,7 +97,7 @@ export async function GET(request: NextRequest, props: Props) {
       };
 
       if (authType === AuthType.SUMTOTAL) {
-        whereClause.active = true;
+        whereClause.splusUserActive = true;
       }
 
       const quizSet = await prisma.quizSet.findFirst({
@@ -145,7 +145,7 @@ export async function GET(request: NextRequest, props: Props) {
         throw new ApiError(404, "NOT_FOUND", "Quiz set not found");
       }
 
-      if (!quizSet.active) {
+      if (!quizSet.splusUserActive) {
         throw new ApiError(403, "FORBIDDEN", "Quiz set is not active");
       }
 
