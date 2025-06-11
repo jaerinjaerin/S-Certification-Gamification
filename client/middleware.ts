@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes("/logout") ||
     // pathname.includes("/test") ||
     pathname.includes("/home") ||
-    pathname.includes("/register") ||
+    // pathname.includes("/register") ||
     pathname.includes("/site") ||
     pathname.includes("/not-ready") ||
     pathname.includes("/invalid-access")
@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const campaignName = segments[0];
-  const campaignQuizSetPath = segments[1];
+  const campaignQuizSetPath = segments[1] === "register" ? null : segments[1];
 
   // if (campaignName.includes("login")) {
   //   return NextResponse.redirect(new URL("/error/not-found", request.url));
@@ -52,6 +52,7 @@ export async function middleware(request: NextRequest) {
   /**
    * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
    */
+  console.log("🚀 ~ middleware ~ campaignQuizSetPath:", session, pathname);
   if (!session && !pathname.includes("/login")) {
     const url = campaignQuizSetPath
       ? `${basePath}/${campaignName}/${campaignQuizSetPath}/login${search}`
