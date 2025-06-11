@@ -464,13 +464,21 @@ export async function getQuizSets(
       languageId: language.id,
     };
 
-    if (authType === AuthType.SUMTOTAL) {
-      whereClause.splusUserActive = true;
-    }
+    // if (authType === AuthType.SUMTOTAL) {
+    //   whereClause.splusUserActive = true;
+    // }
 
     const quizSets = await prisma.quizSet.findMany({
-      where: whereClause,
+      where: {
+        ...whereClause,
+        ...(authType === AuthType.SUMTOTAL && {
+          meta: {
+            sPlusUserActive: true,
+          },
+        }),
+      },
       include: {
+        meta: true,
         domain: {
           include: {
             subsidiary: {
