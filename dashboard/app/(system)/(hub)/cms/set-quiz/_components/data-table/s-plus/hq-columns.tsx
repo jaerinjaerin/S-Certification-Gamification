@@ -108,7 +108,11 @@ export const hqColumns: ColumnDef<GroupedQuizSet>[] = [
     accessorKey: 'url',
     header: 'URL',
     cell: ({ row }) => {
-      if (row.original.uiLanguage && row.original.quizSet) {
+      if (
+        row.original.uiLanguage &&
+        row.original.quizSet &&
+        row.original.quizSet.meta?.sPlusUserActive
+      ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
         return (
           <div className="flex gap-[0.438rem]">
