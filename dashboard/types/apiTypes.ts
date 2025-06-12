@@ -11,6 +11,7 @@ import {
   QuestionOption,
   QuizBadge,
   QuizSet,
+  QuizSetMeta,
   QuizStage,
   Region,
   Subsidiary,
@@ -25,6 +26,7 @@ export interface QuizSetEx extends QuizSet {
       region: Region;
     };
   };
+  meta: QuizSetMeta | null;
   campaign: CampaignEx;
   language: Language | null;
   quizStages: QuizStageEx[];

@@ -34,6 +34,11 @@ export async function handleDownloadQuizSet(data: QuizSetResponse | undefined) {
   // 파일들을 ZIP에 추가
   for (const file of files) {
     const response = await fetch(file.url);
+    console.log('Downloading file:', response);
+    if (!response.ok) {
+      toast.error(`Failed to download file: ${file.name}`);
+      continue;
+    }
     const blob = await response.blob();
     zip.file(file.name, blob);
   }

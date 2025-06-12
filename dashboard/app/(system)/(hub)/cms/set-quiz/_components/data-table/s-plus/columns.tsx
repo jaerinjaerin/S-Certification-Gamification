@@ -32,7 +32,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     cell: ({ row }) => {
       return (
         <StatusCircle
-          isReady={row.original.quizSet?.splusUserActive ?? false}
+          isReady={row.original.quizSet?.meta?.sPlusUserActive ?? false}
         />
       );
     },
@@ -134,7 +134,7 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
       if (
         row.original.uiLanguage &&
         row.original.quizSet &&
-        row.original.quizSet.splusUserActive
+        row.original.quizSet.meta?.sPlusUserActive
       ) {
         const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/${row.original.campaign.slug}/${row.original.domain.code}_${row.original.uiLanguage.code}`;
 
@@ -332,41 +332,6 @@ export const columns: ColumnDef<GroupedQuizSet>[] = [
     sortingFn: 'auto',
   },
 ];
-
-const handleQuizSetActive = async (
-  campaignId: string,
-  quizSetId: string,
-  active: boolean
-): Promise<boolean | undefined> => {
-  console.log(
-    `handleQuizSetActive called with campaignId: ${campaignId}, quizSetId: ${quizSetId}, active: ${active}`
-  );
-  try {
-    const response = await fetch(`/api/cms/quizset/${quizSetId}/active`, {
-      method: 'POST',
-      body: JSON.stringify({ quizSetId: quizSetId, active: !active }),
-    });
-    if (!response.ok) {
-      toast.error(`Error updating quiz set status: ${response.statusText}`);
-      throw new Error(`Error updating quiz set status: ${response.statusText}`);
-    }
-    mutate(
-      (key) =>
-        typeof key === 'string' &&
-        key.includes(`quizset?campaignId=${campaignId}`)
-    );
-    toast.success(
-      `Quiz set ${active ? 'deactivated' : 'activated'} successfully`
-    );
-
-    const data = await response.json();
-    const updatedQuizSet = data.result;
-    return updatedQuizSet.active;
-  } catch (error: any) {
-    toast.error('Error deleting quiz set:', error);
-    console.error('Error deleting quiz set:', error);
-  }
-};
 
 const handleQuizSetDelete = async (quizSetId: string, campaignId: string) => {
   try {

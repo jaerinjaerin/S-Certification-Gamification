@@ -490,7 +490,13 @@ export async function POST(request: NextRequest) {
           jobCodes: jobCodes,
           createrId: session?.user?.id ?? '',
           updaterId: session?.user?.id,
-          splusUserActive: false,
+          // splusUserActive: false,
+        },
+      });
+      await prisma.quizSetMeta.create({
+        data: {
+          quizSetId: quizSet.id,
+          sPlusUserActive: false,
         },
       });
     } else {
@@ -900,6 +906,7 @@ export async function GET(request: Request) {
       },
       include: {
         language: true,
+        meta: true,
         // quizStages: {
         //   include: {
         //     badgeImage: true,

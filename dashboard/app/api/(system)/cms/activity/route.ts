@@ -240,16 +240,36 @@ export async function POST(request: NextRequest) {
 
         if (quizSets.length > 0) {
           quizSets.forEach(async (quizSet) => {
-            await prisma.quizSet.update({
+            const quizSetMeta = await prisma.quizSetMeta.findFirst({
               where: {
-                id: quizSet.id,
-              },
-              data: {
-                splusUserActive: sPlusUserActive === '1',
+                quizSetId: quizSet.id,
               },
             });
+            if (!quizSetMeta) {
+              await prisma.quizSetMeta.create({
+                data: {
+                  quizSetId: quizSet.id,
+                  sPlusUserActive: sPlusUserActive === '1',
+                },
+              });
+            } else {
+              await prisma.quizSetMeta.update({
+                where: {
+                  id: quizSetMeta.id,
+                },
+                data: {
+                  quizSetId: quizSet.id,
+                  sPlusUserActive: sPlusUserActive === '1',
+                },
+              });
+            }
           });
         }
+      } else {
+        failures.push({
+          message: `${data.domainCode}, ${data.SPlusUserActive}: SPlusUserActive was not set to 0 or 1`,
+          code: ERROR_CODES.SPLUSUSERACTIVE_ERROR,
+        });
       }
 
       // if (data.FF_FirstActivityID && data.FF_FirstBadgeImage != null) {
