@@ -217,7 +217,8 @@ const DownloadManualButton = () => {
   const handleDownloadFile = async () => {
     setIsDownloading(true);
     // const FILE_NAME = `Admin_Manual.pptx`;
-    const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
+    // const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
+    const FILE_NAME = `S_Certification_Admin_Manual.pdf`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
     await handleDownload(FILE_NAME, DOWNLOAD_URL);
     setIsDownloading(false);
