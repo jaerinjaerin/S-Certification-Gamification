@@ -674,14 +674,14 @@ export async function POST(request: NextRequest) {
 
         for (let j = 0; j < questionJson.options.length; j++) {
           const option = questionJson.options[j];
-          await prisma.questionOption.findFirst({
-            where: {
-              questionId: question.id,
-              order: j,
-              languageId: language.id,
-              quizSetId: quizSet.id,
-            },
-          });
+          // await prisma.questionOption.findFirst({
+          //   where: {
+          //     questionId: question.id,
+          //     order: j,
+          //     languageId: language.id,
+          //     quizSetId: quizSet.id,
+          //   },
+          // });
           await prisma.questionOption.create({
             data: {
               text: option.text.toString(),
