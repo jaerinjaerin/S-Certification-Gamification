@@ -38,7 +38,7 @@ export function UploadImageFileModal({
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const BADGE_MAX_SIZE = 80 * 1024; // 90kb
+  const BADGE_MAX_SIZE = 70 * 1024; // 90kb
   const CHARACTER_MAX_SIZE = 200 * 1024; // 200kb
 
   // const MAX_WIDTHS = {
