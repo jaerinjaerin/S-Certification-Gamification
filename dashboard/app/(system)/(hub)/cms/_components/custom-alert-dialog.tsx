@@ -53,7 +53,7 @@ export function CustomAlertDialog({
           <AlertDialogTitle className="text-base font-medium text-left">
             {title}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-size-14px text-zinc-500 text-left">
+          <AlertDialogDescription className="text-size-14px text-zinc-500 text-left whitespace-pre">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
