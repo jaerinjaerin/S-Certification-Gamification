@@ -34,7 +34,10 @@ export default async function SumtotalUserLayout({ children, params: { campaign_
   const normalizedLanguageCode = languageCode.replace(/^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/, "$1");
   const locale = await mapBrowserLanguageToLocale(normalizedLanguageCode, campaign_name);
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
+
+  console.log(campaign_name, locale);
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
+  console.log(translatedMessages);
 
   return (
     <div>
