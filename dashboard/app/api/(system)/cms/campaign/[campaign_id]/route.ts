@@ -218,6 +218,30 @@ export async function DELETE(request: NextRequest) {
     //   },
     // });
 
+    await prisma.question.deleteMany({
+      where: {
+        quizStage: {
+          quizSet: {
+            campaignId: campaign.id,
+          },
+        },
+      },
+    });
+
+    await prisma.quizStage.deleteMany({
+      where: {
+        quizSet: {
+          campaignId: campaign.id,
+        },
+      },
+    });
+
+    await prisma.quizSet.deleteMany({
+      where: {
+        campaignId: campaign.id,
+      },
+    });
+
     await prisma.campaign.delete({
       where: {
         id: campaign.id,

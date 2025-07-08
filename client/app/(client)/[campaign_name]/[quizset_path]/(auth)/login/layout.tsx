@@ -54,7 +54,10 @@ export default async function SumtotalUserLayout({
     campaign_name
   );
   const URL_FOR_TRANSLATED_JSON = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${campaign_name}/messages/${locale}.json`;
+
+  console.log(campaign_name, locale);
   const translatedMessages = await fetchContent(URL_FOR_TRANSLATED_JSON);
+  console.log(translatedMessages);
 
   return (
     <div>

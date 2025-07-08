@@ -22,7 +22,14 @@ export default function CodeInputDialog({ state, dispatch, isArabic, count, path
     const searchMessage = translation.rich(searchKey, {
       address: (children) => (
         <>
-          <span className="text-blue-500">{children}</span>
+          <span
+            className="text-blue-500"
+            style={{
+              wordBreak: "break-word",
+            }}
+          >
+            {children}
+          </span>
           <br />
         </>
       ),

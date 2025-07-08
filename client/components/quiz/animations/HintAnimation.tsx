@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 const ANIMATION_PROPS = {
   initial: { translateX: "-100%" },
-  animate: { translateX: "160%" },
+  animate: { translateX: "300%" },
   transition: {
     duration: 1.5,
     repeat: Infinity,
@@ -21,7 +21,7 @@ function HighlightMotionEffect({ children }: { children: React.ReactNode }) {
 function HintOverlay() {
   return (
     <div className="h-full">
-      <svg width="201" height="100%" viewBox="0 0 201 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+      <svg width="100%" height="100%" viewBox="0 0 201 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.741943" width="200" height="100%" transform="rotate(0.285261 0.741943 0)" fill="url(#hintGradient)" />
         <defs>
           <linearGradient id="hintGradient" x1="175.172" y1="34.132" x2="90.7222" y2="110.213" gradientUnits="userSpaceOnUse">

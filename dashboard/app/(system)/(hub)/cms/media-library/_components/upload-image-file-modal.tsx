@@ -38,14 +38,14 @@ export function UploadImageFileModal({
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const BADGE_MAX_SIZE = 56 * 1024; // 56kb
+  const BADGE_MAX_SIZE = 70 * 1024; // 90kb
   const CHARACTER_MAX_SIZE = 200 * 1024; // 200kb
 
-  const MAX_WIDTHS = {
-    badge: 300,
-    character: 960,
-    background: 960,
-  };
+  // const MAX_WIDTHS = {
+  //   badge: 300,
+  //   character: 960,
+  //   background: 960,
+  // };
 
   // 연필 클릭 에디트 모드일 때 데이터에 저장된 URL을 파일처럼 적용
   useEffect(() => {
@@ -67,40 +67,40 @@ export function UploadImageFileModal({
     };
   }, [preview, id]);
 
-  const getDimensionErrorMessage = (group: MediaGroupName) => {
-    switch (group) {
-      case 'badge':
-        return `Maximum Badge image width: ${MAX_WIDTHS.badge}px`;
-      case 'character':
-        return `Maximum Character image width: ${MAX_WIDTHS.character}px`;
-      case 'background':
-        return `Maximum Background image width: ${MAX_WIDTHS.background}px`;
-      default:
-        return 'Invalid image dimensions';
-    }
-  };
+  // const getDimensionErrorMessage = (group: MediaGroupName) => {
+  //   switch (group) {
+  //     case 'badge':
+  //       return `Maximum Badge image width: ${MAX_WIDTHS.badge}px`;
+  //     case 'character':
+  //       return `Maximum Character image width: ${MAX_WIDTHS.character}px`;
+  //     case 'background':
+  //       return `Maximum Background image width: ${MAX_WIDTHS.background}px`;
+  //     default:
+  //       return 'Invalid image dimensions';
+  //   }
+  // };
 
-  const checkImageDimensions = (file: File): Promise<boolean> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      img.onload = () => {
-        URL.revokeObjectURL(img.src);
-        resolve(img.width <= MAX_WIDTHS[group]);
-      };
-    });
-  };
+  // const checkImageDimensions = (file: File): Promise<boolean> => {
+  //   return new Promise((resolve) => {
+  //     const img = new Image();
+  //     img.src = URL.createObjectURL(file);
+  //     img.onload = () => {
+  //       URL.revokeObjectURL(img.src);
+  //       resolve(img.width <= MAX_WIDTHS[group]);
+  //     };
+  //   });
+  // };
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      for (const file of acceptedFiles) {
-        const isValidDimension = await checkImageDimensions(file);
-        if (!isValidDimension) {
-          setErrors([getDimensionErrorMessage(group)]);
-          setIsOpen(true);
-          return;
-        }
-      }
+      // for (const file of acceptedFiles) {
+      // const isValidDimension = await checkImageDimensions(file);
+      // if (!isValidDimension) {
+      //   setErrors([getDimensionErrorMessage(group)]);
+      //   setIsOpen(true);
+      //   return;
+      // }
+      // }
 
       setFiles(
         acceptedFiles.map((file) =>
@@ -117,7 +117,8 @@ export function UploadImageFileModal({
         case 'file-invalid-type':
           return 'The uploaded file does not match the required format.';
         case 'file-too-large':
-          return 'File size is too large';
+          return 'Some files exceed the maximum size limit.\n- Badge must be 70KB or less\n- Other Images must be 200KB or less';
+
         case 'too-many-files':
           return 'Only one file can be uploaded.';
         default:

@@ -1,17 +1,18 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
+import { LoadingFullScreen } from '@/components/loader';
 import { useStateVariables } from '@/components/provider/state-provider';
-import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
-import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
+import { Button } from '@/components/ui/button';
+import { logout } from '@/lib/auth';
 import dayjs from 'dayjs';
 import { Pen, Trash2 } from 'lucide-react';
-import { LoadingFullScreen } from '@/components/loader';
-import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
-import { handleDownload } from '../../(hub)/cms/_utils/utils';
+import { toast } from 'sonner';
 import { mutate } from 'swr';
-import { logout } from '@/lib/auth';
+import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
+import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
+import { handleDownload } from '../../(hub)/cms/_utils/utils';
+import { deleteCampaign } from '../../(hub)/cms/set-quiz/actions/deleteCampaignAction';
 
 export default function CertificationClientComponent() {
   const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
@@ -106,17 +107,23 @@ function CertificationListItem({ campaign }: { campaign: Campaign }) {
   const handleDeleteCampaign = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/cms/campaign/${campaign.id}`, {
-        method: 'DELETE',
-        body: JSON.stringify({
-          campaignId: campaign.id,
-        }),
-      });
+      // const response = await fetch(`/api/cms/campaign/${campaign.id}`, {
+      //   method: 'DELETE',
+      //   body: JSON.stringify({
+      //     campaignId: campaign.id,
+      //   }),
+      // });
+      const result = await deleteCampaign(campaign.id);
 
-      if (!response.ok) {
+      if (!result.success) {
         toast.error('Failed to delete campaign');
         return;
       }
+
+      // if (!response.ok) {
+      //   toast.error('Failed to delete campaign');
+      //   return;
+      // }
 
       // const deletedCampaign = campaigns?.filter((c) => c.id === campaign.id)[0];
 
@@ -217,7 +224,8 @@ const DownloadManualButton = () => {
   const handleDownloadFile = async () => {
     setIsDownloading(true);
     // const FILE_NAME = `Admin_Manual.pptx`;
-    const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
+    // const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
+    const FILE_NAME = `S_Certification_Admin_Manual.pdf`;
     const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
     await handleDownload(FILE_NAME, DOWNLOAD_URL);
     setIsDownloading(false);
