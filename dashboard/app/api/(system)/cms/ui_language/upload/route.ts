@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
     // file upload
     // =============================================
     const s3Client = getS3Client();
-    console.log('file.name: ', file.name);
-    const destinationKey = `certification/${campaign.slug}/messages/${file.name}`;
+    const safeFileName = fileName.replace(/\s+/g, '');
+    const destinationKey = `certification/${campaign.slug}/messages/${safeFileName}`;
     // const destinationKey = `certification/${campaign.slug}/cms/upload/messages/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)
@@ -157,6 +157,8 @@ export async function POST(request: NextRequest) {
           path: `/${destinationKey}`,
         },
       });
+
+      console.log('uploadedFile: ', uploadedFile);
     } else {
       uploadedFile = await prisma.uploadedFile.create({
         data: {
