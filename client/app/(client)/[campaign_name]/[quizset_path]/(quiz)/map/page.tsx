@@ -146,7 +146,7 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
 
       <ResultAlertDialog
         open={!!needSignOut}
-        description={translation("need_sign_out")}
+        description={translation("alert_relogin_required")}
         onConfirm={() => {
           stopLoading();
           processSignOut();
