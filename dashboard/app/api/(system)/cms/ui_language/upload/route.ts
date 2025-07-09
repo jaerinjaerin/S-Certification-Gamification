@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
     // file upload
     // =============================================
     const s3Client = getS3Client();
-    const safeFileName = fileName.replace(/\s+/g, '');
-    const destinationKey = `certification/${campaign.slug}/messages/${safeFileName}`;
+    console.log('file.name: ', file.name);
+    const destinationKey = `certification/${campaign.slug}/messages/${file.name}`;
     // const destinationKey = `certification/${campaign.slug}/cms/upload/messages/${file.name}`;
 
     // 📌 S3 업로드 실행 (PutObjectCommand 사용)

@@ -18,12 +18,13 @@ export async function invalidateCache(distributionId: string, paths: string[]) {
             region: 'us-east-1',
           });
 
+    const sanitizedPaths = paths.map((p) => p.replace(/\s+/g, ''));
     const command = new CreateInvalidationCommand({
       DistributionId: distributionId,
       InvalidationBatch: {
         Paths: {
-          Quantity: paths.length,
-          Items: paths,
+          Quantity: sanitizedPaths.length,
+          Items: sanitizedPaths,
         },
         CallerReference: `${Date.now()}`, // 고유한 요청 ID (매번 다른 값 필요)
       },
