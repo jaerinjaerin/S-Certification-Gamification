@@ -2,10 +2,7 @@ import { getQuizLog } from "@/app/actions/log-actions";
 import { getQuizSet } from "@/app/actions/quiz-actions";
 import { auth } from "@/auth";
 import RefreshButton from "@/components/error/refresh-button";
-import {
-  getServiceLanguageCode,
-  mapBrowserLanguageToLocale,
-} from "@/i18n/locale";
+import { getServiceLanguageCode, mapBrowserLanguageToLocale } from "@/i18n/locale";
 import { QuizProvider } from "@/providers/quizProvider";
 import { fetchUserInfo } from "@/services/userService";
 import { ApiResponseV2, QuizSetEx } from "@/types/apiTypes";
@@ -54,60 +51,35 @@ export default async function QuizLayout({
     const { languageCode } = codes;
 
     // 패턴에 맞는 형식으로 languageCode 변환 (fr-FR-TN -> fr-FR)
-    const normalizedLanguageCode = languageCode.replace(
-      /^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/,
-      "$1"
-    );
+    const normalizedLanguageCode = languageCode.replace(/^([A-Za-z]{2}-[A-Za-z]{2})-([a-zA-Z]{2})$/, "$1");
 
-    locale = await mapBrowserLanguageToLocale(
-      normalizedLanguageCode,
-      params.campaign_name
-    );
+    locale = await mapBrowserLanguageToLocale(normalizedLanguageCode, params.campaign_name);
     // console.log("QuizSetLoginLayout locale:", locale);
   }
 
   const url = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/${params.campaign_name}/messages/${locale}.json`;
-  const messages = await fetch(url)
+  const messages = await fetch(url, { cache: "no-cache" })
     .then((res) => res.json())
-    .catch((error) =>
-      console.error("get message error", locale, params.campaign_name, error)
-    );
+    .catch((error) => console.error("get message error", locale, params.campaign_name, error));
 
   // ================== Quiz Log Setup ==================
   const quizLogResponse = await getQuizLog(userId, params.campaign_name);
 
-  if (
-    quizLogResponse.status != null &&
-    quizLogResponse.status >= 400 &&
-    quizLogResponse.status < 500
-  ) {
-    console.error(
-      "Client error while fetching quiz log",
-      params.campaign_name,
-      quizLogResponse
-    );
+  if (quizLogResponse.status != null && quizLogResponse.status >= 400 && quizLogResponse.status < 500) {
+    console.error("Client error while fetching quiz log", params.campaign_name, quizLogResponse);
 
-    Sentry.captureMessage(
-      `Client error while fetching quiz log: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
-    );
+    Sentry.captureMessage(`Client error while fetching quiz log: ${userId}, ${params.campaign_name}, ${params.quizset_path}`);
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
   if (quizLogResponse.status != null && quizLogResponse.status >= 500) {
-    console.error(
-      "Server error while fetching quiz log",
-      params.campaign_name,
-      quizLogResponse
-    );
-    Sentry.captureMessage(
-      `Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`
-    );
+    console.error("Server error while fetching quiz log", params.campaign_name, quizLogResponse);
+    Sentry.captureMessage(`Server error while fetching quiz log: ${params.campaign_name}, ${quizLogResponse}`);
     return <RefreshButton />;
   }
 
   const quizLog: UserQuizLog | null = quizLogResponse.item?.quizLog || null;
-  const quizStageLogs: UserQuizStageLog[] | null =
-    quizLogResponse.item?.quizStageLogs || null;
+  const quizStageLogs: UserQuizStageLog[] | null = quizLogResponse.item?.quizStageLogs || null;
 
   // ================== Check User Details(Guest) ==================
   if (session?.user.authType === "GUEST") {
@@ -133,52 +105,27 @@ export default async function QuizLayout({
   );
 
   if (quizResponse.status === 404) {
-    console.error(
-      "Quiz set not found",
-      userId,
-      params.campaign_name,
-      params.quizset_path
-    );
-    Sentry.captureMessage(
-      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
-    );
+    console.error("Quiz set not found", userId, params.campaign_name, params.quizset_path);
+    Sentry.captureMessage(`Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`);
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
-  if (
-    quizResponse.status != null &&
-    quizResponse.status >= 400 &&
-    quizResponse.status < 500
-  ) {
+  if (quizResponse.status != null && quizResponse.status >= 400 && quizResponse.status < 500) {
     redirect("/error/not-found");
   }
 
   // 🚀 500번대 에러면 클라이언트에서 재시도 가능하도록 Fallback을 제공
   if (quizResponse.status != null && quizResponse.status >= 500) {
-    console.error(
-      "Server error while fetching quiz set",
-      params.quizset_path,
-      quizResponse
-    );
-    Sentry.captureMessage(
-      `Server error while fetching quiz set: ${params.campaign_name}`
-    );
+    console.error("Server error while fetching quiz set", params.quizset_path, quizResponse);
+    Sentry.captureMessage(`Server error while fetching quiz set: ${params.campaign_name}`);
     return <RefreshButton />;
   }
 
   const quizSet = quizResponse.result?.item;
   // console.log("QuizLayout quizSet", quizSet);
   if (!quizSet) {
-    console.error(
-      "Quiz set not found",
-      quizResponse,
-      params.campaign_name,
-      params.quizset_path,
-      userId
-    );
-    Sentry.captureMessage(
-      `Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`
-    );
+    console.error("Quiz set not found", quizResponse, params.campaign_name, params.quizset_path, userId);
+    Sentry.captureMessage(`Quiz set not found: ${userId}, ${params.campaign_name}, ${params.quizset_path}`);
     redirect(`/${params.campaign_name}/not-ready`);
   }
 
@@ -189,11 +136,7 @@ export default async function QuizLayout({
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
-      <NextIntlClientProvider
-        timeZone={timeZone}
-        messages={messages}
-        locale={locale}
-      >
+      <NextIntlClientProvider timeZone={timeZone} messages={messages} locale={locale}>
         <QuizProvider
           campaignName={params.campaign_name}
           quizSetPath={params.quizset_path}
