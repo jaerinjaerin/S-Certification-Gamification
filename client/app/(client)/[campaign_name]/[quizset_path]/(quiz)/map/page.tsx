@@ -2,36 +2,31 @@
 
 // React
 import { Fragment, useEffect, useRef, useState } from "react";
-
-// Next
-import { useRouter } from "next/navigation";
 import { getSession, signOut } from "next-auth/react";
 
-// Next-intl
-import { useTranslations } from "next-intl";
-
+import { AuthType } from "@prisma/client";
 // Components
 import Connection from "@/components/map/connection";
+import EmailTestButton from "@/components/button/email-test-button";
 import Gradient from "@/components/map/gradient";
-import { StageMarker } from "@/components/map/stage-marker";
-import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
 import PolicyRenderer from "@/components/policy-renderer";
-import useLoader from "@/components/ui/loader";
-
-// Hooks
-import useGAPageView from "@/core/monitoring/ga/usePageView";
-
-// Providers
-import { useQuiz } from "@/providers/quizProvider";
-
 // Types
 import { QuizStageEx } from "@/types/apiTypes";
-import { AuthType } from "@prisma/client";
-
+import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+import { StageMarker } from "@/components/map/stage-marker";
+import TutorialGuidePopup from "@/components/map/tutorial-guide-popup";
 // Utils
 import { cn } from "@/utils/utils";
 import { extractCodesFromPath } from "@/utils/pathUtils";
-import { ResultAlertDialog } from "@/components/dialog/result-alert-dialog";
+// Hooks
+import useGAPageView from "@/core/monitoring/ga/usePageView";
+import useLoader from "@/components/ui/loader";
+// Providers
+import { useQuiz } from "@/providers/quizProvider";
+// Next
+import { useRouter } from "next/navigation";
+// Next-intl
+import { useTranslations } from "next-intl";
 
 export default function QuizMap({ params }: { params: { campaign_name: string; quizset_path: string } }) {
   useGAPageView();
@@ -109,6 +104,7 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
+      <EmailTestButton />
       <div className=" w-full flex flex-col pr-[21px] pl-[39px] relative z-20">
         <TutorialGuidePopup />
         <div className="flex flex-col font-bold">

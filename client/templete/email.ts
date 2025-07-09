@@ -2,7 +2,7 @@ export const getLoginEmailTemplete = (
   galaxyAIExpert: string,
   emailVerifyCodeDescription1: string,
   emailVerifyCodeDescription2: string,
-  emailBadgeDescription4: string
+  emailBadgeDescription4: string,
 ) => {
   return `
 <!DOCTYPE html>
@@ -226,7 +226,7 @@ export const getBadgeEmailTemplete = (
   emailBadgeDate: string,
   emailBadgeDescriptionA: string,
   emailBadgeDescriptionB: string,
-  emailBadgeDescriptionC: string
+  emailBadgeDescriptionC: string,
 ) => {
   return `<!DOCTYPE html>
 <html style="font-weight: 400">
@@ -303,7 +303,7 @@ export const getBadgeEmailTemplete = (
                   style="
                     font-weight: 700;
                     float: left;
-                    font-size: 38px;
+                    font-size: 24px;
                     line-height: 42px;
                     letter-spacing: -1px;
                     margin: 0;
@@ -333,29 +333,25 @@ export const getBadgeEmailTemplete = (
               <div style="width: 100%">
                 <div
                   style="
-                    margin: 70px auto;
+                    margin: 70px auto 17px;
                     text-align: center;
                     background-image: url(${badgeImageUrl});
                     background-size: cover;
                     background-repeat: no-repeat;
                     background-position: center;
-                    width: 148px;
-                    height: 148px;
+                    width: 180px;
+                    height: 180px;
                   "
                 ></div>
-                <h3 class="colored-black" style="text-align: center">
+                <h3 class="colored-black" style="text-align: center; margin:0;">
                   S+ ${galaxyAIExpert}
                 </h3>
-                <h5 class="colored-black" style="text-align: center">
+                <h3 class="colored-black" style="text-align: center; margin:0; font-weight: 400;">
                   ${emailBadgeDate}
-                </h5>
+                </h3>
               </div>
 
-              <div
-                class="interface"
-                style="font-weight: 400; margin-bottom: 30px"
-              >
-                <p
+             <h1
                   class="colored-black"
                   style="
                     font-weight: normal;
@@ -369,8 +365,8 @@ export const getBadgeEmailTemplete = (
                   "
                 >
                   ${emailBadgeDescriptionA}
-                </p>
-                <p
+                </h1>
+                <h1
                   class="colored-black"
                   style="
                     font-weight: normal;
@@ -384,8 +380,7 @@ export const getBadgeEmailTemplete = (
                   "
                 >
                   ${emailBadgeDescriptionB}
-                </p>
-              </div>
+                </h1>
             </div>
           </div>
         </td>
