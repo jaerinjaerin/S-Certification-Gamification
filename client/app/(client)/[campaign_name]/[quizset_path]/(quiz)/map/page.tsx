@@ -7,7 +7,6 @@ import { getSession, signOut } from "next-auth/react";
 import { AuthType } from "@prisma/client";
 // Components
 import Connection from "@/components/map/connection";
-import EmailTestButton from "@/components/button/email-test-button";
 import Gradient from "@/components/map/gradient";
 import PolicyRenderer from "@/components/policy-renderer";
 // Types
@@ -104,7 +103,6 @@ export default function QuizMap({ params }: { params: { campaign_name: string; q
         backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
       }}
     >
-      <EmailTestButton />
       <div className=" w-full flex flex-col pr-[21px] pl-[39px] relative z-20">
         <TutorialGuidePopup />
         <div className="flex flex-col font-bold">

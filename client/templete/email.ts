@@ -279,23 +279,17 @@ export const getBadgeEmailTemplete = (
       "
     >
       <tr style="font-weight: 400">
-        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0">
-          <div style="font-weight: 400; font-size: 14px; padding: 23px 0">
-            <div
-              style="
-                font-weight: 400;
-                max-width: 600px;
-                text-align: left;
-                margin: 0 auto;
-                padding: 0 20px;
-              "
-            >
+        <td style="font-weight: 400; text-align: center; margin: 0; padding: 0;">
+          <div style="font-weight: 400; font-size: 14px; padding: 0;">
+            <div style="font-weight: 400; max-width: 600px; text-align: left; margin: 0 auto; padding: 0;">
               <div
                 style="
                   font-weight: 600;
                   display: inline-block;
                   width: 100%;
                   align-items: center;
+                  padding: 80px 20px 0;
+                  margin: 0;
                 "
               >
                 <h1
@@ -326,14 +320,14 @@ export const getBadgeEmailTemplete = (
               max-width: 600px;
               text-align: left;
               margin: 0 auto;
-              padding: 0 20px;
+              padding: 0 0;
             "
           >
-            <div class="inner" style="font-weight: 400; padding: 30px 0 20px">
-              <div style="width: 100%">
+            <div class="inner" style="font-weight: 400; padding:0 20px 80px;">
+              <div style="width: 100%; padding:0 0 30px;">
                 <div
                   style="
-                    margin: 70px auto 17px;
+                    margin: 30px auto 17px;
                     text-align: center;
                     background-image: url(${badgeImageUrl});
                     background-size: cover;
@@ -351,36 +345,45 @@ export const getBadgeEmailTemplete = (
                 </h3>
               </div>
 
-             <h1
+              <div
+                style="
+                  font-weight: 600;
+                  display: inline-block;
+                  width: 100%;
+                  align-items: center;
+                "
+              >
+                <p
                   class="colored-black"
                   style="
-                    font-weight: normal;
-                    font-family: 'SamsungSharpSans', sans-serif;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                    padding-bottom: 5px;
+                    font-weight: 400;
+                    float: left;
+                    font-size: 16px;
+                    letter-spacing: -1px;
+                    margin: 0;
+                    padding: 0;
+                    display: block;
+                    width: 100%;
                   "
                 >
                   ${emailBadgeDescriptionA}
-                </h1>
-                <h1
+                </p>
+                 <p
                   class="colored-black"
                   style="
-                    font-weight: normal;
-                    font-family: 'SamsungSharpSans', sans-serif;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                    color: black;
-                    border-radius: 4px;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
+                    font-weight: 400;
+                    float: left;
+                    font-size: 16px;
+                    letter-spacing: -1px;
+                    margin: 0;
+                    padding: 0;
+                    display: block;
+                    width: 100%;
                   "
                 >
                   ${emailBadgeDescriptionB}
-                </h1>
+                </p>
+              </div>
             </div>
           </div>
         </td>
