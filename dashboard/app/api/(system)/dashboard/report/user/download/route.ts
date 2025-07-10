@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
         channelSegment: log.channelSegmentId
           ? getChannelSegmentName(log.channelSegmentId)
           : '',
-        channelName: log.channelName ?? '',
+        channelName: log.authType === AuthType.GUEST ? log.channelName : '',
       };
     });
 
