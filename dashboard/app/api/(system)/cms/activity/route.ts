@@ -132,6 +132,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // FF_FirstBadgeImage 이미지가 하나라도 설정되어 있지 않은 경우
+    const notSetFirstBadge = result.data.some(
+      (data) => data.FF_FirstBadgeImage == null
+    );
+    if (notSetFirstBadge) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            message: 'FF_FirstBadgeImage is not set for one or more domains',
+            errorCode: ERROR_CODES.UNKNOWN,
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    // const hasBadge = result.data.some(
+    //     (data) => data.FF_SecondBadgeImage != null
+    //   );
+
     const ffSecondBadgeStageIndex = campaign.settings?.ffSecondBadgeStageIndex;
     console.log('ffSecondBadgeStageIndex: ', ffSecondBadgeStageIndex);
     if (ffSecondBadgeStageIndex == null) {
