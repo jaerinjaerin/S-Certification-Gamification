@@ -128,6 +128,8 @@ const UserProgress = () => {
         }
       });
 
+      console.log('엑셀 다운로드 시작:', period, condition);
+
       const base64 = await exportBadgeLogExcel({
         condition,
         period,
@@ -135,6 +137,8 @@ const UserProgress = () => {
           campaignId: campaign.id,
         },
       });
+
+      console.log('엑셀 다운로드 완료:', base64);
 
       const byteArray = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
       const blob = new Blob([byteArray], {
