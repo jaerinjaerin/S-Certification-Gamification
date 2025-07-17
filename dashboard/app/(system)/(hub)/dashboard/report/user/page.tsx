@@ -22,9 +22,12 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import saveAs from 'file-saver';
 import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import useSWR from 'swr';
+import { exportBadgeLogExcel } from './actions/export-badge-log-base64';
+import { exportFailedBadgeLogBase64 } from './actions/export-failed-badge-log-base64';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -92,27 +95,116 @@ const UserProgress = () => {
     }
   };
 
-  const onDownloadBadgeLog = () => {
-    if (loadingBadgeLog) {
-      return;
-    }
-    if (campaign) {
-      const queryString = searchParams.toString();
-      const url = `/api/dashboard/report/badge/download${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
-      window.location.href = url;
+  const onDownloadBadgeLog = async () => {
+    try {
+      if (loadingBadgeLog) {
+        return;
+      }
+
+      if (campaign == null) {
+        return;
+      }
+
+      setLoadingBadgeLog(true);
+      const query = new URLSearchParams(searchParams.toString());
+
+      const from = query.get('date.from');
+      const to = query.get('date.to');
+
+      if (!from || !to) {
+        console.error('필수 기간 정보가 누락되었습니다.');
+        return;
+      }
+
+      const period = {
+        from: new Date(decodeURIComponent(from)),
+        to: new Date(decodeURIComponent(to)),
+      };
+
+      const condition: Record<string, any> = {};
+      query.forEach((value, key) => {
+        if (!['date.from', 'date.to'].includes(key)) {
+          condition[key] = value;
+        }
+      });
+
+      const base64 = await exportBadgeLogExcel({
+        condition,
+        period,
+        params: {
+          campaignId: campaign.id,
+        },
+      });
+
+      const byteArray = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+      const blob = new Blob([byteArray], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const range = `${period.from.toISOString().split('T')[0]}_to_${
+        period.to.toISOString().split('T')[0]
+      }`;
+      const filename = `badge_log_${range}.xlsx`;
+      saveAs(blob, filename);
+    } catch (err) {
+      console.error('엑셀 다운로드 실패:', err);
+    } finally {
+      setLoadingBadgeLog(false);
     }
   };
 
-  const onDownloadFailedBadgeLog = () => {
+  const onDownloadFailedBadgeLog = async () => {
     if (loadingFailedBadgeLog) {
       return;
     }
-    if (campaign) {
+
+    if (campaign == null) {
+      return;
+    }
+
+    try {
       setLoadingFailedBadgeLog(true);
-      const queryString = searchParams.toString();
-      const url = `/api/dashboard/report/badge/download_failed${queryString ? `?${queryString}&campaign=${campaign?.id}` : `?campaign=${campaign?.id}`}`;
-      window.location.href = url;
-      setLoadingFailedBadgeLog(false);
+
+      const query = new URLSearchParams(searchParams.toString());
+      const from = query.get('date.from');
+      const to = query.get('date.to');
+
+      if (!from || !to) {
+        console.error('기간 정보가 누락되었습니다.');
+        return;
+      }
+
+      const period = {
+        from: new Date(decodeURIComponent(from)),
+        to: new Date(decodeURIComponent(to)),
+      };
+
+      const condition: Record<string, any> = {};
+      query.forEach((value, key) => {
+        if (!['date.from', 'date.to'].includes(key)) {
+          condition[key] = value;
+        }
+      });
+
+      const base64 = await exportFailedBadgeLogBase64({
+        condition,
+        period,
+        params: { campaignId: campaign.id },
+      });
+
+      const byteArray = Uint8Array.from(atob(base64!), (c) => c.charCodeAt(0));
+      const blob = new Blob([byteArray], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const range = `${period.from.toISOString().split('T')[0]}_to_${
+        period.to.toISOString().split('T')[0]
+      }`;
+      saveAs(blob, `badge_failed_log_${range}.xlsx`);
+    } catch (err) {
+      console.error('엑셀 다운로드 실패:', err);
+    } finally {
+      setLoadingFailedBadgeLog(true);
     }
   };
 
@@ -139,7 +231,7 @@ const UserProgress = () => {
       <ChartContainer>
         {isLoading && <LoaderWithBackground />}
         <CardCustomHeaderWithDownload
-          title="Stage Progress"
+          title="setLoadingFailedBadgeLog(true);ge Progress"
           onDownload={onDownload}
         />
         <div className="border rounded-md border-zinc-200">
