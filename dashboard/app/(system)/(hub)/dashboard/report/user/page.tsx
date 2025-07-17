@@ -144,6 +144,7 @@ const UserProgress = () => {
       const range = `${period.from.toISOString().split('T')[0]}_to_${
         period.to.toISOString().split('T')[0]
       }`;
+      console.log('엑셀 다운로드 시작:', range);
       const filename = `badge_log_${range}.xlsx`;
       saveAs(blob, filename);
     } catch (err) {
@@ -231,7 +232,7 @@ const UserProgress = () => {
       <ChartContainer>
         {isLoading && <LoaderWithBackground />}
         <CardCustomHeaderWithDownload
-          title="setLoadingFailedBadgeLog(true);ge Progress"
+          title="Stage Progress"
           onDownload={onDownload}
         />
         <div className="border rounded-md border-zinc-200">
