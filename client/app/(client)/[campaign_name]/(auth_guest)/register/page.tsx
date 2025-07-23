@@ -12,16 +12,20 @@ import LoginButton from "@/components/login/login-button";
 import PolicyRenderer from "@/components/policy-renderer";
 
 // Hooks
+import useLoader from "@/components/ui/loader";
 import useGAPageView from "@/core/monitoring/ga/usePageView";
 import useCheckLocale from "@/hooks/useCheckLocale";
 import useDomainRegionInfo from "@/hooks/useGetDomainInfo";
-import useLoader from "@/components/ui/loader";
 
 // Providers
 import { useCampaign } from "@/providers/campaignProvider";
 
 // Types
-import RegisterForm, { RegisterFormComboboxContainer, RegisterFormContainer, RegisterFormBackground } from "@/components/register";
+import RegisterForm, {
+  RegisterFormBackground,
+  RegisterFormComboboxContainer,
+  RegisterFormContainer,
+} from "@/components/register";
 import { useRegisterForm } from "@/providers/register/register-form-provider";
 
 // Utils
@@ -48,7 +52,8 @@ export default function GuestRegisterPage() {
   } = useRegisterForm();
   const { isArabic } = useCheckLocale();
   const translation = useTranslations();
-  const { openSheet, setOpenSheet, isPolicyAcceptCountry } = useDomainRegionInfo(selectedCountry?.code);
+  const { openSheet, setOpenSheet, isPolicyAcceptCountry } =
+    useDomainRegionInfo(selectedCountry?.code);
   const { data: session, status } = useSession();
   const { campaign } = useCampaign();
   const { Loader } = useLoader();
@@ -79,9 +84,9 @@ export default function GuestRegisterPage() {
         jobId: jobs.find((j) => j.value === selectedJobId)?.id,
         storeId: jobs.find((j) => j.value === selectedJobId)?.storeId,
         languageCode: quizLanguageCode,
-        channelId: selectedChannel?.channelId,
+        channelId: channelInput ? null : selectedChannel?.channelId,
         channelName: channelInput ? channelName?.trim() : selectedChannel?.name,
-        channelSegmentId: selectedChannelSegmentId,
+        channelSegmentId: channelInput ? null : selectedChannelSegmentId,
         campaignId: campaign.id,
         campaignSlug: getCampaignSlug(campaign),
       },
@@ -101,7 +106,12 @@ export default function GuestRegisterPage() {
         <RegisterFormComboboxContainer>
           <RegisterForm />
         </RegisterFormComboboxContainer>
-        <LoginButton disabled={isDisabled()} isArabic={isArabic} translationLogin={translation("save")} onClick={handleClickLoginButton} />
+        <LoginButton
+          disabled={isDisabled()}
+          isArabic={isArabic}
+          translationLogin={translation("save")}
+          onClick={handleClickLoginButton}
+        />
       </RegisterFormContainer>
 
       {Loader(checkRegisteredLoading || status === "loading")}

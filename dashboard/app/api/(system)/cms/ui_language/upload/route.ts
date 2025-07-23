@@ -157,6 +157,8 @@ export async function POST(request: NextRequest) {
           path: `/${destinationKey}`,
         },
       });
+
+      console.log('uploadedFile: ', uploadedFile);
     } else {
       uploadedFile = await prisma.uploadedFile.create({
         data: {
