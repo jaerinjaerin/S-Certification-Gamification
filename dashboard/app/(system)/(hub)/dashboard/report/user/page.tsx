@@ -28,6 +28,7 @@ import { useMemo, useState } from 'react';
 import useSWR from 'swr';
 import { exportBadgeLogExcel } from './actions/export-badge-log-base64';
 import { exportFailedBadgeLogBase64 } from './actions/export-failed-badge-log-base64';
+import { format } from 'date-fns';
 
 const columns: ColumnDef<UserListProps>[] = [
   {
@@ -45,6 +46,13 @@ const columns: ColumnDef<UserListProps>[] = [
   {
     accessorKey: 'lastCompletedStage',
     header: 'completed stage',
+  },
+  {
+    accessorKey: 'date',
+    header: 'date',
+    cell: (info) => {
+      return format(info.row.original.date, 'yyyy-MM-dd HH:mm:ss');
+    },
   },
 ];
 

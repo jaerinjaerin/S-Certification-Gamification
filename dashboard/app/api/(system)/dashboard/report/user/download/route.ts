@@ -5,6 +5,7 @@ import { extendedQuery } from '@/lib/sql';
 import { prisma } from '@/model/prisma';
 import { decrypt } from '@/utils/encrypt';
 import { AuthType, Job, User, UserQuizStatistics } from '@prisma/client';
+import { format } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -70,6 +71,7 @@ export async function GET(request: NextRequest) {
           'channelSegmentId',
           'channelName',
           'domainId',
+          'createdAt',
         ],
       }
     );
@@ -104,6 +106,7 @@ export async function GET(request: NextRequest) {
           ? getChannelSegmentName(log.channelSegmentId)
           : '',
         channelName: log.authType === AuthType.GUEST ? log.channelName : '',
+        date: format(log.createdAt, 'yyyy-MM-dd HH:mm:ss'),
       };
     });
 
@@ -120,6 +123,7 @@ export async function GET(request: NextRequest) {
         { header: 'Channel', key: 'channel', width: 50 },
         { header: 'ChannelSegment', key: 'channelSegment', width: 50 },
         { header: 'ChannelName', key: 'channelName', width: 20 },
+        { header: 'Date', key: 'date', width: 20 },
       ],
       data: result,
     });

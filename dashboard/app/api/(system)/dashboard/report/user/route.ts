@@ -48,7 +48,11 @@ export async function GET(request: NextRequest) {
             : { OR: [{ storeId }, { storeId: null }] }
           : {}),
       },
-      { select: ['userId', 'lastCompletedStage'], limit: take, offset: skip }
+      {
+        select: ['userId', 'lastCompletedStage', 'channelName', 'createdAt'],
+        limit: take,
+        offset: skip,
+      }
     );
 
     const users: User[] = await extendedQuery(
@@ -79,6 +83,7 @@ export async function GET(request: NextRequest) {
       lastCompletedStage: log.lastCompletedStage
         ? log.lastCompletedStage + 1
         : 0,
+      date: log.createdAt,
     }));
 
     return NextResponse.json({ result: { data: result, total: count } });

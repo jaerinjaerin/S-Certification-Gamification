@@ -60,4 +60,5 @@ type ImprovedDataStructure = GroupedData[];
 type UserListProps = {
   providerUserId: string;
   lastCompletedStage: number | string;
+  date: Date;
 };
