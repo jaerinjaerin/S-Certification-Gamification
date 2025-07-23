@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
           'channelSegmentId',
           'channelName',
           'domainId',
+          'createdAt',
         ],
       }
     );
@@ -71,7 +72,6 @@ export async function GET(request: NextRequest) {
           'channelSegmentId',
           'channelName',
           'domainId',
-          'createdAt',
         ],
       }
     );
