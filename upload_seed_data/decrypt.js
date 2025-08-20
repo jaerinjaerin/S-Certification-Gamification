@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
 const IV_LENGTH = 16; // AES uses a 16-byte IV
 
@@ -42,8 +42,8 @@ function decrypt(encryptedData, useFixedIV = false) {
 }
 
 const ids = [
-  "1794738",
-  "2147426",
+  // "1794738",
+  // "2147426",
   // "VN_USER_23165",
   // "IND05595",
   // "IND12427",
@@ -54,6 +54,26 @@ const ids = [
   // "IND16518",
   // "IND07547",
   // "IND12248",
+  // "tGA+DYfpJMbFMxDVVCz2iA==",
+  // "liQuJfaTZVmb3Sl/LbEhvQ==",
+  // "OvdPski0C3DenAwyiP7m1A==",
+  // "f8T1QvPehKwHkNT/eRAGIg==",
+  // "MjgzUAdyk/etiAX7+B3+Ig==",
+  "/mdDblkWXvwIjvSQDfEQuw==",
+  "yMfEbWV5xJXm4BZMoNnRAg==",
+  "iGiTZ0U+da9PFnYJ3TDLjQ==",
+  "/9yfrHPZccNUEbZuTtyxwQ==",
+  "amwqZxFbx/wV9a7QMGMPaA==",
+  "liQuJfaTZVmb3Sl/LbEhvQ==",
+  "OvdPski0C3DenAwyiP7m1A==",
+  "tGA+DYfpJMbFMxDVVCz2iA==",
+  "nBqlH8aTGox/PccUKof/fg==",
+  "xkYPLroxQ77g2UQ4MIESCw==",
+  "f8T1QvPehKwHkNT/eRAGIg==",
+  "Le3LSSpdYDIX4+/d3d+sRw==",
+  "MjgzUAdyk/etiAX7+B3+Ig==",
+  "qcXd6ems2eyq/pbQaRdO3w==",
+  // "2031536",
 ];
 
 function encrypt(email, useFixedIV = false) {
@@ -82,10 +102,10 @@ function encrypt(email, useFixedIV = false) {
 async function main() {
   for (const id of ids) {
     try {
-      const result = encrypt(id, true);
+      const result = decrypt(id, true);
       console.log(`Decrypted [${id}] → ${result}`);
     } catch (error) {
-      console.error(`Error decrypting [${id}]: ${error.toString()}`);
+      console.error(`Error decrypting [${id}]: ${error}`);
     }
   }
 }
