@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
           'channelSegmentId',
           'channelName',
           'domainId',
+          'score',
           'createdAt',
         ],
       }
@@ -106,6 +107,7 @@ export async function GET(request: NextRequest) {
           ? getChannelSegmentName(log.channelSegmentId)
           : '',
         channelName: log.authType === AuthType.GUEST ? log.channelName : '',
+        score: log.score ?? 0,
         date: format(log.createdAt, 'yyyy-MM-dd HH:mm:ss'),
       };
     });
@@ -123,6 +125,7 @@ export async function GET(request: NextRequest) {
         { header: 'Channel', key: 'channel', width: 50 },
         { header: 'ChannelSegment', key: 'channelSegment', width: 50 },
         { header: 'ChannelName', key: 'channelName', width: 20 },
+        { header: 'Score', key: 'score', width: 20 },
         { header: 'Date', key: 'date', width: 20 },
       ],
       data: result,
