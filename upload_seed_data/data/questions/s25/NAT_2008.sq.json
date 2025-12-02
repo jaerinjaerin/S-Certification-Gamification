@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë veçoritë kryesore të Galaxy S25? (zgjidh tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AI një mik I vërtetë",
+        "answerStatus": 1
+      },
+      {
+        "text": "Performanca më e avancuar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Përvoja e përsosur e kamerës",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kujdestari juaj shëndetësor",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Cilën ngjyrë ka Galaxy S25 Ultra? (zgjidh të gjitha)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titan argjend blu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan gri",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan argjend i bardhë",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan i zi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kam dëgjuar se ekziston një veçori për të gjetur një mesazh dhe për të dërguar mesazh njëherësh. Si e ka emrin?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Përmbledhje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veprimi ndëraplikacion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë përfitimet kryesore kur ju bëni një foto portret?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mund të regjistrosh video edhe më të ndriçuara natën me më pak turbullira.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tani mund të filtrosh tinguj të padëshiruar dhe të mbani ata që ju dëshironi.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mund të kryeni detyra duke përdorur disa aplikacione njëkohësisht duke i folur në mënyrë të natyrshme serisë Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ju mund të fotografoni direkt teksturën natyrale të lëkurës",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "A mund ta shpjegoni rezultatin gjatë xhirimit të videos në Nightography?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mund të regjistrosh video edhe më të ndriçuara natën me më pak turbullira.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tani mund të filtrosh tinguj të padëshiruar dhe të mbash ata që ju dëshironi.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mund të kryesh detyra duke përdorur disa aplikacione njëherësh duke i folur në mënyrë të natyrshme serisë Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mund të kapësh lirshëm tonin e saktë dhe përbërjen natyrale të lëkurës",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila nga të mëposhtmet është një veçori kryesore e orës së re që duhet të theksohet si eksperienca e lidhur kur bëni demonstrimin e përdorimit sipas stilit të jetesës? (zgjidh të gjitha përgjigjet e sakta)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tingull i qartë si kristal",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rezultati i energjisë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Garë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila nga të mëposhtmet është një veçori kryesore e Buds3 Pro dhe Buds3 që duhet të theksohet si eksperienca e lidhur kur bëni demonstrimin e përdorimit sipas stilit të jetesës?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX intuitiv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Optimizim i tingullit\n(Tingull i optimizuar)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ofertë multi-blerje",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Cila është veçoria që NUK mbështetet në Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mbivendosje e përkthimit në PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkripto dhe përkthe",
+        "answerStatus": 0
+      },
+      {
+        "text": "Përkthim në kohë reale duke përdorur regjistrimin me zë",
+        "answerStatus": 1
+      },
+      {
+        "text": "Përmbledhje dhe formatim automatik",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Çfarë duhet të përgatis në mënyrë që të përdor Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Duhet të hysh në llogarinë tënde Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Duhet të paguash një tarifë të caktuar abonimi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Duhet të shkarkosh aplikacionin Galaxy AI të posaçëm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asgjë",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Pse duhet të bëj përditësimin e Galaxy tim në One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nuk kanë ndryshuar shumë gjëra krahasuar me One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Me One UI 7.0, do të kesh një eksperiencë më të pasur të AI në telefon krahasuar me softuerët e mëparshëm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Cilët faktorë mund të fshij duke përdorur \"Eraser audio\"? (zgjidh të gjitha)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muzikë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Era",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zhurma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë veçoritë kryesore që duhet të përjetoni për Galaxy S25? (zgjidh të gjitha)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ndihmësi i bisedave",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veprimi ndëraplikacion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portret dhe Filtri im",
+        "answerStatus": 1
+      },
+      {
+        "text": "Fshirësi i audios",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë përmirësimet kryesore të Galaxy S25? (zgjidh tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Veprimi ndëraplikacion",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodaliteti",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bateria",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Me cilën AP është e pajisur seria Galaxy S25",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AP 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë përmirësimet e Galaxy S25 Ultra? (Zgjidh tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Kamera ultra e gjerë 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pesha",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2(për ekranin përpara)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Proçesori",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila nga të mëposhtmet NUK është një CXP kryesore e orës së re? (zgjidhni një)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Esenciale e nivelit të radhës\n(performancë)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gjumë me AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Madhësia e ekranit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ushtrime të personalizuara",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila nga të mëposhtmet është një veçori kryesore që duhet theksuar kur u prezantoni Buds3 Pro dhe Buds3 klientëve që janë të rinj në përdorimin e kufjeve earbuds (blerësi i parë)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tingull i qartë si kristal",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC adaptiv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qëndrim i rehatshëm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Cila është veçoria e re në Tab S10 që mbështet shikimin e gjallë në ambiente të jashtme?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AMOLED 2X dinamik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-reflektimi",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ekrani i madh",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "A ekziston një veçori për të ndarë me lehtësi dhe shpejt foto/video me miqtë?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Përkthimi live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "A është e nevojshme të qëndroj pas tij kur përdor Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nuk është problem, do të punojë nëpërmjet cloud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Po, fatkeqësisht duhet të qëndrosh deri në fund",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "A mund të rekomandosh veçoritë kryesore që mund të provoj? (zgjidh të gjitha)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Veprimi ndëraplikacion",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portret dhe Filtri im",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fshirësi i audios",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Çfarë duhet të them për të provuar veprimin ndëraplikacion në serinë Galaxy S25? (si shembull)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kërko restorant kinez pranë dhe dërgoja Tonit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Përshëndetje Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Më jep informacionin e motit për sot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Përshëndetje Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Si mund të aplikoj filtër kur bëj një foto? (zgjidh dy)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "me përdorimin e filtrit të caktuara paraprakisht të aplikacionit të kamerës",
+        "answerStatus": 1
+      },
+      {
+        "text": "me përdorimin e modalitetit të natës të aplikacionit të kamerës",
+        "answerStatus": 0
+      },
+      {
+        "text": "me përdorimin e Filtri im të fotos në galeri",
+        "answerStatus": 1
+      },
+      {
+        "text": "me përdorimin e lëvizjeve të ngadalta të aplikacionit të kamerës",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jam fans i madh i S Pen. A ke ndonjë rekomandim për mua?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Cilat informacione/të dhëna mund të marr me Përmbledhjen Tani? (zgjidh tre)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Rezultati i energjisë",
+        "answerStatus": 1
+      },
+      {
+        "text": "Programi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarmi",
+        "answerStatus": 1
+      },
+      {
+        "text": "adresa e shtëpisë",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Zgjidhni një veçori që lidhet me shëndetin/gjumin te ora e re (zgjidh të gjitha përgjigjet e sakta)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rezultati i energjisë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Stërvitje e personalizuar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Motivim dhe përmirësim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Zgjidhni veçorinë më të përshtatshme të Buds3 që mund të përdoret në një takim me një të huaj që flet një gjuhë tjetër.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Përkthyesi",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qëndrim i rehatshëm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tingull i qartë si kristal",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Çfarë ka të re për sa i përket tastierës së re Book Cover të Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ndriçimi ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tasti AI i dedikuar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lançuesi i Samsung Note",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ndihmësi Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Cilat janë kriteret për Rezultatin e energjisë? (zgjidh të gjitha)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Gjumi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktiviteti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rrahjet e zemrës",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Cilat është avantazhi kryesor i Trade-in? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mund të marrësh një plan financimi mujor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mund të reduktosh në çast barrën/koston e blerjes së telefonit më të fundit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mund të marrësh dyfish magazinë kundrejt të njëjtit çmim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bli një, dhe mund të marrësh një falas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jam përdorues i S22. Cilat janë përmirësimet kryesore të Galaxy S25? (zgjidh dy)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Cilësia e imazhit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Numri i kamerave",
+        "answerStatus": 0
+      },
+      {
+        "text": "Përmasat",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "A mund të më tregosh për veçoritë ekskluzive të Galaxy S25 Ultra? (zgjidh të gjitha)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S Pen i integruar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zmadhimi 100x dhe kamera 200mp",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ekran / Bateri më e madhe",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "A ka ndonjë mënyrë si t’i ndaj skedarët e mi në pajisjet jo-Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila është veçoria e shfaqjes së videos së regjistruar në lëvizje të ngadaltë?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Videot Nightography",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fshirësi i audios",
+        "answerStatus": 0
+      },
+      {
+        "text": "Lëvizje të ngadalta në çast",
+        "answerStatus": 1
+      },
+      {
+        "text": "Prerja automatike",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Bëj shumë telefonata çdo ditë, por shpesh harroj për çfarë kemi folur. A ka ndonjë veçori të mirë që do të më rekomandoje për këtë situatë?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ndihmësi i transkriptimit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Përkthimi live",
+        "answerStatus": 0
+      },
+      {
+        "text": "Përmbledhja Tani",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kërkimi multimodal",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "E humbas ose e rrëzoj shpesh telefonin. Kam merak të blej diçka të shtrenjtë sepse mund ta prish.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rekomandoj “Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Rekomandoj “Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rekomandoj “Quick Share”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rekomandoj “Model më të lirë”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Çfarë NUK mbulohet nga Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartfon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Orë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kompjuter desktop",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tabletë",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Nëse unaza më bllokohet në gisht, çfarë duhet të bëj?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Aplikoni lubrifikant, si për shembull krem duarsh, vaj pastrues ose sapun për të pakësuar fërkimin, dhe kjo e bën më të lehtë për ta hequr.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zhyteni gishtin në ujë të ftohtë për të ngushtuar përkohësisht enët e gjakut dhe për ta tkurrur gishtin. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pakësoni ënjtjet duke e ngritur dorën për më shumë se 5 minuta.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy Ring është një pajisje që vishet në trup. Në veçanti ndjekja e shëndetit me AI dhe ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rezultati i energjisë",
+        "answerStatus": 0
+      },
+      {
+        "text": "Karta përforcuese",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trajneri i gjumit",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pickimi dy herë",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cila nga të mëposhtmet është CXP kryesore e Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Stërvitje e personalizuar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mbajtje e rehatshme 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pickimi dy herë  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Të gjitha të mësipërmet",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

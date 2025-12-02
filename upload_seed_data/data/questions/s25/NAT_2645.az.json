@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25-in əsas xüsusiyyətləri hansılardır? (üçünü seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Əsl AI yoldaş",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ən qabaqcıl performans",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mükəmməl kamera təcrübəsi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sağlamlıq yoldaşınız",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra hansı rəngdədir? (hamısını seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titan Gümüş Mavi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan Boz",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan Ağ Gümüş",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titan Qara",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Eyni zamanda həm restoran tapıb, həm də mesaj göndərmək funksiyası olduğunu eşitmişəm. Adı nədir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Proqramlararası əməliyyat",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dairəyə alaraq axtarmaq",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Portret çəkməyin əsas üstünlükləri hansılardır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Daha az səs-küylə daha parlaq gecə videoları qeydə ala bilərsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "İndi arzuolunmaz səsləri filtrləyə və istədiyiniz səsləri saxlaya bilərsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 seriyası ilə təbii şəkildə danışmaqla bir neçə proqramdan istifadə edərək tapşırıqları yerinə yetirə bilərsiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asanlıqla təbii dəri yeksturasını çəkə bilərsiniz",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Gecə çəkilişi videosu çəkərkən nəticəni izah edə bilərsiniz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Daha az səs-küylə daha parlaq gecə videoları qeydə ala bilərsiniz.",
+        "answerStatus": 1
+      },
+      {
+        "text": "İndi arzuolunmaz səsləri filtrləyə və istədiyiniz səsləri saxlaya bilərsiniz.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 seriyası ilə təbii şəkildə danışmaqla bir neçə proqramdan istifadə edərək tapşırıqları yerinə yetirə bilərsiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asanlıqla dəqiq ton və təbii dəri toxuması əldə edə bilərsiniz",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakılardan hansı həyat tərzi ilə bağlı istifadə ssenarisi demosu təmin edən zaman qoşulma təcrübəsi kimi qeyd edilməli olan yeni Watch saatının əsas funksiyalarından biridir? (Bütün düzgün cavabları seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristal kimi aydın səs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Enerji xalı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yarış",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakılardan hansı həyat tərzi ilə bağlı istifadə ssenarisi demosu təmin edən zaman qoşulma təcrübəsi kimi qeyd edilməli olan Buds3 Pro və Buds3 cihazlarının əsas funksiyalarından biridir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "İntuitiv UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Səsin optimallaşdırılması\n(Optimallaşdırılmış səs)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Çoxsaylı alış təklifi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Notes proqramında DƏSTƏKLƏNMƏYƏN funksiya hansıdır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mətnin üzərində əks olunan PDF tərcüməsi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkripsiya və Tərcümə edin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Səs yazarkən real vaxt rejimində tərcümə edin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Xülasələşdirin və avtomatik formatlaşdırın",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI-dən istifadə etmək üçün nə hazırlamalıyam?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Samsung account-a daxil olmalısınız",
+        "answerStatus": 1
+      },
+      {
+        "text": "Müəyyən məbləğdə abunə haqqı ödəməlisiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI üçün xüsusi proqramı yükləməlisiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Heç nə",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy-ni nə üçün One UI 7.0 versiyasına təkmilləşdirməliyəm?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1 ilə müqayisədə çox dəyişiklik edilməyib",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0 ilə əvvəlki proqram təminatı ilə müqayisədə daha zəngin AI-telefon təcrübəniz olacaq",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Səs silmə funksiyasından istifadə etməklə hansı amilləri silə bilərəm? (hamısını seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musiqi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Külək",
+        "answerStatus": 0
+      },
+      {
+        "text": "Səs-küy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 modelinin təcrübədən keçirilməli olan əsas xüsusiyyətləri hansılardır? (hamısını seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Söhbət köməkçisi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Proqramlararası əməliyyat",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portret və Mənim filtrim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Səs silmə",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 modelinin əsas təkmilləşdirmələri hansılardır? (üçünü seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Proqramlararası əməliyyat",
+        "answerStatus": 1
+      },
+      {
+        "text": "Çoxmodallılıq",
+        "answerStatus": 1
+      },
+      {
+        "text": "Batareya",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm-lik AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 seriyası hansı AP ilə təchiz olunub",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm-lik AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm-lik AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm-lik AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm-lik AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra modelinin əsas təkmilləşdirmələri hansılardır? (Üçünü seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra Geniş 50 MP Kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Çəki",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (ön displey üçün)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Prosessor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakılardan hansı yeni Watch saatının əsas xüsusiyyətlərindən biri DEYİL? (birini seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Növbəti səviyyəli vaciblik\n(fəaliyyət göstəricisi)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI ilə təmin edilən Yuxu funksiyası",
+        "answerStatus": 0
+      },
+      {
+        "text": "Displey ölçüsü",
+        "answerStatus": 1
+      },
+      {
+        "text": "Fərdiləşdirilmiş idman təcrübəsi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Qulaqdaxili qulaqlıqların yeni alıcıları (1-ci dəfə alan) olan müştərilərə Buds3 Pro və Buds3 qulaqlıqlarını təqdim edən zaman aşağıdakılardan hansı əsas funksiya kimi qeyd edilməlidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristal kimi aydın səs",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptiv ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rahat uyğunlaşma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 modelində çöldə canlı baxışı dəstəkləyən yeni funksiyanın adı nədir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dinamik AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-əksetmə",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Böyük displey",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Fotoları/videoları dostlarla asanlıqla və tez paylaşmaq xüsusiyyəti var?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cəld paylaşım",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Canlı tərcümə",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Cəld paylaşım proqramından istifadə edərkən onun yanında dayanmalıyam?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Problem yoxdur, o, bulud vasitəsilə işləyəcək",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bəli, təəssüf ki, axıra qədər dayanmalısınız",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Təcrübədən keçirməyim üçün əsas xüsusiyyətlər tövsiyə edə bilərsiniz? (hamısını seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Proqramlararası əməliyyat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portret və Mənim filtrim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Səs silmə",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 seriyasında Proqramlararası əməliyyatı təcrübədən keçirmək üçün necə deməliyəm? (misal olaraq)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yaxınlıqda Çin restoranı axtarın və Toniyə göndərin",
+        "answerStatus": 1
+      },
+      {
+        "text": "Salam, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mənə bugünki hava məlumatını bildir",
+        "answerStatus": 0
+      },
+      {
+        "text": "Salam, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Şəkil çəkərkən filtri necə tətbiq edə bilərəm? (iki seçim edin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "kamera proqramının əvvəlcədən təyin edilmiş filtrindən istifadə etməklə",
+        "answerStatus": 1
+      },
+      {
+        "text": "kamera proqramının Gecə rejimindən istifadə etməklə",
+        "answerStatus": 0
+      },
+      {
+        "text": "qalereyada foto üçün Mənim filtrim funksiyasından istifadə etməklə",
+        "answerStatus": 1
+      },
+      {
+        "text": "kamera proqramının Yavaş çəkilişindən istifadə etməklə",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "S pen-i çox xoşlayıram. Mənə nəsə tövsiyə edə bilərsiniz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Now Brief ilə hansı məlumatları/fikirləri əldə edə bilərəm? (üçünü seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Enerji göstəricisi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Qrafik",
+        "answerStatus": 1
+      },
+      {
+        "text": "Siqnal",
+        "answerStatus": 1
+      },
+      {
+        "text": "ev ünvanı",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Yeni Watch saatında Sağlamlıq/Yuxu ilə bağlı bir funksiya seçin (bütün düzgün cavabları seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enerji xalı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fərdiləşdirilmiş təlimat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Özünə motivasiya vermək və təkmilləşdirmək",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Buds3 qulaqlığının başqa bir dildə danışan xarici bir şəxs ilə görüş zamanı istifadə edilə biləcək ən uyğun funksiyasını seçin.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tərcüməçi",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rahat uyğunlaşma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristal kimi aydın səs",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10-un yeni Book Cover Klaviaturasında hansı yenilik var?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Arxa tərəfdə işıq ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Xüsusi AI düyməsi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note proqramını açmaq üçün düymə",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google köməkçisi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Enerji xalı üçün meyarlar hansılardır? (hamısını seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Yuxu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktivlik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ürək tempi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mübadiləli satışın əsas üstünlüyü nədir? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Aylıq maliyyə planı əldə edə bilərsiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ən son model smartfon almaq yükünü/xərcini dərhal azalda bilərsiniz",
+        "answerStatus": 1
+      },
+      {
+        "text": "Eyni qiymətə 2 dəfə daha çox yaddaş sahəsi əldə edə bilərsiniz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Birini almaqla birini pulsuz əldə edə bilərsiniz",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mən S22 istifadəçisiyəm. Galaxy S25 modelinin əsas təkmilləşdirmələri hansılardır? (iki seçim edin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm-lik AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Şəklin keyfiyyəti",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera sayı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ölçü",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mənə Galaxy S25 Ultra modelinin eksklüziv xüsusiyyətlərini deyə bilərsiniz? (hamısını seçin)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Daxildə quraşdırılmış S pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x böyütmə və 200 MP kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Daha böyük ekran / Batareya",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Fayllarımı Android olmayan cihazlarla paylaşmaq mümkündür?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cəld paylaşım",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pul kisəsi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Qeydə alınmış videonun yavaş çəkiliş kimi göstərilməsi xüsusiyyəti hansıdır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Gecə çəkilişi videoları",
+        "answerStatus": 0
+      },
+      {
+        "text": "Səs silmə",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ani Yavaş çəkim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Avtomatik kəsmə",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Gündəlik həyatımda çox zəng edirəm, ancaq danışdıqlarımızı çox vaxt unuduram. Bu vəziyyət üçün tövsiyə edə biləcəyiniz yaxşı xüsusiyyət var?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transkripsiya köməkçisi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Canlı tərcümə",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Çoxmodallı axtarış",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mən tez-tez telefonumu itirirəm və ya əlimdən salıram. Sındığı üçün bahalısını almaqdan çəkinirəm.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sizə \"Samsung Care+\" tövsiyə edirəm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sizə \"Samsung Wallet\" tövsiyə edirəm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sizə \"Cəld paylaşım\" tövsiyə edirəm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sizə \"Daha ucuz model\" tövsiyə edirəm",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+ nəyi əhatə EDİLMİR",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartfon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Masaüstü kompüter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tablet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ring barmağımda ilişsə, nə etməliyəm?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sürtünməni azaltmaq və beləcə üzüyün çıxarılmasını asanlaşdırmaq üçün əl kremi, təmizləyici yağ və ya sabun kimi sürtkü yağlarından istifadə edin.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Qan damarlarını müvəqqəti olaraq daraltmaq və barmağı yığmaq üçün əlinizi soyuq suya salın. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Əlinizi 5 dəqiqədən çox yuxarı qaldırmaqla şişməni azaldın.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakı boşluq üçün ən uyğun cavab hansıdır?\nGalaxy Ring yeni geyiniləbilən cihazdır. Xüsusən də AI ilə işləyən sağlamlığın izlənməsi və ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Enerji xalı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gücləndirmə kartı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxu Təlimi",
+        "answerStatus": 1
+      },
+      {
+        "text": "İki dəfə toxunuş",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakılardan hansı yeni Galaxy Ring üzüyünün əsas xüsusiyyətlərindən biri DEYİL?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Fərdiləşdirilmiş təlimat",
+        "answerStatus": 0
+      },
+      {
+        "text": "24/7 rahat taxma təcrübəsi",
+        "answerStatus": 0
+      },
+      {
+        "text": "İki dəfə toxunuş  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yuxarıdakıların hamısı",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

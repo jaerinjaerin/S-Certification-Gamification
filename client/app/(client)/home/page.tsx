@@ -1,30 +1,67 @@
-'use client';
+"use client";
 
-import { signOut } from 'next-auth/react';
+import Spinner from "@/components/ui/spinner";
+import { AuthType } from "@prisma/client";
+// import { useLocalStorage } from "@/providers/local_storage_provider";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Home() {
-  // const { data: session, status } = useSession();
+  const { status, data: session } = useSession();
 
-  // if (status === 'loading') {
-  //   return <p>Loading...</p>;
-  // }
+  const processSignOut = async (event) => {
+    event.preventDefault();
 
-  // if (status === 'unauthenticated') {
-  //   // 인증되지 않은 경우 로그인 페이지로 리다이렉트
-  //   if (typeof window !== 'undefined') {
-  //     window.location.href = '/auth/login';
-  //   }
-  //   return null;
-  // }
+    const callbackUrl = `${window.location.protocol}//${window.location.host}/home`;
+    let signOutUrl = callbackUrl;
+
+    sessionStorage.clear();
+    if (session?.user?.authType === AuthType.SUMTOTAL) {
+      // 삼플 유저 로그아웃
+
+      signOutUrl = `${process.env.NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT}${callbackUrl}`;
+      // console.log("sumtotal signout", signOutUrl);
+      await signOut({
+        redirect: false, // NextAuth의 기본 리디렉션을 방지
+      });
+      window.location.href = signOutUrl;
+      return;
+    }
+
+    // console.log("signout");
+
+    // 패스워드 유저 로그아웃
+    await signOut();
+  };
+
+  if (status === "loading") {
+    return <Spinner />;
+  }
+
+  if (session) {
+    return (
+      <div
+        className="h-full bg-[#F0F0F0] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]"
+        style={{
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/bg_main2.jpg')`,
+        }}
+      >
+        <h1 className="text-xl text-center text-[#2686F5]">
+          :) Signed in as {session.user?.email} {session.user?.name}
+        </h1>
+
+        <button
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          onClick={processSignOut}
+        >
+          Sign out
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* <h1>Welcome, {session?.user?.email}</h1> */}
-      <h1>Home</h1>
-      <p>인증제 퀴즈 설명</p>
-      <button onClick={() => (window.location.href = '/map')}>퀴즈 풀기</button>
-      <br />
-      <button onClick={() => signOut()}>Sign out</button>
+    <div className="min-w-[280px] max-w-[412px] w-full min-h-svh mx-auto text-base flex flex-col justify-center space-y-[19px]">
+      <h1 className="text-xl text-center text-[#2686F5]">Not signed in</h1>
     </div>
   );
 }

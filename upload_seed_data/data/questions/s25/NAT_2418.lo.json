@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄື ຄຸນສົມບັດທີ່ສຳຄັນ ຂອງ Galaxy S25? (ເລືອກສາມລາຍການ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ຄູ່ຫູ AI ທີ່ແທ້ຈິງ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ປະສິດທິພາບໃຊ້ງານຂັ້ນສູງທີ່ສຸດ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ປະສົບການໃຊ້ງານກ້ອງຖ່າຍຮູບ​ທີ່ສົມບູນແບບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຄູ່ຫູດ້ານສຸຂະພາບຂອງທ່ານ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ສີ ໃດທີ່ Galaxy S25 Ultra ມີ? (ເລືອກທັງໝົດ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ສີຟ້າປົນສີເງິນແບບໄທເທນຽມ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສີເທົາແບບໄທເທນຽມ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສີເງິນປົນສີຂາວແບບໄທເທນຽມ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສີດຳແບບໄທເທນຽມ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍໄດ້ຍິນວ່າມີຄຸນສົມບັດໃນການ ຊອກຫາຮ້ານອາຫານ ແລະ ສົ່ງຂໍ້ຄວາມໃນຄັ້ງດຽວ. ຊື່ຂອງມັນແມ່ນຫຍັງ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar ແລະ Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action ການດຳເນີນການຂ້າມແອັບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ແຕ້ມວົງມົນເພື່ອຊອກຫາ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄືປະໂຫຍດຫຼັກເມື່ອ ຖ່າຍຮູບເຄິ່ງຕົວ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ທ່ານສາມາດບັນທຶກວິດີໂອຕອນກາງຄືນທີ່ແຈ້ງຂຶ້ນພ້ອມສຽງລົບກວນທີ່ໜ້ອຍລົງໄດ້.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຕອນນີ້ທ່ານສາມາດກັ່ນຕອງສຽງທີ່ບໍ່ຕ້ອງການອອກ ແລະ ເກັບສຽງທີ່ທ່ານຕ້ອງການໄວ້ໄດ້.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານສາມາດເຮັດສຳເລັດໜ້າວຽກໂດຍໃຊ້ຫຼາຍແອັບພ້ອມກັນໂດຍການເວົ້າຢ່າງເປັນທຳມະຊາດກັບ Galaxy S25 Series",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານສາມາດຈັບພາບພື້ນຜິວຂອງຜິວທີ່ເປັນທຳມະຊາດໄດ້ຢ່າງອິດສະຫຼະ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ທ່ານສາມາດອະທິບາຍ ຜົນໄດ້ຮັບ ເມື່ອຖ່າຍ ວິດີໂອໃນຕອນກາງຄືນໄດ້ບໍ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ທ່ານສາມາດບັນທຶກວິດີໂອຕອນກາງຄືນທີ່ແຈ້ງຂຶ້ນພ້ອມສຽງລົບກວນທີ່ໜ້ອຍລົງໄດ້.",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຕອນນີ້ທ່ານສາມາດກັ່ນຕອງສຽງທີ່ບໍ່ຕ້ອງການອອກ ແລະ ເກັບສຽງທີ່ທ່ານຕ້ອງການໄວ້ໄດ້.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານສາມາດເຮັດສຳເລັດໜ້າວຽກໂດຍໃຊ້ຫຼາຍແອັບພ້ອມກັນໂດຍການເວົ້າຢ່າງເປັນທຳມະຊາດກັບ Galaxy S25 Series",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານສາມາດຈັບພາບໂທນສີທີ່ຖືກຕ້ອງ ແລະ ພື້ນຜິ້ວທີ່ເປັນທຳມະຊາດໄດ້ຢ່າງອິດສະຫຼະ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ໃດຕໍ່ໄປນີ້ເປັນຄຸນສົມບັດສຳຄັນຂອງໂມງຕົວໃໝ່ທີ່ຄວນຈະເນັ້ນໃຫ້ເປັນ ການສຳຜັດປະສົບການທີ່ເຊື່ອມຕໍ່ ເມື່ອສາທິດການໃຊ້ງານຈິງ? (ເລືອກທຸກຄຳຕອບທີ່ຖືກຕ້ອງ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ສຽງໃສດັ່ງຄຼິສຕອນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຄະແນນພະລັງງານ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການແຂ່ງຂັນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ໃດຕໍ່ໄປນີ້ເປັນ ຄຸນສົມບັດສຳຄັນຂອງ Buds3 Pro ແລະ Buds3 ທີ່ຄວນຈະເນັ້ນໃຫ້ເປັນການສຳຜັດປະສົບການທີ່ເຊື່ອມຕໍ່ ເມື່ອສາທິດການໃຊ້ງານຈິງ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX ທີ່ໃຊ້ງານງ່າຍ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການເພີ່ມປະສິດທິພາບສຽງ",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຂໍ້ສະເໜີການຊື້ຫຼາຍລາຍການ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ຄຸນສົມບັດທີ່ບໍ່ຖືກຮອງຮັບໃນ Samsung Notes ແມ່ນຫຍັງ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ການແປ PDF ແບບຊ້ອນທັບ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຖອດສຽງ ແລະ ແປພາສາ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ແປພາສາໃນເວລາຈິງໃນຂະນະທີ່ບັນທຶກສຽງ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສະຫຼຸບ ແລະ ຈັດຮູບແບບອັດຕະໂນມັດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍຄວນຈະກະກຽມຫຍັງແດ່ເພື່ອ ໃຊ້ Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ທ່ານຈຳເປັນຕ້ອງໄດ້ເຂົ້າສູ່ລະບົບ Samsung Account ຂອງທ່ານ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ທ່ານຈຳເປັນຕ້ອງໄດ້ຊຳລະເງິນຄ່າທຳນຽມການສະໝັກຈຳນວນໜຶ່ງ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານຈຳເປັນຕ້ອງໄດ້ດາວໂຫຼດແອັບສະເພາະຂອງ Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "ບໍ່ມີຫຍັງ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ເປັນຫຍັງຂ້ອຍຈິ່ງຄວນອັບເກຣດ Galaxy ຂອງຂ້ອຍເປັນ One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ບໍ່ມີຫຍັງປ່ຽນແປງຫຼາຍເມື່ອປຽບທຽບກັບ One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "ດ້ວຍ One UI 7.0, ທ່ານຈະໄດ້ຮັບປະສົບການໃຊ້ໂທລະສັບ AI ທີ່ສົມບູນແບບເມື່ອປຽບທຽບກັບຊອບແວກ່ອນໜ້າ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ປັດໃຈໃດ ທີ່ຂ້ອຍສາມາດລຶບໄດ້ໂດຍໃຊ້ຕົວລຶບສຽງ? (ເລືອກທັງໝົດ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ເພງ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ລົມ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສຽງລົບກວນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄື ຄຸນສົມບັດຫຼັກທີ່ຈະໄດ້ສຳຜັດ ສຳລັບ Galaxy S25? (ເລືອກທັງໝົດ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ຕົວຊ່ວຍການສົນທະນາ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Actionການດຳເນີນການຂ້າມແອັບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrait ຮູບເຄິ່ງຕົວ ແລະ ຕົວກັ່ນຕອງຂອງຂ້ອຍ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser ຕົວລຶບສຽງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄື ການປັບປຸງທີ່ສຳຄັນ ຂອງ Galaxy S25? (ເລືອກສາມລາຍການ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ການດຳເນີນການຂ້າມແອັບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ການຄົ້ນຫາຄວາມຫຼາກຫຼາຍ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ແບັດເຕີຣີ",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Series ມາພ້ອມກັບ AP ຫຍັງແດ່",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄື ການປັບປຸງຂອງ Galaxy S25 Ultra? (ເລືອກສາມລາຍການ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ກ້ອງຖ່າຍຮູບ Ulra Wide 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "ນ້ຳໜັກ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (ສຳລັບຈໍສະແດງຜົນດ້ານໜ້າ)",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຕົ​ວປະມວນ​ຜົນ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ໃດຕໍ່ໄປນີ້ ບໍ່ ແມ່ນ CXP ທີ່ສຳຄັນຂອງໂມງຕົວໃໝ່? (ເລືອກໜຶ່ງຂໍ້)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ປະສິດທິາພາບທີ່ເໜືອລະດັບ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການນອນຫຼັບທີ່ຂັບເຄື່ອນດ້ວຍ AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຂະໜາດຈໍສະແດງຜົນ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສຳຜັດປະສົບການຕົວຊ່ວຍການອອກກຳລັງກາຍສ່ວນຕົວ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ໃດຕໍ່ໄປນີ້ເປັນ ຄຸນສົມບັດສຳຄັນທີ່ຄວນເນັ້ນເມື່ອແນະນຳ Buds3 Pro ແລະ Buds3 ໃຫ້ກັບລູກຄ້າທີ່ຫາກໍ່ເລີ່ມໃຊ້ຫູຟັງ (ຜູ້ຊື້ຄົນທີ 1)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ສຽງໃສດັ່ງຄຼິສຕອນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC ແບບປັບປ່ຽນໄດ້",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສວມໃສ່ສະບາຍ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ຄຸນສົມບັດໃໝ່ໃນ Tab S10 ທີ່ຮອງຮັບການເບິ່ງກາງແຈ້ງທີ່ສົດໃສແມ່ນຫຍັງ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AMOLED 2X ແບບໄດນາມິກ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ປ້ອງກັນແສງສະທ້ອນ",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຈໍສະແດງຜົນທີ່ໃຫຍ່",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ມີຄຸນສົມບັດໃນການ ແຊຣ໌ຮູບຖ່າຍ/ວິດີໂອ ກັບໝູ່ຢ່າງງ່າຍດາຍ ແລະ ວ່ອງໄວບໍ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "ແຊຣ໌ດ່ວນ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "ແປພາສາສົດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍຈຳເປັນຕ້ອງຢູ່ໃກ້ໆມັນໃນຂະນະທີ່ໃຊ້ການແຊຣ໌ດ່ວນບໍ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ບໍ່ມີບັນຫາ, ມັນຈະໃຊ້ງານຜ່ານຄລາວ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ແມ່ນ, ເສຍດາຍທີ່ທ່ານຈະຕ້ອງຢູ່ຈົນສິ້ນສຸດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ທ່ານສາມາດແນະນຳຄຸນສົມບັດທີ່ສຳຄັນໃຫ້ຂ້ອຍສຳຜັດໄດ້ຢູ່ບໍ? (ເລືອກທັງໝົດ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ການດຳເນີນການຂ້າມແອັບ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຮູບເຄິ່ງຕົວ ແລະ ຕົວກັ່ນຕອງຂອງຂ້ອຍ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຕົວລຶບສຽງ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍຄວນເວົ້າແນວໃດສຳລັບປະສົບການໃຊ້ການດຳເນີນການຂ້າມແອັບໃນ Galaxy S25 Series? (ຕາມຕົວຢ່າງ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຊອກຫາຮ້ານອາຫານຈີນທີ່ຢູ່ໃກ້ຄຽງ ແລະ ສົ່ງມັນໃຫ້ໂທນີ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ສະບາຍດີ Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "ໃຫ້ຂໍ້ມູນສະພາບອາກາດຂອງມື້ນີ້ແກ່ຂ້ອຍແດ່",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສະບາຍດີ Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍສາມາດນຳໃຊ້ຟິວເຕີ້ເມື່ອຖ່າຍຮູບໄດ້ແນວໃດ? (ເລືອກສອງຢ່າງ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ດ້ວຍການໃຊ້ຟິວເຕີທີ່ຕັ້ງຄ່າມາກ່ອນຂອງແອັບກ້ອງຖ່າຍຮູບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ດ້ວຍການໃຊ້ໂໝດກາງຄືນຂອງແອັບກ້ອງຖ່າຍຮູບ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ດ້ວຍການໃຊ້ຟິວເຕີຂອງຂ້ອຍຂອງຮູບຖ່າຍໃນແກເລີຣີ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ດ້ວຍການໃຊ້ການເຄື່ອນໄຫວຊ້າຂອງແອັບກ້ອງຖ່າຍຮູບ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍເປັນແຟນຕົວຍົງຂອງ S pen. ທ່ານມີຄຳແນະນຳໃດໜຶ່ງບໍ່ສຳລັບຂ້ອຍ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ມູນ/ຂໍ້ມູນເຈາະເລິກໃດທີ່ຂ້ອຍສາມາດໄດ້ຮັບດ້ວຍ Now Brief? (ເລືອກສາມລາຍການ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ຄະແນນພະລັງງານ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຕາຕາລາງນັດໝາຍ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ໂມງປຸກ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ທີ່ຢູ່ບ້ານ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ເລືອກຄຸນສົມບັດທີ່ກ່ຽວຂ້ອງກັບສຸຂະພາບ/ການນອນຫຼັບໃນໂມງຕົວໃໝ່ (ເລືອກທຸກຄຳຕອບທີ່ຖືກຕ້ອງ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຄະແນນພະລັງງານ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການຝຶກສອນສ່ວນບຸກຄົນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ແຮງຮູງໃຈ ແລະ ການປັບປຸງຕົວເອງ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ເລືອກຄຸນສົມບັດທີ່ເໝາະສົມທີ່ສຸດຂອງ Buds3 ທີ່ສາມາດນຳໄປໃຊ້ໃນການພົບປະກັບຄົນຕ່າງປະເທດທີ່ເວົ້າພາສາອື່ນໄດ້.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຕົວຊ່ວຍແປພາສາ (ລ່າມ)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສວມໃສ່ສະບາຍ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສຽງໃສດັ່ງຄຼິສຕອນ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ມີຫຍັງໃໝ່ໆກ່ຽວກັບຄີບອດແບບໜ້າປົກປື້ມໃໝ່ຂອງ Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ແສງໄຟດ້ານຫຼັງ ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ລະຫັດ AI ສະເພາະ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຕົວເປີດໃຊ້ Samsung Note",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຕົວຊ່ວຍ Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄືມາດຖານສຳລັບ ຄະແນນພະລັງງານ? (ເລືອກທັງໝົດ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ການນອນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ກິດຈະກຳ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ອັດຕາຫົວໃຈ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄື ຂໍ້ໄດ້ປຽບຂອງການແລກປ່ຽນ? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ທ່ານສາມາດຮັບແຜນການຈັດຫາເງິນທຶນລາຍເດືອນໄດ້",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານສາມາດຫຼຸດພາລະ/ຄ່າໃຊ້ຈ່າຍຂອງການຊື້ສະມາດໂຟນລຸ້ນຫຼ້າສຸດໄດ້ທັນທີ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ທ່ານສາມາດໄດ້ຮັບບ່ອນເກັບຂໍ້ມູນເພີ່ມຂຶ້ນ 2 ເທົ່າ ດ້ວຍລາຄາເດີມ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທ່ານຊື່ໜຶ່ງອັນ, ທ່ານກໍ່ຈະໄດ້ຮັບຟຣີໜຶ່ງອັນ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍແມ່ນຜູ້ໃຊ້ S22. ແມ່ນຫຍັງຄືການປັບປຸງທີ່ສຳຄັນຂອງ Galaxy S25? (ເລືອກສອງຢ່າງ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຄຸນນະພາບຮູບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຈຳນວນກ້ອງຖ່າຍຮູບ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຂະໜາດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ທ່ານສາມາດບອກຄຸນສົມບັດພິເສດຂອງ Galaxy S25 Ultra ໃຫ້ຂ້ອຍຮູ້ໄດ້ບໍ? (ເລືອກທັງໝົດ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S pen ໃນຕົວ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການຊູມ 100 ເທົ່າ ແລະ ກ້ອງຖ່າຍຮູບ 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "ໜ້າຈໍ / ແບັດເຕີຣີທີ່ໃຫຍ່ຂຶ້ນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ມີວິທີໃດໆບໍໃນການແຊຣ໌ໄຟລ໌ຂອງຂ້ອຍກັບອຸປະກອນທີ່ບໍ່ແມ່ນ Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ແຊຣ໌ດ່ວນ Quick Share ຄິກແຊ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "ກະເປົ໋າເງິນ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄືຄຸນສົມບັດຂອງການສະແດງ ວິດີໂອທີ່ບັນທຶກໃນການເຄື່ອນໄຫວຊ້າ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ວິດີໂອພາບກາງຄືນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຕົວລຶບສຽງ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການເຄື່ອນໄຫວຊ້າທັນທີ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຕັດແຕ່ງອັດຕະໂນມັດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍໂທອອກຫຼາຍຄັ້ງໃນຊີວິດປະຈຳວັນຂອງຂ້ອຍ, ແຕ່ຂ້ອຍມັກຈະລືມສິ່ງທີ່ພວກເຮົາລົມກັນ. ມີຄຸນສົມບັດທີ່ດີໃດໆບໍທີ່ທ່ານສາມາດແນະນຳສຳລັບສະຖານະການນີ້?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຕົວຊ່ວຍການຖອດສຽງ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ແປພາສາສົດ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການຊອກຫາຫຼາຍຮູບແບບ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ຂ້ອຍມັກຈະເຮັດໂທລະສັບຂອງຂ້ອຍເສຍ ຫຼື ຕົກເລື້ອຍໆ. ຂ້ອຍກົງວົນກ່ຽວກັບການຊື້ບາງສິ່ງບາງຢ່າງທີ່ແພງ ຍ້ອນວ່າມັນເພ.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຂໍແນະນຳ “Samsung Care+” ໃຫ້ແກ່ທ່ານ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຂໍແນະນຳ “Samsung Wallet” ໃຫ້ແກ່ທ່ານ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຂໍແນະນຳ “ການແຊຣ໌ດ່ວນ” ໃຫ້ແກ່ທ່ານ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຂໍແນະນຳ “ລຸ້ນທີ່ຖືກກວ່າ” ໃຫ້ແກ່ທ່ານ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງ ບໍ່ຄອບຄຸມ ໂດຍ Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ສະມາດໂຟນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "PC ຕັ້ງໂຕະ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ຖ້າ Ring ຕິດຢູ່ທີ່ນິ້ວມືຂອງຂ້ອຍ, ຂ້ອຍຄວນຈະເຮັດແນວໃດ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ໃຊ້ສານຫຼໍ່ລື່ນ ເຊັ່ນ: ຄີມທາມື, ນ້ຳມັນເຮັດຄວາມສະອາດ ຫຼື ສະບູ່ ເພື່ອຫຼຸດແຮງສຽດສີ ຊຶ່ງເຮັດໃຫ້ຖອດອອກໄດ້ງ່າຍຂຶ້ນ.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຈຸ່ມນິ້ວຂອງທ່ານໃນນ້ຳເຢັນເພື່ອເຮັດໃຫ້ຫຼອດເລືອດຫົດຕົວຊົ່ວຄາວ ແລະ ເຮັດໃຫ້ນິ້ວຫົດຕົວ. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຫຼຸດອາການບວມໂດຍການຍົກມືຂອງທ່ານຂຶນເປັນເວລາຫຼາຍກວ່າ 5 ນາທີ.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ແມ່ນຫຍັງຄືຄຳຕອບທີ່ເໝາະສົມທີ່ສຸດສຳລັບຊ່ອງຫວ່າງດັ່ງຕໍ່ໄປນີ້?\nGalaxy Ring ເປັນອຸປະກອນສວມໃສ່ຕົວໃໝ່. ໂດຍສະເພາະຢ່າງຍິ່ງ, ການຕິດຕາມສຸຂະພາບທີ່ຂັບເຄື່ອນດ້ວຍ AI ແລະ ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ຄະແນນພະລັງງານ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ບັດບູສເຕີ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ການ​ຝຶກ​ສອນ​ການນອນ​ຫຼັບ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ຍິກສອງບາດ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ຂໍ້ໃດຕໍ່ໄປນີ້ແມ່ນ CXP ທີ່ສຳຄັນຂອງ Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ການຝຶກສອນສ່ວນບຸກຄົນ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ສວມໃສ່ສະດວກສະບາຍ 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "ຍິກສອງບາດ  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ທັງໝົດຂ້າງເທິງ",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

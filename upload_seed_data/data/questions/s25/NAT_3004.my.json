@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 ရဲ့ အဓိကလုပ်ဆောင်ချက်တွေက ဘာတွေလဲ။ (သုံးခုရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "စစ်မှန်တဲ့ AI အသုံးပြုမှု",
+        "answerStatus": 1
+      },
+      {
+        "text": "အဆင့်မြင့်ဆုံးစွမ်းဆောင်ရည်",
+        "answerStatus": 1
+      },
+      {
+        "text": "ပြည့်စုံကောင်းမွန်တဲ့ ကင်မရာအတွေ့အကြုံ",
+        "answerStatus": 1
+      },
+      {
+        "text": "သင့်ရဲ့ကျန်းမာရေးအဖော်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra မှာ ဘယ်အရောင်တွေရှိပါသလဲ။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "တိုက်တေနီယမ် ငွေပြာရောင်",
+        "answerStatus": 1
+      },
+      {
+        "text": "တိုက်တေနီယမ် မီးခိုးရောင်",
+        "answerStatus": 1
+      },
+      {
+        "text": "တိုက်တေနီယမ် ငွေဖြူရောင်",
+        "answerStatus": 1
+      },
+      {
+        "text": "တိုက်တေနီယမ် အနက်ရောင်",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "စားသောက်ဆိုင်ရှာပြီး တချိန်တည်း မက်ဆေ့ချ်ပို့လို့ရတဲ့ လုပ်ဆောင်ချက်ရှိတယ်လို့ ကြားဖူးတယ်။ အဲဒါနာမည်က ဘာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar နဲ့ Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "အပြန်အလှန်အက်ပ်ဆောင်ရွက်ချက်",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ပေါ့ထရိတ်ရိုက်တဲ့အခါ အဓိက အကျိုးကျေးဇူးတွေက ဘာတွေလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "နွိုက်စ်နည်းနည်းဖြင့် ပိုလင်းတဲ့ညဘက်ဗီဒီယိုတွေကိုတောင်မှ ရိုက်ကူးနိုင်ပါတယ်။",
+        "answerStatus": 0
+      },
+      {
+        "text": "အခုဆို မလိုချင်တဲ့အသံတွေကို စစ်ထုတ်ပြီး လိုချင်တာတွေပဲ ယူထားလို့ရပါပြီ။",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 စီးရီးကို သဘာဝကျကျ စကားပြောလိုက်ရုံနဲ့ အက်ပ်အမျိုးမျိုးကို တချိန်တည်း အသုံးပြုပြီး အလုပ်တာဝန်တွေကို ပြီးအောင်လုပ်နိုင်ပါတယ်။",
+        "answerStatus": 0
+      },
+      {
+        "text": "သဘာဝအသားအရေပုံစံကို လွတ်လွတ်လပ်လပ်ရိုက်ကူးနိုင်ပါတယ်",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ညဘက်ရိုက်ကူးမှုဗီဒီယိုကို ရိုက်တဲ့အခါ ရတဲ့ ရလဒ်အကြောင်း ပြောပြပေးနိုင်မလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "နွိုက်စ်နည်းနည်းဖြင့် ပိုလင်းတဲ့ညဘက်ဗီဒီယိုတွေကိုတောင်မှ ရိုက်ကူးနိုင်ပါတယ်။",
+        "answerStatus": 1
+      },
+      {
+        "text": "အခုဆို မလိုချင်တဲ့အသံတွေကို စစ်ထုတ်ပြီး လိုချင်တာတွေပဲ ယူထားလို့ရပါပြီ။",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 စီးရီးကို သဘာဝကျကျ စကားပြောလိုက်ရုံနဲ့ အက်ပ်အမျိုးမျိုးကို တချိန်တည်း အသုံးပြုပြီး အလုပ်တာဝန်တွေကို ပြီးအောင်လုပ်နိုင်ပါတယ်။",
+        "answerStatus": 0
+      },
+      {
+        "text": "အရောင်အနုအရင့်အမှန်နဲ့ သဘာဝအသားအရေပုံစံကို လွတ်လွတ်လပ်လပ်ရိုက်ကူးနိုင်ပါတယ်။",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "နေ့စဉ်ဘဝ အသုံးပြုမှုကို လက်တွေ့ပြသတဲ့အခါ ချိတ်ဆက်အတွေ့အကြုံအဖြစ် အသားပေးပြောပြသင့်တဲ့ Watch အသစ်ရဲ့ အဓိကလုပ်ဆောင်ချက်က အောက်ပါထဲမှ ဘယ်အရာလဲ။ (အဖြေမှန်အားလုံးကို ရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ကြည်လင်ပြတ်သားတဲ့အသံ",
+        "answerStatus": 0
+      },
+      {
+        "text": "စွမ်းအင်ရမှတ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "အပြေး",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "နေ့စဉ်ဘဝ အသုံးပြုမှုကို လက်တွေ့ပြသတဲ့အခါ ချိတ်ဆက်အတွေ့အကြုံအဖြစ် အသားပေးပြောပြသင့်တဲ့ Buds3 Pro နဲ့ Buds3 ရဲ့ အဓိကလုပ်ဆောင်ချက်က အောက်ပါထဲမှ ဘယ်အရာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အလိုလိုသိတဲ့ UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "အသံအကောင်းဆုံးချိန်ညှိခြင်း\n(အကောင်းဆုံးချိန်ညှိထားတဲ့အသံ)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "များများဝယ် များများလျှော့",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Notes တွင် ဘယ်လုပ်ဆောင်ချက်ကို မပံ့ပိုးထားဘူးလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "စာထပ်၍ PDF ဘာသာပြန်ခြင်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "အသံဖြည်ခြင်းနဲ့ ဘာသာပြန်",
+        "answerStatus": 0
+      },
+      {
+        "text": "အသံသွင်းနေစဉ် အချိန်နဲ့တပြေးညီဘာသာပြန်",
+        "answerStatus": 1
+      },
+      {
+        "text": "အနှစ်ချုပ်နဲ့ အော်တိုဖောမတ်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI ကို သုံးဖို့ ဘာတွေပြင်ဆင်ထားသင့်လဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "သင့်ရဲ့ Samsung အကောင့်ကို ဝင်ဖို့လိုပါတယ်",
+        "answerStatus": 1
+      },
+      {
+        "text": "အသုံးပြုခအတွက် ငွေပမာဏတစ်ခု ပေးဖို့လိုပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI အတွက် ရည်ရွယ်ထုတ်လုပ်ထားတဲ့အက်ပ်ကို ဒေါင်းလုဒ်လုပ်ဖို့လိုပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ဘာမှမလိုပါ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ငါ့ရဲ့ Galaxy ကနေ One UI 7.0 သို့ ဘာလို့အဆင့်မြှင့်သင့်တာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "One UI 6.1.1 နဲ့ယှဉ်လျှင် ဘာမှလည်း များများစားစား မပြောင်းသွားဘူး",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0 နဲ့ဆိုလျှင် ယခင်ဆော့ဖ်ဝဲနဲ့ယှဉ်ပါက ပိုများတဲ့ AI ဖုန်းအတွေ့အကြုံကို ရရှိပါလိမ့်မယ်",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "အသံဖျက်ကိရိယာကို သုံးပြီး ဘယ်အရာတွေကို ဖျက်နိုင်ပါသလဲ။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "သီချင်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "လေသံ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ဆူညံသံ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 မှာ တွေ့ကြုံခံစားကြည့်ရမယ့် အဓိကလုပ်ဆောင်ချက်တွေက ဘာတွေလဲ။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ချတ်အကူ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အပြန်အလှန်အက်ပ်ဆောင်ရွက်ချက်",
+        "answerStatus": 1
+      },
+      {
+        "text": "ပေါ့ထရိတ်နဲ့ ကျွန်ုပ်၏ Filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "အသံဖျက်ကိရိယာ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 ရဲ့ အဓိကတိုးတက်မှုတွေက ဘာတွေလဲ။ (သုံးခုရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "အပြန်အလှန်အက်ပ်ဆောင်ရွက်ချက်",
+        "answerStatus": 1
+      },
+      {
+        "text": "အနေအထားအမျိုးမျိုးကို ပေါင်းစပ်အသုံးပြုခြင်း",
+        "answerStatus": 1
+      },
+      {
+        "text": "ဘက်ထရီ",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 စီးရီးမှာ တပ်ဆင်ထားတာ ဘယ် AP လဲ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra ရဲ့ တိုးတက်မှုတွေက ဘာတွေလဲ (သုံးခုရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "အလွန်မြင်ကွင်းကျယ် 50 MP ကင်မရာ",
+        "answerStatus": 1
+      },
+      {
+        "text": "အလေးချိန်",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (ရှေ့မျက်နှာပြင်အတွက်)",
+        "answerStatus": 1
+      },
+      {
+        "text": "ပရိုဆက်ဆာ",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "အောက်ပါထဲမှ ဘယ်အရာက Watch အသစ်ရဲ့ အဓိက CXP မဟုတ်ဘူးလဲ။ (တစ်ခု ရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "နောက်တဆင့် မရှိမဖြစ်\n(စွမ်းဆောင်ရည်)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI ဖြင့် စွမ်းအားပေးထားတဲ့ အိပ်စက်မှု",
+        "answerStatus": 0
+      },
+      {
+        "text": "မျက်နှာပြင်အရွယ်အစား",
+        "answerStatus": 1
+      },
+      {
+        "text": "ကိုယ်ပိုင်ပြုလုပ်လို့ရတဲ့ လေ့ကျင့်ခန်းအတွေ့အကြုံ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "နားကြပ်မသုံးဖူးတဲ့ ဝယ်သူတွေ (ပထမဆုံးဝယ်သူ) ကို Buds3 Pro နဲ့ Buds3 အကြောင်း ပြောပြတဲ့အခါ အသားပေးပြောပြသင့်တဲ့ အဓိကလုပ်ဆောင်ချက်က အောက်ပါထဲမှ ဘယ်အရာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ကြည်လင်ပြတ်သားတဲ့အသံ",
+        "answerStatus": 0
+      },
+      {
+        "text": "လိုက်လံပြောင်းလဲနိုင်တဲ့ ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "သက်သောင့်သက်သာ အံဝင်ခွင်ကျဖြစ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ပြင်ပအခြေအနေတွင် စိုပြေတောက်ပတဲ့ ကြည့်ရှုမှုကို ခံစားနိုင်ရန် Tab S10 မှာ ဘယ်လုပ်ဆောင်ချက်အသစ်ပါဝင်လာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ဒိုင်းနမစ် AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "အလင်းမပြန်ခြင်း",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "မျက်နှာပြင်ကြီး",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ဓါတ်ပုံတွေ/ဗီဒီယိုတွေကို သူငယ်ချင်းတွေနဲ့ အလွယ်တကူ မြန်မြန်မျှဝေလို့ရတဲ့ လုပ်ဆောင်ချက်ရှိလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "အမြန်မျှဝေ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "တိုက်ရိုက်ဘာသာပြန်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "အမြန်မျှဝေကို အသုံးပြုနေတုန်း အဲဒီမှာပဲ ရှိနေရမှာလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ပြဿနာမရှိပါဘူး၊ cloud မှတစ်ဆင့် အလုပ်လုပ်နေမှာပါ",
+        "answerStatus": 1
+      },
+      {
+        "text": "ဟုတ်ပါတယ်၊ စိတ်မကောင်းစွာနဲ့ပဲ အဆုံးထိရှိနေပေးရမှာပါ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "စမ်းကြည့်သင့်တဲ့ အဓိကလုပ်ဆောင်ချက်တွေကို အကြံပြုပေးလို့ရမလား။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အပြန်အလှန်အက်ပ်ဆောင်ရွက်ချက်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ပေါ့ထရိတ်နဲ့ ကျွန်ုပ်၏ Filter",
+        "answerStatus": 0
+      },
+      {
+        "text": "အသံဖျက်ကိရိယာ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 စီးရီးမှာ အပြန်အလှန်အက်ပ်ဆောင်ရွက်ချက်ကို သုံးကြည့်ဖို့အတွက် ဘယ်လိုပြောသင့်လဲ။ (ဥပမာအနေဖြင့်)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အနီးအနားရှိ တရုတ်စားသောက်ဆိုင်ကို ရှာဖွေပြီး ၎င်းကို Tony ထံသို့ ပို့ပါ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "ဒီနေ့ရာသီဥတုအချက်အလက်ပေးပါ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ဓါတ်ပုံရိုက်တဲ့အခါ filter ဘယ်လိုထည့်ရမလဲ။ (နှစ်ခု ရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ကင်မရာအက်ပ်ရဲ့ ကြိုတင်သတ်မှတ်ပေးထားတဲ့ filter ကို သုံးခြင်းဖြင့်",
+        "answerStatus": 1
+      },
+      {
+        "text": "ကင်မရာအက်ပ်ရဲ့ ညဘက်အနေအထားကို သုံးခြင်းဖြင့်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ပြခန်းထဲရှိ ဓါတ်ပုံရဲ့ ကျွန်ုပ်၏ filter ကို သုံးခြင်းဖြင့်",
+        "answerStatus": 1
+      },
+      {
+        "text": "ကင်မရာအက်ပ်ရဲ့ စလိုးမိုးရှင်းကို သုံးခြင်းဖြင့်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ငါက S Pen ရဲ့ ဖန်အကြီးစားပါ။ ငါ့အတွက် ညွှန်းပေးချင်တာများရှိလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Now Brief ဖြင့် ဘယ်သတင်းအချက်အလက်/အသေးစိတ်တွေကို ရရှိနိုင်မလဲ။ (သုံးခုရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "စွမ်းအင်ရမှတ်",
+        "answerStatus": 1
+      },
+      {
+        "text": "အချိန်စာရင်း",
+        "answerStatus": 1
+      },
+      {
+        "text": "နှိုးစက်",
+        "answerStatus": 1
+      },
+      {
+        "text": "အိမ်လိပ်စာ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Watch အသစ်မှာ ကျန်းမာရေး/အိပ်စက်မှုနဲ့ဆက်စပ်နေတဲ့ လုပ်ဆောင်ချက်ကို ရွေးချယ်ပါ (အဖြေမှန်အားလုံးကို ရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "စွမ်းအင်ရမှတ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ကိုယ်ပိုင်ပြုလုပ်လို့ရတဲ့ နည်းလမ်းပြသခြင်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "ကိုယ့်ကိုယ်ကိုယ် စိတ်ဓါတ်တက်ကြွအောင်လုပ်ခြင်းနဲ့ တိုးတက်မှု",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "အခြားဘာသာစကားပြောတဲ့ နိုင်ငံခြားသားနဲ့ အစည်းအဝေးလုပ်နေတုန်း အကောင်းဆုံးအသုံးချနိုင်တဲ့ Buds3 ရဲ့ အသင့်လျော်ဆုံး လုပ်ဆောင်ချက်ကို ရွေးချယ်ပါ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "စကားပြန်",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "သက်သောင့်သက်သာ အံဝင်ခွင်ကျဖြစ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ကြည်လင်ပြတ်သားတဲ့အသံ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 ရဲ့ စာအုပ် ကာဗာ ကီးဘုတ်သစ်အကြောင်း အသစ်က ဘာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အနောက်မီး ",
+        "answerStatus": 0
+      },
+      {
+        "text": "သီးသန့်ထည့်သွင်းထားတဲ့ AI ကီး",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note လောင်ချာ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google အကူ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "စွမ်းအင်ရမှတ်အတွက် စံနှုန်းသတ်မှတ်ချက်က ဘာတွေလဲ။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အိပ်စက်မှု",
+        "answerStatus": 0
+      },
+      {
+        "text": "လှုပ်ရှားမှု",
+        "answerStatus": 0
+      },
+      {
+        "text": "နှလုံးခုန်နှုန်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "အလိုက်ပေးလဲလှယ်ရဲ့ အဓိကအကျိုးကျေးဇူးက ဘာလဲ။ ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "လစဉ်ငွေကြေးအစီအစဉ်ကို ရရှိနိုင်ပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "နောက်ဆုံးပေါ်စမတ်ဖုန်း ဝယ်ယူခြင်းရဲ့ ဝန်ထုပ်ဝန်ပိုး/ကုန်ကျစရိတ်ကို ချက်ချင်းလျှော့ချနိုင်ပါတယ်",
+        "answerStatus": 1
+      },
+      {
+        "text": "ဈေးနှုန်းအတူတူနဲ့ 2X ပိုများတဲ့သိုလှောင်ခန်းကို ရရှိနိုင်ပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "တစ်ခုဝယ်၊ တစ်ခုအခမဲ့ ရရှိနိုင်ပါတယ်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ငါက S22 အသုံးပြုသူပါ။ Galaxy S25 ရဲ့ အဓိကတိုးတက်မှုတွေက ဘာတွေလဲ။ (နှစ်ခု ရွေးချယ်ပါ)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "ပုံအရည်အသွေး",
+        "answerStatus": 1
+      },
+      {
+        "text": "ကင်မရာအရေအတွက်",
+        "answerStatus": 0
+      },
+      {
+        "text": "အတိုင်းအတာ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra သီးသန့် လုပ်ဆောင်ချက်တွေအကြောင်း ပြောပြပေးလို့ရမလား။ (အားလုံးရွေးချယ်ပါ)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "တပါတည်းပါဝင်တဲ့ S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x ဇူမ်းနဲ့ 200 MP ကင်မရာ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ပိုကြီးတဲ့ဖန်သားပြင် / ဘက်ထရီ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Android မဟုတ်တဲ့ device တွေကို ငါ့ရဲ့ဖိုင်တွေ မျှဝေလို့ရတဲ့နည်းလမ်းတွေ ရှိပါသလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "အမြန်မျှဝေ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ရိုက်ကူးထားတဲ့ ဗီဒီယိုကို စလိုးမိုးရှင်းနဲ့ပြတဲ့ လုပ်ဆောင်ချက်က ဘာလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ညဘက်ရိုက်ကူးမှုဗီဒီယိုများ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အသံဖျက်ကိရိယာ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ချက်ချင်း အနှေးလှုပ်ရှားမှု",
+        "answerStatus": 1
+      },
+      {
+        "text": "အလိုအလျောက်ဖြတ်ခြင်း",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "တနေ့တနေ့ ဖုန်းအများကြီးဆက်ရပေမယ့် ဘာတွေပြောခဲ့လဲဆိုတာကို ခဏခဏမေ့တတ်တယ်။ ဒီအခြေအနေအတွက် ညွှန်းပေးနိုင်တဲ့ လုပ်ဆောင်ချက်ကောင်းကောင်းများ ရှိပါသလား။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "မှတ်တမ်းအကူ",
+        "answerStatus": 1
+      },
+      {
+        "text": "တိုက်ရိုက်ဘာသာပြန်",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "အနေအထားအမျိုးမျိုးကို ပေါင်းစပ်အသုံးပြု၍ ရှာဖွေခြင်း",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "ခဏခဏ ဖုန်းပြုတ်ကျတယ်(သို့မဟုတ်)ပျောက်တယ်။ ပျက်တတ်တာဆိုတော့ ဈေးကြီးတာဝယ်ရမှာ စိုးရိမ်မိတယ်။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "\"Samsung Care+\" ကို ညွှန်းပါတယ်",
+        "answerStatus": 1
+      },
+      {
+        "text": "\"Samsung Wallet\" ကို ညွှန်းပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "\"အမြန်မျှဝေ\" ကို ညွှန်းပါတယ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "\"ပိုဈေးသက်သာတဲ့မော်ဒယ်\" ကို ညွှန်းပါတယ်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": null,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+ မှာ ဘယ်အရာက အကျုံးမဝင်ဘူးလဲ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "စမတ်ဖုန်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Desktop PC",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ring က လက်ချောင်းမှာ တစ်နေလျှင် ဘာလုပ်ရမလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ပွတ်တိုက်မှုကို လျော့စေဖို့အတွက် ချွတ်ဖို့ပိုလွယ်အောင်လုပ်ပေးတဲ့ လက်လိမ်းခရင်မ်၊ သန့်စင်အဆီ(သို့မဟုတ်)ဆပ်ပြာတို့ကဲ့သို့ ချောဆီကို အသုံးပြုပါ။",
+        "answerStatus": 0
+      },
+      {
+        "text": "သွေးကြောတွေကို ယာယီညှစ်ထားပြီး လက်ချောင်းသေးသွားအောင်လုပ်ဖို့ ရေအေးထဲမှာ သင့်လက်ချောင်းကို နှစ်ပါ။ ",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 မိနစ်ကျော် လက်ကို မြှောက်ထားပြီး ရောင်ရမ်းခြင်းကို လျှော့ချပါ။",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "အောက်ပါကွက်လပ်ထဲမှာ ဖြည့်ဖို့ ဘယ်အဖြေက အသင့်လျော်ဆုံးဖြစ်မလဲ။\nGalaxy Ring က ဝတ်ဆင်နိုင်တဲ့ device အသစ်ဖြစ်ပါတယ်။ အထူးသဖြင့် AI ဖြင့် စွမ်းအားပေးထားတဲ့ ကျန်းမာရေးခြေရာခံခြင်းနဲ့________။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "စွမ်းအင်ရမှတ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "ဘုစတာကတ်",
+        "answerStatus": 0
+      },
+      {
+        "text": "အိပ်စက်မှုနည်းပြ",
+        "answerStatus": 1
+      },
+      {
+        "text": "နှစ်ကြိမ်ဖိညှပ်",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy Ring ရဲ့ အဓိက CXP က အောက်ပါထဲမှ ဘယ်တစ်ခုလဲ။",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ကိုယ်ပိုင်ပြုလုပ်လို့ရတဲ့ နည်းလမ်းပြသခြင်း",
+        "answerStatus": 0
+      },
+      {
+        "text": "24/7 သက်သောင့်သက်သာဝတ်ဆင်",
+        "answerStatus": 0
+      },
+      {
+        "text": "နှစ်ကြိမ်ဖိညှပ်  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "အထက်ပါအားလုံး",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

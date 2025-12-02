@@ -1,0 +1,455 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  ENV: "${ENV}"
+  SERVICE: "${SERVICE}"
+  ADMIN_IMAGE: "${DOCKER_REPOSITORY_IMAGE}/${ADMIN_NAME}:${CI_COMMIT_SHORT_SHA}"
+  CLIENT_IMAGE: "${DOCKER_REPOSITORY_IMAGE}/${CLIENT_NAME}:${CI_COMMIT_SHORT_SHA}"
+
+before_script:
+  # - apk add --no-cache openssh
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REPOSITORY_HOST"
+
+# Build
+
+build_stg_client:
+  stage: build
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
+  script:
+    - |
+      docker build \
+      --build-arg ENV=$ENV \
+      --build-arg DATABASE_URL=$DATABASE_URL \
+      --build-arg AUTH_URL=$AUTH_URL \
+      --build-arg NEXTAUTH_URL=$NEXTAUTH_URL \
+      --build-arg AUTH_SECRET=$AUTH_SECRET \
+      --build-arg NEXTAUTH_SECRET=$NEXTAUTH_SECRET \
+      --build-arg SUMTOTAL_CLIENT_ID=$SUMTOTAL_CLIENT_ID \
+      --build-arg SUMTOTAL_CLIENT_SECRET=$SUMTOTAL_CLIENT_SECRET \
+      --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
+      --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
+      --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
+      --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
+      --build-arg AWS_SES_REGION=$AWS_SES_REGION \
+      --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
+      --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
+      --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
+      -f client/Dockerfile \
+      -t $CLIENT_IMAGE \
+      .
+    - docker push $CLIENT_IMAGE
+  environment:
+    name: staging-client
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/client"'
+      when: always
+    - if: '$ENV == "staging" && $SERVICE =~ /client/'
+      when: always
+    - when: never
+  tags:
+    - docker
+    - linux
+
+build_stg_admin:
+  stage: build
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
+  script:
+    - |
+      docker build \
+      --build-arg ENV=$ENV \
+      --build-arg DATABASE_URL=$DATABASE_URL \
+      --build-arg AUTH_URL=$AUTH_URL \
+      --build-arg NEXTAUTH_URL=$NEXTAUTH_URL \
+      --build-arg AUTH_SECRET=$AUTH_SECRET \
+      --build-arg NEXTAUTH_SECRET=$NEXTAUTH_SECRET \
+      --build-arg SUMTOTAL_CLIENT_ID=$SUMTOTAL_CLIENT_ID \
+      --build-arg SUMTOTAL_CLIENT_SECRET=$SUMTOTAL_CLIENT_SECRET \
+      --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
+      --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
+      --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_CLIENT_URL=$NEXT_PUBLIC_CLIENT_URL \
+      --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
+      --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
+      --build-arg AWS_SES_REGION=$AWS_SES_REGION \
+      --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
+      --build-arg ASSETS_S3_BUCKET_NAME=$ASSETS_S3_BUCKET_NAME \
+      --build-arg AWS_CLOUDFRONT_DISTRIBUTION_ID=$AWS_CLOUDFRONT_DISTRIBUTION_ID \
+      --build-arg ASSETS_S3_BUCKET_REGION=$ASSETS_S3_BUCKET_REGION \
+      --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
+      --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
+      -f dashboard/Dockerfile \
+      -t $ADMIN_IMAGE \
+      .
+    - docker push $ADMIN_IMAGE
+  environment:
+    name: staging-admin
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/admin"'
+      when: always
+    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
+      when: always
+    - when: never
+  tags:
+    - docker
+    - linux
+
+build_prd_client:
+  stage: build
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
+  script:
+    - |
+      # Docker 이미지 빌드
+      docker build \
+      --build-arg ENV=$ENV \
+      --build-arg DATABASE_URL=$DATABASE_URL \
+      --build-arg AUTH_URL=$AUTH_URL \
+      --build-arg NEXTAUTH_URL=$NEXTAUTH_URL \
+      --build-arg AUTH_SECRET=$AUTH_SECRET \
+      --build-arg NEXTAUTH_SECRET=$NEXTAUTH_SECRET \
+      --build-arg SUMTOTAL_CLIENT_ID=$SUMTOTAL_CLIENT_ID \
+      --build-arg SUMTOTAL_CLIENT_SECRET=$SUMTOTAL_CLIENT_SECRET \
+      --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
+      --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
+      --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
+      --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
+      --build-arg AWS_SES_REGION=$AWS_SES_REGION \
+      --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
+      --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
+      --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
+      -f client/Dockerfile \
+      -t $CLIENT_IMAGE \
+      .
+      docker push $CLIENT_IMAGE
+  environment:
+    name: production-client
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "release/client"'
+      when: always
+    - if: '$ENV == "production" && $SERVICE =~ /client/'
+      when: always
+    - when: never
+  tags:
+    - docker
+    - linux
+
+build_prd_admin:
+  stage: build
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+      command:
+        [
+          "--tls=false",
+          "--host=tcp://0.0.0.0:2375",
+          "--storage-driver=overlay2",
+        ]
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: "" # TLS 사용 안함 설정
+  script:
+    - |
+      docker build \
+      --build-arg ENV=$ENV \
+      --build-arg DATABASE_URL=$DATABASE_URL \
+      --build-arg AUTH_URL=$AUTH_URL \
+      --build-arg NEXTAUTH_URL=$NEXTAUTH_URL \
+      --build-arg AUTH_SECRET=$AUTH_SECRET \
+      --build-arg NEXTAUTH_SECRET=$NEXTAUTH_SECRET \
+      --build-arg SUMTOTAL_CLIENT_ID=$SUMTOTAL_CLIENT_ID \
+      --build-arg SUMTOTAL_CLIENT_SECRET=$SUMTOTAL_CLIENT_SECRET \
+      --build-arg SUMTOTAL_CALLBACK_URL=$SUMTOTAL_CALLBACK_URL \
+      --build-arg NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT=$NEXT_PUBLIC_AUTH_SUMTOTAL_SIGNOUT \
+      --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+      --build-arg NEXT_PUBLIC_CLIENT_URL=$NEXT_PUBLIC_CLIENT_URL \
+      --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN \
+      --build-arg NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH \
+      --build-arg AWS_SES_REGION=$AWS_SES_REGION \
+      --build-arg AWS_SES_SENDER=$AWS_SES_SENDER \
+      --build-arg ASSETS_S3_BUCKET_NAME=$ASSETS_S3_BUCKET_NAME \
+      --build-arg AWS_CLOUDFRONT_DISTRIBUTION_ID=$AWS_CLOUDFRONT_DISTRIBUTION_ID \
+      --build-arg ASSETS_S3_BUCKET_REGION=$ASSETS_S3_BUCKET_REGION \
+      --build-arg ENCRYPT_SECRET_KEY=$ENCRYPT_SECRET_KEY \
+      --build-arg PRISMA_CLIENT_OUTPUT=$PRISMA_CLIENT_OUTPUT \
+      --build-arg NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID \
+      -f dashboard/Dockerfile \
+      -t $ADMIN_IMAGE \
+      .
+    - docker push $ADMIN_IMAGE
+  environment:
+    name: production-admin
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "release/admin"'
+      when: always
+    - if: '$ENV == "production" && $SERVICE =~ /admin/'
+      when: always
+    - when: never
+  tags:
+    - docker
+    - linux
+
+# Deploy
+
+deploy_stg_client:
+  stage: deploy
+  before_script:
+    # 1) SSH 키 설정(비밀키를 GitLab CI/CD Variables에 SSH_PRIVATE_KEY라는 이름으로 저장)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    # 2) StrictHostKeyChecking 무시 (호스트키 자동 yes)
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  script:
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/client"'
+      when: always
+    - if: '$ENV == "staging" && $SERVICE =~ /client/'
+      when: always
+    - when: never
+  environment:
+    name: staging-client
+  tags:
+    - deploy
+
+deploy_stg_admin:
+  stage: deploy
+  before_script:
+    # 1) SSH 키 설정(비밀키를 GitLab CI/CD Variables에 SSH_PRIVATE_KEY라는 이름으로 저장)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    # 2) StrictHostKeyChecking 무시 (호스트키 자동 yes)
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  script:
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE && \
+        sudo docker stop $ADMIN_NAME || true && \
+        sudo docker rm $ADMIN_NAME || true && \
+        sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
+      "
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging/admin"'
+      when: always
+    - if: '$ENV == "staging" && $SERVICE =~ /admin/'
+      when: always
+    - when: never
+  environment:
+    name: staging-admin
+  tags:
+    - deploy
+
+deploy_prd_client:
+  stage: deploy
+  before_script:
+    # 1) SSH 키 설정(비밀키를 GitLab CI/CD Variables에 SSH_PRIVATE_KEY라는 이름으로 저장)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    # 2) StrictHostKeyChecking 무시 (호스트키 자동 yes)
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  script:
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_C "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_D "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_E "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_F "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_A "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_B "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_C "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_D "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_E "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_CLIENT_F "\
+        sudo docker stop $CLIENT_NAME || true && \
+        sudo docker rm $CLIENT_NAME || true && \
+        sudo docker run -d --name $CLIENT_NAME -p 3000:3000 $CLIENT_IMAGE \
+      "
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "release/client"'
+      when: always
+    - if: '$ENV == "production" && $SERVICE =~ /client/'
+      when: always
+    - when: never
+  environment:
+    name: production-client
+  tags:
+    - deploy
+
+deploy_prd_admin:
+  stage: deploy
+  before_script:
+    # 1) SSH 키 설정(비밀키를 GitLab CI/CD Variables에 SSH_PRIVATE_KEY라는 이름으로 저장)
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    # 2) StrictHostKeyChecking 무시 (호스트키 자동 yes)
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  script:
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
+        sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REPOSITORY_HOST && \
+        sudo docker image prune --all --force && \
+        sudo docker pull $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_A "\
+        sudo docker stop $ADMIN_NAME || true && \
+        sudo docker rm $ADMIN_NAME || true && \
+        sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
+      "
+    - |
+      ssh -J $EC2_USER@$EC2_BASTION:4022 -p 4022 $EC2_USER@$EC2_ADMIN_B "\
+        sudo docker stop $ADMIN_NAME || true && \
+        sudo docker rm $ADMIN_NAME || true && \
+        sudo docker run -d --name $ADMIN_NAME -p 3000:3000 $ADMIN_IMAGE \
+      "
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "release/admin"'
+      when: always
+    - if: '$ENV == "production" && $SERVICE =~ /admin/'
+      when: always
+    - when: never
+  environment:
+    name: production-admin
+  tags:
+    - deploy

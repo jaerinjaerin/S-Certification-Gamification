@@ -1,16 +1,36 @@
-// app/api/users/[userId]/activities/route.ts
-import { auth } from '@/auth';
-import { NextResponse } from 'next/server';
+export const dynamic = "force-dynamic";
+import { auth } from "@/auth";
+import { prisma } from "@/prisma-client";
+import { refreshToken } from "@/services/api/refresh_token";
+import { BadgeApiType } from "@prisma/client";
+import * as Sentry from "@sentry/nextjs";
+import { NextResponse } from "next/server";
+import { createBadgeLog, extractRawLogFromResponse } from "../_lib/log";
 
-export async function PUT(request: Request, context: any) {
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { activityId, userId, campaignId, domainId } = body as {
+    activityId: string;
+    userId: string;
+    campaignId: string;
+    domainId: string;
+  };
+
   try {
     const session = await auth();
 
     if (!session) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+      createBadgeLog({
+        apiType: BadgeApiType.REGISTER,
+        activityId,
+        userId,
+        campaignId,
+        domainId,
+        status: 401,
+        message: "Unauthorized(no session)",
+      });
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
-    console.log('session', session);
 
     const account = await prisma.account.findFirst({
       where: {
@@ -18,51 +38,114 @@ export async function PUT(request: Request, context: any) {
       },
     });
 
-    console.log('account', account);
-
     if (!account) {
+      createBadgeLog({
+        apiType: BadgeApiType.REGISTER,
+        activityId,
+        userId,
+        campaignId,
+        domainId,
+        status: 404,
+        message: "Account not found",
+      });
+
       return NextResponse.json(
-        { message: 'Account not found' },
+        { message: "Account not found" },
         { status: 404 }
       );
     }
 
-    const body = await request.json();
-    const { activityId } = body;
+    let accessToken = account.access_token;
+    let isTokenRefreshed = false;
 
-    // try {
-    const response = await fetch(
-      `https://samsung.sumtotal.host/apis/api/v1/users/activities/${activityId}/register`,
-      {
-        method: 'PUT',
-        // mode: 'no-cors',
-        cache: 'no-store',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${account.access_token}`, // 액세스 토큰 사용
-          // Authorization:
-          //   'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkEwQjVCMUFCMTUzMjI1MzRDNUIxQUU3QTdEMjZDRkI3NDYzNTIwMzNSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6Im9MV3hxeFV5SlRURnNhNTZmU2JQdDBZMUlETSJ9.eyJuYmYiOjE3MzEzMDMyMzMsImV4cCI6MTczMTMxMDQzMywiaXNzIjoiaHR0cHM6Ly9zYW1zdW5nLnN1bXRvdGFsLmhvc3QvYXBpc2VjdXJpdHkiLCJhdWQiOlsiZXh0YXBpcyIsImh0dHBzOi8vc2Ftc3VuZy5zdW10b3RhbC5ob3N0L2FwaXNlY3VyaXR5L3Jlc291cmNlcyJdLCJjbGllbnRfaWQiOiJTQU1TVU5HRUxFQ1RST05JQ1NfUFJPRF9hOGUxNGVkZTI5Mjk0OWM5OGNiZmU3NzllZGIyZGFhYyIsInN1YiI6ImhxX2FwaS50ZXN0MSIsImF1dGhfdGltZSI6MTczMTMwMjk0NCwiaWRwIjoibG9jYWwiLCJuYW1lIjoiaHFfYXBpLnRlc3QxIiwidXNlcm5hbWUiOiJocV9hcGkudGVzdDEiLCJtYXNrZWR1c2VyaWQiOiIyM0UzOEI2NEU0NjgwRTBBQkZBM0JDQjBGNjg3NURCNiIsInJvbGUiOiJQb3J0YWwgVXNlciIsInRlbmFudCI6IlNBTVNVTkdFTEVDVFJPTklDU19QUk9EIiwiYnJva2Vyc2Vzc2lvbiI6ImQ5MzU3N2RkZjY5NTQ2NzBiYjc0OTg4NWQ1NWExMThhIiwiY3VsdHVyZSI6ImVuLVVTIiwibGFuZ3VhZ2UiOiJlbi11cyIsImRhdGVmb3JtYXQiOiJNTS9kZC95eXl5IiwidGltZWZvcm1hdCI6ImhoOm1tIGEiLCJ1c2VyaWQiOiIyMTM1MTU2IiwicGVyc29ucGsiOiIxNDg0MjAzIiwiZ3Vlc3RhY2NvdW50IjoiMCIsInVzZXJ0aW1lem9uZWlkIjoiQXNpYS9TZW91bCIsInR3b0xldHRlcklTT0xhbmd1YWdlTmFtZSI6ImVuIiwiaXNydGwiOiJGYWxzZSIsInBlcnNvbmd1aWQiOiI0ZjM3YjM0Mi0wZjYyLTQxMzItOTM1MS0wMGYzN2NhNTMzM2EiLCJ1c2VyaWRoYXNoIjoiMTg5Nzk0NDQyMyIsIndmbXVzZXIiOiJUcnVlIiwicHJvcGVybmFtZSI6IlRlc3QrVGVzdCIsImp0aSI6IjVCMzkzMTUwRTI2REFBMTU4RTNGMjhCMjM2QUI2QTc0IiwiaWF0IjoxNzMxMzAzMjMzLCJzY29wZSI6WyJhbGxhcGlzIl0sImFtciI6WyJwd2QiXX0.xZw6ogWCaTNtX0Zo4bbkT-_e-6-wC0KrNWZd5oNWiPrQIpFJlPZy-gjlh2yc2ukq6jFiXxlS58LaEs6OqIcjKomYRjIiuLJxxAdmjpB4ZmEFqjNyufVvGamNilV7aCCaX_Ru76uTSqDxP0sleo85qtY0LzknBKzr4EcNNGoLhSn1TgXUGKtcMphpwPg_Yomkdnp3rXDxI62n_-EYInUNnrtAFBgCG3tKkQnv9-lAv3olnxUHKL1L9MUKsroKsTyNIbM82QhU1LCCo7YktK97cQ5sNiMYNtWQ9iSEIxtUX33sz7ff2copMhGNk77gCcLsMxO9Jtk2T_iC7xMaUP09gA', // 액세스 토큰 사용
-        },
-      }
-    );
-
-    console.log('response', response);
-
-    if (!response.ok) {
-      // const errorData = await response.json();
-      return NextResponse.json(
-        { message: response.statusText || 'Failed to fetch activities' },
-        { status: response.status }
+    const tryNumber = 2;
+    for (let attempt = 0; attempt < tryNumber; attempt++) {
+      const response = await fetch(
+        `https://samsung.sumtotal.host/apis/api/v1/users/activities/${activityId}/register`,
+        {
+          method: "PUT",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
-    }
 
-    const data = await response.json();
-    console.log('data', data);
-    return NextResponse.json(data, { status: 200 });
+      console.log("response", response);
+
+      // 성공 처리
+      if (response.ok) {
+        const data = await response.json();
+        const isRegistered = data?.isRegistered;
+        const status = isRegistered ? response.status : 422;
+
+        createBadgeLog({
+          apiType: BadgeApiType.REGISTER,
+          activityId,
+          userId,
+          campaignId,
+          domainId,
+          accessToken,
+          accountUserId: account.providerAccountId,
+          status,
+          message:
+            `${response.statusText} - isRegistered: ${data.isRegistered}` ||
+            `success - isRegistered: ${data.isRegistered}`,
+          rawLog: JSON.stringify(data),
+        });
+
+        if (data?.isRegistered === false) {
+          return NextResponse.json(data, { status: 422 });
+        }
+
+        return NextResponse.json(data, { status: 200 });
+      }
+
+      // 실패 처리
+      const rawLog = await extractRawLogFromResponse(response);
+      createBadgeLog({
+        apiType: BadgeApiType.REGISTER,
+        activityId,
+        userId,
+        campaignId,
+        domainId,
+        accountUserId: account.providerAccountId,
+        accessToken,
+        status: response.status,
+        message: response.statusText || "Fail to register activity",
+        rawLog,
+      });
+
+      // Accesstoken 만료 처리 (loop를 돌면서 1회만 refresh)
+      if (response.status === 401 && attempt === 0 && !isTokenRefreshed) {
+        if (account.refresh_token != null && account.refresh_token !== "") {
+          console.log("Refreshing token...");
+          try {
+            accessToken = await refreshToken(account.id, account.refresh_token);
+
+            isTokenRefreshed = true;
+            continue; // Retry the request with the new token
+          } catch (error) {
+            console.error("Error refreshing token:", error);
+          }
+        }
+      }
+
+      const isLastAttempt = attempt === tryNumber - 1;
+      if (isLastAttempt) {
+        return NextResponse.json(
+          { message: "Fail to register activity" },
+          { status: response.status }
+        );
+      }
+    }
   } catch (error) {
-    console.error('Error fetching activities:', error);
+    console.error("Error in PUT handler:", error);
+
+    Sentry.captureException(error);
     return NextResponse.json(
-      { message: 'An unexpected error occurred' },
+      { message: "An unexpected error occurred" },
       { status: 500 }
     );
   }

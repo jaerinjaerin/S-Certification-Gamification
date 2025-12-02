@@ -1,0 +1,61 @@
+Warunki przystąpienia do certyfikacji eksperta Galaxy AI 2025
+
+Warunki przystąpienia wraz z naszymi Zasadami zachowania poufności informacji określone poniżej („Warunki”) są zawierane między firmą koreańską Samsung Electronics Co., Ltd. z siedzibą w 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republika Korei (wraz z jej podmiotami stowarzyszonymi, „Samsung”, „my”) i użytkownikiem i regulują dostęp użytkownika do Witryny, Aplikacji mobilnej, Materiałów i Usług (określonych poniżej). Przed uzyskaniem dostępu do aplikacji SamsungPlus („Witryna” lub „Aplikacja mobilna”) lub jej używaniem należy uważnie przeczytać te Warunki. Jeżeli użytkownik nie akceptuje dowolnych z postanowień tych Warunków, nie może uzyskiwać dostępu ani w inny sposób używać Witryny i Aplikacji mobilnej. Używanie Witryny i Aplikacji mobilnej oznacza wyrażenie zgody na wszystkie postanowienia tych Warunków.
+
+Ogólne użycie i ograniczenia
+
+Cała zawartość udostępniana przez firmę Samsung w Witrynie i Aplikacji mobilnej (w tym, lecz nie wyłącznie, dane, informacje, dokumenty, teksty, wzory, znaki towarowe, logo, grafiki, obrazy, ikony, dźwięki, filmy, kod i oprogramowanie) („Materiały”) są wyłączną własnością firmy Samsung, jej licencjodawców lub dostawców zawartości i są chronione prawem autorskim, znakami towarowymi i innymi obowiązującymi przepisami. Użytkownik może uzyskiwać dostęp do Materiałów umieszczonych w Witrynie lub Aplikacji mobilnej wyłącznie w celu szkolenia z zakresu obsługi usługi SamsungPlus i na podstawie wyraźnej zgody firmy Samsung, o ile nie zmodyfikuje ani nie usunie żadnych informacji o prawach autorskich, znakach towarowych lub innych powiadomień o prawach dołączonych do Materiałów, które kopiuje, pobiera, drukuje lub do których uzyskuje dostęp.
+
+Użytkownik zgadza się nie używać, prezentować, odtwarzać, przesyłać, modyfikować, rozpowszechniać, rozprzestrzeniać, sprzedawać, publikować, tworzyć prac pochodnych, rozsyłać, puszczać w obieg ani w żaden sposób nadużywać dowolnych Materiałów, w całości lub części, pocztą e-mail lub innymi środkami, w żadnym celu innym niż cele określone w tych warunkach i wymagające wyraźnej zgody firmy Samsung. Wszelkie nieupoważnione użycie Witryny, Aplikacji mobilnej, Materiałów lub Usług może stanowić naruszenie praw autorskich, znaków towarowych i innych obowiązujących przepisów.
+
+Zabronione użycie
+
+Użytkownik nie może używać Witryny ani Aplikacji mobilnej, żadnych Materiałów ani dowolnych usług udostępnianych za pośrednictwem Witryny lub Aplikacji mobilnej („Usługi”): (a) w sposób powodujący naruszenie lokalnego, stanowego, krajowego, obcego lub międzynarodowego prawa; (b) do prześladowania lub krzywdzenia innych osób; (c) do podszywania się pod osobę lub podmiot albo w inny sposób w celu wprowadzania w błąd w zakresie powiązania z osobą lub podmiotem; lub (d) do zakłócania lub przerywania działania Witryny, Aplikacji mobilnej lub Usług.
+
+Użytkownik oświadcza, że nie będzie „fałszować” ani „kopiować” Witryny lub Aplikacji mobilnej ani dowolnej części Materiałów lub Usług na żadnym innym serwerze lub urządzeniu internetowym bez uprzedniej pisemnej zgody firmy Samsung. Ponadto użytkownik nie może używać żadnej części Materiałów lub Usług w żadnych znacznikach meta ani innych „ukrytych tekstach” bez uprzedniej pisemnej zgody firmy Samsung.
+
+Jak wziąć udział w certyfikacji eksperta Galaxy AI?
+
+Użytkownicy Samsung+
+
+Po zalogowaniu się w aplikacji Samsung+ można uzyskać dostęp do modułów szkoleniowych. Udział w quizie jest dozwolony tylko po ukończeniu szkolenia. Po ukończeniu wszystkich etapów quizu użytkownik otrzyma odznakę eksperta Galaxy AI.
+
+Użytkownicy inni niż Samsung+
+
+Osoby niekorzystające z aplikacji Samsung+ muszą najpierw ukończyć szkolenie online lub offline zapewniane przez lokalny podmiot zależny. Po ukończeniu szkolenia można wziąć udział w quizie, korzystając z łącza przekazanego podmiotowi zależnemu przez Samsung. Po ukończeniu wszystkich etapów quizu użytkownik otrzyma odznakę eksperta Galaxy AI.
+
+Można wielokrotnie powtarzać quiz, jednak przyznana zostanie tylko jedna odznaka.
+
+Każdy etap quizu ma limit pięciu nieprawidłowych odpowiedzi. Po wyczerpaniu liczby nieprawidłowych odpowiedzi przed ukończeniem etap należy powtórzyć od pierwszego pytania. Quiz certyfikacyjny należy ukończyć samodzielnie. Oszukiwanie spowoduje dyskwalifikację i unieważnienie wyników quizu. Certyfikacja eksperta Galaxy AI jest bezpłatna.
+
+Zawartość podmiotów trzecich i łącza do innych witryn
+
+Witryna lub Aplikacja mobilna mogą zawierać zawartość podmiotów trzecich lub łącza do innych witryn lub aplikacji mobilnych. Ze względu na to, że nie mamy kontroli nad witrynami ani aplikacjami mobilnymi podmiotów trzecich, użytkownik przyjmuje do wiadomości i akceptuje wyłączenie naszej odpowiedzialności za dostępność takich witryn lub aplikacji mobilnych. Nie aprobujemy i nie ponosimy odpowiedzialności za żadną zawartość, reklamy, usługi, produkty ani inne materiały dostępne w takich witrynach i aplikacjach mobilnych ani za ich pośrednictwem. Użytkownik przyjmuje również do wiadomości i akceptuje, że firma Samsung nie ponosi odpowiedzialności, bezpośrednio lub pośrednio, za wszelkie szkody lub straty spowodowane lub rzekomo spowodowane przez lub wynikające z użycia lub na podstawie dowolnej zawartości, reklam, usług, produktów lub innych materiałów dostępnych w takich witrynach lub aplikacjach mobilnych. Wszystkie takie witryny i aplikacje mobilne podlegają osobnym warunkom użytkowania.
+
+Ponadto łącze do witryny podmiotu trzeciego nie oznacza, że firma Samsung przyjmuje odpowiedzialność za zawartość lub użycie takiej witryny. Użytkownik jest odpowiedzialny za podjęcie niezbędnych środków ostrożności, aby upewnić się, że wybrana zawartość jest wolna od elementów, takich jak wirusy, robaki, trojany i inne oprogramowanie szkodliwe.
+
+OGÓLNE WYŁĄCZENIE ODPOWIEDZIALNOŚCI
+
+UŻYTKOWNIK PRZYJMUJE DO WIADOMOŚCI I AKCEPTUJE, ŻE KORZYSTA Z WITRYNY, APLIKACJI MOBILNEJ LUB DOWOLNYCH MATERIAŁÓW LUB USŁUG NA WŁASNE RYZYKO I ŻE W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO PONOSI RYZYKO CO DO JAKOŚCI, WYDAJNOŚCI I DOKŁADNOŚCI. W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO WITRYNA I APLIKACJA MOBILNA, MATERIAŁY I USŁUGI SĄ UDOSTĘPNIANE W TAKIM STANIE, W JAKIM SIĘ ZNAJDUJĄ, I DOSTĘPNE SĄ BEZ GWARANCJI, WARUNKÓW, POSTANOWIEŃ, OŚWIADCZEŃ LUB ZOBOWIĄZAŃ ŻADNEGO RODZAJU, WYRAŹNYCH LUB DOROZUMIANYCH. W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO FIRMA SAMSUNG W SPOSÓB WYRAŹNY WYŁĄCZA SWOJĄ ODPOWIEDZIALNOŚĆ Z TYTUŁU WSZYSTKICH GWARANCJI, WARUNKÓW, POSTANOWIEŃ, OŚWIADCZEŃ I ZOBOWIĄZAŃ DOTYCZĄCYCH WITRYNY, APLIKACJI MOBILNEJ, MATERIAŁÓW I USŁUG, WYRAŹNYCH LUB DOROZUMIANYCH, W TYM, LECZ NIE WYŁĄCZNIE, GWARANCJI WARTOŚCI HANDLOWEJ, JAKOŚCI, PRZYDATNOŚCI DO OKREŚLONEGO CELU, DOKŁADNOŚCI, NIEZAKŁÓCONEGO KORZYSTANIA I NIENARUSZALNOŚCI PRAWA PODMIOTÓW TRZECICH. W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO FIRMA SAMSUNG NIE GWARANTUJE DOKŁADNOŚCI, POPRAWNOŚCI, TERMINOWOŚCI, ZGODNOŚCI Z PRAWEM LUB KOMPLETNOŚCI DOWOLNYCH MATERIAŁÓW LUB USŁUG UDOSTĘPNIANYCH ZA POŚREDNICTWEM WITRYNY lub APLIKACJI MOBILNEJ I NIE UDZIELA GWARANCJI, ŻE WITRYNA, APLIKACJA MOBILNA, MATERIAŁY LUB USŁUGI BĘDĄ SPEŁNIAĆ WYMAGANIA UŻYTKOWNIKA LUB ŻE DZIAŁANIE WITRYNY, APLIKACJI MOBILNEJ LUB USŁUG BĘDZIE NIEZAKŁÓCONE LUB POZBAWIONE BŁĘDÓW. ŻADNE PORADY LUB INFORMACJE, PISEMNE LUB USTNE, UZYSKANE PRZEZ UŻYTKOWNIKA ZA POŚREDNICTWEM WITRYNY lub APLIKACJI MOBILNEJ LUB OD FIRMY SAMSUNG, LUB DOWOLNEJ FIRMY Z GRUPY SAMSUNG, LUB OD ODPOWIEDNICH PREZESÓW, PRACOWNIKÓW, DYREKTORÓW LUB AGENTÓW TAKICH PODMIOTÓW (ZBIORCZO OKREŚLANYCH „PODMIOTAMI SAMSUNG”) NIE STANOWIĄ GWARANCJI.
+
+OGRANICZENIE ODPOWIEDZIALNOŚCI
+
+W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO, W ŻADNYM PRZYPADKU, W TYM Z TYTUŁU ZANIEDBANIA, FIRMA SAMSUNG NIE PONOSI ŻADNEJ ODPOWIEDZIALNOŚCI KONTRAKTOWEJ LUB DELIKTOWEJ ZA ŻADNE BEZPOŚREDNIE, POŚREDNIE, PRZYPADKOWE, SZCZEGÓLNE LUB WYNIKOWE SZKODY, UTRATĘ ZYSKÓW, PRZYCHODÓW, KORZYŚCI, DZIAŁALNOŚCI LUB USZKODZENIE DANYCH, KOSZTY ZASTĘPSTWA PROCESOWEGO, WYDATKI LUB WSZELKIE INNE SZKODY WYNIKAJĄCE LUB POWSTAŁE W POŁĄCZENIU Z WSZELKIMI INFORMACJAMI ZAMIESZCZONYMI W WITRYNIE I APLIKACJI MOBILNEJ LUB SPOWODOWANE PRZEZ UŻYCIE WITRYNY I APLIKACJI MOBILNEJ, WSZELKICH MATERIAŁÓW LUB USŁUG, DO KTÓRYCH DOSTĘP UZYSKUJE UŻYTKOWNIK LUB DOWOLNY PODMIOT TRZECI W WITRYNIE I APLIKACJI MOBILNEJ, NAWET JEŻELI FIRMA ZOSTAŁA POWIADOMIONA O MOŻLIWOŚCI WYSTĄPIENIA TAKICH SZKÓD.
+
+Zabezpieczenie przed odpowiedzialnością
+
+Użytkownik zgadza się zabezpieczyć i chronić Podmioty Samsung przed wszelką odpowiedzialnością, szkodami, stratami i kosztami lub wydatkami (łącznie z pokryciem uzasadnionych kosztów zastępstwa procesowego), które Podmioty Samsung mogą ponieść w związku z użytkowaniem lub w wyniku użytkowania Witryny, Aplikacji mobilnej, Materiałów lub Usług przez użytkownika (lub dowolną osobę korzystającą z konta użytkownika) albo za naruszenie tych Warunków. Firma Samsung zastrzega sobie prawo, na własny koszt, do wyłącznej obrony i przejęcia kontroli nad wszelkimi sprawami w innym przypadku podlegającymi zabezpieczeniu przed odpowiedzialnością przez użytkownika i w takim przypadku użytkownik wyraża zgodę na współpracę z firmą Samsung w celu obrony w takim postępowaniu.
+
+Zmiany warunków użytkowania
+
+Zastrzegamy sobie prawo do zmiany, uzupełniania lub usuwania dowolnych części tych Warunków w całości lub we fragmentach w dowolnym momencie przez opublikowanie zmienionych Warunków w Witrynie lub Aplikacji mobilnej. Wszelkie zmiany zaczną obowiązywać dopiero po zaakceptowaniu tych zmienionych Warunków. Jeżeli użytkownik nie akceptuje zmienionych Warunków, nie może używać Witryny i Aplikacji mobilnej.
+
+Obowiązujące prawo i jurysdykcja
+
+Te Warunki podlegają prawom obowiązującym w jurysdykcji miejsca zamieszkania, niezależnie od konfliktów z postanowieniami prawa. Jeżeli użycie Witryny, Aplikacji mobilnej, Materiałów lub Usług powoduje naruszenie praw w miejscu zamieszkania, należy POWSTRZYMAĆ SIĘ OD UŻYWANIA Witryny, Aplikacji mobilnej lub dowolnej części Materiałów lub Usług. Zapewnienie zgodności z przepisami (w tym z wszelkimi prawami kontroli dostępu) w jurysdykcji użytkownika jest obowiązkiem użytkownika.
+
+Ogólne
+
+Niepowodzenie wyegzekwowania przez firmę Samsung dowolnego prawa lub postanowienia zawartego w tych Warunkach nie powoduje zrzeczenia się z takiego prawa lub postanowienia, chyba że zostanie to potwierdzone i zaakceptowane przez firmę Samsung na piśmie. Warunki (łącznie z modyfikacjami, aktualizacjami i uzupełnieniami) stanowią całą umowę między użytkownikiem a firmą Samsung i zastępują wszystkie poprzednie lub równoczesne negocjacje, dyskusje lub umowy, jeżeli takie występują, zawarte między użytkownikiem a firmą Samsung, dotyczące przedmiotu warunków. Użytkownik akceptuje, że te Warunki mogą być przydzielane przez nas podmiotowi trzeciemu według naszego uznania. Nagłówki części mają jedynie charakter informacyjny i w żaden sposób nie definiują, ograniczają, objaśniają ani nie opisują zakresu takiej części. Jeżeli dowolne postanowienia tych Warunków lub ich zastosowanie do dowolnego podmiotu lub okoliczności zostaną określone lub uznane przez dowolny sąd lub organ quasi-prawny o odpowiedniej jurysdykcji za nieważny, niezgodny z prawem lub nie do wyegzekwowania w dowolny sposób („Postanowienie łamiące prawo”), (i) takie Postanowienie łamiące prawo powinno być uznane za zmienione w celu osiągnięcia skutków w stopniu możliwie jak najbliższym temu samemu co Postanowienie łamiące prawo, w zakresie dozwolonym przez prawo; (ii) ważność, zgodność z prawem i możliwość egzekwowania pozostałych postanowień lub części postanowień zawartych tutaj nie powinna być przez to w żaden sposób ograniczana; a (iii) pozostałe Warunki powinny być ważne i egzekwowalne w zakresie dozwolonym przez obowiązujące prawo. Jeżeli jakiekolwiek postanowienia tych Warunków zostaną uznane za sąd o odpowiedniej jurysdykcji za nieprawidłowe, nie powoduje to unieważnienia pozostałych postanowień.
+
+Data [22.01.2025]

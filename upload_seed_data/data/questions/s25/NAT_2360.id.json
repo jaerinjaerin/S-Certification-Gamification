@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa saja Fitur Utama Galaxy S25? (pilih tiga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Teknologi AI Canggih",
+        "answerStatus": 1
+      },
+      {
+        "text": "Performa Paling Canggih",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pengalaman Kamera Sempurna",
+        "answerStatus": 1
+      },
+      {
+        "text": "Teman Kesehatan Anda",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Apa warna yang tersedia untuk Galaxy S25 Ultra? (pilih semua)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Saya dengar ada fitur untuk mencari restoran dan mengirim pesan sekaligus. Apa namanya?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Apa kelebihan utama mengambil foto potret?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Anda dapat merekam video malam lebih terang dengan lebih sedikit noise.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda kini dapat menyaring suara yang tidak diinginkan dan menyimpan yang diperlukan.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda dapat menyelesaikan tugas menggunakan berbagai aplikasi sekaligus dengan berbicara seperti biasa pada perangkat Seri Galaxy S25.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda dapat dengan bebas mendapatkan tekstur kulit yang natural",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Bisakah Anda jelaskan hasil rekaman video Nightography?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Anda dapat merekam video malam lebih terang dengan lebih sedikit noise.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Anda kini dapat menyaring suara yang tidak diinginkan dan menyimpan yang diperlukan.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda dapat menyelesaikan tugas menggunakan berbagai aplikasi sekaligus dengan berbicara seperti biasa pada perangkat Seri Galaxy S25.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda mendapatkan hasil foto dengan warna dan tekstur kulit yang akurat.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Manakah dari berikut ini yang merupakan fitur utama Watch Baru yang harus disampaikan ke customers sebagai pengalaman terhubung atau connected experience saat memberikan use case  penggunaan untuk lifestyle? (pilih semua jawaban yang benar)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crystal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Race",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Manakah dari berikut ini yang merupakan fitur utama Buds3 Pro dan Buds3 yang harus disorot sebagai pengalaman terhubung saat memberikan demo kasus penggunaan sebagai gaya hidup?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX yang intuitif",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sound Optimization\n(Suara yang Dioptimalkan)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Penawaran multi-buy",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa saja fitur yang TIDAK didukung di Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Terjemahan PDF berlapis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkripsi & Terjemahan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Terjemahan real time saat merekam suara",
+        "answerStatus": 1
+      },
+      {
+        "text": "Summarize & Auto format",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa yang harus saya siapkan untuk menggunakan Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Anda harus masuk ke Samsung Account",
+        "answerStatus": 1
+      },
+      {
+        "text": "Anda perlu membayar sejumlah biaya langganan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda perlu mengunduh aplikasi khusus Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tidak ada",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mengapa saya harus meningkatkan perangkat Galaxy saya ke One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tidak banyak yang berubah dibandingkan One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dengan One UI 7.0, Anda akan mendapatkan pengalaman telepon AI yang lebih kaya dibandingkan software sebelumnya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Suara apa yang dapat saya hapus menggunakan Audio Eraser? (pilih semua)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musik",
+        "answerStatus": 0
+      },
+      {
+        "text": "Angin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Noise (Bising)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa fitur baru utama yang dapat dicoba di Galaxy S25? (pilih semua)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrait & My Filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa saja Peningkatan Utama dari Galaxy S25? (pilih tiga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimoda",
+        "answerStatus": 1
+      },
+      {
+        "text": "Baterai",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "AP apa yang digunakan Seri Galaxy S25?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AP 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa saja Peningkatan dari Galaxy S25 Ultra? (Pilih Tiga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Kamera Ultra Wide 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Berat body",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (untuk layar depan)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Prosesor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Manakah jawaban berikut ini yang BUKAN merupakan CXP Utama dari Watch Baru? (pilih salah satu)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Next Level Essential\n(performa)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-Powered Sleep",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ukuran Layar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pengalaman Exercise yang Dipersonalisasi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Manakah dari berikut ini yang merupakan fitur utama yang harus disampaikan kepada customers saat memperkenalkan Buds3 Pro dan Buds3 yang nerupakan pengalaman pertama membeli earbud)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Crystal Clear Sound",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptive ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nyaman Dipakai",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa fitur baru di Tab S10 yang mendukung tampilan luar ruangan yang jernih?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-refleksi",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Layar Besar",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Adakah fitur untuk membagikan foto/video dengan mudah dan cepat kepada teman?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Terjemahan Langsung",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apakah saya perlu tetap membuka Quick Share  saat menggunakannya?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tidak masalah, aplikasi tersebut bekerja via Cloud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ya, sayangnya Anda harus tetap membuka hingga selesai",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Bisakah Anda merekomendasikan fitur utama untuk saya coba? (pilih semua)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-app action",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portrait & My Filter",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa yang harus saya ucapkan untuk mencoba Cross App Action di Seri Galaxy S25? (sebagai contoh)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cari restoran Tiongkok terdekat lalu kirimkan ke Toni.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hai, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Berikan saya informasi cuaca hari ini",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hai, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Bagaimana cara menggunakan filter saat mengambil foto? (pilih dua)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "menggunakan filter preset dari aplikasi kamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "menggunakan mode Malam dari aplikasi kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "menggunakan My Filter dari foto di galeri",
+        "answerStatus": 1
+      },
+      {
+        "text": "menggunakan Slow Motion dari aplikasi kamera",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Saya pengguna S pen. Apakah Anda memiliki rekomendasi untuk saya?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Apa informasi/insight yang bisa saya dapatkan dengan Now Brief? (pilih tiga)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jadwal",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarm",
+        "answerStatus": 1
+      },
+      {
+        "text": "alamat rumah",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Pilih fitur yang berkaitan dengan Health/Sleep di Watch Baru (pilih semua jawaban yang benar)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Motivasi dan Peningkatan Diri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Pilih fitur Buds3 yang paling sesuai yang dapat digunakan dalam pertemuan dengan orang asing yang berbicara bahasa asing.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nyaman Dipakai",
+        "answerStatus": 0
+      },
+      {
+        "text": "Crystal Clear Sound",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa yang baru dari Keyboard Kover Tab S10 terbaru?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Back Light",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tombol AI Khusus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Peluncur Samsung Notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa kriteria Energi Skor? (pilih semua)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tidur",
+        "answerStatus": 0
+      },
+      {
+        "text": "Analisa ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Detak jantung",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa keuntungan utama Tukar Tambah? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Anda bisa mendapatkan rencana pembiayaan bulanan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anda bisa langsung mengurangi beban/biaya pembelian smartphone terbaru",
+        "answerStatus": 1
+      },
+      {
+        "text": "Anda bisa mendapatkan penyimpanan 2X lebih besar dengan harga yang sama",
+        "answerStatus": 0
+      },
+      {
+        "text": "Beli satu gratis satu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Saya pengguna S22. Apa saja peningkatan utama dari Galaxy S25? (pilih dua)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AP 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kualitas gambar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jumlah kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ukuran",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Manakah fitur eksklusif Galaxy S25 Ultra? (pilih semua)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S pen bawaan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zoom 100x & kamera 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Layar/Baterai yang Lebih Besar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Apakah ada cara untuk membagikan file saya ke perangkat bukan Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa fitur yang menampilkan rekaman video dalam gerak lambat?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Video Nightography",
+        "answerStatus": 0
+      },
+      {
+        "text": "Penghapus Audio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instan Slow-mo",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pangkas Otomatis",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Saya melakukan banyak panggilan sehari-hari, tetapi saya sering lupa dengan yang kami bicarakan. Apakah ada fitur bagus yang Anda sarankan untuk situasi ini?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcript Assist",
+        "answerStatus": 1
+      },
+      {
+        "text": "Terjemahan Langsung",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pencarian Multimoda",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Handphone saya sering jatuh, saya khawatir membeli sesuatu yang mahal karena bisa rusak",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Menyarankan Anda \"Samsung Care+\"",
+        "answerStatus": 1
+      },
+      {
+        "text": "Menyarankan Anda \"Samsung Wallet\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Menyarankan Anda \"Berbagi Cepat\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Menyarankan Anda \"Model yang lebih murah\"",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Apa yang TIDAK ditanggung oleh Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartphone",
+        "answerStatus": 0
+      },
+      {
+        "text": "Jam Tangan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Desktop PC",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jika Ring tersangkut di jari saya, apa yang harus saya lakukan?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Oleskan pelumas, seperti krim tangan, minyak pembersih, atau sabun, untuk mengurangi gesekan sehingga lebih mudah dilepas.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rendam jari kamu dalam air dingin untuk menyempitkan pembuluh darah sementara dan mengecilkan jari. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kurangi pembengkakan dengan mengangkat tangan selama lebih dari 5 menit.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Apa jawaban yang tepat untuk mengisi garis bawah kosong di bawah ini?\nGalaxy Ring adalah perangkat wearable baru. Terutama, tracking kesehatan yang didukung AI dan ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Manakah dari berikut ini yang merupakan CXP Utama dari Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pemakaian Nyaman 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semuanya",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

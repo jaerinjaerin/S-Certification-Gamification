@@ -1,0 +1,79 @@
+'use client';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { CalendarIcon } from 'lucide-react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+import { CalendarRange } from '@/components/ui/calendar-range';
+
+// const dateOptions = {
+//   locale: 'en-US',
+//   options: {
+//     year: 'numeric',
+//     month: 'short',
+//     day: '2-digit',
+//   } as Intl.DateTimeFormatOptions,
+// };
+
+export function CalendarForm({
+  label,
+  width = '20rem',
+  minDate,
+  maxDate,
+  field,
+}: {
+  label?: string | undefined;
+  width?: number | string;
+  minDate?: Date;
+  maxDate?: Date;
+  field: ControllerRenderProps<FieldValues, string>;
+}) {
+  // 날짜 범위를 문자열로 표시
+  const getDateRangeText = () => {
+    if (!field?.value?.from && !field?.value?.to) return 'Pick a date';
+    const startedAt = minDate || new Date();
+    const from = field.value.from
+      ? field.value.from.toLocaleDateString()
+      : startedAt.toLocaleDateString();
+    const to = field.value.to
+      ? field.value.to.toLocaleDateString()
+      : (maxDate || new Date()).toLocaleDateString();
+    return `${from} - ${to}`;
+  };
+
+  return (
+    <div className="flex items-center space-x-4">
+      {label && <div>{label}</div>}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              'block',
+              !field?.value?.from && 'text-muted-foreground'
+            )}
+            style={{ minWidth: '7rem', width }}
+          >
+            <div className="flex items-center space-x-2">
+              <CalendarIcon className="h-4 w-4 opacity-50" />
+              <span>{getDateRangeText()}</span>
+            </div>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <CalendarRange
+            mode="range" // 날짜 범위 선택 모드
+            numberOfMonths={2}
+            selected={field.value}
+            onSelect={field.onChange}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}

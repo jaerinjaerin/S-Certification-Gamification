@@ -1,36 +1,91 @@
-// import auth from 'next-auth/jwt';
-// import { auth } from '@/auth';
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { auth } from "@/auth";
+import { AuthType } from "@prisma/client";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  // const session = await auth();
-  // console.log('middleware session:', session);
-  // const token = await getToken({
-  //   req: request,
-  //   secret: process.env.NEXTAUTH_SECRET,
-  // });
+  let session = await auth();
 
-  // const { pathname } = request.nextUrl;
+  // console.log("🚀 ~ middleware ~ session:", session);
+  const { pathname, search } = request.nextUrl;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  // // 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
-  // if (!session && pathname !== '/login' && pathname !== '/verify-request') {
-  //   return NextResponse.redirect(new URL('/login', request.url));
+  console.error(
+    "move page",
+    pathname,
+    session?.user.id
+    // session?.user.isTokenExpired
+  );
+
+  // if (session?.user.isTokenExpired) {
+  //   session = null;
   // }
 
-  // // 로그인된 사용자가 /login 페이지에 접근하려는 경우
-  // if (
-  //   session &&
-  //   (pathname === '/login' ||
-  //     pathname === '/verify-request' ||
-  //     pathname === '/')
-  // ) {
-  //   return NextResponse.redirect(new URL('/home', request.url));
+  if (
+    pathname.includes("/error") ||
+    pathname.includes("/logout") ||
+    // pathname.includes("/test") ||
+    pathname.includes("/home") ||
+    // pathname.includes("/register") ||
+    pathname.includes("/site") ||
+    pathname.includes("/not-ready") ||
+    pathname.includes("/invalid-access")
+  ) {
+    return NextResponse.next();
+  }
+
+  const segments = pathname.split("/").filter(Boolean);
+  /**
+   * 정의되지 않는 path로 접근하는 경우
+   */
+  if (segments.length < 1) {
+    return NextResponse.redirect(new URL("/error/not-found", request.url));
+  }
+
+  const campaignName = segments[0];
+  const campaignQuizSetPath = segments[1] === "register" ? null : segments[1];
+
+  // if (campaignName.includes("login")) {
+  //   return NextResponse.redirect(new URL("/error/not-found", request.url));
   // }
+
+  /**
+   * 로그인되지 않은 사용자가 /login 페이지가 아닌 다른 페이지에 접근하려는 경우
+   */
+  console.log("🚀 ~ middleware ~ campaignQuizSetPath:", session, pathname);
+  if (!session && !pathname.includes("/login")) {
+    const url = campaignQuizSetPath
+      ? `${basePath}/${campaignName}/${campaignQuizSetPath}/login${search}`
+      : `${basePath}/${campaignName}/login${search}`;
+
+    return NextResponse.redirect(new URL(url, request.url));
+  }
+
+  /**
+   * 로그인한 사용자가 /login 페이지에 접근하려는 경우
+   */
+  if (session && pathname.includes("/login")) {
+    const authType = session.user?.authType;
+    if (authType === AuthType.SUMTOTAL) {
+      const url = `${basePath}/${campaignName}`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      return NextResponse.redirect(new URL(url, request.url));
+    } else {
+      const url = `${basePath}/${campaignName}/register`; // 해당 페지지로 이동하면 userlog를 확인하여 맞는 quizset으로 이동하거나 에러 페이지로 이동시킴
+      return NextResponse.redirect(new URL(url, request.url));
+    }
+  }
+
+  if (session && campaignQuizSetPath && segments.length === 2) {
+    const url = `${basePath}/${campaignName}/${campaignQuizSetPath}/map${search}`;
+
+    return NextResponse.redirect(new URL(url, request.url));
+  }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/', '/login', '/home', '/verify-request', '/test'], // 미들웨어를 적용할 경로를 지정
+  matcher: [
+    "/((?!api|monitoring|error|_next/static|_next/image|favicon.ico|.*.png$|.*.php$).*)",
+  ],
 };

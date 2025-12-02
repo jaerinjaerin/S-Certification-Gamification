@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 có những tính năng chính gì? (chọn ba đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Trợ lý AI thực thụ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hiệu năng mạnh hàng đầu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Trải nghiệm camera hoàn hảo",
+        "answerStatus": 1
+      },
+      {
+        "text": "Trợ lý sức khỏe của bạn",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra có các tùy chọn màu nào? (chọn tất cả)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Silver Blue Titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Gray Titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "White Silver Titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Black Titan",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tôi nghe nói có một tính năng giúp người dùng vừa tìm thông tin vừa gửi tin nhắn cùng lúc. Tên của tính năng này là gì?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Những lợi ích chính khi chụp ảnh chân dung là gì?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Có thể quay video ban đêm sáng hơn và ít nhiễu hạt hơn.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Giờ đây, bạn có thể lọc bỏ những tạp âm không mong muốn và giữ lại những âm thanh bạn muốn.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn có thể hoàn thành nhiều công việc qua nhiều ứng dụng cùng một lúc bằng cách trò chuyện tự nhiên với dòng Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn có thể thoải mái chụp lại kết cấu da tự nhiên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Bạn sẽ giới thiệu về chất lượng khi quay video Nightography thế nào?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Có thể quay video ban đêm sáng hơn và ít nhiễu hạt hơn.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Giờ đây, bạn có thể lọc bỏ những tạp âm không mong muốn và giữ lại những âm thanh bạn muốn.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn có thể hoàn thành nhiều công việc qua nhiều ứng dụng cùng một lúc bằng cách trò chuyện tự nhiên với dòng Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chụp ảnh với tông màu da chính xác và kết cấu da tự nhiên",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây là tính năng chính của Watch mới cần được nhấn mạnh là trải nghiệm liền mạch khi minh họa tình huống sử dụng trong cuộc sống?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Âm thanh rõ nét",
+        "answerStatus": 0
+      },
+      {
+        "text": "Điểm số năng lượng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tự thiết lập lộ trình",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây là tính năng chính của Buds3 Pro và Buds3 cần được nhấn mạnh là trải nghiệm liền mạch khi minh họa tình huống sử dụng trong cuộc sống?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX trực quan",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tối ưu âm thanh\n(Âm thanh được tối ưu hóa)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ưu đãi khi mua nhiều",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Đâu là tính năng KHÔNG được hỗ trợ trong Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dịch ghi đè PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chép lời và Dịch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dịch song song khi đang ghi âm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tóm tắt và Tự động định dạng",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tôi nên chuẩn bị những gì để sử dụng Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bạn cần đăng nhập vào tài khoản Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bạn cần trả một khoản phí đăng ký nhất định",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn cần tải xuống ứng dụng chuyên dụng cho Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Không cần chuẩn bị gì",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tại sao tôi nên nâng cấp Galaxy của mình lên One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Không có nhiều thay đổi so với One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Với One UI 7.0, bạn sẽ có trải nghiệm AI trên điện thoại phong phú hơn so với phần mềm tiền nhiệm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Có thể loại bỏ những yếu tố nào khi sử dụng Audio Eraser? (chọn tất cả)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tiếng nhạc",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tiếng gió",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tiếng ồn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Những tính năng chính để trải nghiệm trên Galaxy S25 là gì? (chọn tất cả)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Trợ lý chat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App",
+        "answerStatus": 1
+      },
+      {
+        "text": "Chân dung & Bộ lọc của tôi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 có những cải tiến chính gì? (chọn ba đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross App",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodal Search (Tìm kiếm đa phương thức)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pin",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vi xử lý 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 được trang bị vi xử lý gì?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Vi xử lý 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vi xử lý 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vi xử lý 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vi xử lý 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S25 Ultra có những cải tiến gì? (Chọn ba đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Camera góc siêu rộng 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Trọng lượng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (cho màn hình trước)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bộ xử lý",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây KHÔNG PHẢI LÀ một ĐIỂM NHẤN SẢN PHẨM CHÍNH của Watch mới? (chọn 1 đáp án)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Hiệu năng",
+        "answerStatus": 0
+      },
+      {
+        "text": " AI hỗ trợ giấc ngủ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kích thước màn hình",
+        "answerStatus": 1
+      },
+      {
+        "text": "Cá nhân hóa tập luyện",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây là tính năng chính cần được nhấn mạnh khi giới thiệu Buds3 Pro và Buds3 cho những khách hàng mới mua lần đầu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Âm thanh rõ nét",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC thích ứng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vừa vặn thoải mái",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10 có tính năng mới nào hỗ trợ chế độ xem sống động khi ở ngoài trời?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chống chói",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Màn hình lớn",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Có tính năng nào giúp chia sẻ ảnh/video với bạn bè dễ dàng và nhanh chóng không?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chia sẻ nhanh (Quick Share)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dịch trực tiếp",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Thiết bị có cần ở gần nhau khi sử dụng Chia sẻ nhanh (Quick Share) qua mã QR không?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Không cần, việc chia sẻ thực hiện qua đám mây",
+        "answerStatus": 1
+      },
+      {
+        "text": "Có, thiết bị phải ở gần nhau cho đến khi chia sẻ xong",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Bạn có thể giới thiệu những tính năng chính để tôi trải nghiệm không? (chọn tất cả)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross App",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chân dung & Bộ lọc của tôi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tôi nên nói thế nào để trải nghiệm Cross App trên dòng Galaxy S25? (Ví dụ như)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tìm kiếm quán café gần đây và gửi cho Sam",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cho tôi biết thông tin thời tiết hôm nay",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Làm thế nào để áp dụng bộ lọc khi chụp ảnh? (chọn hai đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "sử dụng bộ lọc cài sẵn của ứng dụng máy ảnh",
+        "answerStatus": 1
+      },
+      {
+        "text": "khi sử dụng Chế độ chụp đêm của ứng dụng máy ảnh",
+        "answerStatus": 0
+      },
+      {
+        "text": "sử dụng bộ lọc cá nhân (My Filter) từ ảnh trong Bộ sưu tập",
+        "answerStatus": 1
+      },
+      {
+        "text": "khi sử dụng Chuyển động chậm của ứng dụng máy ảnh",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tôi rất thích S Pen. Bạn sẽ đề xuất mẫu máy nào cho tôi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tôi có thể nhận được những thông tin và phân tích chi tiết gì với Now Brief? (chọn ba đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Điểm năng lượng",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lịch trình",
+        "answerStatus": 1
+      },
+      {
+        "text": "Báo thức",
+        "answerStatus": 1
+      },
+      {
+        "text": "Địa chỉ nhà",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Chọn tính năng liên quan đến Sức khỏe/Giấc ngủ trong Watch mới (chọn tất cả câu trả lời đúng)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Điểm số năng lượng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hỗ trợ tập luyện chuyên nghiệp",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vượt qua bản thân",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Chọn tính năng phù hợp nhất của Buds3 để có thể sử dụng trong cuộc họp với người nước ngoài nói ngôn ngữ khác.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Phiên Dịch Viên",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vừa vặn thoải mái",
+        "answerStatus": 0
+      },
+      {
+        "text": "Âm thanh rõ nét",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Bao da kèm bàn phím mới của Tab S10 có gì đặc biệt?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Đèn nền ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Phím riêng cho tính năng AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Khởi động Samsung Notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trợ lý Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tiêu chí cho Điểm năng lượng là gì? (chọn tất cả)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Giấc ngủ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hoạt động",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nhịp tim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Chương trình Thu cũ đổi mới (Trade In) có ưu điểm chính nào? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bạn có thể thanh toán theo từng tháng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn có thể giảm ngay gánh nặng/chi phí khi mua chiếc điện thoại thông minh mới nhất",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bạn có thể sở hữu dung lượng lưu trữ gấp 2 lần với cùng mức giá",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bạn mua một, bạn có thể được tặng một",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tôi là người dùng S22. Galaxy S25 có những cải tiến chính gì? (chọn hai đáp án)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Vi xử lý 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Chất lượng hình ảnh",
+        "answerStatus": 1
+      },
+      {
+        "text": "Số lượng camera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kích thước",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Có thể cho tôi biết về các tính năng độc quyền của Galaxy S25 Ultra không? (chọn tất cả)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tích hợp S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thu phóng 100x và camera 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Màn hình to/Pin khủng hơn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Có cách nào để chia sẻ file của tôi với các thiết bị không chạy hệ điều hành Android không?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sử dụng Chia sẻ nhanh (Quick Share)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tính năng hiển thị video đã quay ở chế độ chuyển động chậm là gì?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Video quay đêm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chuyển động chậm tức thì (Instant Low-mo)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Auto Trim",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Trong cuộc sống hàng ngày tôi trò chuyện qua điện thoại rất nhiều, nhưng tôi thường quên mất những gì đã nói. Bạn có thể đề xuất tính năng nào phù hợp cho tình huống này không?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transcript Assist (Trợ lý chép lời)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate (Dịch trực tiếp)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodal Search (Tìm kiếm đa phương thức)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tôi thường làm làm rơi điện thoại. Tôi ngại mua đồ đắt tiền vì sợ làm hỏng.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Giới thiệu “Samsung Care+” cho bạn",
+        "answerStatus": 1
+      },
+      {
+        "text": "Giới thiệu “Samsung Wallet” cho bạn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Giới thiệu “Chia sẻ nhanh” cho bạn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Giới thiệu “những mẫu có giá thấp hơn” cho bạn",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Những gì KHÔNG được Samsung Care+ bảo hành",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Điện thoại thông minh (Smart Phone)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Đồng hồ thông minh (Smart Watch)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Máy tính để bàn",
+        "answerStatus": 1
+      },
+      {
+        "text": "Máy tính bảng (Tablet)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Tôi phải làm gì nếu Ring bị kẹt ở ngón tay?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bôi chất bôi trơn như kem dưỡng da tay, dầu tẩy trang hoặc xà phòng để giảm ma sát, giúp tháo dễ dàng hơn.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ngâm ngón tay vào nước lạnh để làm mạch máu và ngón tay co tạm thời. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Giảm sưng tấy bằng cách giơ tay lên cao trong hơn 5 phút.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\nGalaxy Ring là thiết bị đeo mới. Đặc biệt là chức năng theo dõi sức khỏe hỗ trợ bởi AI và ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Điểm năng lượng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thẻ Booster",
+        "answerStatus": 0
+      },
+      {
+        "text": "Huấn luyện giấc ngủ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Chụm ngón tay hai lần",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây là ĐIỂM NHẤN SẢN PHẨM chính của Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Huấn luyện cá nhân hóa",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thoải mái khi đeo 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chụm ngón tay hai lần  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

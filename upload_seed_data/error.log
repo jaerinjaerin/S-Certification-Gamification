@@ -1,0 +1,75 @@
+2025-01-21 00:04:57,509 - ERROR - Error processing file data/origins/{Switzerland}.{NAT_2756}.{it-IT}.xlsx: File data/origins/{Switzerland}.{NAT_2756}.{it-IT}.xlsx is empty after processing.
+2025-01-21 00:04:57,882 - ERROR - Error processing file data/origins/{Chile}.{NAT_2152}.{es-LTN}.xlsx: File data/origins/{Chile}.{NAT_2152}.{es-LTN}.xlsx is empty after processing.
+2025-01-21 00:04:58,235 - ERROR - Error processing file data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx: File data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx is empty after processing.
+2025-01-21 00:04:59,028 - ERROR - Error processing file data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx: File data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:04:59,440 - ERROR - Error processing file data/origins/{India}.{NAT_2356}.{en-US}.xlsx: File data/origins/{India}.{NAT_2356}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:04:59,825 - ERROR - Error processing file data/origins/{Iraq}.{NAT_2368}.{ar-AE}.xlsx: File data/origins/{Iraq}.{NAT_2368}.{ar-AE}.xlsx is empty after processing.
+2025-01-21 00:05:00,206 - ERROR - Error processing file data/origins/{Mauritius}.{NAT_3701}.{en-US}.xlsx: File data/origins/{Mauritius}.{NAT_3701}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:05:00,604 - ERROR - Error processing file data/origins/{Thailand}.{NAT_2764}.{th}.xlsx: File data/origins/{Thailand}.{NAT_2764}.{th}.xlsx is empty after processing.
+2025-01-21 00:05:01,440 - ERROR - Error processing file data/origins/{Qatar}.{NAT_2634}.{en-US}.xlsx: File data/origins/{Qatar}.{NAT_2634}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:05:01,824 - ERROR - Error processing file data/origins/{Jordan}.{NAT_2400}.{ar-AE}.xlsx: File data/origins/{Jordan}.{NAT_2400}.{ar-AE}.xlsx is empty after processing.
+2025-01-21 00:05:02,522 - ERROR - Error processing file data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx: File data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx is empty after processing.
+2025-01-21 00:05:03,308 - ERROR - Error processing file data/origins/{Panama}.{NAT_2591}.{es-LTN}.xlsx: File data/origins/{Panama}.{NAT_2591}.{es-LTN}.xlsx is empty after processing.
+2025-01-21 00:05:04,080 - ERROR - Error processing file data/origins/{Bolivia}.{NAT_2068}.{es-LTN}.xlsx: File data/origins/{Bolivia}.{NAT_2068}.{es-LTN}.xlsx is empty after processing.
+2025-01-21 00:05:04,465 - ERROR - Error processing file data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx: File data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx is empty after processing.
+2025-01-21 00:05:04,815 - ERROR - Error processing file data/origins/{Azerbaijan}.{NAT_2645}.{az}.xlsx: File data/origins/{Azerbaijan}.{NAT_2645}.{az}.xlsx is empty after processing.
+2025-01-21 00:05:05,200 - ERROR - Error processing file data/origins/{Laos}.{NAT_2418}.{lo}.xlsx: File data/origins/{Laos}.{NAT_2418}.{lo}.xlsx is empty after processing.
+2025-01-21 00:05:05,602 - ERROR - Error processing file data/origins/{Cameroon}.{NAT_120}.{fr-FR}.xlsx: File data/origins/{Cameroon}.{NAT_120}.{fr-FR}.xlsx is empty after processing.
+2025-01-21 00:05:05,977 - ERROR - Error processing file data/origins/{Ghana}.{NAT_2288}.{en-US}.xlsx: File data/origins/{Ghana}.{NAT_2288}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:05:06,355 - ERROR - Error processing file data/origins/{Kenya}.{NAT_2404}.{es-LTN}.xlsx: File data/origins/{Kenya}.{NAT_2404}.{es-LTN}.xlsx is empty after processing.
+2025-01-21 00:05:06,738 - ERROR - Error processing file data/origins/{Oman}.{NAT_2512}.{en-US}.xlsx: File data/origins/{Oman}.{NAT_2512}.{en-US}.xlsx is empty after processing.
+2025-01-21 00:05:07,515 - ERROR - Error processing file data/origins/{Morocco}.{NAT_2504}.{fr-FR}.xlsx: File data/origins/{Morocco}.{NAT_2504}.{fr-FR}.xlsx is empty after processing.
+2025-01-21 00:05:07,925 - ERROR - Error processing file data/origins/{Spain}.{NAT_2724}.{es-ES}.xlsx: File data/origins/{Spain}.{NAT_2724}.{es-ES}.xlsx is empty after processing.
+2025-01-21 00:05:08,271 - ERROR - Error processing file data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx: File data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx is empty after processing.
+2025-01-21 00:27:13,181 - ERROR - Error processing file data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx: "'NO' column not found after adjustment in data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx."
+2025-01-21 00:27:13,959 - ERROR - Error processing file data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx."
+2025-01-21 00:27:14,430 - ERROR - Error processing file data/origins/{India}.{NAT_2356}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{India}.{NAT_2356}.{en-US}.xlsx."
+2025-01-21 00:27:17,478 - ERROR - Error processing file data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx: "'NO' column not found after adjustment in data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx."
+2025-01-21 00:27:19,478 - ERROR - Error processing file data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx: "'NO' column not found after adjustment in data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx."
+2025-01-21 00:27:23,577 - ERROR - Error processing file data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx: "'NO' column not found after adjustment in data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx."
+2025-01-21 00:27:23,963 - ERROR - Error processing file data/origins/{Slovakia}.{NAT_2703}.{sk-SK}.xlsx: "'NO' column not found after adjustment in data/origins/{Slovakia}.{NAT_2703}.{sk-SK}.xlsx."
+2025-01-21 00:27:24,307 - ERROR - Error processing file data/origins/{Tajikistan}.{NAT_76202}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Tajikistan}.{NAT_76202}.{ru}.xlsx."
+2025-01-21 00:27:25,131 - ERROR - Error processing file data/origins/{SriLanka}.{NAT_2144}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{SriLanka}.{NAT_2144}.{en-US}.xlsx."
+2025-01-21 00:27:27,471 - ERROR - Error processing file data/origins/{UnitedKingdom}.{NAT_021505}.{en-GB}.xlsx: "'NO' column not found after adjustment in data/origins/{UnitedKingdom}.{NAT_021505}.{en-GB}.xlsx."
+2025-01-21 00:27:28,356 - ERROR - Error processing file data/origins/{Uzbekistan}.{NAT_2860}.{uz}.xlsx: "'NO' column not found after adjustment in data/origins/{Uzbekistan}.{NAT_2860}.{uz}.xlsx."
+2025-01-21 00:27:31,081 - ERROR - Error processing file data/origins/{USA}.{NAT_2840}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{USA}.{NAT_2840}.{en-US}.xlsx."
+2025-01-21 00:27:31,425 - ERROR - Error processing file data/origins/{Sweden}.{NAT_021501}.{sv}.xlsx: "'NO' column not found after adjustment in data/origins/{Sweden}.{NAT_021501}.{sv}.xlsx."
+2025-01-21 00:27:33,814 - ERROR - Error processing file data/origins/{Denmark}.{NAT_021504}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Denmark}.{NAT_021504}.{en-US}.xlsx."
+2025-01-21 00:27:34,558 - ERROR - Error processing file data/origins/{Cyprus}.{NAT_19602}.{el}.xlsx: "'NO' column not found after adjustment in data/origins/{Cyprus}.{NAT_19602}.{el}.xlsx."
+2025-01-21 00:27:34,964 - ERROR - Error processing file data/origins/{Portugal}.{NAT_2620}.{pt-PT}.xlsx: "'NO' column not found after adjustment in data/origins/{Portugal}.{NAT_2620}.{pt-PT}.xlsx."
+2025-01-21 00:27:36,043 - ERROR - Error processing file data/origins/{Pakistan}.{NAT_2586}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Pakistan}.{NAT_2586}.{en-US}.xlsx."
+2025-01-21 00:27:36,603 - ERROR - Error processing file data/origins/{Sweden}.{NAT_021501}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Sweden}.{NAT_021501}.{en-US}.xlsx."
+2025-01-21 00:27:41,528 - ERROR - Error processing file data/origins/{Kazakhstan}.{NAT_2398}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Kazakhstan}.{NAT_2398}.{ru}.xlsx."
+2025-01-21 00:27:44,294 - ERROR - Error processing file data/origins/{Russia}.{NAT_2643}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Russia}.{NAT_2643}.{ru}.xlsx."
+2025-01-21 00:27:45,550 - ERROR - Error processing file data/origins/{Hungary}.{NAT_2348}.{hu}.xlsx: "'NO' column not found after adjustment in data/origins/{Hungary}.{NAT_2348}.{hu}.xlsx."
+2025-01-21 00:27:46,436 - ERROR - Error processing file data/origins/{Turkey}.{NAT_2792}.{tr}.xlsx: "'NO' column not found after adjustment in data/origins/{Turkey}.{NAT_2792}.{tr}.xlsx."
+2025-01-21 00:27:48,022 - ERROR - Error processing file data/origins/{Romania}.{NAT_2642}.{ro}.xlsx: "'NO' column not found after adjustment in data/origins/{Romania}.{NAT_2642}.{ro}.xlsx."
+2025-01-21 00:27:48,381 - ERROR - Error processing file data/origins/{Denmark}.{NAT_021504}.{da}.xlsx: "'NO' column not found after adjustment in data/origins/{Denmark}.{NAT_021504}.{da}.xlsx."
+2025-01-21 00:31:57,167 - ERROR - Error processing file data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx: "'NO' column not found after adjustment in data/origins/{Norway}.{NAT_021503}.{es-ES}.xlsx."
+2025-01-21 00:31:57,936 - ERROR - Error processing file data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Nepal}.{NAT_060401}.{en-US}.xlsx."
+2025-01-21 00:31:58,317 - ERROR - Error processing file data/origins/{India}.{NAT_2356}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{India}.{NAT_2356}.{en-US}.xlsx."
+2025-01-21 00:32:01,348 - ERROR - Error processing file data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx: "'NO' column not found after adjustment in data/origins/{Bulgaria}.{NAT_2100}.{bg}.xlsx."
+2025-01-21 00:32:03,338 - ERROR - Error processing file data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx: "'NO' column not found after adjustment in data/origins/{Italy}.{NAT_2380}.{it-IT}.xlsx."
+2025-01-21 00:32:08,052 - ERROR - Error processing file data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx: "'NO' column not found after adjustment in data/origins/{Brazil}.{NAT_2076}.{pt-BR}.xlsx."
+2025-01-21 00:32:08,443 - ERROR - Error processing file data/origins/{Slovakia}.{NAT_2703}.{sk-SK}.xlsx: "'NO' column not found after adjustment in data/origins/{Slovakia}.{NAT_2703}.{sk-SK}.xlsx."
+2025-01-21 00:32:08,786 - ERROR - Error processing file data/origins/{Tajikistan}.{NAT_76202}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Tajikistan}.{NAT_76202}.{ru}.xlsx."
+2025-01-21 00:32:09,584 - ERROR - Error processing file data/origins/{SriLanka}.{NAT_2144}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{SriLanka}.{NAT_2144}.{en-US}.xlsx."
+2025-01-21 00:32:11,559 - ERROR - Error processing file data/origins/{UnitedKingdom}.{NAT_021505}.{en-GB}.xlsx: "'NO' column not found after adjustment in data/origins/{UnitedKingdom}.{NAT_021505}.{en-GB}.xlsx."
+2025-01-21 00:32:12,341 - ERROR - Error processing file data/origins/{Uzbekistan}.{NAT_2860}.{uz}.xlsx: "'NO' column not found after adjustment in data/origins/{Uzbekistan}.{NAT_2860}.{uz}.xlsx."
+2025-01-21 00:32:14,752 - ERROR - Error processing file data/origins/{USA}.{NAT_2840}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{USA}.{NAT_2840}.{en-US}.xlsx."
+2025-01-21 00:32:15,095 - ERROR - Error processing file data/origins/{Sweden}.{NAT_021501}.{sv}.xlsx: "'NO' column not found after adjustment in data/origins/{Sweden}.{NAT_021501}.{sv}.xlsx."
+2025-01-21 00:32:17,480 - ERROR - Error processing file data/origins/{Denmark}.{NAT_021504}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Denmark}.{NAT_021504}.{en-US}.xlsx."
+2025-01-21 00:32:18,309 - ERROR - Error processing file data/origins/{Cyprus}.{NAT_19602}.{el}.xlsx: "'NO' column not found after adjustment in data/origins/{Cyprus}.{NAT_19602}.{el}.xlsx."
+2025-01-21 00:32:18,873 - ERROR - Error processing file data/origins/{Portugal}.{NAT_2620}.{pt-PT}.xlsx: "'NO' column not found after adjustment in data/origins/{Portugal}.{NAT_2620}.{pt-PT}.xlsx."
+2025-01-21 00:32:19,686 - ERROR - Error processing file data/origins/{Pakistan}.{NAT_2586}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Pakistan}.{NAT_2586}.{en-US}.xlsx."
+2025-01-21 00:32:20,178 - ERROR - Error processing file data/origins/{Sweden}.{NAT_021501}.{en-US}.xlsx: "'NO' column not found after adjustment in data/origins/{Sweden}.{NAT_021501}.{en-US}.xlsx."
+2025-01-21 00:32:25,353 - ERROR - Error processing file data/origins/{Kazakhstan}.{NAT_2398}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Kazakhstan}.{NAT_2398}.{ru}.xlsx."
+2025-01-21 00:32:28,326 - ERROR - Error processing file data/origins/{Russia}.{NAT_2643}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Russia}.{NAT_2643}.{ru}.xlsx."
+2025-01-21 00:32:29,520 - ERROR - Error processing file data/origins/{Hungary}.{NAT_2348}.{hu}.xlsx: "'NO' column not found after adjustment in data/origins/{Hungary}.{NAT_2348}.{hu}.xlsx."
+2025-01-21 00:32:30,249 - ERROR - Error processing file data/origins/{Turkey}.{NAT_2792}.{tr}.xlsx: "'NO' column not found after adjustment in data/origins/{Turkey}.{NAT_2792}.{tr}.xlsx."
+2025-01-21 00:32:31,777 - ERROR - Error processing file data/origins/{Romania}.{NAT_2642}.{ro}.xlsx: "'NO' column not found after adjustment in data/origins/{Romania}.{NAT_2642}.{ro}.xlsx."
+2025-01-21 00:32:32,120 - ERROR - Error processing file data/origins/{Denmark}.{NAT_021504}.{da}.xlsx: "'NO' column not found after adjustment in data/origins/{Denmark}.{NAT_021504}.{da}.xlsx."
+2025-01-21 00:32:35,849 - ERROR - Error processing file data/origins/{Poland}.{NAT_2616}.{pl}.xlsx: "'NO' column not found after adjustment in data/origins/{Poland}.{NAT_2616}.{pl}.xlsx."
+2025-01-21 00:32:36,618 - ERROR - Error processing file data/origins/{Kyrgyzstan}.{NAT_41702}.{ru}.xlsx: "'NO' column not found after adjustment in data/origins/{Kyrgyzstan}.{NAT_41702}.{ru}.xlsx."
+2025-01-21 00:32:36,963 - ERROR - Error processing file data/origins/{Finland}.{NAT_021502}.{fi}.xlsx: "'NO' column not found after adjustment in data/origins/{Finland}.{NAT_021502}.{fi}.xlsx."
+2025-01-21 00:32:38,159 - ERROR - Error processing file data/origins/{Greece}.{NAT_2300}.{el}.xlsx: "'NO' column not found after adjustment in data/origins/{Greece}.{NAT_2300}.{el}.xlsx."

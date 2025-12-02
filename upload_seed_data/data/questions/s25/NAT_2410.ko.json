@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25에서 대표적인 AI 신기능은 무엇인가요? (2개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 1
+      },
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "S25 Ultra에는 어떤 색상이 있어요? (모두 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Navy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mint",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "\"식당을 찾아서 메세지를 보내기\"를 AI로 한 번에 할 수 있다고 들었는데, 기능 이름이 뭔가요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Filters 활용해서 인물사진 찍으면 어떤 점이 더 좋아요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "야간 촬영시 노이즈가 적고 일정한 밝기로 찍을수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "영상의 소리를 분석하고 원하는 소리만 남길수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "자연스러운 말로 여러개의 앱을 한 번에 실행 시킬수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "자연스러운 피부톤의 사진을 찍을 수 있습니다.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Nightography 기능을 쓰면 어떤 점이 좋아요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "야간 촬영시 노이즈가 적고 선명한 영상을 찍을수 있습니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "영상의 소리를 분석하고 원하는 소리만 남길수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "자연스러운 말로 여러개의 앱을 한 번에 실행 시킬수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "자연스러운 피부톤의 사진을 찍을 수 있습니다.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "워치를 함께 사용하면 일상생활에서 어떤 점이 좋나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "간편한 알림 확인",
+        "answerStatus": 0
+      },
+      {
+        "text": "에너지스코어 제공",
+        "answerStatus": 0
+      },
+      {
+        "text": "러닝/걷기 등 운동 기록 측정",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "삼성 스마트폰과 Buds를 함께 사용하면 어떤 점이 좋나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "직관적인 UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "소리 최적화 (Optimized Sound)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57 방수",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI 관련 추가 기능",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "삼성노트에서 지원하지 않는 것도 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF 변환",
+        "answerStatus": 0
+      },
+      {
+        "text": "음성→텍스트변환 및 번역",
+        "answerStatus": 0
+      },
+      {
+        "text": "녹음과 동시에 실시간 번역",
+        "answerStatus": 1
+      },
+      {
+        "text": "내용 요약 및 자동정리",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Galaxy AI 쓰려면 제가 해야할 게 있나요 ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "삼성계정을 로그인 하셔야 합니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "구독료를 내셔야 합니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy AI 앱을 다운로드 하셔야 합니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "아무것도 안하셔도 됩니다.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "One UI 7.0은 왜 업그레이드 해야하나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "기존과 크게 다른 건 없습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0를 이용하시면, 이전 버전보다 훨씬 다양한 AI 경험을 하실수 있습니다.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25 울트라만의 개선점은 무엇인가요? (2개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra Wide 50MP 카메라",
+        "answerStatus": 1
+      },
+      {
+        "text": "무게",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (전면 디스플레이)",
+        "answerStatus": 1
+      },
+      {
+        "text": "프로세서",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Audio Eraser를 쓰면 어떤 소리를 지울 수 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "음악",
+        "answerStatus": 0
+      },
+      {
+        "text": "바람",
+        "answerStatus": 0
+      },
+      {
+        "text": "소음",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25의 핵심기능은 어떤건가요? (3개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chat Assist",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrait & Filters",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "S25에는 어떤 AP가 탑재되어 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "5nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "4nm AP",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm AP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "러닝 할 때 쓰려는데, 워치의 어떤 기능을 쓸 수 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "심박수 측정",
+        "answerStatus": 0
+      },
+      {
+        "text": "GPS 기반 러닝 코스 기록",
+        "answerStatus": 0
+      },
+      {
+        "text": "러닝 페이스 및 시간 기록",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "버즈(Buds3/3Pro)를 처음 사려고 하는데, 특별한 기능은 어떤게 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "선명한 사운드",
+        "answerStatus": 0
+      },
+      {
+        "text": "적응형 ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "편안한 착용감",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10의 야외시인성 개선을 위한 신기능은 무엇인가요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "다이나믹 아몰레드 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti-reflection",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "대화면",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25 시리즈의 새로운 기능은 무엇인가요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "200배 줌 카메라",
+        "answerStatus": 0
+      },
+      {
+        "text": "마이크",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instant Slow-mo",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "사진과 동영상을 쉽고 빠르게 공유하는 방법이 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Quick Share 이용 할 때는 계속 그자리에 있어야 하나요 ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "아뇨, 멀어지면 자동으로 Cloud 기반으로 전송 됩니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "네, 안타깝게도 끝날때까지 그 자리에 계셔야 합니다.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25를 통해 제가 체험 해볼수 있는 기능은 어떤게 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross App Action",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portrait & Filters",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S25의 Cross App Action을 쓸 때 어떻게 말해요?\n예시를 들어주세요",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "근처에 있는 중식당 찾아서 영수에게 보내줘",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "오늘 날씨 알려줘",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "사진 찍을때 필터 쓰려면 어떻게 해야되나요? (2개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "카메라 앱의 기본 필터 사용",
+        "answerStatus": 1
+      },
+      {
+        "text": "카메라 앱의 야간모드 사용",
+        "answerStatus": 0
+      },
+      {
+        "text": "갤러리에 있는 사진으로 만든 필터 사용",
+        "answerStatus": 1
+      },
+      {
+        "text": "카메라 앱의 슬로우모션으로 만든 필터 사용",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "전 S펜을 너무 잘 쓰고 있는데, 추천 해주실 모델이 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S25 플러스",
+        "answerStatus": 0
+      },
+      {
+        "text": "S25 울트라",
+        "answerStatus": 1
+      },
+      {
+        "text": "S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "갤럭시 워치 울트라",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Now Brief로 부터 받을수 있는 정보는 무엇인가요? (3개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "에너지스코어",
+        "answerStatus": 1
+      },
+      {
+        "text": "일정",
+        "answerStatus": 1
+      },
+      {
+        "text": "알람",
+        "answerStatus": 1
+      },
+      {
+        "text": "집 주소",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "워치에서 헬스/수면 관련 기능은 어떤게 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "에너지스코어",
+        "answerStatus": 0
+      },
+      {
+        "text": "수면 코칭",
+        "answerStatus": 0
+      },
+      {
+        "text": "운동 기록 측정",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Buds3를 구매하려는데, 외국인과 대화 할 때 쓰는 유용한 기능이 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpreter",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "편안한 착용감",
+        "answerStatus": 0
+      },
+      {
+        "text": "선명한 사운드",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "탭S10 북커버 키보드의 새로운 점은 무엇인가요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "백라이트",
+        "answerStatus": 0
+      },
+      {
+        "text": "전용 AI Key",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note 런처",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "삼성헬스의 에너지스코어 기준이 뭐에요?\n(모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "수면",
+        "answerStatus": 0
+      },
+      {
+        "text": "활동",
+        "answerStatus": 0
+      },
+      {
+        "text": "심박",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Trade-in의 이점은 무엇인가요 ?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "할부가 가능합니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "최신 스마트폰 구매시 비용 부담을 줄일수 있습니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "같은 가격으로 저장용량 2배 혜택을 받으실수 있습니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "1+1 프로모션 입니다.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "지금 S22 쓰고 있는데, S25를 쓰면 어떤게 좋아지나요? (2개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Customized AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "AI 기능",
+        "answerStatus": 1
+      },
+      {
+        "text": "카메라 갯수",
+        "answerStatus": 0
+      },
+      {
+        "text": "지문인식",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "S25 울트라만의 특별한 장점은 무엇인가요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S펜 탑재",
+        "answerStatus": 0
+      },
+      {
+        "text": "카메라(UW 50MP)",
+        "answerStatus": 0
+      },
+      {
+        "text": "큰 화면 및 배터리",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "안드로이드가 아닌 기기에 파일을 전송하는 방법이 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "촬영한 영상을 슬로우 모션으로 보는 방법이 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nightography Videos을 쓰면 됩니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser을 쓰면 됩니다.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instant Slow-mo을 쓰면 됩니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Auto Trim을 쓰면 됩니다.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "통화 녹음 이후 내용을 다시 찾아볼 때,\n다시 듣기가 너무 번거로운데 다른 방법이 있을까요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Call Transcript",
+        "answerStatus": 1
+      },
+      {
+        "text": "Live Translate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "폰을 자주 잃어버리거나 떨어트리는 편이라,\n비싼 기기를 사는게 걱정되네요.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Samsung Care+를 이용하시면 됩니다.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Wallet을 써보세요.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share를 써보세요.",
+        "answerStatus": 0
+      },
+      {
+        "text": "저렴한 모델로 구매하세요.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Samsung Care+에서 보장해주지 않는 제품은 어떤게 있나요?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "스마트폰",
+        "answerStatus": 0
+      },
+      {
+        "text": "스마트워치",
+        "answerStatus": 0
+      },
+      {
+        "text": "데스크탑",
+        "answerStatus": 1
+      },
+      {
+        "text": "태블릿",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "갤럭시 링의 사이즈는 어떻게 선택하나요? (2개 선택)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "손가락 사이즈 측정 후 홈페이지 참고",
+        "answerStatus": 1
+      },
+      {
+        "text": "사이즈키트 사용",
+        "answerStatus": 1
+      },
+      {
+        "text": "적당히 구매 후 사이즈 교환",
+        "answerStatus": 0
+      },
+      {
+        "text": "사이즈 측정 불필요",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "갤럭시 링으로 어떤 데이터를 측정 할 수 있나요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "수면",
+        "answerStatus": 0
+      },
+      {
+        "text": "걷기",
+        "answerStatus": 0
+      },
+      {
+        "text": "에너지스코어",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "갤럭시 링의 강점은 무엇인가요? (모두 선택)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "에너지스코어 제공",
+        "answerStatus": 0
+      },
+      {
+        "text": "편안한 착용감",
+        "answerStatus": 0
+      },
+      {
+        "text": "더블핀치(손가락 맞대기)로 쉽게 조작",
+        "answerStatus": 0
+      },
+      {
+        "text": "모두",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

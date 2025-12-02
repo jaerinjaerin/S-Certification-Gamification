@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokios yra „Galaxy S25“ pagrindinės funkcijos? (pasirinkite tris variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Tikrasis DI kompanionas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pažangiausias našumas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Puiki kameros patirtis",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jūsų sveikatos kompanionas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kokių spalvų būna „Galaxy S25 Ultra“? (pasirinkite visus variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titano mėlyna",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titano pilka",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titano balta",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titano juoda",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Girdėjau, kad yra funkcija, skirta vienu metu rasti restoraną ir siųsti pranešimą. Kaip ji vadinasi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "„Now Bar & Brief“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veiksmai programose",
+        "answerStatus": 1
+      },
+      {
+        "text": "Apibrėžimas rateliu",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Gemini Live“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kokie yra portreto fotografavimo privalumai?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galite įrašyti dar ryškesnius vaizdo įrašus nakties metu su mažiau triukšmo.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dabar galite filtruoti nepageidaujamus garsus ir pasilikti tuos, kurių norite.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galite įvykdyti užduotis naudodamiesi keliomis programomis vienu metu natūraliai kalbėdami į „Galaxy S25“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galite laisvai užfiksuoti natūralią odos tekstūrą",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ar galite paaiškinti, koks rezultatas gaunamas, kai filmuojami naktiniai vaizdo įrašai?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galite įrašyti dar ryškesnius vaizdo įrašus nakties metu su mažiau triukšmo.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dabar galite filtruoti nepageidaujamus garsus ir pasilikti tuos, kurių norite.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galite įvykdyti užduotis naudodamiesi keliomis programomis vienu metu natūraliai kalbėdami į „Galaxy S25“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galite laisvai užfiksuoti tikslų atspalvį ir natūralią odos tekstūrą",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuri iš toliau nurodytų naujo laikrodžio funkcijų yra pagrindinė funkcija ir turėtų būti pateikiama kaip susietoji patirtis pristatant gyvenimo stiliaus demonstraciją? (pasirinkite visus teisingus atsakymus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Itin skaidrus garsas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energijos įvertinimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Lenktynės",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuri iš toliau nurodytų „Buds3 Pro“ ir „Buds3“ funkcijų yra pagrindinė funkcija, kuri turėtų būti nurodyta kaip susietoji patirtis pristatant gyvenimo stiliaus demonstraciją?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuityvi UI / UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Sound Optimization“\n(optimizuotas garsas)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kelių įsigijimų pasiūlymas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kokia funkcija NĖRA palaikoma „Samsung Notes“?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Perdengiantis PDF vertimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkribavimas ir vertimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vertimas realiuoju laiku įrašant balsą",
+        "answerStatus": 1
+      },
+      {
+        "text": "Santrauka ir automatinis formatavimas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kaip turėčiau pasiruošti, kad galėčiau naudoti „Galaxy AI“?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Turite būti prisijungę prie savo „Samsung“ paskyros",
+        "answerStatus": 1
+      },
+      {
+        "text": "Turite sumokėti tam tikrą prenumeratos mokestį",
+        "answerStatus": 0
+      },
+      {
+        "text": "Turite atsisiųsti „Galaxy AI“ skirtą programą",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nereikia nieko daryti",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kodėl turėčiau atnaujinti savo „Galaxy“ į „One UI 7.0“?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Beveik niekas nepasikeitė nuo „One UI 6.1.1“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Su „One UI 7.0“ jūsų patirtis su DI telefonu bus geresnė, palyginti su ankstesne programine įranga",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kokius veiksnius galiu panaikinti naudodamasis garso trintuku? (pasirinkite visus variantus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muzika",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vėjas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Triukšmas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokias pagrindines funkcijas reikėtų išbandyti naudojantis „Galaxy S25“? (pasirinkite visus variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Pokalbių pagalba",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veiksmai programose",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portretas ir „Mano filtras“",
+        "answerStatus": 1
+      },
+      {
+        "text": "Garso trintukas",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokie yra „Galaxy S25“ pagrindiniai patobulinimai? (pasirinkite tris variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Veiksmai programose",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodalumas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Akumuliatorius",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm procesorius",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Koks procesorius yra įrengtas „Galaxy S25“",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokie yra „Galaxy S25 Ultra“ pagrindiniai patobulinimai? (Pasirinkite tris variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Itin plataus kampo 50 MP fotoaparatas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Svoris",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Corning Gorilla Armor2“ (priekiniam ekranui)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Procesorius",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuri iš toliau nurodytų funkcijų NĖRA naujo laikrodžio pagrindinė savybė? (pasirinkite vieną)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Naujo lygio našumas",
+        "answerStatus": 0
+      },
+      {
+        "text": "DI valdomas miegas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ekrano dydis",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalizuota treniruočių patirtis",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuri iš toliau nurodytų funkcijų yra pagrindinė funkcija, kuri turėtų būti pabrėžiama pristatant „Buds3 Pro“ ir „Buds3“ pirkėjams, kurie dar nenaudojo ausinių (pirmą kartą įsigyjantiems pirkėjams)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Itin skaidrus garsas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptyvus ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Patogu užsidėti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kokia yra naujoji „Tab S10“ funkcija, palaikanti ryškų laiko vaizdą?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "„Dynamic AMOLED 2X“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Antirefleksinė apsauga",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Didelis ekranas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ar yra funkcija, naudojantis kuria, galima lengvai ir greitai bendrinti nuotraukas / vaizdo įrašus su savo draugais?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "„Smart Things“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spartusis bendrinimas",
+        "answerStatus": 1
+      },
+      {
+        "text": "„Smart Switch“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tiesioginis vertimas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ar turiu būti netoliese tol, kol naudojuosi sparčiuoju bendrinimu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nebūtinai, jis veiks per debesį",
+        "answerStatus": 1
+      },
+      {
+        "text": "Taip, deja, turite būti netoliese",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokias pagrindines funkcijas rekomenduotumėte išbandyti? (pasirinkite visus variantus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Veiksmai programose",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portretas ir „Mano filtras“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Garso trintukas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ką sakyti, jeigu noriu išbandyti veiksmus programose „Galaxy S25“? (pavyzdys)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Surask netoliese esantį kinų restoraną ir nusiųsk jo informaciją Toniui",
+        "answerStatus": 1
+      },
+      {
+        "text": "Labas, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Koks šiandien bus oras",
+        "answerStatus": 0
+      },
+      {
+        "text": "Labas, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kaip fotografuojant pritaikyti filtrą? (pasirinkite du variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Naudojantis iš anksto nustatytu fotoaparato programos filtru",
+        "answerStatus": 1
+      },
+      {
+        "text": "Naudojantis fotoaparato programos naktiniu režimu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Naudojantis galerijoje esančios nuotraukos funkcija „Mano filtras“",
+        "answerStatus": 1
+      },
+      {
+        "text": "Naudojantis fotoaparato programos sulėtintu režimu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Aš esu didelis „S pen“ rašiklio gerbėjas. Ar galite man ką nors rekomenduoti?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "„Galaxy S25 Plus“",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Galaxy S25 Ultra“",
+        "answerStatus": 1
+      },
+      {
+        "text": "„Galaxy S25“",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Galaxy Watch Ultra“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kokios informacijos / įžvalgų galiu gauti naudodamas „Now Brief“? (pasirinkite tris variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energijos įvertinimas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Planas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Žadintuvas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Namų adresas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Pasirinkite funkciją, susijusią su naujo laikrodžio sveikatos / miego funkcijomis (pasirinkite visus teisingus atsakymus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energijos įvertinimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personalizuotos treniruotės",
+        "answerStatus": 0
+      },
+      {
+        "text": "Savimotyvacija ir tobulėjimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Pasirinkite tinkamiausią „Buds3“ funkciją, kurią galima naudoti susitikimo su kita kalba kalbančiu asmeniu metu.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Vertėjas žodžiu",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Patogu užsidėti",
+        "answerStatus": 0
+      },
+      {
+        "text": "Itin skaidrus garsas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kas naujo naujojoje „Tab S10“ „Book Cover“ klaviatūroje?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nugarėlės apšvietimas ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Specialusis dirbtinio intelekto mygtukas",
+        "answerStatus": 1
+      },
+      {
+        "text": "„Samsung Note“ paleidimo priemonė",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Google“ padėjėjas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kokie yra energijos įvertinimo kriterijai? (pasirinkite visus variantus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Miegas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veikla",
+        "answerStatus": 0
+      },
+      {
+        "text": "Širdies susitraukimų dažnis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Koks yra pagrindinis mainų (seno įrenginio grąžinimo) privalumas? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galima gauti mėnesinio finansavimo planą",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galima sumažinti naujo išmaniojo telefono įsigijimo kainą",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galima gauti 2 kartus daugiau atminties vietos už tą pačią kainą",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vieną perki, kitą gauni nemokamai",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Esu S22 naudotojas. Kokie yra „Galaxy S25“ pagrindiniai patobulinimai? (pasirinkite du variantus)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm procesorius",
+        "answerStatus": 1
+      },
+      {
+        "text": "Vaizdo kokybė",
+        "answerStatus": 1
+      },
+      {
+        "text": "Fotoaparatų skaičius",
+        "answerStatus": 0
+      },
+      {
+        "text": "Matmenys",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kokios yra išskirtinės „Galaxy S25 Ultra“ funkcijos? (pasirinkite visus variantus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Įtaisytasis rašiklis „S Pen“",
+        "answerStatus": 0
+      },
+      {
+        "text": "100 k. priartinimas ir 200 MP kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Didesnis ekranas / baterija",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ar galima kaip nors bendrinti savo failus su ne „Android“ įrenginiais?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Spartusis bendrinimas",
+        "answerStatus": 1
+      },
+      {
+        "text": "Išmanieji daiktai",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Try Galaxy“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Piniginė",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kokią funkciją reikėtų naudoti, norint įrašytą vaizdo įrašą peržiūrėti sulėtintai?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Naktiniai vaizdo įrašai",
+        "answerStatus": 0
+      },
+      {
+        "text": "Garso trintuką",
+        "answerStatus": 0
+      },
+      {
+        "text": "Momentinį sulėtinimą",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automatinį apkirpimą",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kasdien daug kalbuosi telefonu, tačiau dažnai pamirštu, apie ką kalbėjomės. Ar galite rekomenduoti kokią nors funkciją tokioje situacijoje?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Transkripcijos pagalba",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tiesioginis vertimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "„Now Brief“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodalinė paieška",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kaotan või kukutan sageli oma telefoni. Muretsen millegi kalli ostmise pärast, kuna see võib katki minna.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Minu soovitus: „Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Minu soovitus: „Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Minu soovitus: „Kiirjagamine”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Minu soovitus: „odavam mudel”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mida EI hõlma Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nutitelefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kell",
+        "answerStatus": 0
+      },
+      {
+        "text": "Töölauaarvuti",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tahvelarvuti",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kuris iš toliau nurodytų būdų yra tinkamas nusiimti „Ring“, jeigu klientas nurodo, kad „Ring“ užstrigo ant piršto ir nepavyksta jo nusiimti?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Patepti lubrikantu, pvz., rankų kremu, valymo alyva ar muilu, kad sumažėtų trintis ir būtų lengviau nusiimti įrenginį.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Įmerkti pirštą į šaltą vandenį, kad laikinai susitrauktų kraujagyslės ir sumažėtų piršto apimtis. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 minutes laikyti pakeltą ranką, kad sumažėtų patinimas.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koks yra tinkamiausias atsakymas, norint užpildyti tuščią vietą šiame teiginyje?\n„Galaxy Ring“ yra naujas dėvimasis įrenginys. Ypač DI stebima sveikatos informacija ir ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energijos įvertinimas",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spartinimo kortelė",
+        "answerStatus": 0
+      },
+      {
+        "text": "Miego treniruotės",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dvigubas suėmimas",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuris iš toliau nurodytų CXP yra „Galaxy Ring“ pagrindinė CXP?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalizuotos treniruotės",
+        "answerStatus": 0
+      },
+      {
+        "text": "Patogus dėvėjimas 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dvigubas suėmimas  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Visi išvardyti variantai",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây KHÔNG PHẢI là cải tiến chính của Dòng Galaxy S24 so với Dòng S23?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Khoanh tròn Search đa năng bằng Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "Khai phóng sáng tạo & Zoom Mắt thần bóng đêm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thăng hạng hiệu năng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Số lượng camera",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây KHÔNG liên quan đến thiết kế của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Thiết kế Đẳng cấp",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thiết kế cạnh tinh tế",
+        "answerStatus": 1
+      },
+      {
+        "text": "Màn hình phẳng và Khung Titan (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bộ sưu tập màu sắc ấn tượng, lấy cảm hứng từ khoáng sản quý giá và bền bỉ với thời gian",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tính năng nào sau đây của Dòng Galaxy S24 liên quan đến cải tiến độ bền? (Chọn hai)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Kháng nước chuẩn IPX8",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mặt kính Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Khung titan (Galaxy S24 Ultra) và Armor Aluminum cải tiến (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bản lề Flex",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tình huống sử dụng nào sau đây KHÔNG PHẢI là tình huống sử dụng tính năng Khoanh vùng Search đa năng bằng Google?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ghi âm cuộc họp và nhận bản tóm tắt nhanh chóng.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tìm các món đồ thời trang khi đang xem video.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Khám phá một địa điểm du lịch bạn nhìn thấy trên bảng tin.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tra cứu công thức món ăn bạn thấy trên YouTube.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n ________ có thể dịch các cuộc trò chuyện đến và đi trong thời gian thực trên nhiều ứng dụng nhắn tin khác nhau và điều chỉnh cách diễn đạt sao cho phù hợp với tình huống của bạn như Chuyên nghiệp, Bình thường, Xã giao, Lịch sự và Biểu cảm bằng biểu tượng cảm xúc.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Phiên dịch trực tiếp cuộc gọi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trợ lý Chat thông minh",
+        "answerStatus": 1
+      },
+      {
+        "text": "Trợ lý Note quyền năng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trợ lý ghi âm thông minh",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây giải thích đúng về Phiên dịch trực tiếp cuộc gọi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Là bản dịch giọng nói theo thời gian thực cả hai chiều.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Khả dụng với ứng dụng của bên thứ 3 mà không cần chuyển sang ứng dụng dịch khác.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tự động căn chỉnh chữ viết tay của bạn.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sắp xếp ghi chú theo trật tự.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây KHÔNG liên quan đến các tính năngTrợ lý Note quyền năng bổ sung cho Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tự động căn chỉnh và giãn cách chữ viết tay khi dùng S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sắp xếp ghi chú theo trật tự",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tạo bìa cho bản tóm tắt dựa trên ghi chú của bạn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Liệt kê ý nổi bật của các điểm quan trọng nhất",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Độ phân giải cao nhất hiện có khi chụp ảnh bằng Camera Zoom quang học 5x trên Galaxy S24 Ultra là bao nhiêu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ của Galaxy S24 Ultra cho ảnh chụp thu phóng sáng hơn, rõ nét hơn ngay cả vào buổi tối",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pixel lớn hơn 1,6 lần",
+        "answerStatus": 1
+      },
+      {
+        "text": "OIS rộng hơn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chụp một chạm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pixel thích ứng mới",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ có thể vừa lấp đầy nền vừa canh thẳng (nghiêng) hình ảnh và di chuyển/thay đổi kích thước các đối tượng trong ảnh bằng tính năng tự động điền.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ảnh chân dung ban đêm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hậu kỳ sáng tạo",
+        "answerStatus": 1
+      },
+      {
+        "text": "Độ phân giải cao 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trợ lý Note quyền năng",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Làm thế nào để kích hoạt tính năng AI đề xuất chỉnh sửa của Dòng Galaxy S24 để chỉnh sửa ảnh tức thì (Hiệu ứng chân dung, Nâng cấp ảnh, Xóa hình phản chiếu, v.v.)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tải xuống và mở ứng dụng chỉnh sửa ảnh rồi áp dụng lần lượt từng hiệu ứng.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chạm vào biểu tượng chỉnh sửa và nhấn vào biểu tượng Hỗ trợ ảnh.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chạm vào biểu tượng hoặc chỉ cần vuốt ảnh lên và bạn có thể xem các tùy chọn chỉnh sửa được đề xuất.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mở ứng dụng mạng xã hội và chọn bộ lọc bạn muốn áp dụng cho ảnh.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây ít liên quan nhất đến các tính năng camera của Dòng Galaxy S24 trên camera của ứng dụng mạng xã hội?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ảnh HDR",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chụp đêm: Tăng độ sáng, giảm độ nhiễu cho ảnh và video ban đêm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thu phóng chuẩn không gian",
+        "answerStatus": 1
+      },
+      {
+        "text": "Chống rung video",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây KHÔNG PHẢI là cải tiến Hiệu năng chơi game của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bộ xử lý nhanh nhất từ trước đến nay của Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hệ thống tản nhiệt buồng hơi lớn hơn (1,9 lần đối với Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chuyển động chậm AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Công nghệ dò tia cải tiến",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây KHÔNG PHẢI là một thành phần của Màn hình cuốn hút của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Màn hình lớn hơn, viền mỏng hơn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Công cụ nhận biết vật thể",
+        "answerStatus": 1
+      },
+      {
+        "text": "HBM tối đa 2.600 nit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nâng cấp thị giác",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Những tính năng nào sau đây liên quan đến Thời lượng pin lâu dài của Dòng Galaxy S24? (Chọn hai)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Dung lượng pin lớn hơn",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Vault",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hình nền tạo sinh",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tần số quét tự động tinh chỉnh",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây là thông số chính xác của bộ nhớ của từng mẫu thuộc Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây ít liên quan nhất đến One UI 6 của Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Bảng điều khiển nhanh bắt mắt",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thiết kế biểu tượng cảm xúc cải tiến",
+        "answerStatus": 0
+      },
+      {
+        "text": "Link to Windows",
+        "answerStatus": 1
+      },
+      {
+        "text": "Widget camera & Widget thông tin thời tiết",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Đâu là đáp án phù hợp nhất để điền vào chỗ trống sau?\n________ là tính năng chia sẻ hoàn toàn tương thích giữa tất cả điện thoại, máy tính bảng và PC (Android, Windows, v.v).",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Chia sẻ nhanh",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào dưới đây là lợi ích của Samsung Account?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Trải nghiệm AI đa dạng giúp đơn giản hoá cuộc sống",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tìm điện thoại bị mất ngay cả khi điện thoại không kết nối mạng",
+        "answerStatus": 0
+      },
+      {
+        "text": "Truy cập và đồng bộ tất cả các dịch vụ và thiết bị Samsung của bạn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tất cả các ý trên",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Ý nào sau đây là lời giới thiệu Galaxy Watch6 phù hợp nhất khi bán chéo với Dòng Galaxy S24?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Thay đổi màn hình khóa & AOD của Dòng Galaxy S24 để thể hiện cá tính của bạn bằng thiết bị.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chụp ảnh và quay video trực tiếp bằng thiết bị này.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tận hưởng trải nghiệm xem thoải mái trên thiết bị này.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Thiết bị sẽ tự động chuyển âm thanh sang thiết bị đang hoạt động.",
+        "answerStatus": 0
+      }
+    ]
+  }
+]

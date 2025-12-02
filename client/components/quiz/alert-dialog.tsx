@@ -1,0 +1,39 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import useCheckLocale from "@/hooks/useCheckLocale";
+import { cn } from "@/utils/utils";
+import { useTranslations } from "next-intl";
+
+export function GameOverAlertDialog({ gameOver, onRestart, onGotoMap }: { gameOver: boolean; onRestart: () => void; onGotoMap: () => void }) {
+  const translation = useTranslations();
+  const { isMyanmar } = useCheckLocale();
+  return (
+    <AlertDialog open={gameOver}>
+      <AlertDialogContent className="w-[250px] sm:w-[340px] rounded-[20px]">
+        <AlertDialogHeader>
+          <AlertDialogTitle aria-hidden className="hidden">
+            Game Over
+          </AlertDialogTitle>
+          <AlertDialogDescription className={cn("text-base", isMyanmar && "leading-9")}>{translation("alert_notification")}</AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <AlertDialogFooter className="sm:justify-center">
+          <AlertDialogCancel onClick={() => onGotoMap()} className="text-wrap">
+            {translation("no")}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={() => onRestart()} className="text-wrap">
+            {translation("retry")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}

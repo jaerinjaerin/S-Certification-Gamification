@@ -1,8 +1,9 @@
 {
   "devDependencies": {
-    "prisma": "^5.22.0"
+    "jest-fetch-mock": "^3.0.3",
+    "prisma": "^6.2.1"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0"
+    "@prisma/client": "^6.2.1"
   }
 }

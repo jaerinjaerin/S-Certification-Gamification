@@ -1,0 +1,1574 @@
+{
+  "hq": [
+    {
+      "domainId": 1,
+      "domainName": "Global",
+      "domainCode": "Global",
+      "parentDomainName": "",
+      "parentDomainId": 0,
+      "isParentDomain": false,
+      "domainHierarchy": "System"
+    },
+    {
+      "domainId": 28,
+      "domainName": "Samsung Global",
+      "domainCode": "ORG_29",
+      "parentDomainName": "",
+      "parentDomainId": 0,
+      "isParentDomain": false,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 24830,
+      "domainName": "zzz scorm deletion domain",
+      "domainCode": "zzz scorm deletion domain",
+      "parentDomainName": "",
+      "parentDomainId": 0,
+      "isParentDomain": false,
+      "domainHierarchy": "Samsung"
+    }
+  ],
+  "regions": [
+    {
+      "domainId": 29,
+      "domainName": "HQ Retail Team",
+      "domainCode": "OrgCode-7",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508376,
+      "domainName": "NA",
+      "domainCode": "NA",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508369,
+      "domainName": "EUROPE",
+      "domainCode": "EUROPE",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508370,
+      "domainName": "CIS",
+      "domainCode": "CIS",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508378,
+      "domainName": "CHINA",
+      "domainCode": "CHINA",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508371,
+      "domainName": "SEAO",
+      "domainCode": "SEAO",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508372,
+      "domainName": "SWA",
+      "domainCode": "SWA",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508374,
+      "domainName": "MENA",
+      "domainCode": "MENA",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508373,
+      "domainName": "LATAM",
+      "domainCode": "LATAM",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508375,
+      "domainName": "AFRICA",
+      "domainCode": "AFRICA",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508377,
+      "domainName": "JAPAN",
+      "domainCode": "JAPAN",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    }
+  ],
+  "subsidiaries": [
+    {
+      "domainId": 349949,
+      "domainName": "SEA",
+      "domainCode": "ORG_36",
+      "parentDomainName": "NA",
+      "parentDomainId": 508376,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333981,
+      "domainName": "SECA",
+      "domainCode": "ORG_696",
+      "parentDomainName": "NA",
+      "parentDomainId": 508376,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349942,
+      "domainName": "SEAD",
+      "domainCode": "ORG_15",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335247,
+      "domainName": "SEAS",
+      "domainCode": "ORG_3",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335243,
+      "domainName": "SEB",
+      "domainCode": "ORG_14",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349951,
+      "domainName": "SECZ",
+      "domainCode": "ORG_53",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 49,
+      "domainName": "SEF",
+      "domainCode": "ORG_55",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 47,
+      "domainName": "SEG",
+      "domainCode": "ORG_1100",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335252,
+      "domainName": "SEGR",
+      "domainCode": "ORG_57",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349943,
+      "domainName": "SEH",
+      "domainCode": "ORG_511",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335249,
+      "domainName": "SEI",
+      "domainCode": "ORG_60",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349939,
+      "domainName": "SEIB",
+      "domainCode": "ORG_9",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508502,
+      "domainName": "SENA",
+      "domainCode": "ORG_0215",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349940,
+      "domainName": "SEPOL",
+      "domainCode": "ORG_71",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349941,
+      "domainName": "SEROM",
+      "domainCode": "ORG_73",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508555,
+      "domainName": "SEUK",
+      "domainCode": "ORG_0216",
+      "parentDomainName": "EUROPE",
+      "parentDomainId": 508369,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349946,
+      "domainName": "SECE",
+      "domainCode": "ORG_5",
+      "parentDomainName": "CIS",
+      "parentDomainId": 508370,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 665823,
+      "domainName": "SEUZ",
+      "domainCode": "ORG_11",
+      "parentDomainName": "CIS",
+      "parentDomainId": 508370,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 43,
+      "domainName": "SERC",
+      "domainCode": "ORG_4",
+      "parentDomainName": "CIS",
+      "parentDomainId": 508370,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 51,
+      "domainName": "SCIC",
+      "domainCode": "ORG_17",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 335241,
+      "domainName": "SEHK",
+      "domainCode": "ORG_1040",
+      "parentDomainName": "CHINA_R",
+      "parentDomainId": 508378,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349945,
+      "domainName": "SET",
+      "domainCode": "ORG_21",
+      "parentDomainName": "CHINA_R",
+      "parentDomainId": 508378,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349933,
+      "domainName": "SAVINA",
+      "domainCode": "ORG_48",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 534645,
+      "domainName": "SEAU",
+      "domainCode": "ORG_0510",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 45,
+      "domainName": "SEIN",
+      "domainCode": "ORG_62",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349936,
+      "domainName": "SENZ",
+      "domainCode": "ORG_69",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349934,
+      "domainName": "SEPCO",
+      "domainCode": "ORG_24",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349935,
+      "domainName": "SESP",
+      "domainCode": "ORG_47",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349938,
+      "domainName": "SME",
+      "domainCode": "ORG_77",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 30,
+      "domainName": "TSE",
+      "domainCode": "ORG_79",
+      "parentDomainName": "SEAO",
+      "parentDomainId": 508371,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349950,
+      "domainName": "Bangladesh_S",
+      "domainCode": "ORG_80",
+      "parentDomainName": "SWA",
+      "parentDomainId": 508372,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 534165,
+      "domainName": "Nepal_S",
+      "domainCode": "ORG_0604",
+      "parentDomainName": "SWA",
+      "parentDomainId": 508372,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 32,
+      "domainName": "SIEL",
+      "domainCode": "ORG_25",
+      "parentDomainName": "SWA",
+      "parentDomainId": 508372,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349952,
+      "domainName": "Sri Lanka_S",
+      "domainCode": "ORG_78",
+      "parentDomainName": "SWA",
+      "parentDomainId": 508372,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349955,
+      "domainName": "SEEG",
+      "domainCode": "ORG_698",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 592797,
+      "domainName": "SEIL",
+      "domainCode": "ORG_376",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349956,
+      "domainName": "SELV",
+      "domainCode": "ORG_66",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349957,
+      "domainName": "SEMAG",
+      "domainCode": "ORG_1093",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349958,
+      "domainName": "SEPAK",
+      "domainCode": "ORG_70",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349953,
+      "domainName": "SESAR",
+      "domainCode": "ORG_686",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 41,
+      "domainName": "SETK",
+      "domainCode": "ORG_6",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 34,
+      "domainName": "SGE",
+      "domainCode": "ORG_7",
+      "parentDomainName": "MENA",
+      "parentDomainId": 508374,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349954,
+      "domainName": "SAMCOL",
+      "domainCode": "ORG_46",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 333971,
+      "domainName": "SEASA",
+      "domainCode": "ORG_50",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 336300,
+      "domainName": "SECH",
+      "domainCode": "ORG_52",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333983,
+      "domainName": "SEDA",
+      "domainCode": "ORG_54",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506610,
+      "domainName": "SELA",
+      "domainCode": "ORG_1141",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333985,
+      "domainName": "SEM",
+      "domainCode": "ORG_67",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349959,
+      "domainName": "SEPR",
+      "domainCode": "ORG_72",
+      "parentDomainName": "LATAM",
+      "parentDomainId": 508373,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 670566,
+      "domainName": "SEEA",
+      "domainCode": "ORG_40",
+      "parentDomainName": "AFRICA",
+      "parentDomainId": 508375,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349948,
+      "domainName": "SEWA",
+      "domainCode": "ORG_37",
+      "parentDomainName": "AFRICA",
+      "parentDomainId": 508375,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349937,
+      "domainName": "SSA",
+      "domainCode": "ORG_23",
+      "parentDomainName": "AFRICA",
+      "parentDomainId": 508375,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 336303,
+      "domainName": "SEJ",
+      "domainCode": "ORG_34",
+      "parentDomainName": "JAPAN_R",
+      "parentDomainId": 508377,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    }
+  ],
+  "domains": [
+    {
+      "domainId": 29,
+      "domainName": "HQ",
+      "domainCode": "OrgCode-7",
+      "parentDomainName": "Samsung Global",
+      "parentDomainId": 28,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349996,
+      "domainName": "United States",
+      "domainCode": "NAT_2840",
+      "parentDomainName": "SEA",
+      "parentDomainId": 349949,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 432204,
+      "domainName": "Canada",
+      "domainCode": "NAT_7000",
+      "parentDomainName": "SECA",
+      "parentDomainId": 333981,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349987,
+      "domainName": "Albania",
+      "domainCode": "NAT_2008",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349989,
+      "domainName": "Bosnia and Herzegovina",
+      "domainCode": "NAT_2070",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349984,
+      "domainName": "Croatia",
+      "domainCode": "NAT_2191",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349988,
+      "domainName": "Macedonia (FYROM)",
+      "domainCode": "NAT_2807",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349986,
+      "domainName": "Serbia",
+      "domainCode": "NAT_2688",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349985,
+      "domainName": "Slovenia",
+      "domainCode": "NAT_2705",
+      "parentDomainName": "SEAD",
+      "parentDomainId": 349942,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335248,
+      "domainName": "Switzerland",
+      "domainCode": "NAT_2756",
+      "parentDomainName": "SEAS",
+      "parentDomainId": 335247,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333980,
+      "domainName": "Austria",
+      "domainCode": "NAT_2040",
+      "parentDomainName": "SEAS",
+      "parentDomainId": 335247,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335244,
+      "domainName": "Estonia",
+      "domainCode": "NAT_2233",
+      "parentDomainName": "SEB",
+      "parentDomainId": 335243,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335245,
+      "domainName": "Latvia",
+      "domainCode": "NAT_2428",
+      "parentDomainName": "SEB",
+      "parentDomainId": 335243,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335246,
+      "domainName": "Lithuania",
+      "domainCode": "NAT_2440",
+      "parentDomainName": "SEB",
+      "parentDomainId": 335243,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349998,
+      "domainName": "Czech Republic",
+      "domainCode": "NAT_2203",
+      "parentDomainName": "SECZ",
+      "parentDomainId": 349951,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 485235,
+      "domainName": "Slovakia",
+      "domainCode": "NAT_2703",
+      "parentDomainName": "SECZ",
+      "parentDomainId": 349951,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 50,
+      "domainName": "France",
+      "domainCode": "NAT_2250",
+      "parentDomainName": "SEF",
+      "parentDomainId": 49,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 48,
+      "domainName": "Germany",
+      "domainCode": "NAT_2276",
+      "parentDomainName": "SEG",
+      "parentDomainId": 47,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335253,
+      "domainName": "Greece",
+      "domainCode": "NAT_2300",
+      "parentDomainName": "SEGR",
+      "parentDomainId": 335252,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 578898,
+      "domainName": "Cyprus",
+      "domainCode": "NAT_19602",
+      "parentDomainName": "SEGR",
+      "parentDomainId": 335252,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349990,
+      "domainName": "Hungary",
+      "domainCode": "NAT_2348",
+      "parentDomainName": "SEH",
+      "parentDomainId": 349943,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335250,
+      "domainName": "Italy",
+      "domainCode": "NAT_2380",
+      "parentDomainName": "SEI",
+      "parentDomainId": 335249,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349980,
+      "domainName": "Spain",
+      "domainCode": "NAT_2724",
+      "parentDomainName": "SEIB",
+      "parentDomainId": 349939,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349991,
+      "domainName": "Portugal",
+      "domainCode": "NAT_2620",
+      "parentDomainName": "SEIB",
+      "parentDomainId": 349939,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508503,
+      "domainName": "Sweden",
+      "domainCode": "NAT_021501",
+      "parentDomainName": "SENA",
+      "parentDomainId": 508502,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508504,
+      "domainName": "Finland",
+      "domainCode": "NAT_021502",
+      "parentDomainName": "SENA",
+      "parentDomainId": 508502,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508505,
+      "domainName": "Norway",
+      "domainCode": "NAT_021503",
+      "parentDomainName": "SENA",
+      "parentDomainId": 508502,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508506,
+      "domainName": "Denmark",
+      "domainCode": "NAT_021504",
+      "parentDomainName": "SENA",
+      "parentDomainId": 508502,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349981,
+      "domainName": "Poland",
+      "domainCode": "NAT_2616",
+      "parentDomainName": "SEPOL",
+      "parentDomainId": 349940,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349982,
+      "domainName": "Bulgaria",
+      "domainCode": "NAT_2100",
+      "parentDomainName": "SEROM",
+      "parentDomainId": 349941,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349983,
+      "domainName": "Romania",
+      "domainCode": "NAT_2642",
+      "parentDomainName": "SEROM",
+      "parentDomainId": 349941,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 508556,
+      "domainName": "United Kingdom",
+      "domainCode": "NAT_021505",
+      "parentDomainName": "SEUK",
+      "parentDomainId": 508555,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 349993,
+      "domainName": "Kazakhstan",
+      "domainCode": "NAT_2398",
+      "parentDomainName": "SECE",
+      "parentDomainId": 349946,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 592799,
+      "domainName": "Kyrgyzstan",
+      "domainCode": "NAT_41702",
+      "parentDomainName": "SECE",
+      "parentDomainId": 349946,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 592800,
+      "domainName": "Tajikistan",
+      "domainCode": "NAT_76202",
+      "parentDomainName": "SECE",
+      "parentDomainId": 349946,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 361206,
+      "domainName": "Uzbekistan",
+      "domainCode": "NAT_2860",
+      "parentDomainName": "SEUZ",
+      "parentDomainId": 665823,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 44,
+      "domainName": "Russia",
+      "domainCode": "NAT_2643",
+      "parentDomainName": "SERC",
+      "parentDomainId": 43,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506003,
+      "domainName": "Azerbaijan",
+      "domainCode": "NAT_2645",
+      "parentDomainName": "SERC",
+      "parentDomainId": 43,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506426,
+      "domainName": "Georgia",
+      "domainCode": "NAT_2644",
+      "parentDomainName": "SERC",
+      "parentDomainId": 43,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 52,
+      "domainName": "China",
+      "domainCode": "NAT_2156",
+      "parentDomainName": "SCIC",
+      "parentDomainId": 51,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335242,
+      "domainName": "Hong Kong",
+      "domainCode": "NAT_2344",
+      "parentDomainName": "SEHK",
+      "parentDomainId": 335241,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349992,
+      "domainName": "Taiwan",
+      "domainCode": "NAT_2158",
+      "parentDomainName": "SET",
+      "parentDomainId": 349945,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349974,
+      "domainName": "Vietnam",
+      "domainCode": "NAT_2704",
+      "parentDomainName": "SAVINA",
+      "parentDomainId": 349933,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 534646,
+      "domainName": "Australia (Mobile)",
+      "domainCode": "NAT_051001",
+      "parentDomainName": "SEAU",
+      "parentDomainId": 534645,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 46,
+      "domainName": "Indonesia",
+      "domainCode": "NAT_2360",
+      "parentDomainName": "SEIN",
+      "parentDomainId": 45,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349977,
+      "domainName": "New Zealand",
+      "domainCode": "NAT_2554",
+      "parentDomainName": "SENZ",
+      "parentDomainId": 349936,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349975,
+      "domainName": "Philippines",
+      "domainCode": "NAT_2608",
+      "parentDomainName": "SEPCO",
+      "parentDomainId": 349934,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349976,
+      "domainName": "Singapore",
+      "domainCode": "NAT_2702",
+      "parentDomainName": "SESP",
+      "parentDomainId": 349935,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349979,
+      "domainName": "Malaysia",
+      "domainCode": "NAT_2458",
+      "parentDomainName": "SME",
+      "parentDomainId": 349938,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 31,
+      "domainName": "Thailand",
+      "domainCode": "NAT_2764",
+      "parentDomainName": "TSE",
+      "parentDomainId": 30,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349973,
+      "domainName": "Cambodia",
+      "domainCode": "NAT_2116",
+      "parentDomainName": "TSE",
+      "parentDomainId": 30,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 361205,
+      "domainName": "Laos",
+      "domainCode": "NAT_2418",
+      "parentDomainName": "TSE",
+      "parentDomainId": 30,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349972,
+      "domainName": "Myanmar",
+      "domainCode": "NAT_3004",
+      "parentDomainName": "TSE",
+      "parentDomainId": 30,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349997,
+      "domainName": "Bangladesh",
+      "domainCode": "NAT_2050",
+      "parentDomainName": "Bangladesh_S",
+      "parentDomainId": 349950,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 534166,
+      "domainName": "Nepal",
+      "domainCode": "NAT_060401",
+      "parentDomainName": "Nepal_S",
+      "parentDomainId": 534165,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 33,
+      "domainName": "India",
+      "domainCode": "NAT_2356",
+      "parentDomainName": "SIEL",
+      "parentDomainId": 32,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349999,
+      "domainName": "Sri Lanka",
+      "domainCode": "NAT_2144",
+      "parentDomainName": "Sri Lanka_S",
+      "parentDomainId": 349952,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349962,
+      "domainName": "Egypt",
+      "domainCode": "NAT_2818",
+      "parentDomainName": "SEEG",
+      "parentDomainId": 349955,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 592798,
+      "domainName": "Israel",
+      "domainCode": "NAT_37602",
+      "parentDomainName": "SEIL",
+      "parentDomainId": 592797,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349966,
+      "domainName": "Palestine",
+      "domainCode": "NAT_2275",
+      "parentDomainName": "SEIL",
+      "parentDomainId": 592797,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349964,
+      "domainName": "Jordan",
+      "domainCode": "NAT_2400",
+      "parentDomainName": "SELV",
+      "parentDomainId": 349956,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349965,
+      "domainName": "Iraq",
+      "domainCode": "NAT_2368",
+      "parentDomainName": "SELV",
+      "parentDomainId": 349956,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349963,
+      "domainName": "Lebanon",
+      "domainCode": "NAT_2422",
+      "parentDomainName": "SELV",
+      "parentDomainId": 349956,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349967,
+      "domainName": "Morocco",
+      "domainCode": "NAT_2504",
+      "parentDomainName": "SEMAG",
+      "parentDomainId": 349957,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349969,
+      "domainName": "Tunisia",
+      "domainCode": "NAT_2788",
+      "parentDomainName": "SEMAG",
+      "parentDomainId": 349957,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349968,
+      "domainName": "Algeria",
+      "domainCode": "NAT_2012",
+      "parentDomainName": "SEMAG",
+      "parentDomainId": 349957,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349970,
+      "domainName": "Pakistan",
+      "domainCode": "NAT_2586",
+      "parentDomainName": "SEPAK",
+      "parentDomainId": 349958,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349960,
+      "domainName": "Saudi Arabia",
+      "domainCode": "NAT_2682",
+      "parentDomainName": "Saudi Arabia_S",
+      "parentDomainId": 349953,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 42,
+      "domainName": "Turkiye",
+      "domainCode": "NAT_2792",
+      "parentDomainName": "SETK",
+      "parentDomainId": 41,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 39,
+      "domainName": "United Arab Emirates",
+      "domainCode": "NAT_2784",
+      "parentDomainName": "SGE",
+      "parentDomainId": 34,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 35,
+      "domainName": "Bahrain",
+      "domainCode": "NAT_2048",
+      "parentDomainName": "SGE",
+      "parentDomainId": 34,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 36,
+      "domainName": "Kuwait",
+      "domainCode": "NAT_2414",
+      "parentDomainName": "SGE",
+      "parentDomainId": 34,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 37,
+      "domainName": "Oman",
+      "domainCode": "NAT_2512",
+      "parentDomainName": "SGE",
+      "parentDomainId": 34,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 38,
+      "domainName": "Qatar",
+      "domainCode": "NAT_2634",
+      "parentDomainName": "SGE",
+      "parentDomainId": 34,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349961,
+      "domainName": "Colombia",
+      "domainCode": "NAT_2170",
+      "parentDomainName": "SAMCOL",
+      "parentDomainId": 349954,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 496135,
+      "domainName": "Argentina",
+      "domainCode": "NAT_2707",
+      "parentDomainName": "SEASA",
+      "parentDomainId": 333971,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 336302,
+      "domainName": "Chile",
+      "domainCode": "NAT_2152",
+      "parentDomainName": "SECH",
+      "parentDomainId": 336300,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 336301,
+      "domainName": "Bolivia",
+      "domainCode": "NAT_2068",
+      "parentDomainName": "SECH",
+      "parentDomainId": 336300,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333984,
+      "domainName": "Brazil",
+      "domainCode": "NAT_2076",
+      "parentDomainName": "SEDA",
+      "parentDomainId": 333983,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335256,
+      "domainName": "Trinidad and tobago",
+      "domainCode": "NAT_2780",
+      "parentDomainName": "Miami_S",
+      "parentDomainId": 335254,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333975,
+      "domainName": "Puerto Rico",
+      "domainCode": "NAT_2630",
+      "parentDomainName": "Miami_S",
+      "parentDomainId": 335254,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 333976,
+      "domainName": "Panama",
+      "domainCode": "NAT_2591",
+      "parentDomainName": "Panama_S",
+      "parentDomainId": 333973,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333974,
+      "domainName": "Ecuador",
+      "domainCode": "NAT_2218",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333977,
+      "domainName": "Costa Rica",
+      "domainCode": "NAT_2188",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 333978,
+      "domainName": "Dominican Republic",
+      "domainCode": "NAT_2212",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 335255,
+      "domainName": "Jamaica",
+      "domainCode": "NAT_2388",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506653,
+      "domainName": "Guatemala",
+      "domainCode": "NAT_2631",
+      "parentDomainName": "Guatemala_S",
+      "parentDomainId": 506652,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506655,
+      "domainName": "Honduras",
+      "domainCode": "NAT_2633",
+      "parentDomainName": "Guatemala_S",
+      "parentDomainId": 506652,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506657,
+      "domainName": "Nicaragua",
+      "domainCode": "NAT_2635",
+      "parentDomainName": "Guatemala_S",
+      "parentDomainId": 506652,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 506654,
+      "domainName": "El Salvador",
+      "domainCode": "NAT_2632",
+      "parentDomainName": "Guatemala_S",
+      "parentDomainId": 506652,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 333972,
+      "domainName": "Paraguay",
+      "domainCode": "NAT_2600",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+
+    {
+      "domainId": 335251,
+      "domainName": "Uruguay",
+      "domainCode": "NAT_2858",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 729951,
+      "domainName": "Venezuela",
+      "domainCode": "NAT_2862",
+      "parentDomainName": "SELA",
+      "parentDomainId": 506610,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 333986,
+      "domainName": "Mexico",
+      "domainCode": "NAT_2484",
+      "parentDomainName": "SEM",
+      "parentDomainId": 333985,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349971,
+      "domainName": "Peru",
+      "domainCode": "NAT_2604",
+      "parentDomainName": "SEPR",
+      "parentDomainId": 349959,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349995,
+      "domainName": "Kenya",
+      "domainCode": "NAT_2404",
+      "parentDomainName": "SEEA",
+      "parentDomainId": 670566,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 361268,
+      "domainName": "Nigeria",
+      "domainCode": "NAT_2566",
+      "parentDomainName": "SEWA",
+      "parentDomainId": 349948,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 361269,
+      "domainName": "Senegal",
+      "domainCode": "NAT_2686",
+      "parentDomainName": "SEWA",
+      "parentDomainId": 349948,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 545493,
+      "domainName": "Cameroon",
+      "domainCode": "NAT_120",
+      "parentDomainName": "SEWA",
+      "parentDomainId": 349948,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 361267,
+      "domainName": "Ghana",
+      "domainCode": "NAT_2288",
+      "parentDomainName": "SEWA",
+      "parentDomainId": 349948,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 545494,
+      "domainName": "Ivory Coast",
+      "domainCode": "NAT_384",
+      "parentDomainName": "SEWA",
+      "parentDomainId": 349948,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 494111,
+      "domainName": "Mauritius",
+      "domainCode": "NAT_3701",
+      "parentDomainName": "SSA",
+      "parentDomainId": 349937,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 349978,
+      "domainName": "South Africa",
+      "domainCode": "NAT_2710",
+      "parentDomainName": "SSA",
+      "parentDomainId": 349937,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 336304,
+      "domainName": "Japan",
+      "domainCode": "NAT_2392",
+      "parentDomainName": "SEJ",
+      "parentDomainId": 336303,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    },
+    {
+      "domainId": 493952,
+      "domainName": "Japan_Galaxy Harajuku",
+      "domainCode": "NAT_23961",
+      "parentDomainName": "SEJ",
+      "parentDomainId": 336303,
+      "isParentDomain": true,
+      "domainHierarchy": "Samsung"
+    }
+  ]
+}

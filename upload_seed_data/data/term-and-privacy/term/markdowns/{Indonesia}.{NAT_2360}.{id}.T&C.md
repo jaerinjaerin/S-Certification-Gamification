@@ -1,0 +1,61 @@
+Ketentuan Penggunaan Sertifikasi Galaxy AI Expert 2025
+
+Ketentuan Penggunaan bersama dengan Kebijakan Privasi kami yang ditetapkan di bawah ini (selanjutnya disebut sebagai "Ketentuan") dibuat antara Samsung Electronics Co., Ltd., sebuah Perusahaan Korea yang berkantor di 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republik Korea (termasuk afiliasinya, selanjutnya disebut sebagai "Samsung" atau "kami") dan Anda, serta mengatur akses atau penggunaan Anda terhadap Situs Web, Aplikasi Seluler, Materi, dan Layanan (sebagaimana didefinisikan di bawah). Harap baca Ketentuan dengan teliti sebelum mengakses atau menggunakan SamsungPlus (selanjutnya disebut sebagai "Situs Web" atau "Seluler"). Apabila Anda tidak setuju dengan salah satu Ketentuan, jangan mengakses atau menggunakan Situs Web dan Seluler. Penggunaan Anda atas Situs Web dan Seluler merupakan bentuk persetujuan Anda terhadap Ketentuan.
+
+Penggunaan Umum dan Batasan
+
+Semua konten yang disediakan oleh Samsung pada Situs Web atau Seluler (termasuk, tetapi tidak terbatas pada, data, informasi, dokumen, teks, desain, merek dagang, logo, grafik, gambar, ikon, suara, video, kode, dan perangkat lunak) (selanjutnya disebut sebagai "Materi") merupakan properti eksklusif Samsung, pemberi lisensi atau penyedia konten, serta dilindungi oleh hak cipta, merek dagang, dan undang-undang yang berlaku. Anda dapat mengakses Materi yang terdapat di Situs Web atau Seluler hanya untuk tujuan pelatihan dukungan SamsungPlus dan patuh pada izin yang dinyatakan secara tegas oleh Samsung, dengan ketentuan bahwa Anda tidak mengubah atau menghapus hak cipta, merek dagang, atau pemberitahuan kepemilikan lainnya yang terdapat pada Materi yang Anda akses, salin, unduh, atau cetak.
+
+Anda setuju untuk tidak menggunakan, menampilkan, memperbanyak, mengirimkan, memodifikasi, mendistribusikan, menyebarluaskan, menjual, memublikasikan, membuat karya turunan, menyiarkan, mengedarkan, atau dengan cara apa pun memanfaatkan Materi apa pun, secara keseluruhan atau sebagian, baik melalui email maupun sarana lain, untuk tujuan apa pun selain untuk tujuan yang diatur di sini dan patuh pada izin yang dinyatakan secara tegas oleh Samsung. Segala bentuk penggunaan yang tidak sah terhadap Situs Web, Seluler, Materi, atau Layanan dapat melanggar hak cipta, merek dagang, dan undang-undang lain yang berlaku.
+
+Penggunaan yang Dilarang
+
+Anda tidak boleh menggunakan Situs Web atau Seluler, serta Materi atau layanan apa pun yang disediakan melalui Situs Web atau Seluler (selanjutnya disebut sebagai "Layanan"): (a) dengan cara yang melanggar hukum lokal, negara bagian, nasional, asing, atau internasional; (b) untuk melecehkan atau membahayakan individu lain; (c) untuk berkedok sebagai orang atau entitas apa pun atau dengan cara lain menyalahgunakan afiliasi Anda dengan seseorang atau suatu entitas; atau (d) untuk mengganggu atau mengacaukan Situs Web, Seluler, atau Layanan.
+
+Anda setuju untuk tidak melakukan "framing" atau "mirroring" terhadap Situs Web atau Seluler atau bagian apa pun dari Materi atau Layanan pada server atau perangkat berbasis internet lain tanpa persetujuan tertulis sebelumnya dari Samsung. Lebih lanjut, Anda tidak boleh menggunakan bagian apa pun dari Materi atau Layanan dalam tag meta apa pun atau "teks tersembunyi" lainnya tanpa persetujuan tertulis sebelumnya dari Samsung.
+
+Cara berpartisipasi dalam Sertifikasi Galaxy AI Expert
+
+Pengguna Samsung+
+
+Setelah masuk ke aplikasi Samsung+, Anda dapat mengakses modul pelatihan. Partisipasi dalam kuis hanya diperbolehkan setelah menyelesaikan pelatihan. Setelah berhasil melewati semua tahap dalam kuis, Anda akan menerima lencana digital Galaxy AI Expert.
+
+Bukan Pengguna Samsung+
+
+Apabila Anda tidak menggunakan aplikasi Samsung+, Anda diwajibkan untuk terlebih dahulu menyelesaikan pelatihan online atau offline yang disediakan oleh anak perusahaan setempat. Setelah pelatihan selesai, Anda dapat berpartisipasi dalam kuis melalui tautan yang diberikan oleh Samsung kepada anak perusahaan Anda. Setelah berhasil melewati semua tahap dalam kuis, Anda akan menerima lencana digital Galaxy AI Expert.
+
+Anda diperkenankan mengikuti dan menyelesaikan kuis berulang kali, tetapi hanya satu lencana yang akan diberikan.
+
+Setiap tahap dalam kuis memiliki batas jawaban salah sebanyak lima kali. Apabila batas ini tercapai sebelum tahap selesai, tahap tersebut harus diulang dari pertanyaan pertama. Kuis sertifikasi harus diselesaikan secara individu. Setiap bentuk kecurangan akan berakibat pada diskualifikasi dan ketidakabsahan hasil kuis. Sertifikasi Galaxy AI Expert tidak memungut biaya apa pun.
+
+Konten Pihak Ketiga dan Tautan ke Situs Web Lain
+
+Situs Web atau Seluler dapat berisi konten pihak ketiga atau tautan ke situs web lain atau aplikasi seluler. Karena kami tidak memiliki kendali atas situs web pihak ketiga atau aplikasi seluler, Anda mengakui dan menyetujui bahwa kami tidak bertanggung jawab atas ketersediaan situs web atau aplikasi seluler tersebut serta tidak menyetujui dan tidak bertanggung jawab atas konten, iklan, layanan, produk, atau materi lainnya, atau yang tersedia dari situs web dan aplikasi seluler tersebut. Anda juga mengakui atau menyetujui bahwa Samsung tidak bertanggung jawab, baik secara langsung maupun tidak langsung, atas kerusakan atau kerugian yang disebabkan atau diduga disebabkan oleh atau sehubungan dengan penggunaan atau ketergantungan pada konten, iklan, layanan, produk, atau materi lainnya yang tersedia dari situs web atau aplikasi seluler tersebut. Semua situs web dan aplikasi seluler tersebut patuh pada ketentuan penggunaan terpisah.
+
+Sebagai tambahan, tautan ke situs web pihak ketiga tidak berarti bahwa Samsung menerima tanggung jawab apa pun atas konten, atau penggunaan, dari situs web tersebut. Anda bertanggung jawab untuk mengambil tindakan pencegahan guna memastikan bahwa apa pun yang Anda gunakan bebas dari hal-hal seperti virus, worm, trojan, dan hal lainnya yang bersifat merusak.
+
+PENAFIAN UMUM
+
+ANDA SECARA TEGAS MENGAKUI DAN MENYETUJUI BAHWA PENGGUNAAN SITUS WEB, SELULER, ATAU MATERI ATAU LAYANAN APA PUN SEPENUHNYA MERUPAKAN RISIKO ANDA SENDIRI DAN BAHWA SEJAUH DIIZINKAN OLEH UNDANG-UNDANG, SELURUH RISIKO MENGENAI KUALITAS KEPUASAN, KINERJA, DAN KETEPATAN MENJADI TANGGUNG JAWAB ANDA. SEJAUH DIIZINKAN OLEH UNDANG-UNDANG, SITUS WEB DAN SELULER, MATERI, DAN LAYANAN DISEDIAKAN ATAS DASAR "SEBAGAIMANA ADANYA" DAN "SEBAGAIMANA YANG TERSEDIA" TANPA JAMINAN, KETENTUAN, PERSYARATAN, PERNYATAAN, ATAU PERJANJIAN APA PUN, BAIK TERSURAT MAUPUN TERSIRAT. SEJAUH DIIZINKAN OLEH UNDANG-UNDANG, SAMSUNG SECARA TEGAS MENAFIKAN SEMUA JAMINAN, KETENTUAN, PERSYARATAN, PERNYATAAN, DAN KESANGGUPAN TERKAIT DENGAN SITUS WEB, SELULER, MATERI, DAN LAYANAN, BAIK TERSURAT MAUPUN TERSIRAT, TERMASUK, TETAPI TIDAK TERBATAS PADA, JAMINAN YANG DAPAT DIPERDAGANGKAN, KUALITAS KEPUASAN, KESESUAIAN UNTUK TUJUAN TERTENTU, KETEPATAN, KENYAMANAN YANG TEPAT, DAN PELANGGARAN HAK PIHAK KETIGA. SEJAUH DIIZINKAN OLEH UNDANG-UNDANG, SAMSUNG TIDAK MENJAMIN KETEPATAN, VALIDITAS, KETEPATAN WAKTU, LEGALITAS, ATAU KELENGKAPAN SETIAP MATERI ATAU LAYANAN YANG TERSEDIA MELALUI SITUS WEB atau SELULER DAN TIDAK MENJAMIN BAHWA SITUS WEB, SELULER, MATERI, ATAU LAYANAN MEMENUHI PERSYARATAN ANDA, ATAU BAHWA PENGOPERASIAN SITUS WEB, SELULER, ATAU LAYANAN TIDAK AKAN TERGANGGU ATAU BEBAS DARI KESALAHAN. SARAN ATAU INFORMASI, BAIK TERTULIS MAUPUN LISAN, YANG ANDA DAPATKAN MELALUI SITUS WEB atau SELULER ATAU DARI SAMSUNG ATAU PERUSAHAAN APA PUN DALAM GRUP SAMSUNG ATAU PETUGAS YANG BERKAITAN, KARYAWAN, DIREKTUR, ATAU AGEN YANG BERSANGKUTAN DARI ENTITAS-ENTITAS TERSEBUT (SECARA KOLEKTIF DISEBUT SEBAGAI "PIHAK SAMSUNG") TIDAK AKAN MENGHASILKAN JAMINAN APA PUN.
+
+BATASAN KEWAJIBAN
+
+SEJAUH DIIZINKAN OLEH UNDANG-UNDANG, DALAM SITUASI APA PUN, TERMASUK KELALAIAN, SAMSUNG TIDAK AKAN BERTANGGUNG JAWAB, BAIK DALAM KONTRAK MAUPUN PERBUATAN MELAWAN HUKUM, ATAS KERUGIAN LANGSUNG, TIDAK LANGSUNG, INSIDENTAL, KHUSUS ATAU KONSEKUENSIAL, KEHILANGAN LABA, PENDAPATAN, BUNGA, BISNIS ATAU KERUSAKAN DATA, BIAYA PENGACARA, PENGELUARAN, ATAU KERUGIAN LAINNYA YANG TIMBUL DARI, ATAU SEHUBUNGAN DENGAN, INFORMASI APA PUN YANG TERMUAT DALAM, ATAU SEBAGAI AKIBAT DARI PENGGUNAAN SITUS WEB DAN SELULER, MATERI, ATAU LAYANAN APA PUN YANG DIAKSES OLEH ANDA ATAU PIHAK KETIGA MANA PUN MELALUI SITUS WEB DAN SELULER, BAHKAN JIKA TELAH DIBERI TAHU TENTANG KEMUNGKINAN TERJADINYA KERUGIAN TERSEBUT.
+
+Ganti Rugi
+
+Anda setuju untuk mengganti kerugian, membela dan membebaskan Pihak Samsung dari dan terhadap semua klaim, tanggung jawab, kerusakan, kerugian, biaya, atau pengeluaran (termasuk biaya pengacara yang wajar) apa pun yang mungkin ditanggung oleh Pihak Samsung sebagai hasil dari atau yang timbul dari penggunaan Situs Web, Ponsel, Bahan atau Layanan Anda (atau siapa pun yang menggunakan akun Anda) atau pelanggaran terhadap Ketentuan ini. Samsung berhak, atas biayanya sendiri, untuk mengambil alih pembelaan dan kontrol eksklusif terhadap masalah apa pun yang seharusnya menjadi tanggung jawab ganti rugi Anda. Jika ini terjadi, Anda setuju untuk bekerja sama dengan Samsung dalam pembelaan tersebut.
+
+Modifikasi Ketentuan
+
+Kami berhak untuk sewaktu-waktu mengubah, menambah, atau menghapus bagian mana pun dari Ketentuan ini secara keseluruhan atau sebagian dengan memposting Ketentuan yang direvisi di Situs Web atau Seluler. Setiap perubahan hanya akan mulai berlaku setelah Anda menyetujui Ketentuan yang telah diperbarui tersebut. Apabila Anda tidak menyetujui Ketentuan yang telah diperbarui tersebut, Anda tidak lagi diperkenankan untuk menggunakan Situs Web dan Seluler.
+
+Hukum dan Yurisdiksi yang Berlaku
+
+Ketentuan ini diatur oleh hukum dari yurisdiksi tempat Anda berdomisili, tanpa memperhatikan pertentangan ketetapan hukum yang berlaku. Apabila penggunaan Situs Web, Seluler, Materi, atau Layanan Anda melanggar hukum tempat Anda tinggal, kami meminta Anda UNTUK TIDAK MENGGUNAKAN Situs Web, Seluler, atau bagian apa pun dari Materi atau Layanan. Anda bertanggung jawab untuk mematuhi hukum yurisdiksi Anda (termasuk hukum kontrol ekspor).
+
+Umum
+
+Ketidakmampuan Samsung untuk menegakkan hak atau ketetapan apa pun dalam Ketentuan bukan merupakan pengabaian atas hak atau ketetapan tersebut, kecuali diakui dan disetujui oleh Samsung secara tertulis. Ketentuan (termasuk modifikasi, pembaruan, dan tambahan) merupakan keseluruhan perjanjian antara Anda dan Samsung, serta menggantikan semua negosiasi, diskusi, atau kesepakatan sebelumnya, jika ada, antara Anda dan Samsung mengenai masalah ini. Anda setuju bahwa Ketentuan ini dapat kami berikan kepada pihak ketiga atas kebijakan kami sendiri. Bagian judul hanya untuk tujuan referensi dan sama sekali tidak mendefinisikan, membatasi, menafsirkan, atau menggambarkan ruang lingkup bagian tersebut. Apabila ada ketetapan dari Ketentuan atau penerapannya terhadap pihak atau keadaan apa pun yang dinyatakan atau dianggap oleh pengadilan atau otoritas kuasi-yudisial dari yurisdiksi yang berwenang menjadi, batal, ilegal, atau tidak dapat diberlakukan dalam hal apa pun (selanjutnya disebut sebagai "Ketentuan Menyimpang"), (i) Ketentuan Menyimpang tersebut akan dianggap telah diubah untuk mencapai, sedekat mungkin, tujuan yang sama yang dimaksudkan dalam Ketentuan Menyimpang, sejauh diizinkan oleh undang-undang; (ii) validitas, legalitas, dan keberlakuan ketentuan lainnya, atau bagian dari ketentuan yang tercantum di sini tidak akan terpengaruh atau terganggu karenanya; dan (iii) bagian lain dari Ketentuan tetap sah dan dapat dilaksanakan sejauh diizinkan oleh undang-undang yang berlaku. Apabila ada ketetapan dari Ketentuan ini yang dinyatakan tidak valid oleh pengadilan dari yurisdiksi yang berwenang, ketetapan lainnya akan tetap berlaku dan memiliki kekuatan penuh.
+
+Tertanggal [22.01.2025]

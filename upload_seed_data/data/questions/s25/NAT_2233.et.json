@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mis on Galaxy S25 põhiomadused? (valige kolm)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Tõeline AI kaaslane",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kõige parem jõudlus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Täiuslik kaamerakogemus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Teie tervisekaaslane",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millised on Galaxy S25 Ultra värvid? (valige õiged)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titaan hõbesinine",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titaanhall",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titaan hõbevalge",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titaanmust",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Olen kuulnud, et olemas on funktsioon korraga restorani otsimiseks ja sõnumi saatmiseks. Mis selle nimi on?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mitme rakendusega toimingud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle To Search with Google",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bixby",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millised on põhieelised portree pildistamisel?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Saate väiksema müraga salvestada veelgi erksamaid öövideoid.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nüüd saate soovimatud helid välja filtreerida ja soovitud helid alles hoida.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saate lõpule viia ülesanded kasutades korraga mitut rakendust ning kasutades selleks naturaalset kõnekeelt Galaxy S25 seadmetega",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saate vabalt jäädvustada loomuliku nahatekstuuri",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mis on paranenud ööfotograafia video salvestamisel?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Saate väiksema müraga salvestada veelgi erksamaid öövideoid.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nüüd saate soovimatud helid välja filtreerida ja soovitud helid alles hoida.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saate lõpule viia ülesanded kasutades korraga mitut rakendust ning kasutades selleks naturaalset kõnekeelt Galaxy S25 seadmetega",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saate vabalt jäädvustada täpse tooni ja loomuliku nahatekstuuri",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Millised järgmistest on uue kella peamised omadused, mida tuleks klientidele demonstreerida kui uued ühendatud kasutusvõimalused? (valige kõik õiged vastused)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallselge heli",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energiaskoor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Race funktsioon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Milline järgmistest on Buds3 Pro ja Buds3 peamine omadus, mida oleks kasulik mainida heli kohta rääkides?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitiivne kasutajaliides/kasutuskogemus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Heli optimeerimine\n(optimeeritud heli)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mitme ostmise võimalus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Millist funktsiooni Samsung Notes rakenduses EI ole?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF-i tõlge",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkribeerimine ja tõlkimine",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaalajas tõlkimine heli salvestamise ajal",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kokkuvõtete tegemine ja automaatne vormindamine",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kuidas saan hakata kasutama Galaxy AI funktsioone?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pean olema sisse logitud Samsungi kontoga",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pean tasuma teatud summa tellimustasu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pean alla laadima Galaxy AI sihtotstarbelise rakenduse",
+        "answerStatus": 0
+      },
+      {
+        "text": "Midagi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Miks pean kasutusele võtma Galaxy versiooniuuenduse One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Versiooniga One UI 6.1.1 võrreldes pole palju muutunud",
+        "answerStatus": 0
+      },
+      {
+        "text": "Eelmise versiooniga võrreldes saate One UI 7.0-ga rikkalikuma AI-telefoni kasutuskogemuse",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Milliseid häirivaid helisid saab kustutada Helikustutaja abil? (valige üks vastus)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muusika",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tuul",
+        "answerStatus": 0
+      },
+      {
+        "text": "Müra",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Millised on Galaxy S25 uued põhifunktsioonid? (valige kõik)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Vestlusabi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mitme rakendusega toimingud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portree ja Minu filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Helikustutaja",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mis on Galaxy S25 seeria peamised täiustused? (valige kolm)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Mitme rakendusega toimingud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodaalne otsing",
+        "answerStatus": 1
+      },
+      {
+        "text": "Aku",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm protsessor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Milline protsessor on Galaxy S25 seerias kasutusel? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6nm protsessor",
+        "answerStatus": 0
+      },
+      {
+        "text": "5nm protsessor",
+        "answerStatus": 0
+      },
+      {
+        "text": "4nm protsessor",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm protsessor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mis on Galaxy S25 Ultra peamised täiustused? (Valige kolm)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "50 MP ülilainurkkaamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kaal",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (eesmise ekraani jaoks)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Protsessor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Milline järgmistest EI OLE uue kella peamine müügiargument? (valige üks)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Järgmise taseme Essential protsessor",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI toega unijälgimine",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ekraani suurus",
+        "answerStatus": 1
+      },
+      {
+        "text": "Isikupärastatud treeningkogemus",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Millised järgmistest on Buds3 peamised omadused, millest oleks loogiline rääkida klientidele?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristallselge heli",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kohanduv ANC (aktiivne mürasummutus)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mugav sobivus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kuidas on täiustatud Tab S10 seeria ekraani kasutusmugavus?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Peegeldusvastane ekraan",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "OneUI 6.1",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kas seal on funktsioon, mis aitab hõlpsalt ja kiiresti fotosid/videoid sõpradega jagada?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nutikad asjad",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kiirjagamine",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nutikas vahetus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reaalajas tõlkimine",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kas pean kiirjagamise kasutamise ajal sinu läheduses olema?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pole probleemi - see töötab ka pilve kaudu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jah, kahjuks peate lõpuni minu kõrval olema",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Milliseid põhifunktsioone soovitaksite mulle? (valige kõik)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Mitme rakendusega toimingud",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portree ja Minu filter",
+        "answerStatus": 0
+      },
+      {
+        "text": "Helikustutaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mida ma pean ütlema, et kasutada Galaxy S25 seerias mitme rakenduse toimingut? (näide)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Otsi lähedalasuvaid hiina restorane ja saada see Alarile",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hei, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Näita mulle tänast ilmateadet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hei, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kuidas saan pildistamise ajal filtrit rakendada? (valige kaks)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Kaamerarakenduses eelseadistatud filtriga",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kaamerarakenduse öörežiimi funktsiooniga",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galeriisse salvestatud foto põhjal Minu filtri funktsiooni kasutamisega",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Notes rakendusega",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Olen S Peni suur fänn. Mis mudelit võiksite mulle soovitada?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Millist teavet/ülevaadet saan funktsiooniga Now Brief vaadata? (valige kolm)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energiaskoor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kalender ja meeldetuletused",
+        "answerStatus": 1
+      },
+      {
+        "text": "Äratuskell ja taimerid",
+        "answerStatus": 1
+      },
+      {
+        "text": "Koduaadress",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Valige uue kella tervise/unega seotud funktsioonid (valige kõik õiged vastused)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiaskoor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Isikupärastatud unejuhendamine",
+        "answerStatus": 0
+      },
+      {
+        "text": "Enese motiveerimine ja arendamine",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Valige Buds3 kõige sobivam funktsioon, mida saab kasutada nt. koosolekul, kus välismaalane räägib teises keeles.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tõlkefunktsioon",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mugav sobivus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristallselge heli",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kuidas täiustati uut Tab S10 Book Cover klaviatuuri?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sinine värv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spetsiaalne AI klahv",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lisakaamera klaviatuuris",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google Assist",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mida võtab Energiaskoor arvesse? (valige kõik)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Uni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktiivsus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Südame löögisagedus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mis on tagasiostukampaania peamine eelis? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Saate kuupõhise finantseerimislepingu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tagastades vana seadme saate uue Galaxy odavamalt",
+        "answerStatus": 1
+      },
+      {
+        "text": "Saate sama hinna eest kaks korda rohkem salvestusruumi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ostate ühe ja saate teise tasuta",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Olen S22 kasutaja. Mis on Galaxy S25 peamised täiustused? (valige kaks)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm protsessor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kaamera",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kaamerate arv",
+        "answerStatus": 0
+      },
+      {
+        "text": "S Pen",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Rääkige mulle Galaxy S25 seeria eksklusiivsetest funktsioonidest. (valige kõik)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sisseehitatud S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x suum ja 200 MP kaamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Suurem ekraan ja aku",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kõik eespool nimetatud variandid",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kas on mingeid viise failide jagamiseks mitte-Androidi seadmetega?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kiirjagamine",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nutikad asjad",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mis funktsiooniga saab salvestatud videot aegluubis vaadata?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ööfotograafia videod",
+        "answerStatus": 0
+      },
+      {
+        "text": "Helikustutaja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kohene AI aegluup",
+        "answerStatus": 1
+      },
+      {
+        "text": "Auto Trim",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Helistan iga päev palju, kuid sageli unustan, millest me rääkisime. Kas on mõnda head funktsiooni, mida sellises olukorras soovitaksite?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kõne tekstiks",
+        "answerStatus": 1
+      },
+      {
+        "text": "Reaalajas tõlkimine",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodaalne otsing",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Kaotan või kukutan sageli oma telefoni. Muretsen millegi kalli ostmise pärast, kuna see võib katki minna.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Minu soovitus: „Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Minu soovitus: „Samsung Wallet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Minu soovitus: „Kiirjagamine”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Minu soovitus: „odavam mudel”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mida EI hõlma Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nutitelefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kell",
+        "answerStatus": 0
+      },
+      {
+        "text": "Töölauaarvuti",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tahvelarvuti",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": null,
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": null,
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 1
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": null,
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 0
+      },
+      {
+        "text": null,
+        "answerStatus": 1
+      }
+    ]
+  }
+]

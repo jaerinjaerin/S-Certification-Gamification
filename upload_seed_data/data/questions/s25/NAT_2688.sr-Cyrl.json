@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koje su ključne karakteristike Galaxy S25? (izaberite tri)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Pravi AI saputnik",
+        "answerStatus": 1
+      },
+      {
+        "text": "Najnaprednije performanse",
+        "answerStatus": 1
+      },
+      {
+        "text": "Perfektno iskustvo kamere",
+        "answerStatus": 1
+      },
+      {
+        "text": "Vaš pratilac za zdravlje",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Koje su boje Galaxy S25 Ultra? (izaberite sve)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanijum srebrno plava",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanijum siva",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanijum belo srebrna",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanijum crna",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Čuo sam da postoji funkcija za istovremeno pronalaženje restorana i slanje poruka. Kako se zove?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rad u više aplikacija",
+        "answerStatus": 1
+      },
+      {
+        "text": "Zaokruži za pretragu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Koje su ključne prednosti prilikom snimanja portreta pomoću funkcije Moj filter?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Možete da snimate još svetlije noćne video snimke sa manje šuma.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sada ste u mogućnosti da filtrirate neželjene zvukove i zadržite one koje želite.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Možete da obavljate zadatke koristeći više aplikacija odjednom pomoću Galaxy S25 serije",
+        "answerStatus": 0
+      },
+      {
+        "text": "Možete zabeležiti prirodnu teksturu kože.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Možete li da objasnite rezultat prilikom snimanja videa sa Noćnim fotografisanjem?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Možete da snimate još svetlije noćne video snimke sa manje šuma.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sada ste u mogućnosti da filtrirate neželjene zvukove i zadržite one koje želite.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Možete da obavljate zadatke koristeći više aplikacija odjednom pomoću Galaxy S25 serije",
+        "answerStatus": 0
+      },
+      {
+        "text": "Možete slobodno uhvatiti tačan ton i prirodnu teksturu kože",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Šta je od sledećeg je ključna karakteristika novog Watch sata koju treba istaći kao povezano iskustvo kada se obavlja demonstracija upotrebe u svakodnevnom životu? (izaberi sve tačne odgovore)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristalno čist zvuk",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energetski rezultat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trka",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Šta je od sledećeg je ključna karakteristika novog Buds3 Pro i Buds3 koju treba istaći kao povezano iskustvo kada se obavlja demonstracija upotrebe u svakodnevnom životu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitivni UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "Optimizacija zvuka\n(Optimizovani zvuk)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ponuda za višestruke kupovine",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Koje funkcije NISU podržane u Samsung beleškama?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF prevod u preklopnom elementu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transkripcija i Prevod",
+        "answerStatus": 0
+      },
+      {
+        "text": "Prevođenje u realnom vremenu tokom snimanja glasa",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sumiranje i Automatsko formatiranje",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Šta treba da pripremim da bih koristio Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Morate da budete prijavljeni na svoj Samsung nalog",
+        "answerStatus": 1
+      },
+      {
+        "text": "Potrebno je da platite određeni iznos za pretplatu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Morate da preuzmete namensku aplikaciju za Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ništa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Zašto da nadogradim svoj Galaxy na One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nije mnogo promenjeno u poređenju sa One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sa One UI 7.0, imaćete bogatije iskustvo AI telefona u poređenju sa prethodnim softverom",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Koje faktore mogu da izbrišem korišćenjem Brisača zvuka? (izaberite sve)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muzika",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vetar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Buka",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koje su glavne funkcije koje treba iskusiti na Galaxy S25? (izaberite sve)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Pomoć za ćaskanje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rad u više aplikacija",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portret i Moj filter",
+        "answerStatus": 1
+      },
+      {
+        "text": "Brisač zvuka",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koja su ključna poboljšanja Galaxy S25? (izaberite tri)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Rad u više aplikacija",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodalnost",
+        "answerStatus": 1
+      },
+      {
+        "text": "Baterija",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP od 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Kojim AP je opremljena Galaxy S25 serija",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "AP od 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP od 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP od 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "AP od 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koja su ključna poboljšanja Galaxy S25 Ultra?  (izaberite tri)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra-široka kamera od 50 MP",
+        "answerStatus": 1
+      },
+      {
+        "text": "Težina",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (za prednji ekran)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Procesor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Šta od sledećeg NIJE ključno korisničko iskustvo novog Watch sata? (izaberite jedan)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Osnovne sledećeg nivoa\n(performanse)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spavanje pomoću AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veličina ekrana",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalizovano iskustvo vežbanja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koja je od sledećih je ključna karakteristika koju treba istaći kada predstavljate Buds3 Pro i Buds3 kupcima koji tek počinju da koriste slušalice (prvi kupac)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristalno čist zvuk",
+        "answerStatus": 0
+      },
+      {
+        "text": "Prilagodljivi ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Udobno nošenje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Koja je nova funkcija u Tab S10 koja podržava živopisno gledanje na otvorenom?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Anti refleksija",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veliki ekran",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Da li postoji funkcija za jednostavno i brzo deljenje fotografija/video snimaka sa prijateljima?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Brzo deljenje",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Prevođenje uživo",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Da li treba da ostanem pored njega dok koristim Brzo deljenje?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nema problema, radiće preko oblaka",
+        "answerStatus": 1
+      },
+      {
+        "text": "Da, nažalost morate ostati do kraja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Možete li da mi preporučite ključne karakteristike koje treba da iskusim? (izaberite sve)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Rad u više aplikacija",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portret i Moj filter",
+        "answerStatus": 0
+      },
+      {
+        "text": "Brisač zvuka",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Šta treba da kažem za doživljaj rada u više aplikacija u Galaxy S25 seriji? (kao primer)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Potraži kineski restoran u blizini i pošalji ga Toniju",
+        "answerStatus": 1
+      },
+      {
+        "text": "Zdravo Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Daj mi informacije o današnjem vremenu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zdravo Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Kako da primenim filter kada snimam fotografiju? (izaberite dva odgovora)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "korišćenjem unapred podešenog filtera aplikacije za kameru",
+        "answerStatus": 1
+      },
+      {
+        "text": "korišćenjem Noćnog režima aplikacije za kameru",
+        "answerStatus": 0
+      },
+      {
+        "text": "korišćenjem funkcije Moj filter za fotografije u galeriji",
+        "answerStatus": 1
+      },
+      {
+        "text": "korišćenjem funkcije Usporeni snimak aplikacije za kameru",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Veliki sam ljubitelj S pen. Da li imate neku preporuku za mene?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Koje informacije/uvide mogu da dobijem sa Now Brief? (izaberite tri)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energetski rezultat",
+        "answerStatus": 1
+      },
+      {
+        "text": "Raspored",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Adresa stanovanja",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Izaberite funkciju koja se odnosi na Zdravlje/Spavanje u novom Watch satu (izaberite sve tačne odgovore)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energetski rezultat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personalizovano treniranje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samomotivacija i poboljšanje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Izaberite najprikladniju funkciju Buds3 koja se može koristiti na sastanku sa strancem koji govori drugi jezik.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tumač",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Udobno naleganje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristalno čist zvuk",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Šta je novo u vezi sa novom Book Cover tastaturom za Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pozadinsko osvetljenje ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Namenski taster za AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Pokretač Samsung beleški",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pomoć za Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Koji su kriterijumi za Energetski rezultat? (izaberite sve)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Spavanje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktivnost",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puls",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Koja je glavna prednost zamene? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Možete da dobijete mesečni plan finansiranja",
+        "answerStatus": 0
+      },
+      {
+        "text": "Možete trenutno da smanjite teret/troškove kupovine najnovijeg pametnog telefona",
+        "answerStatus": 1
+      },
+      {
+        "text": "Možete da dobijete 2X više memorije za skladištenje po istoj ceni",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kupite jedan, a drugi možete da dobijete besplatno",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ja sam korisnik S22. Koja su ključna poboljšanja Galaxy S25? (izaberite dva odgovora)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "AP od 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kvalitet slike",
+        "answerStatus": 1
+      },
+      {
+        "text": "Broj kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dimenzije",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Da li mi možete reći koje su ekskluzivne karakteristike Galaxy S25 Ultra? (izaberite sve)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ugrađeni S pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x zoom & 200mp camera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Veći ekran/baterija",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Da li postoji način da podelim svoje fajlove sa uređajima koji nisu Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Brzo deljenje",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koja je funkcija prikazuje snimljeni video kao usporeni snimak?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Noćni video zapis",
+        "answerStatus": 0
+      },
+      {
+        "text": "Brisač zvuka",
+        "answerStatus": 0
+      },
+      {
+        "text": "Instant usporeni snimak",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automatsko trimovanje",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Svakodnevno obavljam mnogo poziva, ali često zaboravim o čemu smo razgovarali. Da li postoji neka dobra funkcija koju možete da preporučite za ovu situaciju?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pomoći za transkript",
+        "answerStatus": 1
+      },
+      {
+        "text": "Prevođenje uživo",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodalna pretraga",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Često izgubim ili ispustim telefon. Brinem se da kupim nešto skupo da ga ne pokvarim.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Preporučujem vam „Samsung Care+“",
+        "answerStatus": 1
+      },
+      {
+        "text": "Preporučujem vam „Samsung Wallet“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Preporučujem vam „Brzo deljenje“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Preporučujem vam „Jeftiniji model“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Šta NE pokriva Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Pametni telefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "PC",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ako mi se Ring zaglavi na prstu, šta da radim?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nanesite lubrikant, kao što je krema za ruke, ulje za čišćenje ili sapun, da biste smanjili trenje, što olakšava uklanjanje.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Potopite prst u hladnu vodu da biste privremeno suzili krvne sudove i smanjili prst. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Smanjite otok tako što ćete podići ruku na više od 5 minuta.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Koji je najprikladniji odgovor za sledeće prazno polje?\nGalaxy Ring je novi nosivi uređaj. Posebno, praćenje zdravlja pomoću AI i ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energetski rezultat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster kartica",
+        "answerStatus": 0
+      },
+      {
+        "text": "Treniranje spavanja",
+        "answerStatus": 1
+      },
+      {
+        "text": "Uštinite dvaput",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Šta je od sledećeg ključno korisničko iskustvo za Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalizovano vežbanje",
+        "answerStatus": 0
+      },
+      {
+        "text": "Udobno nošenje 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pinch Twice",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sve gore navedeno",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

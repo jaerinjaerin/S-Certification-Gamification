@@ -1,0 +1,140 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { prisma } from '@/model/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
+import { getJobIds, removeDuplicateUsers } from '@/lib/data';
+import { querySearchParams } from '@/lib/query';
+import { extendedQuery, queryRawWithWhere } from '@/lib/sql';
+import { CampaignSettings } from '@prisma/client';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = request.nextUrl;
+    const { where: condition, period } = querySearchParams(searchParams);
+    const { jobId, storeId, ...where } = condition;
+
+    const [settings]: CampaignSettings[] = await queryRawWithWhere(
+      prisma,
+      'CampaignSettings',
+      { campaignId: where.campaignId }
+    );
+
+    if (!settings) {
+      throw new Error('Campaign settings not found');
+    }
+
+    const jobGroup = await getJobIds(jobId);
+
+    const jobGroups = [
+      {
+        key: 'ff',
+        stageIndex: [
+          settings.ffFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.ff,
+      },
+      {
+        key: 'fsm',
+        stageIndex: [
+          settings.fsmFirstBadgeStageIndex || -1,
+          settings.ffSecondBadgeStageIndex || -1,
+        ],
+        jobIds: jobGroup.fsm,
+      },
+    ];
+
+    // 오늘과 6일 전 설정
+    const today = new Date(Math.min(new Date().getTime(), period.to.getTime()));
+    const beforeWeek = new Date(
+      Math.max(
+        addDays(today, -6).getTime(), // today에서 6일 전
+        new Date(period.from).getTime() // period.from
+      )
+    );
+
+    const userBadges: any = await Promise.all(
+      jobGroups.map(({ stageIndex, jobIds }) =>
+        extendedQuery(
+          prisma,
+          'UserQuizBadgeStageStatistics',
+          {
+            ...where,
+            createdAt: {
+              gte: startOfDay(beforeWeek), // 6일 전부터
+              lte: endOfDay(today), // 오늘까지
+            },
+            quizStageIndex: { in: stageIndex },
+            jobId: { in: jobIds },
+            ...(storeId
+              ? storeId === '4'
+                ? { storeId }
+                : { OR: [{ storeId }, { storeId: null }] }
+              : {}),
+          },
+          { orderBy: { createdAt: 'asc' } }
+        )
+      )
+    );
+    // 중복 userId 제거
+    let experts = removeDuplicateUsers(userBadges.flat());
+    experts = filterHighestScores(experts);
+    //
+    // 날짜 범위를 생성
+    const getDateRange = (start: Date, end: Date) => {
+      const dates = [];
+      const current = new Date(start);
+      while (current <= end) {
+        dates.push(current.toISOString().split('T')[0]);
+        current.setDate(current.getDate() + 1);
+      }
+      return dates;
+    };
+
+    // 날짜별 초기 데이터 생성
+    const initialData = getDateRange(beforeWeek, today).map((date) => ({
+      date: date.replace(/-/g, '.'), // YYYY-MM-DD -> YYYY.MM.DD
+      score: 0,
+    }));
+
+    // 데이터 그룹화 및 합산
+    const result = experts.reduce((acc, item) => {
+      const dateKey = item.createdAt.toISOString().split('T')[0]; // 날짜 추출
+      const match = acc.find(
+        (entry: any) => entry.date === dateKey.replace(/-/g, '.')
+      ); // 날짜 일치 항목 찾기
+      if (match) {
+        const score = item.score / experts.length;
+        match.score += score; // stage_2는 expert
+      }
+      return acc;
+    }, initialData);
+
+    return NextResponse.json({ result });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return NextResponse.json(
+      { result: [], message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+function filterHighestScores(data: any) {
+  // Create a Map to store the highest score for each userId
+  const userMap = new Map();
+
+  data.forEach((item: any) => {
+    const existingItem = userMap.get(item.userId);
+    if (!existingItem || item.score > existingItem.score) {
+      // Update the map if the userId is not present or the current score is higher
+      userMap.set(item.userId, item);
+    }
+  });
+
+  // Return the values of the map as an array
+  return Array.from(userMap.values());
+}

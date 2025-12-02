@@ -1,0 +1,9 @@
+export const chartColorGoal = 'var(--chart-goal)';
+export const chartColorExpert = 'var(--chart-expert)';
+export const chartColorAdvanced = 'var(--chart-advanced)';
+export const chartColorFsmSes = 'var(--chart-fsm-ses)';
+export const chartColorFsm = 'var(--chart-fsm)';
+export const chartColorFfSes = 'var(--chart-ff-ses)';
+export const chartColorFf = 'var(--chart-ff)';
+export const chartColorHoverBackground = 'rgba(0, 0, 0, 0.05)';
+export const chartColorExpertLine = 'var(--chart-expert-line)';

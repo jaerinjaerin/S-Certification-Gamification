@@ -1,0 +1,622 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Key Improvement",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "S23 Serisi ile kıyaslandığında aşağıdakilerden hangisi Galaxy S24 serisinde yer alan önemli geliştirmelerden biri DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Circle to Search - Google Destekli",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fotoğraf Asistanı ve Nightography Zoom",
+        "answerStatus": 0
+      },
+      {
+        "text": "Oyun Performansı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kamera Sayısı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "-",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinin tasarımına ait bir özellik DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Premium Tasarım",
+        "answerStatus": 0
+      },
+      {
+        "text": "Edge Ekranlı Tasarım",
+        "answerStatus": 1
+      },
+      {
+        "text": "Düz Ekran ve Titanyum Çerçeve (Galaxy S24 Ultra)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Doğanın daimi ve dayanıklı niteliklerinden ilhamla tasarlanan zamansız renk seçenekleri",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Durability",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangileri Galaxy S24 Serisinde gelişmiş dayanıklılığa sahip özelliklerdir? (İki yanıt seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "IPX8 derece Suya Dayanıklılık",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning® Gorilla® Armor (Galaxy S24 Ultra)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanyum Çerçeve (Galaxy S24 Ultra) ve Daha Güçlü Armor Alüminyum Çerçeve (Galaxy S24+ | Galaxy S24)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Esnek Menteşe",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Circle to Search with Google",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Google Destekli Circle to Search özelliğinin kullanım alanlarından biri DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Toplantıları kaydetme ve hızlı özetini alma.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Video izlerken son moda ürünleri bulma.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Akışta gördüğünüz bir tatil mekanını keşfetme.",
+        "answerStatus": 0
+      },
+      {
+        "text": "YouTube'da gördüğünüz bir yemeğin tarifini arama.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Chat Assist",
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n ________, birçok üçüncü parti uygulamada (Instagram, Snapchat, Whatsapp, Google Chat) gerçek zamanlı olarak gelen ve giden sohbetleri çevirebilir ve konuşmanızın tonunu duruma göre profesyonel, günlük konuşma, sosyal, nazik ve emojili yanıt seçeneklerinden birine dönüştürebilir.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Canlı Çeviri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Chat Asistanı",
+        "answerStatus": 1
+      },
+      {
+        "text": "Not Asistanı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ses Kaydı Asistanı",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Live Translate",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Canlı Çeviri özelliğinin doğru açıklamasıdır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Telefon görüşmesi sırasında iki tarafa da gerçek zamanlı sesli çeviri yapılması özelliğidir.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Başka bir çeviri uygulamasını kullanmanıza gerek kalmadan üçüncü taraf uygulamalarıyla çalışır.",
+        "answerStatus": 0
+      },
+      {
+        "text": "El yazınızı otomatik olarak hizalar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Notları daha biçimli hale getirerek düzenler.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Note Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Not Asistanı ve Galaxy S24 Serisine yeni eklenen Samsung Note özellikleri arasında yer almaz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S Pen ile yazılan el yazısını otomatik olarak hizalama ve boşluklarını ayarlama",
+        "answerStatus": 0
+      },
+      {
+        "text": "Notları daha biçimli hale getirecek şekilde düzenleme",
+        "answerStatus": 0
+      },
+      {
+        "text": "Notlarınıza bağlı olarak özet içeren kapaklar oluşturma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gelen ve gönderilen mesajları anında çevirir.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Space Zoom",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S24 Ultra'nın Telefoto kamerasının 5x Optik Zoom özelliğiyle elde edilebilecek en yüksek fotoğraf çözünürlüğü nedir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "8 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "10 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "12 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "50 MP",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Nightography",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n Galaxy S24 Ultra'nın ________ özelliği, gece karanlığında bile daha parlak ve daha net Zoom kalitesine sahip fotoğraflar sunar.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "1,6 kat Daha Büyük Piksel",
+        "answerStatus": 1
+      },
+      {
+        "text": "Daha geniş OIS",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tek Çekim",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yeni Adaptif Piksel",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________ özelliği, eğik bir fotoğrafı düz konuma getirerek arka planı doldurabilir ve otomatik doldurmayla fotoğraflardaki nesnelerin yerini/boyutunu değiştirebilir.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Gece Portresi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fotoğraf Asistanı (Yaratıcı Düzenleme)",
+        "answerStatus": 1
+      },
+      {
+        "text": "200 MP Yüksek Çözünürlük",
+        "answerStatus": 0
+      },
+      {
+        "text": "Not Asistanı",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Photo Assist",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S24 Serisinin Galeri uygulamasında anında fotoğraf düzenlemek (Portre efekti, Çözünürlüğü artırma, Yansımayı kaldırma ve fazlası) için Fotoğraf Asistanı'nın Düzenleme Önerisi özelliği nasıl açılır?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Fotoğraf düzenleme uygulamasını indirip açın ve efektleri tek tek uygulayın.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Düzenleme simgesine ve sonra Fotoğraf Asistanı simgesine dokunun.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Düzenleme simgesine dokunduğunuzda veya fotoğrafı basitçe yukarı kaydırdığınızda önerilen düzenleme seçeneklerine göz atabilirsiniz.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Sosyal uygulamayı açın ve fotoğrafın üzerinde uygulamak istediğiniz filtreyi seçin.",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Social Camera",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde sosyal medya uygulamalarında desteklenen kamera özelliklerinden bir tanesi DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "HDR Fotoğraflar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nightography: Minimum titreşimle daha parlak gece fotoğrafları ve videoları",
+        "answerStatus": 0
+      },
+      {
+        "text": "Space Zoom",
+        "answerStatus": 1
+      },
+      {
+        "text": "Video Görüntü Sabitleyici",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Gaming Performance",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24'ün oyun performansına dair geliştirmelerden biri DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy Serileri Arasında En Hızlı İşlemcilere Sahip Seri",
+        "answerStatus": 0
+      },
+      {
+        "text": "Daha Geniş Buhar Haznesi  (Galaxy S24 Ultra modelinde 1,9 kat)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yapay Zeka Tabanlı Ağır Çekim",
+        "answerStatus": 1
+      },
+      {
+        "text": "Geliştirilmiş Işın İzleme Teknolojisi",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Immersive Display",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24'ün Sürükleyici Ekran tasarımına ait özelliklerden biri DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Daha ince çerçeve tasarımıyla daha geniş ekran",
+        "answerStatus": 0
+      },
+      {
+        "text": "Obje Duyarlı Teknoloji",
+        "answerStatus": 1
+      },
+      {
+        "text": "HBM Peak (Manuel Ayarlanabilir) 2.600 nit",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vision Booster (Görüntü Güçlendirici)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Longer Battery Life",
+    "importance": "C",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangileri Galaxy S24 serisinin daha uzun pil ömrüne ait özellikler arasında yer alır? (İki yanıt seçin)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Daha Uzun Video Oynatma Süresi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Knox Kasası",
+        "answerStatus": 0
+      },
+      {
+        "text": "Yaratıcı Duvar Kağıdı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptif Ekran Yenileme Hızı",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Memory & Storage",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisinde Galaxy S24 Serisinin her bir modeli için RAM seçenekleri doğru belirtilmiştir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S24: 6 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 10 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 8 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S24: 8 GB, Galaxy S24+: 12 GB, Galaxy S24 Ultra: 12 GB",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "One UI 6",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisinde ONE UI 6 arayüzüne ait özelliklerden biri DEĞİLDİR?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Göz alıcı Quick Panel",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gelişmiş Emoji Tasarımı",
+        "answerStatus": 0
+      },
+      {
+        "text": "Windows Bağlantısı",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamera Widget'ı ve Hava Durumu Widget'ı",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Galaxy Ecosystem",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıda boş bırakılan kısım için en uygun cevap hangisidir?\n________, tüm telefon, tablet ve bilgisayarlar (Android, Windows ve fazlası) arasında kullanabilen Galaxy'e özel daha hızlı bir dosya paylaşım uygulamasıdır.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bluetooth 5.3",
+        "answerStatus": 0
+      },
+      {
+        "text": "Wi-Fi Direct",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Product",
+    "specificFeature": "Samsung Account",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Samsung Account'un avantajlarından bir tanesidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Her adımda kolay bir kullanım deneyimi için zenginleştirilmiş yapay zeka teknolojisi sunar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "İnternet'e bağlı olmasa bile kayıp telefonunuzu bulmanızı sağlar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tüm Samsung hizmetlerinize, cihazlarınıza erişmenizi ve eşitlemenizi sağlar.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hepsi",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S24",
+    "category": "Sales",
+    "specificFeature": "Cross Sell",
+    "importance": "D",
+    "timeLimitSeconds": 30,
+    "text": "Aşağıdakilerden hangisi Galaxy S24 serisiyle Galaxy Watch6'nın çapraz satışında vurgulanması gereken bağlantı deneyimidir?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Saatinizden Galaxy S24 Serisinin kilit ekranı ve Always On Display'i değiştirerek tarzınızla uyum yaratın.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Saatinizden doğrudan fotoğraf ve video çekin.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Saatinizle rahat bir izleme deneyiminin tadını çıkarın.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sesi otomatik olarak aktif cihaza yönlendirin.",
+        "answerStatus": 0
+      }
+    ]
+  }
+]

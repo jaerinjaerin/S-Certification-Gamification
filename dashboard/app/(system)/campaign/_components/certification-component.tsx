@@ -1,0 +1,243 @@
+'use client';
+import { LoadingFullScreen } from '@/components/loader';
+import { useStateVariables } from '@/components/provider/state-provider';
+import { Button } from '@/components/ui/button';
+import { logout } from '@/lib/auth';
+import dayjs from 'dayjs';
+import { Pen, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { mutate } from 'swr';
+import { CustomAlertDialog } from '../../(hub)/cms/_components/custom-alert-dialog';
+import { DownloadFileListPopoverButton } from '../../(hub)/cms/_components/custom-popover';
+import { useNavigation } from '../../(hub)/cms/_hooks/useNavigation';
+import { handleDownload } from '../../(hub)/cms/_utils/utils';
+import { deleteCampaign } from '../../(hub)/cms/set-quiz/actions/deleteCampaignAction';
+
+export default function CertificationClientComponent() {
+  const { role, campaigns } = useStateVariables(); //role이 null이면 ADMIN
+  const { routeToPage, isRouting } = useNavigation();
+
+  if (campaigns?.length === 0) {
+    return (
+      <div className="flex items-center h-full px-4 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <div className="w-full space-y-6 text-center">
+          <div className="space-y-3">
+            <h1 className="text-2xl font-bold">
+              You have no ongoing certifications
+            </h1>
+            <p className="text-gray-500 whitespace-pre-line">
+              {`There are currently no certifications in progress.\nTo start a new certification, please contact your administrator or check the available certification programs.`}
+            </p>
+          </div>
+          <Button
+            onClick={async () => {
+              await logout();
+            }}
+          >
+            Logout
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ width: 'calc(100vw - 63px)' }}>
+      <div className="flex justify-between items-center">
+        <h2 className="text-size-17px font-semibold">Certification List</h2>
+        {!role && (
+          <div className="flex gap-3">
+            <DownloadManualButton />
+            <DownloadFileListPopoverButton type="template" />
+            <Button
+              variant="action"
+              onClick={() => {
+                routeToPage('/campaign/create');
+              }}
+            >
+              Create Certification
+            </Button>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-x-[1.125rem] gap-y-6 mt-8 mb-[3.125rem]">
+        {campaigns ? (
+          campaigns
+            .filter((campaign) => !campaign.deleted)
+            .map((campaign) => (
+              <CertificationListItem key={campaign.id} campaign={campaign} />
+            ))
+        ) : (
+          <div className="text-center w-full mt-[80px]">
+            <h2 className="text-size-24px font-semibold mb-5">
+              This list is empty.
+            </h2>
+            <p className="text-zinc-500 whitespace-pre-line">
+              {role
+                ? 'There is no certification program you have participated in.'
+                : 'No registered certification programs. \n Click the Create Certification button to add a certification program.'}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {isRouting && <LoadingFullScreen />}
+    </div>
+  );
+}
+
+function CertificationListItem({ campaign }: { campaign: Campaign }) {
+  const { setCampaign, role } = useStateVariables();
+  const { routeToPage, isRouting } = useNavigation();
+  const [isEditAble, setIsEditAble] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const currentDate = dayjs();
+  // const isEditAble = campaign?.startedAt
+  //   ? dayjs(currentDate).isBefore(dayjs(campaign.startedAt))
+  //   : false;
+
+  useEffect(() => {
+    if (campaign?.startedAt) {
+      setIsEditAble(dayjs(currentDate).isBefore(dayjs(campaign.startedAt)));
+    }
+  }, [campaign.startedAt, currentDate]);
+
+  const handleDeleteCampaign = async () => {
+    try {
+      setIsLoading(true);
+      // const response = await fetch(`/api/cms/campaign/${campaign.id}`, {
+      //   method: 'DELETE',
+      //   body: JSON.stringify({
+      //     campaignId: campaign.id,
+      //   }),
+      // });
+      const result = await deleteCampaign(campaign.id);
+
+      if (!result.success) {
+        toast.error('Failed to delete campaign');
+        return;
+      }
+
+      // if (!response.ok) {
+      //   toast.error('Failed to delete campaign');
+      //   return;
+      // }
+
+      // const deletedCampaign = campaigns?.filter((c) => c.id === campaign.id)[0];
+
+      // if (!deletedCampaign) {
+      //   toast.error('Failed to delete campaign');
+      //   return;
+      // }
+
+      await mutate(`/api/cms/campaign?role=${role?.name || 'ADMIN'}`);
+
+      // const updatedCampaigns = campaigns?.map((item) =>
+      //   item.id === deletedCampaign.id
+      //     ? { ...deletedCampaign, deleted: true }
+      //     : item
+      // );
+
+      toast.success('Campaign deleted successfully');
+    } catch (error) {
+      toast.error(`Error deleting campaign: ${error}`);
+      console.error('Error deleting campaign:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="h-[6.25rem] w-[24.25rem] flex px-6 gap-[2.625rem] items-center border border-zinc-200 rounded-lg justify-between shadow-sm">
+        <button
+          type="button"
+          className=" grow min-w-0 cursor-pointer h-full text-left px-3 flex flex-col justify-center"
+          onClick={async () => {
+            await setCampaign(campaign.id);
+            routeToPage(`/dashboard/overview`);
+          }}
+        >
+          <h3 className="text-size-24px font-semibold break-words">
+            {campaign.name}
+          </h3>
+          <time className="text-zinc-500 text-size-14px">
+            {`${dayjs(campaign.startedAt).format('YYYY.MM.DD')} ~ 
+          ${dayjs(campaign.endedAt).format('YYYY.MM.DD')}`}
+          </time>
+        </button>
+        <div className="flex gap-3">
+          {isEditAble && (
+            <div>
+              <CustomAlertDialog
+                trigger={
+                  <Button
+                    variant="ghost"
+                    className="p-0 aspect-square size-[1.875rem] rounded-sm "
+                  >
+                    <Trash2
+                      style={{ width: '1.25rem', height: '1.25rem' }}
+                      className="text-red-500"
+                    />
+                  </Button>
+                }
+                description="Once deleted, the registered data cannot be restored. Are you sure you want to delete?"
+                buttons={[
+                  {
+                    label: 'Cancel',
+                    variant: 'secondary',
+                    type: 'cancel',
+                  },
+                  {
+                    label: 'Delete',
+                    variant: 'delete',
+                    type: 'delete',
+                    onClick: handleDeleteCampaign,
+                  },
+                ]}
+              />
+            </div>
+          )}
+          <Button
+            className="p-0 aspect-square size-[1.875rem] rounded-sm"
+            variant="ghost"
+            onClick={async () => {
+              await setCampaign(campaign.id);
+              routeToPage(`/campaign/edit/${campaign.id}`);
+            }}
+          >
+            <Pen className="text-blue-600" />
+          </Button>
+        </div>
+      </div>
+
+      {(isLoading || isRouting) && <LoadingFullScreen />}
+    </>
+  );
+}
+
+const DownloadManualButton = () => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadFile = async () => {
+    setIsDownloading(true);
+    // const FILE_NAME = `Admin_Manual.pptx`;
+    // const FILE_NAME = `S_Certification_Admin_Manual.pptx`;
+    const FILE_NAME = `S_Certification_Admin_Manual.pdf`;
+    const DOWNLOAD_URL = `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/manual/${FILE_NAME}`;
+    await handleDownload(FILE_NAME, DOWNLOAD_URL);
+    setIsDownloading(false);
+  };
+
+  return (
+    <Button
+      onClick={handleDownloadFile}
+      variant={'secondary'}
+      disabled={isDownloading}
+    >
+      Download Manual
+    </Button>
+  );
+};

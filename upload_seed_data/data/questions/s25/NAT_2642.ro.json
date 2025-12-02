@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care sunt Caracteristicile cheie ale Galaxy S25? (selectați trei)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Partener AI adevărat",
+        "answerStatus": 1
+      },
+      {
+        "text": "Cea mai avansată performanță",
+        "answerStatus": 1
+      },
+      {
+        "text": "Experiența perfectă a camerei foto",
+        "answerStatus": 1
+      },
+      {
+        "text": "Companionul tău pentru sănătate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ce culori are Galaxy S25 Ultra? (selectați toate care se aplică)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Titanium Silver Blue",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Gray",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium White Silver",
+        "answerStatus": 1
+      },
+      {
+        "text": "Titanium Black",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Am auzit că există o caracteristică pentru căutarea unui restaurant și trimiterea unui mesaj în același timp. Cum se numește?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Acțiuni între aplicații (Cross-app action)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Care sunt beneficiile cheie când realizez un portret?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Puteți înregistra videouri de noapte cu mai puțin zgomot.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Acum puteți filtra sunetele nedorite și le puteți păstra pe cele pe care le doriți.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puteți realiza activități cu mai multe aplicații simultan, vorbind natural cu seria Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Poți surprinde în mod liber textura naturală a pielii",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Puteți explica rezultatul când realizați videoul cu Fotografie de noapte?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Puteți înregistra videouri de noapte cu mai puțin zgomot digital.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Acum puteți filtra sunetele nedorite și le puteți păstra pe cele pe care le doriți.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puteți realiza activități cu mai multe aplicații simultan, vorbind natural cu seria Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puteți surprinde în mod liber tonul și textura naturală a pielii",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care dintre următoarele este o caracteristică cheie a noului Watch care trebuie evidențiată ca experiența integrată când realizați demonstrații cu cazuri de utilizare din stilul de viață? (selectați toate răspunsurile corecte)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sunet extrem de clar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Scor de energie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cursă",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care dintre următoarele este o caracteristică cheie a Buds3 Pro și Buds3 care trebuie evidențiată ca experiența integrată când realizați demonstrații cu cazuri de utilizare din stilul de viață?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "UI/UX intuitiv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Optimizare sunet\n(sunet optimizat)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ofertă achiziție multiplă",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Care caracteristică NU este acceptată în Note Samsung?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Traducere PDF suprapusă",
+        "answerStatus": 0
+      },
+      {
+        "text": "Transcriere și Traducere",
+        "answerStatus": 0
+      },
+      {
+        "text": "Traducere în timp real în timpul înregistrării vocale",
+        "answerStatus": 1
+      },
+      {
+        "text": "Rezumare și Formatare automată",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Pentru a folosi Galaxy AI trebuie să ...?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Trebuie să vă conectați la contul Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Trebuie să plătiți un anumit abonament",
+        "answerStatus": 0
+      },
+      {
+        "text": "Trebuie să descărcați aplicația dedicată Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nimic",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "De ce ar trebui să-mi actualizez dispozitivul Galaxy la One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nu s-a schimbat mult față de One UI 6.1.1",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cu One UI 7.0, vei avea o experiență mobilă AI mai bogată, în comparație cu software-ul anterior",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ce categorii pot șterge cu Radieră audio? (selectați toate care se aplică)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Muzică",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vânt",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zgomot",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care sunt principalele caracteristici de experimentat cu Galaxy S25? (selectați toate care se aplică)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Asistență chat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Acțiuni între aplicații (Cross-app action)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portret și Filtrul meu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Radieră audio",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care sunt Îmbunătățirile cheie ale Galaxy S25? (selectați trei)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Acțiuni între aplicații (Cross-app action)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Căutare în moduri multiple",
+        "answerStatus": 1
+      },
+      {
+        "text": "Baterie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesor 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Cu ce procesor este echipată seria Galaxy S25",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Procesor 6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesor 5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesor 4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "Procesor 3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care sunt Îmbunătățirile Galaxy S25 Ultra? (Selectați trei)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cameră de 50 MP cu obiectiv ultralarg",
+        "answerStatus": 1
+      },
+      {
+        "text": "Greutate",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (pentru ecranul față)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Procesor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care dintre următoarele NU este o experiență cheie pentru client a noului Watch? (selectați o opțiune)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "(Performanță)\nEsențială de nivel superior",
+        "answerStatus": 0
+      },
+      {
+        "text": "Somn îmbunătățit prin AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dimensiune ecran",
+        "answerStatus": 1
+      },
+      {
+        "text": "Experiență de exerciții fizice personalizate",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care dintre următoarele este o caracteristică cheie ce trebuie evidențiată când prezentați Buds3 Pro și Buds3 clienților care nu sunt familiarizați cu căștile intraauriculare (prima cumpărare)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Sunet extrem de clar",
+        "answerStatus": 0
+      },
+      {
+        "text": "ANC adaptiv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Potrivire confortabilă",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Care este noua caracteristică a Tab S10 care permite vizibilitatea intensă la exterior?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Antireflexie",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ecran de mari dimensiuni",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Există vreo caracteristică ușoară și rapidă de a partaja fotografii/videoclipuri cu prietenii?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Traducere Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Este obligatoriu să rămân în apropierea persoanei când folosesc Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nu, va funcționa prin cloud",
+        "answerStatus": 1
+      },
+      {
+        "text": "Da, din păcate trebuie să stai până la sfârșit",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Puteți să-mi recomandați caracteristici cheie pe care să le încerc? (selectați toate care se aplică)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Acțiuni între aplicații (Cross-app action)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portret și Filtrul meu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Radieră audio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ce ar trebui să spun pentru a încerca Acțiunile între aplicații (Cross-app action) în seria Galaxy S25? (de exemplu)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Caută un restaurant cu mâncare chinezească în apropiere și trimite-l lui Andrei",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bună, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spune-mi informațiile meteo de azi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Bună, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Cum pot aplica un filtru când fac o poză? (selectați două)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "folosind filtrul presetat din aplicația Cameră",
+        "answerStatus": 1
+      },
+      {
+        "text": "folosind modul Noapte din aplicația Cameră",
+        "answerStatus": 0
+      },
+      {
+        "text": "folosind Filtru meu pentru fotografii în Galerie",
+        "answerStatus": 1
+      },
+      {
+        "text": "folosind modul Mișcare lentă din aplicația Cameră",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Sunt un fan al utilizării S Pen. Ai vreo recomandare pentru mine?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ce informații/analize pot obține cu Now Brief? (selectați trei)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Scor de energie",
+        "answerStatus": 1
+      },
+      {
+        "text": "Programul din calendar",
+        "answerStatus": 1
+      },
+      {
+        "text": "Alarmă",
+        "answerStatus": 1
+      },
+      {
+        "text": "Adresa de domiciliu",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Selectați o caracteristică legată de Sănătate/Somn a noului Watch (selectați toate răspunsurile corecte)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Scor de energie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Antrenor personalizat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Automotivare și îmbunătățire",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Selectați cea mai potrivită caracteristică a Buds3 care poate fi folosită într-o întâlnire cu un străin care vorbește o altă limbă.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Interpret",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Potrivire confortabilă",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sunet extrem de clar",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ce este nou la noua Husă cu tastatură a Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Iluminare de fundal ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tastă AI dedicată",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lansator Note Samsung",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asistent Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Care sunt criteriile pentru Scor de energie? (selectați toate care se aplică)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Somn",
+        "answerStatus": 0
+      },
+      {
+        "text": "Raport",
+        "answerStatus": 0
+      },
+      {
+        "text": "Puls inimă",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Care este principalul avantaj al Trade-In? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Poți obține un plan de finanțare lunar",
+        "answerStatus": 0
+      },
+      {
+        "text": "Primești instantaneu o reducere suplimentară",
+        "answerStatus": 1
+      },
+      {
+        "text": "Poți primi un spațiu de stocare de 2X mai mare, la același preț",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cumperi unul, primești unul gratuit",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Sunt un utilizator al S22. Care sunt îmbunătățirile cheie ale Galaxy S25? (selectați două)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Procesor 3 nm",
+        "answerStatus": 1
+      },
+      {
+        "text": "Calitatea imaginii",
+        "answerStatus": 1
+      },
+      {
+        "text": "Numărul de camere foto",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dimensiuni",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Poți să-mi spui caracteristicile exclusive ale Galaxy S25 Ultra? (selectați toate care se aplică)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "S Pen încorporat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zoom 100x și cameră foto de 200 MP",
+        "answerStatus": 0
+      },
+      {
+        "text": "Baterie/ecran mai mari",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Există vreo metodă de a partaja fișiere către dispozitive non-Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Link to Windows",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Ce caracteristică afișează videoul înregistrat cu mișcare lentă?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Videouri Fotografie de noapte",
+        "answerStatus": 0
+      },
+      {
+        "text": "Radieră audio",
+        "answerStatus": 0
+      },
+      {
+        "text": "Filmare cu încetinitorul instantanee",
+        "answerStatus": 1
+      },
+      {
+        "text": "Decupare automată",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Vorbesc mult la telefon în viața de zi cu zi, dar adesea uit despre ce am vorbit. Există vreo caracteristică bună pe care o poți recomanda în această situație?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Asistent transcriere",
+        "answerStatus": 1
+      },
+      {
+        "text": "Traducere Live",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Căutare în moduri multiple",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Îmi scap sau îmi pierd telefonul des. Mă tem să cumpăr ceva scump pentru că se va strica.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Îți recomand „Samsung Care+”",
+        "answerStatus": 1
+      },
+      {
+        "text": "Îți recomand „Link to Windows”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Îți recomand „Quick Share”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Îți recomand „Modelul mai ieftin”",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Ce NU este acoperit prin Samsung Care+?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smartphone",
+        "answerStatus": 0
+      },
+      {
+        "text": "Watch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Desktop PC",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tab",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Dacă Ring se blochează pe deget, ce să fac?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Aplicați un lubrifiant, de ex., cremă de mâini, ulei sau săpun de curățare, pentru reducerea frecării, acest lucru îl face mai ușor de scos.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Scufundați degetul în apă rece pentru a contracta temporar vasele de sânge și micșora degetul. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduceți umflarea prin ținerea ridicată a mâinii mai mult de 5 minute.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care este cel mai potrivit răspuns pentru următorul spațiu liber?\nGalaxy Ring este un nou dispozitiv portabil. În special, monitorizarea sănătății îmbunătățită cu AI și ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Scor de energie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Card amplificator",
+        "answerStatus": 0
+      },
+      {
+        "text": "Îndrumări pentru somn",
+        "answerStatus": 1
+      },
+      {
+        "text": "Apropiere degete dublă",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Care dintre următoarele este o experiență cheie pentru client a Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Antrenor personalizat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Purtare confortabilă 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Apropiere degete dublă  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Toate cele de mai sus",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

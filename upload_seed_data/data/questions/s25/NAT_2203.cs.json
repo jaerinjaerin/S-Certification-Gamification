@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaké jsou základní vlastnosti Galaxy S25? (vyberte tři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Opravdový společník v oblasti umělé inteligence",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nejpokročilejší výkon",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dokonalý zážitek s fotoaparátem",
+        "answerStatus": 1
+      },
+      {
+        "text": "Váš zdravotní společník",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jakou barvu má Galaxy S25 Ultra? (vyberte čtyři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Modrý titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Šedý titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bílý titan",
+        "answerStatus": 1
+      },
+      {
+        "text": "Černý titan",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Zaslechl jsem, že telefon má funkci, která dokáže najít restauraci a zároveň odeslat zprávu. Jak se jmenuje?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Akce napříč aplikacemi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Circle to Search",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jaké jsou hlavní výhody při pořizování portrétů?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Můžete nahrávat ještě jasnější videa v noci s nižší mírou šumu.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nyní můžete odstranit nežádoucí zvuky, a zachovat si naopak zvuky, které se vám líbí.",
+        "answerStatus": 0
+      },
+      {
+        "text": "U řady Galaxy S25 můžete ovládat několik různých aplikací najednou svým přirozeným hlasem",
+        "answerStatus": 0
+      },
+      {
+        "text": "Můžete volně zachytit přirozenou texturu pokožky",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Která z těchto možností nejlépe vystihuje nahrávání nočního videa (Nightography video)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Můžete nahrávat ještě jasnější videa v noci s nižší mírou šumu.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Nyní můžete odstranit nežádoucí zvuky, a zachovat si naopak zvuky, které se vám líbí.",
+        "answerStatus": 0
+      },
+      {
+        "text": "U řady Galaxy S25 můžete ovládat několik různých aplikací najednou svým přirozeným hlasem",
+        "answerStatus": 0
+      },
+      {
+        "text": "Můžete volně zachytit přesný odstín a texturu pokožky",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "X2 / W7",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Pomocí funkce Dvojitého poklepání prsty (Double Pinch) u nových hodinek Watch, lze provádět tyto akce:",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Přijmout příchozí hovor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Aktivovat spoušť fotoaparátu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spustit nebo zapauzovat přehrávač hudby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Která z následujících možností je klíčovou funkcí sluchátek Buds3 Pro a Buds3, která by se měla zdůraznit jako zážitek z propojitelnosti během představení zákazníkovi?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitivní rozhraní a ovládání",
+        "answerStatus": 0
+      },
+      {
+        "text": "Optimalizace zvuku\n(optimalizovaný zvuk)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nový design",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "TabS10 Series",
+    "category": "Galaxy AI ",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Jaká funkce NENÍ podporována v aplikaci Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Překryvný překlad PDF",
+        "answerStatus": 0
+      },
+      {
+        "text": "Přepis hlasu a následný překlad",
+        "answerStatus": 0
+      },
+      {
+        "text": "Překlad v reálném čase při nahrávání hlasu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Shrnutí a automatické formátování",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Co musím udělat pro použití Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Musíte být přihlášen ke svému účtu Samsung",
+        "answerStatus": 1
+      },
+      {
+        "text": "Musíte zaplatit určitý registrační poplatek",
+        "answerStatus": 0
+      },
+      {
+        "text": "Musíte si stáhnout speciální aplikaci Galaxy AI",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nic",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Proč bych měl svůj Galaxy telefon aktualizovat na verzi One UI 7.0?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Ve srovnání s One UI 6.1.1 se moc nezměnilo",
+        "answerStatus": 0
+      },
+      {
+        "text": "S One UI 7.0 budete moci ve srovnání s předchozí verzí softwaru využívat funkce umělé inteligence plnohodnotněji",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Které faktory mohu odstranit pomocí funkce Mazání zvuku?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Hudba",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vítr",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hluk",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaké hlavní funkce musíte u Galaxy S25 vyzkoušet? (vyberte tři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Psaní SMS zpráv",
+        "answerStatus": 0
+      },
+      {
+        "text": "Akce napříč aplikacemi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portrét & Můj filtr",
+        "answerStatus": 1
+      },
+      {
+        "text": "Mazání zvuku",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaká jsou hlavní vylepšení Galaxy S25? (vyberte tři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Akce napříč aplikacemi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Multimodální vyhledávání ",
+        "answerStatus": 1
+      },
+      {
+        "text": "Baterie",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm procesor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jaká je velikost procesoru u řady Galaxy S25?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "PA",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaká jsou vylepšení Galaxy S25 Ultra? (Vyberte tři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ultra širokoúhlý 50 MP fotoaparát",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hmotnost",
+        "answerStatus": 0
+      },
+      {
+        "text": "Materiálová sada Corning Gorilla Armor2 (pro přední displej)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Procesor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Která z následujících možností NENÍ klíčovým argumentem nových hodinek Watch? (vyberte jednu možnost.)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Výbava nové úrovně\n(výkon)",
+        "answerStatus": 0
+      },
+      {
+        "text": "Spánek s podporou AI funkcí",
+        "answerStatus": 0
+      },
+      {
+        "text": "Velikost displeje",
+        "answerStatus": 1
+      },
+      {
+        "text": "Personalizované cvičení",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Která z následujících možností je klíčovou vlastností, jež by se měla zdůraznit při představování sluchátek Buds3 Pro a Buds3 zákazníkům, kteří se teprve seznamují se sluchátky (poprvé kupující)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Křišťálově čistý zvuk",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptivní ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pohodlné nošení",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "TabS10 Series",
+    "category": "Display",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Jaká je nová funkce displeje u řady Tab S10 podporující pohodlné sledování venku?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Displej Dynamic AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "Antireflexní úprava",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Velký displej",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Je k dispozici nějaká funkce pro snadné a rychlé sdílení fotografií/videí s kamarády?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Živý překlad",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Musí být telefony u sebe při použití funkce Quick Share?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Určitě ne, vše funguje na bázi cloudu",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ano, bohužel musí být stále vedle sebe",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaké hlavní funkce bych měl vyzkoušet? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Akce napříč aplikacemi",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portrét & Můj filtr",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mazání zvuku",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jaký hlasový příkaz bych měl použít pro využití AI funkce \"Akce napříč aplikacemi\"?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Vyhledej čínskou restauraci poblíž a pošli ji Tomovi",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Řekni mi, jaké bude dnes počasí",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jak se používají filtry na fotografii? (vyberte dvě možnosti)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "použitím přednastaveného filtru aplikace fotoaparát",
+        "answerStatus": 1
+      },
+      {
+        "text": "použitím nočního režimu aplikace fotoaparát",
+        "answerStatus": 0
+      },
+      {
+        "text": "použitím vlastního filtru (Můj filtr) fotografie v galerii",
+        "answerStatus": 1
+      },
+      {
+        "text": "použitím Zpomaleného pohybu aplikace fotoaparát",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Zbožňuju pero S pen. Co byste mi doporučili?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "PA",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jaké informace/poznatky získám s funkcí Now Brief? (vyberte tři)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Skóre energie",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kalendář",
+        "answerStatus": 1
+      },
+      {
+        "text": "Budík",
+        "answerStatus": 1
+      },
+      {
+        "text": "Domovská adresa",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "X2 / W7",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vyberte funkci týkající se zdraví/spánku v nových hodinkách Watch (vyberte všechny správné odpovědi).",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Skóre energie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Personalizované cvičení",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sebemotivace a zlepšování",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds3 Pro / Buds3",
+    "category": "Connected Exp.",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Vyberte nejvhodnější funkci sluchátek Buds3, kterou lze využít při setkání s cizincem hovořícím jiným jazykem.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tlumočník",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pohodlné nošení",
+        "answerStatus": 0
+      },
+      {
+        "text": "Křišťálově čistý zvuk",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "TabS10 Series",
+    "category": "Features",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Co je nového na nové klávesnici Book Cover Keyboard u tabletů řady Tab S10?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Podsvícení ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Vyhrazená klávesa AI",
+        "answerStatus": 1
+      },
+      {
+        "text": "Spouštěč Samsung Notes",
+        "answerStatus": 0
+      },
+      {
+        "text": "Assistent Google",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Z jakých parametrů se počítá Skóre energie? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Spánek",
+        "answerStatus": 0
+      },
+      {
+        "text": "Denní aktivita",
+        "answerStatus": 0
+      },
+      {
+        "text": "Srdeční tep",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Jaká je hlavní výhoda služby Trade In (výkup starého zařízení)? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Můžete získat výhodný splátkový plán",
+        "answerStatus": 0
+      },
+      {
+        "text": "Snížíte si cenu nového telefonu o hodnotu vašeho starého zařízení",
+        "answerStatus": 1
+      },
+      {
+        "text": "Můžete získat dvojnásobné uložiště za stejnou cenu",
+        "answerStatus": 0
+      },
+      {
+        "text": "Koupíte si jeden telefon, a druhý dostanete zdarma",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Používám Galaxy S22. Jaká jsou hlavní vylepšení Galaxy S25? (vyberte dvě možnosti)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 nm procesor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kvalita fotografií",
+        "answerStatus": 1
+      },
+      {
+        "text": "Počet fotoaparátů",
+        "answerStatus": 0
+      },
+      {
+        "text": "Rozměry",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Jaké jsou exkluzivní funkce Galaxy S25 Ultra? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Vestavěné pero S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "Fotoaparát se 100x zoomem a rozlišením 200 MPx",
+        "answerStatus": 0
+      },
+      {
+        "text": "Větší displej a baterie",
+        "answerStatus": 0
+      },
+      {
+        "text": "Všechny výše uvedené možnosti",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Je nějaký způsob, jakým mohu sdílet své soubory se zařízeními nepoužívajícími OS Android?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Jak se nazývá funkce, která zobrazuje nahrané video ve zpomaleném pohybu?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Profesionální video",
+        "answerStatus": 0
+      },
+      {
+        "text": "Mazání zvuku",
+        "answerStatus": 0
+      },
+      {
+        "text": "Okamžité zpomalení videa",
+        "answerStatus": 1
+      },
+      {
+        "text": "Automatické oříznutí",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "PA",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Během dne hodně telefonuji, ale často si nepamatuji, o čem byla řeč. Jakou funkci byste mi doporučili v tomto případě?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Asistent pro hovory (přepis)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Živý překlad",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Multimodální vyhledávání",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Často telefon ztrácím nebo mi padá. Bojím se koupit něco drahého pro případ, že by se to rozbilo.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Doporučuji vám „Samsung Care+“",
+        "answerStatus": 1
+      },
+      {
+        "text": "Doporučuji vám „Samsung Wallet“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Doporučuji vám „Quick Share“",
+        "answerStatus": 0
+      },
+      {
+        "text": "Doporučuji vám „Levnější model“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Co NENÍ kryto Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Chytrý telefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hodinky",
+        "answerStatus": 0
+      },
+      {
+        "text": "Stolní počítač",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tablet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "FAQ",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "If the Ring gets stuck on my finger, what should I do?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Apply a lubricant, such as hand cream, cleansing oil, or soap, to reduce friction, which makes it easier to remove.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Immerse your finger in cold water to constrict blood vessels temporarily and shrink the finger. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Reduce swelling by elevating your hand for more than 5 minutes.",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Pitchline",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "What is the most appropriate answer to the following blank?\nGalaxy Ring is a new wearable device. Especially, AI-powered health tracking and ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energy Score",
+        "answerStatus": 0
+      },
+      {
+        "text": "Booster Card",
+        "answerStatus": 0
+      },
+      {
+        "text": "Sleep Coaching",
+        "answerStatus": 1
+      },
+      {
+        "text": "Double Pinch",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Which of the following is Key CXP of Galaxy Ring?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Personalized Coaching",
+        "answerStatus": 0
+      },
+      {
+        "text": "Comfortable Wear 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "Double Pinch  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "All of the above",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

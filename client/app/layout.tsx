@@ -1,23 +1,22 @@
-import AuthProvider from '@/providers/auth_provider';
-import { QuizProvider } from '@/providers/quiz_provider';
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import './globals.css';
-
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-});
+import { Version } from "@/components/version";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Samsung+ Certification Gamification',
-  description: 'Samsung+ Certification Gamification',
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_ASSETS_DOMAIN || "https://assets.samsungplus.net"
+  ),
+  title: "Samsung+ Certification",
+  description: "Be a Galaxy AI Expert",
+  icons: {
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/splus_logo.png`,
+  },
+  openGraph: {
+    images: [
+      `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/certification/common/images/meta.jpg`,
+    ],
+  },
 };
 
 export default async function RootLayout({
@@ -26,13 +25,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <AuthProvider>
-          <QuizProvider>{children}</QuizProvider>
-        </AuthProvider>
+    <html lang="en" translate="no">
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
+      <body className={`font-sharpSans font-bold antialiased`}>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
+        {children}
+        <Version />
       </body>
     </html>
   );

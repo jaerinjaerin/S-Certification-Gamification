@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyek a Galaxy S25 szériás készülékek fő jellemzői? (válassz hármat)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Élethű AI telefon",
+        "answerStatus": 1
+      },
+      {
+        "text": "A legfejlettebb teljesítmény",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tökéletes kameraélmény",
+        "answerStatus": 1
+      },
+      {
+        "text": "Az egészségügyi társad",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Milyen színben kapható a Galaxy S25 Ultra? (4 helyes válasz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Ezüstkék titán",
+        "answerStatus": 1
+      },
+      {
+        "text": "Szürke titán",
+        "answerStatus": 1
+      },
+      {
+        "text": "Fehéres szürke titán",
+        "answerStatus": 1
+      },
+      {
+        "text": " Fekete titán",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyik az az új AI funkció, amellyel kikereshetsz egy éttermet, és azonnal üzenetet is küldhetsz számukra?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar, éppen futó appok, és Now Brief, napi riport",
+        "answerStatus": 0
+      },
+      {
+        "text": "Többszintű appkezelés",
+        "answerStatus": 1
+      },
+      {
+        "text": "Bekarikázással keresés",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mik a legfontosabb előnyök, ha portrét készítesz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Még világosabb éjszakai videókat rögzíthetsz, kevesebb zajjal.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kitörölheted a nem kívánt hangokat, és megtarthatod azt, amit szeretnél",
+        "answerStatus": 0
+      },
+      {
+        "text": "A Galaxy S25 szériás készülékekkel egyszerű kommunikációval egyszerre több alkalmazással is elvégezhetsz feladatokat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Szabadon rögzítheted a bőr természetes textúráját",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mit eredményez, ha Nightography- Éjszakai felvételek funkció használatával készítesz éjszakai videót?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Még világosabb éjszakai videókat rögzíthetsz, kevesebb zajjal.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kitörölheted a nem kívánt hangokat, és megtarthatod azt, amit szeretnél",
+        "answerStatus": 0
+      },
+      {
+        "text": "A Galaxy S25 szériás készülékekkel egyszerű kommunikációval egyszerre több alkalmazással is elvégezhetsz feladatokat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Szabadon rögzítheted a bőr tónusát és természetes textúráját",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyek az Új órák fő jellemzői, amelyeket összekapcsolt élményként kell kiemelni, amikor életmód-használati bemutatót tartasz? (egy helyes válasz))",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Alváselemzés",
+        "answerStatus": 0
+      },
+      {
+        "text": "Energiapontszám",
+        "answerStatus": 0
+      },
+      {
+        "text": "Verseny mód",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik a Buds3 Pro és a Buds3 egyik fő jellemzője, amelyet összekapcsolt élményként kell kiemelni, amikor életmód-használati bemutatót tartasz?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Intuitív felhasználói felület/felhasználói élmény",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hangoptimalizálás\n(optimalizált hangzás)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Több vásárlási ajánlat",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Milyen funkciót NEM támogat a Samsung Notes?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Átfedéses PDF fordítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Átirat és fordítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Valós idejű fordítás hangfelvétel közben",
+        "answerStatus": 1
+      },
+      {
+        "text": "Összefoglaló és automatikus formázás",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mit kell tennem a Galaxy AI használatához?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Be kell jelentkezned a Samsung fiókodba.",
+        "answerStatus": 1
+      },
+      {
+        "text": "Meg kell fizetni egy bizonyos összegű előfizetési díjat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Le kell töltenie a Galaxy AI dedikált alkalmazást",
+        "answerStatus": 0
+      },
+      {
+        "text": "Semmit",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Assurance\n&Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Miért érdemes frissítenem a Galaxy készülékemet a One UI legfrissebb 7.0 verziójára?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nem sok minden változott a One UI 6.1.1-hez képest",
+        "answerStatus": 0
+      },
+      {
+        "text": "A One UI 7.0-val a korábbi szoftverekhez képest élethűbb AI-telefon élményben lesz részed",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Miket törölhetek a Hangsávszerkesztő segítségével? (Egy válasz helyes)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Zene",
+        "answerStatus": 0
+      },
+      {
+        "text": "Szél",
+        "answerStatus": 0
+      },
+      {
+        "text": "Zaj",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyek a Galaxy S25 szériás készülékek legfőbb jellemzői? (hármat válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Chatsegéd",
+        "answerStatus": 0
+      },
+      {
+        "text": "Többszintű appkezelés",
+        "answerStatus": 1
+      },
+      {
+        "text": "Portré effekt és Saját szűrő",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hangsávszerkesztő",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyek a Galaxy S25 szériás készülékek legfőbb fejlesztései a korábbi szériához képest? (hármat válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Többszintű appkezelés",
+        "answerStatus": 1
+      },
+      {
+        "text": "AI felskálázás",
+        "answerStatus": 1
+      },
+      {
+        "text": "Akkumulátor",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 nm-es alkalmazásprocesszor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Milyen csíkszélességű processzorral rendelkezik a Galaxy S25 széria?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "5nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "4nm",
+        "answerStatus": 0
+      },
+      {
+        "text": "3nm",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyek a Galaxy S25 Ultra fejlesztései? (Válassz hármat)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "50 MP-es Ultraszéles kameralencse",
+        "answerStatus": 1
+      },
+      {
+        "text": "A készülék súlya",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (az elülső kijelzőhöz)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Processzor",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyik NEM az Új órák egyik kulcsfontosságú termékelőnye? (válassz egyet)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Teljesítmény alapú edzésterv",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-alapú alvás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kijelző mérete",
+        "answerStatus": 1
+      },
+      {
+        "text": "Személyre szabott edzésélmény",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyek azok a fő jellemzők, amelyeket ki kell emelni a Buds3 Pro és a Buds3 bemutatásakor a fülhallgatókkal újonnan ismerkedő vásárlóknak (egy válasz helyes)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Kristálytiszta hangzás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Adaptív ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kényelmes viselet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mely új funkció támogatja a Tab S10 készülékben az élénk kültéri megjelenítést?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Dinamikus 2X AMOLED kijelző",
+        "answerStatus": 0
+      },
+      {
+        "text": "Tükröződésgátló felület",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nagy kijelző",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mely funkció segítségével oszthatók meg fényképek/videók gyorsan és könnyedén a barátokkal?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Switch",
+        "answerStatus": 0
+      },
+      {
+        "text": "Élő fordítás",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Assurance\n&Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "A Quick Share használata közben mindvégig egymás mellett kell lennünk?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nem, szerencsére működik felhőn keresztül is",
+        "answerStatus": 1
+      },
+      {
+        "text": "Igen, sajnos csak egymás közelében használható",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Tudnál ajánlani kulcsfontosságú funkciókat, amiket kipróbálhatok? (egy válasz helyes)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Többszintű appkezelés",
+        "answerStatus": 0
+      },
+      {
+        "text": "Portré effekt és Saját szűrő",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hangsávszerkesztő",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Milyen parancsot adjak, hogy a Galaxy S25 sorozatban kipróbálhassam a Többszintű appkezelés funkciót? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Keress kínai éttermet a közelben, és küldd el Tony-nak",
+        "answerStatus": 1
+      },
+      {
+        "text": "Hi Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "Küldd el nekem a mai időjárásadatokat",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hi Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Hogyan alkalmazhatok különböző szűrőket fotó készítésekor? (kettőt válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "a kamera alkalmazás előre beállított szűrőjének használatával",
+        "answerStatus": 1
+      },
+      {
+        "text": "a kamera alkalmazás Éjszakai módjának használatával",
+        "answerStatus": 0
+      },
+      {
+        "text": "a galériában lévő fotó Saját szűrőjének használatával",
+        "answerStatus": 1
+      },
+      {
+        "text": "a kamera alkalmazás Lassított felvételével",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Imádom az S pen-t használni. Mely készüléket tudnád ajánlani nekem ehhez?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Milyen információkhoz/ismeretekhez juthatok a Now brief- Napi riport segítségével? (hármat válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Energiapontszám",
+        "answerStatus": 1
+      },
+      {
+        "text": "Elvégzendő feladatok",
+        "answerStatus": 1
+      },
+      {
+        "text": "Ébresztő",
+        "answerStatus": 1
+      },
+      {
+        "text": "Lakcímem",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyek az Új órák Egészség/Alvás funkciói (egy válasz helyes)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiapontszám",
+        "answerStatus": 0
+      },
+      {
+        "text": "Személyre szabott tanácsadás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Önmotiváció és fejlesztés",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Válaszd ki a Buds3 fülhallgató legmegfelelőbb funkcióját, amelyet egy más nyelvet beszélő idegennel való találkozás során használhatsz.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Tolmács",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kényelmes viselet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Kristálytiszta hangzás",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mi az újdonság a Tab S10 készülék új Könyvborító billentyűzetében?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Háttérfény ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dedikált AI billentyű",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Notes indító",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google segéd",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Milyen információkból dolgozik az Energiapontszám funkció? (egyet válassz)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Alvás",
+        "answerStatus": 0
+      },
+      {
+        "text": " Napi tevékenységek",
+        "answerStatus": 0
+      },
+      {
+        "text": "Pulzusszám",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Assurance\n&Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Mi a Beszámítás fő előnye? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Havi részletfizetési csomagot kaphatsz",
+        "answerStatus": 0
+      },
+      {
+        "text": "Azonnal csökkentheted a legújabb okostelefon vásárlásával járó terheket/költségeket",
+        "answerStatus": 1
+      },
+      {
+        "text": "2-szer nagyobb tárhelyet kaphatsz ugyanazért az árért",
+        "answerStatus": 0
+      },
+      {
+        "text": "Egyet veszel, a másikat ingyen megkaphatod",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Galaxy S22 felhasználó vagyok. Melyek a Galaxy S25 fő fejlesztései? (kettőt válassz)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "a 3 nm-es alkalmazásprocesszor",
+        "answerStatus": 1
+      },
+      {
+        "text": "Jobb képminőség",
+        "answerStatus": 1
+      },
+      {
+        "text": "Kamerák száma",
+        "answerStatus": 0
+      },
+      {
+        "text": "Készülék méretei",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "El tudnád mondani a Galaxy S25 Ultra exkluzív funkcióit a Galaxy S25 készülékhez képest? (egy válasz helyes) ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Beépített S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100-szoros zoom és 200 mp-es kamera",
+        "answerStatus": 0
+      },
+      {
+        "text": "Nagyobb képernyő és akkumulátor",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Mely funkció segít megosztani fájlokat akár nem Androidos eszközökkel is? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Quick Share",
+        "answerStatus": 1
+      },
+      {
+        "text": "SmartThings",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": " Samsung Wallet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Melyik funkció segít az általad rögzített videó lassított felvételében?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Nightography- Éjszakai felvételek ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Hangsávszerkesztő",
+        "answerStatus": 0
+      },
+      {
+        "text": "Azonnali lassítás",
+        "answerStatus": 1
+      },
+      {
+        "text": "Képszerkesztő segéd",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "A mindennapi életem során sokszor telefonálok, de gyakran elfelejtem, hogy miről is beszéltünk. Melyik az a funkció, amit ajánlani tudsz erre a helyzetre?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Hívás Átírósegéd (Európában nem elérhető)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Élő fordítás",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI felskálázás",
+        "answerStatus": 0
+      },
+      {
+        "text": "Többszintű appkezelés",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Gyakran elhagyom a telefonom. Sokszor el is ejtem, ezért nagyon félek, hogy bármi baja lesz. Mit javasolsz? (egyet válassz)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Javaslom a „Samsung Care+” szolgáltatást",
+        "answerStatus": 1
+      },
+      {
+        "text": "Javaslom a „Samsung Walletet”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Javaslom a „Quick Share-t”",
+        "answerStatus": 0
+      },
+      {
+        "text": "Egy „Olcsóbb modellt” javaslok",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Assurance\n&Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Milyen készülékre nem terjed ki a Samsung Care+?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Okostelefon",
+        "answerStatus": 0
+      },
+      {
+        "text": "Okosóra",
+        "answerStatus": 0
+      },
+      {
+        "text": "Asztali számítógép",
+        "answerStatus": 1
+      },
+      {
+        "text": "Tablet",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "Ha a Gyűrű az ujjamra ragad, mit tegyek?”. (egy válasz helyes)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Használj kenőanyagot, például kézkrémet, tisztítóolajat vagy szappant, hogy csökkentsd a súrlódást, ami megkönnyíti az eltávolítást.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Merítsd az ujjad hideg vízbe, hogy átmenetileg összeszorítsd az ereket és összezsugorítsd az ujjad. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Csökkentsd a duzzanatot azzal, hogy több mint 5 percig megemeled a kezed.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 39,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Mi a legmegfelelőbb válasz a következő üres helyre?\nA Galaxy Ring egy új viselhető eszköz, amely különösképpen az AI-alapú egészségkövetés és ________ funkciók miatt ajánlott.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Energiapontszám",
+        "answerStatus": 0
+      },
+      {
+        "text": "Motivációs kártya",
+        "answerStatus": 0
+      },
+      {
+        "text": "Alvási tanácsadás",
+        "answerStatus": 1
+      },
+      {
+        "text": "Dupla összecsípés",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 40,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "Az alábbiak közül melyek a Galaxy Ring fő ügyfélélményei? (egy válasz helyes)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Személyre szabott tanácsadás",
+        "answerStatus": 0
+      },
+      {
+        "text": "24/7 kényelmes viselet",
+        "answerStatus": 0
+      },
+      {
+        "text": "Dupla összecsípés  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "Ezek közül mindegyik",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

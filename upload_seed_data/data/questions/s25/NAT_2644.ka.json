@@ -1,0 +1,1226 @@
+[
+  {
+    "originQuestionIndex": 1,
+    "orderInStage": 1,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელია Galaxy S25-ის წამყვანი მახასიათებლები? (აირჩიეთ სამი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ნამდვილი AI კომპანიონი",
+        "answerStatus": 1
+      },
+      {
+        "text": "ყველაზე მოწინავე შესრულება",
+        "answerStatus": 1
+      },
+      {
+        "text": "კამერის უნიკალური გამოცდილება",
+        "answerStatus": 1
+      },
+      {
+        "text": "შენი ჯანმრთელობის თანამგზავრი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 2,
+    "orderInStage": 2,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Design/Color",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რომელი ფერებით არის Galaxy S25 Ultra წარმოდგენილი?",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ტიტანიუმ ცისფერი",
+        "answerStatus": 1
+      },
+      {
+        "text": "ტიტანიუმ ნაცრისფერი",
+        "answerStatus": 1
+      },
+      {
+        "text": "ტიტანიუმ ვერცხლისიფერი",
+        "answerStatus": 1
+      },
+      {
+        "text": "ტიტანიუმ შავი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 3,
+    "orderInStage": 3,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "გავიგე, რომ არსებობს ფუნქცია, რომელიც პულობს რესტორანს და დაუყოვნებლივ აგზავნის შეტყობინებას. რა ჰქვია მას?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Now Bar & Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "შემოხაზე, რომ მოძებნო",
+        "answerStatus": 0
+      },
+      {
+        "text": "Gemini Live",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 4,
+    "orderInStage": 4,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რა არის პორტრეტის გადაღების მთავარი უპირატესობა?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "თქვენ შეგიძლიათ ჩაწეროთ უფრო ნათელი ღამის ვიდეოები ნაკლები გამოსახულების ხარვეზით.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ახლა თქვენ შეგიძლიათ გაფილტროთ არასასურველი ხმები და დატოვოთ ის, რომელიც გსურთ.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 სერიასთან ბუნებრივი საუბრით თქვენ შეგიძლიათ დაასრულოთ დავალება ერთდროულად რამდენიმე აპის გამოყენებით",
+        "answerStatus": 0
+      },
+      {
+        "text": "თქვენ თავისუფლად შეგიძლიათ გადაიღოთ კანის ბუნებრივი ტექსტურა",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 5,
+    "orderInStage": 5,
+    "enabled": 1,
+    "stage": 1,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რა არის გაუმჯობესებული ღამით ვიდეო გადაღების მხრივ?\n",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "თქვენ შეგიძლიათ ჩაწეროთ უფრო ნათელი ღამის ვიდეოები ნაკლები ხარვეზით.",
+        "answerStatus": 1
+      },
+      {
+        "text": "ახლა თქვენ შეგიძლიათ გაფილტროთ არასასურველი ხმები და დატოვოთ ის, რომელიც გსურთ.",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 სერიასთან ბუნებრივი საუბრით თქვენ შეგიძლიათ დაასრულოთ დავალება ერთდროულად რამდენიმე აპის გამოყენებით",
+        "answerStatus": 0
+      },
+      {
+        "text": "თქვენ თავისუფლად შეგიძლიათ გადაიღოთ კანის ზუსტი ტონი და ბუნებრივი ტექსტურა",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 6,
+    "orderInStage": 6,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ქვემოთ ჩამოთვლილთაგან რომელია ძირითადი მახასიათებელი ახალი Watch-ის შემთხვევაში, რომლის ხაზგასმით აღნიშვნა უნდა მოხდეს როგორც დაკავშირებული გამოცდილება ყოველდღიური გამოყენების მაგალითის დემო ჩვენების დროს? (აირჩიეთ ყველა სწორი პასუხი)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "კრისტალივით სუფთა ხმა",
+        "answerStatus": 0
+      },
+      {
+        "text": "აკუმულატორის გამძლეობის შეფასება",
+        "answerStatus": 0
+      },
+      {
+        "text": "რბოლა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 7,
+    "orderInStage": 7,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ქვემოთ ჩამოთვლილთაგან რომელია ძირითადი მახასიათებელი Buds3 Pro და Buds3 -ის შემთხვევაში, რომლის ხაზგასმით აღნიშვნა უნდა მოხდეს როგორც დაკავშირებული გამოცდილება ყოველდღიური გამოყენების მაგალითის დემო ჩვენების დროს?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ინტუიციური UI/UX",
+        "answerStatus": 0
+      },
+      {
+        "text": "ჟღერადობის ოპტიმიზაცია\n(ოპტიმიზირებული ჟღერადობა)",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "მრავალჯერადი ყიდვის შეთავაზება",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 8,
+    "orderInStage": 8,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რომელ ფუნქციას არ აქვს Samsung Notes-ის მხარდაჭერა?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "PDF თარგმანის გადაფარვა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ტრანსკრიფცია და თარგმნა",
+        "answerStatus": 0
+      },
+      {
+        "text": "რეალურ დროში თარგმანი ხმის ჩაწერის დროს",
+        "answerStatus": 1
+      },
+      {
+        "text": "შეჯამება და ავტომატური ფორმატი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 9,
+    "orderInStage": 9,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "Samsung Account",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რისთვის უნდა ვიყო მზად, რომ გამოვიყენო Galaxy AI?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "უნდა იყოთ სისტემაში შესული თქვენი Samsung ანგარიშით",
+        "answerStatus": 1
+      },
+      {
+        "text": "უნდა გადაიხადოთ გარკვეული სააბონენტო გადასახადი",
+        "answerStatus": 0
+      },
+      {
+        "text": "უნდა ჩამოტვირთოთ სპეციალური Galaxy AI აპი",
+        "answerStatus": 0
+      },
+      {
+        "text": "არაფერი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 10,
+    "orderInStage": 10,
+    "enabled": 1,
+    "stage": 1,
+    "product": "Service",
+    "category": "One UI 7",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რატომ უნდა განვაახლო ჩემი Galaxy One UI 7.0-ზე?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ბევრი არაფერი შეცვლილა One UI 6.1.1-თან შედარებით",
+        "answerStatus": 0
+      },
+      {
+        "text": "One UI 7.0-ით, თქვენ მიიღებთ უფრო მდიდარ AI გამოცდილებას თქვენს ტელეფონში წინა პროგრამულ უზრუნველყოფასთან შედარებით.",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 11,
+    "orderInStage": 11,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რომელი ხმის ამოშლა შემიძლია „Audio Eraser“ გამოყენების დროს?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "მუსიკა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ქარი",
+        "answerStatus": 0
+      },
+      {
+        "text": "ხმაური",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 12,
+    "orderInStage": 12,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელია საინტერესო ფუნქციები Galaxy S25 შემთხვევაში? (აირჩიეთ ყველა)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ჩატის დამხმარე",
+        "answerStatus": 0
+      },
+      {
+        "text": "Cross-App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "პორტრეტი და \"ჩემი ფილტრი\"",
+        "answerStatus": 1
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 13,
+    "orderInStage": 13,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელია Galaxy S25-ის ძირითადი გაუმჯობესებები? (აირჩიეთ სამი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "Cross-App Action",
+        "answerStatus": 1
+      },
+      {
+        "text": "მულტიმოდალობა",
+        "answerStatus": 1
+      },
+      {
+        "text": "აკუმულატორი",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 ნმ ჩიპსეტი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 14,
+    "orderInStage": 14,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key CXPs",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რამდენ ნანომეტრიანი ტრანზისტორებით არის დამზადებული Galaxy S25 სერიის ჩიპსეტი",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "6 ნმ ჩიპსეტი",
+        "answerStatus": 0
+      },
+      {
+        "text": "5 ნმ ჩიპსეტი",
+        "answerStatus": 0
+      },
+      {
+        "text": "4 ნმ ჩიპსეტი",
+        "answerStatus": 0
+      },
+      {
+        "text": "3 ნმ ჩიპსეტი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 15,
+    "orderInStage": 15,
+    "enabled": 1,
+    "stage": 2,
+    "product": "S25",
+    "category": "Key Improvements",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელია Galaxy S25 Ultra-ს გაუმჯობესებები? (აირჩიეთ სამი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ულტრა განიერი 50 MP კამერა",
+        "answerStatus": 1
+      },
+      {
+        "text": "წონა",
+        "answerStatus": 0
+      },
+      {
+        "text": "Corning Gorilla Armor2 (წინა ეკრანისთვის)",
+        "answerStatus": 1
+      },
+      {
+        "text": "პროცესორი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 16,
+    "orderInStage": 16,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ქვემოთ ჩამოთვლილთაგან, რომელი არ არის აღნიშნული ძირითადი ძლიერი მხერეები ახალი Watch-ის შემთხვევაში? (აირჩიეთ ერთი)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "შემდეგი ეტაპის არსებით ელემენტები (Performance)",
+        "answerStatus": 0
+      },
+      {
+        "text": "AI-ზე დაფუძნებული ძილი",
+        "answerStatus": 0
+      },
+      {
+        "text": "ეკრანის ზომა",
+        "answerStatus": 1
+      },
+      {
+        "text": "მორგებული ვარჯიშის გამოცდილება",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 17,
+    "orderInStage": 17,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ქვემოთ ჩამოთვლილთაგან რომელია ძირითადი მახასიათებელი რომლის ხაზგასმით აღნიშვნა უნდა მოხდეს როცა ხდება Buds3 Pro და Buds3 მომხმარებლებისთვის წარდგენა, რომლებიც ამ ყურსასმენებს არ იცნობენ (1-ელი მყიდველი)?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "კრისტალივით სუფთა ხმა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ადაპტირებადი ANC",
+        "answerStatus": 0
+      },
+      {
+        "text": "კომფორტული მორგება",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 18,
+    "orderInStage": 18,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "Tab S10-ის რომელ ახალ მახასიათებელს აქვს გარეთ ყურების მხარდაჭერა?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "დინამიური AMOLED 2X",
+        "answerStatus": 0
+      },
+      {
+        "text": "სიკაშკაშის საწინააღმდეგო",
+        "answerStatus": 1
+      },
+      {
+        "text": "HDR 10+",
+        "answerStatus": 0
+      },
+      {
+        "text": "დიდი ეკრანი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 19,
+    "orderInStage": 19,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "არსებობს ფუნქცია რომელიც დამეხმარება, მარტივად და სწრაფად გავაზიარო ფოტოები/ვიდეოები მეგობრებთან?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "სწრაფი გაზიარება (Quick share)",
+        "answerStatus": 1
+      },
+      {
+        "text": "ჭკვიანი გადართვა (Smart Switch)",
+        "answerStatus": 0
+      },
+      {
+        "text": "ცოცხალი თარგმანი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 20,
+    "orderInStage": 20,
+    "enabled": 1,
+    "stage": 2,
+    "product": "Service",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რამდენად საჭიროა მოწყობილობასთან ახლოს ყოფნა „სწრაფი გაზიარების“ (Quick Share) გამოყენების დროს?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "არ არის პრობლემა, ის იმუშავებს Cloud სერვისის მეშვეობით",
+        "answerStatus": 1
+      },
+      {
+        "text": "დიახ, სამწუხაროდ ბოლომდე უნდა დარჩე მის სიახლოვეს",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 21,
+    "orderInStage": 21,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელი ფუნქციები უნდა გამოვიყენოთ Galaxy S25 სერიის შესაძლებლობის დემონსტრაციისთვის",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Cross-App Action",
+        "answerStatus": 0
+      },
+      {
+        "text": "პორტრეტი და \"ჩემი ფილტრი\"",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 22,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "როგორ უნდა მივმართო, თუკი მსურს Galaxy S25 სერიაში „Cross-App Action“-ის გამოყენება? (მაგალითად)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ახლომახლო მოიძიე ჩინური რესტორანი და გაუგზავნე ის ტონის",
+        "answerStatus": 1
+      },
+      {
+        "text": "გამარჯობა, Bixby",
+        "answerStatus": 0
+      },
+      {
+        "text": "მომაწოდე დღევანდელი ამინდის ცნობა",
+        "answerStatus": 0
+      },
+      {
+        "text": "გამარჯობა, Gemini",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 23,
+    "orderInStage": 22,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "როგორ შემიძლია ფილტრის გამოყენება ფოტოს გადაღების დროს? (აირჩიეთ ორი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "კამერის აპის არსებული ფილტრის გამოყენებით",
+        "answerStatus": 1
+      },
+      {
+        "text": "ღამის რეჟიმის გამოყენებით",
+        "answerStatus": 0
+      },
+      {
+        "text": "გალერეადან ფოტოს „ჩემი ფილტრის“ გამოყენებით",
+        "answerStatus": 1
+      },
+      {
+        "text": "„ნელი მოძრაობის“ რეჟიმის გამოყენებით",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 24,
+    "orderInStage": 23,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Recommendation",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რომელ მოდელზე შემიძლია S-Pen-ით სარგებლობა?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "Galaxy S25 Plus",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy S25 Ultra",
+        "answerStatus": 1
+      },
+      {
+        "text": "Galaxy S25",
+        "answerStatus": 0
+      },
+      {
+        "text": "Galaxy Watch Ultra",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 25,
+    "orderInStage": 24,
+    "enabled": 1,
+    "stage": 3,
+    "product": "S25",
+    "category": "Demo",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "რა ინფორმაცია/მიმოხილვა შემიძლია მივიღო ფუნქცია „Now Brief“? (აირჩიეთ სამი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "ენერგიის ქულა",
+        "answerStatus": 1
+      },
+      {
+        "text": "განრიგი",
+        "answerStatus": 1
+      },
+      {
+        "text": "მაღვიძარა",
+        "answerStatus": 1
+      },
+      {
+        "text": "სახლის მისამართი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 26,
+    "orderInStage": 25,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Watch",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "აირჩიეთ მახასიათებელი, რომელიც უკავშირდება ახალ Watch-ის ჯანმრთელობის/ძილის აპს (აირჩიეთ სწორი პასუხები)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "აკუმულატორის გამძლეობის შეფასება",
+        "answerStatus": 0
+      },
+      {
+        "text": "მორგებული სწავლება",
+        "answerStatus": 0
+      },
+      {
+        "text": "თვით მოტივაცია და გაუმჯობესება",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 27,
+    "orderInStage": 26,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Buds",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "აირჩიეთ ყველაზე შესაფერისი Buds3-ის ფუნქცია, რომლის გამოყენებც შესაძლებელია უცხოელთან შეხვედრის დროს და ვინც უცხო ენაზე საუბრობს.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "თარჯიმანი",
+        "answerStatus": 1
+      },
+      {
+        "text": "IP57",
+        "answerStatus": 0
+      },
+      {
+        "text": "კომფორტული მორგება",
+        "answerStatus": 0
+      },
+      {
+        "text": "კრისტალივით სუფთა ხმა",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 28,
+    "orderInStage": 27,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Tab",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რა არის Tab S10-ის Book-ის ყდის ახალ კლავიატურაში?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "უკანა განათება ",
+        "answerStatus": 0
+      },
+      {
+        "text": "გამოყოფილი AI გასაღები",
+        "answerStatus": 1
+      },
+      {
+        "text": "Samsung Note-ის გამშვები",
+        "answerStatus": 0
+      },
+      {
+        "text": "Google-ის დამხმარე",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 29,
+    "orderInStage": 28,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Samsung Health",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რა კრიტერიუმები არსებობს ენერგიის ქულისთვის?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ძილი",
+        "answerStatus": 0
+      },
+      {
+        "text": "აქტივობა",
+        "answerStatus": 0
+      },
+      {
+        "text": "გულისცემა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 30,
+    "orderInStage": 29,
+    "enabled": 1,
+    "stage": 3,
+    "product": "Service",
+    "category": "Trade-in",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რა მთავარი უპირატესობა აქვს Trade-in-ს? ",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "მომხმარებელს შეუძლია მიიღოს ყოველთვიური დაფინანსების გეგმა",
+        "answerStatus": 0
+      },
+      {
+        "text": "მომხმარებლებს შეუძლიათ მყისიერად შეამცირონ უახლესი სმარტფონის ყიდვის საფასური",
+        "answerStatus": 1
+      },
+      {
+        "text": "მომხმარებელს შეუძლია მიიღოს 2-ჯერ მეტი შიდა მეხსიერების ვარიანტი იგივე ფასად",
+        "answerStatus": 0
+      },
+      {
+        "text": "იყიდით ერთს, მეორეს მიიღებთ უფასოდ",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 31,
+    "orderInStage": 30,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Upgrader",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "მე ვარ S22-ის მომხმარებელი. რომელია Galaxy S25-ის ძირითადი გაუმჯობესებები? (აირჩიეთ ორი)",
+    "questionType": "MULTI_CHOICE",
+    "options": [
+      {
+        "text": "3 ნმ AP",
+        "answerStatus": 1
+      },
+      {
+        "text": "გამოსახულების ხარისხი",
+        "answerStatus": 1
+      },
+      {
+        "text": "კამერების რაოდენობა",
+        "answerStatus": 0
+      },
+      {
+        "text": "ზომები",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 32,
+    "orderInStage": 31,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Ultra",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "შეგიძლიათ ჩამომითვალოთ Galaxy S25 Ultra-ს ექსკლუზიური მახასიათებლები? (აირჩიეთ ყველა)",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ჩაშენებული S Pen",
+        "answerStatus": 0
+      },
+      {
+        "text": "100x მიახალოება და 200 MP კამერა",
+        "answerStatus": 0
+      },
+      {
+        "text": "უფრო დიდი ეკრანი / აკუმულატორი",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 33,
+    "orderInStage": 32,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Quick Share",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "არსებობს ჩემი ფაილების არა-Android მოწყობილობებზე გაზიარების გზები?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "სწრაფი გაზიარება (Quick share)",
+        "answerStatus": 1
+      },
+      {
+        "text": "Smart Things",
+        "answerStatus": 0
+      },
+      {
+        "text": "Try Galaxy",
+        "answerStatus": 0
+      },
+      {
+        "text": "საფულე (Wallet)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 34,
+    "orderInStage": 33,
+    "enabled": 1,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელი ფუნქცია აჩვენებს ჩაწერილ ვიდეოს ნელი მოძრაობით?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "ღამის გადაღების ვიდეოები",
+        "answerStatus": 0
+      },
+      {
+        "text": "Audio Eraser",
+        "answerStatus": 0
+      },
+      {
+        "text": "მყისიერი ვიდეო შენელება",
+        "answerStatus": 1
+      },
+      {
+        "text": "ავტომატური ამოჭრა (Video Auto Trim)",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 35,
+    "orderInStage": 0,
+    "enabled": 0,
+    "stage": 4,
+    "product": "S25",
+    "category": "Create Excitement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "ყოველდღიურად ძალიან ბევრს ვრეკავ, მაგრამ ხშირად მავიწყდება რაზე ვისაუბრეთ. ხომ არ შეგიძლიათ, რომელიმე კარგი ფუნქცია მირჩიოთ ასეთი შემთხვევისთვის?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "მონაცემების ჩაწერის დამხმარე",
+        "answerStatus": 1
+      },
+      {
+        "text": "ცოცხალი თარგმანი",
+        "answerStatus": 0
+      },
+      {
+        "text": "Now Brief",
+        "answerStatus": 0
+      },
+      {
+        "text": "მულტიმოდალური ძიება",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 36,
+    "orderInStage": 34,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "მე ხშირად ვკარგავ ან ძირს მივარდება ტელეფონი. ყოველთვის ვღელავ ძვირიანი ნივთის ყიდვის დროს რადგან მიფუჭდება.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "გირჩევთ „Samsung Care+“",
+        "answerStatus": 1
+      },
+      {
+        "text": "გირჩევთ „Samsung Wallet“",
+        "answerStatus": 0
+      },
+      {
+        "text": "გირჩევთ „სწრაფ გაზიარებას“",
+        "answerStatus": 0
+      },
+      {
+        "text": "გირჩევთ „უფრო იაფიან მოდელს“",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 37,
+    "orderInStage": 35,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Service",
+    "category": "Samsung Care+",
+    "specificFeature": null,
+    "importance": null,
+    "timeLimitSeconds": 30,
+    "text": "რას არ ფარავს Samsung Care+",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "სმარტფონი",
+        "answerStatus": 0
+      },
+      {
+        "text": "საათი",
+        "answerStatus": 0
+      },
+      {
+        "text": "პერსონალური კომპიუტერი",
+        "answerStatus": 1
+      },
+      {
+        "text": "პლანშეტი",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 38,
+    "orderInStage": 36,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "B",
+    "timeLimitSeconds": 30,
+    "text": "თუ Ring თითზე გაიჭედა, რა გავაკეთო?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "წაისვით ლუბრიკანტი, როგორიცაა ხელის კრემი, გამწმენდი ზეთი ან საპონი ხახუნის შესამცირებლად და მოხსნის გასაადვილებლად.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ჩაყეთ თითი ცივ წყალში, რათა დროებით გამოიწვიოს სისხლძარღვების შევიწროება და თითი უფრო შეიკუმშოს. ",
+        "answerStatus": 0
+      },
+      {
+        "text": "შეამცირეთ შეშუპება მკლავის მაღლა აწევით 5 წუთზე მეტი ხნით.",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 39,
+    "orderInStage": 37,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "რომელია ყველაზე მორგებული პასუხი შემდეგი ცარიელი პუნქტისთვის?\nGalaxy Ring არის ახალი სატარებელი მოწყობილობა. უფრო ზუსტად, AI-ზე დაფუძნებული ჯანმრთელობის მონიტორინგის სისტემა და ________.",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "აკუმულატორის გამძლეობის შეფასება",
+        "answerStatus": 0
+      },
+      {
+        "text": "გამაძლიერებელი ბარათი",
+        "answerStatus": 0
+      },
+      {
+        "text": "ძილის მონიტორინგი",
+        "answerStatus": 1
+      },
+      {
+        "text": "ორმაგი ჩქმეტა",
+        "answerStatus": 0
+      }
+    ]
+  },
+  {
+    "originQuestionIndex": 40,
+    "orderInStage": 38,
+    "enabled": 1,
+    "stage": 4,
+    "product": "Ring",
+    "category": "Customer Engagement",
+    "specificFeature": null,
+    "importance": "A",
+    "timeLimitSeconds": 30,
+    "text": "ქვემოთ ჩამოთვლილთაგან, რომელი არის ძირითადი ძლიერი მხარე Galaxy Ring-ის შემთხვევაში?",
+    "questionType": "SINGLE_CHOICE",
+    "options": [
+      {
+        "text": "მორგებული სწავლება",
+        "answerStatus": 0
+      },
+      {
+        "text": "კომფორტული ტარება 24/7",
+        "answerStatus": 0
+      },
+      {
+        "text": "ორმაგი ჩქმეტა  ",
+        "answerStatus": 0
+      },
+      {
+        "text": "ყველა ზემოთ ჩამოთვლილი",
+        "answerStatus": 1
+      }
+    ]
+  }
+]

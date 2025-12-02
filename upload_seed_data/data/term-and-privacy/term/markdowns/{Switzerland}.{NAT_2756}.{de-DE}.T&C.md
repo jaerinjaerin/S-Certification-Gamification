@@ -1,0 +1,61 @@
+Nutzungsbedingungen für die Expertenzertifizierung für Galaxy AI 2025
+
+Diese Nutzungsbedingungen sowie unsere nachstehenden Datenschutzbestimmungen (die „Bedingungen“) bilden eine Vereinbarung zwischen der Samsung Electronics Co., Ltd., einem koreanischen Unternehmen mit Sitz in 129 Samsung-Ro, Yeongtong-Gu, Suwon-City, Gyeonggi-Do, 16677, Republik Korea (einschließlich der verbundenen Unternehmen, nachstehend „Samsung“, „wir“ oder „uns“) und dir geschlossen und regeln deinen Zugriff oder die Nutzung der Website, der mobilen Anwendung, der Materialien und Dienste (wie unten definiert). Lies dir die Bedingungen sorgfältig durch, bevor du SamsungPlus („Website“ oder „Mobile Anwendung“) aufrufst oder verwendest. Wenn du mit den Bedingungen nicht einverstanden bist, greife nicht auf die Website und die mobile Anwendung zu. Durch die Verwendung der Website oder der mobilen Anwendung stimmst du den Bedingungen zu.
+
+Allgemeine Verwendung und Einschränkungen
+
+Alle Inhalte, die von Samsung auf der Website oder auf der mobilen Anwendung bereitgestellt werden (einschließlich, aber nicht beschränkt auf Daten, Informationen, Dokumente, Texte, Design, Marken, Logos, Grafiken, Bilder, Symbole, Ton, Video, Code und Software) („Materialien“) sind das ausschließliche Eigentum von Samsung, seinen Lizenzgebern oder seinen Inhaltsanbietern und ist durch Urheberrechte, Marken und andere anwendbare Gesetze geschützt. Du darfst auf die auf der Website oder mobilen Anwendung enthaltenen Materialien ausschließlich zu Schulungszwecken für den SamsungPlus-Support und vorbehaltlich der ausdrücklichen Genehmigung von Samsung zugreifen, vorausgesetzt, dass du keine Änderung oder Löschung der Urheberrechts-, Marken- oder sonstigen Eigentumshinweise in den Materialien, auf die du zugreifst, die du kopierst, herunterlädst oder druckst, vornimmst.
+
+Du stimmst zu, das Material weder ganz noch teilweise zu einem anderen Zweck als zu den hier dargelegten Zwecken und vorbehaltlich der ausdrücklichen Genehmigung von Samsung zu verwenden, darzustellen, zu vervielfältigen, zu übertragen, zu verändern, zu verteilen, zu verkaufen, abgeleitete Werke zu erstellen, zu veröffentlichen oder in irgendeiner Weise zu nutzen, sei es per E-Mail oder in sonstiger Form. Jegliche unbefugte Nutzung der Website, der mobilen Anwendung, der Materialien oder der Dienste kann gegen Urheberrechte, Markenrechte und andere anwendbare Gesetze verstoßen.
+
+Verbotene Verwendung
+
+Du darfst die Website oder die mobile Anwendung, die Materialien oder Dienste, die über die Website oder die mobile Anwendung zur Verfügung gestellt werden (die „Dienste“) in folgender Art nicht verwenden: (a) in einer Weise, die gegen lokales, bundesstaatliches, nationales oder internationales Recht verstößt; (b) um eine andere Person zu belästigen oder zu schädigen; (c) um dich als eine Person oder Körperschaft auszugeben oder auf andere Weise deine Zugehörigkeit zu einer Person oder Körperschaft falsch darzustellen; oder (d) um die Website, die mobile Anwendung oder die Dienste zu stören oder zu unterbrechen.
+
+Du stimmst zu, keine „Frames“ oder „Mirrors“ der Website oder mobilen Anwendung oder einem Teil der Materialien oder Dienste auf einem anderen Server oder internetbasierten Gerät ohne vorherige schriftliche Zustimmung von Samsung zu erstellen. Darüber hinaus darfst du ohne vorherige schriftliche Zustimmung von Samsung keine Teile der Materialien oder Dienste in Meta-Tags oder anderen „versteckten Texten“ verwenden.
+
+Teilnahme an der Expertenzertifizierung für Galaxy AI
+
+Samsung+-Benutzer
+
+Nachdem du dich bei der Samsung+-App angemeldet hast, hast du Zugriff auf die Schulungsmodule. Die Teilnahme am Quiz ist erst zulässig, wenn du die Schulung abgeschlossen hast. Wenn du alle Quizphasen durchlaufen hast, erhältst du das Onlineabzeichen als Experte für Galaxy AI.
+
+Nicht-Benutzer von Samsung+
+
+Wenn du die Samsung+-App nicht benutzt, musst du zunächst die von deiner lokalen Niederlassung bereitgestellte Schulung online oder offline abschließen. Nach Abschluss der Schulung kannst du über dem Link, den Samsung deiner Niederlassung zur Verfügung stellt, an dem Quiz teilnehmen. Wenn du alle Quizphasen durchlaufen hast, erhältst du das Onlineabzeichen als Experte für Galaxy AI.
+
+Es ist möglich, mehrmals am Quiz teilzunehmen und zu bestehen, doch es wird nur ein Abzeichen erteilt.
+
+Jede Quizphase hat ein Limit von fünf falschen Antworten. Wenn dieses Limit vor Abschluss einer Phase erreicht wird, muss die Phase ab der ersten Frage neu gestartet werden. Das Zertifizierungsquiz muss einzeln absolviert werden. Jegliche Betrugsversuche führen zur Disqualifizierung und Aberkennung der Quizergebnisse. Die Expertenzertifizierung für Galaxy AI ist kostenlos.
+
+Inhalte von Drittanbietern und Links zu anderen Websites
+
+Die Website oder die mobile Anwendung kann Inhalte Dritter oder Links zu anderen Websites oder mobilen Anwendungen enthalten. Da wir keine Kontrolle über Websites von Drittanbietern oder mobile Anwendungen haben, nimmst du zur Kenntnis, dass wir nicht für die Verfügbarkeit solcher Websites oder Anwendungen verantwortlich sind und keine Verantwortung für Inhalte, Werbung, Dienstleistungen, Produkte oder andere Materialien, die auf solchen Websites und mobilen Anwendungen verfügbar sind, tragen. Du nimmst ebenfalls zur Kenntnis, dass Samsung weder direkt noch indirekt für Schäden oder Verluste verantwortlich ist, die in Verbindung mit der Nutzung oder dem Vertrauen auf Inhalte, Werbung, Dienstleistungen, Produkte oder andere Materialien von solchen Websites und mobilen Anwendungen verursacht werden. Für besagte Websites und mobilen Anwendungen gelten eigene Nutzungsbedingungen.
+
+Darüber hinaus bedeutet ein Link zu einer Website Dritter nicht, dass Samsung für den Inhalt oder die Nutzung einer solchen Website Verantwortung übernimmt. Es liegt an dir, Vorkehrungen zu treffen, um sicherzustellen, dass alles, was du für deine Verwendung auswählst, frei von Viren, Würmern, Trojanern und anderen zerstörerischen Elementen ist.
+
+ALLGEMEINER HAFTUNGSAUSSCHLUSS
+
+DU ERKLÄRST DICH AUSDRÜCKLICH EINVERSTANDEN, DASS DIE NUTZUNG DER WEBSITE, DER MOBILEN ANWENDUNG, MATERIALIEN ODER DIENSTE AUF DEINE ALLEINIGE VERANTWORTUNG ERFOLGT UND DU IM WEITESTEN GESETZLICH ZULÄSSIGEN UMFANG DAS GESAMTE RISIKO HINSICHTLICH ZUFRIEDENSTELLENDER QUALITÄT, LEISTUNG UND GENAUIGKEIT TRÄGST. DIE WEBSITE, DIE MOBILE ANWENDUNG, DIE MATERIALIEN UND DIE DIENSTE WERDEN IM WEITESTEN GESETZLICH ZULÄSSIGEN UMFANG AUF BASIS IHRER DERZEITIGEN FORM UND NACH VERFÜGBARKEIT OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNGEN, BEDINGUNGEN, BESTIMMUNGEN, ZUSICHERUNGEN ODER VERPFLICHTUNGEN JEGLICHER ART BEREITGESTELLT. SAMSUNG LEHNT IM WEITESTEN GESETZLICH ZULÄSSIGEN RAHMEN AUSDRÜCKLICH ALLE AUSDRÜCKLICHEN ODER KONKLUDENTEN GEWÄHRLEISTUNGEN, BEDINGUNGEN, BESTIMMUNGEN, ZUSICHERUNGEN UND VERPFLICHTUNGEN IN BEZUG AUF DIE WEBSITE, MOBILE ANWENDUNG, MATERIALIEN UND DIENSTE AB, INSBESONDERE HINSICHTLICH MARKTGÄNGIGKEIT, ZUFRIEDENSTELLENDER QUALITÄT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK, RICHTIGKEIT, UNGESTÖRTER NUTZUNG UND NICHTVERLETZUNG DER RECHTE DRITTER. SOWEIT GESETZLICH ZULÄSSIG ÜBERNIMMT SAMSUNG KEINE GEWÄHR FÜR DIE RICHTIGKEIT, GÜLTIGKEIT, AKTUALITÄT, RECHTMÄSSIGKEIT ODER VOLLSTÄNDIGKEIT VON MATERIALIEN ODER DIENSTEN, DIE ÜBER DIE WEBSITE ODER MOBILE ANWENDUNG ZUR VERFÜGUNG GESTELLT WERDEN, UND GARANTIERT NICHT, DASS DIE WEBSITE oder MOBILE ANWENDUNG, MATERIALIEN ODER DIENSTE DEINEN ANFORDERUNGEN ENTSPRECHEN ODER DASS DER BETRIEB DER WEBSITE ODER ANWENDUNG ODER DER DIENSTE UNUNTERBROCHEN BZW. FEHLERFREI IST. DURCH MÜNDLICHE ODER SCHRIFTLICHE EMPFEHLUNGEN ODER INFORMATIONEN, DIE DU ÜBER DIE WEBSITE oder MOBILE ANWENDUNG, VON SAMSUNG, EINEM UNTERNEHMEN DER SAMSUNG GROUP ODER DEN ENTSPRECHENDEN LEITENDEN ANGESTELLTEN, MITARBEITERN, FÜHRUNGSKRÄFTEN ODER VERTRETERN SOLCHER UNTERNEHMEN ERHÄLTST (ZUSAMMENFASSEND „SAMSUNG-PARTEIEN“), WERDEN KEINERLEI GARANTIEN BEGRÜNDET.
+
+HAFTUNGSBESCHRÄNKUNG
+
+SOWEIT GESETZLICH ZULÄSSIG ÜBERNIMMT SAMSUNG UNTER KEINEN UMSTÄNDEN (EINSCHLIEẞLICH FAHRLÄSSIGKEIT) VERTRAGS- ODER DELIKTRECHTLICHE HAFTUNG FÜR DIREKTE, INDIREKTE, ZUFÄLLIGE, BESONDERE ODER MITTELBARE SCHÄDEN, FÜR DEN AUSFALL VON GEWINNEN, ERTRÄGEN, ZINSEN, GESCHÄFTEN, DEN VELUST ODER DIE BESCHÄDIGUNG VON DATEN, FÜR ANWALTSGEBÜHREN, AUSGABEN ODER ANDERE SCHÄDEN AUS ODER IN VERBINDUNG MIT INFORMATIONEN, DIE AUF DER WEBSITE ODER IN DER MOBILEN ANWENDUNG ENTHALTEN SIND, ODER DIE INFOLGE DER NUTZUNG DER WEBSITE BZW. DER MOBILEN ANWENDUNG ODER DES ZUGRIFFS AUF MATERIALIEN ODER DIENSTE DURCH DICH ODER DRITTE ÜBER DIE WEBSITE ODER DIE MOBILEN ANWENDUNGEN ENTSTANDEN SIND, SELBST WENN AUF DIE MÖGLICHKEIT DERARTIGER SCHÄDEN HINGEWIESEN WURDE.
+
+Entschädigung
+
+Du verpflichtest dich, die Samsung-Parteien von allen Ansprüchen, Verbindlichkeiten, Schadensersatzansprüchen, Entschädigungen, Kosten und Gebühren (einschließlich angemessener Anwaltsgebühren) freizustellen und schadlos zu halten, die sich aus der Nutzung des Website, der mobilen Anwendung, der Materialien oder Dienste durch dich oder einen Dritten über dein Konto bzw. durch den Verstoß gegen diese Bedingungen ergeben. Samsung behält sich das Recht vor, auf eigene Kosten die ausschließliche Verteidigung und Kontrolle von Angelegenheiten zu übernehmen, die anderweitig von dir entschädigt werden, und in einem solchen Fall verpflichtest du dich, bei der Verteidigung dieser Angelegenheit mit Samsung zusammenzuarbeiten.
+
+Änderung der Bedingungen
+
+Wir behalten uns das Recht vor, die Bedingungen jederzeit durch das Veröffentlichen überarbeiteter Bedingungen auf der Website oder in der mobilen Anwendung ganz oder teilweise zu ändern, zu ergänzen oder löschen. Die Änderungen werden erst dann wirksam, wenn du den neuen Bedingungen zustimmst. Falls du den aktualisierten Bedingungen nicht zustimmst, darfst du die Website oder mobile Anwendung nicht mehr verwenden.
+
+Anwendbares Recht und Gerichtsstand
+
+Diese Bedingungen unterliegen den Gesetzen des Landes, in dem du deinen Wohnsitz hast, ohne Berücksichtigung der Bestimmungen des Kollisionsrechts. Wenn deine Nutzung der Website, der mobilen Anwendung, der Materialien oder der Dienste gegen die Gesetze deines Wohnortes verstößt, bitten wir dich, die Website, die mobile Anwendung oder Teile der Materialien oder Dienste NICHT ZU VERWENDEN. Du bist verantwortlich für die Einhaltung der Gesetze deiner Gerichtsbarkeit (einschließlich Exportkontrollgesetze).
+
+Allgemeines
+
+Das Versäumnis von Samsung, ein Recht oder eine Bestimmung in den Bedingungen geltend zu machen, stellt keinen Verzicht auf dieses Recht oder diese Bestimmung dar, es sei denn, dies wird von Samsung schriftlich bestätigt. Die Bedingungen (einschließlich etwaiger Änderungen, Aktualisierungen und Ergänzungen) stellen die gesamte Vereinbarung zwischen dir und Samsung dar und ersetzen alle vorherigen oder gleichzeitigen Verhandlungen, Absprachen oder Vereinbarungen zwischen dir und Samsung hinsichtlich des Vertragsgegenstands. Du stimmst zu, dass diese Bedingungen nach unserem alleinigen Ermessen von uns an einen Dritten übertragen werden können. Abschnittsüberschriften dienen nur zu Referenzzwecken und definieren, beschränken oder beschreiben den Umfang eines solchen Abschnitts in keiner Weise. Wenn eine Klausel der Bedingungen oder deren Anwendung auf eine Partei oder die Umstände von einem Gericht oder einer gerichtsähnlichen Behörde der zuständigen Gerichtsbarkeit als ungültig, illegal oder nicht durchsetzbar angesehen wird (die „verletzende Klausel“), (i) muss eine solche verletzende Klausel als revidiert angesehen werden, um so weit wie möglich den gleichen Zweck zu erreichen, der in der verletzenden Klausel vorgesehen ist, soweit gesetzlich zulässig; (ii) wird die Gültigkeit, Rechtmäßigkeit und Durchsetzbarkeit der übrigen Bestimmungen oder Teile der Bestimmungen in diesem Dokument in keiner Weise beeinträchtigt oder beeinträchtigt werden; und (iii) bleibt der Rest der Bedingungen gültig und durchsetzbar, soweit dies nach geltendem Recht zulässig ist. Wenn eine Bestimmung der Bedingungen von einem zuständigen Gericht für ungültig befunden wird, bleiben die übrigen Bestimmungen in vollem Umfang in Kraft und wirksam.
+
+Datiert [22.01.2025]
